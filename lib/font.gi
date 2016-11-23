@@ -123,21 +123,22 @@ InstallGlobalFunction( CreateFonts, function()
     type := NewType( FontFamily, IsFont and IsFontRep );
 
     # "black" and "white" are always displayable
+    # TODO the fontInfo is hardcoded with values retrieved from a xgap debug session
     font           := rec();
     font.tiny      := Objectify( type,
-                              rec( fontInfo := WindowCmd([ "XFI", 1 ]), 
+                              rec( fontInfo := [ 7, 1, 5 ],
                                    name := "tiny" ) );
     font.small     := Objectify( type,
-                              rec( fontInfo := WindowCmd([ "XFI", 2 ]), 
+                              rec( fontInfo := [8, 2, 6],
                                    name := "small" ) );
     font.normal    := Objectify( type,
-                              rec( fontInfo := WindowCmd([ "XFI", 3 ]), 
+                              rec( fontInfo := [11, 2, 7],
                                    name := "normal" ) );
     font.large     := Objectify( type,
-                              rec( fontInfo := WindowCmd([ "XFI", 4 ]), 
+                              rec( fontInfo := [12, 3, 9],
                                    name := "large" ) );
     font.huge      := Objectify( type,
-                              rec( fontInfo := WindowCmd([ "XFI", 5 ]), 
+                              rec( fontInfo := [16, 4, 10],
                                    name := "huge" ) );
     font.fonts := [font.tiny,font.small,font.normal,
                    font.large,font.huge];

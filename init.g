@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  init.g                      XGAP library                     Frank Celler
+#W  init.g                      FRANCY library                   Frank Celler
 ##
 #Y  Copyright (C) 1993,  Lehrstuhl D fuer Mathematik,  RWTH, Aachen,  Germany
 ##
@@ -11,33 +11,34 @@ last := 0;    # to make GAP happy when this package is autoloaded
 ##
 #X  declaration part
 ##
-ReadPackage( "xgap", "lib/color.gd"   );
-ReadPackage( "xgap", "lib/font.gd"    );
-ReadPackage( "xgap", "lib/sheet.gd"   );
-ReadPackage( "xgap", "lib/gobject.gd" );
-ReadPackage( "xgap", "lib/menu.gd"    );
-ReadPackage( "xgap", "lib/poset.gd"   );
-ReadPackage( "xgap", "lib/ilatgrp.gd" );
-ReadPackage( "xgap", "lib/meataxe.gd" );
+ReadPackage( "francy", "lib/color.gd"   );
+ReadPackage( "francy", "lib/font.gd"    );
+ReadPackage( "francy", "lib/sheet.gd"   );
+ReadPackage( "francy", "lib/gobject.gd" );
+ReadPackage( "francy", "lib/menu.gd"    );
+ReadPackage( "francy", "lib/poset.gd"   );
+ReadPackage( "francy", "lib/ilatgrp.gd" );
+ReadPackage( "francy", "lib/meataxe.gd" );
 
 #############################################################################
 ##
-#X  interface to `WindowCmd'
+#X  interface to `WindowCmd' override
 ##
-ReadPackage( "xgap", "lib/window.g"   );
+ReadPackage( "francy", "lib/idgenerator.g" );
+ReadPackage( "francy", "lib/window.g"   );
 
 #############################################################################
 ##
 #X  implementation part
 ##
-ReadPackage( "xgap", "lib/color.gi"   );
-ReadPackage( "xgap", "lib/font.gi"    );
-ReadPackage( "xgap", "lib/sheet.gi"   );
-ReadPackage( "xgap", "lib/gobject.gi" );
-ReadPackage( "xgap", "lib/menu.gi"    );
-ReadPackage( "xgap", "lib/poset.gi"   );
-ReadPackage( "xgap", "lib/ilatgrp.gi" );
-ReadPackage( "xgap", "lib/meataxe.gi" );
+ReadPackage( "francy", "lib/color.gi"   );
+ReadPackage( "francy", "lib/font.gi"    );
+ReadPackage( "francy", "lib/sheet.gi"   );
+ReadPackage( "francy", "lib/gobject.gi" );
+ReadPackage( "francy", "lib/menu.gi"    );
+ReadPackage( "francy", "lib/poset.gi"   );
+ReadPackage( "francy", "lib/ilatgrp.gi" );
+ReadPackage( "francy", "lib/meataxe.gi" );
 
 #############################################################################
 ##

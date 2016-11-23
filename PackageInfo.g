@@ -1,84 +1,62 @@
 #############################################################################
 ##  
-##  PackageInfo.g for the GAP package xgap
+##  PackageInfo.g for the GAP package FRANCY
 ##  
 
 SetPackageInfo( rec(
 
-PackageName := "XGAP",
-Subtitle := "a graphical user interface for GAP",
-Version := "4.26",
-Date := "06/11/2016",
+PackageName := "FRANCY",
+Subtitle := "A Framework for Interactive Discrete Mathematics",
+Version := "0.1",
+Date := "20/11/2016",
 
 Persons := [
   rec( 
-    LastName      := "Celler",
-    FirstNames    := "Frank",
+    LastName      := "Martins",
+    FirstNames    := "Manuel",
     IsAuthor      := true,
-    IsMaintainer  := false,
-    Email         := "Frank@Celler.DE",
-    WWWHome       := "http://celler.de/"
-  ),
-
-  rec(
-    LastName      := "Horn",
-    FirstNames    := "Max",
-    IsAuthor      := false,
     IsMaintainer  := true,
-    Email         := "max.horn@math.uni-giessen.de",
-    WWWHome       := "http://www.quendi.de/math",
-    PostalAddress := Concatenation(
-                       "AG Algebra\n",
-                       "Mathematisches Institut\n",
-                       "Justus-Liebig-Universität Gießen\n",
-                       "Arndtstraße 2\n",
-                       "35392 Gießen\n",
-                       "Germany" ),
-    Place         := "Gießen",
-    Institution   := "Justus-Liebig-Universität Gießen"
-  ),
-
-  rec( 
-    LastName      := "Neunhöffer",
-    FirstNames    := "Max",
-    IsAuthor      := true,
-    IsMaintainer  := false,
-    Email         := "max@9hoeffer.de",
-    WWWHome       := "http://www-groups.mcs.st-and.ac.uk/~neunhoef",
-    PostalAddress := Concatenation( [
-                       "Gustav-Freytag-Straße 40\n",
-                       "50354 Hürth\n",
-                       "Germany" ] ),
+    Email         := "manuelmachadomartins@gmail.com",
+    WWWHome       := "http://github.com/mcmartins",
+    Institution   := "Universidade Aberta",
+    Place         := "Lisbon, PT"
   )
 ],
 
-Status := "accepted",
-CommunicatedBy := "Gerhard Hiß (Aachen)",
-AcceptDate := "07/1999",
+##  Status information. Currently the following cases are recognized:
+##    "accepted"      for successfully refereed packages
+##    "submitted"     for packages submitted for the refereeing
+##    "deposited"     for packages for which the GAP developers agreed
+##                    to distribute them with the core GAP system
+##    "dev"           for development versions of packages
+##    "other"         for all other packages
+##
+Status := "dev",
+CommunicatedBy := "TBD",
 
 SourceRepository := rec(
     Type := "git",
-    URL := "https://github.com/gap-packages/xgap",
+    URL := "https://github.com/mcmartins/francy",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://gap-packages.github.io/xgap",
-README_URL      := Concatenation( ~.PackageWWWHome, "/README" ),
+PackageWWWHome  := ~.PackageWWWHome,
+README_URL      := Concatenation( ~.PackageWWWHome, "/README.md" ),
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
                                  "/releases/download/v", ~.Version,
-                                 "/xgap-", ~.Version ),
+                                 "/francy-", ~.Version ),
 ArchiveFormats := ".tar.gz",
 
 AbstractHTML := 
-  "The <span class=\"pkgname\">XGAP</span> package allows to use graphics in GAP.",
+  "The <span class=\"pkgname\">FRANCY</span> package allows to use graphics in GAP.",
 
 PackageDoc := rec(
-  BookName  := "XGAP",
+  BookName  := "FRANCY",
   ArchiveURLSubset := ["htm","doc"],
   HTMLStart := "htm/chapters.htm",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "XGAP - a graphical user interface for GAP",
+  LongTitle := "FRANCY - A Framework for Interactive Discrete Mathematics",
   Autoload  := true
 ),
 
@@ -90,10 +68,8 @@ Dependencies := rec(
   ExternalConditions := []
 ),
 
-AvailabilityTest := function() return GAPInfo.CommandLineOptions.p; end,
+AvailabilityTest := function() return true; end,
 
-#TestFile := "tst/testall.g",
-
-#Keywords := []
+Keywords := ["Interactive", "Graphics"]
 
 ));
