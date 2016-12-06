@@ -24,7 +24,8 @@ ReadPackage( "francy", "lib/meataxe.gd" );
 ##
 #X  interface to `WindowCmd' override
 ##
-ReadPackage( "francy", "lib/idgenerator.g" );
+ReadPackage( "francy", "lib/json.g" );
+ReadPackage( "francy", "lib/windowcmd.g" );
 ReadPackage( "francy", "lib/window.g"   );
 
 #############################################################################

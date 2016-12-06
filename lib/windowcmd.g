@@ -26,13 +26,14 @@ UnbindGlobal("WindowCmd");
 #V  IDS . . . . . . . . . . . . . . . . . . . . . . . . list of generated ids
 ##
 BindGlobal( "IDS", rec(WIN:=0, MENU:=0, OTHER:=0) );
+# BindGlobal( "IDS", rec(WIN:=0, OBJ:=0, rec(MENU:=0, OTHER:=0)) );
 
 
 #############################################################################
 ##
 #F  WindowCmd( args )  . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ## This function overrides the Core WindowCmd (implemented for xgap)
-## and dependent on X11, it returns sequential ids depending on
+## and dependent on X11, and it returns sequential ids depending on
 ## graphical objects
 ##
 BindGlobal( "WindowCmd", function( args )
@@ -50,5 +51,6 @@ BindGlobal( "WindowCmd", function( args )
         id := IDS!.OTHER;
         IDS!.OTHER := id+1;
     fi;
+    Print(args); Print("\n");
     return [id];
 end );

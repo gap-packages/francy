@@ -39,7 +39,7 @@ SourceRepository := rec(
     URL := "https://github.com/mcmartins/francy",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := ~.PackageWWWHome,
+PackageWWWHome  := "https://github.com/mcmartins/francy",
 README_URL      := Concatenation( ~.PackageWWWHome, "/README.md" ),
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
@@ -59,7 +59,6 @@ PackageDoc := rec(
   LongTitle := "FRANCY - A Framework for Interactive Discrete Mathematics",
   Autoload  := true
 ),
-
 
 Dependencies := rec(
   GAP := ">=4.7",
