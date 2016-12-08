@@ -1,10 +1,66 @@
+#############################################################################
+##
+#M  GraphicCanvas( <title>, <width>, <height> ) . . . . .  a new graphic sheet
+##
+##  creates  a  graphic  sheet with  title  <title> and dimension <width>  by
+##  <height>.  A graphic sheet  is the basic  tool  to draw something,  it is
+##  like a piece of  paper on which you can  put your graphic objects, and to
+##  which you  can attach your  menus.   The coordinate $(0,0)$ is  the upper
+##  left corner, $(<width>-1,<height>-1)$ the lower right.
+##
+##  It is  possible to  change the  default behaviour of   a graphic sheet by
+##  installing methods (or   sometimes  called callbacks) for   the following
+##  events.  In order to  avoid  confusion with  the {\GAP} term  \"method\" the
+##  term \"callback\" will be used in the following.  For example, to install
+##  the function `MyLeftPBDownCallback' as callback for the left mouse button
+##  down  event of a graphic <sheet>,  you have  to call `InstallCallback' as
+##  follows.
+##
+##  \begintt
+##      gap> InstallCallback( sheet, "LeftPBDown", MyLeftPBDownCallback );
+##  \endtt
+##
+##
+InstallMethod( GraphicCanvas,
+    "a string, and two integers",
+    true,
+    [ IsString,
+      IsInt,
+      IsInt ],
+    0,
+
+function( title, width, height )
+    local canvas;
+    
+    canvas                  := Objectify( NewType( GraphicCanvasFamily, IsGraphicCanvas and IsGraphicCanvasRep ), rec() );
+	canvas!.id              := 0; # TODO generate ids
+    canvas!.@type           := "svg:svg";
+    canvas!.width           := width;
+    canvas!.height          := height;
+	
+	#canvas!.object          := [];
+	
+	#canvas!.name               := title;
+    #canvas!.draggable          := false;
+    #canvas!.drawn              := false;
+    #canvas!.potentialAction    := "schema:AddAction"
+    #canvas!.callback           := [];
+    #canvas!.menus              := [];
+    
+	#canvas!.defaults           := rec();
+    #canvas!.defaults.color     := COLORS.black;
+    #canvas!.defaults.draggable := false;
+	
+    return canvas;
+
+end );
 
 #############################################################################
 ##
 #M  GraphicObject( <representation>, <canvas>, <def> )  . .  create a template
 ##
 InstallMethod( GraphicObject,
-    "for a representation, a graphic canvas, and defaults",
+    "a representation, a graphic canvas, and defaults",
     true,
     [ IsFunction, IsGraphicCanvas, IsRecord ],
     0,
@@ -20,19 +76,15 @@ function( rep, canvas, def )
         if not IsMutable( def ) then def:= ShallowCopy( def ); fi;
         def.draggable := DefaultsForGraphicObject( canvas ).draggable;
     fi;
-    if not IsBound( def.name ) then
-        if not IsMutable( def ) then def:= ShallowCopy( def ); fi;
-        def.name := DefaultsForGraphicObject( canvas ).name;
-    fi;
 
     obj                  := Objectify( NewType( GraphicObjectFamily, rep ), rec() );
-    obj!.@type           := "svg:";
+    obj!.@type           := "";
     obj!.canvas          := canvas;
     obj!.color           := def.color;
     obj!.name            := def.name;
     obj!.draggable       := def.draggable;
     obj!.drawn           := false;
-    obj!.potentialAction := "schema:AddAction"
+    #obj!.potentialAction := "schema:AddAction"
 
     return obj;
 
@@ -78,8 +130,13 @@ function( canvas, x, y, w, h, def )
     box!.id       := 0; # TODO generate ids
     box!.x        := x;
     box!.y        := y;
-    box!.w        := w;
-    box!.h        := h;
+    box!.width    := w;
+    box!.height   := h;
+    box!.rx       := 0; # TODO support later
+    box!.ry       := 0; # TODO support later
+	
+	# add this one to the canvas
+	AddToCanvas( canvas, box );
 
     return box;
 
@@ -91,26 +148,70 @@ end );
 #M  Draw( <box> ) . . . . . . . . . . . . . . . . . . . . . . . .  draw a box
 ##
 InstallMethod( Draw,
-    "for a box",
+    "generate json to draw a graphic object",
     true,
-    [ IsGraphicObject and IsBoxObjectRep and IsAlive ],
+    [ IsGraphicObject or IsGraphicCanvas ],
     0,
 
-function( box )
-
-    if box!.drawn then
-        box!.potentialAction := "schema:UpdateAction"
-    fi;
+function( gObj )
+	local obj;
 
     obj            := Objectify( NewType( GraphicObjectFamily, rep ), rec() );
     obj!.@context  := rec( svg:="http://www.w3.org/2000/svg", schema:="http://schema.org" );
     obj!.@type     := "schema:DrawAction";
-    obj!.object    := [ box ];
+	obj!.object    := [ gObj ];
 
-    GapToJsonString(box);
+	#if gObj!.drawn then
+        #obj!.potentialAction := rec ( @type := "schema:UpdateAction" )
+	#else
+		#obj!.potentialAction := rec ( @type := "schema:AddAction" )
+    #fi;
+	
+	gObj!.drawn := true;
 
-    box!.drawn := true;
+	# FIXME at the moment the json is printed in the repl, this should go in a dedicated I/O channel
+    GapToJsonString(obj);
 
-    return box;
+    return gObj;
+
+end );
+
+#############################################################################
+##
+#M  AddToCanvas( <canvas>, <box> ) . . . . . . add graphic object to a canvas
+##
+InstallMethod( AddToCanvas,
+    "add graphic object to canvas",
+    true,
+    [ IsGraphicCanvas,
+	  IsGraphicObject ],
+    0,
+
+function( canvas, gObj )
+	
+	gObj!.canvas := canvas;
+	Append( canvas!.object, [ gObj ] );
+
+    return canvas;
+
+end );
+
+#############################################################################
+##
+#M  RemoveFromCanvas( <canvas>, <box> ) . remove graphic object from a canvas
+##
+InstallMethod( RemoveFromCanvas,
+    "remove graphic object from canvas",
+    true,
+    [ IsGraphicCanvas,
+	  IsGraphicObject ],
+    0,
+
+function( canvas, gObj )
+	
+	gObj!.canvas := "";
+	Remove( canvas!.object, Position( canvas!.object, [ gObj ] ) );
+
+    return canvas;
 
 end );
