@@ -30,7 +30,6 @@ DeclareCategory( "IsCircle", IsGraphicObject );
 ##
 BindGlobal( "GraphicCanvasFamily", NewFamily( "GraphicCanvasFamily" ) );
 
-
 #############################################################################
 ##
 #R  IsGraphicObjectRep  . . . . . . . . . . . . . . .  default representation

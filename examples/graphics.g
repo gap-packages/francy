@@ -11,6 +11,7 @@ GroupGraphicObjects([box2, box3]);
 
 Draw(canvas);
 
+LoadPackage("francy");
 canvas:=GraphicCanvas("Canvas Test 2", 200, 200);
 
 circle1:=Circle(canvas, 1, 1, 20, rec(color:="Blue", name:="circle1", draggable:=true)););

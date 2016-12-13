@@ -13,7 +13,6 @@ ReadPackage( "francy", "francy.gd" );
 ReadPackage( "francy", "objects.gd" );
 ReadPackage( "francy", "operations.gd" );
 
-ReadPackage( "francy", "francy.gi" );
 ReadPackage( "francy", "objects.gi" );
 ReadPackage( "francy", "operations.gi" );
 

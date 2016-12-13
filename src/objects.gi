@@ -220,10 +220,6 @@ InstallMethod( GroupGraphicObjects,
 function( objArray )
     local gObj, groupId;
 
-    if not IsGraphicCanvas(canvas!.type) then
-        Error("Canvas is not of type IsGraphicCanvas");
-    fi;
-
     groupId := GenerateId();
 
     for gObj in objArray do
