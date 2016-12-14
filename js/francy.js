@@ -18,12 +18,28 @@
     }
 
     function buildCanvas(canvas) {
+
       let svg = SVG.get(canvas.id);
       let windowId = getWindowId(canvas.id);
+      let window = document.getElementById(windowId);
+
+      if (!window) {
+        $('<div>', {
+          id: windowId,
+          title: canvas.name
+        }).appendTo('#graphics');
+        window = document.getElementById(windowId);
+      }
+
+      $("#" + windowId).dialog({
+        appendTo: "#graphics",
+        resizable: false
+      });
+
       if (!svg) {
         if (canvas['@type'] === 'svg:svg') {
           // create new window pop up add div and assign windowId
-          svg = new SVG(document.getElementById(windowId)).size(canvas.width, canvas.height).id(canvas.id);
+          svg = new SVG(window).size(canvas.width, canvas.height).id(canvas.id);
         }
         if (!svg) {
           throw new Error('The Window with id ' + windowId + ' is not present or couldn\'t be built, please fix the canvas object.');
@@ -36,7 +52,10 @@
       let group = undefined;
       if (o.group) {
         let type = o.group['@type'];
-        group = svg.get(document.getElementById(o.group.id));
+        let element = document.getElementById(o.group.id);
+        if (element) {
+          group = SVG.adopt(element);
+        }
         if (!group) {
           if (type == 'svg:g') {
             group = svg.group().id(o.group.id);
@@ -55,7 +74,11 @@
       let object = undefined;
       let element = document.getElementById(objectId);
       if (element) {
-        object = SVG.adopt(element.parentElement);
+        if (element.tagName !== 'g') {
+          object = SVG.adopt(element.parentElement);
+        } else {
+          object = SVG.adopt(element);
+        }
       }
       let group = buildGroup(svg, o);
       let holder = group ? group : svg;
@@ -98,8 +121,8 @@
       if (o.draggable) {
         object.style('cursor', 'pointer').draggy(function (x, y) {
           return {
-            x: x < o.canvas.width - (o.width ? o.width : o.r * 2) && x > 0,
-            y: y < o.canvas.height - (o.height ? o.height : o.r * 2) && y > 0
+            x: x < svg.width() - (o.width ? o.width : o.r * 2) && x > 0,
+            y: y < svg.height() - (o.height ? o.height : o.r * 2) && y > 0
           };
         });
       }
@@ -120,6 +143,8 @@
 
     return {
       draw: function build(json) {
+        console.log('Francy will draw the following object: ');
+        console.log(json);
         let canvas = json.object;
         let svg = buildCanvas(canvas);
         for (let i in canvas.object) {

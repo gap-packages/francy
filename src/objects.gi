@@ -43,11 +43,12 @@ function( title, width, height )
     canvas!.type            := Objectify( NewType( GraphicCanvasFamily, IsGraphicCanvas and IsGraphicCanvasRep ), rec() );
 	canvas!.id              := GenerateId();
     canvas!.@type           := "svg:svg";
+    canvas!.name            := title;
     canvas!.width           := width;
     canvas!.height          := height;
 	canvas!.object          := [];
 	canvas!.drawn           := false;
-	canvas!.potentialAction := "schema:AddAction";
+	canvas!.potentialAction := rec ( @type := "schema:AddAction" );
 
 	canvas!.defaults           := rec();
     canvas!.defaults.color     := "Black";
@@ -77,12 +78,14 @@ function( representation, canvas, def )
     obj                  := rec();
     obj!.type            := Objectify( NewType( GraphicObjectFamily, representation ), rec() );
     obj!.@type           := "";
-    obj!.canvas          := canvas;
     obj!.color           := def.color;
     obj!.name            := def.name;
     obj!.draggable       := def.draggable;
     obj!.drawn           := false;
-    obj!.potentialAction := "schema:AddAction";
+    obj!.potentialAction := rec ( @type := "schema:AddAction" );
+
+    # add this one to the canvas
+    AddToCanvas( canvas, obj );
 
     return obj;
 
@@ -127,7 +130,7 @@ function( canvas, x, y, w, h, def )
 	    Error("Canvas is not of type GraphicCanvas");
 	fi;
 
-    box           := GraphicObject( IsBoxObjectRep, canvas, def );
+    box           := GraphicObject( IsBox and IsBoxObjectRep, canvas, def );
     box!.@type    := "svg:rect";
     box!.id       := GenerateId();
     box!.x        := x;
@@ -136,9 +139,6 @@ function( canvas, x, y, w, h, def )
     box!.height   := h;
     box!.rx       := 0; # TODO support later
     box!.ry       := 0; # TODO support later
-
-	# add this one to the canvas
-	AddToCanvas( canvas, box );
 
     return box;
 
@@ -162,7 +162,7 @@ function( canvas, x, y, r, def )
 	    Error("Canvas is not of type GraphicCanvas");
 	fi;
 
-    circle           := GraphicObject( IsCircleObjectRep, canvas, def );
+    circle           := GraphicObject( IsCircle and IsCircleObjectRep, canvas, def );
     circle!.@type    := "svg:circle";
     circle!.id       := GenerateId();
     circle!.x        := x;
@@ -170,9 +170,6 @@ function( canvas, x, y, r, def )
     circle!.r        := r;
     circle!.cx       := 0; # TODO support later
     circle!.cy       := 0; # TODO support later
-
-	# add this one to the canvas
-	AddToCanvas( canvas, circle );
 
     return circle;
 
@@ -192,6 +189,8 @@ InstallMethod( LinkGraphicObjects,
 
 function( gObj1, gObj2 )
 
+    local tmpObj;
+
 	if not IsGraphicObject(gObj1!.type) then
 	    Error("Canvas is not of type IsGraphicObject");
 	fi;
@@ -200,7 +199,9 @@ function( gObj1, gObj2 )
     fi;
 
 	gObj1!.connectable := rec();
-	gObj1!.connectable!.object := [gObj2];
+	tmpObj := ShallowCopy( gObj2 );
+    Unbind( tmpObj!.type );
+	gObj1!.connectable!.object := [ tmpObj ];
 	gObj1!.connectable!.directional := true;
 
     return true;

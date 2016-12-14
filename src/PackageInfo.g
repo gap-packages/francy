@@ -6,9 +6,9 @@
 SetPackageInfo( rec(
 
 PackageName := "FRANCY",
-Subtitle := "A Framework for Interactive Discrete Mathematics",
-Version := "0.0.1",
-Date := "20/11/2016",
+Subtitle    := "A Framework for Interactive Discrete Mathematics",
+Version     := "0.0.1",
+Date        := "20/11/2016",
 
 Persons := [
   rec( 
@@ -31,7 +31,7 @@ Persons := [
 ##    "dev"           for development versions of packages
 ##    "other"         for all other packages
 ##
-Status := "dev",
+Status         := "dev",
 CommunicatedBy := "TBD",
 
 SourceRepository := rec(
@@ -51,13 +51,13 @@ AbstractHTML :=
   "The <span class=\"pkgname\">FRANCY</span> package allows to use graphics in GAP.",
 
 PackageDoc := rec(
-  BookName  := "FRANCY",
-  ArchiveURLSubset := ["htm","doc"],
-  HTMLStart := "htm/chapters.htm",
-  PDFFile   := "doc/manual.pdf",
-  SixFile   := "doc/manual.six",
-  LongTitle := "FRANCY - A Framework for Interactive Discrete Mathematics",
-  Autoload  := true
+  BookName         := "FRANCY",
+  ArchiveURLSubset := [ "htm","doc" ],
+  HTMLStart        := "htm/chapters.htm",
+  PDFFile          := "doc/manual.pdf",
+  SixFile          := "doc/manual.six",
+  LongTitle        := "FRANCY - A Framework for Interactive Discrete Mathematics",
+  Autoload         := true
 ),
 
 Dependencies := rec(
@@ -69,6 +69,6 @@ Dependencies := rec(
 
 AvailabilityTest := function() return true; end,
 
-Keywords := ["Interactive", "Graphics"]
+Keywords := [ "Interactive", "Graphics" ]
 
 ));

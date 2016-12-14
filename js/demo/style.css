@@ -28,13 +28,28 @@ section {
     margin: auto;
     padding: 10px;
 }
+
 div#terminal-container {
     width: 65%;
     float: left;
 }
-div#graphics {
+
+div#code {
+    width: 33%;
     float: right;
 }
-section>div#graphics>div {
-    border: solid 1px #c6c6c6;
+
+.code {
+    font-size: small;
+    font-family: monospace;
+    background-color: #fafafa;
+    padding: 5px;
+}
+
+.description {
+    background-color: #c1ffbf;
+}
+
+.ui-dialog-content {
+    background-color: #fafafa !important;
 }

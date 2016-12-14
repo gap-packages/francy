@@ -50,15 +50,14 @@ function createTerminal() {
       socket.onopen = runRealTerminal;
       socket.onclose = runFakeTerminal;
       socket.onerror = runFakeTerminal;
-      socket.onmessage = logMessage;
+      socket.onmessage = draw;
     });
   });
 }
 
-function logMessage(data){
-  data = data.data.split('gap>').join('').split('\\').join('').split(' ').join('').replace(/[\n\r\b]+/g, '');
+function draw(data){
+  data = data.data.replace(/[\n\r\b\s\\]+|(gap>)/g, '');
   if (JsonReader.isValid(data)) {
-    console.log('Drawing: ' + JsonReader.get())
     Francy.draw(JsonReader.get());
   }
 }

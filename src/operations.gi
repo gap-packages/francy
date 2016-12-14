@@ -7,7 +7,7 @@
 
 #############################################################################
 ##
-#M  Draw( <canvas> ) . . . . . . . . . . . . . . . . . . . . . . . draw a canvas
+#M  Draw( <canvas> ) . . . . . . . . . . . . . . . . . . . . . . draw a canvas
 ##
 InstallMethod( Draw,
     "generate json to draw a canvas and all its graphic objects",
@@ -30,19 +30,22 @@ function( canvas )
 
     canvas!.drawn := true;
 
+	# copy the original object
     # this will remove all unsupported objects from dictionary
     # in order to allow json package to produce the json representation
     tmpCanvas:=ShallowCopy( canvas );
-    Unbind(tmpCanvas!.type);
-    for tmpObj in tmpCanvas!.object do
-	    Unbind(tmpObj!.type);
-	    Unbind(tmpObj!.canvas!.type);
-	    Unbind(tmpObj!.canvas!.object);
+    Unbind( tmpCanvas!.type );
+    tmpCanvas!.object := [];
+    for tmpObj in canvas!.object do
+        tmpObj!.drawn := true;
+        tmpObj := ShallowCopy( tmpObj );
+        Unbind( tmpObj!.type );
+        Append( tmpCanvas!.object, [ tmpObj ] );
 	od;
 
     obj            := rec();
     obj!.@context  := rec( svg:="http://www.w3.org/2000/svg", schema:="http://schema.org" );
-    obj!.@type     := "schema:DrawAction";
+    obj!.@type     := rec ( @type := "schema:DrawAction" );
 	obj!.object    := tmpCanvas;
 
 	# FIXME at the moment the json is printed in the repl, this should go in a dedicated I/O channel
@@ -71,7 +74,6 @@ function( canvas, gObj )
         Error("Object is not of type IsGraphicObject");
     fi;
 
-	gObj!.canvas := canvas;
 	Append( canvas!.object, [ gObj ] );
 
     return canvas;
@@ -98,7 +100,7 @@ function( canvas, gObj )
         Error("Object is not of type IsGraphicObject");
     fi;
 
-	gObj!.canvas := "";
+	#gObj!.canvas := "";
 	Remove( canvas!.object, Position( canvas!.object, [ gObj ] ) );
 
     return canvas;

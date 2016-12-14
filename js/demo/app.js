@@ -10,6 +10,7 @@ var terminals = {},
 app.use('/build', express.static(__dirname + '/node_modules/xterm/dist'));
 app.use('/builder.js', express.static(__dirname + '/../builder.js'));
 app.use('/reader.js', express.static(__dirname + '/../reader.js'));
+app.use('/francy.js', express.static(__dirname + '/../francy.js'));
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
@@ -29,6 +30,10 @@ app.get('/builder.js', function (req, res) {
 
 app.get('/reader.js', function (req, res) {
   res.sendFile(__dirname + '/../reader.js');
+});
+
+app.get('/francy.js', function (req, res) {
+  res.sendFile(__dirname + '/../francy.js');
 });
 
 app.post('/terminals', function (req, res) {
@@ -63,16 +68,22 @@ app.post('/terminals/:pid/size', function (req, res) {
   res.end();
 });
 
+var chunks = '';
 app.ws('/terminals/:pid', function (ws, req) {
   var term = terminals[parseInt(req.params.pid)];
-  var chunks = '';
+
   console.log('Connected to terminal ' + term.pid);
   ws.send(logs[term.pid]);
 
   term.on('data', function (data) {
     try {
       chunks += data;
-      if (chunks.indexOf('gap>') !== -1) {
+      // just send the data when is complete
+      // from complete we understand:
+      // the gap> prompt is sent
+      // the carriage return \r is sent
+      if (chunks.indexOf('gap>') !== -1
+        || chunks.indexOf('\r')) {
         ws.send(chunks);
         chunks = '';
       }
