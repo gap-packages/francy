@@ -8,8 +8,6 @@ var terminals = {},
   logs = {};
 
 app.use('/build', express.static(__dirname + '/node_modules/xterm/dist'));
-app.use('/builder.js', express.static(__dirname + '/../builder.js'));
-app.use('/reader.js', express.static(__dirname + '/../reader.js'));
 app.use('/francy.js', express.static(__dirname + '/../francy.js'));
 
 app.get('/', function (req, res) {
@@ -24,14 +22,6 @@ app.get('/main.js', function (req, res) {
   res.sendFile(__dirname + '/main.js');
 });
 
-app.get('/builder.js', function (req, res) {
-  res.sendFile(__dirname + '/../builder.js');
-});
-
-app.get('/reader.js', function (req, res) {
-  res.sendFile(__dirname + '/../reader.js');
-});
-
 app.get('/francy.js', function (req, res) {
   res.sendFile(__dirname + '/../francy.js');
 });
@@ -39,7 +29,7 @@ app.get('/francy.js', function (req, res) {
 app.post('/terminals', function (req, res) {
   var cols = parseInt(req.query.cols),
     rows = parseInt(req.query.rows),
-    term = pty.spawn(process.platform === 'win32' ? 'gap' : 'gap', [], {
+    term = pty.spawn(process.platform === 'win32' ? 'gap.bat' : 'gap.sh', [], {
       name: 'xterm-color',
       cols: cols || 50,
       rows: rows || 20,

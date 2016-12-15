@@ -57,9 +57,7 @@ function createTerminal() {
 
 function draw(data){
   data = data.data.replace(/[\n\r\b\s\\]+|(gap>)/g, '');
-  if (JsonReader.isValid(data)) {
-    Francy.draw(JsonReader.get());
-  }
+  Francy.draw(data);
 }
 
 function runRealTerminal() {

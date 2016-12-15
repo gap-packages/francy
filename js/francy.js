@@ -2,39 +2,53 @@
   "use strict";
   let Francy = (function () {
 
-    let options = {};
-    var Francy = function (options) {
-      options = options;
+    let options = {
+      appendTo: '#graphics'
+    };
+    let json;
+
+    let Francy = function (opt) {
+      options = opt || options;
     };
 
-    // TODO replace svg.js with d3.js?
+    // TODO replace svg.js with d3.js
+
+    function isJsonValid(input) {
+      json = typeof input !== "string" ? JSON.stringify(input) : json;
+      try {
+        json = JSON.parse(input);
+        // TODO validate something in the structure of the object
+      } catch (e) {
+        return false;
+      }
+      return typeof json === "object" && input !== null;
+    }
 
     function getWindowId(canvasId) {
       return 'window-' + canvasId;
     }
 
-    function buildWindow() {
-      options.window.build();
+    function buildWindow(canvas) {
+      let windowId = getWindowId(canvas.id);
+      $('<div>', {
+        id: windowId,
+        title: canvas.name
+      }).appendTo(options.appendTo);
+      $("#" + windowId).dialog({
+        appendTo: options.appendTo,
+        resizable: false
+      }).attr({id: windowId});
     }
 
     function buildCanvas(canvas) {
-
       let svg = SVG.get(canvas.id);
       let windowId = getWindowId(canvas.id);
       let window = document.getElementById(windowId);
 
       if (!window) {
-        $('<div>', {
-          id: windowId,
-          title: canvas.name
-        }).appendTo('#graphics');
+        buildWindow(canvas);
         window = document.getElementById(windowId);
       }
-
-      $("#" + windowId).dialog({
-        appendTo: "#graphics",
-        resizable: false
-      });
 
       if (!svg) {
         if (canvas['@type'] === 'svg:svg') {
@@ -42,7 +56,7 @@
           svg = new SVG(window).size(canvas.width, canvas.height).id(canvas.id);
         }
         if (!svg) {
-          throw new Error('The Window with id ' + windowId + ' is not present or couldn\'t be built, please fix the canvas object.');
+          throw new Error('Something went wrong creating the window with id ' + windowId + '.');
         }
       }
       return svg;
@@ -62,7 +76,7 @@
           }
         }
         if (!group) {
-          throw new Error('The group with id ' + o.group.id + ' is not present or couldn\'t be built, please fix the canvas object.');
+          throw new Error('Something went wrong drawing the group with id ' + o.group.id + '.');
         }
       }
       return group;
@@ -104,10 +118,11 @@
       }
       // TODO implement support to other objects
       if (!object) {
-        throw new Error('The object with id ' + objectId + ' was not drawn!');
+        throw new Error('Something went wrong drawing the object with id ' + objectId + '.');
       }
 
-      buildInteraction(holder, object, o);
+      makeDraggable(holder, object, o);
+      makeConnectable(holder, object, o);
 
       // add other properties
       object.fill(o.color).stroke({width: 1})
@@ -116,7 +131,7 @@
       return object;
     }
 
-    function buildInteraction(svg, object, o) {
+    function makeDraggable(svg, object, o) {
       let type = o['@type'];
       if (o.draggable) {
         object.style('cursor', 'pointer').draggy(function (x, y) {
@@ -126,6 +141,10 @@
           };
         });
       }
+    }
+
+    function makeConnectable(svg, object, o) {
+      let type = o['@type'];
       if (o.connectable && type === 'svg:circle') {
         for (let j in o.connectable.object) {
           let c = o.connectable.object[j];
@@ -142,13 +161,14 @@
     }
 
     return {
-      draw: function build(json) {
-        console.log('Francy will draw the following object: ');
-        console.log(json);
-        let canvas = json.object;
-        let svg = buildCanvas(canvas);
-        for (let i in canvas.object) {
-          buildObject(svg, canvas.object[i]);
+      draw: function draw(input) {
+        if (isJsonValid(input)) {
+          console.log('Francy will draw the following object: ', json);
+          let canvas = json.object;
+          let svg = buildCanvas(canvas);
+          for (let i in canvas.object) {
+            buildObject(svg, canvas.object[i]);
+          }
         }
       }
     }
