@@ -100,7 +100,6 @@ function( canvas, gObj )
         Error("Object is not of type IsGraphicObject");
     fi;
 
-	#gObj!.canvas := "";
 	Remove( canvas!.object, Position( canvas!.object, [ gObj ] ) );
 
     return canvas;

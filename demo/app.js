@@ -8,7 +8,7 @@ var terminals = {},
   logs = {};
 
 app.use('/build', express.static(__dirname + '/node_modules/xterm/dist'));
-app.use('/francy.js', express.static(__dirname + '/../francy.js'));
+app.use('/francy.js', express.static(__dirname + '/../francy-js/francy.js'));
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
@@ -23,7 +23,7 @@ app.get('/main.js', function (req, res) {
 });
 
 app.get('/francy.js', function (req, res) {
-  res.sendFile(__dirname + '/../francy.js');
+  res.sendFile(__dirname + '/../francy-js/francy.js');
 });
 
 app.post('/terminals', function (req, res) {

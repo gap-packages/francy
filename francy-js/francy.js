@@ -3,7 +3,7 @@
   let Francy = (function () {
 
     let options = {
-      appendTo: '#graphics'
+      appendTo: 'body'
     };
     let json;
 
@@ -36,7 +36,7 @@
       }).appendTo(options.appendTo);
       $("#" + windowId).dialog({
         appendTo: options.appendTo,
-        resizable: false
+        resizable: true
       }).attr({id: windowId});
     }
 
