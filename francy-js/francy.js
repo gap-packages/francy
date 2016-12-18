@@ -14,14 +14,21 @@
     // TODO replace svg.js with d3.js
 
     function isJsonValid(input) {
-      json = typeof input !== "string" ? JSON.stringify(input) : json;
-      try {
-        json = JSON.parse(input);
-        // TODO validate something in the structure of the object
-      } catch (e) {
-        return false;
+      input = input.replace(/[\n\r\b\s\\]+|(gap>)/g, '');
+      var jsonRegex = /{(?:[^])*}/g;
+      var match = jsonRegex.exec(input);
+      if (match) {
+        input = match[0];
+        json = typeof input !== "string" ? JSON.stringify(input) : json;
+        try {
+          json = JSON.parse(input);
+          // TODO validate something in the structure of the object
+        } catch (e) {
+          return false;
+        }
+        return typeof json === "object" && input !== null;
       }
-      return typeof json === "object" && input !== null;
+      return false;
     }
 
     function getWindowId(canvasId) {

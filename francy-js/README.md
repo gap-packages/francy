@@ -6,7 +6,8 @@ in order to produce Graphics when Francy GAP Package is present.
 In order to use this module in Jupyter, it can be installed as a notebook extension:
 
 ```bash
-mcmartins@local:~$ jupyter nbextension install /path/to/francy/francy-js --user|--system
+mcmartins@local:~$ git clone https://github.com/mcmartins/francy.git
+mcmartins@local:~$ jupyter nbextension install ~/francy/francy-js --user|--system
 mcmartins@local:~$ jupyter nbextension enable francy-js/main --user|--system
 ```
 

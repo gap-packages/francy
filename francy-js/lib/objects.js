@@ -1,4 +1,4 @@
-define(['id-helper'], function (idHelper) {
+define(['id-helper', 'shape/rect', 'shape/circle'], function (idHelper, rectangle, circle) {
   "use strict";
 
   return {
@@ -10,7 +10,7 @@ define(['id-helper'], function (idHelper) {
             rectangle.build(canvas.object[i], options);
             break;
           case 'svg:circle':
-            Truck;
+            circle.build(canvas.object[i], options);
             break;
         }
       }

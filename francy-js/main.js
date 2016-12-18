@@ -22,9 +22,7 @@ define([
         callbacks.iopub.output = function (msg) {
           callbacks.iopub.outputHighjacked(msg);
           if (msg.content && msg.content.text) {
-            // it won't be a valid json unless all special chars are removed
-            var output = msg.content.text.replace(/[\n\r\b\s\\]+/g, '');
-            Francy.draw(output)
+            Francy.draw(msg.content.text)
           }
         }
 

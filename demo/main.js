@@ -56,8 +56,7 @@ function createTerminal() {
 }
 
 function draw(data){
-  data = data.data.replace(/[\n\r\b\s\\]+|(gap>)/g, '');
-  Francy.draw(data);
+  Francy.draw(data.data);
 }
 
 function runRealTerminal() {
