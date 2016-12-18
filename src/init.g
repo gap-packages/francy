@@ -16,6 +16,8 @@ ReadPackage( "francy", "operations.gd" );
 ReadPackage( "francy", "objects.gi" );
 ReadPackage( "francy", "operations.gi" );
 
+ReadPackage( "francy", "subgroup.g" );
+
 #############################################################################
 ##
 
