@@ -3,10 +3,10 @@
 define([
   'base/js/namespace',
   'nbextensions/francy-js/francy',
-  'nbextensions/francy-js/svg/svg',
-  'nbextensions/francy-js/svg/svg.draggy',
-  'nbextensions/francy-js/svg/svg.connectable'
-], function (Jupyter) {
+  'nbextensions/francy-js/vendor/svg',
+  'nbextensions/francy-js/vendor/svg.draggy',
+  'nbextensions/francy-js/vendor/svg.connectable'
+], function (Jupyter, Francy, SVG, SVGDraggy, SVGConnectable) {
   "use strict";
 
   return {
@@ -14,17 +14,20 @@ define([
 
       console.log('Loading Francy-JS...');
 
-      Jupyter.notebook.kernel.executeHighjacked = kernel.execute;
+      Jupyter.notebook.kernel.executeHighjacked = Jupyter.notebook.kernel.execute;
 
       Jupyter.notebook.kernel.execute = function (command, callbacks, options) {
         callbacks.iopub.outputHighjacked = callbacks.iopub.output;
+
         callbacks.iopub.output = function (msg) {
           callbacks.iopub.outputHighjacked(msg);
           if (msg.content && msg.content.text) {
-            var data = msg.content.text.replace(/[\n\r\b\s\\]+/g, '');
-            Francy.draw(data)
+            // it won't be a valid json unless all special chars are removed
+            var output = msg.content.text.replace(/[\n\r\b\s\\]+/g, '');
+            Francy.draw(output)
           }
         }
+
         this.executeHighjacked(command, callbacks, options);
       }
 
