@@ -1,5 +1,5 @@
 # Francy - Javascript module
-This Javascript module intercepts the communication between a gap instance and a we interface
+This Javascript module intercepts the communication between a gap instance and a the UI
 in order to produce Graphics when Francy GAP Package is present.
 
 ## Jupyter integration
