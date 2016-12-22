@@ -1,4 +1,5 @@
-define(['jquery', 'id-helper'], function ($, idHelper) {
+define(['jquery', 'id-helper', 'canvas'],
+  function ($, idHelper, canvas) {
   "use strict";
 
   return {
@@ -23,6 +24,8 @@ define(['jquery', 'id-helper'], function ($, idHelper) {
       if (!window) {
         throw new Error('Oops, could not create window with id ' + windowId);
       }
+      // start building the canvas
+      canvas.build(json, options);
       return window;
     }
   }

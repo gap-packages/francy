@@ -41,10 +41,6 @@
         id: windowId,
         title: canvas.name
       }).appendTo(options.appendTo);
-      $("#" + windowId).dialog({
-        appendTo: options.appendTo,
-        resizable: true
-      }).attr({id: windowId});
     }
 
     function buildCanvas(canvas) {
@@ -56,6 +52,11 @@
         buildWindow(canvas);
         window = document.getElementById(windowId);
       }
+
+      $("#" + windowId).dialog({
+        appendTo: options.appendTo,
+        resizable: true
+      }).attr({id: windowId});
 
       if (!svg) {
         if (canvas['@type'] === 'svg:svg') {

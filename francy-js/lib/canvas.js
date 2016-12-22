@@ -1,4 +1,4 @@
-define(['id-helper'], function (idHelper) {
+define(['id-helper', 'objects'], function (idHelper, objects) {
   "use strict";
 
   return {
@@ -19,6 +19,7 @@ define(['id-helper'], function (idHelper) {
       if (!holder) {
         throw new Error('Oops, could not create canvas with id ' + canvasId);
       }
+      objects.build(holder, json, options);
       return holder;
     }
   }

@@ -6,11 +6,9 @@ define(['id-helper'], function (idHelper) {
       let objectId = idHelper.getObjectId(o.id);
       var object = undefined;
       if (o.potentialAction['@type'] === 'UpdateAction') {
-        object = d3.select('#' + objectId).attr("x", o.x).attr("y", o.y)
-          .attr("width", o.width).attr("height", o.height);
+        object = d3.select('#' + objectId).style("fill", o.color).attr("x", o.x).attr("y", o.y).text(o.value);
       } else {
-        object = canvas.append("rect").attr("x", o.x).attr("y", o.y).attr("width", o.width)
-          .attr("height", o.height).attr('id', objectId);
+        object = canvas.append("text").style("fill", o.color).attr("x", o.x).attr("y", o.y).text(o.value).attr('id', objectId);
       }
       // cannot continue if object is not present
       if (!object) {
