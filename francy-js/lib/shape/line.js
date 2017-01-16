@@ -1,21 +1,21 @@
-define(['id-helper'], function (idHelper) {
+define(['helper'], function (helper) {
   "use strict";
 
   return {
     build: function build(canvas, o, options) {
-      let objectId = idHelper.getObjectId(o.id);
+      let objectId = helper.getObjectId(o.id);
       var object = undefined;
-      if (o.potentialAction['@type'] === 'UpdateAction') {
-        object = d3.select('#' + objectId).style("stroke", o.color).style("fill", "none")
-          .attr("points", o.points.join(', '));
+      if (o.options.drawn) {
+        object = d3.select('#' + objectId);
       } else {
-        object = canvas.append("polyline").style("stroke", "black").style("fill", "none")
-          .attr("points", o.points.join(', ')).attr('id', objectId);
+        object = canvas.append("polyline").attr('id', objectId);
       }
       // cannot continue if object is not present
       if (!object) {
         throw new Error('Oops, could not create object with id ' + objectId);
       }
+      // add attributes to object
+      object.style("stroke", o.options.color).style("fill", "none").attr("points", o.points.join(', '));
       return object;
     }
   }

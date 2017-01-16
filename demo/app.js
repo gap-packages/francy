@@ -1,32 +1,28 @@
 var express = require('express');
-var app = express();
-var expressWs = require('express-ws')(app);
+var eapp = express();
+var expressWs = require('express-ws')(eapp);
 var os = require('os');
 var pty = require('pty.js');
 
 var terminals = {},
   logs = {};
 
-app.use('/build', express.static(__dirname + '/node_modules/xterm/dist'));
-app.use('/francy.js', express.static(__dirname + '/../francy-js/francy.js'));
+eapp.use('/build', express.static(__dirname + '/node_modules/xterm/dist'));
+eapp.use('/francy.js', express.static(__dirname + '/../francy-js/francy.js'));
 
-app.get('/', function (req, res) {
+eapp.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/style.css', function (req, res) {
+eapp.get('/style.css', function (req, res) {
   res.sendFile(__dirname + '/style.css');
 });
 
-app.get('/main.js', function (req, res) {
+eapp.get('/main.js', function (req, res) {
   res.sendFile(__dirname + '/main.js');
 });
 
-app.get('/francy.js', function (req, res) {
-  res.sendFile(__dirname + '/../francy-js/francy.js');
-});
-
-app.post('/terminals', function (req, res) {
+eapp.post('/terminals', function (req, res) {
   var cols = parseInt(req.query.cols),
     rows = parseInt(req.query.rows),
     term = pty.spawn(process.platform === 'win32' ? 'gap.bat' : 'gap.sh', [], {
@@ -47,7 +43,7 @@ app.post('/terminals', function (req, res) {
   res.end();
 });
 
-app.post('/terminals/:pid/size', function (req, res) {
+eapp.post('/terminals/:pid/size', function (req, res) {
   var pid = parseInt(req.params.pid),
     cols = parseInt(req.query.cols),
     rows = parseInt(req.query.rows),
@@ -59,7 +55,7 @@ app.post('/terminals/:pid/size', function (req, res) {
 });
 
 var chunks = '';
-app.ws('/terminals/:pid', function (ws, req) {
+eapp.ws('/terminals/:pid', function (ws, req) {
   var term = terminals[parseInt(req.params.pid)];
 
   console.log('Connected to terminal ' + term.pid);
@@ -97,4 +93,20 @@ var port = process.env.PORT || 3000,
   host = os.platform() === 'win32' ? '127.0.0.1' : '0.0.0.0';
 
 console.log('App listening to http://' + host + ':' + port);
-app.listen(port, host);
+eapp.listen(port, host);
+
+const {app, BrowserWindow} = require('electron');
+
+let mainWindow;
+
+if (app) {
+  app.on('ready', () => {
+    mainWindow = new BrowserWindow({
+      height: 600,
+      width: 800
+    });
+
+    mainWindow.setMenu(null);
+    mainWindow.loadURL('http://localhost:3000/');
+  });
+}

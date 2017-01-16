@@ -5,19 +5,17 @@
   "main": "app.js",
   "devDependencies": {
     "devtron": "^1.3.0",
-    "electron-builder": "^7.26.0",
-    "electron-installer-dmg": "^0.1.2",
     "electron-packager": "^8.0.0",
     "electron-prebuilt": "^1.4.1",
-    "electron-rebuild": "^1.5.6",
+    "electron-installer-dmg": "^0.1.2",
+    "electron-builder": "^7.18.0",
     "standard": "^8.3.0"
   },
   "dependencies": {
     "electron": "^1.4.5",
     "express": "^4.14.0",
-    "express-ws": "^2.0.0-rc.1",
     "pty.js": "^0.3.1",
-    "xterm": "^2.2.1"
+    "socket.io": "1.7.2"
   },
   "scripts": {
     "start": "electron .",

@@ -190,9 +190,8 @@
         return Francy;
       });
     }
-    else {
-      window.Francy = Francy;
-    }
   }
+
+  window.Francy = Francy;
 
 })();

@@ -1,27 +1,35 @@
-define(['id-helper'], function (idHelper) {
+define(['helper'], function (helper) {
   "use strict";
 
   /**
    * Allows to apply drag behavior on elements inside other elements within its boundaries
    */
   return {
-    apply: function apply(parent, o) {
+    apply: function apply(o) {
+      let objectId = helper.getObjectId(o.id);
+      var object = d3.select('#' + objectId).style("cursor", "pointer").call(d3.drag().on("drag", dragged));
       var sizeW = o.r ? o.r : o.width;
       var sizeH = o.r ? o.r : o.height;
-      var drag = d3.behavior.drag().on('dragstart', function () {
-        d3.event.sourceEvent.stopPropagation();
-      }).on("drag", function () {
-        var x = d3.event.x, y = d3.event.y;
-        if (x <= parent.width - sizeW && x >= sizeW && y <= parent.height - sizeH && y >= sizeH) {
-          // TODO check if the circle can be removed and we can use transform for every shape
-          if (this.tagName == 'circle') {
-            d3.select(this).attr("cx", x).attr("cy", y);
-          } else {
-            d3.select(this).attr("transform", "translate(" + x + "," + y + ")");
-          }
-        }
-      });
-      return drag;
+      var sizePW = object.node().parentNode.clientWidth;
+      var sizePH = object.node().parentNode.clientHeight;
+
+      function dragged() {
+        //if (d3.event.x <= sizePW - sizeW && d3.event.x >= sizeW && d3.event.y <= sizePH - sizeH && d3.event.y >= sizeH) {
+          var self = d3.select(this);
+          var x = self.node().r ? self.node().cx.baseVal.value + d3.event.dx : self.node().x.baseVal.value + d3.event.dx;
+          var y = self.node().r ? self.node().cy.baseVal.value + d3.event.dy : self.node().y.baseVal.value + d3.event.dy;
+          self.attr("cx", x).attr("cy", y).attr("x", x).attr("y", y);
+          d3.select('svg').selectAll('.link').each(function (l, li) {
+            if (l.source == o.id) {
+              d3.select(this).attr("x1", x).attr("y1", y);
+            } else if (l.target == o.id) {
+              d3.select(this).attr("x2", x).attr("y2", y);
+            }
+          });
+        //}
+      }
+
+      return object;
     }
   }
 

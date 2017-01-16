@@ -1,14 +1,105 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Directed Graph Editor</title>
-  <link rel="stylesheet" href="app.css">
+  <title>Francy with D3.js</title>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script>
+    try {
+      $ = jQuery = module.exports;
+    } catch(e) {}
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.js"></script>
+  <script src="/francy.js"></script>
+  <style>
+    body {
+      margin: 10px;
+      padding: 0;
+    }
+
+    .terminal {
+      font-family: monospace;
+      color: white;
+      background: black;
+    }
+
+    svg {
+      border: 1px solid #d6d6d6;
+    }
+  </style>
+  <script>
+
+    requirejs.config({
+      "paths": {
+        "socket.io": "/socket.io/socket.io.js"
+      }
+    });
+
+  </script>
 </head>
 
 <body>
-</body>
+<div>
+<textarea id="text" rows="20" cols="90">
+canvas:=GraphicCanvas("Canvas Test 2", 200, 200);
+circle1:=Circle(canvas, 20, 20, 20, rec(color:="Blue", name:="circle1", draggable:=true));
+circle2:=Circle(canvas, 100, 100, 40, rec(color:="Green", name:="circle2", draggable:=true));
 
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="app.js"></script>
+LinkGraphicObjects([circle1],[circle2]);
+
+Draw(canvas);
+
+canvas:=GraphicCanvas("Canvas Test 1", 200, 200);
+box1:=Box(canvas, 1, 1, 20, 20, rec(color:="Blue", name:="box1", draggable:=true));
+box2:=Box(canvas, 30, 30, 30, 30, rec(color:="Green", name:="box2", draggable:=false));
+box3:=Box(canvas, 60, 60, 40, 40, rec(color:="Red", name:="box2", draggable:=false));
+
+GroupGraphicObjects([box2, box3]);
+
+Draw(canvas);
+</textarea>
+<button id="submit" onclick="socket.emit('input', $('#text').val());" style="vertical-align: top">Run</button>
+</div>
+<div id="messages" style="background-color: #e2e2e2; display:block; width: 740px; height: 300px; overflow-y: auto; font-family: monospace; border: solid 1px rgb(169, 169, 169);">
+
+</div>
+<script>
+  var socket;
+  require(["socket.io"], function (io) {
+    // Connect to the socket.io server
+    socket = io.connect('http://0.0.0.0:3000');
+
+    // Wait for data from the server
+    socket.on('data', function (data) {
+      Francy.draw(data);
+      $('<span>', {style: 'display:block;'}).text('> Gap Output:').appendTo($('#messages'));
+      $('<pre>').text(data).appendTo($('#messages'));
+      scrollDown();
+    });
+
+    socket.on("connect", function () {
+      $('<span>', {style: 'display:block;'}).text('> Socket connected to GAP...').appendTo($('#messages'));
+    });
+
+    socket.on("disconnect", function () {
+      $('<span>', {style: 'display:block;'}).text('> Socket disconnected from GAP...').appendTo($('#messages'));
+      scrollDown();
+    });
+
+    // Listen for user input and pass it to the server
+    /*$("#text").on("keypress", function (e) {
+      if (e.keyCode == 13) {
+        socket.emit("input", $("#text").val());
+      }
+    });*/
+
+    function scrollDown() {
+      var objDiv = document.getElementById("messages");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
+  });
+</script>
+</body>
 </html>

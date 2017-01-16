@@ -1,19 +1,21 @@
-define(['id-helper'], function (idHelper) {
+define(['helper'], function (helper) {
   "use strict";
 
   return {
     build: function build(canvas, o, options) {
-      let objectId = idHelper.getObjectId(o.id);
+      let objectId = helper.getObjectId(o.id);
       var object = undefined;
-      if (o.potentialAction['@type'] === 'UpdateAction') {
-        object = d3.select('#' + objectId).attr('cx', o.cx).attr('cy', o.cy).attr('r', o.r);
+      if (o.options.drawn) {
+        object = d3.select('#' + objectId);
       } else {
-        object = canvas.append('circle').attr('cx', o.cx).attr('cy', o.cy).attr('r', o.r).attr('id', objectId);
+        object = canvas.append('circle').attr('id', objectId);
       }
       // cannot continue if object is not present
       if (!object) {
         throw new Error('Oops, could not create object with id ' + objectId);
       }
+      // add attributes to object
+      object.attr('cx', o.x).attr('cy', o.y).attr('r', o.r).style("fill", o.options.color);
       return object;
     }
   }

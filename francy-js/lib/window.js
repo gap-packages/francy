@@ -1,17 +1,19 @@
-define(['jquery', 'id-helper', 'canvas'],
-  function ($, idHelper, canvas) {
+define(['helper'],
+  function (helper) {
   "use strict";
 
   return {
     build: function build(json, options) {
       let canvas = json.object;
-      let windowId = idHelper.getWindowId(canvas.id);
+      let windowId = helper.getWindowId(canvas.id);
       let window = document.getElementById(windowId);
       // check if the window is already present
       if (!window) {
         $('<div>', {
           id: windowId,
-          title: canvas.name
+          title: canvas.options.name,
+          width: canvas.width,
+          height: canvas.height
         }).appendTo(options.appendTo);
         // update element
         window = document.getElementById(windowId);
@@ -24,8 +26,6 @@ define(['jquery', 'id-helper', 'canvas'],
       if (!window) {
         throw new Error('Oops, could not create window with id ' + windowId);
       }
-      // start building the canvas
-      canvas.build(json, options);
       return window;
     }
   }

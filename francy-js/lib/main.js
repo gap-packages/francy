@@ -2,11 +2,9 @@
 
 define([
   'base/js/namespace',
-  'nbextensions/francy-js/francy',
-  'nbextensions/francy-js/vendor/svg',
-  'nbextensions/francy-js/vendor/svg.draggy',
-  'nbextensions/francy-js/vendor/svg.connectable'
-], function (Jupyter, Francy, SVG, SVGDraggy, SVGConnectable) {
+  'nbextensions/francy-js/lib/francy',
+  'nbextensions/francy-js/vendor/d3'
+], function (Jupyter, Francy, D3) {
   "use strict";
 
   return {

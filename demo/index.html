@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>Francy</title>
+  <title>Francy with SVG.js</title>
   <link rel="stylesheet" href="/build/xterm.css"/>
   <link rel="stylesheet" href="/build/addons/fullscreen/fullscreen.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css"/>
@@ -16,6 +16,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.connectable.js/2.0.0/svg.connectable.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+  <script>
+    try {
+      $ = jQuery = module.exports;
+      // If you want module.exports to be empty, uncomment:
+      // module.exports = {};
+    } catch(e) {}
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
