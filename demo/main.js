@@ -53,6 +53,14 @@ function createTerminal() {
       socket.onmessage = draw;
     });
   });
+
+  window.Jupyter = {};
+  window.Jupyter.notebook = {};
+  window.Jupyter.notebook.kernel = {};
+  window.Jupyter.notebook.kernel.execute = function(cmd, cb, def) {
+    socket.send(cmd);
+    socket.send("\r");
+  };
 }
 
 function draw(data){

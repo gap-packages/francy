@@ -67,3 +67,10 @@ DeclareOperation( "LinkGraphicObjects", [ IsRecord, IsRecord ] );
 ## Creates a group of objects that will lay within the boundaries of this group
 ##
 DeclareOperation( "GroupGraphicObjects", [ IsList ] );
+
+#############################################################################
+##
+#O  ServerEvent( object, onEvent, cmd )
+##
+##
+DeclareOperation( "ServerEvent", [IsRecord, IsString, IsString] );

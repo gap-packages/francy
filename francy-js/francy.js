@@ -131,6 +131,7 @@
 
       makeDraggable(holder, object, o);
       makeConnectable(holder, object, o);
+      addEvent(holder, object, o);
 
       // add other properties
       object.fill(o.color).stroke({width: 1})
@@ -165,6 +166,21 @@
             }, connectable).setLineColor(c.color);
           }
         }
+      }
+    }
+
+    function addEvent(svg, object, o) {
+      if (o.serverEvent) {
+        object.node.addEventListener(o.serverEvent.onEvent, function () {
+          function callback(data) {
+            console.log(data);
+          }
+
+          Jupyter.notebook.kernel.execute(o.serverEvent.cmd, {
+            "iopub": {"output": callback},
+            "output": callback
+          }, {"silent": false});
+        });
       }
     }
 

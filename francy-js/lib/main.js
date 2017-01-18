@@ -3,6 +3,15 @@
 define([
   'base/js/namespace',
   'nbextensions/francy-js/lib/francy',
+  'nbextensions/francy-js/lib/window',
+  'nbextensions/francy-js/lib/objects',
+  'nbextensions/francy-js/lib/helper',
+  'nbextensions/francy-js/lib/canvas',
+  'nbextensions/francy-js/lib/structure/group',
+  'nbextensions/francy-js/lib/shape/circle',
+  'nbextensions/francy-js/lib/shape/rect',
+  'nbextensions/francy-js/lib/behavior/connect',
+  'nbextensions/francy-js/lib/behavior/drag',
   'nbextensions/francy-js/vendor/d3'
 ], function (Jupyter, Francy, D3) {
   "use strict";
