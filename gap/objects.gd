@@ -38,27 +38,17 @@ DeclareOperation( "GraphicObject", [ IsObject, IsRecord, IsRecord ] );
 ##
 DeclareOperation( "Box", [ IsRecord, IsInt, IsInt, IsInt, IsInt, IsRecord ] );
 
+
 #############################################################################
 ##
-#O  Circle( <canvas>, <x>, <y>, <r> )
-#O  Circle( <canvas>, <x>, <y>, <r>, <defaults> )
+#O  Circle( <sheet>, <x>, <y>, <r> )
+#O  Circle( <sheet>, <x>, <y>, <r>, <defaults> )
 ##
-##  creates a new graphic object, namely a black circle, in the graphic canvas
+##  creates a new graphic object, namely a black circle, in the graphic sheet
 ##  <sheet> and returns a {\GAP} record describing this object. The center
 ##  of the circle is $(<x>,<y>)$ and the radius is $<r>$.
 ##
 DeclareOperation( "Circle", [ IsRecord, IsInt, IsInt, IsInt, IsRecord ] );
-
-#############################################################################
-##
-#O  Line( <canvas>, <points>, <width>, <defaults> )
-#O  Line( <canvas>, <points>, <width> )
-##
-##  creates a new graphic object, namely a black line, in the graphic canvas
-##  <canvas> and returns a {\GAP} record describing this object. The center
-##  of the circle is $(<x>,<y>)$ and the radius is $<r>$.
-##
-DeclareOperation( "Line", [ IsRecord, IsList, IsInt, IsRecord ] );
 
 #############################################################################
 ##
@@ -68,7 +58,7 @@ DeclareOperation( "Line", [ IsRecord, IsList, IsInt, IsRecord ] );
 ## Creates a link between the objects. This allows to produce graphics that
 ## represent connected objects.
 ##
-DeclareOperation( "LinkGraphicObjects", [ IsList, IsList ] );
+DeclareOperation( "LinkGraphicObjects", [ IsRecord, IsRecord ] );
 
 #############################################################################
 ##
@@ -77,19 +67,3 @@ DeclareOperation( "LinkGraphicObjects", [ IsList, IsList ] );
 ## Creates a group of objects that will lay within the boundaries of this group
 ##
 DeclareOperation( "GroupGraphicObjects", [ IsList ] );
-
-#############################################################################
-##
-#O  AddToCanvas( <canvas>, <obj> )
-##
-## This operation adds a reference to the object in the canvas and vice-versa
-##
-DeclareOperation( "AddToCanvas", [ IsRecord, IsRecord ] );
-
-#############################################################################
-##
-#O  RemoveFromCanvas( <canvas>, <obj> )
-##
-## This operation removes a reference to the object in the canvas and vice-versa
-##
-DeclareOperation( "RemoveFromCanvas", [ IsRecord, IsRecord ] );

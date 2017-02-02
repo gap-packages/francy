@@ -1,45 +1,20 @@
 #############################################################################
 ##
-#W  init.g                      FRANCY library                   Frank Celler
+#W  init.g                      FRANCY library                 Manuel Martins
 ##
-#Y  Copyright (C) 1993,  Lehrstuhl D fuer Mathematik,  RWTH, Aachen,  Germany
+#Y  Copyright (C) 2016 Manuel Martins
 ##
 
 last := 0;    # to make GAP happy when this package is autoloaded
 
-#############################################################################
-##
-#X  declaration part
-##
-ReadPackage( "francy", "lib/color.gd"   );
-ReadPackage( "francy", "lib/font.gd"    );
-ReadPackage( "francy", "lib/sheet.gd"   );
-ReadPackage( "francy", "lib/gobject.gd" );
-ReadPackage( "francy", "lib/menu.gd"    );
-ReadPackage( "francy", "lib/poset.gd"   );
-ReadPackage( "francy", "lib/ilatgrp.gd" );
-ReadPackage( "francy", "lib/meataxe.gd" );
+ReadPackage( "francy", "gap/ids.g" );
 
-#############################################################################
-##
-#X  interface to `WindowCmd' override
-##
-ReadPackage( "francy", "lib/json.g" );
-ReadPackage( "francy", "lib/windowcmd.g" );
-ReadPackage( "francy", "lib/window.g"   );
+ReadPackage( "francy", "gap/francy.gd" );
+ReadPackage( "francy", "gap/objects.gd" );
+ReadPackage( "francy", "gap/operations.gd" );
 
-#############################################################################
-##
-#X  implementation part
-##
-ReadPackage( "francy", "lib/color.gi"   );
-ReadPackage( "francy", "lib/font.gi"    );
-ReadPackage( "francy", "lib/sheet.gi"   );
-ReadPackage( "francy", "lib/gobject.gi" );
-ReadPackage( "francy", "lib/menu.gi"    );
-ReadPackage( "francy", "lib/poset.gi"   );
-ReadPackage( "francy", "lib/ilatgrp.gi" );
-ReadPackage( "francy", "lib/meataxe.gi" );
+ReadPackage( "francy", "gap/objects.gi" );
+ReadPackage( "francy", "gap/operations.gi" );
 
 #############################################################################
 ##

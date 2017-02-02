@@ -144,20 +144,6 @@ function( canvas, x, y, w, h, def )
 
 end );
 
-InstallOtherMethod( Box,
-    "using default from sheet",
-    true,
-    [ IsRecord,
-      IsInt,
-      IsInt,
-      IsInt,
-      IsInt ],
-    0,
-
-function( canvas, x, y, w, h )
-    return Box( canvas, x, y, w, h, rec(color:="black", draggable:=true, name:="") );
-end );
-
 
 InstallMethod( Circle,
     "one canvas object, four integers for position and size, and one record of defaults",
@@ -187,19 +173,6 @@ function( canvas, x, y, r, def )
 
     return circle;
 
-end );
-
-InstallOtherMethod( Circle,
-    "using default from sheet",
-    true,
-    [ IsRecord,
-      IsInt,
-      IsInt,
-      IsInt ],
-    0,
-
-function( canvas, x, y, r )
-    return Circle( canvas, x, y, r, rec(color:="black", draggable:=true, name:="") );
 end );
 
 
@@ -263,29 +236,5 @@ function( objArray )
     od;
 
     return groupId;
-
-end );
-
-#############################################################################
-##
-#O  ServerEvent( object, onEvent, cmd )
-##
-InstallMethod( ServerEvent,
-    "Execute code back in gap",
-    true,
-    [ IsRecord, IsString, IsString ],
-    0,
-
-function( obj, event, cmd )
-
-    if not IsGraphicObject(obj!.type) then
-        Error("Object is not of type IsGraphicObject");
-    fi;
-
-    obj!.serverEvent := rec();
-    obj!.serverEvent!.onEvent := event;
-    obj!.serverEvent!.cmd := cmd;
-
-    return obj;
 
 end );

@@ -46,7 +46,7 @@ rec( @type := "svg:circle", color := "Green", cx := 0, cy := 0, draggable := tru
   id := 3, name := "circle2", potentialAction := rec( @type := "schema:AddAction" ), r := 40, 
   type := <object>, x := 100, y := 100 )
 gap> 
-gap> LinkGraphicObjects(circle1, circle2);
+gap> Link(circle1, circle2);
 gap> 
 gap> Draw(canvas);
 {"@type" : {"@type" : "schema:DrawAction"},"object" : {"width" : 200,"name" : "Canvas Test 1","height"\

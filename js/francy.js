@@ -61,12 +61,13 @@
       if (!svg) {
         if (canvas['@type'] === 'svg:svg') {
           // create new window pop up add div and assign windowId
-          svg = new SVG(window).size(canvas.width, canvas.height).id(canvas.id);
+          svg = new SVG(window).id(canvas.id);
         }
         if (!svg) {
           throw new Error('Something went wrong creating the window with id ' + windowId + '.');
         }
       }
+      svg.size(canvas.width, canvas.height);
       return svg;
     }
 
@@ -96,7 +97,7 @@
       let object = undefined;
       let element = document.getElementById(objectId);
       if (element) {
-        if (element.tagName !== 'g') {
+        if (element.tagName !== 'g' && element.tagName !== 'text') {
           object = SVG.adopt(element.parentElement);
         } else {
           object = SVG.adopt(element);
@@ -107,6 +108,7 @@
       if (type === 'svg:rect') {
         if (!object) {
           object = holder.rect(o.width, o.height).id(objectId);
+          object.x(o.x).y(o.y);
         } else {
           object.width(o.width).height(o.height);
         }
@@ -114,14 +116,21 @@
         if (!object) {
           object = holder.group();
           object.circle(o.r).id(objectId);
+          object.x(o.x).y(o.y);
         } else {
           SVG.adopt(object.node.firstChild).radius(new SVG.Number(o.r).divide(2));
         }
       } else if (type === 'svg:line') {
         if (!object) {
           object = holder.line(o.x1, o.y1, o.x2, o.y2).id(objectId);
+          object.x(o.x).y(o.y);
         } else {
           object.x1(o.x1).y1(o.y1).x2(o.x2).y2(o.y2);
+        }
+      } else if (type === 'svg:text') {
+        if (!object) {
+          object = holder.text(o.text).x(o.x).y(o.y).id(objectId);
+          object.x(o.x).y(o.y);
         }
       }
       // TODO implement support to other objects
@@ -134,14 +143,12 @@
       addEvent(holder, object, o);
 
       // add other properties
-      object.fill(o.color).stroke({width: 1})
-      object.x(o.x).y(o.y);
+      object.fill(o.color).stroke({width: o.highlight ? 2 : 1})
 
       return object;
     }
 
     function makeDraggable(svg, object, o) {
-      let type = o['@type'];
       if (o.draggable) {
         object.style('cursor', 'pointer').draggy(function (x, y) {
           return {
@@ -171,9 +178,10 @@
 
     function addEvent(svg, object, o) {
       if (o.serverEvent) {
+        object.attr({ 'cursor': 'pointer' });
         object.node.addEventListener(o.serverEvent.onEvent, function () {
           function callback(data) {
-            console.log(data);
+            //console.log(data);
           }
 
           Jupyter.notebook.kernel.execute(o.serverEvent.cmd, {
