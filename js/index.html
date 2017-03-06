@@ -1,0 +1,91 @@
+<html>
+<header>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="dist/francy.bundle.js"></script>
+  <script>
+    let francy = new Francy();
+    let object = francy.draw({
+      "agent": "francy",
+      "action": "draw",
+      "type": "shape",
+      "object": {
+        "type": "circle",
+        "id": 1,
+        "properties": {
+          "name": "circle1",
+          "color": "Blue"
+        },
+        "canvas": {
+          "id": 1,
+          "properties": {
+            "name": "Canvas Test 1",
+            "color": "None"
+          },
+          "width": 300,
+          "height": 300,
+          "x": 0,
+          "y": 0,
+          "r": 0,
+          "cx": 0,
+          "cy": 0
+        },
+        "x": 50,
+        "y": 50,
+        "r": 20,
+        "cx": 0,
+        "cy": 0
+      }
+    });
+    object.tracker.subscribe((object) => console.log('Received notification to update ',object.object));
+
+    object = francy.draw({
+      "agent": "francy",
+      "action": "draw",
+      "type": "shape",
+      "object": {
+        "type": "circle",
+        "id": 3,
+        "properties": {
+          "name": "circle1",
+          "color": "Green"
+        },
+        "canvas": {
+          "id": 1,
+          "properties": {
+            "name": "Canvas Test 1",
+            "color": "None"
+          },
+          "width": 600,
+          "height": 800,
+          "x": 0,
+          "y": 0,
+          "r": 0,
+          "cx": 0,
+          "cy": 0
+        },
+        "x": 100,
+        "y": 100,
+        "r": 20,
+        "cx": 0,
+        "cy": 0
+      }
+    });
+    object.tracker.subscribe((object) => console.log('Received notification to update ',object.object));
+
+  </script>
+  <style>
+    .ui-dialog .ui-dialog-content {
+      padding: 0;
+    }
+    .ui-dialog {
+      padding: 1px;
+    }
+  </style>
+</header>
+<body>
+
+</body>
+</html>

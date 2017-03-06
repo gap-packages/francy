@@ -1,0 +1,42 @@
+-Top level Type can be: shape, behavior, structure, etc
+-Top level action can be: draw, apply, remove
+-Object level Type can be (depending on actual Top level Type): circle, rect, drag, etc
+
+
+{
+  "agent": "francy",
+  "action": "draw",
+  "type": "shape",
+  "object": {
+    "type": "circle",
+    "id": 1,
+    "attributes": {
+      "name": "circle1",
+      "color": "Blue"
+    },
+    "canvas": {
+      "type": "canvas",
+      "id": 1,
+      "attributes": {
+        "name": "Canvas Test 1",
+        "color": "None"
+      },
+      "properties": {
+        "width": 200,
+        "height": 200,
+        "x": 0,
+        "y": 0,
+        "r": 0,
+        "cx": 0,
+        "cy": 0
+      }
+    },
+    "properties": {
+      "x": 1,
+      "y": 1,
+      "r": 20,
+      "cx": 0,
+      "cy": 0
+    }
+  }
+}
