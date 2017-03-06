@@ -65,3 +65,10 @@ DeclareRepresentation( "IsBoxObjectRep", IsGraphicObjectRep,
 #R  IsCircleObjectRep . . . . . . . . . . . . . . . .  default representation
 DeclareRepresentation( "IsCircleObjectRep",
     IsGraphicObjectRep, [ "id", "x", "y", "r", "width" ], IsGraphicObject );
+
+#############################################################################
+##
+#R  IsTextObjectRep . . . . . . . . . . . . . . . . .  default representation
+##
+DeclareRepresentation( "IsTextObjectRep",
+    IsGraphicObjectRep, [ "id", "x", "y", "text" ], IsGraphicObject );

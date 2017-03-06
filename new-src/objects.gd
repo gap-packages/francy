@@ -68,7 +68,7 @@ DeclareOperation( "Line", [ IsRecord, IsList, IsInt, IsRecord ] );
 ## Creates a link between the objects. This allows to produce graphics that
 ## represent connected objects.
 ##
-DeclareOperation( "LinkGraphicObjects", [ IsList, IsList ] );
+DeclareOperation( "Link", [ IsList, IsList ] );
 
 #############################################################################
 ##
@@ -93,3 +93,10 @@ DeclareOperation( "AddToCanvas", [ IsRecord, IsRecord ] );
 ## This operation removes a reference to the object in the canvas and vice-versa
 ##
 DeclareOperation( "RemoveFromCanvas", [ IsRecord, IsRecord ] );
+
+#############################################################################
+##
+#O  ServerEvent( object, onEvent, cmd )
+##
+##
+DeclareOperation( "ServerEvent", [IsRecord, IsString, IsString] );

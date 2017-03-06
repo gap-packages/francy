@@ -52,13 +52,48 @@ DeclareOperation( "Circle", [ IsRecord, IsInt, IsInt, IsInt, IsRecord ] );
 
 #############################################################################
 ##
+#O  Text( <canvas>, <font>, <x>, <y>, <str> )  . . . . write a text in a sheet
+#O  Text( <canvas>, <font>, <x>, <y>, <str>, <defaults> )
+##
+##  creates a new graphic object, namely the string <str> as a black text,
+##  in the graphic sheet <sheet> and returns a {\GAP} record describing
+##  this object.  The text has the baseline of the first character at
+##  $(x,y)$.
+##
+##  If a record <defaults> is given and contains a component `color' of value
+##  <color>, the  function works like the first version  of  `Text', except
+##  that the color of the text will be <color>.  See "Color Models" for how
+##  to select a <color>.
+##
+##  See "operations for graphic objects" for a list of operations
+##  that apply to texts.
+##
+##  Note that `Reshape' for texts takes two parameters, namely the
+##  text object, and the new font. Use `Relabel' to change the string of the
+##  text.
+##
+DeclareOperation( "Text", [ IsRecord, IsInt, IsInt, IsString, IsRecord ] );
+
+#############################################################################
+##
+#O  Highlight( <vertex> ) . . . . . . .  switch highlighting status of vertex
+#O  Highlight( <vertex>, <flag> ) . . .  switch highlighting status of vertex
+##
+##  In the first form this operation switches the highlighting status of a
+##  vertex to ON. In the second form the <flag> decides about ON or OFF.
+##  Highlighting normally means a thicker line width and a change in color.
+##
+DeclareOperation( "Highlight", [ IsRecord, IsBool ] );
+
+#############################################################################
+##
 #O  Link( <object>, <object>, <defaults> )
 #O  Link( [<object>], [<object>], <defaults> )
 ##
 ## Creates a link between the objects. This allows to produce graphics that
 ## represent connected objects.
 ##
-DeclareOperation( "LinkGraphicObjects", [ IsRecord, IsRecord ] );
+DeclareOperation( "Link", [ IsRecord, IsRecord ] );
 
 #############################################################################
 ##

@@ -202,12 +202,93 @@ function( canvas, x, y, r )
     return Circle( canvas, x, y, r, rec(color:="black", draggable:=true, name:="") );
 end );
 
+#############################################################################
+##
+#M  Text( <canvas>, <x>, <y>, <str> ) . . . . . draw a text in a canvas
+#M  Text( <canvas>, <x>, <y>, <str>, <defaults>) . . . . . . . .  dito
+##
+InstallMethod( Text,
+    "for canvas, two integers, string, and record of defaults",
+    true,
+    [ IsRecord,
+      IsInt,
+      IsInt,
+      IsString,
+      IsRecord ],
+    0,
+
+function( canvas, x, y, str, def )
+    local text;
+
+    if not IsGraphicCanvas(canvas!.type) then
+        Error("Canvas is not of type GraphicCanvas");
+    fi;
+
+    # create a text object in <canvas>
+    text := GraphicObject( IsTextObjectRep, canvas, def );
+    text!.@type    := "svg:text";
+    text!.id       := GenerateId();
+    text!.x        := x;
+    text!.y        := y;
+    text!.text     := ShallowCopy(str);
+
+    # and return
+    return text;
+
+end );
+
+
+InstallOtherMethod( Text,
+    "using default from canvas",
+    true,
+    [ IsRecord,
+      IsInt,
+      IsInt,
+      IsString ],
+    0,
+
+function( canvas, x, y, str )
+    return Text( canvas, x, y, str, rec(color:="black", draggable:=true, name:="") );
+end );
+
+
+#############################################################################
+##
+#M  Highlight( <ver>, <flag> )  . . . . . . . . . . . . . .  highlight vertex
+##
+InstallMethod( Highlight,
+    "for a circle, and a boolean",
+    true,
+    [ IsRecord, IsBool ],
+    0,
+
+function( circle, flag )
+
+    circle!.highlight := flag;
+
+end );
+
+
+#############################################################################
+##
+#M  Highlight( <ver> )  . . . . . . . . . . . . . . . . . .  highlight vertex
+##
+InstallOtherMethod( Highlight,
+    "for a circle",
+    true,
+    [ IsRecord ],
+    0,
+
+function( circle )
+    Highlight( circle, true);
+end );
+
 
 #############################################################################
 ##
 #M  Link( <obj1>, <obj2> )
 ##
-InstallMethod( LinkGraphicObjects,
+InstallMethod( Link,
     "link objects",
     true,
     [ IsRecord,

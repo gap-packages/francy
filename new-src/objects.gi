@@ -226,7 +226,7 @@ end );
 ##
 #M  Link( [<obj1>], [<obj2>] )
 ##
-InstallMethod( LinkGraphicObjects,
+InstallMethod( Link,
     "link objects",
     true,
     [ IsList,
@@ -330,5 +330,29 @@ function( canvas, gObj )
 	Remove( canvas!.objects, Position( canvas!.object, [ gObj ] ) );
 
     return canvas;
+
+end );
+
+#############################################################################
+##
+#O  ServerEvent( object, onEvent, cmd )
+##
+InstallMethod( ServerEvent,
+    "Execute code back in gap",
+    true,
+    [ IsRecord, IsString, IsString ],
+    0,
+
+function( obj, event, cmd )
+
+    if not IsGraphicObject(obj!.type) then
+        Error("Object is not of type IsGraphicObject");
+    fi;
+
+    obj!.serverEvent := rec();
+    obj!.serverEvent!.onEvent := event;
+    obj!.serverEvent!.cmd := cmd;
+
+    return obj;
 
 end );

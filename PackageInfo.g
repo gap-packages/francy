@@ -5,10 +5,10 @@
 
 SetPackageInfo( rec(
 
-PackageName := "FRANCY",
-Subtitle := "A Framework for Interactive Discrete Mathematics",
-Version := "0.1",
-Date := "20/11/2016",
+PackageName := "Francy",
+Subtitle    := "Framework for Interactive Discrete Mathematics",
+Version     := "0.0.2",
+Date        := "10/01/2017",
 
 Persons := [
   rec( 
@@ -31,7 +31,7 @@ Persons := [
 ##    "dev"           for development versions of packages
 ##    "other"         for all other packages
 ##
-Status := "dev",
+Status         := "dev",
 CommunicatedBy := "TBD",
 
 SourceRepository := rec(
@@ -48,27 +48,29 @@ ArchiveURL      := Concatenation( ~.SourceRepository.URL,
 ArchiveFormats := ".tar.gz",
 
 AbstractHTML := 
-  "The <span class=\"pkgname\">FRANCY</span> package allows to use graphics in GAP.",
+  "The <span class=\"pkgname\">Francy</span> package allows to use graphics in GAP.",
 
 PackageDoc := rec(
-  BookName  := "FRANCY",
-  ArchiveURLSubset := ["htm","doc"],
-  HTMLStart := "htm/chapters.htm",
-  PDFFile   := "doc/manual.pdf",
-  SixFile   := "doc/manual.six",
-  LongTitle := "FRANCY - A Framework for Interactive Discrete Mathematics",
-  Autoload  := true
+  BookName         := "Francy",
+  ArchiveURLSubset := [ "htm","doc" ],
+  HTMLStart        := "htm/chapters.htm",
+  PDFFile          := "doc/manual.pdf",
+  SixFile          := "doc/manual.six",
+  LongTitle        := "FRANCY - A Framework for Interactive Discrete Mathematics"
 ),
 
 Dependencies := rec(
   GAP := ">=4.7",
-  NeededOtherPackages := [],
+  NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ]
+                         , [ "json", ">= 1.0.1" ] ],
   SuggestedOtherPackages := [],
   ExternalConditions := []
 ),
 
 AvailabilityTest := function() return true; end,
 
-Keywords := ["Interactive", "Graphics"]
+TestFile := "tst/testall.g",
+
+Keywords := [ "Interactive", "Graphics" ]
 
 ));

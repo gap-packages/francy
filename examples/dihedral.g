@@ -15,9 +15,9 @@ printObject := function(obj)
         od;
 end;
 
-d8 := DihedralGroup(8);
+d8 := ;
 SetName(d8,"d8");
-s := GraphicSubgroupLattice(d8);
+s := GraphicSubgroupLattice(DihedralGroup(8));
 
 for i in s!.objects do
     for j in NamesOfComponents(i) do

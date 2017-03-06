@@ -52,9 +52,9 @@
       circle1:=Circle(canvas, 1, 1, 20, rec(color:="Blue", name:="circle1", draggable:=true));<br/>
       circle2:=Circle(canvas, 100, 100, 40, rec(color:="Green", name:="circle2", draggable:=true));
       <p/>
-      LinkGraphicObjects(circle1, circle2);
+      Link(circle1, circle2);
       <p/>
-      ServerEvent(circle1, "click", "circle3:=Circle(canvas, 50, 150, 30 ); LinkGraphicObjects(circle1, circle3); Draw(canvas);");
+      ServerEvent(circle1, "click", "circle3:=Circle(canvas, 50, 150, 30 ); Link(circle1, circle3); Draw(canvas);");
       <p/>
       Draw(canvas);
     </div>

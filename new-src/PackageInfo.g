@@ -56,18 +56,20 @@ PackageDoc := rec(
   HTMLStart        := "htm/chapters.htm",
   PDFFile          := "doc/manual.pdf",
   SixFile          := "doc/manual.six",
-  LongTitle        := "FRANCY - A Framework for Interactive Discrete Mathematics",
-  Autoload         := true
+  LongTitle        := "FRANCY - A Framework for Interactive Discrete Mathematics"
 ),
 
 Dependencies := rec(
   GAP := ">=4.7",
-  NeededOtherPackages := [ [ "json", ">= 1.0.1" ] ],
+  NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ]
+                         , [ "json", ">= 1.0.1" ] ],
   SuggestedOtherPackages := [],
   ExternalConditions := []
 ),
 
 AvailabilityTest := function() return true; end,
+
+TestFile := "tst/testall.g",
 
 Keywords := [ "Interactive", "Graphics" ]
 

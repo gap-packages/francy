@@ -15,6 +15,6 @@ canvas:=GraphicCanvas("Canvas Test 2", 200, 200);
 circle1:=Circle(canvas, 1, 1, 20, rec(color:="Blue", name:="circle1", draggable:=true));
 circle2:=Circle(canvas, 100, 100, 40, rec(color:="Green", name:="circle2", draggable:=true));
 
-LinkGraphicObjects(circle1, circle2);
+Link(circle1, circle2);
 
 Draw(canvas);
