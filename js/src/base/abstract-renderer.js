@@ -10,8 +10,9 @@ export default class AbstractRenderer {
    * This class is abstract an hence cannot be instantiated without being extended and the subclass must implement a {render} method.
    * @param {object} object - the object object.
    * @param verbose
+   * @param tag
    */
-  constructor(object, {verbose = false} = {}) {
+  constructor(object, {verbose = false, tag} = {}) {
     if (new.target === AbstractRenderer) {
       throw new TypeError("Cannot construct Abstract instances directly!");
     }
@@ -19,11 +20,17 @@ export default class AbstractRenderer {
       // or maybe test typeof this.method === "function"
       throw new TypeError("Must override render method!");
     }
+    this.tag = tag;
     this._tracker = new ModelTracker(object, {verbose: verbose});
     // initialise the canvas
-    this._canvas();
+    this.render_canvas();
     this.objectId = IDUtils.getObjectId(this.tracker.object.id);
-    this.object = d3.select(`#${this.objectId}`);
+    this.selector = `${this.tag}#${this.objectId}`;
+    this.object = this.canvas.selectAll(this.selector)
+      .data([this.tracker.object]).enter()
+      .append(this.tag)
+      .attr('stroke', 'black')
+      .attr('stroke-width', '2');
     // render the object
     this.render();
   }
@@ -31,14 +38,14 @@ export default class AbstractRenderer {
   /**
    * This method handles the canvas creation if needed.
    */
-  _canvas() {
+  render_canvas() {
     this.windowId = IDUtils.getWindowId(this.tracker.object.canvas.id);
     this.window = d3.select(`#${this.windowId}`);
     // check if the window is already present
     if (!this.window.node()) {
       $('<div>', {
         id: this.windowId,
-        title: this.tracker.object.canvas.properties.name,
+        title: this.tracker.object.canvas.attributes.name,
         width: this.tracker.object.canvas.width,
         height: this.tracker.object.canvas.height
       }).appendTo('body');
@@ -64,7 +71,9 @@ export default class AbstractRenderer {
       throw new Error(`Oops, could not create canvas with id ${this.canvasId}... Cannot proceed.`);
     }
     // update if needed
-    this.canvas.attr('width', this.tracker.object.canvas.width).attr('height', this.tracker.object.canvas.height)
+    this.canvas
+      .attr('width', this.tracker.object.canvas.properties.width)
+      .attr('height', this.tracker.object.canvas.properties.height)
   }
 
   /**

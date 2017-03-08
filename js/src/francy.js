@@ -1,25 +1,43 @@
 import JsonUtils from './util/json-utils.js';
-import AbstractShapeFactory from './shape/factory';
+import AbstractShapeFactory from './shape/abstract-factory';
+import AbstractBehaviorFactory from './behavior/abstract-factory';
 
 /**
- * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.draw} function,
+ * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.handle} function,
  * Francy will handle the creation of that json as long it is a valid and understandable json object to Francy.
  */
 export class Francy {
 
   constructor({verbose = false} = {}) {
     this.verbose = verbose;
+    d3.forceSimulation()
+      .force("charge", d3.forceManyBody())
+      .force("center", d3.forceCenter());
   }
 
   /**
-   * Main entry point. Calling draw passing a json representation string will trigger the drawing of a json object.
+   * Main entry point. Calling handle passing a json representation string will trigger the drawing of a json object.
    * @param input - a json string/object to get drawn
    */
-  draw(input) {
-    input = JsonUtils.parse(input);
-    if (input) {
-      console.debug('Francy will draw the following object: ', input);
-      return AbstractShapeFactory.build(input, {verbose: this.verbose});
+  handle(input) {
+    let json = JsonUtils.parse(input);
+    if (json) {
+      console.debug('Francy will handle the following object: ', json);
+      switch (json.type) {
+        case 'shape':
+          return AbstractShapeFactory.build(json, {verbose: this.verbose});
+          break;
+        case 'behavior':
+          return AbstractBehaviorFactory.build(json, {verbose: this.verbose});
+          break;
+        case 'structure':
+          throw new Error('No implemented!');
+          break;
+        default:
+          throw new Error('No implemented!');
+          break;
+      }
+
     }
   }
 }

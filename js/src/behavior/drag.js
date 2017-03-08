@@ -1,9 +1,14 @@
+import AbstractBehavior from './../base/abstract-behavior';
 import IDUtils from './../util/id-utils';
 
-export default class Drag {
+export default class Drag extends AbstractBehavior {
 
-  static apply(model) {
-    let objectId = IDUtils.getObjectId(model.id);
+  constructor(json, {verbose = false} = {}) {
+    super(json, {verbose: verbose});
+  }
+
+  static apply(object) {
+    let objectId = IDUtils.getObjectId(object.object.id);
 
     function onDrag() {
       let self = d3.select(this);
@@ -15,10 +20,14 @@ export default class Drag {
       d3.select(this).data()[0].y = y;
       // update connections between component if any
       d3.select('svg').selectAll('.link').each(function (l, li) {
-        if (l.source == o.id) {
+        if (l.source == object.object.id) {
           d3.select(this).attr('x1', x).attr('y1', y);
-        } else if (l.target == o.id) {
-          d3.select(this).attr('x2', x).attr('yg2', y);
+          d3.select(this).data()[0].x = x;
+          d3.select(this).data()[0].y = y;
+        } else if (l.target == object.object.id) {
+          d3.select(this).attr('x2', x).attr('y2', y);
+          d3.select(this).data()[0].x = x;
+          d3.select(this).data()[0].y = y;
         }
       });
     }
@@ -26,8 +35,8 @@ export default class Drag {
     return d3.selectAll(`#${objectId}`).style('cursor', 'pointer').call(d3.drag().on('drag', onDrag));
   }
 
-  static remove(model) {
-    let objectId = IDUtils.getObjectId(model.id);
-    d3.selectAll(`#${this.objectId}`).style('cursor', '').on('mousedown.drag', null);
+  remove(object) {
+    let objectId = IDUtils.getObjectId(object.object.id);
+    return d3.selectAll(`#${this.objectId}`).style('cursor', '').on('mousedown.drag', null);
   }
 }

@@ -7,79 +7,197 @@
   <script src="dist/francy.bundle.js"></script>
   <script>
     let francy = new Francy();
-    let object = francy.draw({
+    let object = francy.handle({
       "agent": "francy",
       "action": "draw",
       "type": "shape",
       "object": {
         "type": "circle",
         "id": 1,
-        "properties": {
+        "attributes": {
           "name": "circle1",
           "color": "Blue"
         },
         "canvas": {
           "id": 1,
-          "properties": {
+          "attributes": {
             "name": "Canvas Test 1",
             "color": "None"
           },
-          "width": 300,
-          "height": 300,
-          "x": 0,
-          "y": 0,
-          "r": 0,
+          "properties": {
+            "width": 300,
+            "height": 300,
+            "x": 0,
+            "y": 0,
+            "r": 0,
+            "cx": 0,
+            "cy": 0
+          }
+        },
+        "properties": {
+          "x": 50,
+          "y": 50,
+          "r": 20,
           "cx": 0,
           "cy": 0
-        },
-        "x": 50,
-        "y": 50,
-        "r": 20,
-        "cx": 0,
-        "cy": 0
+        }
       }
     });
-    object.tracker.subscribe((object) => console.log('Received notification to update ',object.object));
+    object.tracker.subscribe((object) => console.log('Received notification to update ', object.object));
 
-    object = francy.draw({
+    object = francy.handle({
       "agent": "francy",
       "action": "draw",
       "type": "shape",
       "object": {
         "type": "circle",
         "id": 3,
-        "properties": {
+        "attributes": {
           "name": "circle1",
           "color": "Green"
         },
         "canvas": {
           "id": 1,
-          "properties": {
+          "attributes": {
             "name": "Canvas Test 1",
             "color": "None"
           },
-          "width": 600,
-          "height": 800,
-          "x": 0,
-          "y": 0,
-          "r": 0,
+          "properties": {
+            "width": 600,
+            "height": 800,
+            "x": 0,
+            "y": 0,
+            "r": 0,
+            "cx": 0,
+            "cy": 0
+          }
+        },
+        "properties": {
+          "x": 100,
+          "y": 100,
+          "r": 20,
           "cx": 0,
           "cy": 0
-        },
-        "x": 100,
-        "y": 100,
-        "r": 20,
-        "cx": 0,
-        "cy": 0
+        }
       }
     });
-    object.tracker.subscribe((object) => console.log('Received notification to update ',object.object));
+    object.tracker.subscribe((object) => console.log('Received notification to update ', object.object));
 
+    object = francy.handle({
+      "agent": "francy",
+      "action": "draw",
+      "type": "shape",
+      "object": {
+        "type": "rect",
+        "id": 4,
+        "attributes": {
+          "name": "circle1",
+          "color": "Green"
+        },
+        "canvas": {
+          "id": 1,
+          "attributes": {
+            "name": "Canvas Test 1",
+            "color": "None"
+          },
+          "properties": {
+            "width": 600,
+            "height": 800,
+            "x": 0,
+            "y": 0,
+            "r": 0,
+            "cx": 0,
+            "cy": 0
+          }
+        },
+        "properties": {
+          "x": 100,
+          "y": 100,
+          "r": 20,
+          "width": 60,
+          "height": 50
+        }
+      }
+    });
+    object.tracker.subscribe((object) => console.log('Received notification to update ', object.object));
+    object = francy.handle({
+      "agent": "francy",
+      "action": "draw",
+      "type": "behavior",
+      "object": {
+        "id": 5,
+        "type": "link",
+        "object1": {
+          "type": "circle",
+          "id": 1,
+          "attributes": {
+            "name": "circle1",
+            "color": "Blue"
+          },
+          "canvas": {
+            "id": 1,
+            "attributes": {
+              "name": "Canvas Test 1",
+              "color": "None"
+            },
+            "properties": {
+              "width": 300,
+              "height": 300,
+              "x": 0,
+              "y": 0,
+              "r": 0,
+              "cx": 0,
+              "cy": 0
+            }
+          },
+          "properties": {
+            "x": 50,
+            "y": 50,
+            "r": 20,
+            "cx": 0,
+            "cy": 0
+          }
+        },
+        "object2": {
+          "type": "circle",
+          "id": 3,
+          "attributes": {
+            "name": "circle1",
+            "color": "Green"
+          },
+          "canvas": {
+            "id": 1,
+            "attributes": {
+              "name": "Canvas Test 1",
+              "color": "None"
+            },
+            "properties": {
+              "width": 600,
+              "height": 800,
+              "x": 0,
+              "y": 0,
+              "r": 0,
+              "cx": 0,
+              "cy": 0
+            }
+          },
+          "properties": {
+            "x": 100,
+            "y": 100,
+            "r": 20,
+            "cx": 0,
+            "cy": 0
+          }
+        }
+      }
+    })
+    ;
   </script>
   <style>
     .ui-dialog .ui-dialog-content {
       padding: 0;
     }
+
     .ui-dialog {
       padding: 1px;
     }
