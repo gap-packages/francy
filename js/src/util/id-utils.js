@@ -30,4 +30,13 @@ export default class IDUtils {
   static getObjectId(objectId) {
     return `francyObject${objectId}`;
   }
+
+  /**
+   * Returns the id for an object based on a object id.
+   * @param objectId - the object id
+   * @returns {string} the element object id.
+   */
+  static getGroupObjectId(objectId) {
+    return `francyGroupObject${objectId}`;
+  }
 }

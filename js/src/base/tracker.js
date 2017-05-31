@@ -62,11 +62,14 @@ export default class Tracker {
   /**
    * This method is used by the proxy to get the object being tracked
    * @param {object} target - the object being tracked
-   * @param property
-   * @returns {object} return the object being tracked
+   * @param {object} key the the object property
+   * @returns {object} returns the object being tracked
    */
-  get(target, property) {
-    return property in target ? target[property] : target;
+  get(target, key) {
+    if (typeof target[key] === 'object' && target[key] !== null) {
+      return new Proxy(target[key], this)
+    }
+    return key in target ? target[key] : target;
   }
 
   /**

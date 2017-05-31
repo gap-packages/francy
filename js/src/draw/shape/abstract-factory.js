@@ -9,14 +9,14 @@ export default class AbstractShapeFactory {
     }
   }
 
-  static build(input, {verbose = false} = {}) {
+  static build(json, {verbose = false} = {}) {
     let object = undefined;
-    switch (input.object.type) {
+    switch (json.object.type) {
       case 'circle':
-        object = new Circle(input.object, {verbose: verbose});
+        object = new Circle(json.object, {verbose: verbose});
         break;
       case 'rect':
-        object = new Rectangle(input.object, {verbose: verbose});
+        object = new Rectangle(json.object, {verbose: verbose});
         break;
       default:
         throw new TypeError('Oops, couldn\'t create an object for the specified type... Cannot proceed.');

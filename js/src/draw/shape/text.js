@@ -1,4 +1,4 @@
-import AbstractRenderer from './../base/abstract-renderer';
+import AbstractRenderer from './../../base/abstract-renderer';
 
 export default class Text extends AbstractRenderer {
 

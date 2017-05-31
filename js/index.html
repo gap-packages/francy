@@ -5,194 +5,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="dist/francy.bundle.js"></script>
-  <script>
-    let francy = new Francy();
-    let object = francy.handle({
-      "agent": "francy",
-      "action": "draw",
-      "type": "shape",
-      "object": {
-        "type": "circle",
-        "id": 1,
-        "attributes": {
-          "name": "circle1",
-          "color": "Blue"
-        },
-        "canvas": {
-          "id": 1,
-          "attributes": {
-            "name": "Canvas Test 1",
-            "color": "None"
-          },
-          "properties": {
-            "width": 300,
-            "height": 300,
-            "x": 0,
-            "y": 0,
-            "r": 0,
-            "cx": 0,
-            "cy": 0
-          }
-        },
-        "properties": {
-          "x": 50,
-          "y": 50,
-          "r": 20,
-          "cx": 0,
-          "cy": 0
-        }
-      }
-    });
-    object.tracker.subscribe((object) => console.log('Received notification to update ', object.object));
-
-    object = francy.handle({
-      "agent": "francy",
-      "action": "draw",
-      "type": "shape",
-      "object": {
-        "type": "circle",
-        "id": 3,
-        "attributes": {
-          "name": "circle1",
-          "color": "Green"
-        },
-        "canvas": {
-          "id": 1,
-          "attributes": {
-            "name": "Canvas Test 1",
-            "color": "None"
-          },
-          "properties": {
-            "width": 600,
-            "height": 800,
-            "x": 0,
-            "y": 0,
-            "r": 0,
-            "cx": 0,
-            "cy": 0
-          }
-        },
-        "properties": {
-          "x": 100,
-          "y": 100,
-          "r": 20,
-          "cx": 0,
-          "cy": 0
-        }
-      }
-    });
-    object.tracker.subscribe((object) => console.log('Received notification to update ', object.object));
-
-    object = francy.handle({
-      "agent": "francy",
-      "action": "draw",
-      "type": "shape",
-      "object": {
-        "type": "rect",
-        "id": 4,
-        "attributes": {
-          "name": "circle1",
-          "color": "Green"
-        },
-        "canvas": {
-          "id": 1,
-          "attributes": {
-            "name": "Canvas Test 1",
-            "color": "None"
-          },
-          "properties": {
-            "width": 600,
-            "height": 800,
-            "x": 0,
-            "y": 0,
-            "r": 0,
-            "cx": 0,
-            "cy": 0
-          }
-        },
-        "properties": {
-          "x": 100,
-          "y": 100,
-          "r": 20,
-          "width": 60,
-          "height": 50
-        }
-      }
-    });
-    object.tracker.subscribe((object) => console.log('Received notification to update ', object.object));
-    object = francy.handle({
-      "agent": "francy",
-      "action": "draw",
-      "type": "behavior",
-      "object": {
-        "id": 5,
-        "type": "link",
-        "object1": {
-          "type": "circle",
-          "id": 1,
-          "attributes": {
-            "name": "circle1",
-            "color": "Blue"
-          },
-          "canvas": {
-            "id": 1,
-            "attributes": {
-              "name": "Canvas Test 1",
-              "color": "None"
-            },
-            "properties": {
-              "width": 300,
-              "height": 300,
-              "x": 0,
-              "y": 0,
-              "r": 0,
-              "cx": 0,
-              "cy": 0
-            }
-          },
-          "properties": {
-            "x": 50,
-            "y": 50,
-            "r": 20,
-            "cx": 0,
-            "cy": 0
-          }
-        },
-        "object2": {
-          "type": "circle",
-          "id": 3,
-          "attributes": {
-            "name": "circle1",
-            "color": "Green"
-          },
-          "canvas": {
-            "id": 1,
-            "attributes": {
-              "name": "Canvas Test 1",
-              "color": "None"
-            },
-            "properties": {
-              "width": 600,
-              "height": 800,
-              "x": 0,
-              "y": 0,
-              "r": 0,
-              "cx": 0,
-              "cy": 0
-            }
-          },
-          "properties": {
-            "x": 100,
-            "y": 100,
-            "r": 20,
-            "cx": 0,
-            "cy": 0
-          }
-        }
-      }
-    })
-    ;
-  </script>
   <style>
     .ui-dialog .ui-dialog-content {
       padding: 0;
@@ -201,9 +13,146 @@
     .ui-dialog {
       padding: 1px;
     }
+
+    svg {
+      background-color: #FFF;
+      cursor: default;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+    }
+
+    svg:not(.active):not(.ctrl) {
+      cursor: crosshair;
+    }
+
+    line.link {
+      fill: none;
+      stroke: #000;
+      stroke-width: 4px;
+      cursor: default;
+    }
+
+    svg:not(.active):not(.ctrl) path.link {
+      cursor: pointer;
+    }
+
+    line.link.selected {
+      stroke-dasharray: 10,2;
+    }
+
+    line.link.dragline {
+      pointer-events: none;
+    }
+
+    line.link.hidden {
+      stroke-width: 0;
+    }
+
+    circle.node {
+      stroke-width: 1.5px;
+      cursor: pointer;
+    }
+
+    circle.node.reflexive {
+      stroke: #000 !important;
+      stroke-width: 2.5px;
+    }
+
+    text {
+      font: 12px sans-serif;
+      pointer-events: none;
+    }
+
+    text.id {
+      text-anchor: middle;
+      font-weight: bold;
+    }
+
   </style>
 </header>
 <body>
+<svg width="200" height="200"></svg>
+<!--<script>
 
+  var canvas = document.querySelector("canvas"),
+    context = canvas.getContext("2d"),
+    width = canvas.width,
+    height = canvas.height,
+    tau = 2 * Math.PI;
+
+  var nodes = d3.range(1000).map(function(i) {
+    return {
+      r: Math.random() * 14 + 4
+    };
+  });
+
+  var simulation = d3.forceSimulation(nodes)
+    .velocityDecay(0.2)
+    .force("x", d3.forceX().strength(0.002))
+    .force("y", d3.forceY().strength(0.002))
+    .force("collide", d3.forceCollide().radius(function(d) { return d.r + 0.5; }))
+    .on("tick", ticked);
+
+  function ticked() {
+    context.clearRect(0, 0, width, height);
+    context.save();
+    context.translate(width / 2, height / 2);
+
+    context.beginPath();
+    nodes.forEach(function(d) {
+      context.moveTo(d.x + d.r, d.y);
+      context.arc(d.x, d.y, d.r, 0, tau);
+    });
+    context.fillStyle = "#ddd";
+    context.fill();
+    context.strokeStyle = "#333";
+    context.stroke();
+
+    context.restore();
+  }
+
+</script>-->
+<script>
+  let francy = new Francy({verbose: true});
+  francy.test({
+    "agent": "francy",
+    "action": "draw",
+    "type": "shape",
+    "object": {
+      "type": "circle",
+      "id": 1,
+      "attributes": {
+        "name": "circle1",
+        "color": "Blue"
+      },
+      "canvas": {
+        "id": 1,
+        "attributes": {
+          "name": "Canvas Test 1",
+          "color": "None"
+        },
+        "properties": {
+          "width": 300,
+          "height": 300,
+          "x": 0,
+          "y": 0,
+          "r": 0,
+          "cx": 0,
+          "cy": 0
+        }
+      },
+      "properties": {
+        "x": 50,
+        "y": 50,
+        "r": 20,
+        "cx": 0,
+        "cy": 0
+      }
+    }
+  });
+</script>
 </body>
 </html>

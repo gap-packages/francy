@@ -12,13 +12,6 @@ export default class AbstractBehavior {
    * @param verbose
    */
   constructor(json, {verbose = false} = {}) {
-    switch (json.action) {
-      case 'remove':
-        return this.remove(json.object);
-        break;
-      default:
-        return this.apply(json.object);
-        break;
-    }
+    this.object = json.object;
   }
 }
