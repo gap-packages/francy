@@ -4,16 +4,16 @@ export default class MenuUtils {
   static getMenuHtml(data) {
     let html = '<div class="menu">';
     html += MenuUtils._buildDefaultMenu();
-    for (let menu of data.menu) {
+    for (let menu of data.menus) {
       html += '<div class="dropdown">';
-      if (menu.submenu && menu.submenu.length > 0) {
-        html += `<button class="dropdown-button">${menu.label}&nbsp;&#8595;</button><div class="dropdown-content">`;
-        for (let submenu of menu.submenu) {
-          html += `<a href="#">${submenu.label}</a>`;
+      if (menu.menus && menu.menus.length > 0) {
+        html += `<button class="dropdown-button">${menu.title}&nbsp;&#8595;</button><div class="dropdown-content">`;
+        for (let submenu of menu.menus) {
+          html += `<a href="#">${submenu.title}</a>`;
         }
         html += '</div>'
       } else {
-        html += `<button class="dropdown-button">${menu.label}</button>`;
+        html += `<button class="dropdown-button">${menu.title}</button>`;
       }
       html += '</div>'
     }

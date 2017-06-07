@@ -7,8 +7,8 @@ a javascript implementation module.
 
 ## Francy - GAP
 
-See [GAP Impl](/mcmartins/francy/gap)
+See [GAP Impl](/gap)
 
 ## Francy - JS
 
-See [JS Impl](/mcmartins/francy/js)
+See [JS Impl](/js)

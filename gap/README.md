@@ -65,11 +65,13 @@ gap>
 This GAP Package allows the creation of Gap Objects that have a graphical and interactive
 representation. It is possible to create:
 
+-Canvas (Hasse, Force, Normal, etc);
+
 -Shapes (circle, rectangle, lines, etc);
 
 -Menus
 
--Callbacks (OnClick, OnCTRLClick, etc);
+-Callbacks (OnClick, OnDblClick, etc);
 
 -Graphs (Bars, Lines, etc);
 

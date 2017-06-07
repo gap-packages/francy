@@ -1,14 +1,14 @@
 {
   "agent": "francy.draw",
   "canvas": {"id": "C1", "title": "Quaternion Group Subgroup Lattice", "w": 680, "h": 400},
-  "menu": [
-    {"id": "M1", "title": "Tools", "action": "", "menu": [
-        {"id": "M2", "title": "All Subgroups", "action": "", "menu": []},
-        {"id": "M3", "title": "Centralisers", "action": "", "menu": []},
-        {"id": "M4", "title": "Other Action", "action": "", "menu": []}
+  "menus": [
+    {"id": "M1", "title": "Tools", "action": "", "menus": [
+        {"id": "M2", "title": "All Subgroups", "action": "", "menus": []},
+        {"id": "M3", "title": "Centralisers", "action": "", "menus": []},
+        {"id": "M4", "title": "Other Action", "action": "", "menus": []}
       ]
     },
-    {"id": "M5", "title": "Other Menu", "action": "", "menu": []}
+    {"id": "M5", "title": "Other Menu", "action": "", "menus": []}
   ],
   "nodes": [
     {"id": "G1", "title": "G1", "layer": 1, "size": 10, "type": "diamond", "highlight": true},

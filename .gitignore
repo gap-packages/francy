@@ -1,23 +1,4 @@
-*doc/*.xml
-*doc/*.txt
-*doc/*.css
-*doc/*.js
-*doc/*.html
-*doc/*.aux
-*doc/*.bbl
-*doc/*.blg
-*doc/*.brf
-*doc/*.idx
-*doc/*.ilg
-*doc/*.ind
-*doc/*.lab
-*doc/*.log
-*doc/*.out
-*doc/*.pnr
-*doc/*.six
-*doc/*.tex
-*doc/*.toc
-*doc/manual.pdf
+**/doc
 
 *.deps/
 **.dirstamp
@@ -48,7 +29,7 @@
 */tmp/
 */gh-pages/
 
-*node_modules/
+**/node_modules/
 !/js/lib/
 
 .idea

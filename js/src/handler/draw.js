@@ -85,7 +85,7 @@ export default class Draw extends Canvas {
       .data(json.nodes, d => d.id)
       .enter().append('text')
       .attr('class', 'label')
-      .text(d => d.name);
+      .text(d => d.title);
 
     var legend = this.canvas
       .append('g')
@@ -130,7 +130,7 @@ export default class Draw extends Canvas {
 
       label
         .attr('x', d => {
-          return d.x - d.name.length * 2 - Math.sqrt(d.size);
+          return d.x - d.title.length * 2 - Math.sqrt(d.size);
         })
         .attr('y', d => d.y - Math.sqrt(d.size));
 
