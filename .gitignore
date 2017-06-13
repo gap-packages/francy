@@ -34,3 +34,5 @@
 
 .idea
 .iml
+
+*-lock.json

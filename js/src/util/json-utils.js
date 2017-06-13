@@ -10,7 +10,7 @@ export default class JsonUtils {
    */
   static parse(input) {
     input = typeof input !== "string" ? JSON.stringify(input) : input;
-    input = input.replace(/[\n\r\b\s\\]+|(gap>)/g, '');
+    input = input.replace(/[\n\r\b\\]+|(gap>)/g, '');
     let jsonRegex = /{(?:[^])*}/g;
     let match = jsonRegex.exec(input);
     if (match) {

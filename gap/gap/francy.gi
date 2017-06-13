@@ -107,15 +107,15 @@ function( canvasType, title, options )
                 Error("Object is not of type IsFrancyObject");
             fi;
             if IsShape( obj ) then
-                AddSet( object!.model!.nodes, Clone( obj ) );
+                object!.model!.nodes!.(obj!.model!.id) := Clone( obj );
                 return;
             fi;
             if IsLink( obj ) then
-                AddSet( object!.model!.links, Clone( obj ) );
+                object!.model!.links!.(obj!.model!.id) := Clone( obj );
                 return;
             fi;
             if IsMenu( obj ) then
-                AddSet( object!.model!.menus, Clone( obj ) );
+                object!.model!.menus!.(obj!.model!.id) := Clone( obj );
                 return;
             fi;
         end,
@@ -128,27 +128,36 @@ function( canvasType, title, options )
             fi;
             if IsShape( obj ) then
                 # TODO removing here should trigger a remove links for this same shape
-                RemoveSet( object!.model!.nodes, Clone( obj ) );
+                Unbind( object!.model!.nodes!.(obj!.model!.id) );
                 return;
             fi;
             if IsLink( obj ) then
-                RemoveSet( object!.model!.links, Clone( obj ) );
+                Unbind( object!.model!.links!.(obj!.model!.id) );
                 return;
             fi;
             if IsMenu( obj ) then
-                RemoveSet( object!.model!.menus, Clone( obj ) );
+                Unbind( object!.model!.menus!.(obj!.model!.id) );
                 return;
             fi;
         end,
         draw := function( )
-            Print( GapToJsonString( Clone( object!.model ) ) );
+            local obj;
+            # clone the main object
+            obj := Clone( object );
+            # convert record to array
+            obj!.model!.nodes := Converter( object!.model!.nodes );
+            obj!.model!.links := Converter( object!.model!.links );
+            obj!.model!.menus := Converter( object!.model!.menus );
+            # flaten canvas object
+            obj!.model!.canvas := Flat( object!.model!.canvas );
+            Print( GapToJsonString( obj!.model ) );
         end,
         model := rec(
             id     := id,
             agent  := Concatenation( "francy", canvasType!.value ),
-            menus  := [],
-            nodes  := [],
-            links  := [],
+            menus  := rec(),
+            nodes  := rec(),
+            links  := rec(),
             canvas := rec(
                 id      := id,
              	title   := title,
@@ -305,6 +314,7 @@ function( title, callback )
         callback := callback,
         model := rec(
             id     := GenerateId(),
+            title  := title,
             menus  := []
         )
     ) );
@@ -388,8 +398,7 @@ function( object )
     #PrintObj(object);
     Print( Concatenation( "<",
            CategoriesOfObject( object )[1],
-           "/", CategoriesOfObject( object )[2],
-           " - ", String( object!.model!.id ), ">" ) );
+           "/", CategoriesOfObject( object )[2], ">" ) );
     return;
 
 end );
@@ -442,4 +451,60 @@ function( object )
     od;
     return rObj;
 
+end );
+
+#############################################################################
+##
+#M  Flat( <obj> )  . . . . . . . . simple properties clone for FrancyObjects
+##
+InstallMethod( Flat,
+    "a record",
+    true,
+    [ IsRecord ],
+    0,
+
+function( record )
+    return FlatenerHelper( record, rec() );
+end );
+
+#############################################################################
+##
+#M  Clone( <obj> )  . . . . . . . . simple properties clone for FrancyObjects
+##
+InstallMethod( FlatenerHelper,
+    "a record",
+    true,
+    [ IsRecord, IsRecord ],
+    0,
+
+function( record, flaten )
+    local tmpObj;
+
+    for tmpObj in NamesOfComponents( record ) do
+        if IsRecord( record!.(tmpObj) ) then
+            FlatenerHelper( record!.(tmpObj), flaten );
+        else
+            flaten!.(tmpObj) := record!.(tmpObj);
+        fi;
+    od;
+    return flaten;
+end );
+
+#############################################################################
+##
+#M  Converter( <obj> )  . . . . . . . . simple properties clone for FrancyObjects
+##
+InstallMethod( Converter,
+    "a record",
+    true,
+    [ IsRecord ],
+    0,
+
+function( record )
+    local list, o;
+    list := [];
+    for o in NamesOfComponents( record) do
+        Add(list, Flat( record!.(o)!.model ) );
+    od;
+    return list;
 end );

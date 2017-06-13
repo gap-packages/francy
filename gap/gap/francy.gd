@@ -107,6 +107,7 @@ DeclareRepresentation( "IsCallbackFunctionRep",
     IsComponentObjectRep and IsAttributeStoringRep,
     [ "model" ], IsCallbackFunction );
 
+
 #############################################################################
 ## Operations
 #############################################################################
@@ -120,7 +121,25 @@ DeclareOperation( "Clone", [ IsFrancyObject ] );
 
 #############################################################################
 ##
-#O  Callback( <function> )
+#O  Flat . . . . . . . . . clones IsFrancyObjects using their representation
+##
+DeclareOperation( "Flat", [ IsRecord ] );
+
+#############################################################################
+##
+#O  FlatenerHelper . . . . . . . . . clones IsFrancyObjects using their representation
+##
+DeclareOperation( "FlatenerHelper", [ IsRecord, IsRecord ] );
+
+#############################################################################
+##
+#O  Converter . . . . . . . . . clones IsFrancyObjects using their representation
+##
+DeclareOperation( "Converter", [ IsRecord ] );
+
+#############################################################################
+##
+#O  CallbackFunction( <function> )
 ##
 ##
 DeclareOperation( "CallbackFunction", [ IsFunction ] );

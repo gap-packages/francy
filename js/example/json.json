@@ -1,30 +1,46 @@
 {
-  "agent": "francy.draw",
-  "canvas": {"id": "C1", "title": "Quaternion Group Subgroup Lattice", "w": 680, "h": 400},
-  "menus": [
-    {"id": "M1", "title": "Tools", "action": "", "menus": [
-        {"id": "M2", "title": "All Subgroups", "action": "", "menus": []},
-        {"id": "M3", "title": "Centralisers", "action": "", "menus": []},
-        {"id": "M4", "title": "Other Action", "action": "", "menus": []}
-      ]
-    },
-    {"id": "M5", "title": "Other Menu", "action": "", "menus": []}
-  ],
+  "id": 1,
   "nodes": [
-    {"id": "G1", "title": "G1", "layer": 1, "size": 10, "type": "diamond", "highlight": true},
-    {"id": "G2", "title": "G2", "layer": 2, "size": 10, "type": "circle"},
-    {"id": "G3", "title": "G3", "layer": 3, "size": 10, "type": "circle"},
-    {"id": "G4", "title": "G4", "layer": 3, "size": 10, "type": "circle"},
-    {"id": "G5", "title": "G5", "layer": 3, "size": 10, "type": "circle"},
-    {"id": "G6", "title": "G6", "layer": 4, "size": 10, "type": "diamond", "highlight": true}
+    {
+      "x": 0,
+      "y": 0,
+      "type": "circle",
+      "size": 10,
+      "id": 2,
+      "title": "G",
+      "layer": 0,
+      "highlight": true
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "type": "circle",
+      "size": 10,
+      "id": 3,
+      "title": "1",
+      "layer": 1,
+      "highlight": true
+    }
   ],
   "links": [
-    {"id": "L1", "source": "G1", "target": "G2"},
-    {"id": "L2", "source": "G2", "target": "G3"},
-    {"id": "L3", "source": "G2", "target": "G4"},
-    {"id": "L4", "source": "G2", "target": "G5"},
-    {"id": "L5", "source": "G3", "target": "G6"},
-    {"id": "L6", "source": "G4", "target": "G6"},
-    {"id": "L7", "source": "G5", "target": "G6"}
-  ]
+    {
+      "source": 2,
+      "id": 4,
+      "target": 3
+    }
+  ],
+  "menus": [
+    {
+      "id": 6,
+      "title": "All Subgroups",
+      "menus": []
+    }
+  ],
+  "canvas": {
+    "h": 400,
+    "id": 1,
+    "title": "Quaternion Group Subgroup Lattice",
+    "w": 680
+  },
+  "agent": "francy.draw.hasse"
 }
