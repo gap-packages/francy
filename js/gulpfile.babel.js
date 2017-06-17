@@ -14,7 +14,19 @@ gulp.task('es6', function () {
     .bundle()
     .on('error', gutil.log)
     .pipe(source('francy.bundle.js'))
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./dist/francy'));
 });
 
-gulp.task('default', ['es6']);
+gulp.task('css', function () {
+  gulp.src(['./css/**/*']).pipe(gulp.dest('./dist/francy/css'));
+});
+
+gulp.task('js', function () {
+  gulp.src(['./lib/d3.v4.min.js']).pipe(gulp.dest('./dist/francy'));
+});
+
+gulp.task('jupyter', function () {
+  gulp.src(['./jupyter/**/*']).pipe(gulp.dest('./dist/francy/jupyter'));
+});
+
+gulp.task('default', ['es6', 'css', 'js', 'jupyter']);
