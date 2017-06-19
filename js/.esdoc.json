@@ -1,6 +1,6 @@
 {
   "source": ".",
-  "destination": "./docs/jsdoc",
+  "destination": "./doc",
   "includes": ["\\.(js|es6)$"],
   "excludes": ["\\.(txt|html|json|md)$", "node_modules", "lib"],
   "access": ["public", "protected", "private"],

@@ -4,7 +4,7 @@
   "scripts": {
     "doc": "esdoc",
     "build": "gulp",
-    "jupyter": "gulp && jupyter nbextension install ./francy --system && nbextension enable francy/jupyter/main --system"
+    "jupyter": "gulp && sudo jupyter nbextension install dist/francy --system && sudo jupyter nbextension enable francy/jupyter/main --system"
   },
   "devDependencies": {
     "babel-cli": "6.24.1",
@@ -16,6 +16,11 @@
     "esdoc": "0.5.2",
     "gulp": "3.9.0",
     "gulp-util": "3.0.8",
-    "vinyl-source-stream": "1.1.0"
+    "vinyl-source-stream": "1.1.0",
+    "webpack": "2.6.1",
+    "del": "3.0.0",
+    "webpack-stream": "3.2.0",
+    "babel-loader": "7.0.0",
+    "gulp-sequence": "0.4.6"
   }
 }

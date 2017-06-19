@@ -4,7 +4,9 @@ import Logger from '../util/logger';
 
 export default class AbstractCanvas {
 
-  static colors = d3.scaleSequential().domain([0, 100]).interpolator(d3.interpolateRainbow);
+  static get colors() {
+    return d3.scaleSequential().domain([0, 100]).interpolator(d3.interpolateRainbow);
+  }
 
   static getSymbol(type) {
     if (type === 'circle') {
