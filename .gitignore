@@ -1,6 +1,5 @@
 **/doc
 
-*.deps/
 **.dirstamp
 *.libs/
 
