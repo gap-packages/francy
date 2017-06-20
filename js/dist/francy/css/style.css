@@ -1,0 +1,113 @@
+/**
+ * Graphs
+ */
+svg {
+  cursor: move;
+}
+
+.nodes {
+  cursor: pointer;
+}
+
+.links {
+  cursor: auto;
+}
+
+text.label {
+  font-size: 11px;
+  fill: #000000;
+}
+
+.links line, .arrows path {
+  stroke: #999999;
+  stroke-opacity: 0.6;
+}
+
+.nodes circle, .nodes rect {
+  stroke: #ffffff;
+}
+
+.highlight:hover {
+  stroke: #fffd00;
+  stroke-width: 2px;
+}
+
+/**
+ * Menus
+ */
+.dropdown-button {
+  background-color: transparent;
+  color: black;
+  padding: 4px;
+  border: 1px solid;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  padding-left: 4px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border: 1px solid;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 4px 12px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover {
+  background-color: #a0a0a0;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropdown-button {
+  background-color: #a0a0a0;
+}
+
+.menu {
+  margin: 0;
+  padding: 4px;
+  background-color: #e9e9e9;
+  border: 1px solid #dddddd;
+}
+
+/**
+ * JQuery
+ */
+.ui-dialog {
+  width: auto !important;
+}
+
+.ui-dialog-content {
+  border: 1px solid #dddddd !important;
+  margin-top: 4px;
+  padding: inherit !important;
+}
+
+.ui-dialog-content svg {
+  margin: 4px;
+}
+
+.ui-corner-all {
+  border-radius: inherit !important;
+}
+
+.ui-widget-header {
+  background: #e9e9e9 none;
+  border: 1px solid #dddddd;
+}
