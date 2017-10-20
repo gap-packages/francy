@@ -1,4 +1,5 @@
 # Francy
+
 FRANCY is a Framework for Interactive Discrete Mathematics package for GAP.
 
 Unlike XGAP, Francy is not linked with any GUI framework and instead, this package is responsible for the generation 
@@ -12,3 +13,7 @@ See [GAP Impl](/gap)
 ## Francy - JS
 
 See [JS Impl](/js)
+
+# License
+
+MIT License
