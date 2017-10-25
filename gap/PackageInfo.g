@@ -5,72 +5,72 @@
 
 SetPackageInfo( rec(
 
-PackageName := "Francy",
-Subtitle    := "Framework for Interactive Discrete Mathematics",
-Version     := "0.1.0",
-Date        := "13/05/2017",
+  PackageName := "Francy",
+  Subtitle    := "Framework for Interactive Discrete Mathematics",
+  Version     := "0.2.0",
+  Date        := "25/10/2017",
 
-Persons := [
-  rec( 
-    LastName      := "Martins",
-    FirstNames    := "Manuel",
-    IsAuthor      := true,
-    IsMaintainer  := true,
-    Email         := "manuelmachadomartins@gmail.com",
-    WWWHome       := "http://github.com/mcmartins",
-    Institution   := "Universidade Aberta",
-    Place         := "Lisbon, PT"
-  )
-],
+  Persons := [
+    rec(
+      LastName     := "Martins",
+      FirstNames   := "Manuel",
+      IsAuthor     := true,
+      IsMaintainer := true,
+      Email        := "manuelmachadomartins@gmail.com",
+      WWWHome      := "http://github.com/mcmartins",
+      Institution  := "Universidade Aberta",
+      Place        := "Lisbon, PT"
+    )
+  ],
 
-##  Status information. Currently the following cases are recognized:
-##    "accepted"      for successfully refereed packages
-##    "submitted"     for packages submitted for the refereeing
-##    "deposited"     for packages for which the GAP developers agreed
-##                    to distribute them with the core GAP system
-##    "dev"           for development versions of packages
-##    "other"         for all other packages
-##
-Status         := "dev",
-CommunicatedBy := "TBD",
+  ##  Status information. Currently the following cases are recognized:
+  ##  "accepted"    for successfully refereed packages
+  ##  "submitted"   for packages submitted for the refereeing
+  ##  "deposited"   for packages for which the GAP developers agreed
+  ##          to distribute them with the core GAP system
+  ##  "dev"       for development versions of packages
+  ##  "other"     for all other packages
+  ##
 
-SourceRepository := rec(
+  Status           := "dev",
+  CommunicatedBy   := "TBD",
+  SourceRepository := rec(
     Type := "git",
-    URL := "https://github.com/mcmartins/francy",
-),
-IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://github.com/mcmartins/francy",
-README_URL      := Concatenation( ~.PackageWWWHome, "/README.md" ),
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
-ArchiveURL      := Concatenation( ~.SourceRepository.URL,
-                                 "/releases/download/v", ~.Version,
-                                 "/francy-", ~.Version ),
-ArchiveFormats := ".tar.gz",
+    URL  := "https://github.com/mcmartins/francy",
+  ),
+  IssueTrackerURL := Concatenation(~.SourceRepository.URL, "/issues"),
+  PackageWWWHome  := "https://github.com/mcmartins/francy",
+  README_URL      := Concatenation(~.PackageWWWHome, "/README.md"),
+  PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
+  ArchiveURL      := Concatenation(~.SourceRepository.URL, "/releases/download/v",
+                                    ~.Version, "/francy-", ~.Version),
+  ArchiveFormats  := ".tar.gz",
 
-AbstractHTML := 
+  AbstractHTML :=
   "The <span class=\"pkgname\">Francy</span> package allows to use graphics in GAP.",
 
-PackageDoc := rec(
-  BookName         := "Francy",
-  ArchiveURLSubset := [ "htm","doc" ],
-  HTMLStart        := "htm/chapters.htm",
-  PDFFile          := "doc/manual.pdf",
-  SixFile          := "doc/manual.six",
-  LongTitle        := "FRANCY - A Framework for Interactive Discrete Mathematics"
-),
+  PackageDoc := rec(
+    BookName         := "Francy",
+    ArchiveURLSubset := ["htm","doc"],
+    HTMLStart        := "htm/chapters.htm",
+    PDFFile          := "doc/manual.pdf",
+    SixFile          := "doc/manual.six",
+    LongTitle        := "FRANCY - A Framework for Interactive Discrete Mathematics"
+  ),
 
-Dependencies := rec(
-  GAP := ">=4.7",
-  NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ]
-                         , [ "json", ">= 1.0.1" ] ],
-  SuggestedOtherPackages := [],
-  ExternalConditions := []
-),
+  Dependencies := rec(
+    GAP                    := ">=4.7",
+    NeededOtherPackages    := [["GAPDoc", ">= 1.5"],
+                              ["json", ">= 1.0.1"],
+                              ["uuid", ">= 0.4"]],
+    SuggestedOtherPackages := [],
+    ExternalConditions     := []
+  ),
 
-AvailabilityTest := function() return true; end,
+  AvailabilityTest := function() return true; end,
 
-TestFile := "tst/testall.g",
+  TestFile := "tst/testall.g",
 
-Keywords := [ "Interactive", "Graphics", "Plot", "" ]
+  Keywords := ["Interactive", "Graphics", "Plot"]
 
 ));

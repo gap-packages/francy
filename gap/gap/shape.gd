@@ -4,12 +4,11 @@
 ##
 #Y  Copyright (C) 2017 Manuel Martins
 ##
+
+#############################################################################
 ##
-
-#############################################################################
 ## Categories
-#############################################################################
-
+##
 
 #############################################################################
 ##
@@ -64,24 +63,24 @@ BindGlobal( "LinkFamily", NewFamily( "LinkFamily", IsLink ) );
 #R  IsShapeRep  . . . . . . . . . . . . . . . . . . .  default representation
 ##
 DeclareRepresentation( "IsShapeRep",
-    IsComponentObjectRep and IsAttributeStoringRep,
-    [ "model" ], IsShape );
+  IsComponentObjectRep and IsAttributeStoringRep,
+  [ "model" ], IsShape );
 
 #############################################################################
 ##
 #R  IsShapeDefaultsRep  . . . . . . . . . . . . . . . . . . .  default representation
 ##
 DeclareRepresentation( "IsShapeDefaultsRep",
-    IsComponentObjectRep and IsAttributeStoringRep,
-    [ "layer", "x", "y", "size", "highlight" ], IsShapeDefaults );
+  IsComponentObjectRep and IsAttributeStoringRep,
+  [ "layer", "x", "y", "size", "highlight" ], IsShapeDefaults );
 
 #############################################################################
 ##
 #R  IsShapeTypeRep  . . . . . . . . . . . . . . . . .  default representation
 ##
 DeclareRepresentation( "IsShapeTypeRep",
-    IsComponentObjectRep and IsAttributeStoringRep,
-    [ "value" ], IsShapeType );
+  IsComponentObjectRep and IsAttributeStoringRep,
+  [ "value" ], IsShapeType );
 
 
 #############################################################################
@@ -89,8 +88,8 @@ DeclareRepresentation( "IsShapeTypeRep",
 #R  IsLinkRep  . . . . . . . . . . . . . . . . . . .  default representation
 ##
 DeclareRepresentation( "IsLinkRep",
-    IsComponentObjectRep and IsAttributeStoringRep,
-    [ "id", "source", "target" ], IsLink );
+  IsComponentObjectRep and IsAttributeStoringRep,
+  [ "id", "source", "target" ], IsLink );
 
 
 #############################################################################

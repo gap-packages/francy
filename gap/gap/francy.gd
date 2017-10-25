@@ -4,20 +4,28 @@
 ##
 #Y  Copyright (C) 2017 Manuel Martins
 ##
+
+#############################################################################
+##
+## Globals
 ##
 
 #############################################################################
 ##
-#V FrancySequentialID . . . . . . . . . . . . . Holds the latest generated ID
+#V FrancyMIMEType . . . Contains the MIME Type defined for francy application
 ##
-BindGlobal( "FrancySequentialID", 0 );
-MakeReadWriteGlobal( "FrancySequentialID" );
-
+BindGlobal("FrancyMIMEType", "application/francy+json");
 
 #############################################################################
+##
+#V FrancyFunctionCallbacks . . . Contains the list of callbacks to be executed
+##
+BindGlobal("FrancyFunctionCallbacks", rec());
+
+#############################################################################
+##
 ## Categories
-#############################################################################
-
+##
 
 #############################################################################
 ##
@@ -25,121 +33,119 @@ MakeReadWriteGlobal( "FrancySequentialID" );
 ##
 ##  This is the category in which all graphic objects are.
 ##
-DeclareCategory( "IsFrancyObject", IsObject );
+DeclareCategory("IsFrancyObject", IsObject);
 
 #############################################################################
 ##
 #C  IsFrancyDefaults( <obj> ) . . . . . . . . . . . category of defaults record
 ##
-DeclareCategory( "IsFrancyDefaults", IsFrancyObject );
+DeclareCategory("IsFrancyDefaults", IsFrancyObject);
 
 #############################################################################
 ##
 #C  IsFrancyType( <obj> ) . . . . . . . . . . . category of types
 ##
-DeclareCategory( "IsFrancyType", IsFrancyObject );
+DeclareCategory("IsFrancyType", IsFrancyObject);
 
 #############################################################################
 ##
 #O  IsCallback( <title> )
 ##
-DeclareCategory( "IsCallback", IsFrancyObject );
+DeclareCategory("IsCallback", IsFrancyObject);
 
 #############################################################################
 ##
 #O  IsCallbackFunction( <title> )
 ##
-DeclareCategory( "IsCallbackFunction", IsFunction );
+DeclareCategory("IsCallbackFunction", IsFunction);
 
 #############################################################################
 ##
 #O  IsCallbackTrigger( <title> )
 ##
-DeclareCategory( "IsCallbackTrigger", IsCallback );
+DeclareCategory("IsCallbackTrigger", IsCallback);
 
 
 #############################################################################
+##
 ## Families
-#############################################################################
-
+##
 
 #############################################################################
 ##
 #V  ShapeFamily
 ##
-BindGlobal( "CallbackFamily", NewFamily( "CallbackFamily", IsCallback ) );
+BindGlobal("CallbackFamily", NewFamily("CallbackFamily", IsCallback));
 
 
 #############################################################################
+##
 ## Representations
-#############################################################################
-
-
-#############################################################################
 ##
-#R  IsFrancyTypeRep . . . . . . . . . . . . . . . .  default representation
-##
-DeclareRepresentation( "IsFrancyTypeRep",
-    IsComponentObjectRep and IsAttributeStoringRep,
-    [ "NORMAL", "FORCE", "HASSE", "PLOT" ], IsFrancyType );
 
 #############################################################################
 ##
-#R  IsCallbackRep  . . . . . . . . . . . . . . . . . . .  default representation
+#R  IsFrancyTypeRep . . . . . . . . . . . . . . . . . default representation
 ##
-DeclareRepresentation( "IsCallbackRep",
-    IsComponentObjectRep and IsAttributeStoringRep,
-    [ "model" ], IsCallback );
+DeclareRepresentation("IsFrancyTypeRep", 
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["NORMAL", "FORCE", "HASSE", "PLOT"], IsFrancyType);
 
 #############################################################################
 ##
-#R  IsCallbackRep  . . . . . . . . . . . . . . . . . . .  default representation
+#R  IsCallbackRep  . . . . . . . . . . . . . . . . . . default representation
 ##
-DeclareRepresentation( "IsCallbackTriggerRep",
-    IsComponentObjectRep and IsAttributeStoringRep,
-    [ "model" ], IsCallback );
+DeclareRepresentation("IsCallbackRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["model"], IsCallback);
 
 #############################################################################
 ##
-#R  IsCallbackFunctionRep  . . . . . . . . . . . . . . . . . . .  default representation
+#R  IsCallbackRep  . . . . . . . . . . . . . . . . . . default representation
 ##
-DeclareRepresentation( "IsCallbackFunctionRep",
-    IsComponentObjectRep and IsAttributeStoringRep,
-    [ "model" ], IsCallbackFunction );
+DeclareRepresentation("IsCallbackTriggerRep",
+  IsComponentObjectRep and IsAttributeStoringRep, ["model"], IsCallback);
+
+#############################################################################
+##
+#R  IsCallbackFunctionRep  . . . . . . . . . . . . . . default representation
+##
+DeclareRepresentation("IsCallbackFunctionRep",
+  IsComponentObjectRep and IsAttributeStoringRep, ["model"], IsCallbackFunction);
 
 
 #############################################################################
+##
 ## Operations
-#############################################################################
-
+##
 
 #############################################################################
 ##
 #O  Clone . . . . . . . . . clones IsFrancyObjects using their representation
 ##
-DeclareOperation( "Clone", [ IsFrancyObject ] );
+DeclareOperation("Clone", [IsFrancyObject]);
 
 #############################################################################
 ##
 #O  Flat . . . . . . . . . clones IsFrancyObjects using their representation
 ##
-DeclareOperation( "Flat", [ IsRecord ] );
+DeclareOperation("Flat", [IsRecord]);
 
 #############################################################################
 ##
-#O  FlatenerHelper . . . . . . . . . clones IsFrancyObjects using their representation
+#O  FlattenHelper . . . . clones IsFrancyObjects using their representation
 ##
-DeclareOperation( "FlatenerHelper", [ IsRecord, IsRecord ] );
+DeclareOperation("FlattenHelper", [IsRecord, IsRecord]);
 
 #############################################################################
 ##
-#O  Converter . . . . . . . . . clones IsFrancyObjects using their representation
+#O  FlattenRecord . . . . . clones IsFrancyObjects using their representation
 ##
-DeclareOperation( "Converter", [ IsRecord ] );
+DeclareOperation("FlattenRecord", [IsRecord]);
 
 #############################################################################
 ##
 #O  CallbackFunction( <function> )
 ##
 ##
-DeclareOperation( "CallbackFunction", [ IsFunction ] );
+DeclareOperation("CallbackFunction", [IsFunction]);
