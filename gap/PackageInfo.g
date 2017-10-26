@@ -3,7 +3,7 @@
 ##  PackageInfo.g for the GAP package FRANCY
 ##
 
-SetPackageInfo( rec(
+SetPackageInfo(rec(
 
   PackageName := "Francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
@@ -61,7 +61,7 @@ SetPackageInfo( rec(
   Dependencies := rec(
     GAP                    := ">=4.7",
     NeededOtherPackages    := [["GAPDoc", ">= 1.5"],
-                              ["json", ">= 1.0.1"],
+                              ["json", ">= 1.1.0"],
                               ["uuid", ">= 0.4"]],
     SuggestedOtherPackages := [],
     ExternalConditions     := []

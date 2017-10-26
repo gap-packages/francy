@@ -1,20 +1,21 @@
 #############################################################################
 ##
-#W  menu.gd                    FRANCY library                  Manuel Martins
+#W  francy.gd                   FRANCY library                 Manuel Martins
 ##
 #Y  Copyright (C) 2017 Manuel Martins
 ##
+
+
+#############################################################################
+##
+## Globals
+##
+
 
 #############################################################################
 ##
 ## Categories
 ##
-
-#############################################################################
-##
-#C  IsMenu( <obj> ) . . . . . . . . . . . category of menus
-##
-DeclareCategory("IsMenu", IsFrancyObject);
 
 
 #############################################################################
@@ -22,24 +23,11 @@ DeclareCategory("IsMenu", IsFrancyObject);
 ## Families
 ##
 
-#############################################################################
-##
-#V  MenuFamily
-##
-BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
-
 
 #############################################################################
 ##
 ## Representations
 ##
-
-#############################################################################
-##
-#R  IsMenuRep  . . . . . . . . . . . . . . . . . . .  default representation
-##
-DeclareRepresentation("IsMenuRep",
-  IsComponentObjectRep and IsAttributeStoringRep, ["model"], IsMenu);
 
 
 #############################################################################
@@ -49,7 +37,24 @@ DeclareRepresentation("IsMenuRep",
 
 #############################################################################
 ##
-#O  Menu( <title>, <object> )
+#O  Clone . . . . . . . . . clones IsFrancyObjects using their representation
 ##
+DeclareOperation("Clone", [IsFrancyObject]);
+
+#############################################################################
 ##
-DeclareOperation("Menu", [IsString, IsCallback]);
+#O  Flat . . . . . . . . . clones IsFrancyObjects using their representation
+##
+DeclareOperation("Flat", [IsRecord]);
+
+#############################################################################
+##
+#O  FlattenHelper . . . . clones IsFrancyObjects using their representation
+##
+DeclareOperation("FlattenHelper", [IsRecord, IsRecord]);
+
+#############################################################################
+##
+#O  FlattenRecord . . . . . clones IsFrancyObjects using their representation
+##
+DeclareOperation("FlattenRecord", [IsRecord]);

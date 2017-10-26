@@ -75,7 +75,8 @@ DeclareRepresentation("IsCanvasTypeRep",
 
 #############################################################################
 ##
-#O  Canvas( <title>, <defaults> )
+#O  Canvas( <canvas type>, <title>, <defaults> )
+#O  Canvas( <canvas type>, <title> )
 ##
 ## GraphicCanvas represents a base element to draw graphics on. Inspired by
 ## the HTML <canvas> element which is used to draw graphics, in runtime,

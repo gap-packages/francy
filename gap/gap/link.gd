@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  menu.gd                    FRANCY library                  Manuel Martins
+#W  shape.gd                   FRANCY library                  Manuel Martins
 ##
 #Y  Copyright (C) 2017 Manuel Martins
 ##
@@ -12,9 +12,9 @@
 
 #############################################################################
 ##
-#C  IsMenu( <obj> ) . . . . . . . . . . . category of menus
+#C  IsLink( <obj> ) . . . . . . . . . . . category of links
 ##
-DeclareCategory("IsMenu", IsFrancyObject);
+DeclareCategory("IsLink", IsFrancyObject);
 
 
 #############################################################################
@@ -24,9 +24,9 @@ DeclareCategory("IsMenu", IsFrancyObject);
 
 #############################################################################
 ##
-#V  MenuFamily
+#V  LinkFamily  . . . . . . . . . . . . . . .  family of all links
 ##
-BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
+BindGlobal("LinkFamily", NewFamily("LinkFamily", IsLink));
 
 
 #############################################################################
@@ -36,10 +36,11 @@ BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
 
 #############################################################################
 ##
-#R  IsMenuRep  . . . . . . . . . . . . . . . . . . .  default representation
+#R  IsLinkRep  . . . . . . . . . . . . . . . . . . .  default representation
 ##
-DeclareRepresentation("IsMenuRep",
-  IsComponentObjectRep and IsAttributeStoringRep, ["model"], IsMenu);
+DeclareRepresentation("IsLinkRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["id", "source", "target"], IsLink);
 
 
 #############################################################################
@@ -49,7 +50,10 @@ DeclareRepresentation("IsMenuRep",
 
 #############################################################################
 ##
-#O  Menu( <title>, <object> )
+#O  Link( <object>, <object> )
+#O  Link( [<object>], [<object>] )
 ##
+## Creates a link between the objects. This allow to produce graphics
+## representing connected objects.
 ##
-DeclareOperation("Menu", [IsString, IsCallback]);
+DeclareOperation("Link", [IsShape, IsShape]);
