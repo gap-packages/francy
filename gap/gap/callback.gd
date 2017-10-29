@@ -31,9 +31,15 @@ DeclareCategory("IsCallback", IsFrancyObject);
 
 #############################################################################
 ##
-#C  IsCallbackDefaults( <obj> ) . . . . . . . category of callbacks defaults
+#C  IsCallbackRequiredArg( <obj> ) . . . . . . . category of callbacks args
 ##
-DeclareCategory( "IsCallbackDefaults", IsFrancyDefaults );
+DeclareCategory( "IsCallbackRequiredArg", IsFrancyObject );
+
+#############################################################################
+##
+#O  IsArgType( <obj> )
+##
+DeclareCategory("IsArgType", IsFrancyObject);
 
 #############################################################################
 ##
@@ -65,15 +71,21 @@ BindGlobal("CallbackFamily", NewFamily("CallbackFamily", IsCallback));
 ##
 DeclareRepresentation("IsCallbackRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
-  ["id", "triggerType", "func", "args", "options"], IsCallback);
+  ["id", "type", "func", "knownArgs", "requiredArgs"], IsCallback);
 
 #############################################################################
 ##
-#R  IsCallbackRep  . . . . . . . . . . . . . . . . . . default representation
+#R  IsCallbackRequiredArgRep  . . . . . . . . . . . . . . . . . . default representation
 ##
-DeclareRepresentation("IsCallbackDefaultsRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["model"], IsCallbackDefaults);
+DeclareRepresentation("IsCallbackRequiredArgRep",
+  IsComponentObjectRep and IsAttributeStoringRep, ["model"], IsCallbackRequiredArg);
+
+#############################################################################
+##
+#R  IsCallbackRequiredArgTypeRep  . . . . . . . . . . . . . . . . . . default representation
+##
+DeclareRepresentation("IsArgTypeRep",
+  IsComponentObjectRep and IsAttributeStoringRep, ["value"], IsArgType);
 
 #############################################################################
 ##
@@ -90,12 +102,20 @@ DeclareRepresentation("IsTriggerTypeRep",
 
 #############################################################################
 ##
-#O  Callback( <category representation>, <canvas>, <defaults> )
+#O  Callback( <trigger type>, <function>, <args> )
 ##
 ## Creates a Callback objec that holds the function and args to be executed 
 ## remotly by a trigger based on a trigger type.
 ##
-DeclareOperation("Callback", [IsTriggerType, IsFunction, IsList, IsCallbackDefaults]);
+DeclareOperation("Callback", [IsTriggerType, IsFunction, IsList]);
+
+#############################################################################
+##
+#O  CallbackRequiredArgs( <calbback args type>, <title> )
+##
+## Creates a Callback 
+##
+DeclareOperation("CallbackRequiredArg", [IsArgType, IsString]);
 
 #############################################################################
 ##

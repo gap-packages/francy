@@ -39,7 +39,8 @@ BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
 #R  IsMenuRep  . . . . . . . . . . . . . . . . . . .  default representation
 ##
 DeclareRepresentation("IsMenuRep",
-  IsComponentObjectRep and IsAttributeStoringRep, ["model"], IsMenu);
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["id", "title", "callback", "menus"], IsMenu);
 
 
 #############################################################################

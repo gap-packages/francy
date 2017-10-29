@@ -13,8 +13,8 @@
 InstallMethod(Link,
   "a shape, another shape",
   true,
-  [ IsShape,
-    IsShape ],
+  [IsShape,
+   IsShape],
   0,
 
 function(source, target)
@@ -22,36 +22,34 @@ function(source, target)
   local object;
 
   object := Objectify(NewType(LinkFamily, IsLink and IsLinkRep), rec(
-    model := rec(
-      id     := HexStringUUID(RandomUUID()),
-      source := source!.model!.id,
-      target := target!.model!.id
-    )
+    id     := HexStringUUID(RandomUUID()),
+    source := source!.id,
+    target := target!.id
   ));
 
   return object;
 
 end);
 
-InstallOtherMethod(Link,
+InstallMethod(Links,
   "a list of shape, a list of shape",
   true,
-  [ IsList,
-    IsList ],
+  [IsList,
+   IsList],
   0,
 
 function(source, target)
 
-  local tmpList, tmpSrc, tmpTgt;
+  local list, src, tgt;
 
-  tmpList := [];
-  for tmpSrc in source do
-    for tmpTgt in target do
-      AddSet(tmpList, Link(tmpSrc, tmpTgt));
+  list := [];
+  for src in source do
+    for tgt in target do
+      AddSet(list, Link(src, tgt));
     od;
   od;
 
-  return tmpList;
+  return list;
 
 end);
 

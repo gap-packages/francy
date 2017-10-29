@@ -17,6 +17,11 @@
 ##
 BindGlobal("FrancyMIMEType", "application/francy+json");
 
+#############################################################################
+##
+#V FrancyAgent . . . Contains the Agent string identification
+##
+BindGlobal("FrancyAgent", "application/francy");
 
 #############################################################################
 ##
@@ -43,11 +48,24 @@ DeclareCategory("IsFrancyDefaults", IsFrancyObject);
 ##
 DeclareCategory("IsFrancyType", IsFrancyObject);
 
+#############################################################################
+##
+#C  IsFrancy( <obj> ) . . . . . . . . . . . category of types
+##
+DeclareCategory("IsFrancy", IsFrancyObject);
+
+
 
 #############################################################################
 ##
 ## Families
 ##
+
+#############################################################################
+##
+#V  CanvasFamily  . . . . . . . . . . . . . . .  family of all canvas
+##
+BindGlobal("FrancyFamily", NewFamily("FrancyFamily", IsFrancyObject));
 
 
 #############################################################################
@@ -62,8 +80,17 @@ DeclareCategory("IsFrancyType", IsFrancyObject);
 DeclareRepresentation("IsFrancyTypeRep", 
   IsComponentObjectRep and IsAttributeStoringRep, ["value"], IsFrancyType);
 
+#############################################################################
+##
+#R  IsFrancyRep . . . . . . . . . . . . . . . . . default representation
+##
+DeclareRepresentation("IsFrancyRep",
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["model"], IsFrancyObject);
+
 
 #############################################################################
 ##
 ## Operations
 ##
+DeclareOperation("Francy", []);

@@ -12,8 +12,8 @@
 InstallMethod(Menu,
   "a title string",
   true,
-  [ IsString,
-    IsCallback ],
+  [IsString,
+   IsCallback],
   0,
 
 function(title, callback)
@@ -22,35 +22,25 @@ function(title, callback)
 
   object := Objectify(NewType(MenuFamily, IsMenu and IsMenuRep), rec(
     add := function(obj)
-      ###
-      ## <obj> must be of type IsMenu or IsCallbackFunction
-      ###
-      if IsMenu(obj) then
-        AddSet(object!.model!.menus, Clone(obj));
+      if not IsMenu(obj) then
+        Error("Object is not of type IsMenu");
       else
-        Error("Object is not of type IsMenu or IsCallbackFunction");
+        object!.menus!.(obj!.id) := obj;
       fi;
-
       return;
     end,
     remove := function(obj)
-      ###
-      ## <obj> must be of type IsMenu or IsCallbackFunction
-      ###
-      if IsMenu(obj) then
-        RemoveSet(object!.model!.menus, Clone(obj));
+      if not IsMenu(obj) then
+        Error("Object is not of type IsMenu");
       else
-        Error("Object is not of type IsMenu or IsCallbackFunction");
+        Unbind(object!.menus!.(obj!.id));
       fi;
-
       return;
     end,
+    id       := HexStringUUID(RandomUUID()),
+    title    := title,
     callback := callback,
-    model := rec(
-      id     := HexStringUUID(RandomUUID()),
-      title  := title,
-      menus  := []
-    )
+    menus    := rec()
   ));
 
   return object;

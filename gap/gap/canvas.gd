@@ -51,7 +51,8 @@ BindGlobal("CanvasFamily", NewFamily("CanvasFamily", IsCanvas));
 #R  IsCanvasRep . . . . . . . . . . . . . . . . . . . default representation
 ##
 DeclareRepresentation("IsCanvasRep",
-  IsComponentObjectRep and IsAttributeStoringRep, ["model"], IsCanvas);
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["id", "type", "title", "options"], IsCanvas);
 
 #############################################################################
 ##

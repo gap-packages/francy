@@ -50,10 +50,18 @@ DeclareRepresentation("IsLinkRep",
 
 #############################################################################
 ##
-#O  Link( <object>, <object> )
 #O  Link( [<object>], [<object>] )
 ##
 ## Creates a link between the objects. This allow to produce graphics
 ## representing connected objects.
 ##
 DeclareOperation("Link", [IsShape, IsShape]);
+
+#############################################################################
+##
+#O  Links( [<object>], [<object>] )
+##
+## Creates a link between the objects. This allow to produce graphics
+## representing connected objects.
+##
+DeclareOperation("Links", [IsList, IsList]);

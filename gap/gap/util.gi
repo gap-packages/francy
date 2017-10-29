@@ -13,7 +13,7 @@
 InstallMethod(PrintObj,
   "a francy object",
   true,
-  [ IsFrancyObject ],
+  [IsFrancyObject],
   0,
 
 function(object)
@@ -31,7 +31,7 @@ end);
 InstallMethod(ViewObj,
   "a francy object",
   true,
-  [ IsFrancyObject ],
+  [IsFrancyObject],
   0,
 
 function(object)
@@ -48,110 +48,51 @@ end);
 ##
 #M  Clone( <obj> )  . . . . . . . . simple properties clone for FrancyObjects
 ##
+## This method will clone a FrancyObject and return a record, traversing all the
+## components and converting when appropriate.
+##
+## This method removes components of type IsFunction, as they can't be
+## converted to JSON string.
+##
 InstallMethod(Clone,
-  "a francy object",
+  "an object",
   true,
-  [ IsFrancyObject ],
+  [IsObject],
   0,
 
 function(object)
 
-  local tmpObj, rObj;
-
-  rObj := rec();
-  for tmpObj in NamesOfComponents(object) do
-    # copy everything except functions! Functions will break json conversion!
-    if not IsFunction( object!.(tmpObj)) then
-      rObj!.(tmpObj) := object!.(tmpObj);
-    fi;
-  od;
-
-  return rObj;
+  return Clone(object, rec());
 
 end);
 
 #############################################################################
 ##
-#M  Clone( <obj> )  . . . . . . . . simple properties clone for FrancyObjects
+#M  Clone( <obj> )  . . . . . . . . simple properties clone for Records
+##
+## This method will clone a FrancyObject into the given record
 ##
 InstallOtherMethod(Clone,
-  "a francy object",
+  "an object, a record",
   true,
-  [ IsRecord ],
+  [IsObject,
+   IsRecord],
   0,
 
-function(object)
+function(object, record)
 
-  local tmpObj, rObj;
+  local component, copy;
 
-  rObj := rec();
-  for tmpObj in NamesOfComponents(object) do
-    # copy everything except functions!
-    if not IsFunction(object!.(tmpObj)) then
-      rObj!.(tmpObj) := object!.(tmpObj);
+  copy := StructuralCopy(object);
+  for component in NamesOfComponents(copy) do
+    if IsRecord(copy!.(component)) or IsFrancyObject(copy!.(component)) then
+      record!.(component) := rec();
+      Clone(copy!.(component), record!.(component));
+    elif not IsFunction(copy!.(component)) then
+      record!.(component) := copy!.(component);
     fi;
   od;
 
-  return rObj;
-end);
+  return record;
 
-#############################################################################
-##
-#M  Flat( <obj> )  . . . . . . . . simple properties clone for FrancyObjects
-##
-InstallMethod(Flat,
-  "a record",
-  true,
-  [ IsRecord ],
-  0,
-
-function(record)
-
-  return FlattenHelper(record, rec());
-end);
-
-#############################################################################
-##
-#M  Clone( <obj> )  . . . . . . . . simple properties clone for FrancyObjects
-##
-InstallMethod(FlattenHelper,
-  "a record",
-  true,
-  [ IsRecord, 
-    IsRecord ],
-  0,
-
-function(record, flatten)
-  local tmpObj;
-
-  for tmpObj in NamesOfComponents(record) do
-    if IsRecord(record!.(tmpObj)) then
-      FlattenHelper(record!.(tmpObj), flatten);
-    else
-      flatten!.(tmpObj) := record!.(tmpObj);
-    fi;
-  od;
-
-  return flatten;
-end);
-
-#############################################################################
-##
-#M  FlattenRecord( <obj> )  . . . . simple properties clone for FrancyObjects
-##
-InstallMethod(FlattenRecord,
-  "a record",
-  true,
-  [ IsRecord ],
-  0,
-
-function(record)
-  local list, obj;
-
-  list := [];
-  for obj in NamesOfComponents(record) do
-    Add(list, Flat(record!.(obj)!.model));
-  od;
-
-  return list;
 end);

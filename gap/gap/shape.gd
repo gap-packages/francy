@@ -52,7 +52,7 @@ BindGlobal("ShapeFamily", NewFamily("ShapeFamily", IsShape));
 ##
 DeclareRepresentation("IsShapeRep",
   IsComponentObjectRep and IsAttributeStoringRep,
-  ["model"], IsShape);
+  ["id", "type", "title", "options"], IsShape);
 
 #############################################################################
 ##
