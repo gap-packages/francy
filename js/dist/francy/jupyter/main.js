@@ -34,8 +34,8 @@ define([
 
         callbacks.iopub.output = function (msg) {
           callbacks.iopub.outputHighjacked(msg);
-          if (msg.content && msg.content.text) {
-            francy.handle(msg.content.text)
+          if (msg.content.data['application/francy+json']) {
+            francy.handle(msg.content.data['application/francy+json'])
           }
         };
 

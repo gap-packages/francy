@@ -129,9 +129,7 @@ export default class Draw extends Canvas {
         .attr('transform', d => `translate(${d.x},${d.y})`);
 
       label
-        .attr('x', d => {
-          return d.x - d.title.length * 2 - Math.sqrt(d.size);
-        })
+        .attr('x', d => d.x - d.title.length * 2 - Math.sqrt(d.size))
         .attr('y', d => d.y - Math.sqrt(d.size));
 
       node.each(collide(0.5));
