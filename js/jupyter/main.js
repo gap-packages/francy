@@ -34,13 +34,13 @@ define([
 
         callbacks.iopub.output = function (msg) {
           callbacks.iopub.outputHighjacked(msg);
-          if (msg.content.data['application/francy+json']) {
-            francy.handle(msg.content.data['application/francy+json'])
+          if (msg.content && msg.content.data['application/francy+json']) {
+            francy.handle(msg.content.data['application/francy+json']);
           }
         };
 
         this.executeHighjacked(command, callbacks, options);
-      }
+      };
 
     }
   };
