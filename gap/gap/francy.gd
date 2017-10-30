@@ -78,7 +78,8 @@ BindGlobal("FrancyFamily", NewFamily("FrancyFamily", IsFrancyObject));
 #R  IsFrancyTypeRep . . . . . . . . . . . . . . . . . default representation
 ##
 DeclareRepresentation("IsFrancyTypeRep", 
-  IsComponentObjectRep and IsAttributeStoringRep, ["value"], IsFrancyType);
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["value"], IsFrancyType);
 
 #############################################################################
 ##
@@ -86,7 +87,7 @@ DeclareRepresentation("IsFrancyTypeRep",
 ##
 DeclareRepresentation("IsFrancyRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
-  ["model"], IsFrancyObject);
+  ["agent"], IsFrancyObject);
 
 
 #############################################################################

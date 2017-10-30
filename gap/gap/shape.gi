@@ -44,20 +44,13 @@ InstallMethod(Shape,
    IsString,
    IsShapeDefaults],
   0,
-
 function(shapeType, title, options)
-
-  local object;
-
-  object := Objectify(NewType(ShapeFamily, IsShape and IsShapeRep), rec(
+  return Objectify(NewType(ShapeFamily, IsShape and IsShapeRep), rec(
     id      := HexStringUUID(RandomUUID()),
     type    := shapeType!.value,
     title   := title,
     options := options
   ));
-
-  return object;
-
 end);
 
 InstallOtherMethod(Shape,
@@ -66,9 +59,6 @@ InstallOtherMethod(Shape,
   [IsShapeType,
    IsString],
   0,
-
 function(shapeType, title)
-
   return Shape(shapeType, title, ShapeDefaults);
-
 end);

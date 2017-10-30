@@ -14,11 +14,8 @@ InstallMethod(Francy,
   true,
   [],
   0,
-
 function()
-
   local object;
-  
   object := Objectify(NewType(FrancyFamily, IsFrancy and IsFrancyRep), rec(
     draw := function(canvas)
       local obj;
@@ -28,7 +25,5 @@ function()
     end,
     agent := FrancyAgent
   ));
-
   return object;
-
 end);

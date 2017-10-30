@@ -5,7 +5,6 @@
 #Y  Copyright (C) 2017 Manuel Martins
 ##
 
-
 #############################################################################
 ##
 #M  Link( <obj1>, <obj2> )
@@ -18,17 +17,11 @@ InstallMethod(Link,
   0,
 
 function(source, target)
-
-  local object;
-
-  object := Objectify(NewType(LinkFamily, IsLink and IsLinkRep), rec(
+  return Objectify(NewType(LinkFamily, IsLink and IsLinkRep), rec(
     id     := HexStringUUID(RandomUUID()),
     source := source!.id,
     target := target!.id
   ));
-
-  return object;
-
 end);
 
 InstallMethod(Links,
@@ -37,19 +30,13 @@ InstallMethod(Links,
   [IsList,
    IsList],
   0,
-
 function(source, target)
-
   local list, src, tgt;
-
   list := [];
   for src in source do
     for tgt in target do
       AddSet(list, Link(src, tgt));
     od;
   od;
-
   return list;
-
 end);
-

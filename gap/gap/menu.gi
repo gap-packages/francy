@@ -15,11 +15,8 @@ InstallMethod(Menu,
   [IsString,
    IsCallback],
   0,
-
 function(title, callback)
-
   local object;
-
   object := Objectify(NewType(MenuFamily, IsMenu and IsMenuRep), rec(
     add := function(obj)
       if not IsMenu(obj) then
@@ -42,7 +39,5 @@ function(title, callback)
     callback := callback,
     menus    := rec()
   ));
-
   return object;
-
 end);

@@ -59,14 +59,16 @@ DeclareRepresentation("IsCanvasRep",
 #R  IsCanvasDefaultsRep . . . . . . . . . . . . . . . default representation
 ##
 DeclareRepresentation("IsCanvasDefaultsRep",
-  IsComponentObjectRep and IsAttributeStoringRep, ["w", "h"], IsCanvasDefaults);
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["w", "h"], IsCanvasDefaults);
 
 #############################################################################
 ##
 #R  IsCanvasType . . . . . . . . . . . . . . . .  . . default representation
 ##
 DeclareRepresentation("IsCanvasTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep, ["value"], IsCanvasType);
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["value"], IsCanvasType);
 
 
 #############################################################################

@@ -42,11 +42,8 @@ InstallMethod(Callback,
    IsFunction,
    IsList],
   0,
-
 function(triggerType, func, knownArgs)
-
   local object;
-
   object := Objectify(NewType(CallbackFamily, IsCallback and IsCallbackRep), rec(
     add := function(obj)
       if not IsCallbackRequiredArg(obj) then
@@ -62,9 +59,7 @@ function(triggerType, func, knownArgs)
     knownArgs    := knownArgs,
     requiredArgs := rec()
   ));
-
   return object;
-
 end);
 
 InstallOtherMethod(Callback,
@@ -73,11 +68,8 @@ InstallOtherMethod(Callback,
   [IsTriggerType,
    IsFunction],
   0,
-
 function(triggerType, func)
-
   return Callback(triggerType, func, []);
-
 end);
 
 InstallOtherMethod(Callback,
@@ -86,11 +78,8 @@ InstallOtherMethod(Callback,
   [IsFunction,
    IsList],
   0,
-
 function(func, knownArgs)
-
   return Callback(TriggerType!.CLICK, func, knownArgs);
-
 end);
 
 InstallOtherMethod(Callback,
@@ -98,11 +87,8 @@ InstallOtherMethod(Callback,
   true,
   [IsFunction],
   0,
-
 function(func)
-
   return Callback(TriggerType!.CLICK, func, []);
-
 end);
 
 #############################################################################
@@ -115,20 +101,13 @@ InstallMethod(CallbackRequiredArg,
   [IsArgType,
    IsString],
   0,
-
 function(argType, title)
-
-  local object;
-
-  object := Objectify(NewType(CallbackFamily, IsCallbackRequiredArg and IsCallbackRequiredArgRep), rec(
+  return Objectify(NewType(CallbackFamily, IsCallbackRequiredArg and IsCallbackRequiredArgRep), rec(
     id    := HexStringUUID(RandomUUID()),
     type  := argType!.value,
     title := title,
     value := ""
   ));
-
-  return object;
-
 end);
 
 #############################################################################
@@ -140,20 +119,12 @@ InstallMethod(Trigger,
   true,
   [IsString],
   0,
-
 function(json)
-
   local callback, object, requiredArgs;
-  
   object := JsonStringToGap(json);
-  
   # TODO validate json object!
-  
   callback := FrancyCallbacks!.(object!.id);
-  
-  # TODO iterate over args and crceate a list of values
+  # TODO iterate over args and create a list of values
   requiredArgs := [];
-  
   return CallFuncList(callback!.func, callback!.knownArgs + requiredArgs);
-
 end);

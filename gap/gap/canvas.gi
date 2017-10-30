@@ -36,11 +36,8 @@ InstallMethod(Canvas,
    IsString,
    IsCanvasDefaults],
   0,
-
 function(canvasType, title, options)
-
   local object;
-  
   object := Objectify(NewType(CanvasFamily, IsCanvas and IsCanvasRep), rec(
     add := function(obj)
       if not IsFrancyObject(obj) then
@@ -82,9 +79,7 @@ function(canvasType, title, options)
     title     := title,
     options   := options
   ));
-
   return object;
-
 end);
 
 InstallOtherMethod(Canvas,
@@ -93,9 +88,6 @@ InstallOtherMethod(Canvas,
   [IsCanvasType,
    IsString],
   0,
-
 function(canvasType, title)
-
   return Canvas(canvasType, title, CanvasDefaults);
-
 end);

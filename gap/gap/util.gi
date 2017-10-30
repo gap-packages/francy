@@ -5,7 +5,6 @@
 #Y  Copyright (C) 2017 Manuel Martins
 ##
 
-
 #############################################################################
 ##
 #M  PrintObj( <obj> ) . . . . . . . . . . . . .  override for IsFrancyObjects
@@ -15,13 +14,8 @@ InstallMethod(PrintObj,
   true,
   [IsFrancyObject],
   0,
-
 function(object)
-
   Print(Clone(object));
-
-  return;
-
 end);
 
 #############################################################################
@@ -33,15 +27,10 @@ InstallMethod(ViewObj,
   true,
   [IsFrancyObject],
   0,
-
 function(object)
-
   Print(Concatenation( "<",
        CategoriesOfObject( object )[1],
        "/", CategoriesOfObject( object )[2], ">"));
-
-  return;
-
 end);
 
 #############################################################################
@@ -59,11 +48,8 @@ InstallMethod(Clone,
   true,
   [IsObject],
   0,
-
 function(object)
-
   return Clone(object, rec());
-
 end);
 
 #############################################################################
@@ -78,11 +64,8 @@ InstallOtherMethod(Clone,
   [IsObject,
    IsRecord],
   0,
-
 function(object, record)
-
   local component, copy;
-
   copy := StructuralCopy(object);
   for component in NamesOfComponents(copy) do
     if IsRecord(copy!.(component)) or IsFrancyObject(copy!.(component)) then
@@ -92,7 +75,5 @@ function(object, record)
       record!.(component) := copy!.(component);
     fi;
   od;
-
   return record;
-
 end);

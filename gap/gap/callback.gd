@@ -5,7 +5,6 @@
 #Y  Copyright (C) 2017 Manuel Martins
 ##
 
-
 #############################################################################
 ##
 ## Globals
@@ -75,24 +74,27 @@ DeclareRepresentation("IsCallbackRep",
 
 #############################################################################
 ##
-#R  IsCallbackRequiredArgRep  . . . . . . . . . . . . . . . . . . default representation
+#R  IsCallbackRequiredArgRep  . . . . . . . . .. . . . default representation
 ##
 DeclareRepresentation("IsCallbackRequiredArgRep",
-  IsComponentObjectRep and IsAttributeStoringRep, ["model"], IsCallbackRequiredArg);
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["id", "type", "title", "value"], IsCallbackRequiredArg);
 
 #############################################################################
 ##
-#R  IsCallbackRequiredArgTypeRep  . . . . . . . . . . . . . . . . . . default representation
+#R  IsArgTypeRep  . . . . . . . . . .  default representation
 ##
 DeclareRepresentation("IsArgTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep, ["value"], IsArgType);
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["value"], IsArgType);
 
 #############################################################################
 ##
 #R  IsTriggerRep  . . . . . . . . . . . . . . . . . . default representation
 ##
 DeclareRepresentation("IsTriggerTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep, ["value"], IsTriggerType);
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["value"], IsTriggerType);
 
 
 #############################################################################
@@ -113,7 +115,7 @@ DeclareOperation("Callback", [IsTriggerType, IsFunction, IsList]);
 ##
 #O  CallbackRequiredArgs( <calbback args type>, <title> )
 ##
-## Creates a Callback 
+## Creates a Callback Require Argument
 ##
 DeclareOperation("CallbackRequiredArg", [IsArgType, IsString]);
 
