@@ -37,7 +37,6 @@ gap>
 gap> canvas := Canvas(CanvasType!.HASSE, "Quaternion Group Subgroup Lattice");
 <IsFrancyObject/IsCanvas>
 gap>
-gap> canvas!.add(canvas);
 gap> shapeG := Shape(ShapeType!.CIRCLE, "G");
 <IsFrancyObject/IsShape>
 gap>
