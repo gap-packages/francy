@@ -86,3 +86,21 @@ DeclareRepresentation("IsCanvasTypeRep",
 ## via JavaScript.
 ##
 DeclareOperation("Canvas", [IsCanvasType, IsString, IsCanvasDefaults]);
+
+#############################################################################
+##
+#O  Add( <canvas>, <francy object> )
+#O  Add( <canvas>, <list of francy object> )
+##
+## 
+##
+DeclareOperation("Add", [IsCanvas, IsFrancyObject]);
+
+#############################################################################
+##
+#O  Remove( <canvas>, <francy object> )
+#O  Remove( <canvas>, <list of francy object> )
+##
+## 
+##
+DeclareOperation("Remove", [IsCanvas, IsFrancyObject]);

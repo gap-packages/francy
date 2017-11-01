@@ -1,46 +1,66 @@
 {
-  "id": 1,
-  "nodes": [
-    {
-      "x": 0,
-      "y": 0,
-      "type": "circle",
-      "size": 10,
-      "id": 2,
-      "title": "G",
-      "layer": 0,
-      "highlight": true
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "type": "circle",
-      "size": 10,
-      "id": 3,
-      "title": "1",
-      "layer": 1,
-      "highlight": true
-    }
-  ],
-  "links": [
-    {
-      "source": 2,
-      "id": 4,
-      "target": 3
-    }
-  ],
-  "menus": [
-    {
-      "id": 6,
-      "title": "All Subgroups",
-      "menus": []
-    }
-  ],
+  "agent": "application/francy",
   "canvas": {
-    "h": 400,
-    "id": 1,
-    "title": "Quaternion Group Subgroup Lattice",
-    "w": 680
-  },
-  "agent": "francy.draw.hasse"
+    "type": "layered",
+    "id": "C2232D710B7840D7AC0B65170CB76F5A",
+    "title": "QuaternionGroup Subgroup Lattice",
+    "options": {
+      "h": 400,
+      "w": 680
+    },
+    "menus": {
+      "9ECB1D5F9D6D4278F434C256F63CBCD3": {
+        "id": "9ECB1D5F9D6D4278F434C256F63CBCD3",
+        "title": "All Subgroups",
+        "callback": {
+          "type": "server",
+          "id": "B9F9F0943FAD4D4E04CCA836666B98E8",
+          "knownArgs": [],
+          "trigger": "click",
+          "requiredArgs": {
+            "A7C5F31D44B44DC45CBDBDDEC5BFE2C6": {
+              "type": "string",
+              "id": "A7C5F31D44B44DC45CBDBDDEC5BFE2C6",
+              "title": "A test String",
+              "value": ""
+            }
+          }
+        },
+        "menus": {}
+      }
+    },
+    "nodes": {
+      "BBD6B49E746F45D42483770446A32F42": {
+        "type": "diamond",
+        "id": "BBD6B49E746F45D42483770446A32F42",
+        "title": "G",
+        "options": {
+          "x": 0,
+          "y": 0,
+          "size": 10,
+          "layer": 0,
+          "highlight": true
+        }
+      },
+      "381B78FE811840038CCD1ACBA164C267": {
+        "type": "diamond",
+        "id": "381B78FE811840038CCD1ACBA164C267",
+        "title": "1",
+        "options": {
+          "x": 0,
+          "y": 0,
+          "size": 10,
+          "layer": 0,
+          "highlight": true
+        }
+      }
+    },
+    "links": {
+      "92C780AE49344AAB9C4130C7E437EAF0": {
+        "source": "BBD6B49E746F45D42483770446A32F42",
+        "id": "92C780AE49344AAB9C4130C7E437EAF0",
+        "target": "381B78FE811840038CCD1ACBA164C267"
+      }
+    }
+  }
 }

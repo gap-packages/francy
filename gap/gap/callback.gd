@@ -32,7 +32,7 @@ DeclareCategory("IsCallback", IsFrancyObject);
 ##
 #C  IsCallbackRequiredArg( <obj> ) . . . . . . . category of callbacks args
 ##
-DeclareCategory( "IsCallbackRequiredArg", IsFrancyObject );
+DeclareCategory( "IsRequiredArg", IsFrancyObject );
 
 #############################################################################
 ##
@@ -42,10 +42,9 @@ DeclareCategory("IsArgType", IsFrancyObject);
 
 #############################################################################
 ##
-#O  IsTrigger( <obj> )
+#O  IsCallbackType( <obj> )
 ##
-DeclareCategory("IsTriggerType", IsFrancyObject);
-
+DeclareCategory("IsCallbackType", IsFrancyObject);
 
 #############################################################################
 ##
@@ -76,9 +75,9 @@ DeclareRepresentation("IsCallbackRep",
 ##
 #R  IsCallbackRequiredArgRep  . . . . . . . . .. . . . default representation
 ##
-DeclareRepresentation("IsCallbackRequiredArgRep",
+DeclareRepresentation("IsRequiredArgRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
-  ["id", "type", "title", "value"], IsCallbackRequiredArg);
+  ["id", "type", "title", "value"], IsRequiredArg);
 
 #############################################################################
 ##
@@ -90,11 +89,11 @@ DeclareRepresentation("IsArgTypeRep",
 
 #############################################################################
 ##
-#R  IsTriggerRep  . . . . . . . . . . . . . . . . . . default representation
+#R  IsArgTypeRep  . . . . . . . . . .  default representation
 ##
-DeclareRepresentation("IsTriggerTypeRep",
+DeclareRepresentation("IsCallbackTypeRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
-  ["value"], IsTriggerType);
+  ["value"], IsCallbackType);
 
 
 #############################################################################
@@ -104,12 +103,12 @@ DeclareRepresentation("IsTriggerTypeRep",
 
 #############################################################################
 ##
-#O  Callback( <trigger type>, <function>, <args> )
+#O  Callback( <callback type>, <trigger event>, <function>, <args> )
 ##
 ## Creates a Callback objec that holds the function and args to be executed 
 ## remotly by a trigger based on a trigger type.
 ##
-DeclareOperation("Callback", [IsTriggerType, IsFunction, IsList]);
+DeclareOperation("Callback", [IsCallbackType, IsTriggerEvent, IsFunction, IsList]);
 
 #############################################################################
 ##
@@ -117,12 +116,22 @@ DeclareOperation("Callback", [IsTriggerType, IsFunction, IsList]);
 ##
 ## Creates a Callback Require Argument
 ##
-DeclareOperation("CallbackRequiredArg", [IsArgType, IsString]);
+DeclareOperation("RequiredArg", [IsArgType, IsString]);
 
 #############################################################################
 ##
-#O  Trigger( <json> )
+#O  Add( <callback>, <arg> )
+#O  Add( <callback>, <list of args> )
 ##
-## TODO
+## 
 ##
-DeclareOperation("Trigger", [IsString]);
+DeclareOperation("Add", [IsCallback, IsRequiredArg]);
+
+#############################################################################
+##
+#O  Remove( <callback>, <arg> )
+#O  Remove( <callback>, <list of args> )
+##
+## 
+##
+DeclareOperation("Remove", [IsCallback, IsRequiredArg]);

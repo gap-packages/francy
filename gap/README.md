@@ -34,38 +34,32 @@ Homepage: https://github.com/mcmartins/francy
              IRREDSOL 1.4, json 1.1.0, LAGUNA 3.7.0, Polenta 1.3.7, Polycyclic 2.11, RadiRoot 2.7, ResClasses 4.6.0, Sophus 1.23, SpinSym 1.5, TomLib 1.2.6, Utils 0.46, uuid 0.4
  Try '??help' for help. See also '?copyright', '?cite' and '?authors'
 gap>
-gap> canvas := Canvas(CanvasType!.HASSE, "Quaternion Group Subgroup Lattice");
+gap> canvas := Canvas(CanvasType!.LAYERED, "Quaternion Group Subgroup Lattice");
 <IsFrancyObject/IsCanvas>
 gap>
-gap> shapeG := Shape(ShapeType!.CIRCLE, "G");
+gap> shapeG := Shape(ShapeType!.DIAMOND, "G");
 <IsFrancyObject/IsShape>
 gap>
-gap> canvas!.add(shapeG);
-gap> shape1 := Shape(ShapeType!.CIRCLE, "1");
+gap> shape1 := Shape(ShapeType!.DIAMOND, "1");
 <IsFrancyObject/IsShape>
 gap>
-gap> canvas!.add(shape1);
 gap> link := Link(shapeG, shape1);
 <IsFrancyObject/IsLink>
 gap>
-gap> canvas!.add(link);
 gap> callback := Callback(AllSubgroups);
 <IsFrancyObject/IsCallback>
 gap>
-gap> arg1 := CallbackRequiredArg(ArgType!.STRING, "A test String");
-<IsFrancyObject/IsCallback>
+gap> arg1 := RequiredArg(ArgType!.STRING, "A test String");
+<IsFrancyObject/IsRequiredArg>
 gap>
-gap> callback!.add(arg1);
-<IsFrancyObject/IsCallback>
+gap> Add(callback, arg1);
 gap>
 gap> menu := Menu( "All Subgroups", callback );
 <IsFrancyObject/IsMenu>
 gap>
-gap> canvas!.add(menu);
-gap> francy := Francy();
-<IsFrancyObject/IsFrancy>
+gap> Add(canvas, [shapeG, shape1, link, menu]);
 gap>
-gap> francy!.draw(canvas);
+gap> Draw(canvas);
 rec( 
   data := 
     rec( 

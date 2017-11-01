@@ -55,7 +55,6 @@ DeclareCategory("IsFrancyType", IsFrancyObject);
 DeclareCategory("IsFrancy", IsFrancyObject);
 
 
-
 #############################################################################
 ##
 ## Families
@@ -94,4 +93,4 @@ DeclareRepresentation("IsFrancyRep",
 ##
 ## Operations
 ##
-DeclareOperation("Francy", []);
+

@@ -7,29 +7,27 @@
 
 #############################################################################
 ##
-#M  CallbackTrigger . . .  the various events supported to trigger a callback
+#M  CallbackType . . .  the various events supported to trigger a callback
 ##
-BindGlobal("TriggerType", Objectify(NewType(CallbackFamily, IsTriggerType and IsTriggerTypeRep), rec(
-  DOUBLE_CLICK := Objectify(NewType(CallbackFamily, IsTriggerType and IsTriggerTypeRep), rec(value := "dblclick")),
-  RIGHT_CLICK := Objectify(NewType(CallbackFamily, IsTriggerType and IsTriggerTypeRep), rec(value := "context")),
-  CLICK := Objectify(NewType(CallbackFamily, IsTriggerType and IsTriggerTypeRep), rec(value := "click")),
-  OVER := Objectify(NewType(CallbackFamily, IsTriggerType and IsTriggerTypeRep), rec(value := "mouseover"))
+BindGlobal("CallbackType", Objectify(NewType(CallbackFamily, IsFrancyType and IsFrancyTypeRep), rec(
+  SERVER := Objectify(NewType(CallbackFamily, IsCallbackType and IsCallbackTypeRep), rec(value := "server")),
+  CLIENT := Objectify(NewType(CallbackFamily, IsCallbackType and IsCallbackTypeRep), rec(value := "client"))
 )));
 
 #############################################################################
 ##
 #M  CallbackDefaults . . . . . . . . . .  the various types of shapes supported
 ##
-BindGlobal("ArgType", Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(
+BindGlobal("ArgType", Objectify(NewType(CallbackFamily, IsFrancyType and IsFrancyTypeRep), rec(
   INTEGER := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "int")),
   BOOLEAN := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "boolean")),
-  STRING := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "string")),
-  DOUBLE := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "double"))
+  STRING  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "string")),
+  DOUBLE  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "double"))
 )));
 
 #############################################################################
 ##
-#M  Callback( <trigger type>,  <function>, <known args> ) . 
+#M  Callback( <callback type>, <trigger event>,  <function>, <known args> ) . 
 ##  
 ## triggers a callback with a list of known args.
 ## Extra args, or required args, should be registered using:
@@ -38,38 +36,31 @@ BindGlobal("ArgType", Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeR
 InstallMethod(Callback,
   "a trigger type, a function, a list of known args",
   true,
-  [IsTriggerType,
+  [IsCallbackType,
+   IsTriggerEvent,
    IsFunction,
    IsList],
   0,
-function(triggerType, func, knownArgs)
-  local object;
-  object := Objectify(NewType(CallbackFamily, IsCallback and IsCallbackRep), rec(
-    add := function(obj)
-      if not IsCallbackRequiredArg(obj) then
-        Error("Object is not of type IsFrancyObject");
-      else
-        object!.requiredArgs!.(obj!.id) := obj;
-      fi;
-      return object;
-    end,
+function(callbackType, triggerEvent, func, knownArgs)
+  return Objectify(NewType(CallbackFamily, IsCallback and IsCallbackRep), rec(
     id           := HexStringUUID(RandomUUID()),
-    type         := triggerType!.value,
+    type         := callbackType!.value,
+    trigger      := triggerEvent!.value,
     func         := func,
     knownArgs    := knownArgs,
     requiredArgs := rec()
   ));
-  return object;
 end);
 
 InstallOtherMethod(Callback,
   "a trigger type, a function",
   true,
-  [IsTriggerType,
+  [IsCallbackType,
+   IsTriggerEvent,
    IsFunction],
   0,
-function(triggerType, func)
-  return Callback(triggerType, func, []);
+function(callbackType, triggerEvent, func)
+  return Callback(callbackType, triggerEvent, func, []);
 end);
 
 InstallOtherMethod(Callback,
@@ -79,7 +70,7 @@ InstallOtherMethod(Callback,
    IsList],
   0,
 function(func, knownArgs)
-  return Callback(TriggerType!.CLICK, func, knownArgs);
+  return Callback(CallbackType!.SERVER, TriggerEvent!.CLICK, func, knownArgs);
 end);
 
 InstallOtherMethod(Callback,
@@ -88,21 +79,21 @@ InstallOtherMethod(Callback,
   [IsFunction],
   0,
 function(func)
-  return Callback(TriggerType!.CLICK, func, []);
+  return Callback(CallbackType!.SERVER, TriggerEvent!.CLICK, func, []);
 end);
 
 #############################################################################
 ##
-#M  CallbackRequiredArg( <calbback args type>, <title> )
+#M  RequiredArg( <callback arg type>, <title> )
 ##
-InstallMethod(CallbackRequiredArg,
+InstallMethod(RequiredArg,
   "a callback arg type, a title",
   true,
   [IsArgType,
    IsString],
   0,
 function(argType, title)
-  return Objectify(NewType(CallbackFamily, IsCallbackRequiredArg and IsCallbackRequiredArgRep), rec(
+  return Objectify(NewType(CallbackFamily, IsRequiredArg and IsRequiredArgRep), rec(
     id    := HexStringUUID(RandomUUID()),
     type  := argType!.value,
     title := title,
@@ -110,21 +101,61 @@ function(argType, title)
   ));
 end);
 
+
 #############################################################################
 ##
-#M  Trigger( <a json string> ) . triggers a callback
+#M  Add( <callback>, <required arg> ) . . . . . add objects to canvas
 ##
-InstallMethod(Trigger,
-  "a json string",
+InstallMethod(Add,
+  "a callback, a required arg",
   true,
-  [IsString],
+  [IsCallback,
+   IsRequiredArg],
   0,
-function(json)
-  local callback, object, requiredArgs;
-  object := JsonStringToGap(json);
-  # TODO validate json object!
-  callback := FrancyCallbacks!.(object!.id);
-  # TODO iterate over args and create a list of values
-  requiredArgs := [];
-  return CallFuncList(callback!.func, callback!.knownArgs + requiredArgs);
+function(callback, arg)
+  callback!.requiredArgs!.(arg!.id) := arg;
+  return callback;
+end);
+
+InstallOtherMethod(Add,
+  "a canvas, a list of francy objects",
+  true,
+  [IsCallback,
+   IsList],
+  0,
+function(callback, objects)
+  local object;
+  for object in objects do
+    Add(callback, object);
+  od;
+  return callback;
+end);
+
+#############################################################################
+##
+#M  Remove( <callback>, <required arg> ) . . . . . add objects to canvas
+##
+InstallMethod(Remove,
+  "a callback, a required arg",
+  true,
+  [IsCallback,
+   IsRequiredArg],
+  0,
+function(callback, arg)
+  Unbind(callback!.requiredArgs!.(arg!.id));
+  return callback;
+end);
+
+InstallOtherMethod(Remove,
+  "a canvas, a list of francy objects",
+  true,
+  [IsCallback,
+   IsList],
+  0,
+function(callback, objects)
+  local object;
+  for object in objects do
+    Remove(callback, object);
+  od;
+  return callback;
 end);

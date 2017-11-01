@@ -1,9 +1,15 @@
 #############################################################################
 ##
-#W  menu.gd                    FRANCY library                  Manuel Martins
+#W  callback.gd                 FRANCY library                 Manuel Martins
 ##
 #Y  Copyright (C) 2017 Manuel Martins
 ##
+
+#############################################################################
+##
+## Globals
+##
+
 
 #############################################################################
 ##
@@ -12,10 +18,15 @@
 
 #############################################################################
 ##
-#C  IsMenu( <obj> ) . . . . . . . . . . . category of menus
+#O  IsTrigger( <obj> )
 ##
-DeclareCategory("IsMenu", IsFrancyObject);
+DeclareCategory("IsTrigger", IsFrancyObject);
 
+#############################################################################
+##
+#O  IsTriggerType( <obj> )
+##
+DeclareCategory("IsTriggerEvent", IsFrancyObject);
 
 #############################################################################
 ##
@@ -24,9 +35,9 @@ DeclareCategory("IsMenu", IsFrancyObject);
 
 #############################################################################
 ##
-#V  MenuFamily
+#V  CallbackFamily
 ##
-BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
+BindGlobal("TriggerFamily", NewFamily("TriggerFamily", IsTrigger));
 
 
 #############################################################################
@@ -36,11 +47,11 @@ BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
 
 #############################################################################
 ##
-#R  IsMenuRep  . . . . . . . . . . . . . . . . . . .  default representation
+#R  IsTriggerRep  . . . . . . . . . . . . . . . . . . default representation
 ##
-DeclareRepresentation("IsMenuRep",
+DeclareRepresentation("IsTriggerEventRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
-  ["id", "title", "callback", "menus"], IsMenu);
+  ["value"], IsTriggerEvent);
 
 
 #############################################################################
@@ -50,25 +61,8 @@ DeclareRepresentation("IsMenuRep",
 
 #############################################################################
 ##
-#O  Menu( <title>, <object> )
+#O  Trigger( <json> )
 ##
+## TODO
 ##
-DeclareOperation("Menu", [IsString, IsCallback]);
-
-#############################################################################
-##
-#O  Add( <menu>, <direct submenu> )
-#O  Add( <menu>, <list of menu> )
-##
-## 
-##
-DeclareOperation("Add", [IsMenu, IsMenu]);
-
-#############################################################################
-##
-#O  Remove( <menu>, <menu> )
-#O  Remove( <menu>, <list of menu> )
-##
-## 
-##
-DeclareOperation("Remove", [IsMenu, IsMenu]);
+DeclareOperation("Trigger", [IsString]);
