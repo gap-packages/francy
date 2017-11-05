@@ -15,7 +15,10 @@ export class Francy {
    * @param menuActionHandler this handler will be used to invoke actions from the menu, default console.log
    * @param changeTrackerHandler this handler will be used to report any changes detected by the ChangeTracker, default console.log
    */
-  constructor({ verbose = false, callbackHandler = console.log } = {}) {
+  constructor({ verbose = false, callbackHandler }) {
+    if (!callbackHandler) {
+      throw new Error("Missing Callback Handler!");
+    }
     this.options = {
       verbose: verbose,
       callbackHandler: callbackHandler

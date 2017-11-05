@@ -2,8 +2,11 @@ import Callback from './callback';
 
 export default class MenuUtils {
 
-  constructor({ verbose = false, callbackHandler = console.log } = {}) {
-    this.callbackHandler = callbackHandler;
+  constructor({ verbose = false, callbackHandler } = {}) {
+    this.options = {
+      verbose: verbose,
+      callbackHandler: callbackHandler
+    };
   }
 
   getMenuHtml(json) {
