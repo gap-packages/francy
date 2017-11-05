@@ -31,7 +31,7 @@ define([
         var self = this;
 
         function trigger(json) {
-          self.executeHighjacked(`Trigger(${JSON.stringify(json)});`, callbacks, options);
+          self.executeHighjacked(`Trigger(${JSON.stringify(JSON.stringify(json))});`, callbacks, options);
         }
 
         callbacks.iopub.outputHighjacked = callbacks.iopub.output;

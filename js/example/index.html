@@ -13,7 +13,10 @@
 <body>
 <script>
 
-  var francy = new Francy({verbose: true});
+  function trigger(json) {
+    console.error(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
+  }
+  var francy = new Francy({verbose: true, callbackHandler: trigger});
   d3.json("json.json", function (error, json) {
     francy.handle(json);
   });
