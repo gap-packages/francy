@@ -31,8 +31,8 @@ function(json)
   # TODO validate json object!
   callback := FrancyCallbacks!.(object!.id);
   requiredArgs := [];
-  for arg in object!.requiredArgs do
-    Add(requiredArgs, arg!.value);
+  for arg in NamesOfComponents(object!.requiredArgs) do
+    Add(requiredArgs, object!.requiredArgs!.(arg)!.value);
   od;
-  return CallFuncList(callback!.func, Concatenation(callback!.knownArgs, requiredArgs));
+  CallFuncList(callback!.func, Concatenation(callback!.knownArgs, requiredArgs));
 end);

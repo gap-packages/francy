@@ -9,6 +9,8 @@ define([
   "use strict";
 
   window.d3 = d3;
+  // FIXME
+  Jupyter.keyboard_manager.command_shortcuts._shortcuts = {};
 
   let loadCss = function loadCss(name) {
     let link = document.createElement("link");
