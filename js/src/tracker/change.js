@@ -9,7 +9,7 @@ export default class Tracker {
    * @param {object} object - the object object to keep track of changes.
    * @param verbose
    */
-  constructor(object, {verbose = false} = {}) {
+  constructor(object, { verbose = false, throttle = 1000 } = {}) {
     this.verbose = verbose;
     /**
      * This is property holds a list of change subscribers.
@@ -39,7 +39,7 @@ export default class Tracker {
         this._dirty = false;
         return this.sync();
       }
-    }, 1000);
+    }, throttle);
   }
 
   /**
@@ -49,9 +49,9 @@ export default class Tracker {
    * @param {object} value - the new value
    */
   set(receiver, property, value) {
-    if (receiver[property] !== value) {
+    if (!(value[property] instanceof Object) && receiver[property] !== value) {
       if (this.verbose) {
-        console.debug(`Object ID ${this.object.id} property ${property} changed from ${receiver[property]} to ${value}.`);
+        //console.debug(`Object ID ${this.object.id} property ${property} changed from ${receiver[property]} to ${value}.`);
       }
       receiver[property] = value;
       this._dirty = true;
@@ -67,7 +67,7 @@ export default class Tracker {
    */
   get(target, key) {
     if (typeof target[key] === 'object' && target[key] !== null) {
-      return new Proxy(target[key], this)
+      return new Proxy(target[key], this);
     }
     return key in target ? target[key] : target;
   }

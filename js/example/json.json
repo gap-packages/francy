@@ -1,17 +1,14 @@
 {
   "agent": "application/francy",
   "canvas": {
+    "h": 400,
     "type": "layered",
     "id": "C2232D710B7840D7AC0B65170CB76F5A",
-    "title": "QuaternionGroup Subgroup Lattice",
-    "options": {
-      "h": 400,
-      "w": 680
-    },
+    "title": "Quaternion Group Subgroup Lattice",
     "menus": {
       "9ECB1D5F9D6D4278F434C256F63CBCD3": {
         "id": "9ECB1D5F9D6D4278F434C256F63CBCD3",
-        "title": "All Subgroups",
+        "title": "Other",
         "callback": {
           "type": "server",
           "id": "B9F9F0943FAD4D4E04CCA836666B98E8",
@@ -19,9 +16,109 @@
           "trigger": "click",
           "requiredArgs": {
             "A7C5F31D44B44DC45CBDBDDEC5BFE2C6": {
-              "type": "string",
+              "type": "number",
               "id": "A7C5F31D44B44DC45CBDBDDEC5BFE2C6",
+              "title": "A number",
+              "value": ""
+            },
+            "A7C5F31D44B44DC45CBDBDDEC5BFE276": {
+              "type": "string",
+              "id": "A7C5F31D44B44DC45CBDBDDEC5BFE276",
               "title": "A test String",
+              "value": ""
+            },
+            "A7C5F31D44B44DC45CBDBDDEC5BFE2C76": {
+              "type": "date",
+              "id": "A7C5F31D44B44DC45CBDBDDEC5BFE2C76",
+              "title": "A date ?",
+              "value": ""
+            }
+          }
+        },
+        "menus": {
+          "9ECB1D5F9D6D4278F434C256F63CBC": {
+            "id": "9ECB1D5F9D6D4278F434C256F63CBC",
+            "title": "cenas",
+            "callback": {
+              "type": "server",
+              "id": "B9F9F0943FAD4D4E04CCA836666B98",
+              "knownArgs": [],
+              "trigger": "click",
+              "requiredArgs": {
+                "A7C5F31D44B44DC45CBDBDDEC5BFE2": {
+                  "type": "number",
+                  "id": "A7C5F31D44B44DC45CBDBDDEC5BFE2",
+                  "title": "A number",
+                  "value": ""
+                },
+                "A7C5F31D44B44DC45CBDBDDEC5BFE2": {
+                  "type": "string",
+                  "id": "A7C5F31D44B44DC45CBDBDDEC5BFE2",
+                  "title": "A test String",
+                  "value": ""
+                },
+                "A7C5F31D44B44DC45CBDBDDEC5BFE2C": {
+                  "type": "date",
+                  "id": "A7C5F31D44B44DC45CBDBDDEC5BFE2C",
+                  "title": "A date ?",
+                  "value": ""
+                }
+              }
+            },
+            "menus": {}
+          },
+          "9ECB1D5F9D6D4278F434256F63CBC": {
+            "id": "9ECB1D5F9D6D4278F434256F63CBC",
+            "title": "cenas",
+            "callback": {
+              "type": "server",
+              "id": "B9F9F0943FAD4D4E04CCA36666B98",
+              "knownArgs": [],
+              "trigger": "click",
+              "requiredArgs": {
+                "A7C5F31D44B44DC45CBDBDDEC5BF": {
+                  "type": "number",
+                  "id": "A7C5F31D44B44DC45CBDBDDEC5BF",
+                  "title": "A number",
+                  "value": ""
+                },
+                "A7C5F31D44B44DC45CBDBDDE5BFE": {
+                  "type": "string",
+                  "id": "A7C5F31D44B44DC45CBDBDDE5BFE",
+                  "title": "A test String",
+                  "value": ""
+                },
+                "A7C5F31D44B44DC45CBDBDDEC5BFE2": {
+                  "type": "date",
+                  "id": "A7C5F31D44B44DC45CBDBDDEC5BFE2",
+                  "title": "A date ?",
+                  "value": ""
+                }
+              }
+            },
+            "menus": {}
+          }
+        }
+      },
+      "9ECB1D5F9D6D4278F434C256F63CBCD": {
+        "id": "9ECB1D5F9D6D4278F434C256F63CBCD",
+        "title": "All Subgroups",
+        "callback": {
+          "type": "server",
+          "id": "B9F9F0943FAD4D4E04CCA836666B98E",
+          "knownArgs": [],
+          "trigger": "click",
+          "requiredArgs": {
+            "A7C5F31D44B44DC45CBDBDDEC5BFE2C": {
+              "type": "number",
+              "id": "A7C5F31D44B44DC45CBDBDDEC5BFE2C",
+              "title": "A number",
+              "value": ""
+            },
+            "A7C5F31D44B44DC45CBDBDDEC5BFE27": {
+              "type": "string",
+              "id": "A7C5F31D44B44DC45CBDBDDEC5BFE27",
+              "title": "A String",
               "value": ""
             }
           }
@@ -29,30 +126,27 @@
         "menus": {}
       }
     },
+    "w": 680,
     "nodes": {
       "BBD6B49E746F45D42483770446A32F42": {
+        "x": 0,
+        "y": 0,
         "type": "diamond",
+        "size": 20,
         "id": "BBD6B49E746F45D42483770446A32F42",
         "title": "G",
-        "options": {
-          "x": 0,
-          "y": 0,
-          "size": 10,
-          "layer": 0,
-          "highlight": true
-        }
+        "layer": 0,
+        "highlight": true
       },
       "381B78FE811840038CCD1ACBA164C267": {
-        "type": "diamond",
+        "x": 0,
+        "y": 0,
+        "type": "circle",
+        "size": 30,
         "id": "381B78FE811840038CCD1ACBA164C267",
         "title": "1",
-        "options": {
-          "x": 0,
-          "y": 0,
-          "size": 10,
-          "layer": 0,
-          "highlight": true
-        }
+        "layer": 10,
+        "highlight": true
       }
     },
     "links": {

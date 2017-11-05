@@ -10,8 +10,24 @@
 #M  CanvasType . . . . . . . . . . . .  the various types of canvas supported
 ##
 BindGlobal("CanvasType", Objectify(NewType(CanvasFamily, IsFrancyType and IsFrancyTypeRep), rec(
-  NORMAL := Objectify(NewType(CanvasFamily, IsCanvasType and IsCanvasTypeRep), rec(value := "normal")),
-  FORCE := Objectify(NewType(CanvasFamily, IsCanvasType and IsCanvasTypeRep), rec(value := "force")),
+  NORMAL := Objectify(NewType(CanvasFamily, IsCanvasType and IsCanvasTypeRep), 
+    rec(
+      value := "normal", 
+      defaults := rec(
+        w:= 680,
+        h:= 400 
+      )
+    )
+  ),
+  FORCE := Objectify(NewType(CanvasFamily, IsCanvasType and IsCanvasTypeRep), 
+    rec(
+      value := "force",
+      defaults := rec(
+        w:= 680,
+        h:= 400
+      )
+    )
+  ),
   LAYERED := Objectify(NewType(CanvasFamily, IsCanvasType and IsCanvasTypeRep), rec(value := "layered")),
   GRID := Objectify(NewType(CanvasFamily, IsCanvasType and IsCanvasTypeRep), rec(value := "grid"))
 )));
@@ -37,15 +53,14 @@ InstallMethod(Canvas,
    IsCanvasDefaults],
   0,
 function(canvasType, title, options)
-  return Objectify(NewType(CanvasFamily, IsCanvas and IsCanvasRep), rec(
+  return MergeObjects(Objectify(NewType(CanvasFamily, IsCanvas and IsCanvasRep), rec(
     id        := HexStringUUID(RandomUUID()),
     menus     := rec(),
     nodes     := rec(),
     links     := rec(),
     type      := canvasType!.value,
-    title     := title,
-    options   := options
-  ));
+    title     := title
+  )), options);
 end);
 
 InstallOtherMethod(Canvas,

@@ -12,6 +12,9 @@ export default class Draw extends Canvas {
   }
 
   add(json) {
+    
+    var canvasNodes = Object.values(json.canvas.nodes),
+        canvasLinks = Object.values(json.canvas.links);
 
     var svg = this.canvas,
       width = +svg.attr('width'),
@@ -53,16 +56,16 @@ export default class Draw extends Canvas {
     var link = svg.append('g')
       .attr('class', 'links')
       .selectAll('line')
-      .data(json.links)
+      .data(canvasLinks)
       .enter().append('line')
       .attr('class', 'link')
-      .attr('id', d => `${d.source},${d.target}`);
-    //.style('marker-end', 'url(#arrow)');
+      .attr('id', d => `${d.source},${d.target}`)
+    .style('marker-end', 'url(#arrow)');
 
 
     var node = svg.append('g')
       .attr('class', 'nodes').selectAll('g.nodes')
-      .data(json.nodes, d => d.id)
+      .data(canvasNodes, d => d.id)
       .enter().append('path')
       .attr('d', d3.symbol().type(d => Canvas.getSymbol(d.type)).size(d => d.size * 90))
       .attr('transform', 'translate(0,0)')
@@ -82,7 +85,7 @@ export default class Draw extends Canvas {
     var label = svg.append('g')
       .attr('class', 'labels')
       .selectAll('text')
-      .data(json.nodes, d => d.id)
+      .data(canvasNodes, d => d.id)
       .enter().append('text')
       .attr('class', 'label')
       .text(d => d.title);
@@ -91,7 +94,7 @@ export default class Draw extends Canvas {
       .append('g')
       .attr('class', 'legend')
       .selectAll('g')
-      .data(d3.map(json.nodes, d => d.layer).values(), d => d.id)
+      .data(d3.map(canvasNodes, d => d.layer).values(), d => d.id)
       .enter()
       .append('g')
       .attr('id', d => `legendLayer${d.layer}`)
@@ -113,9 +116,9 @@ export default class Draw extends Canvas {
       .attr('y', 10 - 2)
       .text(d => `Index ${d.layer}`);
 
-    simulation.nodes(json.nodes).on('tick', ticked);
+    simulation.nodes(canvasNodes).on('tick', ticked);
 
-    simulation.force('link').links(json.links);
+    simulation.force('link').links(canvasLinks);
 
     function ticked() {
       link
@@ -129,7 +132,7 @@ export default class Draw extends Canvas {
         .attr('transform', d => `translate(${d.x},${d.y})`);
 
       label
-        .attr('x', d => d.x - d.title.length * 2 - Math.sqrt(d.size))
+        .attr('x', d => d.x - d.title.length - Math.sqrt(d.size))
         .attr('y', d => d.y - Math.sqrt(d.size));
 
       node.each(collide(0.5));
@@ -140,7 +143,7 @@ export default class Draw extends Canvas {
       radius = 20;
 
     function collide(alpha) {
-      let quadTree = d3.quadtree(json.nodes);
+      let quadTree = d3.quadtree(canvasNodes);
       return function (d) {
         let rb = 2 * radius + padding,
           nx1 = d.x - rb,
@@ -171,11 +174,11 @@ export default class Draw extends Canvas {
     //Create an array logging what is connected to what
     var linkedByIndex = {};
 
-    for (let i = 0; i < json.nodes.length; i++) {
+    for (let i = 0; i < canvasNodes.length; i++) {
       linkedByIndex[`${i},${i}`] = 1;
     }
 
-    json.links.forEach(function (d) {
+    canvasLinks.forEach(function (d) {
       linkedByIndex[`${d.source.index},${d.target.index}`] = 1;
     });
 

@@ -39,3 +39,9 @@
 #O  Clone . . . . . . . . . clones IsFrancyObjects using their representation
 ##
 DeclareOperation("Clone", [IsObject]);
+
+#############################################################################
+##
+#O  MergeRecord( <obj>, <obj> )  . . . . . . . . simple properties merge
+##
+DeclareOperation("MergeObjects", [IsFrancyObject, IsFrancyObject]);

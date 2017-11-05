@@ -77,3 +77,20 @@ function(object, record)
   od;
   return record;
 end);
+
+#############################################################################
+##
+#O  MergeRecord( <obj>, <obj> )  . . . . . . . . simple properties merge
+##
+InstallMethod(MergeObjects,
+  "an object, another object",
+  true,
+  [IsFrancyObject, IsFrancyObject],
+  0,
+function(dst, src)
+  local name;
+  for name in NamesOfComponents(src) do
+    dst!.(name) := src!.(name);
+  od;
+  return dst;
+end);

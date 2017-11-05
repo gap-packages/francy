@@ -1,6 +1,6 @@
 /**
  * This class generates ids for the html/svg elements in the dom.
- * The ids naming convention is: 'francy[Window|Canvas|Object]*numerical id*'
+ * The ids naming convention is: 'Francy[Window|Canvas|Object]-*numerical id*'
  */
 export default class IDUtils {
 
@@ -10,7 +10,7 @@ export default class IDUtils {
    * @returns {string} the window element id.
    */
   static getWindowId(canvasId) {
-    return `francyWindow${canvasId}`;
+    return `FrancyWindow-${canvasId}`;
   }
 
   /**
@@ -19,7 +19,7 @@ export default class IDUtils {
    * @returns {string} the canvas element id.
    */
   static getCanvasId(canvasId) {
-    return `francyCanvas${canvasId}`;
+    return `FrancyCanvas-${canvasId}`;
   }
 
   /**
@@ -28,6 +28,6 @@ export default class IDUtils {
    * @returns {string} the element object id.
    */
   static getObjectId(objectId) {
-    return `francyObject${objectId}`;
+    return `FrancyObject-${objectId}`;
   }
 }

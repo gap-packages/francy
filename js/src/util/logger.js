@@ -1,24 +1,38 @@
 /**
- * This class generates ids for the html/svg elements in the dom.
- * The ids naming convention is: 'francy[Window|Canvas|Object]*numerical id*'
+ * This class is a singleton that provides a logger for the Francy application.
  */
+
+let singleton = null;
+
 export default class Logger {
 
-  constructor({verbose = false} = {}) {
-    this.verbose = verbose;
+  constructor({ verbose = false } = {}) {
+    if (!singleton) {
+      this.verbose = verbose;
+      this.console = console;
+      singleton = this;
+    }
+    else {
+      return singleton;
+    }
+    
   }
 
   debug(message) {
     if (this.verbose) {
-      console.debug(message);
+      this.console.debug(this._format('DEBUG', message));
     }
   }
 
   info(message) {
-    console.info(message);
+    this.console.info(this._format('INFO', message));
   }
 
   error(message, error) {
-    console.error(message, error);
+    this.console.error(this._format('ERROR', message), error);
+  }
+  
+  _format(level, message) {
+    return `[${level}] - ${new Date().toISOString()} - ${message}`;
   }
 }

@@ -36,7 +36,7 @@ text.label {
  * Menus
  */
 .dropdown-button {
-  background-color: transparent;
+  background-color: #ededed;
   color: black;
   padding: 4px;
   border: 1px solid;
@@ -52,38 +52,60 @@ text.label {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
   min-width: 160px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
-  border: 1px solid;
 }
 
-.dropdown-content a {
+.dropdown-content button.dropdown-button {
   color: black;
   padding: 4px 12px;
   text-decoration: none;
   display: block;
   cursor: pointer;
+  width: 100%;
+  border-width: 0 1px 1px 1px;
+  text-align: left;
 }
 
-.dropdown-content a:hover {
-  background-color: #a0a0a0;
+.dropdown-content, button:hover {
+  background-color: #ededed;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
-.dropdown:hover .dropdown-button {
-  background-color: #a0a0a0;
+.dropdown:hover, .dropdown-button {
+  background-color: #f6f6f6;
 }
 
 .menu {
   margin: 0;
   padding: 4px;
-  background-color: #e9e9e9;
+  background-color: #f6f6f6;
   border: 1px solid #dddddd;
+}
+
+/**
+ * Modal
+ *
+ */
+
+.requiredArgs {
+  padding: 10px;
+}
+
+.requiredArgs > label {
+  margin: 3px;
+  display: inline-block;
+  text-align: right;
+  width: 40%;
+}
+
+.requiredArgs > input {
+  margin: 3px;
+  width: 54%;
 }
 
 /**
@@ -110,4 +132,12 @@ text.label {
 .ui-widget-header {
   background: #e9e9e9 none;
   border: 1px solid #dddddd;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+  padding: 0 !important;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+    margin-top: 3px!important;
 }

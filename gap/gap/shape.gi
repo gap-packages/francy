@@ -45,12 +45,11 @@ InstallMethod(Shape,
    IsShapeDefaults],
   0,
 function(shapeType, title, options)
-  return Objectify(NewType(ShapeFamily, IsShape and IsShapeRep), rec(
+  return MergeObjects(Objectify(NewType(ShapeFamily, IsShape and IsShapeRep), rec(
     id      := HexStringUUID(RandomUUID()),
     type    := shapeType!.value,
-    title   := title,
-    options := options
-  ));
+    title   := title
+  )), options);
 end);
 
 InstallOtherMethod(Shape,

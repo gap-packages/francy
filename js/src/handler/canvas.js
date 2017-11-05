@@ -1,5 +1,5 @@
 import IDUtils from '../util/id-utils';
-import MenuUtils from '../util/menu-utils';
+import MenuUtils from './menu';
 import Logger from '../util/logger';
 
 export default class AbstractCanvas {
@@ -11,25 +11,32 @@ export default class AbstractCanvas {
   static getSymbol(type) {
     if (type === 'circle') {
       return d3.symbolCircle;
-    } else if (type === 'cross') {
+    }
+    else if (type === 'cross') {
       return d3.symbolCross;
-    } else if (type === 'diamond') {
+    }
+    else if (type === 'diamond') {
       return d3.symbolDiamond;
-    } else if (type === 'square') {
+    }
+    else if (type === 'square') {
       return d3.symbolSquare;
-    } else if (type === 'triangle') {
+    }
+    else if (type === 'triangle') {
       return d3.symbolTriangle;
-    } else if (type === 'star') {
+    }
+    else if (type === 'star') {
       return d3.symbolStar;
-    } else if (type === 'wye') {
+    }
+    else if (type === 'wye') {
       return d3.symbolWye;
-    } else {
+    }
+    else {
       return d3.symbolCircle;
     }
   }
 
-  constructor({verbose = false} = {}) {
-    this.logger = new Logger({verbose: verbose});
+  constructor({ verbose = false } = {}) {
+    this.logger = new Logger({ verbose: verbose });
   }
 
   _renderCanvas(json) {
@@ -58,14 +65,14 @@ export default class AbstractCanvas {
     }
     // this will force the dialog to open
     $(`#${self.windowId}`).dialog({
-      close: function (event, ui) {
+      close: function(event, ui) {
         self.logger.debug(`Closing window [${self.windowId}]...`);
         return $(this).dialog('destroy').remove();
       }
     });
     self.logger.debug(`Creating Window Menus [${self.windowId}]...`);
     // build menu
-    $(MenuUtils.getMenuHtml(json)).appendTo(`#${self.windowId}`);
+    $(`#${self.windowId}`).append(new MenuUtils().getMenuHtml(json));
     $('<br/>').appendTo(`#${self.windowId}`);
 
     // build canvas
@@ -83,7 +90,7 @@ export default class AbstractCanvas {
     // update if needed
     self.canvas
       .attr('width', json.canvas.w)
-      .attr('height', json.canvas.h)
+      .attr('height', json.canvas.h);
   }
 
 }

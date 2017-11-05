@@ -26,11 +26,13 @@ InstallMethod(Trigger,
   [IsString],
   0,
 function(json)
-  local callback, object, requiredArgs;
+  local callback, object, requiredArgs, arg;
   object := JsonStringToGap(json);
   # TODO validate json object!
   callback := FrancyCallbacks!.(object!.id);
-  # TODO iterate over args and create a list of values
   requiredArgs := [];
-  return CallFuncList(callback!.func, callback!.knownArgs + requiredArgs);
+  for arg in object!.requiredArgs do
+    Add(requiredArgs, arg!.value);
+  od;
+  return CallFuncList(callback!.func, Concatenation(callback!.knownArgs, requiredArgs));
 end);

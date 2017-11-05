@@ -42,7 +42,8 @@ InstallMethod(Callback,
    IsList],
   0,
 function(callbackType, triggerEvent, func, knownArgs)
-  return Objectify(NewType(CallbackFamily, IsCallback and IsCallbackRep), rec(
+  local object;
+  object := Objectify(NewType(CallbackFamily, IsCallback and IsCallbackRep), rec(
     id           := HexStringUUID(RandomUUID()),
     type         := callbackType!.value,
     trigger      := triggerEvent!.value,
@@ -50,6 +51,8 @@ function(callbackType, triggerEvent, func, knownArgs)
     knownArgs    := knownArgs,
     requiredArgs := rec()
   ));
+  FrancyCallbacks!.(object!.id) := object;
+  return object;
 end);
 
 InstallOtherMethod(Callback,
@@ -93,6 +96,7 @@ InstallMethod(RequiredArg,
    IsString],
   0,
 function(argType, title)
+  # FIXME might have to add a new property with order of the arg!
   return Objectify(NewType(CallbackFamily, IsRequiredArg and IsRequiredArgRep), rec(
     id    := HexStringUUID(RandomUUID()),
     type  := argType!.value,

@@ -5,12 +5,10 @@ define([
   'base/js/namespace',
   'nbextensions/francy/lib/d3.v4.min',
   'nbextensions/francy/amd/francy.bundle',
-], function (require, Jupyter, d3, FrancyBundle) {
+], function(require, Jupyter, d3, FrancyBundle) {
   "use strict";
 
   window.d3 = d3;
-  // TODO missing attach handlers for menu and changes
-  let francy = new FrancyBundle.Francy({verbose: true});
 
   let loadCss = function loadCss(name) {
     let link = document.createElement("link");
@@ -23,17 +21,24 @@ define([
   loadCss('./../css/style.css');
 
   return {
-    load_ipython_extension: function () {
+    load_ipython_extension: function() {
 
       console.log('Loading Francy Javascript...');
 
       Jupyter.notebook.kernel.executeHighjacked = Jupyter.notebook.kernel.execute;
 
-      Jupyter.notebook.kernel.execute = function (command, callbacks, options) {
+      Jupyter.notebook.kernel.execute = function(command, callbacks, options) {
+        var self = this;
+
+        function trigger(cmd) {
+          self.executeHighjacked(cmd, callbacks, options);
+        }
+
         callbacks.iopub.outputHighjacked = callbacks.iopub.output;
 
-        callbacks.iopub.output = function (msg) {
+        callbacks.iopub.output = function(msg) {
           callbacks.iopub.outputHighjacked(msg);
+          let francy = new FrancyBundle.Francy({ verbose: true, callbackHandler: trigger });
           if (msg.content && msg.content.data['application/francy+json']) {
             francy.handle(msg.content.data['application/francy+json']);
           }
@@ -41,7 +46,6 @@ define([
 
         this.executeHighjacked(command, callbacks, options);
       };
-
     }
   };
 
