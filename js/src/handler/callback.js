@@ -5,7 +5,7 @@ import Modal from '../util/modal';
 
 export default class CallbackHandler {
 
-  constructor(config, { verbose = false, callbackHandler } = {}) {
+  constructor(config, { verbose = false, callbackHandler }) {
     this.options = {
       verbose: verbose,
       callbackHandler: callbackHandler

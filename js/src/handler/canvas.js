@@ -35,7 +35,11 @@ export default class AbstractCanvas {
     }
   }
 
-  constructor({ verbose = false } = {}) {
+  constructor({ verbose = false, callbackHandler }) {
+    this.options = {
+      verbose: verbose,
+      callbackHandler: callbackHandler
+    };
     this.logger = new Logger({ verbose: verbose });
   }
 
@@ -72,7 +76,7 @@ export default class AbstractCanvas {
     });
     self.logger.debug(`Creating Window Menus [${self.windowId}]...`);
     // build menu
-    $(`#${self.windowId}`).append(new MenuUtils().getMenuHtml(json));
+    $(`#${self.windowId}`).append(new MenuUtils(this.options).getMenuHtml(json));
     $('<br/>').appendTo(`#${self.windowId}`);
 
     // build canvas

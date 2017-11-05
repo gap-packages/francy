@@ -2,7 +2,7 @@ import Logger from '../util/logger';
 
 export default class Modal {
 
-  constructor(config, { verbose = false, callbackHandler = console.log } = {}) {
+  constructor(config, { verbose = false, callbackHandler }) {
     this.options = {
       verbose: verbose,
       callbackHandler: callbackHandler

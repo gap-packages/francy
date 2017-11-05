@@ -2,7 +2,7 @@ import Callback from './callback';
 
 export default class MenuUtils {
 
-  constructor({ verbose = false, callbackHandler } = {}) {
+  constructor({ verbose = false, callbackHandler }) {
     this.options = {
       verbose: verbose,
       callbackHandler: callbackHandler

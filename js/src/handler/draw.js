@@ -2,8 +2,8 @@ import Canvas from './canvas';
 
 export default class Draw extends Canvas {
 
-  constructor({verbose = false} = {}) {
-    super({verbose: verbose});
+  constructor({ verbose = false, callbackHandler }) {
+    super({ verbose: verbose, callbackHandler: callbackHandler });
   }
 
   handle(json) {
@@ -12,9 +12,9 @@ export default class Draw extends Canvas {
   }
 
   add(json) {
-    
+
     var canvasNodes = Object.values(json.canvas.nodes),
-        canvasLinks = Object.values(json.canvas.links);
+      canvasLinks = Object.values(json.canvas.links);
 
     var svg = this.canvas,
       width = +svg.attr('width'),
@@ -60,7 +60,7 @@ export default class Draw extends Canvas {
       .enter().append('line')
       .attr('class', 'link')
       .attr('id', d => `${d.source},${d.target}`)
-    .style('marker-end', 'url(#arrow)');
+      .style('marker-end', 'url(#arrow)');
 
 
     var node = svg.append('g')
@@ -78,7 +78,7 @@ export default class Draw extends Canvas {
       //.on('contextmenu', connectedNodes) //rightclick
       .on('click', connectedNodes);
 
-    node.append('title').text(function (d) {
+    node.append('title').text(function(d) {
       return `ID:\t${d.id}\nLayer:\t${d.layer}`;
     });
 
@@ -98,7 +98,7 @@ export default class Draw extends Canvas {
       .enter()
       .append('g')
       .attr('id', d => `legendLayer${d.layer}`)
-      .attr('transform', function (d, i) {
+      .attr('transform', function(d, i) {
         let x = 0;
         let y = i * 11;
         return `translate(${x},${y})`;
@@ -144,13 +144,13 @@ export default class Draw extends Canvas {
 
     function collide(alpha) {
       let quadTree = d3.quadtree(canvasNodes);
-      return function (d) {
+      return function(d) {
         let rb = 2 * radius + padding,
           nx1 = d.x - rb,
           nx2 = d.x + rb,
           ny1 = d.y - rb,
           ny2 = d.y + rb;
-        quadTree.visit(function (quad, x1, y1, x2, y2) {
+        quadTree.visit(function(quad, x1, y1, x2, y2) {
           if (quad.point && (quad.point !== d)) {
             let x = d.x - quad.point.x,
               y = d.y - quad.point.y,
@@ -178,7 +178,7 @@ export default class Draw extends Canvas {
       linkedByIndex[`${i},${i}`] = 1;
     }
 
-    canvasLinks.forEach(function (d) {
+    canvasLinks.forEach(function(d) {
       linkedByIndex[`${d.source.index},${d.target.index}`] = 1;
     });
 
@@ -196,7 +196,8 @@ export default class Draw extends Canvas {
         link.style('opacity', o => d.index === o.source.index || d.index === o.target.index ? 1 : 0.1);
         //Reduce the op
         toggle = 1;
-      } else {
+      }
+      else {
         //Put them back to opacity=1
         node.style('opacity', 1);
         link.style('opacity', 1);
