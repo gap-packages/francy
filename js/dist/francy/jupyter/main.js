@@ -12,6 +12,18 @@ define([
   // FIXME
   Jupyter.keyboard_manager.command_shortcuts._shortcuts = {};
 
+  function trigger(json) {
+    Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, { iopub: { output: output } }, {});
+  }
+
+  function output(msg) {
+    if (msg.content && msg.content.data && msg.content.data['application/francy+json']) {
+      francy.handle(msg.content.data['application/francy+json']);
+    }
+  }
+
+  let francy = new FrancyBundle.Francy({ verbose: true, callbackHandler: trigger });
+
   let loadCss = function loadCss(name) {
     let link = document.createElement("link");
     link.type = "text/css";
@@ -30,20 +42,11 @@ define([
       Jupyter.notebook.kernel.executeHighjacked = Jupyter.notebook.kernel.execute;
 
       Jupyter.notebook.kernel.execute = function(command, callbacks, options) {
-        var self = this;
-
-        function trigger(json) {
-          self.executeHighjacked(`Trigger(${JSON.stringify(JSON.stringify(json))});`, callbacks, options);
-        }
-
         callbacks.iopub.outputHighjacked = callbacks.iopub.output;
 
-        callbacks.iopub.output = function(msg) {
+        callbacks.iopub.output = function output(msg) {
           callbacks.iopub.outputHighjacked(msg);
-          let francy = new FrancyBundle.Francy({ verbose: true, callbackHandler: trigger });
-          if (msg.content && msg.content.data['application/francy+json']) {
-            francy.handle(msg.content.data['application/francy+json']);
-          }
+          output(msg);
         };
 
         this.executeHighjacked(command, callbacks, options);
