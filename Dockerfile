@@ -10,4 +10,3 @@ RUN jupyter nbextension enable francy/jupyter/main --system
 RUN ln -s /home/gap/francy/gap /home/gap/inst/gap-master/pkg/francy
 
 COPY . /home/gap
-
