@@ -30,8 +30,8 @@ define([
       Jupyter.notebook.kernel.execute = function(command, callbacks, options) {
         var self = this;
 
-        function trigger(cmd) {
-          self.executeHighjacked(cmd, callbacks, options);
+        function trigger(json) {
+          self.executeHighjacked(`Trigger(${JSON.stringify(json)});`, callbacks, options);
         }
 
         callbacks.iopub.outputHighjacked = callbacks.iopub.output;
