@@ -22,7 +22,7 @@ BindGlobal("ArgType", Objectify(NewType(CallbackFamily, IsFrancyType and IsFranc
   INTEGER := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "int")),
   BOOLEAN := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "boolean")),
   STRING  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "string")),
-  DOUBLE  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "double"))
+  NUMBER  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "number"))
 )));
 
 #############################################################################
