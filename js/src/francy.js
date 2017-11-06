@@ -34,13 +34,12 @@ export class Francy {
    * Main entry point. Calling handle passing a json representation string will trigger the drawing of a json object.
    * @param input - a json string/object to get drawn
    */
-  handle(input, { appendTo } = {}) {
+  handle(input) {
     let json = JsonUtils.parse(input);
     if (json) {
       //var tracker = new Tracker(json, this.options);
       //tracker.subscribe(function(obj) { console.log(obj); });
       //return new Draw(this.options).handle(tracker.object);
-      this.options.appendTo = appendTo ? appendTo : this.options.appendTo;
       return new Draw(this.options).render(json);
     }
   }

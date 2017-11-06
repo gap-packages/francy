@@ -20,9 +20,12 @@
   
   var francy = new Francy({verbose: true, appendTo: $('#francy'), callbackHandler: trigger});
   d3.json("json.json", function (error, json) {
-    francy.handle(json);
+    var id = francy.handle(json);
+    console.log(id);
+    $(`#${id}`).detach().appendTo('#francy2');
   });
 
 </script>
+<div id="francy2"></div>
 </body>
 </html>

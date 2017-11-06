@@ -9,6 +9,7 @@ export default class Draw extends Canvas {
   render(json) {
     this._renderCanvas(json);
     this._render(json);
+    return this.windowId;
   }
 
   _render(json) {
@@ -220,8 +221,6 @@ export default class Draw extends Canvas {
       d.fx = null;
       d.fy = null;
     }
-
-    return self.window;
 
   }
 

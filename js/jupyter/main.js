@@ -47,8 +47,9 @@ define([
       // `this` is the output area we are appending to
       let append_mime = function(json, md, element) {
         var toinsert = this.create_output_subarea(md, CLASS_NAME, MIME_TYPE);
+        var francyObjectId = francy.handle(json);
+        $(`#${francyObjectId}`).detach().appendTo(toinsert);
         element.append(toinsert);
-        francy.handle(json, { appendTo: element });
         return toinsert;
       };
 
