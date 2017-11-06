@@ -35,9 +35,10 @@ export default class AbstractCanvas {
     }
   }
 
-  constructor({ verbose = false, callbackHandler }) {
+  constructor({ verbose = false, appendTo, callbackHandler }) {
     this.options = {
       verbose: verbose,
+      appendTo: appendTo,
       callbackHandler: callbackHandler
     };
     this.logger = new Logger({ verbose: verbose });
@@ -57,27 +58,27 @@ export default class AbstractCanvas {
       $('<div>', {
         id: self.windowId,
         title: json.canvas.title,
-        width: json.canvas.w,
-        height: json.canvas.h
-      }).appendTo('body');
+        class: 'window'
+      }).appendTo(this.options.appendTo);
       // update element
       self.window = d3.select(`#${self.windowId}`);
-      // build menu
-      $(`#${self.windowId}`).append(new MenuUtils(this.options).getMenuHtml(json));
-      $('<br/>').appendTo(`#${self.windowId}`);
     }
     // cannot continue if window is not present
     if (!self.window.node()) {
       throw new Error(`Oops, could not create window with id ${self.windowId}... Cannot proceed.`);
     }
     // this will force the dialog to open
-    $(`#${self.windowId}`).dialog({
-      close: function(event, ui) {
-        self.logger.debug(`Closing window [${self.windowId}]...`);
-        return $(this).dialog('destroy').remove();
-      }
-    });
+    //$(`#${self.windowId}`).dialog({
+    //  close: function(event, ui) {
+    //    self.logger.debug(`Closing window [${self.windowId}]...`);
+    //    return $(this).dialog('destroy').remove();
+    //  }
+    //});
     self.logger.debug(`Creating Window Menus [${self.windowId}]...`);
+
+    // build menu
+    new MenuUtils(json, { version: this.options.verbose, appendTo: self.window.node(), callbackHandler: this.options.callbackHandler });
+    $('<br/>').appendTo(`#${self.windowId}`);
 
     // build canvas
     self.canvasId = IDUtils.getCanvasId(json.canvas.id);
@@ -85,7 +86,7 @@ export default class AbstractCanvas {
     if (!self.canvas.node()) {
       self.logger.debug(`Creating Canvas [${self.canvasId}]...`);
       self.canvas = d3.select(`div#${self.windowId}`).append('svg')
-        .attr('id', self.canvasId);
+        .attr('id', self.canvasId).attr('class', 'canvas');
     }
     // cannot continue if canvas is not present
     if (!self.canvas.node()) {

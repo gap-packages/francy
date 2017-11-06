@@ -65,6 +65,7 @@ define([
 
       let francy = new FrancyBundle.Francy({
         verbose: true,
+        appendTo: 'body',
         callbackHandler: trigger
       });
     }

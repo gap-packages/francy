@@ -2,16 +2,16 @@ import Canvas from './canvas';
 
 export default class Draw extends Canvas {
 
-  constructor({ verbose = false, callbackHandler }) {
-    super({ verbose: verbose, callbackHandler: callbackHandler });
+  constructor({ verbose = false, appendTo, callbackHandler }) {
+    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  handle(json) {
+  render(json) {
     this._renderCanvas(json);
-    this.add(json);
+    this._render(json);
   }
 
-  add(json) {
+  _render(json) {
 
     var canvasNodes = Object.values(json.canvas.nodes),
       canvasLinks = Object.values(json.canvas.links);
@@ -61,7 +61,6 @@ export default class Draw extends Canvas {
       .attr('class', 'link')
       .attr('id', d => `${d.source},${d.target}`)
       .style('marker-end', 'url(#arrow)');
-
 
     var node = svg.append('g')
       .attr('class', 'nodes').selectAll('g.nodes')
@@ -221,6 +220,8 @@ export default class Draw extends Canvas {
       d.fx = null;
       d.fy = null;
     }
+
+    return self.window;
 
   }
 

@@ -2,9 +2,10 @@ import Logger from '../util/logger';
 
 export default class Modal {
 
-  constructor(config, { verbose = false, callbackHandler }) {
+  constructor(config, { verbose = false, appendTo, callbackHandler }) {
     this.options = {
       verbose: verbose,
+      appendTo: appendTo,
       callbackHandler: callbackHandler
     };
     this.logger = new Logger({ verbose: verbose });
@@ -21,7 +22,7 @@ export default class Modal {
       id: self.config.id,
       title: 'Required Arguments',
       class: 'requiredArgs'
-    }).appendTo('body');
+    }).appendTo(this.options.appendTo);
 
     for (var arg of Object.values(self.config.requiredArgs)) {
       $('<label>', {

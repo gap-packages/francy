@@ -2,14 +2,16 @@ import Callback from './callback';
 
 export default class MenuUtils {
 
-  constructor({ verbose = false, callbackHandler }) {
+  constructor(json, { verbose = false, appendTo, callbackHandler }) {
     this.options = {
       verbose: verbose,
+      appendTo: appendTo,
       callbackHandler: callbackHandler
     };
+    this.build(json);
   }
 
-  getMenuHtml(json) {
+  build(json) {
     var self = this;
     var $html = $('<div>', { class: 'menu', id: json.id });
     self._buildDefaultMenu().appendTo($html);
@@ -28,7 +30,7 @@ export default class MenuUtils {
         $('<button>', { class: 'dropdown-button', click: function() { return callback.execute(); } }).text(menu.title).appendTo($menu);
       }
     }
-    return $html;
+    $html.appendTo(this.options.appendTo);
   }
 
   _buildDefaultMenu() {
