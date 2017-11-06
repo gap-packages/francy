@@ -19,17 +19,6 @@ define([
     Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
   }
 
-  outputHandler.OutputArea.prototype._handle_output = outputHandler.OutputArea.prototype.handle_output;
-
-  outputHandler.OutputArea.prototype.handle_output = function(msg) {
-    if (msg.content && msg.content.data && msg.content.data['application/francy+json']) {
-      // FIXME this should return an html object to include in the cell
-      francy.handle(msg.content.data['application/francy+json']);
-      return;
-    }
-    return outputHandler.OutputArea.prototype._handle_output(msg);
-  };
-
   let loadCss = function loadCss(name) {
     let link = document.createElement("link");
     link.type = "text/css";
@@ -44,6 +33,17 @@ define([
     load_ipython_extension: function() {
 
       console.log('Loading Francy Javascript...');
+
+      outputHandler.OutputArea.prototype._handle_output = outputHandler.OutputArea.prototype.handle_output;
+
+      outputHandler.OutputArea.prototype.handle_output = function(msg) {
+        if (msg.content && msg.content.data && msg.content.data['application/francy+json']) {
+          // FIXME this should return an html object to include in the cell
+          francy.handle(msg.content.data['application/francy+json']);
+          return;
+        }
+        return this._handle_output(msg);
+      };
 
     }
   };
