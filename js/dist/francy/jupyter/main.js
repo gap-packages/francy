@@ -9,6 +9,8 @@ define([
 ], function(require, Jupyter, outputHandler, d3, FrancyBundle) {
   "use strict";
 
+  var self = this;
+
   window.d3 = d3;
 
   let loadCss = function loadCss(name) {
@@ -23,8 +25,6 @@ define([
 
   return {
     load_ipython_extension: function() {
-
-      var self = this;
 
       console.log('Loading Francy Javascript...');
 
