@@ -35,8 +35,8 @@ define([
         Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, {
           iopub: {
             output: function(msg) {
-              if (msg.content && msg.content.data && msg.content.data['application/francy+json']) {
-                francy.handle(msg.content.data['application/francy+json']);
+              if (msg.content && msg.content.data && msg.content.data['application/vnd.francy+json']) {
+                francy.handle(msg.content.data['application/vnd.francy+json']);
                 return;
               }
             }
