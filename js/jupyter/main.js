@@ -16,7 +16,7 @@ define([
   let francy = new FrancyBundle.Francy({ verbose: true, callbackHandler: trigger });
 
   function trigger(json) {
-    Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, { iopub: { output: outputHandler.OutputArea.prototype.handle_output } }, {});
+    Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
   }
 
   outputHandler.OutputArea.prototype._handle_output = outputHandler.OutputArea.prototype.handle_output;
