@@ -24,18 +24,25 @@ define([
   return {
     load_ipython_extension: function() {
 
+      var self = this;
+
       console.log('Loading Francy Javascript...');
 
       // FIXME Cannot write on dialog as it will assume as keyboard shortcut!
       Jupyter.keyboard_manager.command_shortcuts._shortcuts = {};
 
-      let francy = new FrancyBundle.Francy({ verbose: true, callbackHandler: trigger });
+      let francy = new FrancyBundle.Francy({
+        verbose: true,
+        callbackHandler: function(msg) {
+          trigger.call(self, msg);
+        }
+      });
+
+      outputHandler.OutputArea.prototype._handle_output = outputHandler.OutputArea.prototype.handle_output;
 
       function trigger(json) {
         Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, { iopub: { output: outputHandler.OutputArea.prototype.handle_output } }, {});
       }
-
-      outputHandler.OutputArea.prototype._handle_output = outputHandler.OutputArea.prototype.handle_output;
 
       outputHandler.OutputArea.prototype.handle_output = function(msg) {
         if (msg.content && msg.content.data && msg.content.data['application/francy+json']) {
