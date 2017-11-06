@@ -31,23 +31,12 @@ define([
 
       console.log('Loading Francy Javascript...');
 
-      var trigger = function(json) {
-        Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
+      let trigger = function(json) {
+        Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, { iopub: { output: append_mime } }, {});
       };
-
-      var action = {
-        icon: '', // a font-awesome class used on buttons, etc
-        help: 'execute callback command',
-        help_index: 'zz',
-        handler: trigger
-      };
-      var prefix = 'francy';
-      var action_name = 'callback';
-
-      Jupyter.actions.register(action, action_name, prefix);
 
       // `this` is the output area we are appending to
-      var append_mime = function(json, md, element) {
+      let append_mime = function(json, md, element) {
         var toinsert = this.create_output_subarea(md, CLASS_NAME, MIME_TYPE);
         francy.handle(json);
         element.append(toinsert);
@@ -67,7 +56,7 @@ define([
 
       let francy = new FrancyBundle.Francy({
         verbose: true,
-        callbackHandler: Jupyter.actions._actions['francy:callback'].handler
+        callbackHandler: trigger
       });
     }
   };
