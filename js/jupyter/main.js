@@ -27,7 +27,7 @@ define([
       francy.handle(msg.content.data['application/francy+json']);
       return;
     }
-    return this._handle_output(msg);
+    return outputHandler.OutputArea.prototype._handle_output(msg);
   };
 
   let loadCss = function loadCss(name) {
