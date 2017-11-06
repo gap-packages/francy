@@ -11,7 +11,7 @@ export default class MenuUtils {
 
   getMenuHtml(json) {
     var self = this;
-    var $html = $('<div>', { class: 'menu' });
+    var $html = $('<div>', { class: 'menu', id: json.id });
     self._buildDefaultMenu().appendTo($html);
     for (let menu of Object.values(json.canvas.menus)) {
       var callback = new Callback(menu, this.options);

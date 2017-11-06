@@ -47,31 +47,28 @@ define([
         index: 0
       });
 
-
       // FIXME Cannot write on dialog as it will assume as keyboard shortcut!
       Jupyter.keyboard_manager.command_shortcuts._shortcuts = {};
 
       let francy = new FrancyBundle.Francy({
         verbose: true,
-        callbackHandler: function(msg) {
-          trigger.call(self, msg);
-        }
+        callbackHandler: Jupyter.actions._actions['francy:callback'].handler
       });
 
-      //outputHandler.OutputArea.prototype._handle_output = outputHandler.OutputArea.prototype.handle_output;
+      var trigger = function(json) {
+        Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
+      };
 
-      function trigger(json) {
-        Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`); //, { iopub: { output: outputHandler.OutputArea.prototype.handle_output } }, {});
-      }
+      var action = {
+        icon: '', // a font-awesome class used on buttons, etc
+        help: 'execute callback command',
+        help_index: 'zz',
+        handler: trigger
+      };
+      var prefix = 'francy';
+      var action_name = 'callback';
 
-      //outputHandler.OutputArea.prototype.handle_output = function(msg) {
-      //  if (msg.content && msg.content.data && msg.content.data['application/vnd.francy+json']) {
-      // FIXME this should return an html object to include in the cell
-      //    francy.handle(msg.content.data['application/vnd.francy+json']);
-      //    return;
-      //  }
-      //  return this._handle_output(msg);
-      //};
+      Jupyter.actions.register(action, action_name, prefix);
     }
   };
 

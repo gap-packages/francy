@@ -62,6 +62,9 @@ export default class AbstractCanvas {
       }).appendTo('body');
       // update element
       self.window = d3.select(`#${self.windowId}`);
+      // build menu
+      $(`#${self.windowId}`).append(new MenuUtils(this.options).getMenuHtml(json));
+      $('<br/>').appendTo(`#${self.windowId}`);
     }
     // cannot continue if window is not present
     if (!self.window.node()) {
@@ -75,9 +78,6 @@ export default class AbstractCanvas {
       }
     });
     self.logger.debug(`Creating Window Menus [${self.windowId}]...`);
-    // build menu
-    $(`#${self.windowId}`).append(new MenuUtils(this.options).getMenuHtml(json));
-    $('<br/>').appendTo(`#${self.windowId}`);
 
     // build canvas
     self.canvasId = IDUtils.getCanvasId(json.canvas.id);
