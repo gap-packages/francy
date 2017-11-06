@@ -32,7 +32,16 @@ define([
       console.log('Loading Francy Javascript...');
 
       let trigger = function(json) {
-        Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, { iopub: { output: append_mime } }, {});
+        Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, {
+          iopub: {
+            output: function(msg) {
+              if (msg.content && msg.content.data && msg.content.data['application/francy+json']) {
+                francy.handle(msg.content.data['application/francy+json']);
+                return;
+              }
+            }
+          }
+        }, {});
       };
 
       // `this` is the output area we are appending to
