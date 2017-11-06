@@ -48,7 +48,7 @@ define([
       let append_mime = function(json, md, element) {
         var toinsert = this.create_output_subarea(md, CLASS_NAME, MIME_TYPE);
         element.append(toinsert);
-        francy.handle(json, { appendTo: toinsert });
+        francy.handle(json, { appendTo: element });
         return toinsert;
       };
 
