@@ -10,14 +10,6 @@ define([
   "use strict";
 
   window.d3 = d3;
-  // FIXME Cannot write on dialog as it will assume as keyboard shortcut!
-  Jupyter.keyboard_manager.command_shortcuts._shortcuts = {};
-
-  let francy = new FrancyBundle.Francy({ verbose: true, callbackHandler: trigger });
-
-  function trigger(json) {
-    Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
-  }
 
   let loadCss = function loadCss(name) {
     let link = document.createElement("link");
@@ -34,6 +26,15 @@ define([
 
       console.log('Loading Francy Javascript...');
 
+      // FIXME Cannot write on dialog as it will assume as keyboard shortcut!
+      Jupyter.keyboard_manager.command_shortcuts._shortcuts = {};
+
+      let francy = new FrancyBundle.Francy({ verbose: true, callbackHandler: trigger });
+
+      function trigger(json) {
+        Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, { iopub: { output: outputHandler.OutputArea.prototype.handle_output } }, {});
+      }
+
       outputHandler.OutputArea.prototype._handle_output = outputHandler.OutputArea.prototype.handle_output;
 
       outputHandler.OutputArea.prototype.handle_output = function(msg) {
@@ -44,7 +45,6 @@ define([
         }
         return this._handle_output(msg);
       };
-
     }
   };
 
