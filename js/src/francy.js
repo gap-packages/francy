@@ -15,17 +15,19 @@ export class Francy {
    * @param menuActionHandler this handler will be used to invoke actions from the menu, default console.log
    * @param changeTrackerHandler this handler will be used to report any changes detected by the ChangeTracker, default console.log
    */
-  constructor({ verbose = false, callbackHandler }) {
+  constructor({ verbose = false, appendTo, callbackHandler }) {
     if (!callbackHandler) {
       throw new Error("Missing Callback Handler!");
     }
     this.options = {
       verbose: verbose,
+      appendTo: appendTo,
       callbackHandler: callbackHandler
     };
     if (!d3) {
       throw new Error('D3 is not imported! Francy won\'t work without it... please import D3 v4+.');
     }
+    this.draw = new Draw(this.options);
   }
 
   /**
@@ -38,7 +40,7 @@ export class Francy {
       //var tracker = new Tracker(json, this.options);
       //tracker.subscribe(function(obj) { console.log(obj); });
       //return new Draw(this.options).handle(tracker.object);
-      return new Draw(this.options).handle(json);
+      return new Draw(this.options).render(json);
     }
   }
 }

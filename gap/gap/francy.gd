@@ -15,7 +15,7 @@
 ##
 #V FrancyMIMEType . . . Contains the MIME Type defined for francy application
 ##
-BindGlobal("FrancyMIMEType", "application/francy+json");
+BindGlobal("FrancyMIMEType", "application/vnd.francy+json");
 
 #############################################################################
 ##

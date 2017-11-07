@@ -87,6 +87,16 @@ text.label {
   border: 1px solid #dddddd;
 }
 
+.window, .canvas {
+  border: solid 1px #dddddd;
+  padding: 3px;
+}
+
+.window {
+  display: inline-block!important;
+}
+
+
 /**
  * Modal
  *

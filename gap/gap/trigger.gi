@@ -34,5 +34,5 @@ function(json)
   for arg in NamesOfComponents(object!.requiredArgs) do
     Add(requiredArgs, object!.requiredArgs!.(arg)!.value);
   od;
-  CallFuncList(callback!.func, Concatenation(callback!.knownArgs, requiredArgs));
+  return CallFuncList(callback!.func, Concatenation(callback!.knownArgs, requiredArgs));
 end);
