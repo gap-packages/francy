@@ -118,7 +118,7 @@ box-shadow:1px 1px 3px #000;
 margin-top:-100px;
 margin-left:-150px;
 padding:10px;
-display: visible;
+display: block;
 }
 
 .francy .modal .header {
