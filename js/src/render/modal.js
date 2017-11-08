@@ -11,8 +11,8 @@ export default class Modal extends Renderer {
   render(json) {
     var self = this;
 
-    var overlay = d3.select(this.options.appendTo).append('div').attr('class', 'francy overlay');
-    var modal = d3.select(this.options.appendTo).append('div')
+    var overlay = d3.select('body').append('div').attr('class', 'francy overlay');
+    var modal = d3.select('body').append('div')
       .attr('id', json.callback.id)
       .attr('class', 'modal');
 
