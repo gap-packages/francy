@@ -27,7 +27,7 @@ export default class Modal extends Renderer {
 
     for (var arg of Object.values(json.callback.requiredArgs)) {
       content.append('label').attr('for', arg.id).text(arg.title);
-      content.append('input').attr('id', arg.id)
+      content.append('input').attr('id', arg.id).attr('class', 'raw_input')
         .attr('required', '')
         .attr('name', arg.id)
         .attr('type', arg.type)
