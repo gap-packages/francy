@@ -46,7 +46,7 @@ export default class Modal extends Renderer {
 
     footer.append('button').text('Ok').on('click', function() {
       if (form.node().checkValidity()) {
-        self.options.callbackHandler(json);
+        self.options.callbackHandler(json.callback);
         overlay.remove();
         modal.remove();
       }
