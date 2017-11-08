@@ -25,7 +25,7 @@ list-style:none;
 position:relative;
 width:100%;
 z-index:5;
-border:1px solid #ededed
+border:1px solid #cfcfcf
 }
 
 .francy .nav > li {
@@ -122,12 +122,12 @@ display: block;
 }
 
 .francy .modal .header {
-border-bottom:1px solid #ededed;
+border-bottom:1px solid #cfcfcf;
 padding:10px
 }
 
 .francy .modal .footer {
-border-top:1px solid #ededed;
+border-top:1px solid #cfcfcf;
 padding:10px
 }
 
@@ -162,7 +162,7 @@ margin:3px
 }
 
 .francy .window,.canvas {
-border:solid 1px #ddd
+border:solid 1px #cfcfcf
 }
 
 .francy svg {

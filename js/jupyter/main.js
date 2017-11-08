@@ -57,7 +57,16 @@ define([
         verbose: true,
         appendTo: '#francy-drawing-div',
         callbackHandler: function(json) {
-          Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, Object.values(Jupyter.notebook.kernel._msg_callbacks)[0]);
+          Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, {
+          iopub: {
+            output: function(msg) {
+              if (msg.content && msg.content.data && msg.content.data['application/vnd.francy+json']) {
+                francy.handle(msg.content.data['application/vnd.francy+json']);
+                return;
+              }
+            }
+          }
+        });
         }
       });
     }
