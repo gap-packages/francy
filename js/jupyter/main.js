@@ -61,7 +61,7 @@ define([
             iopub: {
               output: function(msg) {
                 if (msg.content && msg.content.data && msg.content.data['application/vnd.francy+json']) {
-                  francy.handle(msg.content.data['application/vnd.francy+json']);
+                  francy.render(msg.content.data['application/vnd.francy+json']);
                   return;
                 }
               }
