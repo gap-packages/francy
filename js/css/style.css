@@ -1,23 +1,23 @@
-.highlight:hover {
+.francy .highlight:hover {
 stroke:#fffd00;
 stroke-width:2px
 }
 
-.links {
+.francy .links {
 cursor:auto
 }
 
-.links line,.arrows path {
+.francy .links line,.arrows path {
 stroke:#999;
 stroke-opacity:.6
 }
 
-a {
+.francy a {
 color:inherit;
 font-family:"Helvetica Neue",Helvetica,Arial,sans-serif
 }
 
-.nav {
+.francy .nav {
 background:#f6f6f6;
 color:#333;
 float:left;
@@ -28,75 +28,75 @@ z-index:5;
 border:1px solid #ededed
 }
 
-.nav > li {
+.francy .nav > li {
 margin-left:5px
 }
 
-.nav li {
+.francy .nav li {
 float:left;
 position:relative
 }
 
-.nav li ul {
+.francy .nav li ul {
 width:100%
 }
 
-.nav li a {
+.francy .nav li a {
 background:#f6f6f6;
 display:block;
 padding:5px;
 text-decoration:none
 }
 
-.nav li:hover a {
+.francy .nav li:hover a {
 background:#f6f6f6;
 text-decoration:none
 }
 
-.nav li:hover a:hover {
+.francy .nav li:hover a:hover {
 background:#ededed;
 text-decoration:none
 }
 
-.nav li:hover ul {
+.francy .nav li:hover ul {
 left:0
 }
 
-.nav li:hover ul a {
+.francy .nav li:hover ul a {
 text-decoration:none
 }
 
-.nav li:hover ul li a:hover {
+.francy .nav li:hover ul li a:hover {
 background:#ededed
 }
 
-.nav ul {
+.francy .nav ul {
 background:#333;
 left:-9999px;
 list-style:none;
 position:absolute
 }
 
-.nav ul a {
+.francy .nav ul a {
 white-space:nowrap;
 overflow:hidden;
 text-overflow:ellipsis
 }
 
-.nav ul li {
+.francy .nav ul li {
 float:none;
 width:100%
 }
 
-.nodes {
+.francy .nodes {
 cursor:pointer
 }
 
-.nodes circle,.nodes rect {
+.francy .nodes circle,.nodes rect {
 stroke:#fff
 }
 
-.overlay {
+.francy.overlay {
 position:absolute;
 top:0;
 left:0;
@@ -106,72 +106,75 @@ background-color:rgba(0,0,0,0.5);
 z-index:10
 }
 
-.modal {
+.francy .modal {
 position:fixed;
 top:50%;
 left:50%;
+bottom: inherit;
+right: inherit;
 z-index:11;
 background:#fff;
 box-shadow:1px 1px 3px #000;
 margin-top:-100px;
 margin-left:-150px;
-padding:10px
+padding:10px;
+display: visible;
 }
 
-.modal .header {
+.francy .modal .header {
 border-bottom:1px solid #ededed;
 padding:10px
 }
 
-.modal .footer {
+.francy .modal .footer {
 border-top:1px solid #ededed;
 padding:10px
 }
 
-.modal .content {
+.francy .modal .content {
 padding:5px
 }
 
-.modal .content input {
+.francy .modal .content input {
 margin:5px;
 width:45%
 }
 
-.modal .content label {
+.francy .modal .content label {
 display:inline-block;
 margin:5px;
 text-align:right;
 width:45%
 }
 
-.modal .footer button {
+.francy .modal .footer button {
 float:right;
 margin-left:5px
 }
 
-.window {
+.francy .window {
 display:grid;
 width:100%
 }
 
-.canvas {
+.francy .canvas {
 margin:3px
 }
 
-.window,.canvas {
+.francy .window,.canvas {
 border:solid 1px #ddd
 }
 
-svg {
+.francy svg {
 cursor:move
 }
 
-text.label {
+.francy text.label {
 fill:#000;
 font-size:11px
 }
 
-ul {
+.francy ul {
 margin:0;
 padding:0
 }
