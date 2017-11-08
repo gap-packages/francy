@@ -46,10 +46,6 @@ define([
         index: 0
       });
 
-      // FIXME Cannot write on dialog as it will assume as keyboard shortcut!
-      ///Jupyter.keyboard_manager.command_shortcuts._shortcuts = {};
-      //Jupyter.keyboard_manager.register_events(d3.selectAll('.arg'));
-
       // create a display: none div for drawing
       d3.select('body').append('div').attr('id', 'francy-drawing-div').attr('style', 'display: none;');
 

@@ -1,6 +1,6 @@
 import Renderer from './renderer';
 
-/* global d3 */
+/* global d3, Jupyter */
 
 export default class Modal extends Renderer {
 
@@ -27,7 +27,7 @@ export default class Modal extends Renderer {
 
     for (var arg of Object.values(json.callback.requiredArgs)) {
       content.append('label').attr('for', arg.id).text(arg.title);
-      content.append('input').attr('id', arg.id).attr('class', 'raw_input')
+      content.append('input').attr('id', arg.id).attr('class', 'arg')
         .attr('required', '')
         .attr('name', arg.id)
         .attr('type', arg.type)
@@ -55,6 +55,11 @@ export default class Modal extends Renderer {
       overlay.remove();
       modal.remove();
     });
+
+    if (Jupyter) {
+      // oh well, jupyter needs to register input fields not to enable keyboard shortcuts
+      Jupyter.keyboard_manager.register_events('.arg');
+    }
 
     return modal;
   }
