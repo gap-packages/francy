@@ -1,23 +1,23 @@
 class BarChart {
 
   // All options that should be accessible to caller
-  var width = 500;
-  var height = 300;
-  var barPadding = 1;
-  var fillColor = 'coral';
-  var data = [];
+  width = 500;
+  height = 300;
+  barPadding = 1;
+  fillColor = 'coral';
+  data = [];
 
-  var updateWidth;
-  var updateHeight;
-  var updateFillColor;
-  var updateData;
+  updateWidth;
+  updateHeight;
+  updateFillColor;
+  updateData;
 
   constructor({ verbose = false } = {}) {
 
   }
 
-
-  function chart(selection) {
+/*
+  chart(selection) {
     selection.each(function() {
 
       var barSpacing = height / data.length;
@@ -135,5 +135,6 @@ class BarChart {
     if (typeof updateData === 'function') updateData();
     return chart;
   };
+  */
 
 }

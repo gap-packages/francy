@@ -1,5 +1,5 @@
 {
-  "agent": "application/francy",
+  "agent": "application/vnd.francy+json",
   "canvas": {
     "h": 400,
     "type": "layered",
@@ -8,7 +8,7 @@
     "menus": {
       "9ECB1D5F9D6D4278F434C256F63CBCD3": {
         "id": "9ECB1D5F9D6D4278F434C256F63CBCD3",
-        "title": "Other",
+        "title": "Other super long name",
         "callback": {
           "type": "server",
           "id": "B9F9F0943FAD4D4E04CCA836666B98E8",

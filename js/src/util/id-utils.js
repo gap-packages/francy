@@ -1,6 +1,6 @@
 /**
  * This class generates ids for the html/svg elements in the dom.
- * The ids naming convention is: 'Francy[Window|Canvas|Object]-*numerical id*'
+ * The ids naming convention is: 'Francy[Window|Canvas|Object]-*hex uuid*'
  */
 export default class IDUtils {
 
@@ -29,5 +29,14 @@ export default class IDUtils {
    */
   static getObjectId(objectId) {
     return `FrancyObject-${objectId}`;
+  }
+
+  /**
+   * Returns the id for an object based on a object id.
+   * @param menuId - the menu id
+   * @returns {string} the element object id.
+   */
+  static getMenuId(menuId) {
+    return `FrancyMenu-${menuId}`;
   }
 }

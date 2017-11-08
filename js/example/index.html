@@ -2,11 +2,7 @@
 <header>
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v4">
   <link rel="stylesheet" type="text/css" href="../dist/francy/css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css"/>
-  <script src="../lib/jquery.min.js"></script>
-  <script src="../lib/jquery-ui.min.js"></script>
   <script src="../dist/francy/lib/d3.v4.min.js"></script>
-  <script src="../dist/francy/lib/underscore-min.js"></script>
   <script src="../dist/francy/browser/francy.bundle.js"></script>
   <title>Francy</title>
 </header>
@@ -18,14 +14,12 @@
     console.error(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
   }
   
-  var francy = new Francy({verbose: true, appendTo: $('#francy'), callbackHandler: trigger});
+  var francy = new Francy({verbose: true, appendTo: '#francy', callbackHandler: trigger});
   d3.json("json.json", function (error, json) {
-    var id = francy.handle(json);
-    console.log(id);
-    $(`#${id}`).detach().appendTo('#francy2');
+    var element = francy.render(json);
+    document.getElementsByTagName('body')[0].append(element);
   });
 
 </script>
-<div id="francy2"></div>
 </body>
 </html>

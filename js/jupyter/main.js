@@ -12,8 +12,6 @@ define([
   var MIME_TYPE = 'application/vnd.francy+json';
   var CLASS_NAME = 'francy-view';
 
-  var self = this;
-
   window.d3 = d3;
 
   let loadCss = function loadCss(name) {
@@ -31,30 +29,17 @@ define([
 
       console.log('Loading Francy Javascript...');
 
-      let trigger = function(json) {
-        Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, {
-          iopub: {
-            output: function(msg) {
-              if (msg.content && msg.content.data && msg.content.data['application/vnd.francy+json']) {
-                francy.handle(msg.content.data['application/vnd.francy+json']);
-                return;
-              }
-            }
-          }
-        }, {});
-      };
-
       // `this` is the output area we are appending to
-      let append_mime = function(json, md, element) {
+      let appendMime = function(json, md, element) {
+        var francyObject = francy.render(json);
         var toinsert = this.create_output_subarea(md, CLASS_NAME, MIME_TYPE);
-        var francyObjectId = francy.handle(json);
-        $(`#${francyObjectId}`).detach().appendTo(toinsert);
+        toinsert.append(francyObject);
         element.append(toinsert);
         return toinsert;
       };
 
       // Register mime type with the output area
-      outputHandler.OutputArea.prototype.register_mime_type(MIME_TYPE, append_mime, {
+      outputHandler.OutputArea.prototype.register_mime_type(MIME_TYPE, appendMime, {
         // An output widget could contain arbitrary user javascript
         safe: false,
         // Index of renderer in `output_area.display_order`
@@ -64,10 +49,13 @@ define([
       // FIXME Cannot write on dialog as it will assume as keyboard shortcut!
       Jupyter.keyboard_manager.command_shortcuts._shortcuts = {};
 
+      // start francy
       let francy = new FrancyBundle.Francy({
         verbose: true,
-        appendTo: 'body',
-        callbackHandler: trigger
+        appendTo: 'francy-drawing-div',
+        callbackHandler: function(json) {
+          Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, Object.values(Jupyter.notebook.kernel._msg_callbacks)[0]);
+        }
       });
     }
   };

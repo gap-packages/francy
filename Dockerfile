@@ -4,8 +4,6 @@ MAINTAINER Manuel Martins <manuelmachadomartins@gmail.com>
 
 USER root
 
-#RUN git clone -b develop https://github.com/mcmartins/francy.git
-
 COPY . /home/gap
 
 RUN jupyter nbextension install /home/gap/js/dist/francy --system

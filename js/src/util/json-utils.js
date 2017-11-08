@@ -17,7 +17,7 @@ export default class JsonUtils {
       input = match[0];
       try {
         let json = JSON.parse(input);
-        return json.agent === 'application/francy' ? json : undefined;
+        return json.agent === 'application/vnd.francy+json' ? json : undefined;
       }
       catch (e) {
         console.error(e);

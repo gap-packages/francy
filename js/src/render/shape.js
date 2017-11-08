@@ -1,45 +1,55 @@
-import Canvas from './canvas';
+import Renderer from './renderer';
+import IDUtils from '../util/id-utils';
 
-export default class Draw extends Canvas {
+/* global d3 */
+
+export default class Shape extends Renderer {
+
+
+  static get colors() {
+    return d3.scaleSequential().domain([0, 100]).interpolator(d3.interpolateRainbow);
+  }
+
+  static getSymbol(type) {
+    if (type === 'circle') {
+      return d3.symbolCircle;
+    }
+    else if (type === 'cross') {
+      return d3.symbolCross;
+    }
+    else if (type === 'diamond') {
+      return d3.symbolDiamond;
+    }
+    else if (type === 'square') {
+      return d3.symbolSquare;
+    }
+    else if (type === 'triangle') {
+      return d3.symbolTriangle;
+    }
+    else if (type === 'star') {
+      return d3.symbolStar;
+    }
+    else if (type === 'wye') {
+      return d3.symbolWye;
+    }
+    else {
+      return d3.symbolCircle;
+    }
+  }
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   render(json) {
-    this._renderCanvas(json);
-    this._render(json);
-    return this.windowId;
-  }
-
-  _render(json) {
+    var canvas = d3.select(this.options.appendTo);
 
     var canvasNodes = Object.values(json.canvas.nodes),
       canvasLinks = Object.values(json.canvas.links);
 
-    var svg = this.canvas,
+    var svg = canvas,
       width = +svg.attr('width'),
       height = +svg.attr('height');
-
-    svg = svg.call(d3.zoom().on('zoom', zoomed)).append('g').attr('class', 'draw');
-
-    function zoomed() {
-      svg.attr('transform', `translate(${d3.event.transform.x},${d3.event.transform.y}) scale(${d3.event.transform.k})`);
-    }
-
-    svg.append('defs').selectAll('marker')
-      .data(['arrow'])
-      .enter().append('marker')
-      .attr('class', 'arrows')
-      .attr('id', d => d)
-      .attr('viewBox', '0 -5 10 10')
-      .attr('refX', 25)
-      .attr('refY', 0)
-      .attr('markerWidth', 10)
-      .attr('markerHeight', 10)
-      .attr('orient', 'auto')
-      .append('path')
-      .attr('d', 'M0,-5L10,0L0,5 L10,0 L0, -5');
 
     //Generic gravity for the X position
     var forceX = d3.forceX(d => 250).strength(0.1);
@@ -67,7 +77,7 @@ export default class Draw extends Canvas {
       .attr('class', 'nodes').selectAll('g.nodes')
       .data(canvasNodes, d => d.id)
       .enter().append('path')
-      .attr('d', d3.symbol().type(d => Canvas.getSymbol(d.type)).size(d => d.size * 90))
+      .attr('d', d3.symbol().type(d => Shape.getSymbol(d.type)).size(d => d.size * 90))
       .attr('transform', 'translate(0,0)')
       .attr('class', d => 'node' + (d.highlight ? ' highlight' : ''))
       .attr('id', d => d.id)
@@ -90,7 +100,7 @@ export default class Draw extends Canvas {
       .attr('class', 'label')
       .text(d => d.title);
 
-    var legend = this.canvas
+    var legend = svg
       .append('g')
       .attr('class', 'legend')
       .selectAll('g')
@@ -107,8 +117,8 @@ export default class Draw extends Canvas {
     legend.append('rect')
       .attr('width', 10)
       .attr('height', 8)
-      .style('fill', d => Canvas.colors(d.layer * 6))
-      .style('stroke', d => Canvas.colors(d.layer * 6));
+      .style('fill', d => Shape.colors(d.layer * 6))
+      .style('stroke', d => Shape.colors(d.layer * 6));
 
     legend.append('text')
       .attr('style', 'font-size: 10px;')
@@ -128,7 +138,7 @@ export default class Draw extends Canvas {
         .attr('y2', d => d.target.y);
 
       node
-        .style('fill', d => Canvas.colors(d.layer * 6))
+        .style('fill', d => Shape.colors(d.layer * 6))
         .attr('transform', d => `translate(${d.x},${d.y})`);
 
       label

@@ -8,21 +8,21 @@ let webpack = require('webpack-stream');
 let webpackConfig = require('./webpack.config.js');
 let gulpSequence = require('gulp-sequence');
 
-gulp.task('clean', function (cb) {
+gulp.task('clean', function(cb) {
   return del(['./dist']);
 });
 
-gulp.task('webpack-amd', function () {
+gulp.task('webpack-amd', function() {
   gulp.src('./src/francy.js')
     .pipe(webpack(webpackConfig))
     .pipe(gulp.dest('./dist/francy/amd'));
 });
 
-gulp.task('browserify', function () {
+gulp.task('browserify', function() {
   browserify({
-    entries: './src/francy.js',
-    debug: true
-  })
+      entries: './src/francy.js',
+      debug: true
+    })
     .transform(babelify)
     .on('error', gutil.log)
     .bundle()
@@ -31,15 +31,15 @@ gulp.task('browserify', function () {
     .pipe(gulp.dest('./dist/francy/browser'));
 });
 
-gulp.task('css', function () {
+gulp.task('css', function() {
   gulp.src(['./css/**/*']).pipe(gulp.dest('./dist/francy/css'));
 });
 
-gulp.task('js', function () {
-  gulp.src(['./lib/d3.v4.min.js', './lib/underscore-min.js']).pipe(gulp.dest('./dist/francy/lib'));
+gulp.task('js', function() {
+  gulp.src(['./lib/d3.v4.min.js']).pipe(gulp.dest('./dist/francy/lib'));
 });
 
-gulp.task('jupyter', function () {
+gulp.task('jupyter', function() {
   gulp.src(['./jupyter/**/*']).pipe(gulp.dest('./dist/francy/jupyter'));
 });
 
