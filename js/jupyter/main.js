@@ -55,7 +55,7 @@ define([
       // start francy
       let francy = new FrancyBundle.Francy({
         verbose: true,
-        appendTo: 'francy-drawing-div',
+        appendTo: '#francy-drawing-div',
         callbackHandler: function(json) {
           Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, Object.values(Jupyter.notebook.kernel._msg_callbacks)[0]);
         }
