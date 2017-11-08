@@ -1,7 +1,7 @@
 {
   "agent": "application/vnd.francy+json",
   "canvas": {
-    "h": 400,
+    "h": "100%",
     "type": "layered",
     "id": "C2232D710B7840D7AC0B65170CB76F5A",
     "title": "Quaternion Group Subgroup Lattice",
@@ -126,7 +126,7 @@
         "menus": {}
       }
     },
-    "w": 680,
+    "w": "100%",
     "nodes": {
       "BBD6B49E746F45D42483770446A32F42": {
         "x": 0,

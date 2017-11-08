@@ -37,7 +37,7 @@ BindGlobal("CanvasType", Objectify(NewType(CanvasFamily, IsFrancyType and IsFran
 #M  CanvasDefaults . . . . . . . . . .  the various types of shapes supported
 ##
 BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
-  w:= 680,
+  w:= "100%",
   h:= 400 
 )));
 
