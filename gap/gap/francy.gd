@@ -19,12 +19,6 @@ BindGlobal("FrancyMIMEType", "application/vnd.francy+json");
 
 #############################################################################
 ##
-#V FrancyAgent . . . Contains the Agent string identification
-##
-BindGlobal("FrancyAgent", "application/francy");
-
-#############################################################################
-##
 ## Categories
 ##
 

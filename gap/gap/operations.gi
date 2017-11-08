@@ -17,7 +17,7 @@ InstallMethod(Draw,
 function(canvas)
   local object;
   object := rec();
-  object!.agent := FrancyAgent;
+  object!.agent := FrancyMIMEType;
   object!.canvas := Clone(canvas);
   return rec(json := true, source := "gap", data := rec((FrancyMIMEType) := GapToJsonString(object)));
 end);
