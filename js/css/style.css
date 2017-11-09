@@ -182,6 +182,6 @@ padding:0
 /*
  * Override Jupyter
  */
-.output_subarea .francy-view .output_result {
-max-width: inherit;
+div.output_subarea.francy-view.output_result {
+max-width: inherit!important;
 }
