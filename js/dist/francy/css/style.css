@@ -178,3 +178,10 @@ font-size:11px
 margin:0;
 padding:0
 }
+
+/*
+ * Override Jupyter
+ */
+.output_subarea .francy-view .output_result {
+max-width: inherit;
+}

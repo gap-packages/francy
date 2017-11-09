@@ -49,6 +49,15 @@ export default class Logger {
   }
 
   /**
+   * Creates a [WARN] entry in the console log
+   * @param message the message to print
+   * @param error the error Object to attach to the message
+   */
+  error(message, error) {
+    this.console.error(this._format('WARN', message), error);
+  }
+
+  /**
    * This is a private method that formats all log messages
    * @param message the message to print
    */

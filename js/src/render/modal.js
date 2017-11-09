@@ -1,3 +1,4 @@
+import IDUtils from '../util/id-utils';
 import Renderer from './renderer';
 
 /* global d3, Jupyter */
@@ -10,6 +11,9 @@ export default class Modal extends Renderer {
 
   render(json) {
     var self = this;
+
+    var modalId = IDUtils.getWindowId(json.callback.id);
+    this.logger.debug(`Creating Callback Modal [${modalId}]...`);
 
     var overlay = d3.select('body').append('div').attr('class', 'francy overlay');
     var modal = d3.select('body').append('div')
@@ -49,17 +53,26 @@ export default class Modal extends Renderer {
         self.options.callbackHandler(json.callback);
         overlay.remove();
         modal.remove();
+        event.preventDefault();
       }
+      return false;
     });
-    footer.append('button').text('Cancel').on('click', function() {
+    footer.append('button').text('Cancel').on('click', () => {
       overlay.remove();
       modal.remove();
+      return false;
     });
 
-    if (Jupyter) {
-      // oh well, jupyter needs to register input fields not to enable keyboard shortcuts
+    try {
       Jupyter.keyboard_manager.register_events('.arg');
     }
+    catch (e) {
+      if (e.name == "ReferenceError") {
+        self.logger.debug('It seems we\'re not running on Jupyter... Skipping...', e);
+      }
+    }
+
+    this.logger.debug(`Callback Modal ready: ${modal}`);
 
     return modal;
   }
