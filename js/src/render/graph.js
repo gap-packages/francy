@@ -57,8 +57,8 @@ export default class Graph extends Renderer {
     var forceX = d3.forceX(d => 250).strength(0.1);
 
     //Strong y positioning based on layer
-    //var forceY = d3.forceY(d => d.layer * 50).strength(0.5);
-    var forceY = d3.forceY(d => 250).strength(0.5);
+    var forceY = d3.forceY(d => d.layer * 50).strength(0.5);
+    //var forceY = d3.forceY(d => 250).strength(0.5);
 
     var simulation = d3.forceSimulation()
       .force('link', d3.forceLink().id(d => d.id))
