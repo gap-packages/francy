@@ -15,10 +15,12 @@ export default class Modal extends Renderer {
     var modalId = IDUtils.getWindowId(json.callback.id);
     this.logger.debug(`Creating Callback Modal [${modalId}]...`);
 
-    var overlay = d3.select('body').append('div').attr('class', 'francy overlay');
-    var modal = d3.select('body').append('div')
-      .attr('class', 'francy')
-      .append('div').attr('id', json.callback.id)
+    var overlay = d3.select('body').append('div')
+      .attr('class', 'francy overlay');
+    var holder = d3.select('body').append('div')
+      .attr('class', 'francy');
+    var modal = holder.append('div')
+      .attr('id', json.callback.id)
       .attr('class', 'francy modal');
 
     var form = modal.append('form');
@@ -53,6 +55,7 @@ export default class Modal extends Renderer {
         self.options.callbackHandler(json.callback);
         overlay.remove();
         modal.remove();
+        holder.remove();
         event.preventDefault();
       }
       return false;
@@ -60,6 +63,7 @@ export default class Modal extends Renderer {
     footer.append('button').text('Cancel').on('click', () => {
       overlay.remove();
       modal.remove();
+      holder.remove();
       return false;
     });
 

@@ -53,7 +53,8 @@ export default class Logger {
    * @param message the message to print
    * @param error the error Object to attach to the message
    */
-  error(message, error) {
+  warn(message, error) {
+    error = error || {};
     this.console.error(this._format('WARN', message), error);
   }
 

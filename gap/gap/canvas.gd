@@ -18,12 +18,6 @@ DeclareCategory("IsCanvas", IsFrancyObject);
 
 #############################################################################
 ##
-#C  IsCanvasType( <obj> ) . . . . . . . . . . . category of shapes
-##
-DeclareCategory("IsCanvasType", IsFrancyObject);
-
-#############################################################################
-##
 #C  IsCanvasDefaults( <obj> ) . . . . . . . . . . . category of canvas defaults
 ##
 DeclareCategory("IsCanvasDefaults", IsFrancyDefaults);
@@ -52,7 +46,7 @@ BindGlobal("CanvasFamily", NewFamily("CanvasFamily", IsCanvas));
 ##
 DeclareRepresentation("IsCanvasRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
-  ["id", "type", "title", "options"], IsCanvas);
+  ["id", "title", "options"], IsCanvas);
 
 #############################################################################
 ##
@@ -64,35 +58,24 @@ DeclareRepresentation("IsCanvasDefaultsRep",
 
 #############################################################################
 ##
-#R  IsCanvasType . . . . . . . . . . . . . . . .  . . default representation
-##
-DeclareRepresentation("IsCanvasTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["value"], IsCanvasType);
-
-
-#############################################################################
-##
 ## Operations
 ##
 
 #############################################################################
 ##
-#O  Canvas( <canvas type>, <title>, <defaults> )
-#O  Canvas( <canvas type>, <title> )
+#O  Canvas( <title>, <defaults> )
+#O  Canvas( <title> )
 ##
-## GraphicCanvas represents a base element to draw graphics on. Inspired by
+## Canvas represents a base element to draw graphics on. Inspired by
 ## the HTML <canvas> element which is used to draw graphics, in runtime,
 ## via JavaScript.
 ##
-DeclareOperation("Canvas", [IsCanvasType, IsString, IsCanvasDefaults]);
+DeclareOperation("Canvas", [IsString, IsCanvasDefaults]);
 
 #############################################################################
 ##
 #O  Add( <canvas>, <francy object> )
 #O  Add( <canvas>, <list of francy object> )
-##
-## 
 ##
 DeclareOperation("Add", [IsCanvas, IsFrancyObject]);
 
@@ -101,6 +84,6 @@ DeclareOperation("Add", [IsCanvas, IsFrancyObject]);
 #O  Remove( <canvas>, <francy object> )
 #O  Remove( <canvas>, <list of francy object> )
 ##
-## 
-##
 DeclareOperation("Remove", [IsCanvas, IsFrancyObject]);
+
+DeclareOperation("Draw", [IsCanvas]);

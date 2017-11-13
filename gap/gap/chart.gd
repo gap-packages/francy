@@ -12,21 +12,21 @@
 
 #############################################################################
 ##
-#C  IsShape( <obj> ) . . . . . . . . . . . category of shapes
+#C  IsChart( <obj> ) . . . . . . . . . . . category of shapes
 ##
-DeclareCategory("IsShape", IsFrancyObject);
+DeclareCategory("IsChart", IsFrancyObject);
 
 #############################################################################
 ##
-#C  IsShapeType( <obj> ) . . . . . . . . . . . category of shapes
+#C  IsChartType( <obj> ) . . . . . . . . . . . category of shapes
 ##
-DeclareCategory("IsShapeType", IsFrancyObject);
+DeclareCategory("IsChartType", IsFrancyObject);
 
 #############################################################################
 ##
-#C  IsShapeDefaults( <obj> ) . . . . . . . . . . . category of shape defgaults
+#C  IsChartDefaults( <obj> ) . . . . . . . . . . . category of shape defgaults
 ##
-DeclareCategory("IsShapeDefaults", IsFrancyDefaults);
+DeclareCategory("IsChartDefaults", IsFrancyDefaults);
 
 
 #############################################################################
@@ -38,7 +38,7 @@ DeclareCategory("IsShapeDefaults", IsFrancyDefaults);
 ##
 #V  ShapeFamily
 ##
-BindGlobal("ShapeFamily", NewFamily("ShapeFamily", IsShape));
+BindGlobal("ChartFamily", NewFamily("ChartFamily", IsChart));
 
 
 #############################################################################
@@ -50,25 +50,25 @@ BindGlobal("ShapeFamily", NewFamily("ShapeFamily", IsShape));
 ##
 #R  IsShapeRep  . . . . . . . . . . . . . . . . . . .  default representation
 ##
-DeclareRepresentation("IsShapeRep",
+DeclareRepresentation("IsChartRep",
   IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "type", "title", "options"], IsShape);
+  ["id", "type", "title", "options"], IsChart);
 
 #############################################################################
 ##
 #R  IsShapeDefaultsRep  . . . . . . . . . . . . . . . default representation
 ##
-DeclareRepresentation("IsShapeDefaultsRep",
+DeclareRepresentation("IsChartDefaultsRep",
   IsComponentObjectRep and IsAttributeStoringRep,
-  ["layer", "x", "y", "size", "highlight"], IsShapeDefaults);
+  ["layer", "x", "y", "size", "highlight"], IsChartDefaults);
 
 #############################################################################
 ##
 #R  IsShapeTypeRep  . . . . . . . . . . . . . . . . .  default representation
 ##
-DeclareRepresentation("IsShapeTypeRep",
+DeclareRepresentation("IsChartTypeRep",
   IsComponentObjectRep and IsAttributeStoringRep,
-  ["value"], IsShapeType);
+  ["value"], IsChartType);
 
 
 #############################################################################
@@ -78,10 +78,28 @@ DeclareRepresentation("IsShapeTypeRep",
 
 #############################################################################
 ##
-#O  GraphicObject( <category representation>, <canvas>, <defaults> )
-#O  GraphicObject( <category representation>, <canvas> )
+#O  Chart( <category representation>, <canvas>, <defaults> )
+#O  Chart( <category representation>, <canvas> )
 ##
 ## Every object to draw will be a subclass of this object. This will allow
 ## all the objects to contain the same base information.
 ##
-DeclareOperation("Shape", [IsShapeType, IsString, IsShapeDefaults]);
+DeclareOperation("Chart", [IsChartType, IsChartDefaults]);
+
+#############################################################################
+##
+#O  Add( <graph>, <francy object> )
+#O  Add( <graph>, <list of francy object> )
+##
+## 
+##
+DeclareOperation("Add", [IsChart, IsFrancyObject]);
+
+#############################################################################
+##
+#O  Remove( <graph>, <francy object> )
+#O  Remove( <graph>, <list of francy object> )
+##
+## 
+##
+DeclareOperation("Remove", [IsChart, IsFrancyObject]);

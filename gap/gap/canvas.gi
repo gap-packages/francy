@@ -7,70 +7,40 @@
 
 #############################################################################
 ##
-#M  CanvasType . . . . . . . . . . . .  the various types of canvas supported
-##
-BindGlobal("CanvasType", Objectify(NewType(CanvasFamily, IsFrancyType and IsFrancyTypeRep), rec(
-  NORMAL := Objectify(NewType(CanvasFamily, IsCanvasType and IsCanvasTypeRep), 
-    rec(
-      value := "normal", 
-      defaults := rec(
-        w:= 680,
-        h:= 400 
-      )
-    )
-  ),
-  FORCE := Objectify(NewType(CanvasFamily, IsCanvasType and IsCanvasTypeRep), 
-    rec(
-      value := "force",
-      defaults := rec(
-        w:= 680,
-        h:= 400
-      )
-    )
-  ),
-  LAYERED := Objectify(NewType(CanvasFamily, IsCanvasType and IsCanvasTypeRep), rec(value := "layered")),
-  GRID := Objectify(NewType(CanvasFamily, IsCanvasType and IsCanvasTypeRep), rec(value := "grid"))
-)));
-
-#############################################################################
-##
-#M  CanvasDefaults . . . . . . . . . .  the various types of shapes supported
+#M  CanvasDefaults . . . . . . . . . .  the various properties for a canvas
 ##
 BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
   w:= "100%",
-  h:= 400 
+  h:= "400"
 )));
 
 #############################################################################
 ##
-#M  Canvas( <canvasType>, <title>, <options> ) . . . . . a new graphic canvas
+#M  Canvas( <title>, <options> ) . . . . . a new graphic canvas
 ##
 InstallMethod(Canvas,
-  "a canvas type, a title string, a default configurations record",
+  "a title string, a default configurations record",
   true,
-  [IsCanvasType,
-   IsString,
+  [IsString,
    IsCanvasDefaults],
   0,
-function(canvasType, title, options)
+function(title, options)
   return MergeObjects(Objectify(NewType(CanvasFamily, IsCanvas and IsCanvasRep), rec(
     id        := HexStringUUID(RandomUUID()),
     menus     := rec(),
-    nodes     := rec(),
-    links     := rec(),
-    type      := canvasType!.value,
+    graph    := rec(),
+    chart    := rec(),
     title     := title
   )), options);
 end);
 
 InstallOtherMethod(Canvas,
-  "a canvas type, a title string",
+  "a title string",
   true,
-  [IsCanvasType,
-   IsString],
+  [IsString],
   0,
-function(canvasType, title)
-  return Canvas(canvasType, title, CanvasDefaults);
+function(title)
+  return Canvas(title, CanvasDefaults);
 end);
 
 #############################################################################
@@ -84,10 +54,10 @@ InstallMethod(Add,
    IsFrancyObject],
   0,
 function(canvas, object)
-  if IsShape(object) then
-    canvas!.nodes!.(object!.id) := object;
-  elif IsLink(object) then
-    canvas!.links!.(object!.id) := object;
+  if IsGraph(object) then
+    canvas!.graph := object;
+  elif IsChart(object) then
+    canvas!.chart := object;
   elif IsMenu(object) then
     canvas!.menus!.(object!.id) := object;
   fi;
@@ -120,16 +90,10 @@ InstallMethod(Remove,
   0,
 function(canvas, object)
   local link;
-  if IsShape(object) then
-    Unbind(canvas!.nodes!.(object!.id));
-    # remove also links to this object
-    for link in object!.links do
-      if link!.source!.id = object!.id or link!.target!.id = object!.id then
-        Unbind(canvas!.links!.(link!.id));
-      fi;
-    od;
-  elif IsLink(object) then
-    Unbind(canvas!.links!.(object!.id));
+  if IsGraph(object) then
+    Unbind(canvas!.graph);
+  elif IsChart(object) then
+    Unbind(canvas!.chart);
   elif IsMenu(object) then
     Unbind(canvas!.menus!.(object!.id));
   fi;
@@ -148,4 +112,21 @@ function(canvas, objects)
     Remove(canvas, object);
   od;
   return canvas;
+end);
+
+#############################################################################
+##
+#M  Draw( ) . . . . . 
+##
+InstallMethod(Draw,
+  "",
+  true,
+  [IsCanvas],
+  0,
+function(canvas)
+  local object;
+  object := rec();
+  object!.agent := FrancyMIMEType;
+  object!.canvas := Clone(canvas);
+  return rec(json := true, source := "gap", data := rec((FrancyMIMEType) := GapToJsonString(object)));
 end);

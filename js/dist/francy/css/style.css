@@ -44,7 +44,7 @@ width:100%
 .francy .nav li a {
 background:#f6f6f6;
 display:block;
-padding:5px;
+padding:10px 15px;
 text-decoration:none
 }
 
@@ -115,7 +115,6 @@ right: inherit;
 z-index:11;
 background:#fff;
 box-shadow:1px 1px 3px #000;
-margin-top:-100px;
 margin-left:-150px;
 padding:10px;
 display: block;

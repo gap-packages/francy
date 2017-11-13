@@ -48,6 +48,19 @@ DeclareCategory("IsCallbackType", IsFrancyObject);
 
 #############################################################################
 ##
+#O  IsTrigger( <obj> )
+##
+DeclareCategory("IsTrigger", IsFrancyObject);
+
+#############################################################################
+##
+#O  IsTriggerType( <obj> )
+##
+DeclareCategory("IsTriggerEvent", IsFrancyObject);
+
+
+#############################################################################
+##
 ## Families
 ##
 
@@ -56,6 +69,12 @@ DeclareCategory("IsCallbackType", IsFrancyObject);
 #V  CallbackFamily
 ##
 BindGlobal("CallbackFamily", NewFamily("CallbackFamily", IsCallback));
+
+#############################################################################
+##
+#V  CallbackFamily
+##
+BindGlobal("TriggerFamily", NewFamily("TriggerFamily", IsTrigger));
 
 
 #############################################################################
@@ -94,6 +113,14 @@ DeclareRepresentation("IsArgTypeRep",
 DeclareRepresentation("IsCallbackTypeRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
   ["value"], IsCallbackType);
+
+#############################################################################
+##
+#R  IsTriggerRep  . . . . . . . . . . . . . . . . . . default representation
+##
+DeclareRepresentation("IsTriggerEventRep",
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["value"], IsTriggerEvent);
 
 
 #############################################################################
@@ -135,3 +162,11 @@ DeclareOperation("Add", [IsCallback, IsRequiredArg]);
 ## 
 ##
 DeclareOperation("Remove", [IsCallback, IsRequiredArg]);
+
+#############################################################################
+##
+#O  Trigger( <json> )
+##
+## Triggers a callback function in GAP. TODO argument description
+##
+DeclareOperation("Trigger", [IsString]);

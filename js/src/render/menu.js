@@ -11,16 +11,16 @@ export default class Menu extends Renderer {
   }
 
   render(json) {
-    var window = d3.select(this.options.appendTo);
+    var parent = this.options.appendTo;
 
     var menuId = IDUtils.getMenuId(json.canvas.id);
-    var menu = d3.select(`#${menuId}`);
+    var menu = parent.select(`#${menuId}`);
 
     // check if the menu is already present
     if (!menu.node()) {
       // create a div element detached from the DOM!
       this.logger.debug(`Creating Menu [${menuId}]...`);
-      menu = window.append('ul')
+      menu = parent.append('ul')
         .attr('class', 'nav').attr('id', menuId);
     }
 

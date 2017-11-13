@@ -3,7 +3,7 @@ import IDUtils from '../util/id-utils';
 
 /* global d3 */
 
-export default class Shape extends Renderer {
+export default class Graph extends Renderer {
 
 
   static get colors() {
@@ -42,20 +42,23 @@ export default class Shape extends Renderer {
   }
 
   render(json) {
-    var canvas = d3.select(this.options.appendTo);
+    var parent = this.options.appendTo;
 
-    var canvasNodes = Object.values(json.canvas.nodes),
-      canvasLinks = Object.values(json.canvas.links);
+    var canvasNodes = Object.values(json.canvas.graph.nodes),
+      canvasLinks = Object.values(json.canvas.graph.links);
 
-    var svg = canvas,
+    var svg = parent,
       width = +svg.attr('width'),
       height = +svg.attr('height');
+
+    var t = d3.transition().duration(250);
 
     //Generic gravity for the X position
     var forceX = d3.forceX(d => 250).strength(0.1);
 
     //Strong y positioning based on layer
-    var forceY = d3.forceY(d => d.layer * 50).strength(0.5);
+    //var forceY = d3.forceY(d => d.layer * 50).strength(0.5);
+    var forceY = d3.forceY(d => 250).strength(0.5);
 
     var simulation = d3.forceSimulation()
       .force('link', d3.forceLink().id(d => d.id))
@@ -64,46 +67,65 @@ export default class Shape extends Renderer {
       .force("y", forceY)
       .force('center', d3.forceCenter(width / 2, height / 2));
 
-    var link = svg.append('g')
-      .attr('class', 'links')
-      .selectAll('line')
-      .data(canvasLinks)
-      .enter().append('line')
-      .attr('class', 'link')
-      .attr('id', d => `${d.source},${d.target}`)
-      .style('marker-end', 'url(#arrow)');
+    var linkGroup = svg.selectAll('g.links');
 
-    var node = svg.append('g')
-      .attr('class', 'nodes').selectAll('g.nodes')
-      .data(canvasNodes, d => d.id)
-      .enter().append('path')
-      .attr('d', d3.symbol().type(d => Shape.getSymbol(d.type)).size(d => d.size * 90))
+    if (!linkGroup.node()) {
+      linkGroup = svg.append('g').attr('class', 'links');
+    }
+
+    var link = linkGroup.selectAll('line.link').data(canvasLinks);
+
+    link.exit().transition(t).remove();
+
+    link = link.enter().append('line')
+      .attr('class', 'link')
+      .attr('id', d => `${d.source},${d.target}`);
+    //.style('marker-end', 'url(#arrow)');
+
+    var nodeGroup = svg.selectAll('g.nodes');
+
+    if (!nodeGroup.node()) {
+      nodeGroup = svg.append('g').attr('class', 'nodes');
+    }
+
+    var node = nodeGroup.selectAll('path.node').data(canvasNodes);
+
+    node.exit().transition(t).remove();
+
+    node = node.enter().append('path')
+      .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
       .attr('transform', 'translate(0,0)')
       .attr('class', d => 'node' + (d.highlight ? ' highlight' : ''))
-      .attr('id', d => d.id)
-      .call(d3.drag()
+      .attr('id', d => d.id);
+
+    node.call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
         .on('end', dragended))
       //.on('contextmenu', connectedNodes) //rightclick
       .on('click', connectedNodes);
 
-    node.append('title').text(function(d) {
-      return `ID:\t${d.id}\nLayer:\t${d.layer}`;
-    });
+    node.append('title').text(d => `ID:\t${d.id}\nLayer:\t${d.layer}`);
 
-    var label = svg.append('g')
-      .attr('class', 'labels')
-      .selectAll('text')
-      .data(canvasNodes, d => d.id)
+    var labelGroup = svg.selectAll('.labels');
+
+    if (!labelGroup.node()) {
+      labelGroup = svg.append('g').attr('class', 'labels');
+    }
+
+    var label = labelGroup.selectAll('text')
+      .data(canvasNodes)
       .enter().append('text')
       .attr('class', 'label')
       .text(d => d.title);
 
-    var legend = svg
-      .append('g')
-      .attr('class', 'legend')
-      .selectAll('g')
+    var legendGroup = svg.selectAll('.legend');
+
+    if (!legendGroup.node()) {
+      legendGroup = svg.append('g').attr('class', 'legend');
+    }
+
+    /*var legend = legendGroup.selectAll('g')
       .data(d3.map(canvasNodes, d => d.layer).values(), d => d.id)
       .enter()
       .append('g')
@@ -117,14 +139,14 @@ export default class Shape extends Renderer {
     legend.append('rect')
       .attr('width', 10)
       .attr('height', 8)
-      .style('fill', d => Shape.colors(d.layer * 6))
-      .style('stroke', d => Shape.colors(d.layer * 6));
+      .style('fill', d => Graph.colors(d.layer * 6))
+      .style('stroke', d => Graph.colors(d.layer * 6));
 
     legend.append('text')
       .attr('style', 'font-size: 10px;')
       .attr('x', 10 + 5)
       .attr('y', 10 - 2)
-      .text(d => `Index ${d.layer}`);
+      .text(d => `Index ${d.layer}`);*/
 
     simulation.nodes(canvasNodes).on('tick', ticked);
 
@@ -138,7 +160,7 @@ export default class Shape extends Renderer {
         .attr('y2', d => d.target.y);
 
       node
-        .style('fill', d => Shape.colors(d.layer * 6))
+        .style('fill', d => Graph.colors(d.layer * 6))
         .attr('transform', d => `translate(${d.x},${d.y})`);
 
       label

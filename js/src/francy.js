@@ -2,9 +2,8 @@ import JsonUtils from "./util/json-utils";
 import Window from "./render/window";
 import Canvas from "./render/canvas";
 import Menu from "./render/menu";
-import Shape from "./render/shape";
-import BarChart from "./render/chart-bar";
-import LineChart from "./render/chart-line";
+import Graph from "./render/graph";
+//import Chart from "./render/chart";
 //import Tracker from "./tracker/change";
 
 /* global d3 */
@@ -49,13 +48,11 @@ export class Francy {
       //tracker.subscribe(function(obj) { console.log(obj); });
       //return new Draw(this.options).handle(tracker.object);
       var menu = new Menu(this.options);
-      var shapes = new Shape(this.options);
-      //var lineChart = new LineChart(this.options);
-      //var barChart = new BarChart(this.options);
+      var graph = new Graph(this.options);
+      //var chart = new Chart(this.options);
       var canvas = new Canvas(this.options);
-      canvas.add(shapes);
-      //canvas.add(lineChart);
-      //canvas.add(barChart);
+      canvas.add(graph);
+      //canvas.add(chart);
       var window = new Window(this.options);
       window.add(menu);
       window.add(canvas);

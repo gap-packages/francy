@@ -34,8 +34,8 @@ Homepage: https://github.com/mcmartins/francy
              IRREDSOL 1.4, json 1.1.0, LAGUNA 3.7.0, Polenta 1.3.7, Polycyclic 2.11, RadiRoot 2.7, ResClasses 4.6.0, Sophus 1.23, SpinSym 1.5, TomLib 1.2.6, Utils 0.46, uuid 0.4
  Try '??help' for help. See also '?copyright', '?cite' and '?authors'
 gap>
-gap> canvas := Canvas(CanvasType!.LAYERED, "Quaternion Group Subgroup Lattice");
-<IsFrancyObject/IsCanvas>
+gap> graph := Graph(GraphType.LAYERED);
+<IsFrancyObject/IsGraph>
 gap>
 gap> shapeG := Shape(ShapeType!.DIAMOND, "G");
 <IsFrancyObject/IsShape>
@@ -45,6 +45,8 @@ gap> shape1 := Shape(ShapeType!.DIAMOND, "1");
 gap>
 gap> link := Link(shapeG, shape1);
 <IsFrancyObject/IsLink>
+gap>
+gap> Add(graph, [shapeG, shape1, link]);
 gap>
 gap> callback := Callback(AllSubgroups);
 <IsFrancyObject/IsCallback>
@@ -57,7 +59,10 @@ gap>
 gap> menu := Menu( "All Subgroups", callback );
 <IsFrancyObject/IsMenu>
 gap>
-gap> Add(canvas, [shapeG, shape1, link, menu]);
+gap> canvas := Canvas("Quaternion Group Subgroup Lattice");
+<IsFrancyObject/IsCanvas>
+gap>
+gap> Add(canvas, [graph, menu]);
 gap>
 gap> Draw(canvas);
 rec( 

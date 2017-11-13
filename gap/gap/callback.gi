@@ -18,12 +18,23 @@ BindGlobal("CallbackType", Objectify(NewType(CallbackFamily, IsFrancyType and Is
 ##
 #M  CallbackDefaults . . . . . . . . . .  the various types of shapes supported
 ##
-BindGlobal("ArgType", Objectify(NewType(CallbackFamily, IsFrancyType and IsFrancyTypeRep), rec(
+BindGlobal("ArgType", rec(
   INTEGER := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "int")),
   BOOLEAN := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "boolean")),
   STRING  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "string")),
   NUMBER  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "number"))
-)));
+));
+
+#############################################################################
+##
+#M  TriggerEvent . . .  the various events supported to trigger a callback
+##
+BindGlobal("TriggerEvent", rec(
+  DOUBLE_CLICK := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "dblclick")),
+  RIGHT_CLICK  := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "context")),
+  CLICK        := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "click")),
+  OVER         := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "mouseover"))
+));
 
 #############################################################################
 ##
@@ -73,7 +84,7 @@ InstallOtherMethod(Callback,
    IsList],
   0,
 function(func, knownArgs)
-  return Callback(CallbackType!.SERVER, TriggerEvent!.CLICK, func, knownArgs);
+  return Callback(CallbackType!.SERVER, TriggerEvent.CLICK, func, knownArgs);
 end);
 
 InstallOtherMethod(Callback,
@@ -82,7 +93,7 @@ InstallOtherMethod(Callback,
   [IsFunction],
   0,
 function(func)
-  return Callback(CallbackType!.SERVER, TriggerEvent!.CLICK, func, []);
+  return Callback(CallbackType!.SERVER, TriggerEvent.CLICK, func, []);
 end);
 
 #############################################################################
@@ -162,4 +173,25 @@ function(callback, objects)
     Remove(callback, object);
   od;
   return callback;
+end);
+
+#############################################################################
+##
+#M  Trigger( <a json string> ) . triggers a callback
+##
+InstallMethod(Trigger,
+  "a json string",
+  true,
+  [IsString],
+  0,
+function(json)
+  local callback, object, requiredArgs, arg;
+  object := JsonStringToGap(json);
+  # TODO validate json object!
+  callback := FrancyCallbacks!.(object!.id);
+  requiredArgs := [];
+  for arg in NamesOfComponents(object!.requiredArgs) do
+    Add(requiredArgs, object!.requiredArgs!.(arg)!.value);
+  od;
+  return CallFuncList(callback!.func, Concatenation(callback!.knownArgs, requiredArgs));
 end);

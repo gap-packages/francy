@@ -19,7 +19,7 @@ export default class Composite extends Renderer {
     // update children rendering with a new parent if required!
     var childrenOptions = this.options;
     if (parent) {
-      childrenOptions.appendTo = parent.node();
+      childrenOptions.appendTo = parent;
     }
     // render other components
     for (var renderer of this.renderers) {
