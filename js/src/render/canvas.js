@@ -21,9 +21,6 @@ export default class Canvas extends Composite {
       canvas = parent.append('svg')
         .attr('id', canvasId)
         .attr('class', 'canvas');
-      canvas.call(d3.zoom().on('zoom', function() {
-        canvas.attr('transform', `translate(${d3.event.transform.x},${d3.event.transform.y}) scale(${d3.event.transform.k})`);
-      }));
 
       canvas.append('defs').selectAll('marker')
         .data(['arrow'])
@@ -47,13 +44,10 @@ export default class Canvas extends Composite {
 
     canvas.attr('width', json.canvas.w).attr('height', json.canvas.h);
 
-    var draw = canvas.select('.draw');
+    var draw = canvas.select('g.graph');
 
     if (!draw.node()) {
-      canvas = canvas.append('g').attr('class', 'draw');
-    }
-    else {
-      canvas = draw;
+      canvas.append('g').attr('class', 'graph');
     }
 
     this.logger.debug(`Canvas ready: ${canvas}`);
@@ -62,7 +56,6 @@ export default class Canvas extends Composite {
 
     return canvas;
   }
-
 
 
 }

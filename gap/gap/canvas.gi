@@ -11,7 +11,7 @@
 ##
 BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
   w:= "100%",
-  h:= "400"
+  h:= "600"
 )));
 
 #############################################################################

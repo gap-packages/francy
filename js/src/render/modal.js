@@ -20,7 +20,7 @@ export default class Modal extends Renderer {
     var holder = d3.select('body').append('div')
       .attr('class', 'francy');
     var modal = holder.append('div')
-      .attr('id', json.callback.id)
+      .attr('id', modalId)
       .attr('class', 'francy modal');
 
     var form = modal.append('form');

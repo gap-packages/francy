@@ -15,6 +15,12 @@ export default class CallbackHandler {
   }
 
   execute(config) {
-    return new Modal(this.options).render(config);
+    if (config.callback.requiredArgs) {
+      var modal = new Modal(this.options);
+      return modal.render(config);
+    }
+    else {
+      return this.options.callbackHandler(config.callback);
+    }
   }
 }

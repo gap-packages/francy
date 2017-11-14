@@ -18,12 +18,12 @@
   d3.json("json.json", function (error, json) {
     var element = francy.render(json);
     document.getElementsByTagName('body')[0].append(element);
-    setTimeout(function() {
+    /*setTimeout(function() {
       d3.json("json1.json", function (error, json) {
         var element = francy.render(json);
         //document.getElementsByTagName('body')[0].append(element);
       });
-    }, 3000);
+    }, 3000);*/
   });
 
 </script>

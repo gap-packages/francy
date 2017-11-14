@@ -44,12 +44,12 @@ export default class Graph extends Renderer {
   render(json) {
     var parent = this.options.appendTo;
 
-    var canvasNodes = Object.values(json.canvas.graph.nodes),
-      canvasLinks = Object.values(json.canvas.graph.links);
+    var canvasNodes = json.canvas.graph.nodes ? Object.values(json.canvas.graph.nodes) : [],
+      canvasLinks = json.canvas.graph.links ? Object.values(json.canvas.graph.links) : [];
 
-    var svg = parent,
-      width = +svg.attr('width'),
-      height = +svg.attr('height');
+    var svg = parent.select('g.graph'),
+      width = +parent.attr('width') || d3.select("body").node().getBoundingClientRect().width,
+      height = +parent.attr('height') || d3.select("body").node().getBoundingClientRect().height;
 
     var t = d3.transition().duration(250);
 
@@ -57,7 +57,7 @@ export default class Graph extends Renderer {
     var forceX = d3.forceX(d => 250).strength(0.1);
 
     //Strong y positioning based on layer
-    var forceY = d3.forceY(d => d.layer * 50).strength(0.5);
+    var forceY = d3.forceY(d => d.layer * 100).strength(0.5);
     //var forceY = d3.forceY(d => 250).strength(0.5);
 
     var simulation = d3.forceSimulation()
@@ -66,6 +66,10 @@ export default class Graph extends Renderer {
       .force("x", forceX)
       .force("y", forceY)
       .force('center', d3.forceCenter(width / 2, height / 2));
+
+    parent.call(d3.zoom().on('zoom', function() {
+      svg.attr('transform', `translate(${d3.event.transform.x},${d3.event.transform.y}) scale(${d3.event.transform.k})`);
+    }));
 
     var linkGroup = svg.selectAll('g.links');
 
@@ -113,9 +117,11 @@ export default class Graph extends Renderer {
       labelGroup = svg.append('g').attr('class', 'labels');
     }
 
-    var label = labelGroup.selectAll('text')
-      .data(canvasNodes)
-      .enter().append('text')
+    var label = labelGroup.selectAll('text').data(canvasNodes);
+
+    label.exit().transition(t).remove();
+
+    label = label.enter().append('text')
       .attr('class', 'label')
       .text(d => d.title);
 
