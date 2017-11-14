@@ -15,7 +15,7 @@ export default class CallbackHandler {
   }
 
   execute(config) {
-    if (config.callback.requiredArgs) {
+    if (Object.keys(config.callback.requiredArgs).length) {
       var modal = new Modal(this.options);
       return modal.render(config);
     }

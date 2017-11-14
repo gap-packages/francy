@@ -61,6 +61,7 @@ export default class Modal extends Renderer {
       return false;
     });
     footer.append('button').text('Cancel').on('click', () => {
+      event.preventDefault();
       overlay.remove();
       modal.remove();
       holder.remove();

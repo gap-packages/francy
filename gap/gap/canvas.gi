@@ -10,7 +10,7 @@
 #M  CanvasDefaults . . . . . . . . . .  the various properties for a canvas
 ##
 BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
-  w:= "100%",
+  w:= "800",
   h:= "600"
 )));
 
