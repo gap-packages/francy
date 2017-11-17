@@ -1,8 +1,6 @@
 import Logger from '../util/logger';
 import Modal from './modal';
 
-// FIXME http://loredanacirstea.github.io/es6-design-patterns/
-
 export default class CallbackHandler {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {

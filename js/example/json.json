@@ -1,7 +1,7 @@
 {
   "agent": "application/vnd.francy+json",
   "canvas": {
-    "h": "800",
+    "height": "800",
     "id": "8B5591B9B01A48D06CB0D174A94834C3",
     "title": "Quaternion Group Subgroup Lattice",
     "menus": {
@@ -25,9 +25,9 @@
         "menus": {}
       }
     },
-    "w": "800",
+    "width": "800",
     "graph": {
-        "type": "directed",
+        "type": "hasse",
         "id": "C2232D710B7840D7AC0B65170CB76F5A",
         "simulation": true,
         "nodes": {
@@ -38,7 +38,7 @@
             "size": 10,
             "id": "BBD6B49E746F45D42483770446A32F42",
             "title": "G",
-            "layer": 1,
+            "layer": 10,
             "highlight": true
           },
           "381B78FE811840038CCD1ACBA164C267": {

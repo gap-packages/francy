@@ -1,5 +1,4 @@
 import Renderer from './renderer';
-import IDUtils from '../util/id-utils';
 
 /* global d3 */
 
@@ -42,34 +41,39 @@ export default class Graph extends Renderer {
   }
 
   render(json) {
+
+    if (!Object.keys(json.canvas.graph).length) {
+      return;
+    }
+
     var parent = this.options.appendTo;
 
     var canvasNodes = json.canvas.graph.nodes ? Object.values(json.canvas.graph.nodes) : [],
       canvasLinks = json.canvas.graph.links ? Object.values(json.canvas.graph.links) : [];
 
-    var svg = parent.select('g.graph'),
-      width = +parent.attr('width') || d3.select("body").node().getBoundingClientRect().width,
-      height = +parent.attr('height') || d3.select("body").node().getBoundingClientRect().height;
+    var svg = parent.select('g.content'),
+      width = window.innerWidth || +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
+      height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
 
     var t = d3.transition().duration(250);
 
     //Generic gravity for the X position
-    var forceX = d3.forceX(d => 250).strength(0.1);
+    var forceX = d3.forceX(250).strength(0.1);
 
-    //Strong y positioning based on layer
-    var forceY = d3.forceY(d => d.layer * 100).strength(0.5);
-    //var forceY = d3.forceY(d => 250).strength(0.5);
+    //Generic gravity for the Y position - undirected/directed graphs fall here
+    var forceY = d3.forceY(250).strength(0.5);
+
+    if (json.canvas.graph.type === 'hasse') {
+      //Strong y positioning based on layer
+      forceY = d3.forceY(d => d.layer * 100).strength(0.5);
+    }
 
     var simulation = d3.forceSimulation()
       .force('link', d3.forceLink().id(d => d.id))
       .force('charge', d3.forceManyBody().strength(-400))
-      .force("x", forceX)
-      .force("y", forceY)
+      .force('x', forceX)
+      .force('y', forceY)
       .force('center', d3.forceCenter(width / 2, height / 2));
-
-    parent.call(d3.zoom().on('zoom', function() {
-      svg.attr('transform', `translate(${d3.event.transform.x},${d3.event.transform.y}) scale(${d3.event.transform.k})`);
-    }));
 
     var linkGroup = svg.selectAll('g.links');
 
@@ -84,7 +88,25 @@ export default class Graph extends Renderer {
     link = link.enter().append('line')
       .attr('class', 'link')
       .attr('id', d => `${d.source},${d.target}`);
-    //.style('marker-end', 'url(#arrow)');
+
+    if (json.canvas.graph.type === 'directed') {
+      // this means we need arrows, so we append the marker
+      parent.append('defs').selectAll('marker')
+        .data(['arrow'])
+        .enter().append('marker')
+        .attr('class', 'arrows')
+        .attr('id', d => d)
+        .attr('viewBox', '0 -5 10 10')
+        .attr('refX', 25)
+        .attr('refY', 0)
+        .attr('markerWidth', 10)
+        .attr('markerHeight', 10)
+        .attr('orient', 'auto')
+        .append('path')
+        .attr('d', 'M0,-5L10,0L0,5 L10,0 L0, -5');
+      // update the style of the link
+      link.style('marker-end', 'url(#arrow)');
+    }
 
     var nodeGroup = svg.selectAll('g.nodes');
 
@@ -108,6 +130,8 @@ export default class Graph extends Renderer {
         .on('end', dragended))
       //.on('contextmenu', connectedNodes) //rightclick
       .on('click', connectedNodes);
+    //.on('click', function() { alert(':)'); });
+
 
     node.append('title').text(d => `ID:\t${d.id}\nLayer:\t${d.layer}`);
 
@@ -125,13 +149,13 @@ export default class Graph extends Renderer {
       .attr('class', 'label')
       .text(d => d.title);
 
-    var legendGroup = svg.selectAll('.legend');
+    var legendGroup = parent.selectAll('.legend');
 
     if (!legendGroup.node()) {
-      legendGroup = svg.append('g').attr('class', 'legend');
+      legendGroup = parent.append('g').attr('class', 'legend');
     }
 
-    /*var legend = legendGroup.selectAll('g')
+    var legend = legendGroup.selectAll('g')
       .data(d3.map(canvasNodes, d => d.layer).values(), d => d.id)
       .enter()
       .append('g')
@@ -152,7 +176,7 @@ export default class Graph extends Renderer {
       .attr('style', 'font-size: 10px;')
       .attr('x', 10 + 5)
       .attr('y', 10 - 2)
-      .text(d => `Index ${d.layer}`);*/
+      .text(d => `Index ${d.layer}`);
 
     simulation.nodes(canvasNodes).on('tick', ticked);
 
@@ -173,7 +197,7 @@ export default class Graph extends Renderer {
         .attr('x', d => d.x - d.title.length - Math.sqrt(d.size))
         .attr('y', d => d.y - Math.sqrt(d.size));
 
-      node.each(collide(0.5));
+      node.each(collide(0.8));
     }
 
     // COLLISION

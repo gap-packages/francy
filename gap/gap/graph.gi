@@ -11,8 +11,8 @@
 ##
 BindGlobal("GraphType", rec(
   UNDIRECTED := Objectify(NewType(GraphFamily, IsGraphType and IsGraphTypeRep), rec(value := "undirected")),
-  DIRECTED  := Objectify(NewType(GraphFamily, IsGraphType and IsGraphTypeRep), rec(value := "directed")),
-  HASSE  := Objectify(NewType(GraphFamily, IsGraphType and IsGraphTypeRep), rec(value := "directed"))
+  DIRECTED   := Objectify(NewType(GraphFamily, IsGraphType and IsGraphTypeRep), rec(value := "directed")),
+  HASSE      := Objectify(NewType(GraphFamily, IsGraphType and IsGraphTypeRep), rec(value := "hasse"))
 ));
 
 #############################################################################
@@ -50,6 +50,7 @@ InstallOtherMethod(Graph,
 function(graphType)
   return Graph(graphType, GraphDefaults);
 end);
+
 #############################################################################
 ##
 #M  Add( <graph>, <francy object> ) . . . . . add objects to graph
@@ -130,15 +131,15 @@ end);
 ##
 #M  ShapeType . . . . . . . . . . . . . the various types of shapes supported
 ##
-BindGlobal("ShapeType", Objectify(NewType(ShapeFamily, IsFrancyType and IsFrancyTypeRep), rec(
+BindGlobal("ShapeType", rec(
   TRIANGLE := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "triangle")),
-  DIAMOND := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "diamond")),
-  CIRCLE := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "circle")),
-  SQUARE := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "square")),
-  CROSS := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "cross")),
-  STAR := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "star")),
-  WYE := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "wye"))
-)));
+  DIAMOND  := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "diamond")),
+  CIRCLE   := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "circle")),
+  SQUARE   := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "square")),
+  CROSS    := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "cross")),
+  STAR     := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "star")),
+  WYE      := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "wye"))
+));
 
 
 #############################################################################
@@ -148,9 +149,9 @@ BindGlobal("ShapeType", Objectify(NewType(ShapeFamily, IsFrancyType and IsFrancy
 BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and IsShapeDefaultsRep), rec(
   highlight := true,
   layer := 0,
-  size := 10,
-  x := 0,
-  y := 0 
+  size  := 10,
+  x     := 0,
+  y     := 0 
 )));
 
 
@@ -159,18 +160,31 @@ BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and I
 #M  Shape( <shapeType>, <title>, <options> )  . .  create a Shape for a type
 ##
 InstallMethod(Shape,
-  "a shape type, a title string, a default configurations record",
+  "a shape type, a title string, a callback, a default configurations record",
   true,
   [IsShapeType,
    IsString,
+   IsCallback,
    IsShapeDefaults],
   0,
-function(shapeType, title, options)
+function(shapeType, title, callback, options)
   return MergeObjects(Objectify(NewType(ShapeFamily, IsShape and IsShapeRep), rec(
-    id      := HexStringUUID(RandomUUID()),
-    type    := shapeType!.value,
-    title   := title
+    id       := HexStringUUID(RandomUUID()),
+    type     := shapeType!.value,
+    title    := title,
+    callback := callback
   )), options);
+end);
+
+InstallOtherMethod(Shape,
+  "a shape type, a callback, a title string",
+  true,
+  [IsShapeType,
+   IsString,
+   IsCallback],
+  0,
+function(shapeType, title, callback)
+  return Shape(shapeType, title, callback, ShapeDefaults);
 end);
 
 InstallOtherMethod(Shape,
@@ -180,10 +194,17 @@ InstallOtherMethod(Shape,
    IsString],
   0,
 function(shapeType, title)
-  return Shape(shapeType, title, ShapeDefaults);
+  return Shape(shapeType, title, NoopCallback, ShapeDefaults);
 end);
 
-
+InstallOtherMethod(Shape,
+  "a shape type",
+  true,
+  [IsShapeType],
+  0,
+function(shapeType)
+  return Shape(shapeType, "", NoopCallback, ShapeDefaults);
+end);
 #############################################################################
 ##
 #M  Link( <obj1>, <obj2> )

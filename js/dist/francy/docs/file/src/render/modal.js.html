@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/render/modal.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/francy.js~Francy.html">Francy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#instance-typedef-Options">Options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Options">Options</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">render</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/base.js~Base.html">Base</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/callback.js~CallbackHandler.html">CallbackHandler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/canvas.js~Canvas.html">Canvas</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/chart.js~Chart.html">Chart</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/composite.js~Composite.html">Composite</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/graph.js~Graph.html">Graph</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/menu.js~Menu.html">Menu</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/modal.js~Modal.html">Modal</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/renderer.js~Renderer.html">Renderer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/window.js~Window.html">Window</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">tracker</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tracker/change.js~Tracker.html">Tracker</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">util</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/util/id-utils.js~IDUtils.html">IDUtils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/util/json-utils.js~JsonUtils.html">JsonUtils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/util/logger.js~Logger.html">Logger</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/render/modal.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import IDUtils from &apos;../util/id-utils&apos;;
+import Renderer from &apos;./renderer&apos;;
+
+/* global d3, Jupyter */
+
+export default class Modal extends Renderer {
+
+  constructor({ verbose = false, appendTo, callbackHandler }) {
+    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  }
+
+  render(json) {
+    var self = this;
+
+    var modalId = IDUtils.getWindowId(json.callback.id);
+    this.logger.debug(`Creating Callback Modal [${modalId}]...`);
+
+    var overlay = d3.select(&apos;body&apos;).append(&apos;div&apos;)
+      .attr(&apos;class&apos;, &apos;francy overlay&apos;);
+    var holder = d3.select(&apos;body&apos;).append(&apos;div&apos;)
+      .attr(&apos;class&apos;, &apos;francy&apos;);
+    var modal = holder.append(&apos;div&apos;)
+      .attr(&apos;id&apos;, modalId)
+      .attr(&apos;class&apos;, &apos;francy modal&apos;);
+
+    var form = modal.append(&apos;form&apos;);
+
+    var header = form.append(&apos;div&apos;).attr(&apos;class&apos;, &apos;header&apos;);
+
+    header.append(&apos;span&apos;).html(&apos;Required arguments for&amp;nbsp;&apos;).append(&apos;span&apos;).attr(&apos;style&apos;, &apos;font-weight: bold;&apos;).text(json.title);
+
+    var content = form.append(&apos;div&apos;).attr(&apos;class&apos;, &apos;content&apos;);
+
+    for (var arg of Object.values(json.callback.requiredArgs)) {
+      content.append(&apos;label&apos;).attr(&apos;for&apos;, arg.id).text(arg.title);
+      content.append(&apos;input&apos;).attr(&apos;id&apos;, arg.id).attr(&apos;class&apos;, &apos;arg&apos;)
+        .attr(&apos;required&apos;, &apos;&apos;)
+        .attr(&apos;name&apos;, arg.id)
+        .attr(&apos;type&apos;, arg.type)
+        .attr(&apos;value&apos;, arg.value)
+        .on(&apos;change&apos;, function() {
+          json.callback.requiredArgs[this.id].value = this.value;
+        })
+        .on(&apos;input&apos;, this.onchange)
+        .on(&apos;keyup&apos;, this.onchange)
+        .on(&apos;paste&apos;, this.onchange);
+      content.append(&apos;span&apos;).attr(&apos;class&apos;, &apos;validity&apos;);
+      content.append(&apos;br&apos;);
+    }
+
+    var footer = form.append(&apos;div&apos;).attr(&apos;class&apos;, &apos;footer&apos;);
+
+    footer.append(&apos;button&apos;).text(&apos;Ok&apos;).on(&apos;click&apos;, function() {
+      if (form.node().checkValidity()) {
+        self.options.callbackHandler(json.callback);
+        overlay.remove();
+        modal.remove();
+        holder.remove();
+        event.preventDefault();
+      }
+      return false;
+    });
+    footer.append(&apos;button&apos;).text(&apos;Cancel&apos;).on(&apos;click&apos;, () =&gt; {
+      event.preventDefault();
+      overlay.remove();
+      modal.remove();
+      holder.remove();
+      return false;
+    });
+
+    // disable keyboard shortcuts when using this modal in Jupyter
+    try {
+      Jupyter.keyboard_manager.register_events(&apos;.arg&apos;);
+    }
+    catch (e) {
+      if (e.name == &apos;ReferenceError&apos;) {
+        self.logger.debug(&apos;It seems we\&apos;re not running on Jupyter...&apos;, e);
+      }
+    }
+
+    this.logger.debug(`Callback Modal updated ${modalId}...`);
+
+    return modal;
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

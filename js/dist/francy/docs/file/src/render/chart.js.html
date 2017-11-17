@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/render/chart.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/francy.js~Francy.html">Francy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#instance-typedef-Options">Options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Options">Options</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">render</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/base.js~Base.html">Base</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/callback.js~CallbackHandler.html">CallbackHandler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/canvas.js~Canvas.html">Canvas</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/chart.js~Chart.html">Chart</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/composite.js~Composite.html">Composite</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/graph.js~Graph.html">Graph</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/menu.js~Menu.html">Menu</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/modal.js~Modal.html">Modal</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/renderer.js~Renderer.html">Renderer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/window.js~Window.html">Window</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">tracker</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tracker/change.js~Tracker.html">Tracker</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">util</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/util/id-utils.js~IDUtils.html">IDUtils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/util/json-utils.js~JsonUtils.html">JsonUtils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/util/logger.js~Logger.html">Logger</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/render/chart.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Renderer from &apos;./renderer&apos;;
+//import IDUtils from &apos;../util/id-utils&apos;;
+
+/* global d3 */
+
+export default class Chart extends Renderer {
+
+  constructor({ verbose = false, appendTo, callbackHandler }) {
+    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  }
+
+  static get colors() {
+    return d3.scaleSequential().domain([0, 100]).interpolator(d3.interpolateRainbow);
+  }
+
+  render(json) {
+
+    if (!Object.keys(json.canvas.chart).length) {
+      return;
+    }
+
+    var parent = this.options.appendTo;
+
+    var chartAxis = json.canvas.chart.axis,
+      chartDatasets = json.canvas.chart.data,
+      numberOfDatasets = Object.keys(chartDatasets).length;
+
+    var svg = parent.select(&apos;g.content&apos;),
+      margin = { top: 50, right: 50, bottom: 50, left: 50 },
+      width = +parent.attr(&apos;width&apos;) || d3.select(&apos;body&apos;).node().getBoundingClientRect().width,
+      height = +parent.attr(&apos;height&apos;) || d3.select(&apos;body&apos;).node().getBoundingClientRect().height;
+
+    // set the dimensions and margins of the chart
+    width -= margin.left - margin.right;
+    height -= margin.top - margin.bottom;
+
+    // set the ranges
+    var x = d3.scaleBand().range([0, width]).padding(0.1).domain(chartAxis.x.domain);
+    var y = d3.scaleLinear().range([height, 0]).domain(chartAxis.y.domain);
+
+    var self = this;
+
+    Object.keys(chartDatasets).forEach(function(key, index) {
+
+      if (!chartAxis.y.domain.length) {
+        y.domain([0, d3.max(chartDatasets[key], function(d) { return d; })]);
+      }
+
+      if (!chartAxis.x.domain.length) {
+        chartAxis.x.domain = self._range(chartDatasets[key].length);
+        x.domain(chartAxis.x.domain);
+      }
+
+      // append the rectangles for the bar chart
+      svg.selectAll(&apos;.bar-&apos; + index)
+        .data(chartDatasets[key]).enter()
+        .append(&apos;rect&apos;)
+        .style(&apos;fill&apos;, () =&gt; Chart.colors(index * numberOfDatasets))
+        .attr(&apos;class&apos;, &apos;bar&apos;)
+        .attr(&apos;x&apos;, function(d, i) { return x(chartAxis.x.domain[i]) + index * (x.bandwidth() / numberOfDatasets); })
+        .attr(&apos;width&apos;, (x.bandwidth() / numberOfDatasets) - 1)
+        .attr(&apos;y&apos;, function(d) { return y(d); })
+        .attr(&apos;height&apos;, function(d) { return height - y(d); });
+    });
+
+    // add the x Axis
+    svg.append(&apos;g&apos;).attr(&apos;transform&apos;, `translate(0,${height})`)
+      .call(d3.axisBottom(x))
+      .append(&quot;text&quot;)
+      .attr(&quot;dy&quot;, 80)
+      .attr(&quot;dx&quot;, width / 2)
+      .attr(&quot;fill&quot;, &quot;black&quot;)
+      .attr(&apos;class&apos;, &apos;axis&apos;)
+      .style(&quot;text-anchor&quot;, &quot;end&quot;)
+      .text(chartAxis.x.title);
+
+    // add the y Axis
+    svg.append(&apos;g&apos;)
+      .call(d3.axisLeft(y))
+      .append(&quot;text&quot;)
+      .attr(&quot;dx&quot;, -80)
+      .attr(&quot;dy&quot;, height / 2)
+      .attr(&quot;fill&quot;, &quot;black&quot;)
+      .attr(&apos;class&apos;, &apos;axis&apos;)
+      .style(&quot;text-anchor&quot;, &quot;end&quot;)
+      .text(chartAxis.y.title);
+
+    var options = d3.keys(chartDatasets);
+
+    var legend = svg.selectAll(&quot;.legend&quot;)
+      .data(options.slice())
+      .enter().append(&quot;g&quot;)
+      .attr(&quot;class&quot;, &quot;legend&quot;)
+      .attr(&quot;transform&quot;, (d, i) =&gt; &quot;translate(0,&quot; + i * 20 + &quot;)&quot;);
+
+    legend.append(&quot;rect&quot;)
+      .attr(&quot;x&quot;, width - 18)
+      .attr(&quot;width&quot;, 18)
+      .attr(&quot;height&quot;, 18)
+      .style(&apos;fill&apos;, (d, i) =&gt; Chart.colors(i * numberOfDatasets));
+
+    legend.append(&quot;text&quot;)
+      .attr(&quot;x&quot;, width - 24)
+      .attr(&quot;y&quot;, 9)
+      .attr(&quot;dy&quot;, &quot;.35em&quot;)
+      .style(&quot;text-anchor&quot;, &quot;end&quot;)
+      .text(function(d) { return d; });
+  }
+
+  _range(max) {
+    return Array.from(new Array(max), (_, i) =&gt; i).map(x =&gt; x);
+  }
+
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

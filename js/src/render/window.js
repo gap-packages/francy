@@ -12,6 +12,7 @@ export default class Window extends Composite {
   render(json) {
     var windowId = IDUtils.getWindowId(json.canvas.id);
     var window = d3.select(`#${windowId}`);
+
     // check if the window is already present
     if (!window.node()) {
       // create a div element detached from the DOM!
@@ -20,12 +21,13 @@ export default class Window extends Composite {
         .attr('id', windowId)
         .attr('class', 'francy window');
     }
+
     // cannot continue if window is not present
     if (!window.node()) {
       throw new Error(`Oops, could not create window with id [${windowId}]... Cannot proceed.`);
     }
 
-    this.logger.debug(`Window ready: ${window}`);
+    this.logger.debug(`Window updated ${windowId}...`);
 
     this.renderChildren(window, json);
 

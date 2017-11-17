@@ -68,16 +68,17 @@ export default class Modal extends Renderer {
       return false;
     });
 
+    // disable keyboard shortcuts when using this modal in Jupyter
     try {
       Jupyter.keyboard_manager.register_events('.arg');
     }
     catch (e) {
-      if (e.name == "ReferenceError") {
-        self.logger.debug('It seems we\'re not running on Jupyter... Skipping...', e);
+      if (e.name == 'ReferenceError') {
+        self.logger.debug('It seems we\'re not running on Jupyter...', e);
       }
     }
 
-    this.logger.debug(`Callback Modal ready: ${modal}`);
+    this.logger.debug(`Callback Modal updated ${modalId}...`);
 
     return modal;
   }

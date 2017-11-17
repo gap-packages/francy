@@ -25,11 +25,8 @@ list-style:none;
 position:relative;
 width:100%;
 z-index:5;
-border:1px solid #cfcfcf
-}
-
-.francy .nav > li {
-margin-left:5px
+border:1px solid #cfcfcf;
+margin-top: 3px;
 }
 
 .francy .nav li {
@@ -169,9 +166,9 @@ border:solid 1px #cfcfcf
 cursor:move
 }
 
-.francy text.label {
+.francy text {
 fill:#000;
-font-size:11px
+font-size:12px
 }
 
 .francy ul {

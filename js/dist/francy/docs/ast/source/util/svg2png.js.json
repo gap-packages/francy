@@ -1,0 +1,114 @@
+{
+  "type": "File",
+  "start": 0,
+  "end": 3557,
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 113,
+      "column": 0
+    }
+  },
+  "program": {
+    "type": "Program",
+    "start": 0,
+    "end": 3557,
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 0
+      },
+      "end": {
+        "line": 113,
+        "column": 0
+      }
+    },
+    "sourceType": "module",
+    "body": [],
+    "directives": [],
+    "leadingComments": null,
+    "innerComments": [
+      {
+        "type": "CommentBlock",
+        "value": "// Set-up the export button\nd3.select('#saveButton').on('click', function() {\n  var svgString = getSVGString(svg.node());\n  svgString2Image(svgString, 2 * width, 2 * height, 'png', save); // passes Blob and filesize String to the callback\n\n  function save(dataBlob, filesize) {\n    saveAs(dataBlob, 'D3 vis exported to PNG.png'); // FileSaver.js function\n  }\n});\n\n// Below are the functions that handle actual exporting:\n// getSVGString ( svgNode ) and svgString2Image( svgString, width, height, format, callback )\nfunction getSVGString(svgNode) {\n  svgNode.setAttribute('xlink', 'http://www.w3.org/1999/xlink');\n  var cssStyleText = getCSSStyles(svgNode);\n  appendCSS(cssStyleText, svgNode);\n\n  var serializer = new XMLSerializer();\n  var svgString = serializer.serializeToString(svgNode);\n  svgString = svgString.replace(/(\\w+)?:?xlink=/g, 'xmlns:xlink='); // Fix root xlink without namespace\n  svgString = svgString.replace(/NS\\d+:href/g, 'xlink:href'); // Safari NS namespace fix\n\n  return svgString;\n\n  function getCSSStyles(parentElement) {\n    var selectorTextArr = [];\n\n    // Add Parent element Id and Classes to the list\n    selectorTextArr.push('#' + parentElement.id);\n    for (var c = 0; c < parentElement.classList.length; c++)\n      if (!contains('.' + parentElement.classList[c], selectorTextArr))\n        selectorTextArr.push('.' + parentElement.classList[c]);\n\n    // Add Children element Ids and Classes to the list\n    var nodes = parentElement.getElementsByTagName(\"*\");\n    for (var i = 0; i < nodes.length; i++) {\n      var id = nodes[i].id;\n      if (!contains('#' + id, selectorTextArr))\n        selectorTextArr.push('#' + id);\n\n      var classes = nodes[i].classList;\n      for (var c = 0; c < classes.length; c++)\n        if (!contains('.' + classes[c], selectorTextArr))\n          selectorTextArr.push('.' + classes[c]);\n    }\n\n    // Extract CSS Rules\n    var extractedCSSText = \"\";\n    for (var i = 0; i < document.styleSheets.length; i++) {\n      var s = document.styleSheets[i];\n\n      try {\n        if (!s.cssRules) continue;\n      }\n      catch (e) {\n        if (e.name !== 'SecurityError') throw e; // for Firefox\n        continue;\n      }\n\n      var cssRules = s.cssRules;\n      for (var r = 0; r < cssRules.length; r++) {\n        if (contains(cssRules[r].selectorText, selectorTextArr))\n          extractedCSSText += cssRules[r].cssText;\n      }\n    }\n\n\n    return extractedCSSText;\n\n    function contains(str, arr) {\n      return arr.indexOf(str) === -1 ? false : true;\n    }\n\n  }\n\n  function appendCSS(cssText, element) {\n    var styleElement = document.createElement(\"style\");\n    styleElement.setAttribute(\"type\", \"text/css\");\n    styleElement.innerHTML = cssText;\n    var refNode = element.hasChildNodes() ? element.children[0] : null;\n    element.insertBefore(styleElement, refNode);\n  }\n}\n\n\nfunction svgString2Image(svgString, width, height, format, callback) {\n  var format = format ? format : 'png';\n\n  var imgsrc = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgString))); // Convert SVG string to data URL\n\n  var canvas = document.createElement(\"canvas\");\n  var context = canvas.getContext(\"2d\");\n\n  canvas.width = width;\n  canvas.height = height;\n\n  var image = new Image();\n  image.onload = function() {\n    context.clearRect(0, 0, width, height);\n    context.drawImage(image, 0, 0, width, height);\n\n    canvas.toBlob(function(blob) {\n      var filesize = Math.round(blob.length / 1024) + ' KB';\n      if (callback) callback(blob, filesize);\n    });\n\n\n  };\n\n  image.src = imgsrc;\n}\n",
+        "start": 0,
+        "end": 3556,
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 112,
+            "column": 2
+          }
+        }
+      }
+    ]
+  },
+  "comments": [
+    {
+      "type": "CommentBlock",
+      "value": "// Set-up the export button\nd3.select('#saveButton').on('click', function() {\n  var svgString = getSVGString(svg.node());\n  svgString2Image(svgString, 2 * width, 2 * height, 'png', save); // passes Blob and filesize String to the callback\n\n  function save(dataBlob, filesize) {\n    saveAs(dataBlob, 'D3 vis exported to PNG.png'); // FileSaver.js function\n  }\n});\n\n// Below are the functions that handle actual exporting:\n// getSVGString ( svgNode ) and svgString2Image( svgString, width, height, format, callback )\nfunction getSVGString(svgNode) {\n  svgNode.setAttribute('xlink', 'http://www.w3.org/1999/xlink');\n  var cssStyleText = getCSSStyles(svgNode);\n  appendCSS(cssStyleText, svgNode);\n\n  var serializer = new XMLSerializer();\n  var svgString = serializer.serializeToString(svgNode);\n  svgString = svgString.replace(/(\\w+)?:?xlink=/g, 'xmlns:xlink='); // Fix root xlink without namespace\n  svgString = svgString.replace(/NS\\d+:href/g, 'xlink:href'); // Safari NS namespace fix\n\n  return svgString;\n\n  function getCSSStyles(parentElement) {\n    var selectorTextArr = [];\n\n    // Add Parent element Id and Classes to the list\n    selectorTextArr.push('#' + parentElement.id);\n    for (var c = 0; c < parentElement.classList.length; c++)\n      if (!contains('.' + parentElement.classList[c], selectorTextArr))\n        selectorTextArr.push('.' + parentElement.classList[c]);\n\n    // Add Children element Ids and Classes to the list\n    var nodes = parentElement.getElementsByTagName(\"*\");\n    for (var i = 0; i < nodes.length; i++) {\n      var id = nodes[i].id;\n      if (!contains('#' + id, selectorTextArr))\n        selectorTextArr.push('#' + id);\n\n      var classes = nodes[i].classList;\n      for (var c = 0; c < classes.length; c++)\n        if (!contains('.' + classes[c], selectorTextArr))\n          selectorTextArr.push('.' + classes[c]);\n    }\n\n    // Extract CSS Rules\n    var extractedCSSText = \"\";\n    for (var i = 0; i < document.styleSheets.length; i++) {\n      var s = document.styleSheets[i];\n\n      try {\n        if (!s.cssRules) continue;\n      }\n      catch (e) {\n        if (e.name !== 'SecurityError') throw e; // for Firefox\n        continue;\n      }\n\n      var cssRules = s.cssRules;\n      for (var r = 0; r < cssRules.length; r++) {\n        if (contains(cssRules[r].selectorText, selectorTextArr))\n          extractedCSSText += cssRules[r].cssText;\n      }\n    }\n\n\n    return extractedCSSText;\n\n    function contains(str, arr) {\n      return arr.indexOf(str) === -1 ? false : true;\n    }\n\n  }\n\n  function appendCSS(cssText, element) {\n    var styleElement = document.createElement(\"style\");\n    styleElement.setAttribute(\"type\", \"text/css\");\n    styleElement.innerHTML = cssText;\n    var refNode = element.hasChildNodes() ? element.children[0] : null;\n    element.insertBefore(styleElement, refNode);\n  }\n}\n\n\nfunction svgString2Image(svgString, width, height, format, callback) {\n  var format = format ? format : 'png';\n\n  var imgsrc = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgString))); // Convert SVG string to data URL\n\n  var canvas = document.createElement(\"canvas\");\n  var context = canvas.getContext(\"2d\");\n\n  canvas.width = width;\n  canvas.height = height;\n\n  var image = new Image();\n  image.onload = function() {\n    context.clearRect(0, 0, width, height);\n    context.drawImage(image, 0, 0, width, height);\n\n    canvas.toBlob(function(blob) {\n      var filesize = Math.round(blob.length / 1024) + ' KB';\n      if (callback) callback(blob, filesize);\n    });\n\n\n  };\n\n  image.src = imgsrc;\n}\n",
+      "start": 0,
+      "end": 3556,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 112,
+          "column": 2
+        }
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "type": "CommentBlock",
+      "value": "// Set-up the export button\nd3.select('#saveButton').on('click', function() {\n  var svgString = getSVGString(svg.node());\n  svgString2Image(svgString, 2 * width, 2 * height, 'png', save); // passes Blob and filesize String to the callback\n\n  function save(dataBlob, filesize) {\n    saveAs(dataBlob, 'D3 vis exported to PNG.png'); // FileSaver.js function\n  }\n});\n\n// Below are the functions that handle actual exporting:\n// getSVGString ( svgNode ) and svgString2Image( svgString, width, height, format, callback )\nfunction getSVGString(svgNode) {\n  svgNode.setAttribute('xlink', 'http://www.w3.org/1999/xlink');\n  var cssStyleText = getCSSStyles(svgNode);\n  appendCSS(cssStyleText, svgNode);\n\n  var serializer = new XMLSerializer();\n  var svgString = serializer.serializeToString(svgNode);\n  svgString = svgString.replace(/(\\w+)?:?xlink=/g, 'xmlns:xlink='); // Fix root xlink without namespace\n  svgString = svgString.replace(/NS\\d+:href/g, 'xlink:href'); // Safari NS namespace fix\n\n  return svgString;\n\n  function getCSSStyles(parentElement) {\n    var selectorTextArr = [];\n\n    // Add Parent element Id and Classes to the list\n    selectorTextArr.push('#' + parentElement.id);\n    for (var c = 0; c < parentElement.classList.length; c++)\n      if (!contains('.' + parentElement.classList[c], selectorTextArr))\n        selectorTextArr.push('.' + parentElement.classList[c]);\n\n    // Add Children element Ids and Classes to the list\n    var nodes = parentElement.getElementsByTagName(\"*\");\n    for (var i = 0; i < nodes.length; i++) {\n      var id = nodes[i].id;\n      if (!contains('#' + id, selectorTextArr))\n        selectorTextArr.push('#' + id);\n\n      var classes = nodes[i].classList;\n      for (var c = 0; c < classes.length; c++)\n        if (!contains('.' + classes[c], selectorTextArr))\n          selectorTextArr.push('.' + classes[c]);\n    }\n\n    // Extract CSS Rules\n    var extractedCSSText = \"\";\n    for (var i = 0; i < document.styleSheets.length; i++) {\n      var s = document.styleSheets[i];\n\n      try {\n        if (!s.cssRules) continue;\n      }\n      catch (e) {\n        if (e.name !== 'SecurityError') throw e; // for Firefox\n        continue;\n      }\n\n      var cssRules = s.cssRules;\n      for (var r = 0; r < cssRules.length; r++) {\n        if (contains(cssRules[r].selectorText, selectorTextArr))\n          extractedCSSText += cssRules[r].cssText;\n      }\n    }\n\n\n    return extractedCSSText;\n\n    function contains(str, arr) {\n      return arr.indexOf(str) === -1 ? false : true;\n    }\n\n  }\n\n  function appendCSS(cssText, element) {\n    var styleElement = document.createElement(\"style\");\n    styleElement.setAttribute(\"type\", \"text/css\");\n    styleElement.innerHTML = cssText;\n    var refNode = element.hasChildNodes() ? element.children[0] : null;\n    element.insertBefore(styleElement, refNode);\n  }\n}\n\n\nfunction svgString2Image(svgString, width, height, format, callback) {\n  var format = format ? format : 'png';\n\n  var imgsrc = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgString))); // Convert SVG string to data URL\n\n  var canvas = document.createElement(\"canvas\");\n  var context = canvas.getContext(\"2d\");\n\n  canvas.width = width;\n  canvas.height = height;\n\n  var image = new Image();\n  image.onload = function() {\n    context.clearRect(0, 0, width, height);\n    context.drawImage(image, 0, 0, width, height);\n\n    canvas.toBlob(function(blob) {\n      var filesize = Math.round(blob.length / 1024) + ' KB';\n      if (callback) callback(blob, filesize);\n    });\n\n\n  };\n\n  image.src = imgsrc;\n}\n",
+      "start": 0,
+      "end": 3556,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 112,
+          "column": 2
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "eof",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 3557,
+      "end": 3557,
+      "loc": {
+        "start": {
+          "line": 113,
+          "column": 0
+        },
+        "end": {
+          "line": 113,
+          "column": 0
+        }
+      }
+    }
+  ]
+}

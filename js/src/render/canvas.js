@@ -21,20 +21,6 @@ export default class Canvas extends Composite {
       canvas = parent.append('svg')
         .attr('id', canvasId)
         .attr('class', 'canvas');
-
-      canvas.append('defs').selectAll('marker')
-        .data(['arrow'])
-        .enter().append('marker')
-        .attr('class', 'arrows')
-        .attr('id', d => d)
-        .attr('viewBox', '0 -5 10 10')
-        .attr('refX', 25)
-        .attr('refY', 0)
-        .attr('markerWidth', 10)
-        .attr('markerHeight', 10)
-        .attr('orient', 'auto')
-        .append('path')
-        .attr('d', 'M0,-5L10,0L0,5 L10,0 L0, -5');
     }
 
     // cannot continue if canvas is not present
@@ -42,15 +28,18 @@ export default class Canvas extends Composite {
       throw new Error(`Oops, could not create canvas with id [${canvasId}]... Cannot proceed.`);
     }
 
-    canvas.attr('width', json.canvas.w).attr('height', json.canvas.h);
+    canvas.attr('width', json.canvas.width).attr('height', json.canvas.height);
 
-    var draw = canvas.select('g.graph');
+    var content = canvas.select('g.content');
 
-    if (!draw.node()) {
-      canvas.append('g').attr('class', 'graph');
+    if (!content.node()) {
+      var contentGroup = canvas.append('g').attr('class', 'content');
+      canvas.call(d3.zoom().on('zoom', function() {
+        contentGroup.attr('transform', `translate(${d3.event.transform.x},${d3.event.transform.y}) scale(${d3.event.transform.k})`);
+      }));
     }
 
-    this.logger.debug(`Canvas ready: ${canvas}`);
+    this.logger.debug(`Canvas updated ${canvasId}...`);
 
     this.renderChildren(canvas, json);
 

@@ -180,7 +180,7 @@ DeclareOperation("Remove", [IsGraph, IsFrancyObject]);
 ## Every object to draw will be a subclass of this object. This will allow
 ## all the objects to contain the same base information.
 ##
-DeclareOperation("Shape", [IsShapeType, IsString, IsShapeDefaults]);
+DeclareOperation("Shape", [IsShapeType, IsString, IsCallback, IsShapeDefaults]);
 
 #############################################################################
 ##

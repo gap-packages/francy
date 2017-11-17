@@ -1,140 +1,114 @@
-class BarChart {
+import Renderer from './renderer';
+//import IDUtils from '../util/id-utils';
 
-  // All options that should be accessible to caller
-  width = 500;
-  height = 300;
-  barPadding = 1;
-  fillColor = 'coral';
-  data = [];
+/* global d3 */
 
-  updateWidth;
-  updateHeight;
-  updateFillColor;
-  updateData;
+export default class Chart extends Renderer {
 
-  constructor({ verbose = false } = {}) {
-
+  constructor({ verbose = false, appendTo, callbackHandler }) {
+    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-/*
-  chart(selection) {
-    selection.each(function() {
+  static get colors() {
+    return d3.scaleSequential().domain([0, 100]).interpolator(d3.interpolateRainbow);
+  }
 
-      var barSpacing = height / data.length;
-      var barHeight = barSpacing - barPadding;
-      var maxValue = d3.max(data);
-      var widthScale = width / maxValue;
+  render(json) {
 
-      var dom = d3.select(this);
-      var svg = dom.append('svg')
-        .attr('class', 'bar-chart')
-        .attr('height', height)
-        .attr('width', width)
-        .style('fill', fillColor);
+    if (!Object.keys(json.canvas.chart).length) {
+      return;
+    }
 
-      var bars = svg.selectAll('rect.display-bar')
-        .data(data)
-        .enter()
-        .append('rect')
-        .attr('class', 'display-bar')
-        .attr('y', function(d, i) { return i * barSpacing; })
-        .attr('height', barHeight)
-        .attr('x', 0)
-        .attr('width', function(d) { return d * widthScale; });
+    var parent = this.options.appendTo;
 
+    var chartAxis = json.canvas.chart.axis,
+      chartDatasets = json.canvas.chart.data,
+      numberOfDatasets = Object.keys(chartDatasets).length;
 
-      // update functions
-      updateWidth = function() {
-        widthScale = width / maxValue;
-        bars.transition().duration(1000).attr('width', function(d) { return d * widthScale; });
-        svg.transition().duration(1000).attr('width', width);
-      };
+    var svg = parent.select('g.content'),
+      margin = { top: 50, right: 50, bottom: 50, left: 50 },
+      width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
+      height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
 
-      updateHeight = function() {
-        barSpacing = height / data.length;
-        barHeight = barSpacing - barPadding;
-        bars.transition().duration(1000).attr('y', function(d, i) { return i * barSpacing; })
-          .attr('height', barHeight);
-        svg.transition().duration(1000).attr('height', height);
+    // set the dimensions and margins of the chart
+    width -= margin.left - margin.right;
+    height -= margin.top - margin.bottom;
 
-      };
+    // set the ranges
+    var x = d3.scaleBand().range([0, width]).padding(0.1).domain(chartAxis.x.domain);
+    var y = d3.scaleLinear().range([height, 0]).domain(chartAxis.y.domain);
 
-      updateFillColor = function() {
-        svg.transition().duration(1000).style('fill', fillColor);
-      };
+    var self = this;
 
-      updateData = function() {
-        barSpacing = height / data.length;
-        barHeight = barSpacing - barPadding;
-        maxValue = d3.max(data);
-        widthScale = width / maxValue;
+    Object.keys(chartDatasets).forEach(function(key, index) {
 
-        var update = svg.selectAll('rect.display-bar')
-          .data(data);
-
-        update
-          .transition()
-          .duration(1000)
-          .attr('y', function(d, i) { return i * barSpacing; })
-          .attr('height', barHeight)
-          .attr('x', 0)
-          .attr('width', function(d) { return d * widthScale; });
-
-        update.enter()
-          .append('rect')
-          .attr('class', 'display-bar')
-          .attr('y', function(d, i) { return i * barSpacing; })
-          .attr('height', barHeight)
-          .attr('x', 0)
-          .attr('width', 0)
-          .style('opacity', 0)
-          .transition()
-          .duration(1000)
-          .delay(function(d, i) { return (data.length - i) * 40; })
-          .attr('width', function(d) { return d * widthScale; })
-          .style('opacity', 1);
-
-        update.exit()
-          .transition()
-          .duration(650)
-          .delay(function(d, i) { return (data.length - i) * 20; })
-          .style('opacity', 0)
-          .attr('height', 0)
-          .attr('x', 0)
-          .attr('width', 0)
-          .remove();
+      if (!chartAxis.y.domain.length) {
+        y.domain([0, d3.max(chartDatasets[key], function(d) { return d; })]);
       }
 
+      if (!chartAxis.x.domain.length) {
+        chartAxis.x.domain = self._range(chartDatasets[key].length);
+        x.domain(chartAxis.x.domain);
+      }
+
+      // append the rectangles for the bar chart
+      svg.selectAll('.bar-' + index)
+        .data(chartDatasets[key]).enter()
+        .append('rect')
+        .style('fill', () => Chart.colors(index * numberOfDatasets))
+        .attr('class', 'bar')
+        .attr('x', function(d, i) { return x(chartAxis.x.domain[i]) + index * (x.bandwidth() / numberOfDatasets); })
+        .attr('width', (x.bandwidth() / numberOfDatasets) - 1)
+        .attr('y', function(d) { return y(d); })
+        .attr('height', function(d) { return height - y(d); });
     });
+
+    // add the x Axis
+    svg.append('g').attr('transform', `translate(0,${height})`)
+      .call(d3.axisBottom(x))
+      .append("text")
+      .attr("dy", 80)
+      .attr("dx", width / 2)
+      .attr("fill", "black")
+      .attr('class', 'axis')
+      .style("text-anchor", "end")
+      .text(chartAxis.x.title);
+
+    // add the y Axis
+    svg.append('g')
+      .call(d3.axisLeft(y))
+      .append("text")
+      .attr("dx", -80)
+      .attr("dy", height / 2)
+      .attr("fill", "black")
+      .attr('class', 'axis')
+      .style("text-anchor", "end")
+      .text(chartAxis.y.title);
+
+    var options = d3.keys(chartDatasets);
+
+    var legend = svg.selectAll(".legend")
+      .data(options.slice())
+      .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", (d, i) => "translate(0," + i * 20 + ")");
+
+    legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style('fill', (d, i) => Chart.colors(i * numberOfDatasets));
+
+    legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
   }
 
-  chart.width = function(value) {
-    if (!arguments.length) return width;
-    width = value;
-    if (typeof updateWidth === 'function') updateWidth();
-    return chart;
-  };
-
-  chart.height = function(value) {
-    if (!arguments.length) return height;
-    height = value;
-    if (typeof updateHeight === 'function') updateHeight();
-    return chart;
-  };
-
-  chart.fillColor = function(value) {
-    if (!arguments.length) return fillColor;
-    fillColor = value;
-    if (typeof updateFillColor === 'function') updateFillColor();
-    return chart;
-  };
-
-  chart.data = function(value) {
-    if (!arguments.length) return data;
-    data = value;
-    if (typeof updateData === 'function') updateData();
-    return chart;
-  };
-  */
+  _range(max) {
+    return Array.from(new Array(max), (_, i) => i).map(x => x);
+  }
 
 }

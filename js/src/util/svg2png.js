@@ -1,4 +1,4 @@
-// Set-up the export button
+/*// Set-up the export button
 d3.select('#saveButton').on('click', function() {
   var svgString = getSVGString(svg.node());
   svgString2Image(svgString, 2 * width, 2 * height, 'png', save); // passes Blob and filesize String to the callback
@@ -109,3 +109,4 @@ function svgString2Image(svgString, width, height, format, callback) {
 
   image.src = imgsrc;
 }
+*/

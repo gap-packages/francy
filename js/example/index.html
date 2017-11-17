@@ -2,28 +2,29 @@
 <header>
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v4">
   <link rel="stylesheet" type="text/css" href="../dist/francy/css/style.css">
-  <script src="../dist/francy/lib/d3.v4.min.js"></script>
+  <script src="../dist/francy/lib/d3.min.js"></script>
   <script src="../dist/francy/browser/francy.bundle.js"></script>
   <title>Francy</title>
 </header>
 <body>
   <div id="francy"></div>
 <script>
-
+  /* global d3 Francy */
+  
   function trigger(json) {
     console.error(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
   }
   
-  var francy = new Francy({verbose: true, appendTo: '#francy', callbackHandler: trigger});
+  var francy = new Francy({verbose: true, appendTo: 'body', callbackHandler: trigger});
   d3.json("json.json", function (error, json) {
     var element = francy.render(json);
     document.getElementsByTagName('body')[0].append(element);
-    /*setTimeout(function() {
-      d3.json("json1.json", function (error, json) {
+    setTimeout(function() {
+      d3.json("json2.json", function (error, json) {
         var element = francy.render(json);
-        //document.getElementsByTagName('body')[0].append(element);
+        document.getElementsByTagName('body')[0].append(element);
       });
-    }, 3000);*/
+    }, 1000);
   });
 
 </script>

@@ -9,10 +9,10 @@
 ##
 #M  CallbackType . . .  the various events supported to trigger a callback
 ##
-BindGlobal("CallbackType", Objectify(NewType(CallbackFamily, IsFrancyType and IsFrancyTypeRep), rec(
+BindGlobal("CallbackType", rec(
   SERVER := Objectify(NewType(CallbackFamily, IsCallbackType and IsCallbackTypeRep), rec(value := "server")),
   CLIENT := Objectify(NewType(CallbackFamily, IsCallbackType and IsCallbackTypeRep), rec(value := "client"))
-)));
+));
 
 #############################################################################
 ##
@@ -84,7 +84,7 @@ InstallOtherMethod(Callback,
    IsList],
   0,
 function(func, knownArgs)
-  return Callback(CallbackType!.SERVER, TriggerEvent.CLICK, func, knownArgs);
+  return Callback(CallbackType.SERVER, TriggerEvent.CLICK, func, knownArgs);
 end);
 
 InstallOtherMethod(Callback,
@@ -93,7 +93,31 @@ InstallOtherMethod(Callback,
   [IsFunction],
   0,
 function(func)
-  return Callback(CallbackType!.SERVER, TriggerEvent.CLICK, func, []);
+  return Callback(CallbackType.SERVER, TriggerEvent.CLICK, func, []);
+end);
+
+#############################################################################
+##
+#M  NoopCallback( )
+##
+## Creates an empty Callback object that does nothing
+##
+InstallMethod(NoopCallback,
+  "",
+  true,
+  [],
+  0,
+function()
+  local object;
+  object := Objectify(NewType(CallbackFamily, IsCallback and IsCallbackRep), rec(
+    id           := HexStringUUID(RandomUUID()),
+    type         := "None",
+    trigger      := "None",
+    func         := "None",
+    knownArgs    := rec(),
+    requiredArgs := rec()
+  ));
+  return object;
 end);
 
 #############################################################################
@@ -115,7 +139,6 @@ function(argType, title)
     value := ""
   ));
 end);
-
 
 #############################################################################
 ##

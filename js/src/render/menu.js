@@ -2,8 +2,6 @@ import Renderer from './renderer';
 import Callback from './callback';
 import IDUtils from '../util/id-utils';
 
-/* global d3 */
-
 export default class Menu extends Renderer {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
@@ -25,33 +23,33 @@ export default class Menu extends Renderer {
     }
 
     // force rebuild menu again
-    menu.selectAll("*").remove();
+    menu.selectAll('*').remove();
 
     var entry = menu.append('li');
-    entry.append('a').attr('href', '#').html('Francy');
+    entry.append('a').html('Francy');
     var content = entry.append('ul');
-    content.append('li').append('a').attr('href', '#').on("click", () => console.log("Save to PNG pressed... Not Implemented!")).attr('title', 'Save to PNG').html('Save to PNG');
-    content.append('li').append('a').attr('href', '#').on("click", () => console.log("About Francy pressed... Not Implemented!")).attr('title', 'About').html('About');
+    content.append('li').append('a').on('click', () => this.logger.info('Save to PNG pressed... Not Implemented!')).attr('title', 'Save to PNG').html('Save to PNG');
+    content.append('li').append('a').on('click', () => this.logger.info('About Francy pressed... Not Implemented!')).attr('title', 'About').html('About');
 
     // FIXME the menu depth is 'infinite', but this implementations supports only depth = 1!
     for (let menuItem of Object.values(json.canvas.menus)) {
       var callback = new Callback(this.options);
       entry = menu.append('li');
       if (menuItem.menus && Object.values(menuItem.menus).length > 0) {
-        entry.append('a').attr('href', '#').html(menuItem.title);
+        entry.append('a').html(menuItem.title);
         content = entry.append('ul');
         entry = content.append('li');
         for (let submenu of Object.values(menuItem.menus)) {
           callback = new Callback(this.options);
-          entry.append('a').attr('href', '#').on("click", () => callback.execute(submenu)).attr('title', submenu.title).html(submenu.title);
+          entry.append('a').on('click', () => callback.execute(submenu)).attr('title', submenu.title).html(submenu.title);
         }
       }
       else {
-        entry.append('a').attr('href', '#').on("click", () => callback.execute(menuItem)).attr('title', menuItem.title).html(menuItem.title);
+        entry.append('a').on('click', () => callback.execute(menuItem)).attr('title', menuItem.title).html(menuItem.title);
       }
     }
 
-    this.logger.debug(`Menu ready: ${menu}`);
+    this.logger.debug(`Menu updated ${menuId}...`);
 
     return menu;
   }

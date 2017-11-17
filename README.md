@@ -1,18 +1,21 @@
 # Francy
 
-FRANCY is a Framework for Interactive Discrete Mathematics package for GAP.
+Francy is a framework for Interactive Discrete Mathematics package for GAP.
 
-Unlike XGAP, Francy is not linked with any GUI framework and instead, this package is responsible for the generation 
-of Semantic Graphical Objects that can be used to produce Graphical Objects, using external libraries, e.g. _Francy - JS_ 
-a javascript implementation module. 
+Unlike [XGAP](https://github.com/gap-packages/xgap), Francy is not linked with any GUI framework and instead, 
+this package is responsible for the generating a semantic model that can be used to produce a graphical representation using any other framework / language.
 
-## Francy - GAP
+See [Graphics Semantics package for GAP](/gap)
 
-See [GAP Impl](/gap)
+As an example, there is javascript implementation of the graphical representation that works in Jupyter, embeded in a web page or as a desktop application (e.g. using electron).
 
-## Francy - JS
+See [Graphics Interface using Javascritp and D3.v4](/js)
 
-See [JS Impl](/js)
+# Binder
+
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/develop)
+
+[MyBinder](https://mybinder.org/) allows opening Jupyter notebooks in an executable environment. Try the *francy.ipynb*.
 
 # License
 

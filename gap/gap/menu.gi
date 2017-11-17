@@ -24,13 +24,21 @@ function(title, callback)
   ));
 end);
 
+InstallOtherMethod(Menu,
+  "a title string",
+  true,
+  [IsString],
+  0,
+function(title)
+  return Menu(title, NoopCallback);
+end);
 
 #############################################################################
 ##
 #M  Add( <menu>, <menu> ) . . . . . add menu to canvas
 ##
 InstallMethod(Add,
-  "a canvas, a shape",
+  "a menu, a menu",
   true,
   [IsMenu,
    IsMenu],
@@ -59,7 +67,7 @@ end);
 #M  Remove( <menu>, <menu> ) . . . . . remove menu from menu
 ##
 InstallMethod(Remove,
-  "a canvas, a shape",
+  "a menu, a menu",
   true,
   [IsMenu,
    IsMenu],

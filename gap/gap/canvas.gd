@@ -86,4 +86,10 @@ DeclareOperation("Add", [IsCanvas, IsFrancyObject]);
 ##
 DeclareOperation("Remove", [IsCanvas, IsFrancyObject]);
 
+#############################################################################
+##
+#O  Draw( <canvas> )
+##
+## Generates the json representation of the canvas and children objects
+##
 DeclareOperation("Draw", [IsCanvas]);

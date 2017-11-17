@@ -2,8 +2,7 @@
 
 FRANCY is a Framework for Interactive Discrete Mathematics package for GAP.
 
-Unlike XGAP, Francy is not linked with any GUI framework and instead, this package is responsible for the generation 
-of Semantic Graphical Objects that can be used to produce Graphical Objects, using external libraries, e.g. _Francy - Javascript module_.
+TODO
 
 # Usage
 
@@ -83,18 +82,16 @@ gap>
 This GAP Package allows the creation of Gap Objects that have a graphical and interactive
 representation. It is possible to create:
 
--Canvas (Hasse, Force, Normal, Plot, etc);
+- Shapes (circle, square, etc);
 
--Shapes (circle, rectangle, lines, etc);
+- Callbacks (OnClick, OnDblClick, etc);
 
--Menus
+- Graphs (Directed, Hasse, etc);
 
--Callbacks (OnClick, OnDblClick, etc);
-
--Plots (Bars, Lines, etc);
+- Plots (Bars, Lines, etc);
 
 The output of these objects is pure JSON and can be used to produce the Graphical representation 
-in any Programing Language / OS.
+in any Framework / Programing Language / OS.
 
 Note: An external library is needed in order to translate the JSON produced into its Graphical representation, 
 see _Francy - JS_ a javascript implementation module.

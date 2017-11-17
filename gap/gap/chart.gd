@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  shape.gd                   FRANCY library                  Manuel Martins
+#W  chart.gd                   FRANCY library                  Manuel Martins
 ##
 #Y  Copyright (C) 2017 Manuel Martins
 ##
@@ -12,13 +12,13 @@
 
 #############################################################################
 ##
-#C  IsChart( <obj> ) . . . . . . . . . . . category of shapes
+#C  IsChart( <obj> ) . . . . . . . . . . . category of charts
 ##
 DeclareCategory("IsChart", IsFrancyObject);
 
 #############################################################################
 ##
-#C  IsChartType( <obj> ) . . . . . . . . . . . category of shapes
+#C  IsChartType( <obj> ) . . . . . . . . . . . category of charts
 ##
 DeclareCategory("IsChartType", IsFrancyObject);
 
@@ -28,6 +28,30 @@ DeclareCategory("IsChartType", IsFrancyObject);
 ##
 DeclareCategory("IsChartDefaults", IsFrancyDefaults);
 
+#############################################################################
+##
+#C  IsAxisScaleType( <obj> ) . . . . . . . . . . . category of charts
+##
+DeclareCategory("IsAxisScaleType", IsFrancyObject);
+
+#############################################################################
+##
+#C  IsXAxis( <obj> ) . . . . . . . . . . . category of charts
+##
+DeclareCategory("IsXAxis", IsFrancyObject);
+
+#############################################################################
+##
+#C  IsYAxis( <obj> ) . . . . . . . . . . . category of charts
+##
+DeclareCategory("IsYAxis", IsFrancyObject);
+
+#############################################################################
+##
+#C  IsDataset( <obj> ) . . . . . . . . . . . category of charts
+##
+DeclareCategory("IsDataset", IsFrancyObject);
+
 
 #############################################################################
 ##
@@ -36,7 +60,7 @@ DeclareCategory("IsChartDefaults", IsFrancyDefaults);
 
 #############################################################################
 ##
-#V  ShapeFamily
+#V  ChartFamily
 ##
 BindGlobal("ChartFamily", NewFamily("ChartFamily", IsChart));
 
@@ -48,7 +72,7 @@ BindGlobal("ChartFamily", NewFamily("ChartFamily", IsChart));
 
 #############################################################################
 ##
-#R  IsShapeRep  . . . . . . . . . . . . . . . . . . .  default representation
+#R  IsChartRep  . . . . . . . . . . . . . . . . . . .  default representation
 ##
 DeclareRepresentation("IsChartRep",
   IsComponentObjectRep and IsAttributeStoringRep,
@@ -56,7 +80,7 @@ DeclareRepresentation("IsChartRep",
 
 #############################################################################
 ##
-#R  IsShapeDefaultsRep  . . . . . . . . . . . . . . . default representation
+#R  IsChartDefaultsRep  . . . . . . . . . . . . . . . default representation
 ##
 DeclareRepresentation("IsChartDefaultsRep",
   IsComponentObjectRep and IsAttributeStoringRep,
@@ -64,11 +88,35 @@ DeclareRepresentation("IsChartDefaultsRep",
 
 #############################################################################
 ##
-#R  IsShapeTypeRep  . . . . . . . . . . . . . . . . .  default representation
+#R  IsChartTypeRep  . . . . . . . . . . . . . . . . .  default representation
 ##
 DeclareRepresentation("IsChartTypeRep",
   IsComponentObjectRep and IsAttributeStoringRep,
   ["value"], IsChartType);
+
+#############################################################################
+##
+#R  IsAxisScaleTypeRep  . . . . . . . . . . . . . . . . .  default representation
+##
+DeclareRepresentation("IsAxisScaleTypeRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["value"], IsChartType);
+
+#############################################################################
+##
+#R  IsAxisScaleTypeRep  . . . . . . . . . . . . . . . . .  default representation
+##
+DeclareRepresentation("IsAxisRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["scale", "title", "domain"], IsChartType);
+
+#############################################################################
+##
+#R  IsAxisScaleTypeRep  . . . . . . . . . . . . . . . . .  default representation
+##
+DeclareRepresentation("IsDatasetRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  [], IsChartType);
 
 
 #############################################################################
@@ -88,18 +136,40 @@ DeclareOperation("Chart", [IsChartType, IsChartDefaults]);
 
 #############################################################################
 ##
-#O  Add( <graph>, <francy object> )
-#O  Add( <graph>, <list of francy object> )
-##
-## 
+#O  Add( <chart>, <francy object> )
+#O  Add( <chart>, <list of francy object> )
 ##
 DeclareOperation("Add", [IsChart, IsFrancyObject]);
 
 #############################################################################
 ##
-#O  Remove( <graph>, <francy object> )
-#O  Remove( <graph>, <list of francy object> )
-##
-## 
+#O  Remove( <chart>, <francy object> )
+#O  Remove( <chart>, <list of francy object> )
 ##
 DeclareOperation("Remove", [IsChart, IsFrancyObject]);
+
+#############################################################################
+##
+#O  Dataset( <title>, <data> )
+##
+DeclareOperation("Dataset", [IsString, IsList]);
+
+#############################################################################
+##
+#O  DefaultAxis( <chart type> )
+##
+DeclareOperation("DefaultAxis", [IsChartType]);
+
+#############################################################################
+##
+#O  XAxis( <axis scale type>, <title>, <domain range> )
+#O  XAxis( <axis scale type>, <title> )
+##
+DeclareOperation("XAxis", [IsAxisScaleType, IsString, IsList]);
+
+#############################################################################
+##
+#O  YAxis( <axis scale type>, <title>, <domain range> )
+#O  YAxis( <axis scale type>, <title> )
+##
+DeclareOperation("YAxis", [IsAxisScaleType, IsString, IsList]);

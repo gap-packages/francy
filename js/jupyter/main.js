@@ -4,7 +4,7 @@ define([
   'require',
   'base/js/namespace',
   'notebook/js/outputarea',
-  'nbextensions/francy/lib/d3.v4.min',
+  'nbextensions/francy/lib/d3.min',
   'nbextensions/francy/amd/francy.bundle',
 ], function(require, Jupyter, outputHandler, d3, FrancyBundle) {
   "use strict";
@@ -27,7 +27,7 @@ define([
   return {
     load_ipython_extension: function() {
 
-      console.log('Loading Francy Javascript...');
+      console.log('Starting loading Module Francy Javascript...');
 
       // `this` is the output area we are appending to
       let appendMime = function(json, md, element) {
@@ -46,7 +46,7 @@ define([
         index: 0
       });
 
-      // create a display: none div for drawing
+      // create a 'display: none;' div for drawing
       d3.select('body').append('div').attr('id', 'francy-drawing-div').attr('style', 'display: none;');
 
       // start francy
@@ -58,6 +58,7 @@ define([
             iopub: {
               output: function(msg) {
                 if (msg.content && msg.content.data && msg.content.data['application/vnd.francy+json']) {
+                  // This will update the existing canvas!
                   francy.render(msg.content.data['application/vnd.francy+json']);
                   return;
                 }
@@ -66,6 +67,8 @@ define([
           }, {});
         }
       });
+
+      console.log('Finished loading Module Francy Javascript.');
     }
   };
 

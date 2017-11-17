@@ -132,10 +132,18 @@ DeclareRepresentation("IsTriggerEventRep",
 ##
 #O  Callback( <callback type>, <trigger event>, <function>, <args> )
 ##
-## Creates a Callback objec that holds the function and args to be executed 
+## Creates a Callback object that holds the function and args to be executed 
 ## remotly by a trigger based on a trigger type.
 ##
 DeclareOperation("Callback", [IsCallbackType, IsTriggerEvent, IsFunction, IsList]);
+
+#############################################################################
+##
+#O  NoopCallback( )
+##
+## Creates an empty Callback object that does nothing
+##
+DeclareOperation("NoopCallback", []);
 
 #############################################################################
 ##

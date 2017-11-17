@@ -20,7 +20,9 @@ export default class JsonUtils {
         return json.agent === 'application/vnd.francy+json' ? json : undefined;
       }
       catch (e) {
+        /* eslint-disable no-console */
         console.error(e);
+        /* eslint-enable no-console */
       }
     }
     return undefined;
