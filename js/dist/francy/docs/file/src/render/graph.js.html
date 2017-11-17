@@ -108,9 +108,9 @@ export default class Graph extends Renderer {
       canvasLinks = json.canvas.graph.links ? Object.values(json.canvas.graph.links) : [];
 
     var svg = parent.select(&apos;g.content&apos;),
-      width = window.innerWidth || +parent.attr(&apos;width&apos;) || d3.select(&apos;body&apos;).node().getBoundingClientRect().width,
+      width = +parent.attr(&apos;width&apos;) || d3.select(&apos;body&apos;).node().getBoundingClientRect().width,
       height = +parent.attr(&apos;height&apos;) || d3.select(&apos;body&apos;).node().getBoundingClientRect().height;
-
+    //window.innerWidth ||
     var t = d3.transition().duration(250);
 
     //Generic gravity for the X position
