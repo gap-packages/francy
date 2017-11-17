@@ -127,6 +127,8 @@ export default class Modal extends Renderer {
     // disable keyboard shortcuts when using this modal in Jupyter
     try {
       Jupyter.keyboard_manager.register_events(&apos;.arg&apos;);
+      Jupyter.keyboard_manager.register_events(&apos;.francy .overlay&apos;);
+      Jupyter.keyboard_manager.register_events(&apos;.francy .modal&apos;);
     }
     catch (e) {
       if (e.name == &apos;ReferenceError&apos;) {

@@ -156,27 +156,27 @@ export default class Graph extends Renderer {
     }
 
     var legend = legendGroup.selectAll('g')
-      .data(d3.map(canvasNodes, d => d.layer).values(), d => d.id)
+      .data(canvasNodes.map(d => d.layer).sort())
       .enter()
       .append('g')
-      .attr('id', d => `legendLayer${d.layer}`)
+      .attr('id', d => `legendLayer${d}`)
       .attr('transform', function(d, i) {
-        let x = 0;
-        let y = i * 11;
+        let x = 10;
+        let y = (i + 1) * 11;
         return `translate(${x},${y})`;
       });
 
     legend.append('rect')
       .attr('width', 10)
       .attr('height', 8)
-      .style('fill', d => Graph.colors(d.layer * 6))
-      .style('stroke', d => Graph.colors(d.layer * 6));
+      .style('fill', d => Graph.colors(d * 6))
+      .style('stroke', d => Graph.colors(d * 6));
 
     legend.append('text')
       .attr('style', 'font-size: 10px;')
       .attr('x', 10 + 5)
       .attr('y', 10 - 2)
-      .text(d => `Index ${d.layer}`);
+      .text(d => `Index ${d}`);
 
     simulation.nodes(canvasNodes).on('tick', ticked);
 

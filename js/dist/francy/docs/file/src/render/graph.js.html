@@ -212,27 +212,27 @@ export default class Graph extends Renderer {
     }
 
     var legend = legendGroup.selectAll(&apos;g&apos;)
-      .data(d3.map(canvasNodes, d =&gt; d.layer).values(), d =&gt; d.id)
+      .data(canvasNodes.map(d =&gt; d.layer).sort())
       .enter()
       .append(&apos;g&apos;)
-      .attr(&apos;id&apos;, d =&gt; `legendLayer${d.layer}`)
+      .attr(&apos;id&apos;, d =&gt; `legendLayer${d}`)
       .attr(&apos;transform&apos;, function(d, i) {
-        let x = 0;
-        let y = i * 11;
+        let x = 10;
+        let y = (i + 1) * 11;
         return `translate(${x},${y})`;
       });
 
     legend.append(&apos;rect&apos;)
       .attr(&apos;width&apos;, 10)
       .attr(&apos;height&apos;, 8)
-      .style(&apos;fill&apos;, d =&gt; Graph.colors(d.layer * 6))
-      .style(&apos;stroke&apos;, d =&gt; Graph.colors(d.layer * 6));
+      .style(&apos;fill&apos;, d =&gt; Graph.colors(d * 6))
+      .style(&apos;stroke&apos;, d =&gt; Graph.colors(d * 6));
 
     legend.append(&apos;text&apos;)
       .attr(&apos;style&apos;, &apos;font-size: 10px;&apos;)
       .attr(&apos;x&apos;, 10 + 5)
       .attr(&apos;y&apos;, 10 - 2)
-      .text(d =&gt; `Index ${d.layer}`);
+      .text(d =&gt; `Index ${d}`);
 
     simulation.nodes(canvasNodes).on(&apos;tick&apos;, ticked);
 

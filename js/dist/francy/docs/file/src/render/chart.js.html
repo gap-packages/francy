@@ -96,8 +96,7 @@ export default class Chart extends Renderer {
 
     var self = this;
 
-    Object.keys(chartDatasets).forEach(function(key, index) {
-
+    Object.keys(chartDatasets).forEach(function(key) {
       if (!chartAxis.y.domain.length) {
         y.domain([0, d3.max(chartDatasets[key], function(d) { return d; })]);
       }
@@ -106,7 +105,9 @@ export default class Chart extends Renderer {
         chartAxis.x.domain = self._range(chartDatasets[key].length);
         x.domain(chartAxis.x.domain);
       }
+    });
 
+    Object.keys(chartDatasets).forEach(function(key, index) {
       // append the rectangles for the bar chart
       svg.selectAll(&apos;.bar-&apos; + index)
         .data(chartDatasets[key]).enter()
@@ -123,7 +124,7 @@ export default class Chart extends Renderer {
     svg.append(&apos;g&apos;).attr(&apos;transform&apos;, `translate(0,${height})`)
       .call(d3.axisBottom(x))
       .append(&quot;text&quot;)
-      .attr(&quot;dy&quot;, 80)
+      .attr(&quot;dy&quot;, 50)
       .attr(&quot;dx&quot;, width / 2)
       .attr(&quot;fill&quot;, &quot;black&quot;)
       .attr(&apos;class&apos;, &apos;axis&apos;)
@@ -134,7 +135,7 @@ export default class Chart extends Renderer {
     svg.append(&apos;g&apos;)
       .call(d3.axisLeft(y))
       .append(&quot;text&quot;)
-      .attr(&quot;dx&quot;, -80)
+      .attr(&quot;dx&quot;, -50)
       .attr(&quot;dy&quot;, height / 2)
       .attr(&quot;fill&quot;, &quot;black&quot;)
       .attr(&apos;class&apos;, &apos;axis&apos;)
@@ -150,17 +151,17 @@ export default class Chart extends Renderer {
       .attr(&quot;transform&quot;, (d, i) =&gt; &quot;translate(0,&quot; + i * 20 + &quot;)&quot;);
 
     legend.append(&quot;rect&quot;)
-      .attr(&quot;x&quot;, width - 18)
-      .attr(&quot;width&quot;, 18)
-      .attr(&quot;height&quot;, 18)
+      .attr(&quot;x&quot;, width + 20)
+      .attr(&quot;width&quot;, 19)
+      .attr(&quot;height&quot;, 19)
       .style(&apos;fill&apos;, (d, i) =&gt; Chart.colors(i * numberOfDatasets));
 
     legend.append(&quot;text&quot;)
-      .attr(&quot;x&quot;, width - 24)
+      .attr(&quot;x&quot;, width + 70)
       .attr(&quot;y&quot;, 9)
       .attr(&quot;dy&quot;, &quot;.35em&quot;)
       .style(&quot;text-anchor&quot;, &quot;end&quot;)
-      .text(function(d) { return d; });
+      .text((d) =&gt; d);
   }
 
   _range(max) {

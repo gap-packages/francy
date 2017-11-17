@@ -40,8 +40,7 @@ export default class Chart extends Renderer {
 
     var self = this;
 
-    Object.keys(chartDatasets).forEach(function(key, index) {
-
+    Object.keys(chartDatasets).forEach(function(key) {
       if (!chartAxis.y.domain.length) {
         y.domain([0, d3.max(chartDatasets[key], function(d) { return d; })]);
       }
@@ -50,7 +49,9 @@ export default class Chart extends Renderer {
         chartAxis.x.domain = self._range(chartDatasets[key].length);
         x.domain(chartAxis.x.domain);
       }
+    });
 
+    Object.keys(chartDatasets).forEach(function(key, index) {
       // append the rectangles for the bar chart
       svg.selectAll('.bar-' + index)
         .data(chartDatasets[key]).enter()
@@ -67,7 +68,7 @@ export default class Chart extends Renderer {
     svg.append('g').attr('transform', `translate(0,${height})`)
       .call(d3.axisBottom(x))
       .append("text")
-      .attr("dy", 80)
+      .attr("dy", 50)
       .attr("dx", width / 2)
       .attr("fill", "black")
       .attr('class', 'axis')
@@ -78,7 +79,7 @@ export default class Chart extends Renderer {
     svg.append('g')
       .call(d3.axisLeft(y))
       .append("text")
-      .attr("dx", -80)
+      .attr("dx", -50)
       .attr("dy", height / 2)
       .attr("fill", "black")
       .attr('class', 'axis')
@@ -94,17 +95,17 @@ export default class Chart extends Renderer {
       .attr("transform", (d, i) => "translate(0," + i * 20 + ")");
 
     legend.append("rect")
-      .attr("x", width - 18)
-      .attr("width", 18)
-      .attr("height", 18)
+      .attr("x", width + 20)
+      .attr("width", 19)
+      .attr("height", 19)
       .style('fill', (d, i) => Chart.colors(i * numberOfDatasets));
 
     legend.append("text")
-      .attr("x", width - 24)
+      .attr("x", width + 70)
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
-      .text(function(d) { return d; });
+      .text((d) => d);
   }
 
   _range(max) {
