@@ -30,7 +30,7 @@ InstallOtherMethod(Menu,
   [IsString],
   0,
 function(title)
-  return Menu(title, NoopCallback);
+  return Menu(title, NoopCallback());
 end);
 
 #############################################################################

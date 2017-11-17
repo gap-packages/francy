@@ -194,7 +194,7 @@ InstallOtherMethod(Shape,
    IsString],
   0,
 function(shapeType, title)
-  return Shape(shapeType, title, NoopCallback, ShapeDefaults);
+  return Shape(shapeType, title, NoopCallback(), ShapeDefaults);
 end);
 
 InstallOtherMethod(Shape,
@@ -203,7 +203,7 @@ InstallOtherMethod(Shape,
   [IsShapeType],
   0,
 function(shapeType)
-  return Shape(shapeType, "", NoopCallback, ShapeDefaults);
+  return Shape(shapeType, "", NoopCallback(), ShapeDefaults);
 end);
 #############################################################################
 ##
