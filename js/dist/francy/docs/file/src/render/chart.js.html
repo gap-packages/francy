@@ -82,30 +82,33 @@ export default class Chart extends Renderer {
       numberOfDatasets = Object.keys(chartDatasets).length;
 
     var svg = parent.select(&apos;g.content&apos;),
-      margin = { top: 50, right: 50, bottom: 50, left: 50 },
+      margin = { top: 50, right: 50, bottom: 100, left: 100 },
       width = +parent.attr(&apos;width&apos;) || d3.select(&apos;body&apos;).node().getBoundingClientRect().width,
       height = +parent.attr(&apos;height&apos;) || d3.select(&apos;body&apos;).node().getBoundingClientRect().height;
 
     // set the dimensions and margins of the chart
-    width -= margin.left - margin.right;
-    height -= margin.top - margin.bottom;
+    width = width - margin.left - margin.right;
+    height = height - margin.top - margin.bottom;
 
     // set the ranges
     var x = d3.scaleBand().range([0, width]).padding(0.1).domain(chartAxis.x.domain);
     var y = d3.scaleLinear().range([height, 0]).domain(chartAxis.y.domain);
 
+    svg.attr(&apos;transform&apos;, `translate(${margin.left},${margin.top})`);
+
     var self = this;
 
-    Object.keys(chartDatasets).forEach(function(key) {
-      if (!chartAxis.y.domain.length) {
-        y.domain([0, d3.max(chartDatasets[key], function(d) { return d; })]);
-      }
+    var tmp = [];
+    Object.keys(chartDatasets).forEach(key =&gt; tmp = tmp.concat(chartDatasets[key]));
 
-      if (!chartAxis.x.domain.length) {
-        chartAxis.x.domain = self._range(chartDatasets[key].length);
-        x.domain(chartAxis.x.domain);
-      }
-    });
+    if (!chartAxis.y.domain.length) {
+      y.domain([0, d3.max(tmp, d =&gt; d)]);
+    }
+
+    if (!chartAxis.x.domain.length) {
+      chartAxis.x.domain = self._range(tmp.length / numberOfDatasets);
+      x.domain(chartAxis.x.domain);
+    }
 
     Object.keys(chartDatasets).forEach(function(key, index) {
       // append the rectangles for the bar chart
@@ -123,44 +126,44 @@ export default class Chart extends Renderer {
     // add the x Axis
     svg.append(&apos;g&apos;).attr(&apos;transform&apos;, `translate(0,${height})`)
       .call(d3.axisBottom(x))
-      .append(&quot;text&quot;)
-      .attr(&quot;dy&quot;, 50)
-      .attr(&quot;dx&quot;, width / 2)
-      .attr(&quot;fill&quot;, &quot;black&quot;)
+      .append(&apos;text&apos;)
+      .attr(&apos;dy&apos;, 50)
+      .attr(&apos;dx&apos;, width / 2)
+      .attr(&apos;fill&apos;, &apos;black&apos;)
       .attr(&apos;class&apos;, &apos;axis&apos;)
-      .style(&quot;text-anchor&quot;, &quot;end&quot;)
+      .style(&apos;text-anchor&apos;, &apos;end&apos;)
       .text(chartAxis.x.title);
 
     // add the y Axis
     svg.append(&apos;g&apos;)
       .call(d3.axisLeft(y))
-      .append(&quot;text&quot;)
-      .attr(&quot;dx&quot;, -50)
-      .attr(&quot;dy&quot;, height / 2)
-      .attr(&quot;fill&quot;, &quot;black&quot;)
+      .append(&apos;text&apos;)
+      .attr(&apos;dx&apos;, -50)
+      .attr(&apos;dy&apos;, height / 2)
+      .attr(&apos;fill&apos;, &apos;black&apos;)
       .attr(&apos;class&apos;, &apos;axis&apos;)
-      .style(&quot;text-anchor&quot;, &quot;end&quot;)
+      .style(&apos;text-anchor&apos;, &apos;end&apos;)
       .text(chartAxis.y.title);
 
     var options = d3.keys(chartDatasets);
 
-    var legend = svg.selectAll(&quot;.legend&quot;)
+    var legend = svg.selectAll(&apos;.legend&apos;)
       .data(options.slice())
-      .enter().append(&quot;g&quot;)
-      .attr(&quot;class&quot;, &quot;legend&quot;)
-      .attr(&quot;transform&quot;, (d, i) =&gt; &quot;translate(0,&quot; + i * 20 + &quot;)&quot;);
+      .enter().append(&apos;g&apos;)
+      .attr(&apos;class&apos;, &apos;legend&apos;)
+      .attr(&apos;transform&apos;, (d, i) =&gt; &apos;translate(0,&apos; + i * 20 + &apos;)&apos;);
 
-    legend.append(&quot;rect&quot;)
-      .attr(&quot;x&quot;, width + 20)
-      .attr(&quot;width&quot;, 19)
-      .attr(&quot;height&quot;, 19)
+    legend.append(&apos;rect&apos;)
+      .attr(&apos;x&apos;, width + 20)
+      .attr(&apos;width&apos;, 19)
+      .attr(&apos;height&apos;, 19)
       .style(&apos;fill&apos;, (d, i) =&gt; Chart.colors(i * numberOfDatasets));
 
-    legend.append(&quot;text&quot;)
-      .attr(&quot;x&quot;, width + 70)
-      .attr(&quot;y&quot;, 9)
-      .attr(&quot;dy&quot;, &quot;.35em&quot;)
-      .style(&quot;text-anchor&quot;, &quot;end&quot;)
+    legend.append(&apos;text&apos;)
+      .attr(&apos;x&apos;, width + 70)
+      .attr(&apos;y&apos;, 9)
+      .attr(&apos;dy&apos;, &apos;.35em&apos;)
+      .style(&apos;text-anchor&apos;, &apos;end&apos;)
       .text((d) =&gt; d);
   }
 
