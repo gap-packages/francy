@@ -56,8 +56,12 @@ InstallMethod(Add,
 function(canvas, object)
   if IsGraph(object) then
     canvas!.graph := object;
+    # unbind the chart, only one should exist!
+    Unbind(canvas!.chart);
   elif IsChart(object) then
     canvas!.chart := object;
+    # unbind the graph, only one should exist!
+    Unbind(canvas!.graph);
   elif IsMenu(object) then
     canvas!.menus!.(object!.id) := object;
   fi;

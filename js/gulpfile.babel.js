@@ -11,8 +11,12 @@ let mocha = require('gulp-mocha');
 let esdoc = require('gulp-esdoc');
 let eslint = require('gulp-eslint');
 
-gulp.task('clean', function(cb) {
+gulp.task('clean-dist', function(cb) {
   return del(['./dist']);
+});
+
+gulp.task('clean-docs', function(cb) {
+  return del(['./docs']);
 });
 
 gulp.task('webpack-amd', function(cb) {
@@ -56,7 +60,7 @@ gulp.task('test', function(cb) {
 
 gulp.task('docs', function(cb) {
   return gulp.src('./src')
-    .pipe(esdoc({ destination: "./dist/francy/docs" }));
+    .pipe(esdoc({ destination: "./docs" }));
 });
 
 gulp.task('lint', function(cb) {
@@ -66,4 +70,6 @@ gulp.task('lint', function(cb) {
     .pipe(eslint.failOnError()).on("error", function(e) {});
 });
 
-gulp.task('default', gulpSequence('lint', 'test', 'clean', ['webpack-amd', 'browserify', 'css', 'js', 'jupyter', 'docs']));
+gulp.task('default', gulpSequence('lint', 'test', 'clean-dist', ['webpack-amd', 'browserify', 'css', 'js', 'jupyter']));
+
+gulp.task('documentation', gulpSequence('clean-docs', 'docs'));

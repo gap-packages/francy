@@ -42,7 +42,7 @@ export default class Graph extends Renderer {
 
   render(json) {
 
-    if (!Object.keys(json.canvas.graph).length) {
+    if (!json.canvas.graph) {
       return;
     }
 
@@ -54,7 +54,7 @@ export default class Graph extends Renderer {
     var svg = parent.select('g.content'),
       width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
       height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
-    //window.innerWidth ||
+
     var t = d3.transition().duration(500);
 
     //Generic gravity for the X position
@@ -64,7 +64,7 @@ export default class Graph extends Renderer {
     var forceY = d3.forceY(500).strength(0.35);
 
     if (json.canvas.graph.type === 'hasse') {
-      //Strong y positioning based on layer
+      //Strong y positioning based on layer to simulate the hasse diagram
       forceY = d3.forceY(d => d.layer * (d.size * 5)).strength(1);
     }
 
@@ -160,7 +160,7 @@ export default class Graph extends Renderer {
     legendGroup.selectAll('*').remove();
 
     var legend = legendGroup.selectAll('g')
-      .data(d3.map(canvasNodes, d => d.layer).values().sort((a, b) => a.layer < b.layer), d => d.id);
+      .data(d3.map(canvasNodes, d => d.layer).values().sort((a, b) => a.layer > b.layer), d => d.id);
 
     legend.exit().transition(t).remove();
 
@@ -186,8 +186,10 @@ export default class Graph extends Renderer {
       .text(d => `Index ${d.layer}`);
 
     simulation.nodes(canvasNodes).on('tick', ticked);
-
     simulation.force('link').links(canvasLinks);
+
+    //force simulation restart
+    simulation.alpha(1).restart();
 
     function ticked() {
       link

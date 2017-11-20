@@ -25,6 +25,10 @@ export default class Menu extends Renderer {
     // force rebuild menu again
     menu.selectAll('*').remove();
 
+    if (json.canvas.title) {
+      menu.append('li').attr('class', 'title').append('a').html(json.canvas.title);
+    }
+
     var entry = menu.append('li');
     entry.append('a').html('Francy');
     var content = entry.append('ul');

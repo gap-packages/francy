@@ -6,7 +6,6 @@
     "title": "Bar Chart",
     "menus": {},
     "height": "600",
-    "graph": {},
     "chart": {
       "type": "bar",
       "data": {

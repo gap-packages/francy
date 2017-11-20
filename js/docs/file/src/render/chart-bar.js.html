@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/render/chart-bar.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/francy.js~Francy.html">Francy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#instance-typedef-Options">Options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Options">Options</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">render</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/base.js~Base.html">Base</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/callback.js~CallbackHandler.html">CallbackHandler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/canvas.js~Canvas.html">Canvas</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/chart-bar.js~BarChart.html">BarChart</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/chart.js~Chart.html">Chart</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/composite.js~Composite.html">Composite</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/graph.js~Graph.html">Graph</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/menu.js~Menu.html">Menu</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/modal.js~Modal.html">Modal</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/renderer.js~Renderer.html">Renderer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/render/window.js~Window.html">Window</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">tracker</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tracker/change.js~Tracker.html">Tracker</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">util</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/util/id-utils.js~IDUtils.html">IDUtils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/util/json-utils.js~JsonUtils.html">JsonUtils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/util/logger.js~Logger.html">Logger</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/render/chart-bar.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Renderer from &apos;./renderer&apos;;
+import Chart from &apos;./chart&apos;;
+
+/* global d3 */
+
+export default class BarChart extends Renderer {
+
+  constructor({ verbose = false, appendTo, callbackHandler }) {
+    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  }
+
+  render(json) {
+
+    if (!json.canvas.chart) {
+      return;
+    }
+
+    var parent = this.options.appendTo;
+
+    var chartAxis = json.canvas.chart.axis,
+      chartDatasets = json.canvas.chart.data,
+      numberOfDatasets = Object.keys(chartDatasets).length;
+
+    var svg = parent.select(&apos;g.content&apos;),
+      margin = { top: 50, right: 50, bottom: 100, left: 100 },
+      width = +parent.attr(&apos;width&apos;) || d3.select(&apos;body&apos;).node().getBoundingClientRect().width,
+      height = +parent.attr(&apos;height&apos;) || d3.select(&apos;body&apos;).node().getBoundingClientRect().height;
+
+    // set the dimensions and margins of the chart
+    width = width - margin.left - margin.right;
+    height = height - margin.top - margin.bottom;
+
+    var t = d3.transition().duration(500);
+
+    // set the ranges
+    var x = d3.scaleBand().range([0, width]).padding(0.1).domain(chartAxis.x.domain);
+    var y = d3.scaleLinear().range([height, 0]).domain(chartAxis.y.domain);
+
+    svg.attr(&apos;transform&apos;, `translate(${margin.left},${margin.top})`);
+
+    var tmp = [];
+    Object.keys(chartDatasets).forEach(key =&gt; tmp = tmp.concat(chartDatasets[key]));
+
+    if (!chartAxis.y.domain.length) {
+      y.domain([0, d3.max(tmp, d =&gt; d)]);
+    }
+
+    if (!chartAxis.x.domain.length) {
+      chartAxis.x.domain = Chart.domainRange(tmp.length / numberOfDatasets);
+      x.domain(chartAxis.x.domain);
+    }
+
+    var barsGroup = svg.selectAll(&apos;g.bars&apos;);
+
+    if (!barsGroup.node()) {
+      barsGroup = svg.append(&apos;g&apos;).attr(&apos;class&apos;, &apos;bars&apos;);
+    }
+
+    Object.keys(chartDatasets).forEach(function(key, index) {
+      var bar = barsGroup.selectAll(&apos;.bar-&apos; + index).data(chartDatasets[key]);
+
+      bar.exit().transition(t).remove();
+
+      // append the rectangles for the bar chart
+      bar.enter()
+        .append(&apos;rect&apos;)
+        .style(&apos;fill&apos;, () =&gt; Chart.colors(index * numberOfDatasets))
+        .attr(&apos;class&apos;, &apos;bar-&apos; + index)
+        .attr(&apos;x&apos;, function(d, i) { return x(chartAxis.x.domain[i]) + index * (x.bandwidth() / numberOfDatasets); })
+        .attr(&apos;width&apos;, (x.bandwidth() / numberOfDatasets) - 1)
+        .attr(&apos;y&apos;, function(d) { return y(d); })
+        .attr(&apos;height&apos;, function(d) { return height - y(d); });
+    });
+
+    // force rebuild axis again
+    var xAxisGroup = svg.selectAll(&apos;g.x-axis&apos;);
+
+    if (!xAxisGroup.node()) {
+      xAxisGroup = svg.append(&apos;g&apos;).attr(&apos;class&apos;, &apos;x-axis&apos;);
+    }
+
+    xAxisGroup.selectAll(&apos;*&apos;).remove();
+
+    // add the x Axis
+    xAxisGroup
+      .attr(&apos;transform&apos;, `translate(0,${height})`)
+      .call(d3.axisBottom(x))
+      .append(&apos;text&apos;)
+      .attr(&apos;dy&apos;, 50)
+      .attr(&apos;dx&apos;, width / 2)
+      .attr(&apos;fill&apos;, &apos;black&apos;)
+      .attr(&apos;class&apos;, &apos;axis&apos;)
+      .style(&apos;text-anchor&apos;, &apos;end&apos;)
+      .text(chartAxis.x.title);
+
+    // force rebuild axis again
+    var yAxisGroup = svg.selectAll(&apos;g.y-axis&apos;);
+
+    if (!yAxisGroup.node()) {
+      yAxisGroup = svg.append(&apos;g&apos;).attr(&apos;class&apos;, &apos;y-axis&apos;);
+    }
+
+    yAxisGroup.selectAll(&apos;*&apos;).remove();
+
+    // add the y Axis
+    yAxisGroup
+      .call(d3.axisLeft(y))
+      .append(&apos;text&apos;)
+      .attr(&apos;dx&apos;, -50)
+      .attr(&apos;dy&apos;, height / 2)
+      .attr(&apos;fill&apos;, &apos;black&apos;)
+      .attr(&apos;class&apos;, &apos;axis&apos;)
+      .style(&apos;text-anchor&apos;, &apos;end&apos;)
+      .text(chartAxis.y.title);
+
+    var options = d3.keys(chartDatasets);
+
+    var legendGroup = svg.selectAll(&apos;.legend&apos;);
+
+    if (!legendGroup.node()) {
+      legendGroup = svg.append(&apos;g&apos;).attr(&apos;class&apos;, &apos;legend&apos;);
+    }
+
+    // force rebuild legend again
+    legendGroup.selectAll(&apos;*&apos;).remove();
+
+    var legend = legendGroup.selectAll(&apos;g&apos;).data(options.slice());
+
+    legend.exit().transition(t).remove();
+
+    legend = legend.enter()
+      .append(&apos;g&apos;)
+      .attr(&apos;transform&apos;, (d, i) =&gt; &apos;translate(0,&apos; + i * 20 + &apos;)&apos;);
+
+    legend.append(&apos;rect&apos;)
+      .attr(&apos;x&apos;, width + 20)
+      .attr(&apos;width&apos;, 19)
+      .attr(&apos;height&apos;, 19)
+      .style(&apos;fill&apos;, (d, i) =&gt; Chart.colors(i * numberOfDatasets));
+
+    legend.append(&apos;text&apos;)
+      .attr(&apos;x&apos;, width + 70)
+      .attr(&apos;y&apos;, 9)
+      .attr(&apos;dy&apos;, &apos;.35em&apos;)
+      .style(&apos;text-anchor&apos;, &apos;end&apos;)
+      .text((d) =&gt; d);
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -45,6 +45,14 @@ padding:10px 15px;
 text-decoration:none
 }
 
+.francy .nav li.title {
+float:right!important
+}
+
+.francy .nav li.title:hover a:hover {
+background:inherit!important
+}
+
 .francy .nav li:hover a {
 background:#f6f6f6;
 text-decoration:none
