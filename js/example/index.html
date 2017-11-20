@@ -16,18 +16,21 @@
   }
   
   var francy = new Francy({verbose: true, appendTo: 'body', callbackHandler: trigger});
-  /*d3.json("json.json", function (error, json) {
+  
+  d3.json("json1.json", function (error, json) {
     var element = francy.render(json);
     document.getElementsByTagName('body')[0].append(element);
-  });*/
-  d3.json("json1.json", function (error, json) {
-        var element = francy.render(json);
-        document.getElementsByTagName('body')[0].append(element);
-      });
+  });
+  
+  d3.json("json3.json", function (error, json) {
+    var element = francy.render(json);
+    document.getElementsByTagName('body')[0].append(element);
+  });
+  
   d3.json("json2.json", function (error, json) {
-        var element = francy.render(json);
-        document.getElementsByTagName('body')[0].append(element);
-      });
+    var element = francy.render(json);
+    document.getElementsByTagName('body')[0].append(element);
+  });
 
 </script>
 </body>

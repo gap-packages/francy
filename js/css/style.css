@@ -26,7 +26,7 @@ position:relative;
 width:100%;
 z-index:5;
 border:1px solid #cfcfcf;
-margin-top: 3px;
+margin-top:3px
 }
 
 .francy .nav li {
@@ -107,14 +107,14 @@ z-index:10
 position:fixed;
 top:50%;
 left:50%;
-bottom: inherit;
-right: inherit;
+bottom:inherit;
+right:inherit;
 z-index:11;
 background:#fff;
 box-shadow:1px 1px 3px #000;
 margin-left:-150px;
 padding:10px;
-display: block;
+display:block
 }
 
 .francy .modal .header {
@@ -154,7 +154,7 @@ width:100%
 }
 
 .francy .canvas {
-margin-top: 3px;
+margin-top:3px;
 width:100%
 }
 
@@ -176,9 +176,6 @@ margin:0;
 padding:0
 }
 
-/*
- * Override Jupyter
- */
 div.output_subarea.francy-view.output_result {
-max-width: inherit!important;
+max-width:inherit!important
 }

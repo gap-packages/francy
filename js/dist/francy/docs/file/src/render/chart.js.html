@@ -90,6 +90,8 @@ export default class Chart extends Renderer {
     width = width - margin.left - margin.right;
     height = height - margin.top - margin.bottom;
 
+    var t = d3.transition().duration(500);
+
     // set the ranges
     var x = d3.scaleBand().range([0, width]).padding(0.1).domain(chartAxis.x.domain);
     var y = d3.scaleLinear().range([height, 0]).domain(chartAxis.y.domain);
@@ -111,20 +113,32 @@ export default class Chart extends Renderer {
     }
 
     Object.keys(chartDatasets).forEach(function(key, index) {
+      var bar = svg.selectAll(&apos;.bar-&apos; + index).data(chartDatasets[key]);
+
+      bar.exit().transition(t).remove();
+
       // append the rectangles for the bar chart
-      svg.selectAll(&apos;.bar-&apos; + index)
-        .data(chartDatasets[key]).enter()
+      bar.enter()
         .append(&apos;rect&apos;)
         .style(&apos;fill&apos;, () =&gt; Chart.colors(index * numberOfDatasets))
-        .attr(&apos;class&apos;, &apos;bar&apos;)
+        .attr(&apos;class&apos;, &apos;bar-&apos; + index)
         .attr(&apos;x&apos;, function(d, i) { return x(chartAxis.x.domain[i]) + index * (x.bandwidth() / numberOfDatasets); })
         .attr(&apos;width&apos;, (x.bandwidth() / numberOfDatasets) - 1)
         .attr(&apos;y&apos;, function(d) { return y(d); })
         .attr(&apos;height&apos;, function(d) { return height - y(d); });
     });
 
+    var xAxisGroup = svg.selectAll(&apos;g.x-axis&apos;);
+
+    if (!xAxisGroup.node()) {
+      xAxisGroup = svg.append(&apos;g&apos;).attr(&apos;class&apos;, &apos;x-axis&apos;);
+    }
+
+    xAxisGroup.selectAll(&apos;*&apos;).remove();
+
     // add the x Axis
-    svg.append(&apos;g&apos;).attr(&apos;transform&apos;, `translate(0,${height})`)
+    xAxisGroup
+      .attr(&apos;transform&apos;, `translate(0,${height})`)
       .call(d3.axisBottom(x))
       .append(&apos;text&apos;)
       .attr(&apos;dy&apos;, 50)
@@ -134,8 +148,17 @@ export default class Chart extends Renderer {
       .style(&apos;text-anchor&apos;, &apos;end&apos;)
       .text(chartAxis.x.title);
 
+    // force rebuild axis again      
+    var yAxisGroup = svg.selectAll(&apos;g.y-axis&apos;);
+
+    if (!yAxisGroup.node()) {
+      yAxisGroup = svg.append(&apos;g&apos;).attr(&apos;class&apos;, &apos;y-axis&apos;);
+    }
+
+    yAxisGroup.selectAll(&apos;*&apos;).remove();
+
     // add the y Axis
-    svg.append(&apos;g&apos;)
+    yAxisGroup
       .call(d3.axisLeft(y))
       .append(&apos;text&apos;)
       .attr(&apos;dx&apos;, -50)
@@ -147,9 +170,12 @@ export default class Chart extends Renderer {
 
     var options = d3.keys(chartDatasets);
 
-    var legend = svg.selectAll(&apos;.legend&apos;)
-      .data(options.slice())
-      .enter().append(&apos;g&apos;)
+    var legend = svg.selectAll(&apos;.legend&apos;).data(options.slice());
+
+    legend.exit().transition(t).remove();
+
+    legend = legend.enter()
+      .append(&apos;g&apos;)
       .attr(&apos;class&apos;, &apos;legend&apos;)
       .attr(&apos;transform&apos;, (d, i) =&gt; &apos;translate(0,&apos; + i * 20 + &apos;)&apos;);
 

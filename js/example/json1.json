@@ -1,74 +1,163 @@
 {
   "agent": "application/vnd.francy+json",
   "canvas": {
-    "height": "400",
-    "id": "8B5591B9B01A48D06CB0D174A94834C3",
+    "h": 400,
+    "width": "800",
+    "height": "600",
+    "id": "A197731FA6674899EC0A97DF399ED5BC",
     "title": "Quaternion Group Subgroup Lattice",
-    "menus": {
-      "9ECB1D5F9D6D4278F434C256F63CBCD3": {
-        "id": "9ECB1D5F9D6D4278F434C256F63CBCD3",
-        "title": "All Subgroups",
-        "callback": {
-          "type": "server",
-          "id": "B9F9F0943FAD4D4E04CCA836666B98E8",
-          "trigger": "click",
-          "knownArgs": [],
-          "requiredArgs": {
-            "A7C5F31D44B44DC45CBDBDDEC5BFE2C6": {
-              "type": "string",
-              "id": "A7C5F31D44B44DC45CBDBDDEC5BFE2C6",
-              "title": "A test String",
-              "value": ""
-            }
-          }
-        },
-        "menus": {}
-      }
-    },
-    "width": "100%",
+    "menus": {},
     "graph": {
-        "type": "directed",
-        "id": "C2232D710B7840D7AC0B65170CB76F5A",
-        "simulation": true,
-        "nodes": {
-          "BBD6B49E746F45D42483770446A32F42": {
-            "x": 0,
-            "y": 0,
-            "type": "diamond",
-            "size": 10,
-            "id": "BBD6B49E746F45D42483770446A32F42",
-            "title": "G",
-            "layer": 1,
-            "highlight": true
+      "type": "hasse",
+      "id": "585C13EF00EC4E71DCCF4C7246C86807",
+      "simulation": true,
+      "nodes": {
+        "85A237CE30554A1FF46170E35B1B80BD": {
+          "x": 0,
+          "y": 0,
+          "type": "diamond",
+          "size": 10,
+          "id": "85A237CE30554A1FF46170E35B1B80BD",
+          "title": "G",
+          "layer": 0,
+          "callback": {
+            "func": "None",
+            "type": "None",
+            "id": "F1FEFF20027649A2ACC6C24171DCF18E",
+            "trigger": "None",
+            "knownArgs": {},
+            "requiredArgs": {}
           },
-          "381B78FE811840038CCD1ACBA164C267": {
-            "x": 0,
-            "y": 0,
-            "type": "diamond",
-            "size": 10,
-            "id": "381B78FE811840038CCD1ACBA164C267",
-            "title": "1",
-            "layer": 1,
-            "highlight": true
-          },
-          "381B78FE811840038CCD1ACBA164C27": {
-            "x": 0,
-            "y": 0,
-            "type": "diamond",
-            "size": 10,
-            "id": "381B78FE811840038CCD1ACBA164C27",
-            "title": "1",
-            "layer": 0,
-            "highlight": true
-          }
+          "highlight": true
         },
-        "links": {
-          "92C780AE49344AAB9C4130C7E437EAF0": {
-            "source": "BBD6B49E746F45D42483770446A32F42",
-            "id": "92C780AE49344AAB9C4130C7E437EAF0",
-            "target": "381B78FE811840038CCD1ACBA164C267"
-          }
+        "F827B91B58E84D8B1C8AF64FAE72BCC9": {
+          "x": 0,
+          "y": 0,
+          "type": "wye",
+          "size": 10,
+          "id": "F827B91B58E84D8B1C8AF64FAE72BCC9",
+          "title": "1",
+          "layer": 3,
+          "callback": {
+            "func": "None",
+            "type": "None",
+            "id": "22781FF7D7DE499DBC8CE6A090CD060B",
+            "trigger": "None",
+            "knownArgs": {},
+            "requiredArgs": {}
+          },
+          "highlight": true
+        },
+        "1FA9D518A51B4422D4BCFDD58129403D": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "1FA9D518A51B4422D4BCFDD58129403D",
+          "title": "SG1",
+          "layer": 1,
+          "callback": {
+            "func": "None",
+            "type": "None",
+            "id": "AC8D576B0FE244445C628F7E2D3407EE",
+            "trigger": "None",
+            "knownArgs": {},
+            "requiredArgs": {}
+          },
+          "highlight": true
+        },
+        "5C86291270454B2204CE851D9700D815": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "5C86291270454B2204CE851D9700D815",
+          "title": "SG2",
+          "layer": 2,
+          "callback": {
+            "func": "None",
+            "type": "None",
+            "id": "C67D424E718C46115470A9BEC35491E1",
+            "trigger": "None",
+            "knownArgs": {},
+            "requiredArgs": {}
+          },
+          "highlight": true
+        },
+        "A097FBE57B75448F7411A2D059F57F96": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "A097FBE57B75448F7411A2D059F57F96",
+          "title": "SG3",
+          "layer": 2,
+          "callback": {
+            "func": "None",
+            "type": "None",
+            "id": "88581D5244C14315E4ADF2C56B7FC00A",
+            "trigger": "None",
+            "knownArgs": {},
+            "requiredArgs": {}
+          },
+          "highlight": true
+        },
+        "B7AB8F184B4445538CF142F0306DBEB1": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "B7AB8F184B4445538CF142F0306DBEB1",
+          "title": "SG4",
+          "layer": 2,
+          "callback": {
+            "func": "None",
+            "type": "None",
+            "id": "84C73C59C61E4A8ED40B15005C016EE7",
+            "trigger": "None",
+            "knownArgs": {},
+            "requiredArgs": {}
+          },
+          "highlight": true
         }
+      },
+      "links": {
+        "4B5B4F8B7FFF40EB1CCB52D91AE1A625": {
+          "source": "85A237CE30554A1FF46170E35B1B80BD",
+          "id": "4B5B4F8B7FFF40EB1CCB52D91AE1A625",
+          "target": "1FA9D518A51B4422D4BCFDD58129403D"
+        },
+        "CF7A947230684DF1ACD7F5C1030A5179": {
+          "source": "1FA9D518A51B4422D4BCFDD58129403D",
+          "id": "CF7A947230684DF1ACD7F5C1030A5179",
+          "target": "5C86291270454B2204CE851D9700D815"
+        },
+        "3B872359ED7C47E8DC89F84643911735": {
+          "source": "5C86291270454B2204CE851D9700D815",
+          "id": "3B872359ED7C47E8DC89F84643911735",
+          "target": "F827B91B58E84D8B1C8AF64FAE72BCC9"
+        },
+        "AC9B1FCA063B4B6634DB9D8DD19DB6CE": {
+          "source": "1FA9D518A51B4422D4BCFDD58129403D",
+          "id": "AC9B1FCA063B4B6634DB9D8DD19DB6CE",
+          "target": "A097FBE57B75448F7411A2D059F57F96"
+        },
+        "F56ECE9B1067405C8C71CE7F402A0087": {
+          "source": "A097FBE57B75448F7411A2D059F57F96",
+          "id": "F56ECE9B1067405C8C71CE7F402A0087",
+          "target": "F827B91B58E84D8B1C8AF64FAE72BCC9"
+        },
+        "6E0B4C4D860245AA045E144DCD838345": {
+          "source": "1FA9D518A51B4422D4BCFDD58129403D",
+          "id": "6E0B4C4D860245AA045E144DCD838345",
+          "target": "B7AB8F184B4445538CF142F0306DBEB1"
+        },
+        "2EE9B76F2B0246D8746CD9F9BA69E208": {
+          "source": "B7AB8F184B4445538CF142F0306DBEB1",
+          "id": "2EE9B76F2B0246D8746CD9F9BA69E208",
+          "target": "F827B91B58E84D8B1C8AF64FAE72BCC9"
+        }
+      }
     },
     "chart": {}
   }

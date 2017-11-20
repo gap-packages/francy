@@ -55,22 +55,23 @@ export default class Graph extends Renderer {
       width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
       height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
     //window.innerWidth ||
-    var t = d3.transition().duration(250);
+    var t = d3.transition().duration(500);
 
     //Generic gravity for the X position
-    var forceX = d3.forceX(250).strength(0.1);
+    var forceX = d3.forceX(-500).strength(0.35);
 
     //Generic gravity for the Y position - undirected/directed graphs fall here
-    var forceY = d3.forceY(250).strength(0.5);
+    var forceY = d3.forceY(500).strength(0.35);
 
     if (json.canvas.graph.type === 'hasse') {
       //Strong y positioning based on layer
-      forceY = d3.forceY(d => d.layer * 100).strength(0.5);
+      forceY = d3.forceY(d => d.layer * (d.size * 5)).strength(1);
     }
 
     var simulation = d3.forceSimulation()
-      .force('link', d3.forceLink().id(d => d.id))
-      .force('charge', d3.forceManyBody().strength(-400))
+      .force('link', d3.forceLink().id(d => d.id).strength(0.001))
+      .force('charge', d3.forceManyBody().strength(-250))
+      .force('collide', d3.forceCollide(d => d.size))
       .force('x', forceX)
       .force('y', forceY)
       .force('center', d3.forceCenter(width / 2, height / 2));
@@ -132,7 +133,7 @@ export default class Graph extends Renderer {
       .on('click', connectedNodes);
     //.on('click', function() { alert(':)'); });
 
-
+    // TODO this could be a tooltip tag from json
     node.append('title').text(d => `ID:\t${d.id}\nLayer:\t${d.layer}`);
 
     var labelGroup = svg.selectAll('.labels');
@@ -156,7 +157,7 @@ export default class Graph extends Renderer {
     }
 
     var legend = legendGroup.selectAll('g')
-      .data(d3.map(canvasNodes, d => d.layer).values().sort(d => d.layer), d => d.id);
+      .data(d3.map(canvasNodes, d => d.layer).values().sort((a, b) => a.layer < b.layer), d => d.id);
 
     legend.exit().transition(t).remove();
 
@@ -200,17 +201,16 @@ export default class Graph extends Renderer {
         .attr('x', d => d.x - d.title.length - Math.sqrt(d.size))
         .attr('y', d => d.y - Math.sqrt(d.size));
 
-      node.each(collide(0.8));
+      node.each(collide(0.9));
     }
 
     // COLLISION
-    var padding = 1, // separation between circles
-      radius = 20;
+    var padding = 1; // separation between circles;
 
     function collide(alpha) {
       let quadTree = d3.quadtree(canvasNodes);
       return function(d) {
-        let rb = 2 * radius + padding,
+        let rb = 2 * d.size + padding,
           nx1 = d.x - rb,
           nx2 = d.x + rb,
           ny1 = d.y - rb,
@@ -271,7 +271,9 @@ export default class Graph extends Renderer {
     }
 
     function dragstarted(d) {
-      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      if (!d3.event.active) {
+        simulation.alphaTarget(0.3).restart();
+      }
       d.fx = d.x;
       d.fy = d.y;
     }
@@ -282,7 +284,9 @@ export default class Graph extends Renderer {
     }
 
     function dragended(d) {
-      if (!d3.event.active) simulation.alphaTarget(0);
+      if (!d3.event.active) {
+        simulation.alphaTarget(0);
+      }
       d.fx = null;
       d.fy = null;
     }
