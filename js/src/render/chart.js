@@ -72,6 +72,7 @@ export default class Chart extends Renderer {
         .attr('height', function(d) { return height - y(d); });
     });
 
+    // force rebuild axis again
     var xAxisGroup = svg.selectAll('g.x-axis');
 
     if (!xAxisGroup.node()) {
@@ -92,7 +93,7 @@ export default class Chart extends Renderer {
       .style('text-anchor', 'end')
       .text(chartAxis.x.title);
 
-    // force rebuild axis again      
+    // force rebuild axis again
     var yAxisGroup = svg.selectAll('g.y-axis');
 
     if (!yAxisGroup.node()) {
@@ -114,13 +115,21 @@ export default class Chart extends Renderer {
 
     var options = d3.keys(chartDatasets);
 
-    var legend = svg.selectAll('.legend').data(options.slice());
+    var legendGroup = svg.selectAll('.legend');
+
+    if (!legendGroup.node()) {
+      legendGroup = svg.append('g').attr('class', 'legend');
+    }
+
+    // force rebuild legend again
+    legendGroup.selectAll('*').remove();
+
+    var legend = legendGroup.selectAll('g').data(options.slice());
 
     legend.exit().transition(t).remove();
 
     legend = legend.enter()
       .append('g')
-      .attr('class', 'legend')
       .attr('transform', (d, i) => 'translate(0,' + i * 20 + ')');
 
     legend.append('rect')

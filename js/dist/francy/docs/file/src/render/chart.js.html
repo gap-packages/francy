@@ -128,6 +128,7 @@ export default class Chart extends Renderer {
         .attr(&apos;height&apos;, function(d) { return height - y(d); });
     });
 
+    // force rebuild axis again
     var xAxisGroup = svg.selectAll(&apos;g.x-axis&apos;);
 
     if (!xAxisGroup.node()) {
@@ -148,7 +149,7 @@ export default class Chart extends Renderer {
       .style(&apos;text-anchor&apos;, &apos;end&apos;)
       .text(chartAxis.x.title);
 
-    // force rebuild axis again      
+    // force rebuild axis again
     var yAxisGroup = svg.selectAll(&apos;g.y-axis&apos;);
 
     if (!yAxisGroup.node()) {
@@ -170,13 +171,21 @@ export default class Chart extends Renderer {
 
     var options = d3.keys(chartDatasets);
 
-    var legend = svg.selectAll(&apos;.legend&apos;).data(options.slice());
+    var legendGroup = svg.selectAll(&apos;.legend&apos;);
+
+    if (!legendGroup.node()) {
+      legendGroup = svg.append(&apos;g&apos;).attr(&apos;class&apos;, &apos;legend&apos;);
+    }
+
+    // force rebuild legend again
+    legendGroup.selectAll(&apos;*&apos;).remove();
+
+    var legend = legendGroup.selectAll(&apos;g&apos;).data(options.slice());
 
     legend.exit().transition(t).remove();
 
     legend = legend.enter()
       .append(&apos;g&apos;)
-      .attr(&apos;class&apos;, &apos;legend&apos;)
       .attr(&apos;transform&apos;, (d, i) =&gt; &apos;translate(0,&apos; + i * 20 + &apos;)&apos;);
 
     legend.append(&apos;rect&apos;)

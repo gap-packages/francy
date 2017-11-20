@@ -156,6 +156,9 @@ export default class Graph extends Renderer {
       legendGroup = parent.append('g').attr('class', 'legend');
     }
 
+    // force rebuild legend again
+    legendGroup.selectAll('*').remove();
+
     var legend = legendGroup.selectAll('g')
       .data(d3.map(canvasNodes, d => d.layer).values().sort((a, b) => a.layer < b.layer), d => d.id);
 
