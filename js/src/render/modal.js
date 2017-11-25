@@ -15,6 +15,7 @@ export default class Modal extends Renderer {
     var modalId = IDUtils.getWindowId(json.callback.id);
     this.logger.debug(`Creating Callback Modal [${modalId}]...`);
 
+    // we want to overlay everything, hence 'body' must be used
     var overlay = d3.select('body').append('div')
       .attr('class', 'francy overlay');
     var holder = d3.select('body').append('div')

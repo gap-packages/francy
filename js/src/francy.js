@@ -1,7 +1,7 @@
 import JsonUtils from './util/json-utils';
 import Window from './render/window';
 import Canvas from './render/canvas';
-import Menu from './render/menu';
+import MainMenu from './render/menu-main';
 import Graph from './render/graph';
 import Chart from './render/chart';
 //import Tracker from './tracker/change';
@@ -64,7 +64,7 @@ export default class Francy {
       //return new Draw(this.options).handle(tracker.object);
       var window = new Window(this.options);
       var canvas = new Canvas(this.options);
-      var menu = new Menu(this.options);
+      var menu = new MainMenu(this.options);
       var graph = new Graph(this.options);
       var chart = new Chart(this.options);
       canvas.add(graph);

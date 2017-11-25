@@ -1,0 +1,84 @@
+{
+  "agent": "application/vnd.francy+json",
+  "canvas": {
+    "h": 400,
+    "width": "800",
+    "height": "100",
+    "id": "8DCD5BBDED624AE18C514461B4AAEA75",
+    "title": "Multi Chained Menu Gets Flatenned!",
+    "menus": {
+      "1B09C45784694781CC3D3E68AF1F5CFF": {
+        "id": "1B09C45784694781CC3D3E68AF1F5CFF",
+        "title": "Multi Menu",
+        "callback": {
+          "type": "server",
+          "id": "26572242DF2F43D9AC72DA4D57B7AA81",
+          "trigger": "click",
+          "knownArgs": [],
+          "requiredArgs": {}
+        },
+        "menus": {
+          "0B1E608E0B7844971C520DBC7A9E74A1": {
+            "id": "0B1E608E0B7844971C520DBC7A9E74A1",
+            "title": "Add Circle",
+            "callback": {
+              "type": "server",
+              "id": "858A0120C4444F10ECA4C280DCA35730",
+              "trigger": "click",
+              "knownArgs": [],
+              "requiredArgs": {
+                "D24388E504254B3ECC899D9748C5DE87": {
+                  "type": "number",
+                  "id": "D24388E504254B3ECC899D9748C5DE87",
+                  "title": "How many Circles?",
+                  "value": ""
+                }
+              }
+            },
+            "menus": {
+              "AE9D1BE0EA16438874B27FE539D34269": {
+                "id": "AE9D1BE0EA16438874B27FE539D34269",
+                "title": "Add Square",
+                "callback": {
+                  "type": "server",
+                  "id": "4D178A036EF742C2BC6C055D9B907FB9",
+                  "trigger": "click",
+                  "knownArgs": [],
+                  "requiredArgs": {
+                    "6712D58088354743248E80CD0871AE9A": {
+                      "type": "number",
+                      "id": "6712D58088354743248E80CD0871AE9A",
+                      "title": "How many Squares?",
+                      "value": ""
+                    }
+                  }
+                },
+                "menus": {
+                  "972A7D3A2BD2428E84513487EA9965A8": {
+                    "id": "972A7D3A2BD2428E84513487EA9965A8",
+                    "title": "Clear",
+                    "callback": {
+                      "type": "server",
+                      "id": "137DB56349C44C86349415D8DBC577B4",
+                      "trigger": "click",
+                      "knownArgs": [],
+                      "requiredArgs": {}
+                    },
+                    "menus": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "graph": {
+      "type": "hasse",
+      "id": "70C0C02B07B84DB34C05ECEED45E49C0",
+      "simulation": true,
+      "nodes": {},
+      "links": {}
+    }
+  }
+}

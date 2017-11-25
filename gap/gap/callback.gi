@@ -108,16 +108,7 @@ InstallMethod(NoopCallback,
   [],
   0,
 function()
-  local object;
-  object := Objectify(NewType(CallbackFamily, IsCallback and IsCallbackRep), rec(
-    id           := HexStringUUID(RandomUUID()),
-    type         := "None",
-    trigger      := "None",
-    func         := "None",
-    knownArgs    := rec(),
-    requiredArgs := rec()
-  ));
-  return object;
+  return Objectify(NewType(CallbackFamily, IsCallback and IsCallbackRep), rec());
 end);
 
 #############################################################################

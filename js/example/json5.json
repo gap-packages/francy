@@ -1,0 +1,93 @@
+{
+  "agent": "application/vnd.francy+json",
+  "canvas": {
+    "width": "800",
+    "height": "600",
+    "id": "44F96C4561094BDFC47AD9F77FF86CC7",
+    "title": "Shape Menus",
+    "menus": {
+      "1A5194D41AA64E14F4731453576F6130": {
+        "id": "1A5194D41AA64E14F4731453576F6130",
+        "title": "Top",
+        "callback": {},
+        "menus": {
+          "DF0DE114906544908458A18956D837D0": {
+            "id": "DF0DE114906544908458A18956D837D0",
+            "title": "Clear",
+            "callback": {
+              "type": "server",
+              "id": "74D4168DDAE04AC67C79C360683FA7D6",
+              "trigger": "click",
+              "knownArgs": [],
+              "requiredArgs": {}
+            },
+            "menus": {}
+          }
+        }
+      },
+      "B9434EB1D9C3443A9C319E151A4721EC": {
+        "id": "B9434EB1D9C3443A9C319E151A4721EC",
+        "title": "Clear2",
+        "callback": {
+          "type": "server",
+          "id": "5C2B7AC85F3A48CD2CBF6C30AB2E8BF4",
+          "trigger": "click",
+          "knownArgs": [],
+          "requiredArgs": {}
+        },
+        "menus": {}
+      }
+    },
+    "graph": {
+      "type": "hasse",
+      "id": "8C49A2ECB0BD42FEC4D73738EB3DABF7",
+      "simulation": true,
+      "nodes": {
+        "C1D8132743454B1A94FEFC052C93EA9E": {
+          "x": 0,
+          "y": 0,
+          "type": "square",
+          "size": 10,
+          "id": "C1D8132743454B1A94FEFC052C93EA9E",
+          "title": "A",
+          "layer": 0,
+          "menus": {
+            "1A5194D41AA64E14F4731453576F6130": {
+              "id": "1A5194D41AA64E14F4731453576F6130",
+              "title": "Top",
+              "callback": {},
+              "menus": {
+                "DF0DE114906544908458A18956D837D0": {
+                  "id": "DF0DE114906544908458A18956D837D0",
+                  "title": "Clear",
+                  "callback": {
+                    "type": "server",
+                    "id": "74D4168DDAE04AC67C79C360683FA7D6",
+                    "trigger": "click",
+                    "knownArgs": [],
+                    "requiredArgs": {}
+                  },
+                  "menus": {}
+                },
+      "B9434EB1D9C3443A9C319E151A4721EC": {
+        "id": "B9434EB1D9C3443A9C319E151A4721EC",
+        "title": "Clear2",
+        "callback": {
+          "type": "server",
+          "id": "5C2B7AC85F3A48CD2CBF6C30AB2E8BF4",
+          "trigger": "click",
+          "knownArgs": [],
+          "requiredArgs": {}
+        },
+        "menus": {}
+      }
+              }
+            }
+          },
+          "highlight": true
+        }
+      },
+      "links": {}
+    }
+  }
+}

@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  francy.gd                   FRANCY library                 Manuel Martins
+#W  util.gd                   FRANCY library                 Manuel Martins
 ##
 #Y  Copyright (C) 2017 Manuel Martins
 ##

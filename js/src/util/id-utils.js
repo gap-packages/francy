@@ -39,4 +39,5 @@ export default class IDUtils {
   static getMenuId(menuId) {
     return `FrancyMenu-${menuId}`;
   }
+
 }

@@ -34,4 +34,9 @@ export default class Chart extends Renderer {
     return Array.from(new Array(max), (_, i) => i).map(x => x);
   }
 
+  static zoomToFit(element) {
+    var transform = d3.zoomTransform(element.node());
+    transform.translate(element.left, element.top);
+  }
+
 }

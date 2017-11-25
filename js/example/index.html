@@ -20,6 +20,16 @@
   d3.json("json1.json", function (error, json) {
     var element = francy.render(json);
     document.getElementsByTagName('body')[0].append(element);
+    setTimeout(function(){
+       d3.json("json1.1.json", function (error, json) {
+          francy.render(json);
+       });
+    }, 3000);
+  });
+  
+  d3.json("json2.json", function (error, json) {
+    var element = francy.render(json);
+    document.getElementsByTagName('body')[0].append(element);
   });
   
   d3.json("json3.json", function (error, json) {
@@ -27,7 +37,12 @@
     document.getElementsByTagName('body')[0].append(element);
   });
   
-  d3.json("json2.json", function (error, json) {
+  d3.json("json4.json", function (error, json) {
+    var element = francy.render(json);
+    document.getElementsByTagName('body')[0].append(element);
+  });
+
+  d3.json("json5.json", function (error, json) {
     var element = francy.render(json);
     document.getElementsByTagName('body')[0].append(element);
   });

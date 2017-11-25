@@ -30,7 +30,7 @@ DeclareCategory("IsCallback", IsFrancyObject);
 
 #############################################################################
 ##
-#C  IsCallbackRequiredArg( <obj> ) . . . . . . . category of callbacks args
+#C  IsRequiredArg( <obj> ) . . . . . . . category of callbacks args
 ##
 DeclareCategory( "IsRequiredArg", IsFrancyObject );
 
@@ -54,7 +54,7 @@ DeclareCategory("IsTrigger", IsFrancyObject);
 
 #############################################################################
 ##
-#O  IsTriggerType( <obj> )
+#O  IsTriggerEvent( <obj> )
 ##
 DeclareCategory("IsTriggerEvent", IsFrancyObject);
 
@@ -72,7 +72,7 @@ BindGlobal("CallbackFamily", NewFamily("CallbackFamily", IsCallback));
 
 #############################################################################
 ##
-#V  CallbackFamily
+#V  TriggerFamily
 ##
 BindGlobal("TriggerFamily", NewFamily("TriggerFamily", IsTrigger));
 
@@ -92,7 +92,7 @@ DeclareRepresentation("IsCallbackRep",
 
 #############################################################################
 ##
-#R  IsCallbackRequiredArgRep  . . . . . . . . .. . . . default representation
+#R  IsRequiredArgRep  . . . . . . . . .. . . . default representation
 ##
 DeclareRepresentation("IsRequiredArgRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
@@ -108,7 +108,7 @@ DeclareRepresentation("IsArgTypeRep",
 
 #############################################################################
 ##
-#R  IsArgTypeRep  . . . . . . . . . .  default representation
+#R  IsCallbackTypeRep  . . . . . . . . . .  default representation
 ##
 DeclareRepresentation("IsCallbackTypeRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
@@ -116,7 +116,7 @@ DeclareRepresentation("IsCallbackTypeRep",
 
 #############################################################################
 ##
-#R  IsTriggerRep  . . . . . . . . . . . . . . . . . . default representation
+#R  IsTriggerEventRep  . . . . . . . . . . . . . . . . . . default representation
 ##
 DeclareRepresentation("IsTriggerEventRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
@@ -132,8 +132,8 @@ DeclareRepresentation("IsTriggerEventRep",
 ##
 #O  Callback( <callback type>, <trigger event>, <function>, <args> )
 ##
-## Creates a Callback object that holds the function and args to be executed 
-## remotly by a trigger based on a trigger type.
+## Creates a Callback object that holds a function and args to be executed 
+##  by a trigger based on a trigger type.
 ##
 DeclareOperation("Callback", [IsCallbackType, IsTriggerEvent, IsFunction, IsList]);
 
@@ -141,7 +141,8 @@ DeclareOperation("Callback", [IsCallbackType, IsTriggerEvent, IsFunction, IsList
 ##
 #O  NoopCallback( )
 ##
-## Creates an empty Callback object that does nothing
+## Creates an empty Callback object that does nothing.
+## Useful, for instance, to creat menu holders.
 ##
 DeclareOperation("NoopCallback", []);
 
@@ -158,7 +159,8 @@ DeclareOperation("RequiredArg", [IsArgType, IsString]);
 #O  Add( <callback>, <arg> )
 #O  Add( <callback>, <list of args> )
 ##
-## 
+## Add required args to a specific callback.
+## Required Args, are user input driven and required for the execution of a callback
 ##
 DeclareOperation("Add", [IsCallback, IsRequiredArg]);
 
@@ -167,7 +169,7 @@ DeclareOperation("Add", [IsCallback, IsRequiredArg]);
 #O  Remove( <callback>, <arg> )
 #O  Remove( <callback>, <list of args> )
 ##
-## 
+## Remove required args to a specific callback.
 ##
 DeclareOperation("Remove", [IsCallback, IsRequiredArg]);
 
@@ -175,6 +177,7 @@ DeclareOperation("Remove", [IsCallback, IsRequiredArg]);
 ##
 #O  Trigger( <json> )
 ##
-## Triggers a callback function in GAP. TODO argument description
+## Triggers a callback function in GAP.
+## Gets a JSON String object representation of the callback to execute.
 ##
 DeclareOperation("Trigger", [IsString]);

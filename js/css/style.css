@@ -1,6 +1,14 @@
+.francy {
+font-family:"Helvetica Neue",Helvetica,Arial,sans-serif
+}
+
 .francy .highlight:hover {
 stroke:#fffd00;
 stroke-width:2px
+}
+
+.francy .context {
+cursor:context-menu!important
 }
 
 .francy .links {
@@ -13,11 +21,10 @@ stroke-opacity:.6
 }
 
 .francy a {
-color:inherit;
-font-family:"Helvetica Neue",Helvetica,Arial,sans-serif
+color:inherit
 }
 
-.francy .nav {
+.francy .main-menu {
 background:#f6f6f6;
 color:#333;
 float:left;
@@ -29,71 +36,76 @@ border:1px solid #cfcfcf;
 margin-top:3px
 }
 
-.francy .nav li {
+.francy .main-menu li {
 float:left;
-position:relative
+position:relative;
+cursor:pointer
 }
 
-.francy .nav li ul {
-width:100%
+.francy .main-menu li ul {
+width:100%;
+box-shadow:5px 5px 5px grey;
+min-width: 120px
 }
 
-.francy .nav li a {
+.francy .main-menu li a {
 background:#f6f6f6;
 display:block;
 padding:10px 15px;
 text-decoration:none
 }
 
-.francy .nav li.title {
-float:right!important
+.francy .main-menu li.title {
+float:right!important;
+cursor:auto
 }
 
-.francy .nav li.title:hover a:hover {
+.francy .main-menu li.title:hover a:hover {
 background:inherit!important
 }
 
-.francy .nav li:hover a {
+.francy .main-menu li:hover a {
 background:#f6f6f6;
 text-decoration:none
 }
 
-.francy .nav li:hover a:hover {
+.francy .main-menu li:hover a:hover {
 background:#ededed;
 text-decoration:none
 }
 
-.francy .nav li:hover ul {
+.francy .main-menu li:hover ul {
 left:0
 }
 
-.francy .nav li:hover ul a {
+.francy .main-menu li:hover ul a {
 text-decoration:none
 }
 
-.francy .nav li:hover ul li a:hover {
+.francy .main-menu li:hover ul li a:hover {
 background:#ededed
 }
 
-.francy .nav ul {
+.francy .main-menu ul {
 background:#333;
 left:-9999px;
 list-style:none;
 position:absolute
 }
 
-.francy .nav ul a {
+.francy .main-menu ul a {
 white-space:nowrap;
 overflow:hidden;
-text-overflow:ellipsis
+text-overflow:ellipsis;
+min-width: 120px
 }
 
-.francy .nav ul li {
+.francy .main-menu ul li {
 float:none;
 width:100%
 }
 
-.francy .nodes {
+.francy .nodes,.francy .bars {
 cursor:pointer
 }
 
@@ -186,4 +198,86 @@ padding:0
 
 div.output_subarea.francy-view.output_result {
 max-width:inherit!important
+}
+
+.francy.tooltip {
+position:absolute;
+display:none;
+min-width:80px;
+height:auto;
+background:none repeat scroll 0 0 #f6f6f6;
+border:1px solid #cfcfcf;
+padding:10px;
+text-align:justify
+}
+
+.francy .title {
+font-weight:700
+}
+
+.francy .context-menu {
+position:absolute;
+display:none;
+background:#f6f6f6;
+color:#333;
+border-radius:4px;
+font-family:Arial,sans-serif;
+font-size:14px;
+min-width:150px;
+border:1px solid #cfcfcf;
+z-index:1200;
+box-shadow:5px 5px 5px grey
+}
+
+.francy .context-menu ul {
+list-style-type:none;
+margin:0;
+padding:0;
+cursor:pointer
+}
+
+.francy .context-menu ul li a {
+background:#f6f6f6;
+display:block;
+padding:5px 10px;
+text-decoration:none
+}
+
+.francy .context-menu ul li a:hover {
+background-color:#ededed
+}
+
+.francy.table {
+display:table;
+width:100%
+}
+
+.francy.table-row {
+display:table-row
+}
+
+.francy.table-heading {
+background-color:#eee;
+display:table-header-group
+}
+
+.francy.table-cell,.francy.table-head {
+display:table-cell;
+padding:0 6px
+}
+
+.francy.table-heading {
+background-color:#eee;
+display:table-header-group;
+font-weight:700
+}
+
+.francy.table-foot {
+background-color:#eee;
+display:table-footer-group;
+font-weight:700
+}
+
+.francy.table-body {
+display:table-row-group
 }

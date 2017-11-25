@@ -26,11 +26,11 @@ InstallMethod(Canvas,
   0,
 function(title, options)
   return MergeObjects(Objectify(NewType(CanvasFamily, IsCanvas and IsCanvasRep), rec(
-    id        := HexStringUUID(RandomUUID()),
-    menus     := rec(),
-    graph    := rec(),
-    chart    := rec(),
-    title     := title
+    id    := HexStringUUID(RandomUUID()),
+    menus := rec(),
+    graph := rec(),
+    chart := rec(),
+    title := title
   )), options);
 end);
 

@@ -35,7 +35,7 @@ export default class Canvas extends Composite {
     if (!content.node()) {
       var contentGroup = canvas.append('g').attr('class', 'content');
       canvas.call(d3.zoom().on('zoom', function() {
-        contentGroup.attr('transform', `translate(${d3.event.transform.x},${d3.event.transform.y}) scale(${d3.event.transform.k})`);
+        contentGroup.attr('transform', d3.event.transform);
       }));
     }
 

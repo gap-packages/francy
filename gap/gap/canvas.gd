@@ -54,7 +54,8 @@ DeclareRepresentation("IsCanvasRep",
 ##
 DeclareRepresentation("IsCanvasDefaultsRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
-  ["w", "h"], IsCanvasDefaults);
+  ["width", "height"], IsCanvasDefaults);
+
 
 #############################################################################
 ##

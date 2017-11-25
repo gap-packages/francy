@@ -21,6 +21,7 @@
           "title": "G",
           "layer": 0,
           "menus": {
+            }
           },
           "highlight": true
         },
@@ -78,6 +79,18 @@
           "type": "circle",
           "size": 10,
           "id": "B7AB8F184B4445538CF142F0306DBEB1",
+          "title": "SG4",
+          "layer": 2,
+          "menus": {
+          },
+          "highlight": true
+        },
+        "B7AB8F184B4445538CF142F0306DBEB11": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "B7AB8F184B4445538CF142F0306DBEB11",
           "title": "SG4",
           "layer": 2,
           "menus": {

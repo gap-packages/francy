@@ -160,31 +160,19 @@ BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and I
 #M  Shape( <shapeType>, <title>, <options> )  . .  create a Shape for a type
 ##
 InstallMethod(Shape,
-  "a shape type, a title string, a callback, a default configurations record",
+  "a shape type, a title string, a default configurations record",
   true,
   [IsShapeType,
    IsString,
-   IsCallback,
    IsShapeDefaults],
   0,
-function(shapeType, title, callback, options)
+function(shapeType, title, options)
   return MergeObjects(Objectify(NewType(ShapeFamily, IsShape and IsShapeRep), rec(
-    id       := HexStringUUID(RandomUUID()),
-    type     := shapeType!.value,
-    title    := title,
-    callback := callback
+    id    := HexStringUUID(RandomUUID()),
+    type  := shapeType!.value,
+    title := title,
+    menus := rec()
   )), options);
-end);
-
-InstallOtherMethod(Shape,
-  "a shape type, a callback, a title string",
-  true,
-  [IsShapeType,
-   IsString,
-   IsCallback],
-  0,
-function(shapeType, title, callback)
-  return Shape(shapeType, title, callback, ShapeDefaults);
 end);
 
 InstallOtherMethod(Shape,
@@ -194,7 +182,7 @@ InstallOtherMethod(Shape,
    IsString],
   0,
 function(shapeType, title)
-  return Shape(shapeType, title, NoopCallback(), ShapeDefaults);
+  return Shape(shapeType, title, ShapeDefaults);
 end);
 
 InstallOtherMethod(Shape,
@@ -203,8 +191,69 @@ InstallOtherMethod(Shape,
   [IsShapeType],
   0,
 function(shapeType)
-  return Shape(shapeType, "", NoopCallback(), ShapeDefaults);
+  return Shape(shapeType, "", ShapeDefaults);
 end);
+
+
+#############################################################################
+##
+#M  Add( <graph>, <francy object> ) . . . . . add objects to graph
+##
+InstallMethod(Add,
+  "a shape, a menu",
+  true,
+  [IsShape,
+   IsMenu],
+  0,
+function(shape, menu)
+    shape!.menus!.(menu!.id) := menu;
+  return shape;
+end);
+
+InstallOtherMethod(Add,
+  "a shape, a list of menu",
+  true,
+  [IsShape,
+   IsList],
+  0,
+function(shape, menus)
+  local menu;
+  for menu in menus do
+    Add(shape, menu);
+  od;
+  return shape;
+end);
+
+#############################################################################
+##
+#M  Remove( <graph>, <francy object> ) . . . . . remove object from graph
+##
+InstallMethod(Remove,
+  "a shape, a menu",
+  true,
+  [IsShape,
+   IsMenu],
+  0,
+function(shape, menu)
+  Unbind(shape!.menu!.(menu!.id));
+  return shape;
+end);
+
+InstallOtherMethod(Remove,
+  "a shape, a list of callbacks",
+  true,
+  [IsShape,
+   IsList],
+  0,
+function(shape, menus)
+  local menu;
+  for menu in menus do
+    Remove(shape, menu);
+  od;
+  return shape;
+end);
+
+
 #############################################################################
 ##
 #M  Link( <obj1>, <obj2> )

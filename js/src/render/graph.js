@@ -1,4 +1,6 @@
 import Renderer from './renderer';
+import ContextMenu from './menu-context';
+import Tooltip from './tooltip';
 
 /* global d3 */
 
@@ -46,6 +48,8 @@ export default class Graph extends Renderer {
       return;
     }
 
+    var tooltip = new Tooltip(this.options);
+
     var parent = this.options.appendTo;
 
     var canvasNodes = json.canvas.graph.nodes ? Object.values(json.canvas.graph.nodes) : [],
@@ -88,7 +92,8 @@ export default class Graph extends Renderer {
 
     link = link.enter().append('line')
       .attr('class', 'link')
-      .attr('id', d => `${d.source},${d.target}`);
+      .attr('id', d => `${d.source},${d.target}`)
+      .merge(link);
 
     if (json.canvas.graph.type === 'directed') {
       // this means we need arrows, so we append the marker
@@ -122,19 +127,22 @@ export default class Graph extends Renderer {
     node = node.enter().append('path')
       .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
       .attr('transform', 'translate(0,0)')
-      .attr('class', d => 'node' + (d.highlight ? ' highlight' : ''))
-      .attr('id', d => d.id);
+      .attr('class', d => 'node' + (d.highlight ? ' highlight' : '') + (Object.values(d.menus).length ? ' context' : ''))
+      .attr('id', d => d.id)
+      .merge(node);
 
     node.call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
         .on('end', dragended))
-      //.on('contextmenu', connectedNodes) //rightclick
+      .on('contextmenu', d => new ContextMenu(this.options).render(d))
       .on('click', connectedNodes);
     //.on('click', function() { alert(':)'); });
 
     // TODO this could be a tooltip tag from json
-    node.append('title').text(d => `ID:\t${d.id}\nLayer:\t${d.layer}`);
+    node
+      .on("mousemove", d => tooltip.render({ 'ID': d.id, 'Value': d.layer }))
+      .on("mouseout", () => tooltip.unrender());
 
     var labelGroup = svg.selectAll('.labels');
 
@@ -148,7 +156,8 @@ export default class Graph extends Renderer {
 
     label = label.enter().append('text')
       .attr('class', 'label')
-      .text(d => d.title);
+      .text(d => d.title)
+      .merge(label);
 
     var legendGroup = parent.selectAll('.legend');
 
@@ -171,7 +180,8 @@ export default class Graph extends Renderer {
         let x = 10;
         let y = (i + 1) * 11;
         return `translate(${x},${y})`;
-      });
+      })
+      .merge(legend);
 
     legend.append('rect')
       .attr('width', 10)
@@ -199,12 +209,12 @@ export default class Graph extends Renderer {
         .attr('y2', d => d.target.y);
 
       node
-        .style('fill', d => Graph.colors(d.layer * 6))
+        .style('fill', d => Graph.colors(d.layer * 5))
         .attr('transform', d => `translate(${d.x},${d.y})`);
 
       label
-        .attr('x', d => d.x - d.title.length - Math.sqrt(d.size))
-        .attr('y', d => d.y - Math.sqrt(d.size));
+        .attr('x', d => d.x - d.title.length - Math.sqrt(d.size * d.title.length * 2))
+        .attr('y', d => d.y - Math.sqrt(d.size * 2));
 
       node.each(collide(0.9));
     }
@@ -295,6 +305,7 @@ export default class Graph extends Renderer {
       d.fx = null;
       d.fy = null;
     }
+
 
   }
 

@@ -17,7 +17,7 @@ export default class Window extends Composite {
     if (!window.node()) {
       // create a div element detached from the DOM!
       this.logger.debug(`Creating Window [${windowId}]...`);
-      window = d3.select(this.options.appendTo).append('div').remove()
+      window = d3.select(this.options.appendTo).append('div') //.remove()
         .attr('id', windowId)
         .attr('class', 'francy window');
     }
@@ -27,7 +27,7 @@ export default class Window extends Composite {
       throw new Error(`Oops, could not create window with id [${windowId}]... Cannot proceed.`);
     }
 
-    this.logger.debug(`Window updated ${windowId}...`);
+    this.logger.debug(`Window updated [${windowId}]...`);
 
     this.renderChildren(window, json);
 

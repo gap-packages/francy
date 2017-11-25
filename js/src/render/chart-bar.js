@@ -1,4 +1,5 @@
 import Renderer from './renderer';
+import Tooltip from './tooltip';
 import Chart from './chart';
 
 /* global d3 */
@@ -15,14 +16,16 @@ export default class BarChart extends Renderer {
       return;
     }
 
+    var tooltip = new Tooltip(this.options);
+
     var parent = this.options.appendTo;
 
-    var chartAxis = json.canvas.chart.axis,
-      chartDatasets = json.canvas.chart.data,
-      numberOfDatasets = Object.keys(chartDatasets).length;
+    var axis = json.canvas.chart.axis,
+      datasets = json.canvas.chart.data,
+      datasetNames = Object.keys(datasets);
 
     var svg = parent.select('g.content'),
-      margin = { top: 50, right: 50, bottom: 100, left: 100 },
+      margin = { top: 50, right: 50, bottom: 50, left: 50 },
       width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
       height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
 
@@ -33,21 +36,24 @@ export default class BarChart extends Renderer {
     var t = d3.transition().duration(500);
 
     // set the ranges
-    var x = d3.scaleBand().range([0, width]).padding(0.1).domain(chartAxis.x.domain);
-    var y = d3.scaleLinear().range([height, 0]).domain(chartAxis.y.domain);
+    var x = d3.scaleBand().range([0, width]).padding(0.1).domain(axis.x.domain);
+    var y = d3.scaleLinear().range([height, 0]).domain(axis.y.domain);
 
-    svg.attr('transform', `translate(${margin.left},${margin.top})`);
+    // TODO this should zoom to fit
+    var transform = d3.zoomTransform(svg.node());
+    transform.x = margin.left;
+    transform.y = margin.top;
 
     var tmp = [];
-    Object.keys(chartDatasets).forEach(key => tmp = tmp.concat(chartDatasets[key]));
+    datasetNames.forEach(key => tmp = tmp.concat(datasets[key]));
 
-    if (!chartAxis.y.domain.length) {
+    if (!axis.y.domain.length) {
       y.domain([0, d3.max(tmp, d => d)]);
     }
 
-    if (!chartAxis.x.domain.length) {
-      chartAxis.x.domain = Chart.domainRange(tmp.length / numberOfDatasets);
-      x.domain(chartAxis.x.domain);
+    if (!axis.x.domain.length) {
+      axis.x.domain = Chart.domainRange(tmp.length / datasetNames.length);
+      x.domain(axis.x.domain);
     }
 
     var barsGroup = svg.selectAll('g.bars');
@@ -56,20 +62,23 @@ export default class BarChart extends Renderer {
       barsGroup = svg.append('g').attr('class', 'bars');
     }
 
-    Object.keys(chartDatasets).forEach(function(key, index) {
-      var bar = barsGroup.selectAll('.bar-' + index).data(chartDatasets[key]);
+    datasetNames.forEach(function(key, index) {
+      var bar = barsGroup.selectAll(`.bar${index}`).data(datasets[key]);
 
       bar.exit().transition(t).remove();
 
       // append the rectangles for the bar chart
       bar.enter()
         .append('rect')
-        .style('fill', () => Chart.colors(index * numberOfDatasets))
-        .attr('class', 'bar-' + index)
-        .attr('x', function(d, i) { return x(chartAxis.x.domain[i]) + index * (x.bandwidth() / numberOfDatasets); })
-        .attr('width', (x.bandwidth() / numberOfDatasets) - 1)
+        .style('fill', () => Chart.colors(index * 5))
+        .attr('class', `bar${index}`)
+        .attr('x', function(d, i) { return x(axis.x.domain[i]) + index * (x.bandwidth() / datasetNames.length); })
+        .attr('width', (x.bandwidth() / datasetNames.length) - 1)
         .attr('y', function(d) { return y(d); })
-        .attr('height', function(d) { return height - y(d); });
+        .attr('height', function(d) { return height - y(d); })
+        .merge(bar)
+        .on("mousemove", d => tooltip.render({ 'Dataset': key, 'Value': d }))
+        .on("mouseout", () => tooltip.unrender());
     });
 
     // force rebuild axis again
@@ -91,7 +100,7 @@ export default class BarChart extends Renderer {
       .attr('fill', 'black')
       .attr('class', 'axis')
       .style('text-anchor', 'end')
-      .text(chartAxis.x.title);
+      .text(axis.x.title);
 
     // force rebuild axis again
     var yAxisGroup = svg.selectAll('g.y-axis');
@@ -111,9 +120,7 @@ export default class BarChart extends Renderer {
       .attr('fill', 'black')
       .attr('class', 'axis')
       .style('text-anchor', 'end')
-      .text(chartAxis.y.title);
-
-    var options = d3.keys(chartDatasets);
+      .text(axis.y.title);
 
     var legendGroup = svg.selectAll('.legend');
 
@@ -124,25 +131,26 @@ export default class BarChart extends Renderer {
     // force rebuild legend again
     legendGroup.selectAll('*').remove();
 
-    var legend = legendGroup.selectAll('g').data(options.slice());
+    var legend = legendGroup.selectAll('g').data(datasetNames.slice());
 
     legend.exit().transition(t).remove();
 
     legend = legend.enter()
       .append('g')
-      .attr('transform', (d, i) => 'translate(0,' + i * 20 + ')');
+      .attr('transform', (d, i) => `translate(0,${i * 20})`)
+      .merge(legend);
 
     legend.append('rect')
       .attr('x', width + 20)
       .attr('width', 19)
       .attr('height', 19)
-      .style('fill', (d, i) => Chart.colors(i * numberOfDatasets));
+      .style('fill', (d, i) => Chart.colors(i * 5));
 
     legend.append('text')
       .attr('x', width + 70)
       .attr('y', 9)
       .attr('dy', '.35em')
       .style('text-anchor', 'end')
-      .text((d) => d);
+      .text(d => d);
   }
 }
