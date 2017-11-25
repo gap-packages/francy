@@ -10,7 +10,6 @@ export default class Menu extends Renderer {
   traverse(appendTo, menusIterator) {
     while (menusIterator.hasNext()) {
       var menuItem = menusIterator.next();
-      var callback = new Callback(this.options);
       var entry = appendTo.append('li');
       var action = entry.append('a').attr('title', menuItem.title).html(menuItem.title);
       if (menuItem.menus && Object.values(menuItem.menus).length > 0) {
@@ -19,7 +18,7 @@ export default class Menu extends Renderer {
         this.traverse(content, subMenusIterator);
       }
       if (menuItem.callback && Object.values(menuItem.callback).length) {
-        action.on('click', () => callback.execute(menuItem));
+        action.on('click', () => new Callback(this.options).execute(menuItem));
       }
     }
   }
