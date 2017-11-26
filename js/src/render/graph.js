@@ -137,6 +137,7 @@ export default class Graph extends Renderer {
         .on('end', dragended))
       .on('contextmenu', d => new ContextMenu(this.options).render(d))
       .on('click', connectedNodes);
+    //.on('click', zoomToFit);
     //.on('click', function() { alert(':)'); });
 
     // TODO this could be a tooltip tag from json

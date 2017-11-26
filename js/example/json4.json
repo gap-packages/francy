@@ -1,9 +1,8 @@
 {
   "agent": "application/vnd.francy+json",
   "canvas": {
-    "h": 400,
     "width": "800",
-    "height": "100",
+    "height": "400",
     "id": "8DCD5BBDED624AE18C514461B4AAEA75",
     "title": "Multi Chained Menu Gets Flatenned!",
     "menus": {
@@ -77,7 +76,70 @@
       "type": "hasse",
       "id": "70C0C02B07B84DB34C05ECEED45E49C0",
       "simulation": true,
-      "nodes": {},
+      "nodes": {
+        "85A237CE30554A1FF46170E35B1B80BD": {
+          "x": 0,
+          "y": 0,
+          "type": "diamond",
+          "size": 10,
+          "id": "85A237CE30554A1FF46170E35B1B80BD",
+          "title": "G",
+          "layer": 0,
+          "menus": {
+            "366688A254054F9AFC43A6EA5008CAD2": {
+              "id": "366688A254054F9AFC43A6EA5008CAD2",
+              "title": "Add Circle",
+              "callback": {
+                "type": "server",
+                "id": "9A4E435F8A234BBD34DD34C838182A5C",
+                "trigger": "click",
+                "knownArgs": [],
+                "requiredArgs": {
+                  "8F794C1FA828467404CA41218DCFC68D": {
+                    "type": "number",
+                    "id": "8F794C1FA828467404CA41218DCFC68D",
+                    "title": "How many Circles?",
+                    "value": ""
+                  }
+                }
+              },
+              "menus": {}
+            },
+            "682E684B60AC4F4CCCEED7EAB57AE7DA": {
+              "id": "682E684B60AC4F4CCCEED7EAB57AE7DA",
+              "title": "Add Square",
+              "callback": {
+                "type": "server",
+                "id": "12AC5E185BB641038431E4B4C3456293",
+                "trigger": "click",
+                "knownArgs": [],
+                "requiredArgs": {
+                  "4509A7188928455C64B962BCBF295BF1": {
+                    "type": "number",
+                    "id": "4509A7188928455C64B962BCBF295BF1",
+                    "title": "How many Squares?",
+                    "value": ""
+                  }
+                }
+              },
+              "menus": {}
+            },
+            "8C1F96C773474A8154A4C46BB113E35E": {
+              "id": "8C1F96C773474A8154A4C46BB113E35E",
+              "title": "Clear",
+              "callback": {
+                "type": "server",
+                "id": "E3F02797F57E4022DCE98F0FCF04CBA8",
+                "trigger": "click",
+                "knownArgs": [],
+                "requiredArgs": {}
+              },
+              "menus": {}
+            }
+          },
+          "highlight": true
+        }
+      },
       "links": {}
     }
   }

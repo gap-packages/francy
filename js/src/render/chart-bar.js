@@ -147,7 +147,7 @@ export default class BarChart extends Renderer {
       .style('fill', (d, i) => Chart.colors(i * 5));
 
     legend.append('text')
-      .attr('x', width + 70)
+      .attr('x', width + 80)
       .attr('y', 9)
       .attr('dy', '.35em')
       .style('text-anchor', 'end')

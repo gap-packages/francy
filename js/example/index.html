@@ -12,7 +12,7 @@
   /* global d3 Francy */
   
   function trigger(json) {
-    console.error(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
+    console.log(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
   }
   
   var francy = new Francy({verbose: true, appendTo: 'body', callbackHandler: trigger});
@@ -43,6 +43,11 @@
   });
 
   d3.json("json5.json", function (error, json) {
+    var element = francy.render(json);
+    document.getElementsByTagName('body')[0].append(element);
+  });
+  
+  d3.json("json6.json", function (error, json) {
     var element = francy.render(json);
     document.getElementsByTagName('body')[0].append(element);
   });

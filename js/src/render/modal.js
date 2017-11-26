@@ -30,11 +30,12 @@ export default class Modal extends Renderer {
 
     header.append('span').html('Required arguments for&nbsp;').append('span').attr('style', 'font-weight: bold;').text(json.title);
 
-    var content = form.append('div').attr('class', 'content');
+    var content = form.append('div').attr('class', 'content').append('div').attr('class', 'table').append('div').attr('class', 'francy table-body');
 
     for (var arg of Object.values(json.callback.requiredArgs)) {
-      content.append('label').attr('for', arg.id).text(arg.title);
-      content.append('input').attr('id', arg.id).attr('class', 'arg')
+      var row = content.append('div').attr('class', 'francy table-row');
+      row.append('div').attr('class', 'francy table-cell').append('label').attr('for', arg.id).text(arg.title);
+      row.append('div').attr('class', 'francy table-cell').append('input').attr('id', arg.id).attr('class', 'arg')
         .attr('required', '')
         .attr('name', arg.id)
         .attr('type', arg.type)
@@ -45,8 +46,7 @@ export default class Modal extends Renderer {
         .on('input', this.onchange)
         .on('keyup', this.onchange)
         .on('paste', this.onchange);
-      content.append('span').attr('class', 'validity');
-      content.append('br');
+      row.append('span').attr('class', 'validity');
     }
 
     var footer = form.append('div').attr('class', 'footer');

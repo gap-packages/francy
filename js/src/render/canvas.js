@@ -3,6 +3,7 @@ import Composite from './composite';
 
 /* global d3 */
 
+//FIXME implement propper zoom to fit, see https://bl.ocks.org/iamkevinv/0a24e9126cd2fa6b283c6f2d774b69a2
 export default class Canvas extends Composite {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
@@ -11,7 +12,7 @@ export default class Canvas extends Composite {
 
   render(json) {
     var parent = this.options.appendTo;
-
+    //var active = d3.select(null);
     var canvasId = IDUtils.getCanvasId(json.canvas.id);
     var canvas = parent.select(`svg#${canvasId}`);
     // check if the canvas is already present
@@ -30,21 +31,59 @@ export default class Canvas extends Composite {
 
     canvas.attr('width', json.canvas.width).attr('height', json.canvas.height);
 
+    var zoom = d3.zoom(); //.scaleExtent([1, 8]);
+
     var content = canvas.select('g.content');
 
     if (!content.node()) {
-      var contentGroup = canvas.append('g').attr('class', 'content');
-      canvas.call(d3.zoom().on('zoom', function() {
-        contentGroup.attr('transform', d3.event.transform);
-      }));
+      content = canvas.append('g').attr('class', 'content');
+      zoom.on("zoom", zoomed);
+      canvas.call(zoom);
     }
 
-    this.logger.debug(`Canvas updated ${canvasId}...`);
+    canvas.on("click", stopped, true);
+
+    /*
+        this.zoomToFit = clicked;
+
+        function clicked() {
+          if (active.node() === this) { return zoomReset(); }
+          active.classed("active", false);
+          active = d3.select(this).classed("active", true);
+
+          var dx = this.getBBox().width,
+            dy = this.getBBox().height,
+            scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / json.canvas.width, dy / json.canvas.height))),
+            translate = [json.canvas.width / 2 - scale, json.canvas.height / 2 - scale];
+
+          canvas.transition()
+            .duration(750)
+            .call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
+        }
+
+        function zoomReset() {
+          active.classed("active", false);
+          active = d3.select(null);
+          canvas.transition()
+            .duration(750)
+            .call(zoom.transform, d3.zoomIdentity); // updated for d3 v4
+        }
+    */
+    function zoomed() {
+      content.style("stroke-width", 1.5 / d3.event.transform.k + "px").attr("transform", d3.event.transform);
+    }
+
+    function stopped() {
+      if (d3.event.defaultPrevented) { d3.event.stopPropagation(); }
+    }
+
+    this.logger.debug(`Canvas updated [${canvasId}]...`);
+
+    //this.canvas = canvas;
 
     this.renderChildren(canvas, json);
 
     return canvas;
   }
-
 
 }

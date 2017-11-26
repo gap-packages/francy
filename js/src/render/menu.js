@@ -11,14 +11,14 @@ export default class Menu extends Renderer {
     while (menusIterator.hasNext()) {
       var menuItem = menusIterator.next();
       var entry = appendTo.append('li');
-      var action = entry.append('a').attr('title', menuItem.title).html(menuItem.title);
+      var action = entry.selectAll('a').data([menuItem]).enter().append('a').attr('title', menuItem.title).html(menuItem.title);
+      if (menuItem.callback && Object.values(menuItem.callback).length) {
+        action.on('click', (d) => new Callback(this.options).execute(d));
+      }
       if (menuItem.menus && Object.values(menuItem.menus).length > 0) {
         var content = entry.append('ul');
         var subMenusIterator = this.iterator(Object.values(menuItem.menus));
         this.traverse(content, subMenusIterator);
-      }
-      if (menuItem.callback && Object.values(menuItem.callback).length) {
-        action.on('click', () => new Callback(this.options).execute(menuItem));
       }
     }
   }

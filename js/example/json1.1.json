@@ -20,9 +20,7 @@
           "id": "85A237CE30554A1FF46170E35B1B80BD",
           "title": "G",
           "layer": 0,
-          "menus": {
-            }
-          },
+          "menus": {},
           "highlight": true
         },
         "F827B91B58E84D8B1C8AF64FAE72BCC9": {
@@ -33,8 +31,7 @@
           "id": "F827B91B58E84D8B1C8AF64FAE72BCC9",
           "title": "1",
           "layer": 3,
-          "menus": {
-          },
+          "menus": {},
           "highlight": true
         },
         "1FA9D518A51B4422D4BCFDD58129403D": {
@@ -45,8 +42,7 @@
           "id": "1FA9D518A51B4422D4BCFDD58129403D",
           "title": "SG1",
           "layer": 1,
-          "menus": {
-          },
+          "menus": {},
           "highlight": true
         },
         "5C86291270454B2204CE851D9700D815": {
@@ -57,8 +53,7 @@
           "id": "5C86291270454B2204CE851D9700D815",
           "title": "SG2",
           "layer": 2,
-          "menus": {
-          },
+          "menus": {},
           "highlight": true
         },
         "A097FBE57B75448F7411A2D059F57F96": {
@@ -69,8 +64,7 @@
           "id": "A097FBE57B75448F7411A2D059F57F96",
           "title": "SG3",
           "layer": 2,
-          "menus": {
-          },
+          "menus": {},
           "highlight": true
         },
         "B7AB8F184B4445538CF142F0306DBEB1": {
@@ -81,8 +75,7 @@
           "id": "B7AB8F184B4445538CF142F0306DBEB1",
           "title": "SG4",
           "layer": 2,
-          "menus": {
-          },
+          "menus": {},
           "highlight": true
         },
         "B7AB8F184B4445538CF142F0306DBEB11": {
@@ -93,8 +86,7 @@
           "id": "B7AB8F184B4445538CF142F0306DBEB11",
           "title": "SG4",
           "layer": 2,
-          "menus": {
-          },
+          "menus": {},
           "highlight": true
         }
       },

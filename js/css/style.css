@@ -43,7 +43,6 @@ cursor:pointer
 }
 
 .francy .main-menu li ul {
-width:100%;
 box-shadow:5px 5px 5px grey;
 min-width: 120px
 }
@@ -141,28 +140,21 @@ display:block
 
 .francy .modal .header {
 border-bottom:1px solid #cfcfcf;
-padding:10px
+text-align: center;
+padding:10px 0
 }
 
 .francy .modal .footer {
 border-top:1px solid #cfcfcf;
-padding:10px
+padding:10px 0
 }
 
 .francy .modal .content {
-padding:5px
+margin: 15px 5px
 }
 
 .francy .modal .content input {
-margin:5px;
-width:45%
-}
-
-.francy .modal .content label {
-display:inline-block;
-margin:5px;
-text-align:right;
-width:45%
+margin:5px
 }
 
 .francy .modal .footer button {
@@ -222,7 +214,6 @@ position:absolute;
 display:none;
 background:#f6f6f6;
 color:#333;
-border-radius:4px;
 font-family:Arial,sans-serif;
 font-size:14px;
 min-width:150px;
