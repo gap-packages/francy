@@ -194,7 +194,7 @@ div.output_subarea.francy-view.output_result {
 max-width:inherit!important
 }
 
-.francy.tooltip {
+.francy-tooltip {
 min-width: fit-content;
 background:none repeat scroll 0 0 #f6f6f6;
 border:1px solid #cfcfcf;

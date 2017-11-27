@@ -16,7 +16,7 @@ export default class Tooltip extends Renderer {
 
   render(object) {
 
-    this.tooltip.attr('transform',`translate(${d3.event.offsetX},${d3.event.offsetY})`);
+    this.tooltip.attr('transform', `translate(${d3.event.offsetX},${d3.event.offsetY})`);
 
     //d3.select(d3.event.srcElement).attr('transform')
 
@@ -25,9 +25,8 @@ export default class Tooltip extends Renderer {
       return;
     }
 
-    var table = this.tooltip.append('xhtml:div').attr('class', 'francy tooltip')
-      .append('div').attr('class', 'francy tooltip')
-      .attr('class', 'table').append('div').attr('class', 'francy table-body');
+    var table = this.tooltip.append('xhtml:div').attr('class', 'francy-tooltip')
+      .append('div').attr('class', 'table').append('div').attr('class', 'francy table-body');
     Object.keys(object).map(function(key) {
       var row = table.append('div').attr('class', 'francy table-row');
       row.append('div').attr('class', 'francy table-cell').text(key);

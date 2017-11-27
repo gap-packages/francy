@@ -49,6 +49,7 @@ export default class Graph extends Renderer {
     }
 
     var tooltip = new Tooltip(this.options);
+    var contextmenu = new ContextMenu(this.options);
 
     var parent = this.options.appendTo;
 
@@ -135,7 +136,7 @@ export default class Graph extends Renderer {
         .on('start', dragstarted)
         .on('drag', dragged)
         .on('end', dragended))
-      .on('contextmenu', d => Object.values(d.menus).length ? new ContextMenu(this.options).render(d) : undefined)
+      .on('contextmenu', d => Object.values(d.menus).length ? contextmenu.render(d) : undefined)
       .on('click', connectedNodes);
     //.on('click', zoomToFit);
     //.on('click', function() { alert(':)'); });
