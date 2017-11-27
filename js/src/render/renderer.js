@@ -21,4 +21,8 @@ export default class Renderer extends Base {
     return d3.select(this.options.appendTo.node().parentNode);
   }
 
+  get SVGParent() {
+    return this.HTMLParent.select('svg');
+  }
+
 }

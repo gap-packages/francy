@@ -11,7 +11,7 @@ export default class Canvas extends Composite {
   }
 
   render(json) {
-    var parent = this.options.appendTo;
+    var parent = d3.select(this.options.appendTo).node();
     //var active = d3.select(null);
     var canvasId = IDUtils.getCanvasId(json.canvas.id);
     var canvas = parent.select(`svg#${canvasId}`);
@@ -38,39 +38,39 @@ export default class Canvas extends Composite {
     if (!content.node()) {
       content = canvas.append('g').attr('class', 'content');
       zoom.on("zoom", zoomed);
-      canvas.call(zoom);
+      canvas.call(zoom); //.transform, d3.zoomIdentity);
     }
 
     canvas.on("click", stopped, true);
 
     /*
-        this.zoomToFit = clicked;
+         this.zoomToFit = clicked;
 
-        function clicked() {
-          if (active.node() === this) { return zoomReset(); }
-          active.classed("active", false);
-          active = d3.select(this).classed("active", true);
+         function clicked() {
+           if (active.node() === this) { return zoomReset(); }
+           active.classed("active", false);
+           active = d3.select(this).classed("active", true);
 
-          var dx = this.getBBox().width,
-            dy = this.getBBox().height,
-            scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / json.canvas.width, dy / json.canvas.height))),
-            translate = [json.canvas.width / 2 - scale, json.canvas.height / 2 - scale];
+           var dx = this.getBBox().width,
+             dy = this.getBBox().height,
+             scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / json.canvas.width, dy / json.canvas.height))),
+             translate = [json.canvas.width / 2 - scale, json.canvas.height / 2 - scale];
 
-          canvas.transition()
-            .duration(750)
-            .call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
-        }
+           canvas.transition()
+             .duration(750)
+             .call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
+         }
 
-        function zoomReset() {
-          active.classed("active", false);
-          active = d3.select(null);
-          canvas.transition()
-            .duration(750)
-            .call(zoom.transform, d3.zoomIdentity); // updated for d3 v4
-        }
-    */
+         function zoomReset() {
+           active.classed("active", false);
+           active = d3.select(null);
+           canvas.transition()
+             .duration(750)
+             .call(zoom.transform, d3.zoomIdentity); // updated for d3 v4
+         }
+     */
     function zoomed() {
-      content.style("stroke-width", 1.5 / d3.event.transform.k + "px").attr("transform", d3.event.transform);
+      content.attr("transform", d3.event.transform);
     }
 
     function stopped() {
