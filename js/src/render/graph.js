@@ -142,7 +142,7 @@ export default class Graph extends Renderer {
 
     // TODO this could be a tooltip tag from json
     node
-      .on("mousemove", d => tooltip.render({ 'ID': d.id, 'Value': d.layer }))
+      .on("mouseover", d => tooltip.render({ 'ID': d.id, 'Value': d.layer }))
       .on("mouseout", () => tooltip.unrender());
 
     var labelGroup = svg.selectAll('.labels');

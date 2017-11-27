@@ -77,7 +77,7 @@ export default class BarChart extends Renderer {
         .attr('y', function(d) { return y(d); })
         .attr('height', function(d) { return height - y(d); })
         .merge(bar)
-        .on("mousemove", d => tooltip.render({ 'Dataset': key, 'Value': d }))
+        .on("mouseover", d => tooltip.render({ 'Dataset': key, 'Value': d }))
         .on("mouseout", () => tooltip.unrender());
     });
 

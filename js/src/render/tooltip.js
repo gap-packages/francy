@@ -16,7 +16,7 @@ export default class Tooltip extends Renderer {
 
   render(object) {
 
-    this.tooltip.attr('transform', `translate(${d3.event.x},${d3.event.y})`);
+    this.tooltip.attr('transform',`translate(${d3.event.offsetX},${d3.event.offsetY})`);
 
     //d3.select(d3.event.srcElement).attr('transform')
 

@@ -16,7 +16,10 @@ export default class ContextMenu extends Menu {
 
   render(object) {
 
-    this.contextMenu.attr('transform', `translate(${d3.event.x},${d3.event.y})`);
+    this.contextMenu.attr('transform', `translate(${d3.event.offsetX},${d3.event.offsetY})`);
+
+    // show the context menu
+    this.contextMenu.style('display', 'block');
 
     // check if it exists already
     if (this.contextMenu.selectAll('*').node()) {
@@ -30,9 +33,6 @@ export default class ContextMenu extends Menu {
     var menu = this.contextMenu.append('xhtml:div').append('div').attr('class', 'francy context-menu').append('ul');
     var menusIterator = this.iterator(Object.values(object.menus));
     this.traverse(menu, menusIterator);
-
-    // show the context menu
-    this.contextMenu.style('display', 'block');
 
     d3.event.preventDefault();
   }
