@@ -135,7 +135,7 @@ export default class Graph extends Renderer {
         .on('start', dragstarted)
         .on('drag', dragged)
         .on('end', dragended))
-      .on('contextmenu', d => new ContextMenu(this.options).render(d))
+      .on('contextmenu', d => Object.values(d.menus).length ? new ContextMenu(this.options).render(d) : undefined)
       .on('click', connectedNodes);
     //.on('click', zoomToFit);
     //.on('click', function() { alert(':)'); });
