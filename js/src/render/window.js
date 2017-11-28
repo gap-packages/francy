@@ -19,7 +19,7 @@ export default class Window extends Composite {
       this.logger.debug(`Creating Window [${windowId}]...`);
       window = d3.select(this.options.appendTo).append('div') //.remove()
         .attr('id', windowId)
-        .attr('class', 'francy window');
+        .attr('class', 'francy francy-window');
     }
 
     // cannot continue if window is not present

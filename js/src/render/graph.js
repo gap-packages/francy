@@ -1,6 +1,7 @@
 import Renderer from './renderer';
 import ContextMenu from './menu-context';
 import Tooltip from './tooltip';
+import Callback from './callback';
 
 /* global d3 */
 
@@ -44,19 +45,24 @@ export default class Graph extends Renderer {
 
   render(json) {
 
+    // just ignore rendering if no graph is present
     if (!json.canvas.graph) {
+      this.logger.debug('No Graph to render here... continuing...');
       return;
     }
 
+    //var self = this;
+
     var tooltip = new Tooltip(this.options);
-    var contextmenu = new ContextMenu(this.options);
+    var contextMenu = new ContextMenu(this.options);
+    var callback = new Callback(this.options);
 
     var parent = this.options.appendTo;
 
     var canvasNodes = json.canvas.graph.nodes ? Object.values(json.canvas.graph.nodes) : [],
       canvasLinks = json.canvas.graph.links ? Object.values(json.canvas.graph.links) : [];
 
-    var svg = parent.select('g.content'),
+    var svg = parent.select('g.francy-content'),
       width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
       height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
 
@@ -81,18 +87,18 @@ export default class Graph extends Renderer {
       .force('y', forceY)
       .force('center', d3.forceCenter(width / 2, height / 2));
 
-    var linkGroup = svg.selectAll('g.links');
+    var linkGroup = svg.selectAll('g.francy-links');
 
     if (!linkGroup.node()) {
-      linkGroup = svg.append('g').attr('class', 'links');
+      linkGroup = svg.append('g').attr('class', 'francy-links');
     }
 
-    var link = linkGroup.selectAll('line.link').data(canvasLinks);
+    var link = linkGroup.selectAll('line.francy-link').data(canvasLinks);
 
     link.exit().transition(t).remove();
 
     link = link.enter().append('line')
-      .attr('class', 'link')
+      .attr('class', 'francy-link')
       .attr('id', d => `${d.source},${d.target}`)
       .merge(link);
 
@@ -101,7 +107,7 @@ export default class Graph extends Renderer {
       parent.append('defs').selectAll('marker')
         .data(['arrow'])
         .enter().append('marker')
-        .attr('class', 'arrows')
+        .attr('class', 'francy-arrows')
         .attr('id', d => d)
         .attr('viewBox', '0 -5 10 10')
         .attr('refX', 25)
@@ -115,20 +121,20 @@ export default class Graph extends Renderer {
       link.style('marker-end', 'url(#arrow)');
     }
 
-    var nodeGroup = svg.selectAll('g.nodes');
+    var nodeGroup = svg.selectAll('g.francy-nodes');
 
     if (!nodeGroup.node()) {
-      nodeGroup = svg.append('g').attr('class', 'nodes');
+      nodeGroup = svg.append('g').attr('class', 'francy-nodes');
     }
 
-    var node = nodeGroup.selectAll('path.node').data(canvasNodes);
+    var node = nodeGroup.selectAll('path.francy-node').data(canvasNodes);
 
     node.exit().transition(t).remove();
 
     node = node.enter().append('path')
       .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
       .attr('transform', 'translate(0,0)')
-      .attr('class', d => 'node' + (d.highlight ? ' highlight' : '') + (Object.values(d.menus).length ? ' context' : ''))
+      .attr('class', d => 'francy-node' + (d.highlight ? ' francy-highlight' : '') + (Object.values(d.menus).length ? ' francy-context' : ''))
       .attr('id', d => d.id)
       .merge(node);
 
@@ -136,20 +142,44 @@ export default class Graph extends Renderer {
         .on('start', dragstarted)
         .on('drag', dragged)
         .on('end', dragended))
-      .on('contextmenu', d => Object.values(d.menus).length ? contextmenu.render(d) : undefined)
-      .on('click', connectedNodes);
-    //.on('click', zoomToFit);
-    //.on('click', function() { alert(':)'); });
+      .on('contextmenu', function(d) {
+        // default, build context menu
+        contextMenu.render(d);
+        // any callbacks will be handled here
+        executeCallback.call(this, d, 'contextmenu');
+      })
+      .on('click', function(d) {
+        // default, highlight connected nodes
+        connectedNodes.call(this);
+        // any callbacks will be handled here
+        executeCallback.call(this, d, 'click');
+      })
+      .on('dblclick', function(d) {
+        // any callbacks will be handled here
+        executeCallback.call(this, d, 'dblclick');
+      })
+      .on("mouseover", d => {
+        // default, show tooltip
+        tooltip.render(d.info);
+      })
+      .on("mouseout", () => {
+        // default, hide tooltip
+        tooltip.unrender();
+      });
 
-    // TODO this could be a tooltip tag from json
-    node
-      .on("mouseover", d => tooltip.render({ 'ID': d.id, 'Value': d.layer }))
-      .on("mouseout", () => tooltip.unrender());
+    function executeCallback(data, event) {
+      if (data.callbacks) {
+        Object.values(data.callbacks).forEach((cb) => {
+          // execute the ones that match the event!
+          cb.trigger === event && callback.execute({ callback: cb });
+        });
+      }
+    }
 
-    var labelGroup = svg.selectAll('.labels');
+    var labelGroup = svg.selectAll('.francy-labels');
 
     if (!labelGroup.node()) {
-      labelGroup = svg.append('g').attr('class', 'labels');
+      labelGroup = svg.append('g').attr('class', 'francy-labels');
     }
 
     var label = labelGroup.selectAll('text').data(canvasNodes);
@@ -157,14 +187,14 @@ export default class Graph extends Renderer {
     label.exit().transition(t).remove();
 
     label = label.enter().append('text')
-      .attr('class', 'label')
+      .attr('class', 'francy-label')
       .text(d => d.title)
       .merge(label);
 
     var legendGroup = parent.selectAll('.legend');
 
     if (!legendGroup.node()) {
-      legendGroup = parent.append('g').attr('class', 'legend');
+      legendGroup = parent.append('g').attr('class', 'francy-legend');
     }
 
     // force rebuild legend again
@@ -178,11 +208,7 @@ export default class Graph extends Renderer {
     legend = legend.enter()
       .append('g')
       .attr('id', d => `legendLayer${d}`)
-      .attr('transform', function(d, i) {
-        let x = 10;
-        let y = (i + 1) * 11;
-        return `translate(${x},${y})`;
-      })
+      .attr('transform', (d, i) => `translate(${10},${(i + 1) * 11})`)
       .merge(legend);
 
     legend.append('rect')
@@ -264,12 +290,11 @@ export default class Graph extends Renderer {
       linkedByIndex[`${d.source.index},${d.target.index}`] = 1;
     });
 
-    //This function looks up whether a pair are neighbours
-    function neighboring(a, b) {
-      return linkedByIndex[`${a.index},${b.index}`];
-    }
-
     function connectedNodes() {
+      //This function looks up whether a pair are neighbours
+      function neighboring(a, b) {
+        return linkedByIndex[`${a.index},${b.index}`];
+      }
       d3.event.preventDefault();
       if (toggle === 0) {
         //Reduce the opacity of all but the neighbouring nodes
@@ -289,7 +314,7 @@ export default class Graph extends Renderer {
 
     function dragstarted(d) {
       if (!d3.event.active) {
-        simulation.alphaTarget(0.3).restart();
+        simulation.alphaTarget(0.01).restart();
       }
       d.fx = d.x;
       d.fy = d.y;
@@ -307,7 +332,6 @@ export default class Graph extends Renderer {
       d.fx = null;
       d.fy = null;
     }
-
 
   }
 

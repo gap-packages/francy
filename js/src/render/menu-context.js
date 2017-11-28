@@ -10,13 +10,19 @@ export default class ContextMenu extends Menu {
     // check if the window is already present
     if (!this.contextMenu.node()) {
       this.contextMenu = this.SVGParent.append('foreignObject')
-        .classed('context-menus', true).style('display', 'none');
+        .classed('context-menu-holder', true).style('display', 'none');
     }
   }
 
   render(object) {
 
-    this.contextMenu.attr('transform', `translate(${d3.event.offsetX},${d3.event.offsetY})`);
+    // just ignore rendering if no menus are present
+    if (!object.menus || !Object.values(object.menus).length) {
+      this.logger.debug('No ContextMenu to render here... continuing...');
+      return;
+    }
+
+    this.contextMenu.attr('transform', `translate(${d3.event.offsetX + 5},${d3.event.offsetY + 5})`);
 
     // show the context menu
     this.contextMenu.style('display', 'block');
@@ -27,10 +33,10 @@ export default class ContextMenu extends Menu {
     }
 
     // destroy menu
-    d3.select('body').on('click.context-menu', () => this.unrender());
+    d3.select('body').on('click.francy-context-menu', () => this.unrender());
 
     // this gets executed when a contextmenu event occurs
-    var menu = this.contextMenu.append('xhtml:div').append('div').attr('class', 'francy context-menu').append('ul');
+    var menu = this.contextMenu.append('xhtml:div').append('div').attr('class', 'francy-context-menu').append('ul');
     var menusIterator = this.iterator(Object.values(object.menus));
     this.traverse(menu, menusIterator);
 

@@ -54,6 +54,26 @@
           "title": "SG2",
           "layer": 2,
           "menus": {},
+          "info": {
+            "Something": "nice",
+            "Another Something": "nice"
+          },
+          "callbacks": {
+            "9A4E435F8A234BBD34DD34C838182A5C": {
+              "type": "server",
+              "id": "9A4E435F8A234BBD34DD34C838182A5C",
+              "trigger": "dblclick",
+              "knownArgs": [],
+              "requiredArgs": {
+                "8F794C1FA828467404CA41218DCFC68D": {
+                  "type": "number",
+                  "id": "8F794C1FA828467404CA41218DCFC68D",
+                  "title": "How many Circles?",
+                  "value": ""
+                }
+              }
+            }
+          },
           "highlight": true
         },
         "A097FBE57B75448F7411A2D059F57F96": {

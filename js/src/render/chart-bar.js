@@ -12,7 +12,9 @@ export default class BarChart extends Renderer {
 
   render(json) {
 
+    // just ignore rendering if no chart is present
     if (!json.canvas.chart) {
+      this.logger.debug('No BarChart to render here... continuing...');
       return;
     }
 
@@ -40,9 +42,9 @@ export default class BarChart extends Renderer {
     var y = d3.scaleLinear().range([height, 0]).domain(axis.y.domain);
 
     // TODO this should zoom to fit
-    var transform = d3.zoomTransform(svg.node());
-    transform.x = margin.left;
-    transform.y = margin.top;
+    //var transform = d3.zoomTransform(svg.node());
+    //transform.x = margin.left;
+    //transform.y = margin.top;
 
     var tmp = [];
     datasetNames.forEach(key => tmp = tmp.concat(datasets[key]));
@@ -56,10 +58,10 @@ export default class BarChart extends Renderer {
       x.domain(axis.x.domain);
     }
 
-    var barsGroup = svg.selectAll('g.bars');
+    var barsGroup = svg.selectAll('g.francy-bars');
 
     if (!barsGroup.node()) {
-      barsGroup = svg.append('g').attr('class', 'bars');
+      barsGroup = svg.append('g').attr('class', 'francy-bars');
     }
 
     datasetNames.forEach(function(key, index) {
@@ -71,7 +73,7 @@ export default class BarChart extends Renderer {
       bar.enter()
         .append('rect')
         .style('fill', () => Chart.colors(index * 5))
-        .attr('class', `bar${index}`)
+        .attr('class', `francy-bar${index}`)
         .attr('x', function(d, i) { return x(axis.x.domain[i]) + index * (x.bandwidth() / datasetNames.length); })
         .attr('width', (x.bandwidth() / datasetNames.length) - 1)
         .attr('y', function(d) { return y(d); })
@@ -82,10 +84,10 @@ export default class BarChart extends Renderer {
     });
 
     // force rebuild axis again
-    var xAxisGroup = svg.selectAll('g.x-axis');
+    var xAxisGroup = svg.selectAll('g.francy-x-axis');
 
     if (!xAxisGroup.node()) {
-      xAxisGroup = svg.append('g').attr('class', 'x-axis');
+      xAxisGroup = svg.append('g').attr('class', 'francy-x-axis');
     }
 
     xAxisGroup.selectAll('*').remove();
@@ -98,15 +100,15 @@ export default class BarChart extends Renderer {
       .attr('dy', 50)
       .attr('dx', width / 2)
       .attr('fill', 'black')
-      .attr('class', 'axis')
+      .attr('class', 'francy-axis')
       .style('text-anchor', 'end')
       .text(axis.x.title);
 
     // force rebuild axis again
-    var yAxisGroup = svg.selectAll('g.y-axis');
+    var yAxisGroup = svg.selectAll('g.francy-y-axis');
 
     if (!yAxisGroup.node()) {
-      yAxisGroup = svg.append('g').attr('class', 'y-axis');
+      yAxisGroup = svg.append('g').attr('class', 'francy-y-axis');
     }
 
     yAxisGroup.selectAll('*').remove();
@@ -118,14 +120,14 @@ export default class BarChart extends Renderer {
       .attr('dx', -50)
       .attr('dy', height / 2)
       .attr('fill', 'black')
-      .attr('class', 'axis')
+      .attr('class', 'francy-axis')
       .style('text-anchor', 'end')
       .text(axis.y.title);
 
-    var legendGroup = svg.selectAll('.legend');
+    var legendGroup = svg.selectAll('.francy-legend');
 
     if (!legendGroup.node()) {
-      legendGroup = svg.append('g').attr('class', 'legend');
+      legendGroup = svg.append('g').attr('class', 'francy-legend');
     }
 
     // force rebuild legend again

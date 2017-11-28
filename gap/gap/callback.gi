@@ -5,14 +5,6 @@
 #Y  Copyright (C) 2017 Manuel Martins
 ##
 
-#############################################################################
-##
-#M  CallbackType . . .  the various events supported to trigger a callback
-##
-BindGlobal("CallbackType", rec(
-  SERVER := Objectify(NewType(CallbackFamily, IsCallbackType and IsCallbackTypeRep), rec(value := "server")),
-  CLIENT := Objectify(NewType(CallbackFamily, IsCallbackType and IsCallbackTypeRep), rec(value := "client"))
-));
 
 #############################################################################
 ##
@@ -32,8 +24,7 @@ BindGlobal("ArgType", rec(
 BindGlobal("TriggerEvent", rec(
   DOUBLE_CLICK := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "dblclick")),
   RIGHT_CLICK  := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "context")),
-  CLICK        := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "click")),
-  OVER         := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "mouseover"))
+  CLICK        := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "click"))
 ));
 
 #############################################################################
@@ -45,18 +36,16 @@ BindGlobal("TriggerEvent", rec(
 ##      Callback!.add(CallbackRequiredArg)
 ##
 InstallMethod(Callback,
-  "a trigger type, a function, a list of known args",
+  "a function, a list of known args",
   true,
-  [IsCallbackType,
-   IsTriggerEvent,
+  [IsTriggerEvent,
    IsFunction,
    IsList],
   0,
-function(callbackType, triggerEvent, func, knownArgs)
+function(triggerEvent, func, knownArgs)
   local object;
   object := Objectify(NewType(CallbackFamily, IsCallback and IsCallbackRep), rec(
     id           := HexStringUUID(RandomUUID()),
-    type         := callbackType!.value,
     trigger      := triggerEvent!.value,
     func         := func,
     knownArgs    := knownArgs,
@@ -69,12 +58,11 @@ end);
 InstallOtherMethod(Callback,
   "a trigger type, a function",
   true,
-  [IsCallbackType,
-   IsTriggerEvent,
+  [IsTriggerEvent,
    IsFunction],
   0,
-function(callbackType, triggerEvent, func)
-  return Callback(callbackType, triggerEvent, func, []);
+function(triggerEvent, func)
+  return Callback(triggerEvent, func, []);
 end);
 
 InstallOtherMethod(Callback,
@@ -84,7 +72,7 @@ InstallOtherMethod(Callback,
    IsList],
   0,
 function(func, knownArgs)
-  return Callback(CallbackType.SERVER, TriggerEvent.CLICK, func, knownArgs);
+  return Callback(TriggerEvent.CLICK, func, knownArgs);
 end);
 
 InstallOtherMethod(Callback,
@@ -93,7 +81,7 @@ InstallOtherMethod(Callback,
   [IsFunction],
   0,
 function(func)
-  return Callback(CallbackType.SERVER, TriggerEvent.CLICK, func, []);
+  return Callback(TriggerEvent.CLICK, func, []);
 end);
 
 #############################################################################

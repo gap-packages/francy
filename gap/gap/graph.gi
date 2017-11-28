@@ -168,10 +168,12 @@ InstallMethod(Shape,
   0,
 function(shapeType, title, options)
   return MergeObjects(Objectify(NewType(ShapeFamily, IsShape and IsShapeRep), rec(
-    id    := HexStringUUID(RandomUUID()),
-    type  := shapeType!.value,
-    title := title,
-    menus := rec()
+    id       := HexStringUUID(RandomUUID()),
+    type     := shapeType!.value,
+    title    := title,
+    callbacks := rec(),
+    menus    := rec(),
+    info     := rec()
   )), options);
 end);
 
@@ -240,7 +242,7 @@ function(shape, menu)
 end);
 
 InstallOtherMethod(Remove,
-  "a shape, a list of callbacks",
+  "a shape, a list of menus",
   true,
   [IsShape,
    IsList],
@@ -249,6 +251,65 @@ function(shape, menus)
   local menu;
   for menu in menus do
     Remove(shape, menu);
+  od;
+  return shape;
+end);
+
+
+#############################################################################
+##
+#M  Add( <graph>, <callback> ) . . . . . add objects to graph
+##
+InstallMethod(Add,
+  "a shape, a callback",
+  true,
+  [IsShape,
+   IsCallback],
+  0,
+function(shape, callback)
+    shape!.callbacks!.(callback!.id) := callback;
+  return shape;
+end);
+
+InstallOtherMethod(Add,
+  "a shape, a list of callback",
+  true,
+  [IsShape,
+   IsList],
+  0,
+function(shape, callbacks)
+  local callback;
+  for callback in callbacks do
+    Add(shape, callback);
+  od;
+  return shape;
+end);
+
+#############################################################################
+##
+#M  Remove( <graph>, <callback> ) . . . . . remove object from graph
+##
+InstallMethod(Remove,
+  "a shape, a callback",
+  true,
+  [IsShape,
+   IsCallback],
+  0,
+function(shape, callback)
+  Unbind(shape!.callbacks!.(callback!.id));
+  return shape;
+end);
+
+InstallOtherMethod(Remove,
+  "a shape, a list of callbacks",
+  true,
+  [IsShape,
+   IsList],
+  0,
+function(shape, callbacks)
+  local callback;
+  for callback in callbacks do
+    Remove(shape, callback);
   od;
   return shape;
 end);

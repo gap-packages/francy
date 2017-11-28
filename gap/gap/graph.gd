@@ -184,8 +184,8 @@ DeclareOperation("Shape", [IsShapeType, IsString, IsShapeDefaults]);
 
 #############################################################################
 ##
-#O  Add( <shape>, <callback> )
-#O  Add( <shape>, <list of callbacks> )
+#O  Add( <shape>, <menu> )
+#O  Add( <shape>, <list of menus> )
 ##
 ## 
 ##
@@ -193,12 +193,30 @@ DeclareOperation("Add", [IsShape, IsMenu]);
 
 #############################################################################
 ##
-#O  Remove( <shape>, <francy object> )
+#O  Add( <shape>, <callback> )
+#O  Add( <shape>, <list of callbacks> )
+##
+## 
+##
+DeclareOperation("Add", [IsShape, IsCallback]);
+
+#############################################################################
+##
+#O  Remove( <shape>, <menu> )
 #O  Remove( <shape>, <list of menus> )
 ##
 ## 
 ##
 DeclareOperation("Remove", [IsShape, IsMenu]);
+
+#############################################################################
+##
+#O  Remove( <shape>, <callback> )
+#O  Remove( <shape>, <list of callbacks> )
+##
+## 
+##
+DeclareOperation("Remove", [IsShape, IsCallback]);
 
 #############################################################################
 ##

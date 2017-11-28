@@ -42,12 +42,6 @@ DeclareCategory("IsArgType", IsFrancyObject);
 
 #############################################################################
 ##
-#O  IsCallbackType( <obj> )
-##
-DeclareCategory("IsCallbackType", IsFrancyObject);
-
-#############################################################################
-##
 #O  IsTrigger( <obj> )
 ##
 DeclareCategory("IsTrigger", IsFrancyObject);
@@ -108,14 +102,6 @@ DeclareRepresentation("IsArgTypeRep",
 
 #############################################################################
 ##
-#R  IsCallbackTypeRep  . . . . . . . . . .  default representation
-##
-DeclareRepresentation("IsCallbackTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["value"], IsCallbackType);
-
-#############################################################################
-##
 #R  IsTriggerEventRep  . . . . . . . . . . . . . . . . . . default representation
 ##
 DeclareRepresentation("IsTriggerEventRep",
@@ -135,7 +121,7 @@ DeclareRepresentation("IsTriggerEventRep",
 ## Creates a Callback object that holds a function and args to be executed 
 ##  by a trigger based on a trigger type.
 ##
-DeclareOperation("Callback", [IsCallbackType, IsTriggerEvent, IsFunction, IsList]);
+DeclareOperation("Callback", [IsTriggerEvent, IsFunction, IsList]);
 
 #############################################################################
 ##

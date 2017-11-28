@@ -17,39 +17,37 @@ export default class Modal extends Renderer {
 
     // we want to overlay everything, hence 'body' must be used
     var overlay = d3.select('body').append('div')
-      .attr('class', 'francy overlay');
+      .attr('class', 'francy-overlay');
     var holder = d3.select('body').append('div')
       .attr('class', 'francy');
     var modal = holder.append('div')
       .attr('id', modalId)
-      .attr('class', 'francy modal');
+      .attr('class', 'francy-modal');
 
     var form = modal.append('form');
 
-    var header = form.append('div').attr('class', 'header');
+    var header = form.append('div').attr('class', 'francy-modal-header');
 
     header.append('span').html('Required arguments for&nbsp;').append('span').attr('style', 'font-weight: bold;').text(json.title);
 
-    var content = form.append('div').attr('class', 'content').append('div').attr('class', 'table').append('div').attr('class', 'francy table-body');
+    var content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
 
     for (var arg of Object.values(json.callback.requiredArgs)) {
-      var row = content.append('div').attr('class', 'francy table-row');
-      row.append('div').attr('class', 'francy table-cell').append('label').attr('for', arg.id).text(arg.title);
-      row.append('div').attr('class', 'francy table-cell').append('input').attr('id', arg.id).attr('class', 'arg')
+      var row = content.append('div').attr('class', 'francy-table-row');
+      row.append('div').attr('class', 'francy-table-cell').append('label').attr('for', arg.id).text(arg.title);
+      row.append('div').attr('class', 'francy-table-cell').append('input').attr('id', arg.id).attr('class', 'francy-arg')
         .attr('required', '')
         .attr('name', arg.id)
         .attr('type', arg.type)
         .attr('value', arg.value)
-        .on('change', function() {
-          json.callback.requiredArgs[this.id].value = this.value;
-        })
+        .on('change', function() { json.callback.requiredArgs[this.id].value = this.value; })
         .on('input', this.onchange)
         .on('keyup', this.onchange)
         .on('paste', this.onchange);
       row.append('span').attr('class', 'validity');
     }
 
-    var footer = form.append('div').attr('class', 'footer');
+    var footer = form.append('div').attr('class', 'francy-modal-footer');
 
     footer.append('button').text('Ok').on('click', function() {
       if (form.node().checkValidity()) {
@@ -71,9 +69,9 @@ export default class Modal extends Renderer {
 
     // disable keyboard shortcuts when using this modal in Jupyter
     try {
-      Jupyter.keyboard_manager.register_events('.arg');
-      Jupyter.keyboard_manager.register_events('.francy .overlay');
-      Jupyter.keyboard_manager.register_events('.francy .modal');
+      Jupyter.keyboard_manager.register_events('.francy-arg');
+      Jupyter.keyboard_manager.register_events('.francy-overlay');
+      Jupyter.keyboard_manager.register_events('.francy-modal');
     }
     catch (e) {
       if (e.name == 'ReferenceError') {
@@ -81,7 +79,7 @@ export default class Modal extends Renderer {
       }
     }
 
-    this.logger.debug(`Callback Modal updated ${modalId}...`);
+    this.logger.debug(`Callback Modal updated [${modalId}]...`);
 
     return modal;
   }

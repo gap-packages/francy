@@ -2,20 +2,20 @@
 font-family:"Helvetica Neue",Helvetica,Arial,sans-serif
 }
 
-.francy .highlight:hover {
+.francy-highlight:hover {
 stroke:#fffd00;
 stroke-width:2px
 }
 
-.francy .context {
+.francy-context {
 cursor:context-menu!important
 }
 
-.francy .links {
+.francy-links {
 cursor:auto
 }
 
-.francy .links line,.arrows path {
+.francy-links line, .francy-arrows path {
 stroke:#999;
 stroke-opacity:.6
 }
@@ -24,7 +24,7 @@ stroke-opacity:.6
 color:inherit
 }
 
-.francy .main-menu {
+.francy-main-menu {
 background:#f6f6f6;
 color:#333;
 float:left;
@@ -32,87 +32,86 @@ list-style:none;
 position:relative;
 width:100%;
 z-index:5;
-border:1px solid #cfcfcf;
-margin-top:3px
+border:1px solid #cfcfcf
 }
 
-.francy .main-menu li {
+.francy-main-menu li {
 float:left;
 position:relative;
-cursor:pointer
+cursor:pointer;
+padding-left:5px!important
 }
 
-.francy .main-menu li ul {
+.francy-main-menu li ul {
 box-shadow:5px 5px 5px grey;
 min-width: 120px
 }
 
-.francy .main-menu li a {
+.francy-main-menu li a {
 background:#f6f6f6;
 display:block;
 padding:10px 15px;
 text-decoration:none
 }
 
-.francy .main-menu li.title {
+.francy-main-menu li.francy-title {
 float:right!important;
 cursor:auto
 }
 
-.francy .main-menu li.title:hover a:hover {
+.francy-main-menu li.francy-title:hover a:hover {
 background:inherit!important
 }
 
-.francy .main-menu li:hover a {
+.francy-main-menu li:hover a {
 background:#f6f6f6;
 text-decoration:none
 }
 
-.francy .main-menu li:hover a:hover {
+.francy-main-menu li:hover a:hover {
 background:#ededed;
 text-decoration:none
 }
 
-.francy .main-menu li:hover ul {
+.francy-main-menu li:hover ul {
 left:0
 }
 
-.francy .main-menu li:hover ul a {
+.francy-main-menu li:hover ul a {
 text-decoration:none
 }
 
-.francy .main-menu li:hover ul li a:hover {
+.francy-main-menu li:hover ul li a:hover {
 background:#ededed
 }
 
-.francy .main-menu ul {
-background:#333;
+.francy-main-menu ul {
 left:-9999px;
 list-style:none;
 position:absolute
 }
 
-.francy .main-menu ul a {
+.francy-main-menu ul a {
 white-space:nowrap;
 overflow:hidden;
 text-overflow:ellipsis;
 min-width: 120px
 }
 
-.francy .main-menu ul li {
+.francy-main-menu ul li {
 float:none;
 width:100%
 }
 
-.francy .nodes,.francy .bars {
+.francy-nodes,.francy-bars {
 cursor:pointer
 }
 
-.francy .nodes circle,.nodes rect {
+.francy-nodes circle,.francy-nodes rect {
 stroke:#fff
 }
 
-.francy.overlay {
+.francy-overlay {
 position:fixed;
 top:0;
 left:0;
@@ -124,7 +123,7 @@ background-color:rgba(0,0,0,0.5);
 z-index:10
 }
 
-.francy .modal {
+.francy-modal {
 position:fixed;
 top:50%;
 left:50%;
@@ -132,47 +131,45 @@ bottom:inherit;
 right:inherit;
 z-index:11;
 background:#fff;
-box-shadow:1px 1px 3px #000;
+box-shadow:5px 5px 5px grey;
 margin-left:-150px;
 padding:10px;
 display:block
 }
 
-.francy .modal .header {
+.francy-modal-header {
 border-bottom:1px solid #cfcfcf;
 text-align: center;
 padding:10px 0
 }
 
-.francy .modal .footer {
+.francy-modal-footer {
 border-top:1px solid #cfcfcf;
 padding:10px 0
 }
 
-.francy .modal .content {
+.francy-modal-content {
 margin: 15px 5px
 }
 
-.francy .modal .content input {
+.francy-modal-content input {
 margin:5px
 }
 
-.francy .modal .footer button {
+.francy-modal-footer button {
 float:right;
 margin-left:5px
 }
 
-.francy .window {
+.francy-window {
 display:grid;
-width:100%
+width:100%;
+margin:3px
 }
 
-.francy .canvas {
+.francy-canvas {
 margin-top:3px;
-width:100%
-}
-
-.francy .window,.canvas {
+width:100%;
 border:solid 1px #cfcfcf
 }
 
@@ -202,11 +199,11 @@ padding:10px;
 text-align:justify
 }
 
-.francy .title {
+.francy-title {
 font-weight:700
 }
 
-.francy .context-menu {
+.francy-context-menu {
 background:#f6f6f6;
 color:#333;
 min-width:150px;
@@ -215,55 +212,57 @@ z-index:1200;
 box-shadow:5px 5px 5px grey
 }
 
-.francy .context-menu ul {
+.francy-context-menu ul {
 list-style-type:none;
 margin:0;
 padding:0;
 cursor:pointer
 }
 
-.francy .context-menu ul li a {
+.francy-context-menu ul li a {
 background:#f6f6f6;
 display:block;
 padding:5px 10px;
 text-decoration:none
 }
 
-.francy .context-menu ul li a:hover {
+.francy-context-menu ul li a:hover {
 background-color:#ededed
 }
 
-.francy.table {
+.francy-table {
 display:table;
 width:100%
 }
 
-.francy.table-row {
+.francy-table-row {
 display:table-row
 }
 
-.francy.table-heading {
+.francy-table-heading {
 background-color:#eee;
 display:table-header-group
 }
 
-.francy.table-cell,.francy.table-head {
+.francy-table-cell,.francy-table-head {
 display:table-cell;
-padding:0 6px
+padding:0 6px;
+vertical-align:middle;
+white-space:nowrap
 }
 
-.francy.table-heading {
+.francy-table-heading {
 background-color:#eee;
 display:table-header-group;
 font-weight:700
 }
 
-.francy.table-foot {
+.francy-table-foot {
 background-color:#eee;
 display:table-footer-group;
 font-weight:700
 }
 
-.francy.table-body {
+.francy-table-body {
 display:table-row-group
 }

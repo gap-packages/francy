@@ -20,14 +20,14 @@ export default class MainMenu extends Menu {
       // create a div element detached from the DOM!
       this.logger.debug(`Creating Main Menu [${menuId}]...`);
       menu = parent.append('ul')
-        .attr('class', 'main-menu').attr('id', menuId);
+        .attr('class', 'francy-main-menu').attr('id', menuId);
     }
 
     // force rebuild menu again
     menu.selectAll('*').remove();
 
     if (json.canvas.title) {
-      menu.append('li').attr('class', 'title').append('a').html(json.canvas.title);
+      menu.append('li').attr('class', 'francy-title').append('a').html(json.canvas.title);
     }
 
     var entry = menu.append('li');

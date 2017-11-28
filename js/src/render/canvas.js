@@ -21,7 +21,7 @@ export default class Canvas extends Composite {
       this.logger.debug(`Creating Canvas [${canvasId}]...`);
       canvas = parent.append('svg')
         .attr('id', canvasId)
-        .attr('class', 'canvas');
+        .attr('class', 'francy-canvas');
     }
 
     // cannot continue if canvas is not present
@@ -33,12 +33,12 @@ export default class Canvas extends Composite {
 
     var zoom = d3.zoom(); //.scaleExtent([1, 8]);
 
-    var content = canvas.select('g.content');
+    var content = canvas.select('g.francy-content');
 
     if (!content.node()) {
-      content = canvas.append('g').attr('class', 'content');
+      content = canvas.append('g').attr('class', 'francy-content');
       zoom.on("zoom", zoomed);
-      canvas.call(zoom); //.transform, d3.zoomIdentity);
+      canvas.call(zoom).on("dblclick.zoom", null); //.transform, d3.zoomIdentity);
     }
 
     canvas.on("click", stopped, true);
