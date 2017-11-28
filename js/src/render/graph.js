@@ -167,15 +167,6 @@ export default class Graph extends Renderer {
         tooltip.unrender();
       });
 
-    function executeCallback(data, event) {
-      if (data.callbacks) {
-        Object.values(data.callbacks).forEach((cb) => {
-          // execute the ones that match the event!
-          cb.trigger === event && callback.execute({ callback: cb });
-        });
-      }
-    }
-
     var labelGroup = svg.selectAll('.francy-labels');
 
     if (!labelGroup.node()) {
@@ -190,6 +181,32 @@ export default class Graph extends Renderer {
       .attr('class', 'francy-label')
       .text(d => d.title)
       .merge(label);
+
+    label
+      .on('contextmenu', function(d) {
+        // default, build context menu
+        contextMenu.render(d);
+        // any callbacks will be handled here
+        executeCallback.call(this, d, 'contextmenu');
+      })
+      .on('click', function(d) {
+        // default, highlight connected nodes
+        connectedNodes.call(this);
+        // any callbacks will be handled here
+        executeCallback.call(this, d, 'click');
+      })
+      .on('dblclick', function(d) {
+        // any callbacks will be handled here
+        executeCallback.call(this, d, 'dblclick');
+      })
+      .on("mouseover", d => {
+        // default, show tooltip
+        tooltip.render(d.info);
+      })
+      .on("mouseout", () => {
+        // default, hide tooltip
+        tooltip.unrender();
+      });
 
     var legendGroup = parent.selectAll('.legend');
 
@@ -331,6 +348,15 @@ export default class Graph extends Renderer {
       }
       d.fx = null;
       d.fy = null;
+    }
+
+    function executeCallback(data, event) {
+      if (data.callbacks) {
+        Object.values(data.callbacks).forEach((cb) => {
+          // execute the ones that match the event!
+          cb.trigger === event && callback.execute({ callback: cb });
+        });
+      }
     }
 
   }

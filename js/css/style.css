@@ -103,7 +103,7 @@ float:none;
 width:100%
 }
 
-.francy-nodes,.francy-bars {
+.francy-nodes,.francy-bars, .francy-labels {
 cursor:pointer
 }
 
