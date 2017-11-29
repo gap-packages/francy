@@ -163,7 +163,5 @@ export default class ScatterChart extends Renderer {
       .attr('dy', '.35em')
       .style('text-anchor', 'end')
       .text(d => d);
-
-    parent.zoomToFit();
   }
 }

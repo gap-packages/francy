@@ -46,6 +46,20 @@ define([
         index: 0
       });
 
+      /* Get all cells in notebook */
+      Jupyter.notebook.get_cells().forEach(cell => {
+        /* If a cell has output data of 'application/vnd.dataresource+json' mime type */
+        if (
+          cell.output_area &&
+          cell.output_area.outputs.find(
+            output => output.data && output.data[MIME_TYPE]
+          )
+        ) {
+          /* Re-render the cell */
+          Jupyter.notebook.render_cell_output(cell);
+        }
+      });
+
       // create a 'display: none;' div for drawing
       d3.select('body').append('div').attr('id', 'francy-drawing-div').attr('style', 'display: none;');
 

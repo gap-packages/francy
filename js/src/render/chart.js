@@ -17,16 +17,25 @@ export default class Chart extends Renderer {
       return;
     }
 
+    var element = undefined;
     switch (json.canvas.chart.type) {
       case "bar":
-        return new BarChart(this.options).render(json);
+        element = new BarChart(this.options).render(json);
+        break;
       case "line":
-        return new LineChart(this.options).render(json);
+        element = new LineChart(this.options).render(json);
+        break;
       case "scatter":
-        return new ScatterChart(this.options).render(json);
+        element = new ScatterChart(this.options).render(json);
+        break;
       default:
         throw new TypeError(`The chart type [${json.canvas.chart.type}] is not implemented!`);
     }
+
+    // delay the zoom to fit
+    setTimeout(this.options.appendTo.zoomToFit, 500);
+
+    return element;
   }
 
   static get colors() {
