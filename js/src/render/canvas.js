@@ -14,7 +14,7 @@ export default class Canvas extends Composite {
     var parent = d3.select(this.options.appendTo);
     //var active = d3.select(null);
     var canvasId = IDUtils.getCanvasId(json.canvas.id);
-    var canvas = parent.select(`svg#${canvasId}`);
+    var canvas = d3.select(`svg#${canvasId}`);
     // check if the canvas is already present
     if (!canvas.node()) {
       // create a svg element detached from the DOM!
