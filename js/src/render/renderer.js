@@ -22,7 +22,7 @@ export default class Renderer extends Base {
   }
 
   get SVGParent() {
-    return this.HTMLParent.select('svg');
+    return this.options.appendTo;
   }
 
 }

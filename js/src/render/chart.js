@@ -1,5 +1,7 @@
 import Renderer from './renderer';
 import BarChart from './chart-bar';
+import LineChart from './chart-line';
+import ScatterChart from './chart-scatter';
 
 /* global d3 */
 
@@ -19,8 +21,9 @@ export default class Chart extends Renderer {
       case "bar":
         return new BarChart(this.options).render(json);
       case "line":
-        this.logger.info('Not implemented yet!');
-        break;
+        return new LineChart(this.options).render(json);
+      case "scatter":
+        return new ScatterChart(this.options).render(json);
       default:
         throw new TypeError(`The chart type [${json.canvas.chart.type}] is not implemented!`);
     }

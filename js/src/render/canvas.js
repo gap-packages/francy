@@ -11,7 +11,7 @@ export default class Canvas extends Composite {
   }
 
   render(json) {
-    var parent = d3.select(this.options.appendTo).node();
+    var parent = d3.select(this.options.appendTo);
     //var active = d3.select(null);
     var canvasId = IDUtils.getCanvasId(json.canvas.id);
     var canvas = parent.select(`svg#${canvasId}`);
@@ -21,7 +21,7 @@ export default class Canvas extends Composite {
       this.logger.debug(`Creating Canvas [${canvasId}]...`);
       canvas = parent.append('svg')
         .attr('id', canvasId)
-        .attr('class', 'francy-canvas');
+        .attr('class', 'francy francy-canvas');
     }
 
     // cannot continue if canvas is not present
@@ -43,34 +43,36 @@ export default class Canvas extends Composite {
 
     canvas.on("click", stopped, true);
 
-    /*
-         this.zoomToFit = clicked;
+    canvas.zoomToFit = function() {
+      var bounds = content.node().getBBox();
 
-         function clicked() {
-           if (active.node() === this) { return zoomReset(); }
-           active.classed("active", false);
-           active = d3.select(this).classed("active", true);
+      var fullWidth = canvas.node().clientWidth,
+        fullHeight = canvas.node().clientHeight;
 
-           var dx = this.getBBox().width,
-             dy = this.getBBox().height,
-             scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / json.canvas.width, dy / json.canvas.height))),
-             translate = [json.canvas.width / 2 - scale, json.canvas.height / 2 - scale];
+      var width = bounds.width,
+        height = bounds.height;
 
-           canvas.transition()
-             .duration(750)
-             .call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
-         }
+      if (width == 0 || height == 0) return;
 
-         function zoomReset() {
-           active.classed("active", false);
-           active = d3.select(null);
-           canvas.transition()
-             .duration(750)
-             .call(zoom.transform, d3.zoomIdentity); // updated for d3 v4
-         }
-     */
+      var midX = bounds.x + width / 2,
+        midY = bounds.y + height / 2;
+
+      var scale = (0.75) / Math.max(width / fullWidth, height / fullHeight);
+      var translateX = fullWidth / 2 - scale * midX,
+        translateY = fullHeight / 2 - scale * midY;
+
+      content.transition()
+        .duration(750)
+        .attr('transform', `translate(${translateX},${translateY}) scale(${scale})`)
+        .on('end', updateZoom([translateX, translateY], scale));
+    };
+
     function zoomed() {
       content.attr("transform", d3.event.transform);
+    }
+
+    function updateZoom(translate, scale) {
+      canvas.call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
     }
 
     function stopped() {
@@ -78,8 +80,6 @@ export default class Canvas extends Composite {
     }
 
     this.logger.debug(`Canvas updated [${canvasId}]...`);
-
-    //this.canvas = canvas;
 
     this.renderChildren(canvas, json);
 

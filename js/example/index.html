@@ -15,11 +15,11 @@
     console.log(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
   }
   
-  var francy = new Francy({verbose: true, appendTo: 'body', callbackHandler: trigger});
+  var francy = new Francy({verbose: true, appendTo: '#francy', callbackHandler: trigger});
   
   d3.json("json1.json", function (error, json) {
     var element = francy.render(json);
-    document.getElementsByTagName('body')[0].append(element);
+    document.getElementById('francy').append(element);
     setTimeout(function(){
        d3.json("json1.1.json", function (error, json) {
           francy.render(json);
@@ -29,29 +29,39 @@
   
   d3.json("json2.json", function (error, json) {
     var element = francy.render(json);
-    document.getElementsByTagName('body')[0].append(element);
+    document.getElementById('francy').append(element);
   });
   
   d3.json("json3.json", function (error, json) {
     var element = francy.render(json);
-    document.getElementsByTagName('body')[0].append(element);
+    document.getElementById('francy').append(element);
   });
   
   d3.json("json4.json", function (error, json) {
     var element = francy.render(json);
-    document.getElementsByTagName('body')[0].append(element);
+    document.getElementById('francy').append(element);
   });
 
   d3.json("json5.json", function (error, json) {
     var element = francy.render(json);
-    document.getElementsByTagName('body')[0].append(element);
+    document.getElementById('francy').append(element);
   });
   
   d3.json("json6.json", function (error, json) {
     var element = francy.render(json);
-    document.getElementsByTagName('body')[0].append(element);
+    document.getElementById('francy').append(element);
   });
 
+  d3.json("json7.json", function (error, json) {
+    var element = francy.render(json);
+    document.getElementById('francy').append(element);
+  });
+  
+  d3.json("json8.json", function (error, json) {
+    var element = francy.render(json);
+    document.getElementById('francy').append(element);
+  });
+  
 </script>
 </body>
 </html>

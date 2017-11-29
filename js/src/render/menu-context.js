@@ -6,7 +6,7 @@ export default class ContextMenu extends Menu {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
-    this.contextMenu = this.SVGParent.select('foreignObject.context-menus');
+    this.contextMenu = this.SVGParent.select('foreignObject.context-menu-holder');
     // check if the window is already present
     if (!this.contextMenu.node()) {
       this.contextMenu = this.SVGParent.append('foreignObject')

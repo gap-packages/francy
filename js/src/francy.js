@@ -1,10 +1,11 @@
 import JsonUtils from './util/json-utils';
-import Window from './render/window';
 import Canvas from './render/canvas';
 import MainMenu from './render/menu-main';
 import Graph from './render/graph';
 import Chart from './render/chart';
 //import Tracker from './tracker/change';
+
+let ALL_CANVAS = {};
 
 /* global d3 */
 
@@ -62,16 +63,15 @@ export default class Francy {
       //var tracker = new Tracker(json, this.options);
       //tracker.subscribe(function(obj) { console.log(obj); });
       //return new Draw(this.options).handle(tracker.object);
-      var window = new Window(this.options);
       var canvas = new Canvas(this.options);
       var menu = new MainMenu(this.options);
       var graph = new Graph(this.options);
       var chart = new Chart(this.options);
+      canvas.add(menu);
       canvas.add(graph);
       canvas.add(chart);
-      window.add(menu);
-      window.add(canvas);
-      var element = window.render(json);
+      var element = canvas.render(json);
+      ALL_CANVAS[json.canvas.id] = element;
       return element.node();
     }
   }
@@ -79,6 +79,14 @@ export default class Francy {
 
 try {
   exports.Francy = window.Francy = Francy;
+  window.onresize = function() {
+    // zoom to fit all canvas on resize
+    Object.values(ALL_CANVAS).forEach(function(canvas) {
+      canvas.zoomToFit();
+    });
+    // adjust top menu on resize
+    d3.selectAll('foreignObject.francy-main-menu-holder').attr('width', '100%');
+  };
 }
 catch (e) {
   exports.Francy = Francy;

@@ -85,7 +85,11 @@ export default class Graph extends Renderer {
       .force('collide', d3.forceCollide(d => d.size))
       .force('x', forceX)
       .force('y', forceY)
-      .force('center', d3.forceCenter(width / 2, height / 2));
+      .force('center', d3.forceCenter(width / 2, height / 2))
+      .on("end", function() {
+        // zoom to fit when simulation is over
+        parent.zoomToFit();
+      });
 
     var linkGroup = svg.selectAll('g.francy-links');
 
@@ -225,7 +229,7 @@ export default class Graph extends Renderer {
     legend = legend.enter()
       .append('g')
       .attr('id', d => `legendLayer${d}`)
-      .attr('transform', (d, i) => `translate(${10},${(i + 1) * 11})`)
+      .attr('transform', (d, i) => `translate(${10},${(i + 5) * 12})`)
       .merge(legend);
 
     legend.append('rect')

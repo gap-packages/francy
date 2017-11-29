@@ -26,13 +26,10 @@ color:inherit
 
 .francy-main-menu {
 background:#f6f6f6;
-color:#333;
 float:left;
 list-style:none;
-position:relative;
 width:100%;
-z-index:5;
-border:1px solid #cfcfcf
+border-bottom:1px solid #cfcfcf
 }
 
 .francy-main-menu li {
@@ -103,12 +100,16 @@ float:none;
 width:100%
 }
 
-.francy-nodes,.francy-bars, .francy-labels {
+.francy-nodes,.francy-bars, .francy-lines, .francy-labels {
 cursor:pointer
 }
 
 .francy-nodes circle,.francy-nodes rect {
 stroke:#fff
+}
+
+.francy-lines path {
+fill:none;
 }
 
 .francy-overlay {
@@ -159,10 +160,6 @@ margin:5px
 .francy-modal-footer button {
 float:right;
 margin-left:5px
-}
-
-.francy-window {
-margin:3px
 }
 
 .francy-canvas {

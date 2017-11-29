@@ -6,7 +6,7 @@ export default class Tooltip extends Renderer {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
-    this.tooltip = this.SVGParent.select('foreignObject.tooltips');
+    this.tooltip = this.SVGParent.select('foreignObject.tooltip-holder');
     // check if the window is already present
     if (!this.tooltip.node()) {
       this.tooltip = this.SVGParent.append('foreignObject')

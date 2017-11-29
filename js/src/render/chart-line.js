@@ -4,7 +4,7 @@ import Chart from './chart';
 
 /* global d3 */
 
-export default class BarChart extends Renderer {
+export default class LineChart extends Renderer {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
@@ -14,7 +14,7 @@ export default class BarChart extends Renderer {
 
     // just ignore rendering if no chart is present
     if (!json.canvas.chart) {
-      this.logger.debug('No BarChart to render here... continuing...');
+      this.logger.debug('No LineChart to render here... continuing...');
       return;
     }
 
@@ -38,7 +38,7 @@ export default class BarChart extends Renderer {
     var t = d3.transition().duration(500);
 
     // set the ranges
-    var x = d3.scaleBand().range([0, width]).padding(0.1).domain(axis.x.domain);
+    var x = d3.scaleLinear().range([0, width]).domain(axis.x.domain);
     var y = d3.scaleLinear().range([height, 0]).domain(axis.y.domain);
 
     var tmp = [];
@@ -49,44 +49,50 @@ export default class BarChart extends Renderer {
     }
 
     if (!axis.x.domain.length) {
-      axis.x.domain = Chart.domainRange(tmp.length / datasetNames.length);
-      x.domain(axis.x.domain);
+      x.domain([0, tmp.length / datasetNames.length]);
     }
 
-    var barsGroup = svg.selectAll('g.francy-bars');
+    var linesGroup = svg.selectAll('g.francy-lines');
 
-    if (!barsGroup.node()) {
-      barsGroup = svg.append('g').attr('class', 'francy-bars');
+    if (!linesGroup.node()) {
+      linesGroup = svg.append('g').attr('class', 'francy-lines');
     }
 
     datasetNames.forEach(function(key, index) {
-      var bar = barsGroup.selectAll(`.francy-bar${index}`).data(datasets[key]);
+      var valueLine = d3.line()
+        .x(function(d, i) { return x(i); })
+        .y(function(d) { return y(d); });
 
-      bar.exit().style("fill-opacity", 1).transition(t).style("fill-opacity", 1e-6).remove();
+      var line = linesGroup.selectAll(`.line${index}`).data([datasets[key]]);
+
+      line.exit().style("fill-opacity", 1).transition(t).style("fill-opacity", 1e-6).remove();
 
       // append the rectangles for the bar chart
-      bar.enter()
-        .append('rect')
-        .style('fill', () => Chart.colors(index * 5))
-        .attr('class', `francy-bar${index}`)
-        .attr('x', function(d, i) { return x(axis.x.domain[i]) + index * (x.bandwidth() / datasetNames.length); })
-        .attr('width', (x.bandwidth() / datasetNames.length) - 1)
-        .attr('y', function(d) { return y(d); })
-        .attr('height', function(d) { return height - y(d); })
+      line
+        .enter()
+        .append('path')
+        .style('stroke', () => Chart.colors(index * 5))
+        .style('stroke-width', '5px')
+        .attr('class', `francy-line${index}`)
+        .attr('d', valueLine)
         .on("mouseover", function(d) {
           d3.select(this).transition()
-            .duration(250).style("fill-opacity", 0.5);
+            .duration(250)
+            .style("stroke-opacity", 0.5)
+            .style('stroke-width', '10px');
           tooltip.render({ 'Dataset': key, 'Value': d });
         })
         .on("mouseout", function() {
           d3.select(this).transition()
-            .duration(250).style("fill-opacity", 1);
+            .duration(250)
+            .style("stroke-opacity", 1)
+            .style('stroke-width', '5px');
           tooltip.unrender();
         })
         .style("fill-opacity", 1e-6)
         .transition(t).style("fill-opacity", 1);
 
-      bar.merge(bar);
+      line.merge(line);
     });
 
     // force rebuild axis again
