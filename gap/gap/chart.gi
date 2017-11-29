@@ -12,7 +12,7 @@
 BindGlobal("ChartType", rec(
   LINE    := Objectify(NewType(ChartFamily, IsChartType and IsChartTypeRep), rec(value := "line")),
   BAR     := Objectify(NewType(ChartFamily, IsChartType and IsChartTypeRep), rec(value := "bar")),
-  STACKED := Objectify(NewType(ChartFamily, IsChartType and IsChartTypeRep), rec(value := "stacked"))
+  SCATTER := Objectify(NewType(ChartFamily, IsChartType and IsChartTypeRep), rec(value := "scatter"))
 ));
 
 #############################################################################

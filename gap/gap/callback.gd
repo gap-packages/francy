@@ -12,8 +12,15 @@
 
 #############################################################################
 ##
-#V FrancyCallbacks . . . . . . Contains the record of callbacks to be executed
+#V FrancyCallbacks . . . . . . 
 ##
+#! @Chapter Francy Core
+#! @Section Global Records
+#! In this section we show the core Francy Records for multi purpose.
+#! @Description
+#! This <C>rec<C> holds all the records registered within a <C>Menu<C> or <C>Shape<C>.
+#! This way it's possible to handle asynchronous calls to execute <C>Functions<C>
+#! @Returns <C>rec<C> of <C>Callback<C>
 BindGlobal("FrancyCallbacks", rec());
 
 
@@ -62,12 +69,24 @@ DeclareCategory("IsTriggerEvent", IsFrancyObject);
 ##
 #V  CallbackFamily
 ##
+#! @Chapter Francy Core
+#! @Section Global Families
+#! In this section we show the core Francy Families for multi purpose.
+#! @Description
+#! This Family identifies all <C>Callback<C> objects
+#! @Returns <C>CallbackFamily<C>
 BindGlobal("CallbackFamily", NewFamily("CallbackFamily", IsCallback));
 
 #############################################################################
 ##
 #V  TriggerFamily
 ##
+#! @Chapter Francy Core
+#! @Section Global Families
+#! In this section we show the core Francy Families for multi purpose.
+#! @Description
+#! This Family identifies all <C>Trigger<C> objects
+#! @Returns <C>TriggerFamily<C>
 BindGlobal("TriggerFamily", NewFamily("TriggerFamily", IsTrigger));
 
 

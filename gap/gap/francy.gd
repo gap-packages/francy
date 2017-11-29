@@ -14,6 +14,13 @@
 ##
 #V FrancyMIMEType . . . Contains the MIME Type defined for francy application
 ##
+#! @Chapter Francy Core
+#! @Section Global Types
+#! In this section we show the core Francy types
+#! @Description
+#! Specifies the content-type mime of this package. 
+#! A MIME type stands for "Multipurpose Internet Mail Extensions" and it's a standard to identify a document.
+#! @Returns application/vnd.francy+json
 BindGlobal("FrancyMIMEType", "application/vnd.francy+json");
 
 #############################################################################
@@ -57,6 +64,12 @@ DeclareCategory("IsFrancy", IsFrancyObject);
 ##
 #V  CanvasFamily  . . . . . . . . . . . . . . .  family of all canvas
 ##
+#! @Chapter Francy Core
+#! @Section Global Families
+#! In this section we show the core Francy Families for multi purpose.
+#! @Description
+#! This Family identifies all objects of this package 
+#! @Returns <C>FrancyFamily<C> of 
 BindGlobal("FrancyFamily", NewFamily("FrancyFamily", IsFrancyObject));
 
 
