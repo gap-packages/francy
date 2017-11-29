@@ -212,7 +212,7 @@ export default class Graph extends Renderer {
         tooltip.unrender();
       });
 
-    var legendGroup = parent.selectAll('.legend');
+    var legendGroup = parent.selectAll('.francy-legend');
 
     if (!legendGroup.node()) {
       legendGroup = parent.append('g').attr('class', 'francy-legend');

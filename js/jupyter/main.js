@@ -3,10 +3,11 @@
 define([
   'require',
   'base/js/namespace',
+  'base/js/events',
   'notebook/js/outputarea',
   'nbextensions/francy/lib/d3.min',
   'nbextensions/francy/amd/francy.bundle',
-], function(require, Jupyter, outputHandler, d3, FrancyBundle) {
+], function(require, Jupyter, events, outputHandler, d3, FrancyBundle) {
   "use strict";
 
   var MIME_TYPE = 'application/vnd.francy+json';
@@ -63,23 +64,29 @@ define([
       // Register mime type with the output area
       outputHandler.OutputArea.prototype.register_mime_type(MIME_TYPE, appendMime, {
         safe: true,
-        // Index of renderer in `output_area.display_order`
         index: 0
       });
 
-      /* Get all cells in notebook */
+      /* Render output application/vnd.francy+json MIME Cells */
       Jupyter.notebook.get_cells().forEach(cell => {
-        /* If a cell has output data of 'application/vnd.dataresource+json' mime type */
-        if (
-          cell.output_area &&
-          cell.output_area.outputs.find(
-            output => output.data && output.data[MIME_TYPE]
-          )
-        ) {
-          /* Re-render the cell */
+        if (cell.output_area && cell.output_area.outputs.find(output => output.data && output.data[MIME_TYPE])) {
           Jupyter.notebook.render_cell_output(cell);
         }
       });
+
+      /**
+       * Handle when an output is cleared or removed
+       */
+      function handleClearOutput(event, { cell: { output_area } }) {
+        const toinsert = output_area.element.find(`.${CLASS_NAME.split(' ')[0]}`);
+        if (toinsert[0]) {
+          francy.unrender();
+        }
+      }
+
+      /* Handle when an output is cleared or removed */
+      events.on('clear_output.CodeCell', handleClearOutput);
+      events.on('delete.Cell', handleClearOutput);
 
       console.log('Finished loading Module Francy Javascript.');
     }

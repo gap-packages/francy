@@ -75,6 +75,10 @@ export default class Francy {
       return element.node();
     }
   }
+
+  unrender() {
+    ALL_CANVAS = {};
+  }
 }
 
 try {
