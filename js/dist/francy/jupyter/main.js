@@ -43,6 +43,9 @@ define([
     }
   });
 
+  // create a 'display: none;' div for drawing
+  d3.select('body').append('div').attr('id', 'francy-drawing-div').attr('style', 'display: none;');
+
   return {
     load_ipython_extension: function() {
 
@@ -77,9 +80,6 @@ define([
           Jupyter.notebook.render_cell_output(cell);
         }
       });
-
-      // create a 'display: none;' div for drawing
-      d3.select('body').append('div').attr('id', 'francy-drawing-div').attr('style', 'display: none;');
 
       console.log('Finished loading Module Francy Javascript.');
     }
