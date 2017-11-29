@@ -33,7 +33,7 @@ export default class Chart extends Renderer {
     }
 
     // delay the zoom to fit
-    setTimeout(this.options.appendTo.zoomToFit, 500);
+    setTimeout(this.options.appendTo.zoomToFit, 1000);
 
     return element;
   }

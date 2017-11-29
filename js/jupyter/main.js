@@ -40,8 +40,7 @@ define([
 
       // Register mime type with the output area
       outputHandler.OutputArea.prototype.register_mime_type(MIME_TYPE, appendMime, {
-        // An output widget could contain arbitrary user javascript
-        safe: false,
+        safe: true,
         // Index of renderer in `output_area.display_order`
         index: 0
       });
