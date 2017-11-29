@@ -161,6 +161,5 @@ export default class BarChart extends Renderer {
       .style('text-anchor', 'end')
       .text(d => d);
 
-    parent.zoomToFit();
   }
 }
