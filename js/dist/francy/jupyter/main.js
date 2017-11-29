@@ -24,6 +24,25 @@ define([
 
   loadCss('./../css/style.css');
 
+  // start francy
+  let francy = new FrancyBundle.Francy({
+    verbose: true,
+    appendTo: '#francy-drawing-div',
+    callbackHandler: function(json) {
+      Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, {
+        iopub: {
+          output: function(msg) {
+            if (msg.content && msg.content.data && msg.content.data['application/vnd.francy+json']) {
+              // This will update the existing canvas!
+              francy.render(msg.content.data['application/vnd.francy+json']);
+              return;
+            }
+          }
+        }
+      }, {});
+    }
+  });
+
   return {
     load_ipython_extension: function() {
 
@@ -61,25 +80,6 @@ define([
 
       // create a 'display: none;' div for drawing
       d3.select('body').append('div').attr('id', 'francy-drawing-div').attr('style', 'display: none;');
-
-      // start francy
-      let francy = new FrancyBundle.Francy({
-        verbose: true,
-        appendTo: '#francy-drawing-div',
-        callbackHandler: function(json) {
-          Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, {
-            iopub: {
-              output: function(msg) {
-                if (msg.content && msg.content.data && msg.content.data['application/vnd.francy+json']) {
-                  // This will update the existing canvas!
-                  francy.render(msg.content.data['application/vnd.francy+json']);
-                  return;
-                }
-              }
-            }
-          }, {});
-        }
-      });
 
       console.log('Finished loading Module Francy Javascript.');
     }
