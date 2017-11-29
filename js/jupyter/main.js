@@ -67,24 +67,23 @@ define([
         index: 0
       });
 
-      /* Render output application/vnd.francy+json MIME Cells */
+      // Render output application/vnd.francy+json MIME Cells
       Jupyter.notebook.get_cells().forEach(cell => {
         if (cell.output_area && cell.output_area.outputs.find(output => output.data && output.data[MIME_TYPE])) {
           Jupyter.notebook.render_cell_output(cell);
         }
       });
 
-      /**
-       * Handle when an output is cleared or removed
-       */
-      function handleClearOutput(event, { cell: { output_area } }) {
+      // Handle when an output is cleared or removed
+      let handleClearOutput = function(event, { cell: { output_area } }) {
         const toinsert = output_area.element.find(`.${CLASS_NAME.split(' ')[0]}`);
         if (toinsert[0]) {
-          francy.unrender();
+          var id = d3.select(toinsert[0]).select('svg').attr('id');
+          francy.unrender(id);
         }
-      }
+      };
 
-      /* Handle when an output is cleared or removed */
+      // Handle when an output is cleared or removed
       events.on('clear_output.CodeCell', handleClearOutput);
       events.on('delete.Cell', handleClearOutput);
 

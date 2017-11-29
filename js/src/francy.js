@@ -1,4 +1,5 @@
 import JsonUtils from './util/json-utils';
+import IDUtils from './util/id-utils';
 import Canvas from './render/canvas';
 import MainMenu from './render/menu-main';
 import Graph from './render/graph';
@@ -71,18 +72,19 @@ export default class Francy {
       canvas.add(graph);
       canvas.add(chart);
       var element = canvas.render(json);
-      ALL_CANVAS[json.canvas.id] = element;
+      ALL_CANVAS[IDUtils.getCanvasId(json.canvas.id)] = element;
       return element.node();
     }
   }
 
-  unrender() {
-    ALL_CANVAS = {};
+  unrender(id) {
+    delete ALL_CANVAS[id];
   }
 }
 
 try {
   exports.Francy = window.Francy = Francy;
+  // handle events on resize
   window.onresize = function() {
     // zoom to fit all canvas on resize
     Object.values(ALL_CANVAS).forEach(function(canvas) {

@@ -36,8 +36,8 @@ export default class MainMenu extends Menu {
     var entry = menu.append('li');
     entry.append('a').html('Francy');
     var content = entry.append('ul');
-    content.append('li').append('a').on('click', () => this.logger.info('Save to PNG pressed... Not Implemented!')).attr('title', 'Save to PNG').html('Save to PNG');
     content.append('li').append('a').on('click', () => parent.zoomToFit()).attr('title', 'Zoom to Fit').html('Zoom to Fit');
+    content.append('li').append('a').on('click', () => this.logger.info('Save to PNG pressed... Not Implemented!')).attr('title', 'Save to PNG').html('Save to PNG');
     content.append('li').append('a').on('click', () => this.logger.info('About Francy pressed... Not Implemented!')).attr('title', 'About').html('About');
 
     // Traverse all menus and flatten them!
