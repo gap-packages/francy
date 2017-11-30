@@ -52,10 +52,10 @@ export default class ScatterChart extends Renderer {
       x.domain([0, tmp.length / datasetNames.length]);
     }
 
-    var scatterGroup = svg.selectAll('g.francy-scatter');
+    var scatterGroup = svg.selectAll('g.francy-scatters');
 
     if (!scatterGroup.node()) {
-      scatterGroup = svg.append('g').attr('class', 'francy-scatter');
+      scatterGroup = svg.append('g').attr('class', 'francy-scatters');
     }
 
     datasetNames.forEach(function(key, index) {
@@ -163,5 +163,7 @@ export default class ScatterChart extends Renderer {
       .attr('dy', '.35em')
       .style('text-anchor', 'end')
       .text(d => d);
+
+    return svg;
   }
 }

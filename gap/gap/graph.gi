@@ -7,24 +7,6 @@
 
 #############################################################################
 ##
-#M  TriggerEvent . . .  the various events supported to trigger a callback
-##
-BindGlobal("GraphType", rec(
-  UNDIRECTED := Objectify(NewType(GraphFamily, IsGraphType and IsGraphTypeRep), rec(value := "undirected")),
-  DIRECTED   := Objectify(NewType(GraphFamily, IsGraphType and IsGraphTypeRep), rec(value := "directed")),
-  HASSE      := Objectify(NewType(GraphFamily, IsGraphType and IsGraphTypeRep), rec(value := "hasse"))
-));
-
-#############################################################################
-##
-#M  GraphDefaults . . . . . . . . . .  the various types of shapes supported
-##
-BindGlobal("GraphDefaults", Objectify(NewType(GraphFamily, IsGraphDefaults and IsGraphDefaultsRep), rec(
-  simulation := true
-)));
-
-#############################################################################
-##
 #M  Graph( <graph type> ) . 
 ##
 InstallMethod(Graph,
@@ -125,35 +107,6 @@ function(graph, objects)
   od;
   return graph;
 end);
-
-
-#############################################################################
-##
-#M  ShapeType . . . . . . . . . . . . . the various types of shapes supported
-##
-BindGlobal("ShapeType", rec(
-  TRIANGLE := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "triangle")),
-  DIAMOND  := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "diamond")),
-  CIRCLE   := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "circle")),
-  SQUARE   := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "square")),
-  CROSS    := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "cross")),
-  STAR     := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "star")),
-  WYE      := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "wye"))
-));
-
-
-#############################################################################
-##
-#M  ShapeDefaults . . . . . . . . . . . the various types of shapes supported
-##
-BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and IsShapeDefaultsRep), rec(
-  highlight := true,
-  layer := 0,
-  size  := 10,
-  x     := 0,
-  y     := 0 
-)));
-
 
 #############################################################################
 ##

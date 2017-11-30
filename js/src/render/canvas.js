@@ -63,16 +63,16 @@ export default class Canvas extends Composite {
 
       content.transition()
         .duration(750)
-        .attr('transform', `translate(${translateX},${translateY}) scale(${scale})`)
-        .on('end', updateZoom([translateX, translateY], scale));
+        .attr('transform', `translate(${translateX},${translateY})scale(${scale},${scale})`)
+        .on('end', updateZoom(translateX, translateY, scale));
     };
+
+    function updateZoom(translateX, translateY, scale) {
+      canvas.call(zoom.transform, d3.zoomIdentity.translate(translateX, translateY).scale(scale, scale));
+    }
 
     function zoomed() {
       content.attr("transform", d3.event.transform);
-    }
-
-    function updateZoom(translate, scale) {
-      canvas.call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
     }
 
     function stopped() {

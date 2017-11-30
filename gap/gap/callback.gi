@@ -5,28 +5,6 @@
 #Y  Copyright (C) 2017 Manuel Martins
 ##
 
-
-#############################################################################
-##
-#M  CallbackDefaults . . . . . . . . . .  the various types of shapes supported
-##
-BindGlobal("ArgType", rec(
-  INTEGER := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "int")),
-  BOOLEAN := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "boolean")),
-  STRING  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "string")),
-  NUMBER  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "number"))
-));
-
-#############################################################################
-##
-#M  TriggerEvent . . .  the various events supported to trigger a callback
-##
-BindGlobal("TriggerEvent", rec(
-  DOUBLE_CLICK := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "dblclick")),
-  RIGHT_CLICK  := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "context")),
-  CLICK        := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "click"))
-));
-
 #############################################################################
 ##
 #M  Callback( <callback type>, <trigger event>,  <function>, <known args> ) . 
@@ -189,7 +167,11 @@ InstallMethod(Trigger,
 function(json)
   local callback, object, requiredArgs, arg;
   object := JsonStringToGap(json);
-  # TODO validate json object!
+  # FIXME need to validate the callback!
+  #object.func := ""; # this is filtered by the Sanitizer so better put it back for validation
+  #if not IsCallbackRep(object) then
+  #  Error("Not a valid Callback!");
+  #fi;
   callback := FrancyCallbacks!.(object!.id);
   requiredArgs := [];
   for arg in NamesOfComponents(object!.requiredArgs) do

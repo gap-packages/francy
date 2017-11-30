@@ -4,40 +4,36 @@
 ##
 #Y  Copyright (C) 2017 Manuel Martins
 ##
+#! @Chapter Francy Menus
 
 #############################################################################
 ##
-## Categories
-##
+#! @Section Categories
+#! In this section we show the Francy Menu Categories.
 
-#############################################################################
-##
-#C  IsMenu( <obj> ) . . . . . . . . . . . category of menus
-##
+#! @Description
+#! Identifies <C>Menu</C> objects.
 DeclareCategory("IsMenu", IsFrancyObject);
 
 
 #############################################################################
 ##
-## Families
-##
+#! @Section Families
+#! In this section we show the Francy Menu Families.
 
-#############################################################################
-##
-#V  MenuFamily
-##
+#! @Description
+#! This Family identifies all <C>Menu</C> objects
+#! @Returns <C>MenuFamily</C>
 BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
 
 
 #############################################################################
 ##
-## Representations
-##
+#! @Section Representations
+#! In this section we show the Francy Menu Representations.
 
-#############################################################################
-##
-#R  IsMenuRep  . . . . . . . . . . . . . . . . . . .  default representation
-##
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>Menu</C> internal representation.
 DeclareRepresentation("IsMenuRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
   ["id", "title", "callback", "menus"], IsMenu);
@@ -45,30 +41,25 @@ DeclareRepresentation("IsMenuRep",
 
 #############################################################################
 ##
-## Operations
-##
+#! @Section Operations
+#! In this section we show the Francy Menu Operations.
 
-#############################################################################
-##
-#O  Menu( <title>, <object> )
-##
-##
+#! @Description
+#! Creates a Menu for a <C>Callback</C>
+#! @Arguments IsString(title)[, IsCallback]
+#! @Returns <C>Menu</C>
 DeclareOperation("Menu", [IsString, IsCallback]);
 
-#############################################################################
-##
-#O  Add( <menu>, <direct submenu> )
-#O  Add( <menu>, <list of menu> )
-##
-## 
-##
+#! @Description
+#! Add <C>Menu</C> to a specific <C>Menu</C> creating a Submenu.
+#! The client should be able to handle this.
+#! @Arguments IsMenu, [IsMenu, List(IsMenu)]
+#! @Returns <C>Menu</C>
 DeclareOperation("Add", [IsMenu, IsMenu]);
 
-#############################################################################
-##
-#O  Remove( <menu>, <menu> )
-#O  Remove( <menu>, <list of menu> )
-##
-## 
-##
+#! @Description
+#! Remove <C>Menu</C> from a specific <C>Menu</C>.
+#! The client should be able to handle this.
+#! @Arguments IsMenu, [IsMenu, List(IsMenu)]
+#! @Returns <C>Menu</C>
 DeclareOperation("Remove", [IsMenu, IsMenu]);

@@ -4,44 +4,25 @@
 ##
 #Y  Copyright (C) 2017 Manuel Martins
 ##
-
-#############################################################################
-##
-## Globals
-##
+#! @Chapter Francy Util
 
 
 #############################################################################
 ##
-## Categories
-##
+#! @Section Operations
+#! In this section we show the Francy Util Operations.
 
+#! @Description
+#! This method will clone a FrancyObject and return a record, traversing all the
+#! components and converting when appropriate.
+#! This method removes components of type IsFunction, as they can't be
+#! converted to JSON string!
+#! @Arguments IsObject
+#! @Returns <C>rec</C>
+DeclareOperation("Sanitize", [IsObject]);
 
-#############################################################################
-##
-## Families
-##
-
-
-#############################################################################
-##
-## Representations
-##
-
-
-#############################################################################
-##
-## Operations
-##
-
-#############################################################################
-##
-#O  Clone . . . . . . . . . clones IsFrancyObjects using their representation
-##
-DeclareOperation("Clone", [IsObject]);
-
-#############################################################################
-##
-#O  MergeRecord( <obj>, <obj> )  . . . . . . . . simple properties merge
-##
+#! @Description
+#! This method will merge the properties of 2 objects into one <C>rec</C>.
+#! @Arguments IsFrancyObject, IsFrancyObject
+#! @Returns <C>rec</C>
 DeclareOperation("MergeObjects", [IsFrancyObject, IsFrancyObject]);

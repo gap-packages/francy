@@ -4,54 +4,46 @@
 ##
 #Y  Copyright (C) 2017 Manuel Martins
 ##
+#! @Chapter Francy Canvas
 
 #############################################################################
 ##
-## Categories
-##
+#! @Section Categories
+#! In this section we show the Francy Canvas Categories.
 
-#############################################################################
-##
-#C  IsCanvas( <obj> ) . . . . . . . . . . . category of graphic canvas
-##
+#! @Description
+#! Identifies <C>Canvas</C> objects.
 DeclareCategory("IsCanvas", IsFrancyObject);
 
-#############################################################################
-##
-#C  IsCanvasDefaults( <obj> ) . . . . . . . . . . . category of canvas defaults
-##
+#! @Description
+#! Identifies <C>CanvasDefaults</C> objects.
 DeclareCategory("IsCanvasDefaults", IsFrancyDefaults);
 
 
 #############################################################################
 ##
-## Families
-##
+#! @Section Families
+#! In this section we show the Francy Canvas Families.
 
-#############################################################################
-##
-#V  CanvasFamily  . . . . . . . . . . . . . . .  family of all canvas
-##
+#! @Description
+#! This Family identifies all <C>Canvas</C> objects
+#! @Returns <C>CanvasFamily</C>
 BindGlobal("CanvasFamily", NewFamily("CanvasFamily", IsCanvas));
 
 
 #############################################################################
 ##
-## Representations
-##
+#! @Section Representations
+#! In this section we show the Francy Canvas Representations.
 
-#############################################################################
-##
-#R  IsCanvasRep . . . . . . . . . . . . . . . . . . . default representation
-##
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>Canvas</C> internal representation.
 DeclareRepresentation("IsCanvasRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
   ["id", "title", "options"], IsCanvas);
 
-#############################################################################
-##
-#R  IsCanvasDefaultsRep . . . . . . . . . . . . . . . default representation
-##
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>CanvasDefaults</C> internal representation.
 DeclareRepresentation("IsCanvasDefaultsRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
   ["width", "height"], IsCanvasDefaults);
@@ -59,38 +51,48 @@ DeclareRepresentation("IsCanvasDefaultsRep",
 
 #############################################################################
 ##
-## Operations
-##
+#! @Section Operations
+#! In this section we show the Francy Canvas Operations.
 
-#############################################################################
-##
-#O  Canvas( <title>, <defaults> )
-#O  Canvas( <title> )
-##
-## Canvas represents a base element to draw graphics on. Inspired by
-## the HTML <canvas> element which is used to draw graphics, in runtime,
-## via JavaScript.
-##
+#! @Description
+#! Canvas represents a base element to draw graphics on. Inspired by
+#! the HTML canvas tag element which is used to draw graphics, in runtime,
+#! via JavaScript.
+#! Examples:
+#! <P/>
+#! Create a simple <C>Canvas</C>:
+#! @InsertChunk Example_Create_Canvas_1
+#! <P/>
+#! @Arguments IsString(title)[, IsCanvasDefaults]
+#! @Returns <C>Callback</C>
 DeclareOperation("Canvas", [IsString, IsCanvasDefaults]);
 
-#############################################################################
-##
-#O  Add( <canvas>, <francy object> )
-#O  Add( <canvas>, <list of francy object> )
-##
+#! @Description
+#! Add <C>FrancyObject</C> to a specific <C>Canvas</C>.
+#! @Arguments IsCanvas, [IsFrancyObject, List(IsFrancyObject)]
+#! @Returns <C>Canvas</C>
 DeclareOperation("Add", [IsCanvas, IsFrancyObject]);
 
-#############################################################################
-##
-#O  Remove( <canvas>, <francy object> )
-#O  Remove( <canvas>, <list of francy object> )
-##
+#! @Description
+#! Remove <C>FrancyObject</C> from a <C>Canvas</C>.
+#! @Arguments IsCanvas, [IsFrancyObject, List(IsFrancyObject)]
+#! @Returns <C>Canvas</C>
 DeclareOperation("Remove", [IsCanvas, IsFrancyObject]);
+
+#! @Description
+#! Generates the JSON representation of the canvas and children objects
+#! @Arguments IsCanvas
+#! @Returns <C>rec</C> with json representation of the canvas
+DeclareOperation("Draw", [IsCanvas]);
 
 #############################################################################
 ##
-#O  Draw( <canvas> )
-##
-## Generates the json representation of the canvas and children objects
-##
-DeclareOperation("Draw", [IsCanvas]);
+#! @Section Global
+#! In this section we show the Global Francy Canvas Records for multi purpose.
+
+#! @Description
+#! This <C>rec</C> holds all the default setting for a canvas
+BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
+  width:= "800",
+  height:= "600"
+)));

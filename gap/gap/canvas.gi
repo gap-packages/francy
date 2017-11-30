@@ -7,15 +7,6 @@
 
 #############################################################################
 ##
-#M  CanvasDefaults . . . . . . . . . .  the various properties for a canvas
-##
-BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
-  width:= "800",
-  height:= "600"
-)));
-
-#############################################################################
-##
 #M  Canvas( <title>, <options> ) . . . . . a new graphic canvas
 ##
 InstallMethod(Canvas,
@@ -131,6 +122,6 @@ function(canvas)
   local object;
   object := rec();
   object!.agent := FrancyMIMEType;
-  object!.canvas := Clone(canvas);
+  object!.canvas := Sanitize(canvas);
   return rec(json := true, source := "gap", data := rec((FrancyMIMEType) := GapToJsonString(object)));
 end);

@@ -7,34 +7,6 @@
 
 #############################################################################
 ##
-#M  TriggerEvent . . .  the various events supported to trigger a callback
-##
-BindGlobal("ChartType", rec(
-  LINE    := Objectify(NewType(ChartFamily, IsChartType and IsChartTypeRep), rec(value := "line")),
-  BAR     := Objectify(NewType(ChartFamily, IsChartType and IsChartTypeRep), rec(value := "bar")),
-  SCATTER := Objectify(NewType(ChartFamily, IsChartType and IsChartTypeRep), rec(value := "scatter"))
-));
-
-#############################################################################
-##
-#M  TriggerEvent . . .  the various events supported to trigger a callback
-##
-BindGlobal("AxisScaleType", rec(
-  LINEAR := Objectify(NewType(ChartFamily, IsAxisScaleType and IsAxisScaleTypeRep), rec(value := "linear")),
-  BAND   := Objectify(NewType(ChartFamily, IsAxisScaleType and IsAxisScaleTypeRep), rec(value := "band"))
-));
-
-#############################################################################
-##
-#M  ChartDefaults . . . . . . . . . .  the various types of shapes supported
-##
-BindGlobal("ChartDefaults", Objectify(NewType(ChartFamily, IsChartDefaults and IsChartDefaultsRep), rec(
-  labels := true,
-  legend := true
-)));
-
-#############################################################################
-##
 #M  Chart( <chart type> ) . 
 ##
 InstallMethod(Chart,

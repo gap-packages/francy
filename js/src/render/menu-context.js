@@ -41,6 +41,8 @@ export default class ContextMenu extends Menu {
     this.traverse(menu, menusIterator);
 
     d3.event.preventDefault();
+
+    return this.contextMenu;
   }
 
   unrender() {

@@ -100,7 +100,7 @@ float:none;
 width:100%
 }
 
-.francy-nodes,.francy-bars, .francy-lines, .francy-labels {
+.francy-nodes,.francy-bars,.francy-lines,.francy-labels,.francy-scatters {
 cursor:pointer
 }
 

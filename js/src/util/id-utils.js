@@ -1,6 +1,6 @@
 /**
  * This class generates ids for the html/svg elements in the dom.
- * The ids naming convention is: 'Francy[Window|Canvas|Object]-*hex uuid*'
+ * The ids naming convention is: 'Francy[Window|Canvas|Object|Menu]-*hex uuid*'
  */
 export default class IDUtils {
 

@@ -15,7 +15,7 @@ InstallMethod(PrintObj,
   [IsFrancyObject],
   0,
 function(object)
-  Print(Clone(object));
+  Print(Sanitize(object));
 end);
 
 #############################################################################
@@ -35,7 +35,7 @@ end);
 
 #############################################################################
 ##
-#M  Clone( <obj> )  . . . . . . . . simple properties clone for FrancyObjects
+#M  Sanitize( <obj> )  . . . . . . . . simple properties clone for FrancyObjects
 ##
 ## This method will clone a FrancyObject and return a record, traversing all the
 ## components and converting when appropriate.
@@ -43,22 +43,22 @@ end);
 ## This method removes components of type IsFunction, as they can't be
 ## converted to JSON string.
 ##
-InstallMethod(Clone,
+InstallMethod(Sanitize,
   "an object",
   true,
   [IsObject],
   0,
 function(object)
-  return Clone(object, rec());
+  return Sanitize(object, rec());
 end);
 
 #############################################################################
 ##
-#M  Clone( <obj> )  . . . . . . . . simple properties clone for Records
+#M  Sanitize( <obj> )  . . . . . . . . simple properties clone for Records
 ##
 ## This method will clone a FrancyObject into the given record
 ##
-InstallOtherMethod(Clone,
+InstallOtherMethod(Sanitize,
   "an object, a record",
   true,
   [IsObject,
@@ -70,7 +70,7 @@ function(object, record)
   for component in NamesOfComponents(copy) do
     if IsRecord(copy!.(component)) or IsFrancyObject(copy!.(component)) then
       record!.(component) := rec();
-      Clone(copy!.(component), record!.(component));
+      Sanitize(copy!.(component), record!.(component));
     elif not IsFunction(copy!.(component)) then
       record!.(component) := copy!.(component);
     fi;

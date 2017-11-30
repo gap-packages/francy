@@ -34,4 +34,6 @@ export default class Menu extends Renderer {
       }
     };
   }
+
+  unrender() {}
 }

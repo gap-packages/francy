@@ -51,8 +51,6 @@ export default class Graph extends Renderer {
       return;
     }
 
-    //var self = this;
-
     var tooltip = new Tooltip(this.options);
     var contextMenu = new ContextMenu(this.options);
     var callback = new Callback(this.options);
@@ -363,6 +361,10 @@ export default class Graph extends Renderer {
       }
     }
 
+    return svg;
+
   }
+
+  unrender() {}
 
 }

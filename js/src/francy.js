@@ -15,7 +15,7 @@ let ALL_CANVAS = {};
  * Francy will handle the creation of that json as long it is a valid and understandable json object to Francy.
  * @access public
  * 
- * @version 0.2.0
+ * @version 0.5.0
  * 
  * @example
  * let francy = new Francy({verbose: true, appendTo: '#div-id', callbackHandler: console.log});

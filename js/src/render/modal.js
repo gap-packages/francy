@@ -83,4 +83,6 @@ export default class Modal extends Renderer {
 
     return modal;
   }
+
+  unrender() {}
 }

@@ -4,99 +4,60 @@
 ##
 #Y  Copyright (C) 2017 Manuel Martins
 ##
-
-#############################################################################
-##
-## Globals
-##
-
-#############################################################################
-##
-#V FrancyMIMEType . . . Contains the MIME Type defined for francy application
-##
 #! @Chapter Francy Core
-#! @Section Global Types
-#! In this section we show the core Francy types
+#!
+#! Francy is responsible for generating JSON metadata which allows to add visual 
+#! representation using external libraries such as Francy-JS.
+#! <P/>
+
+#############################################################################
+##
+#! @Section Categories
+#! In this section we show the Francy Core Categories.
+
 #! @Description
-#! Specifies the content-type mime of this package. 
-#! A MIME type stands for "Multipurpose Internet Mail Extensions" and it's a standard to identify a document.
-#! @Returns application/vnd.francy+json
-BindGlobal("FrancyMIMEType", "application/vnd.francy+json");
-
-#############################################################################
-##
-## Categories
-##
-
-#############################################################################
-##
-#C  IsGraphicObject( <obj> ) . . . . . . . . . . category of graphic objects
-##
-##  This is the category in which all graphic objects are.
-##
+#! Identifies all <C>Objects</C> in Francy.
 DeclareCategory("IsFrancyObject", IsObject);
 
-#############################################################################
-##
-#C  IsFrancyDefaults( <obj> ) . . . . . . . . . . . category of defaults record
-##
+#! @Description
+#! Identifies all Default records in Francy.
 DeclareCategory("IsFrancyDefaults", IsFrancyObject);
 
-#############################################################################
-##
-#C  IsFrancyType( <obj> ) . . . . . . . . . . . category of types
-##
+#! @Description
+#! Identifies all Type records in Francy.
 DeclareCategory("IsFrancyType", IsFrancyObject);
 
-#############################################################################
-##
-#C  IsFrancy( <obj> ) . . . . . . . . . . . category of types
-##
-DeclareCategory("IsFrancy", IsFrancyObject);
-
 
 #############################################################################
 ##
-## Families
-##
+#! @Section Families
+#! In this section we show the Francy Core Families.
 
-#############################################################################
-##
-#V  CanvasFamily  . . . . . . . . . . . . . . .  family of all canvas
-##
-#! @Chapter Francy Core
-#! @Section Global Families
-#! In this section we show the core Francy Families for multi purpose.
 #! @Description
 #! This Family identifies all objects of this package 
-#! @Returns <C>FrancyFamily<C> of 
+#! @Returns <C>FrancyFamily<C>
 BindGlobal("FrancyFamily", NewFamily("FrancyFamily", IsFrancyObject));
 
 
 #############################################################################
 ##
-## Representations
-##
+#! @Section Representations
+#! In this section we show the Francy Core Representations.
 
-#############################################################################
-##
-#R  IsFrancyTypeRep . . . . . . . . . . . . . . . . . default representation
-##
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>FrancyType</C> internal representation.
 DeclareRepresentation("IsFrancyTypeRep", 
   IsComponentObjectRep and IsAttributeStoringRep, 
   ["value"], IsFrancyType);
 
 #############################################################################
 ##
-#R  IsFrancyRep . . . . . . . . . . . . . . . . . default representation
-##
-DeclareRepresentation("IsFrancyRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["agent"], IsFrancyObject);
+#! @Section Global
+#! In this section we show the Francy Core Types
 
-
-#############################################################################
-##
-## Operations
-##
+#! @Description
+#! Specifies the content-type mime of this package. 
+#! A MIME type stands for "Multipurpose Internet Mail Extensions" and it's a standard to identify a document.
+#! @Returns application/vnd.francy+json
+BindGlobal("FrancyMIMEType", "application/vnd.francy+json");
 

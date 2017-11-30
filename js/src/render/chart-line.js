@@ -68,8 +68,7 @@ export default class LineChart extends Renderer {
       line.exit().style("fill-opacity", 1).transition(t).style("fill-opacity", 1e-6).remove();
 
       // append the rectangles for the bar chart
-      line
-        .enter()
+      line.enter()
         .append('path')
         .style('stroke', () => Chart.colors(index * 5))
         .style('stroke-width', '5px')
@@ -167,5 +166,6 @@ export default class LineChart extends Renderer {
       .style('text-anchor', 'end')
       .text(d => d);
 
+    return svg;
   }
 }
