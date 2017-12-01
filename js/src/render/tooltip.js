@@ -24,8 +24,6 @@ export default class Tooltip extends Renderer {
 
     this.tooltip.attr('transform', `translate(${d3.event.offsetX + 5},${d3.event.offsetY + 5})`);
 
-    //d3.select(d3.event.srcElement).attr('transform')
-
     // check if it exists already
     if (this.tooltip.selectAll('*').node()) {
       return;

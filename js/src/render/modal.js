@@ -18,9 +18,7 @@ export default class Modal extends Renderer {
     // we want to overlay everything, hence 'body' must be used
     var overlay = d3.select('body').append('div')
       .attr('class', 'francy-overlay');
-    var holder = d3.select('body').append('div')
-      .attr('class', 'francy');
-    var modal = holder.append('div')
+    var modal = d3.select('body').append('div')
       .attr('id', modalId)
       .attr('class', 'francy-modal');
 
@@ -47,6 +45,8 @@ export default class Modal extends Renderer {
       row.append('span').attr('class', 'validity');
     }
 
+    content.selectAll('.francy-arg').node().focus();
+
     var footer = form.append('div').attr('class', 'francy-modal-footer');
 
     footer.append('button').text('Ok').on('click', function() {
@@ -54,7 +54,6 @@ export default class Modal extends Renderer {
         self.options.callbackHandler(json.callback);
         overlay.remove();
         modal.remove();
-        holder.remove();
         event.preventDefault();
       }
       return false;
@@ -63,7 +62,6 @@ export default class Modal extends Renderer {
       event.preventDefault();
       overlay.remove();
       modal.remove();
-      holder.remove();
       return false;
     });
 

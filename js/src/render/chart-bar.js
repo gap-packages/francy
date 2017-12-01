@@ -35,8 +35,6 @@ export default class BarChart extends Renderer {
     width = width - margin.left - margin.right;
     height = height - margin.top - margin.bottom;
 
-    var t = d3.transition().duration(500);
-
     // set the ranges
     var x = d3.scaleBand().range([0, width]).padding(0.1).domain(axis.x.domain);
     var y = d3.scaleLinear().range([height, 0]).domain(axis.y.domain);
@@ -62,7 +60,7 @@ export default class BarChart extends Renderer {
     datasetNames.forEach(function(key, index) {
       var bar = barsGroup.selectAll(`.francy-bar${index}`).data(datasets[key]);
 
-      bar.exit().style("fill-opacity", 1).transition(t).style("fill-opacity", 1e-6).remove();
+      bar.exit().remove();
 
       // append the rectangles for the bar chart
       bar.enter()
@@ -82,9 +80,7 @@ export default class BarChart extends Renderer {
           d3.select(this).transition()
             .duration(250).style("fill-opacity", 1);
           tooltip.unrender();
-        })
-        .style("fill-opacity", 1e-6)
-        .transition(t).style("fill-opacity", 1);
+        });
 
       bar.merge(bar);
     });
@@ -141,7 +137,7 @@ export default class BarChart extends Renderer {
 
     var legend = legendGroup.selectAll('g').data(datasetNames.slice());
 
-    legend.exit().transition(t).remove();
+    legend.exit().remove();
 
     legend = legend.enter()
       .append('g')

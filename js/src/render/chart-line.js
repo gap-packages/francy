@@ -35,8 +35,6 @@ export default class LineChart extends Renderer {
     width = width - margin.left - margin.right;
     height = height - margin.top - margin.bottom;
 
-    var t = d3.transition().duration(500);
-
     // set the ranges
     var x = d3.scaleLinear().range([0, width]).domain(axis.x.domain);
     var y = d3.scaleLinear().range([height, 0]).domain(axis.y.domain);
@@ -65,7 +63,7 @@ export default class LineChart extends Renderer {
 
       var line = linesGroup.selectAll(`.line${index}`).data([datasets[key]]);
 
-      line.exit().style("fill-opacity", 1).transition(t).style("fill-opacity", 1e-6).remove();
+      line.exit().remove();
 
       // append the rectangles for the bar chart
       line.enter()
@@ -87,9 +85,7 @@ export default class LineChart extends Renderer {
             .style("stroke-opacity", 1)
             .style('stroke-width', '5px');
           tooltip.unrender();
-        })
-        .style("fill-opacity", 1e-6)
-        .transition(t).style("fill-opacity", 1);
+        });
 
       line.merge(line);
     });
@@ -146,7 +142,7 @@ export default class LineChart extends Renderer {
 
     var legend = legendGroup.selectAll('g').data(datasetNames.slice());
 
-    legend.exit().transition(t).remove();
+    legend.exit().remove();
 
     legend = legend.enter()
       .append('g')

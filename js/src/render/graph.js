@@ -64,8 +64,6 @@ export default class Graph extends Renderer {
       width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
       height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
 
-    var t = d3.transition().duration(500);
-
     //Generic gravity for the X position
     var forceX = d3.forceX(-500).strength(0.35);
 
@@ -97,7 +95,7 @@ export default class Graph extends Renderer {
 
     var link = linkGroup.selectAll('line.francy-link').data(canvasLinks);
 
-    link.exit().transition(t).remove();
+    link.exit().remove();
 
     link = link.enter().append('line')
       .attr('class', 'francy-link')
@@ -131,7 +129,7 @@ export default class Graph extends Renderer {
 
     var node = nodeGroup.selectAll('path.francy-node').data(canvasNodes);
 
-    node.exit().transition(t).remove();
+    node.exit().remove();
 
     node = node.enter().append('path')
       .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
@@ -177,7 +175,7 @@ export default class Graph extends Renderer {
 
     var label = labelGroup.selectAll('text').data(canvasNodes);
 
-    label.exit().transition(t).remove();
+    label.exit().remove();
 
     label = label.enter().append('text')
       .attr('class', 'francy-label')
@@ -222,7 +220,7 @@ export default class Graph extends Renderer {
     var legend = legendGroup.selectAll('g')
       .data(d3.map(canvasNodes, d => d.layer).values().sort((a, b) => a.layer > b.layer), d => d.id);
 
-    legend.exit().transition(t).remove();
+    legend.exit().remove();
 
     legend = legend.enter()
       .append('g')

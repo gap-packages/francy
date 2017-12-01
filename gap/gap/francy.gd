@@ -6,9 +6,11 @@
 ##
 #! @Chapter Francy Core
 #!
-#! Francy is responsible for generating JSON metadata which allows to add visual 
-#! representation using external libraries such as Francy-JS.
+#! Francy is responsible for generating JSON metadata which allows external
+#! tools / libraries / frameworks to add a visual representation. See Francy-JS.
 #! <P/>
+#! Please see Francy-JS for client implementation.
+
 
 #############################################################################
 ##
@@ -57,7 +59,7 @@ DeclareRepresentation("IsFrancyTypeRep",
 
 #! @Description
 #! Specifies the content-type mime of this package. 
-#! A MIME type stands for "Multipurpose Internet Mail Extensions" and it's a standard to identify a document.
+#! A MIME type stands for "Multipurpose Internet Mail Extensions" and it's a 
+#! standard to identify a document on the internet.
 #! @Returns application/vnd.francy+json
 BindGlobal("FrancyMIMEType", "application/vnd.francy+json");
-

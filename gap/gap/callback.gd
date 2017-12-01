@@ -6,13 +6,14 @@
 ##
 #! @Chapter Francy Callbacks
 #!
-#! <C>Callbacks</C> are objects that hold functions, arguments 
+#! <C>Callbacks</C> are objects that hold a function, a list of arguments 
 #! and a trigger event. <C>Callbacks</C> are used to execute GAP code 
 #! from a remote client using the <C>Trigger</C> Operation.
 #! <P/>
-#! <C>Callbacks</C> can be added to <C>Menus</C> and/or <C>Shapes</C>. 
+#! <C>Callbacks</C> can be added directly to <C>Menus</C> and/or <C>Shapes</C>.
 #! <P/>
 #! Please see Francy-JS for client implementation.
+
 
 #############################################################################
 ##

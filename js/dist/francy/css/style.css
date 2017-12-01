@@ -41,7 +41,8 @@ padding-left:5px!important
 
 .francy-main-menu li ul {
 box-shadow:5px 5px 5px grey;
-min-width: 120px
+min-width: 120px;
+z-index: 500;
 }
 
 .francy-main-menu li a {
@@ -121,7 +122,7 @@ min-height:100%;
 width:100%;
 min-width:100%;
 background-color:rgba(0,0,0,0.5);
-z-index:10
+z-index:750
 }
 
 .francy-modal {
@@ -130,10 +131,11 @@ top:50%;
 left:50%;
 bottom:inherit;
 right:inherit;
-z-index:11;
+z-index:1000;
 background:#fff;
-box-shadow:5px 5px 5px grey;
-margin-left:-150px;
+box-shadow:5px 5px 5px black;
+margin-left:-182px;
+margin-top:-102px;
 padding:10px;
 display:block
 }
@@ -195,7 +197,8 @@ text-align:justify
 }
 
 .francy-title {
-font-weight:700
+font-weight:700;
+text-overflow:ellipsis;
 }
 
 .francy-context-menu {
@@ -203,7 +206,7 @@ background:#f6f6f6;
 color:#333;
 min-width:150px;
 border:1px solid #cfcfcf;
-z-index:1200;
+z-index:500;
 box-shadow:5px 5px 5px grey
 }
 
@@ -260,4 +263,10 @@ font-weight:700
 
 .francy-table-body {
 display:table-row-group
+}
+
+@media only screen and (max-width: 600px) {
+  .francy-main-menu .francy-title {
+    display: none;
+  }
 }

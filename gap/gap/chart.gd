@@ -5,7 +5,12 @@
 #Y  Copyright (C) 2017 Manuel Martins
 ##
 #! @Chapter Francy Charts
-#!
+#! It is possible to build <C>Charts</C> with simple <C>Datasets</C>.
+#! <P/>
+#! Currently, Francy, supports Bar, Line and Scatter Charts.
+#! <P/>
+#! Please see Francy-JS for client implementation.#
+
 
 #############################################################################
 ##

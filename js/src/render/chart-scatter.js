@@ -35,8 +35,6 @@ export default class ScatterChart extends Renderer {
     width = width - margin.left - margin.right;
     height = height - margin.top - margin.bottom;
 
-    var t = d3.transition().duration(500);
-
     // set the ranges
     var x = d3.scaleLinear().range([0, width]).domain(axis.x.domain);
     var y = d3.scaleLinear().range([height, 0]).domain(axis.y.domain);
@@ -61,7 +59,7 @@ export default class ScatterChart extends Renderer {
     datasetNames.forEach(function(key, index) {
       var scatter = scatterGroup.selectAll(`.scatter${index}`).data(datasets[key]);
 
-      scatter.exit().style("fill-opacity", 1).transition(t).style("fill-opacity", 1e-6).remove();
+      scatter.exit().remove();
 
       // append the rectangles for the bar chart
       scatter
@@ -85,9 +83,7 @@ export default class ScatterChart extends Renderer {
             .style("fill-opacity", 1)
             .attr('r', 5);
           tooltip.unrender();
-        })
-        .style("fill-opacity", 1e-6)
-        .transition(t).style("fill-opacity", 1);
+        });
 
       scatter.merge(scatter);
     });
@@ -144,7 +140,7 @@ export default class ScatterChart extends Renderer {
 
     var legend = legendGroup.selectAll('g').data(datasetNames.slice());
 
-    legend.exit().transition(t).remove();
+    legend.exit().remove();
 
     legend = legend.enter()
       .append('g')

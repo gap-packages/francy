@@ -4,7 +4,7 @@
 
 chart:=Chart(ChartType.BAR);
 chart!.axis!.x!.title := "X Axis";
-chart!.axis!.x!.domain := ["domain1", "domain2", "domain3", "domain4", "domain5"];
+chart!.axis!.x!.domain := ["domain1", "domain2", "domain3", "domain4", "domain5"]; # default []
 chart!.axis!.y!.title := "Y Axis";
 data1 := Dataset("data1", [100,20,30,47,90]);
 data2 := Dataset("data2", [51,60,72,38,97]);
@@ -20,8 +20,8 @@ Add(chart, [data1, data2, data3]);
 #! @BeginExample
 
 chart:=Chart(ChartType.LINE);
-chart!.axis!.x!.title := "X Axis";
-chart!.axis!.y!.title := "Y Axis";
+chart!.axis!.x!.title := "X Axis"; # default ""
+chart!.axis!.y!.title := "Y Axis"; # default ""
 data1 := Dataset("data1", [100,20,30,47,90]);
 Add(chart, data1);
 

@@ -47,7 +47,7 @@ export default class Canvas extends Composite {
       var bounds = content.node().getBBox();
 
       var fullWidth = canvas.node().clientWidth,
-        fullHeight = canvas.node().clientHeight;
+        fullHeight = canvas.node().clientHeight + 40; //well, the menu is part of the canvas
 
       var width = bounds.width,
         height = bounds.height;
@@ -62,9 +62,9 @@ export default class Canvas extends Composite {
         translateY = fullHeight / 2 - scale * midY;
 
       content.transition()
-        .duration(750)
+        .duration(2000)
         .attr('transform', `translate(${translateX},${translateY})scale(${scale},${scale})`)
-        .on('end', updateZoom(translateX, translateY, scale));
+        .on('end', () => updateZoom(translateX, translateY, scale));
     };
 
     function updateZoom(translateX, translateY, scale) {

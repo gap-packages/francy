@@ -5,6 +5,8 @@
 #Y  Copyright (C) 2017 Manuel Martins
 ##
 #! @Chapter Francy Menus
+#! Please see Francy-JS for client implementation.
+
 
 #############################################################################
 ##

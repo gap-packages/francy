@@ -5,7 +5,7 @@
     "width": "800",
     "height": "600",
     "id": "BADFB1FBB15143125C5771BF1E49AAAC",
-    "title": "Add circles on demand",
+    "title": "Add circles on demand and a bigger title just because",
     "menus": {
       "366688A254054F9AFC43A6EA5008CAD2": {
         "id": "366688A254054F9AFC43A6EA5008CAD2",
@@ -19,6 +19,12 @@
             "8F794C1FA828467404CA41218DCFC68D": {
               "type": "number",
               "id": "8F794C1FA828467404CA41218DCFC68D",
+              "title": "How many Circles?",
+              "value": ""
+            },
+            "8F794C1FA828467404CA41218DCFC68E": {
+              "type": "number",
+              "id": "8F794C1FA828467404CA41218DCFC68E",
               "title": "How many Circles?",
               "value": ""
             }

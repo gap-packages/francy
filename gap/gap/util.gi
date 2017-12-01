@@ -65,19 +65,45 @@ InstallOtherMethod(Sanitize,
    IsRecord],
   0,
 function(object, record)
-  local component, copy;
+  local component, copy, tmp;
   copy := StructuralCopy(object);
   for component in NamesOfComponents(copy) do
     if IsRecord(copy!.(component)) or IsFrancyObject(copy!.(component)) then
       record!.(component) := rec();
       Sanitize(copy!.(component), record!.(component));
-    elif not IsFunction(copy!.(component)) then
+    elif IsList(copy!.(component)) and not IsString(copy!.(component)) then
+      record!.(component) := [];
+      Sanitize(copy!.(component), record!.(component));
+    elif IsFunction(copy!.(component)) then
+      record!.(component) := NameFunction(copy!.(component));
+    else
       record!.(component) := copy!.(component);
     fi;
   od;
   return record;
 end);
 
+#############################################################################
+##
+#M  Sanitize( <obj> )  . . . . . . . . simple properties clone for Records
+##
+## This method will clone a FrancyObject into the given record
+##
+InstallOtherMethod(Sanitize,
+  "a list, another list",
+  true,
+  [IsList,
+   IsList],
+  0,
+function(list, result)
+  local item;
+  for item in list do
+    # well, everything that is important for the client is in records
+    # everything inside arrays we just convert to string
+    Add(result, String(item));
+  od;
+  return result;
+end);
 #############################################################################
 ##
 #O  MergeRecord( <obj>, <obj> )  . . . . . . . . simple properties merge

@@ -6,6 +6,8 @@
 ##
 #! @Chapter Francy Graphs
 #!
+#! Please see Francy-JS for client implementation.
+
 
 #############################################################################
 ##
@@ -179,19 +181,17 @@ DeclareOperation("Add", [IsShape, IsCallback]);
 DeclareOperation("Remove", [IsShape, IsCallback]);
 
 #! @Description
-#! Creates a link between the objects. This allow to produce graphics
-#! representing connected objects.
+#! Creates a <C>Link</C> between the two <C>Shape</C>.
 #! <P/>
 #! @Arguments IsShape IsShape
 #! @Returns <C>Link</C>
 DeclareOperation("Link", [IsShape, IsShape]);
 
 #! @Description
-#! Creates a link between the objects. This allow to produce graphics
-#! representing connected objects.
+#! Creates a <C>Link</C> between the <C>Shape</C> of the first list and the second list.
 #! <P/>
 #! @Arguments List(IsShape), List(IsShape)
-#! @Returns <C>Link</C>
+#! @Returns <C>List(Link)</C>
 DeclareOperation("Links", [IsList, IsList]);
 
 #############################################################################
@@ -212,7 +212,8 @@ BindGlobal("GraphType", rec(
 #! The default configuration for a graph.
 #! @Returns <C>rec</C> of <C>GraphDefaults</C>
 BindGlobal("GraphDefaults", Objectify(NewType(GraphFamily, IsGraphDefaults and IsGraphDefaultsRep), rec(
-  simulation := true
+  simulation := true,
+  forces     := true
 )));
 
 #! @Description

@@ -5,6 +5,10 @@
 #Y  Copyright (C) 2017 Manuel Martins
 ##
 #! @Chapter Francy Canvas
+#! A <C>Canvas</C> is an area where the graphics representation of Francy live.
+#! <P/>
+#! Please see Francy-JS for client implementation.
+
 
 #############################################################################
 ##
@@ -40,13 +44,13 @@ BindGlobal("CanvasFamily", NewFamily("CanvasFamily", IsCanvas));
 #! Checks whether an <C>Object</C> has a <C>Canvas</C> internal representation.
 DeclareRepresentation("IsCanvasRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
-  ["id", "title", "options"], IsCanvas);
+  ["id", "title", "options", "width", "height", "zoomToFit"], IsCanvas);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>CanvasDefaults</C> internal representation.
 DeclareRepresentation("IsCanvasDefaultsRep",
   IsComponentObjectRep and IsAttributeStoringRep, 
-  ["width", "height"], IsCanvasDefaults);
+  ["width", "height", "zoomToFit"], IsCanvasDefaults);
 
 
 #############################################################################
@@ -93,6 +97,7 @@ DeclareOperation("Draw", [IsCanvas]);
 #! @Description
 #! This <C>rec</C> holds all the default setting for a canvas
 BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
-  width:= "800",
-  height:= "600"
+  width     := "800",
+  height    := "600",
+  zoomToFit := true
 )));
