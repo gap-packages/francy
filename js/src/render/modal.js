@@ -47,8 +47,6 @@ export default class Modal extends Renderer {
       row.append('span').attr('class', 'validity');
     }
 
-    content.selectAll('.francy-arg').node().focus();
-
     var footer = form.append('div').attr('class', 'francy-modal-footer');
 
     footer.append('button').text('Ok').on('click', function() {
@@ -71,6 +69,7 @@ export default class Modal extends Renderer {
 
     // disable keyboard shortcuts when using this modal in Jupyter
     try {
+      Jupyter.keyboard_manager.register_events('.francy');
       Jupyter.keyboard_manager.register_events('.francy-arg');
       Jupyter.keyboard_manager.register_events('.francy-overlay');
       Jupyter.keyboard_manager.register_events('.francy-modal');
@@ -80,6 +79,8 @@ export default class Modal extends Renderer {
         self.logger.debug('It seems we\'re not running on Jupyter...', e);
       }
     }
+
+    content.selectAll('.francy-arg').node().focus();
 
     this.logger.debug(`Callback Modal updated [${modalId}]...`);
 
