@@ -3,7 +3,6 @@ import Composite from './composite';
 
 /* global d3 */
 
-//FIXME implement propper zoom to fit, see https://bl.ocks.org/iamkevinv/0a24e9126cd2fa6b283c6f2d774b69a2
 export default class Canvas extends Composite {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
@@ -12,7 +11,7 @@ export default class Canvas extends Composite {
 
   render(json) {
     var parent = d3.select(this.options.appendTo);
-    //var active = d3.select(null);
+
     var canvasId = IDUtils.getCanvasId(json.canvas.id);
     var canvas = d3.select(`svg#${canvasId}`);
     // check if the canvas is already present
@@ -31,7 +30,7 @@ export default class Canvas extends Composite {
 
     canvas.attr('width', json.canvas.width).attr('height', json.canvas.height);
 
-    var zoom = d3.zoom(); //.scaleExtent([1, 8]);
+    var zoom = d3.zoom();
 
     var content = canvas.select('g.francy-content');
 
@@ -47,7 +46,7 @@ export default class Canvas extends Composite {
       var bounds = content.node().getBBox();
 
       var fullWidth = canvas.node().clientWidth,
-        fullHeight = canvas.node().clientHeight + 40; //well, the menu is part of the canvas
+        fullHeight = canvas.node().clientHeight + 45; //well, the menu is part of the canvas +-40px
 
       var width = bounds.width,
         height = bounds.height;
@@ -85,5 +84,7 @@ export default class Canvas extends Composite {
 
     return canvas;
   }
+
+  unrender() {}
 
 }

@@ -16,11 +16,11 @@ define([
   window.d3 = d3;
 
   let loadCss = function loadCss(name) {
-    let link = document.createElement("link");
-    link.type = "text/css";
-    link.rel = "stylesheet";
+    let link = document.createElement('link');
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
     link.href = require.toUrl(name);
-    document.getElementsByTagName("head")[0].appendChild(link);
+    document.getElementsByTagName('head')[0].appendChild(link);
   };
 
   loadCss('./../css/style.css');
@@ -33,9 +33,9 @@ define([
       Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, {
         iopub: {
           output: function(msg) {
-            if (msg.content && msg.content.data && msg.content.data['application/vnd.francy+json']) {
+            if (msg.content && msg.content.data && msg.content.data[MIME_TYPE]) {
               // This will update the existing canvas!
-              francy.render(msg.content.data['application/vnd.francy+json']);
+              francy.render(msg.content.data[MIME_TYPE]);
               return;
             }
           }
@@ -63,7 +63,7 @@ define([
 
       // Register mime type with the output area
       outputHandler.OutputArea.prototype.register_mime_type(MIME_TYPE, appendMime, {
-        safe: true,
+        safe: true, // in order to render the objects on notebook load!
         index: 0
       });
 
@@ -78,7 +78,10 @@ define([
       let handleClearOutput = function(event, { cell: { output_area } }) {
         const toinsert = output_area.element.find(`.${CLASS_NAME.split(' ')[0]}`);
         if (toinsert[0]) {
-          var id = d3.select(toinsert[0]).select('svg').attr('id');
+          // The svg might be gone to another cell (!?)
+          // well, when Draw is invoked for a canvas inside another cell it moves the svg to another output cell!
+          var svg = d3.select(toinsert[0]).select('svg');
+          var id = svg ? svg.attr('id') : undefined;
           francy.unrender(id);
         }
       };

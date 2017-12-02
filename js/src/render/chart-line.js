@@ -166,4 +166,6 @@ export default class LineChart extends Renderer {
 
     return svg;
   }
+
+  unrender() {}
 }

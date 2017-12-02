@@ -1,21 +1,15 @@
-import Logger from '../util/logger';
-import Modal from './modal';
+import Base from './base';
+import RequiredArgsModal from './modal-required';
 
-export default class CallbackHandler {
+export default class CallbackHandler extends Base {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
-    this.options = {
-      verbose: verbose,
-      appendTo: appendTo,
-      callbackHandler: callbackHandler
-    };
-    this.logger = new Logger({ verbose: verbose });
+    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   execute(config) {
     if (Object.keys(config.callback.requiredArgs).length) {
-      var modal = new Modal(this.options);
-      return modal.render(config);
+      return new RequiredArgsModal(this.options).render(config);
     }
     else {
       return this.options.callbackHandler(config.callback);

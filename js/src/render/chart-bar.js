@@ -161,4 +161,6 @@ export default class BarChart extends Renderer {
 
     return svg;
   }
+
+  unrender() {}
 }

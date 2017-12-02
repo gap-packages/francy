@@ -20,8 +20,7 @@ export default class MainMenu extends Menu {
       // create a div element detached from the DOM!
       this.logger.debug(`Creating Main Menu [${menuId}]...`);
       menu = parent.append('foreignObject').attr('transform', `translate(0,0)`)
-        .classed('francy-main-menu-holder', true).attr('width', '100%')
-        .attr('id', menuId);
+        .attr('class', 'francy-main-menu-holder').attr('id', menuId);
     }
 
     // force rebuild menu again
@@ -48,5 +47,7 @@ export default class MainMenu extends Menu {
 
     return menu;
   }
+
+  unrender() {}
 
 }

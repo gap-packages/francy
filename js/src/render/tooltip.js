@@ -6,19 +6,19 @@ export default class Tooltip extends Renderer {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
-    this.tooltip = this.SVGParent.select('foreignObject.tooltip-holder');
+    this.tooltip = this.SVGParent.select('foreignObject.francy-tooltip-holder');
     // check if the window is already present
     if (!this.tooltip.node()) {
       this.tooltip = this.SVGParent.append('foreignObject')
-        .classed('tooltip-holder', true).style('display', 'none');
+        .attr('class', 'francy-tooltip-holder');
     }
   }
 
   render(object) {
 
-    // just ignore rendering if no menus are present
+    // just ignore rendering if no info are present
     if (!object || !Object.values(object).length) {
-      this.logger.debug('Nothing to render here... continuing...');
+      //this.logger.debug('Nothing to render here... continuing...');
       return;
     }
 
@@ -43,6 +43,6 @@ export default class Tooltip extends Renderer {
 
   unrender() {
     this.tooltip.selectAll('*').remove();
-    this.tooltip.style('display', 'none');
+    this.tooltip.style('display', null);
   }
 }

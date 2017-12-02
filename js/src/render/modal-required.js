@@ -3,7 +3,7 @@ import Renderer from './renderer';
 
 /* global d3, Jupyter */
 
-export default class Modal extends Renderer {
+export default class RequiredArgsModal extends Renderer {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
@@ -13,6 +13,7 @@ export default class Modal extends Renderer {
     var self = this;
 
     var modalId = IDUtils.getWindowId(json.callback.id);
+
     this.logger.debug(`Creating Callback Modal [${modalId}]...`);
 
     // we want to overlay everything, hence 'body' must be used
@@ -28,14 +29,17 @@ export default class Modal extends Renderer {
 
     var header = form.append('div').attr('class', 'francy-modal-header');
 
-    header.append('span').html('Required arguments for&nbsp;').append('span').attr('style', 'font-weight: bold;').text(json.title);
+    var headerTitle = header.append('span').html('Required arguments&nbsp;');
+    if (json.title) {
+      headerTitle.append('span').attr('style', 'font-weight: bold;').text(`for ${json.title}`);
+    }
 
     var content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
 
     for (var arg of Object.values(json.callback.requiredArgs)) {
       var row = content.append('div').attr('class', 'francy-table-row');
       row.append('div').attr('class', 'francy-table-cell').append('label').attr('for', arg.id).text(arg.title);
-      row.append('div').attr('class', 'francy-table-cell').append('input').attr('id', arg.id).attr('class', 'francy-arg')
+      var input = row.append('div').attr('class', 'francy-table-cell').append('input').attr('id', arg.id).attr('class', 'francy-arg')
         .attr('required', '')
         .attr('name', arg.id)
         .attr('type', arg.type)
@@ -44,6 +48,15 @@ export default class Modal extends Renderer {
         .on('input', this.onchange)
         .on('keyup', this.onchange)
         .on('paste', this.onchange);
+      if (arg.type === 'checkbox') {
+        // well, a checkbox works this way so we need to initialize 
+        // the value to false and update the value based on the checked 
+        // property that triggers the onchange event
+        arg.value = arg.value || false;
+        input.attr('required', null)
+          .attr('value', arg.value)
+          .on('change', function() { json.callback.requiredArgs[this.id].value = this.value = this.checked; });
+      }
       row.append('span').attr('class', 'validity');
     }
 

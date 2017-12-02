@@ -54,7 +54,8 @@ export default class Francy {
   }
 
   /**
-   * Main entry point. Calling handle passing a json representation string will trigger the drawing of a json object.
+   * Main entry point. Calling render passing a json representation string will 
+   * trigger the drawing of a json object.
    * @param {String} input a json string/object render
    * @returns {Object} the element created
    */
@@ -90,7 +91,7 @@ try {
     Object.values(ALL_CANVAS).forEach(function(canvas) {
       canvas.zoomToFit();
     });
-    // adjust top menu on resize
+    // adjust top menus on resize
     d3.selectAll('foreignObject.francy-main-menu-holder').attr('width', '100%');
   };
 }

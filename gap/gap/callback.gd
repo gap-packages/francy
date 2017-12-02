@@ -171,9 +171,8 @@ BindGlobal("FrancyCallbacks", rec());
 #! The available <C>ArgType</C> specify the type of argument a <C>Callback</C> is expecting.
 #! @Returns <C>rec</C> of <C>ArgType</C>: <C>ArgType.INTEGER</C>,<C>ArgType.BOOLEAN</C>,<C>ArgType.STRING</C>,<C>ArgType.NUMBER</C>
 BindGlobal("ArgType", rec(
-  INTEGER := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "int")),
-  BOOLEAN := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "boolean")),
-  STRING  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "string")),
+  BOOLEAN := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "checkbox")),
+  STRING  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "text")),
   NUMBER  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "number"))
 ));
 

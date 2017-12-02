@@ -121,12 +121,12 @@ InstallMethod(Shape,
   0,
 function(shapeType, title, options)
   return MergeObjects(Objectify(NewType(ShapeFamily, IsShape and IsShapeRep), rec(
-    id       := HexStringUUID(RandomUUID()),
-    type     := shapeType!.value,
-    title    := title,
+    id        := HexStringUUID(RandomUUID()),
+    type      := shapeType!.value,
+    title     := title,
     callbacks := rec(),
-    menus    := rec(),
-    info     := rec()
+    menus     := rec(),
+    info      := rec()
   )), options);
 end);
 

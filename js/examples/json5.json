@@ -23,7 +23,7 @@
               "value": ""
             },
             "8F794C1FA828467404CA41218DCFC68E": {
-              "type": "number",
+              "type": "checkbox",
               "id": "8F794C1FA828467404CA41218DCFC68E",
               "title": "How many Circles?",
               "value": ""

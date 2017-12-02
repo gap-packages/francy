@@ -14,7 +14,7 @@
 
 #! @Description
 #! This method will clone a <C>Object</C> and return a record, traversing all the
-#! components and converting when appropriate.
+#! components and sanitizing when appropriate.
 #! This method removes components of type IsFunction, as they can't be
 #! converted to a JSON string!
 #! @Arguments IsObject

@@ -73,13 +73,13 @@ BindGlobal("LinkFamily", NewFamily("LinkFamily", IsLink));
 #! Checks whether an <C>Object</C> has a <C>Graph</C> internal representation.
 DeclareRepresentation("IsGraphRep",
   IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "type", "title", "options"], IsGraph);
+  ["id", "type", "nodes", "links"], IsGraph);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>GraphDefaults</C> internal representation.
 DeclareRepresentation("IsGraphDefaultsRep",
   IsComponentObjectRep and IsAttributeStoringRep,
-  ["layer", "x", "y", "size", "highlight"], IsGraphDefaults);
+  ["simulation", "forces"], IsGraphDefaults);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>GraphType</C> internal representation.
@@ -91,7 +91,7 @@ DeclareRepresentation("IsGraphTypeRep",
 #! Checks whether an <C>Object</C> has a <C>Shape</C> internal representation.
 DeclareRepresentation("IsShapeRep",
   IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "type", "title", "options"], IsShape);
+  ["id", "type", "title", "menus", "callbacks", "info"], IsShape);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>ShapeDeafults</C> internal representation.
@@ -234,8 +234,8 @@ BindGlobal("ShapeType", rec(
 #! @Returns <C>rec</C> of <C>ShapeDefaults</C>
 BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and IsShapeDefaultsRep), rec(
   highlight := true,
-  layer := 0,
-  size  := 10,
-  x     := 0,
-  y     := 0 
+  layer     := 0,
+  size      := 10,
+  x         := 0,
+  y         := 0 
 )));

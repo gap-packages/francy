@@ -164,4 +164,6 @@ export default class ScatterChart extends Renderer {
 
     return svg;
   }
+
+  unrender() {}
 }

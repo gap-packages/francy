@@ -29,7 +29,8 @@ background:#f6f6f6;
 float:left;
 list-style:none;
 width:100%;
-border-bottom:1px solid #cfcfcf
+border-bottom:1px solid #cfcfcf;
+clear:both
 }
 
 .francy-main-menu li {
@@ -100,6 +101,15 @@ min-width: 120px
 float:none;
 width:100%
 }
+
+.francy-main-menu-holder {
+width:100%;
+}
+
+.francy-context-menu-holder {
+display:none
+}
+
 
 .francy-nodes,.francy-bars,.francy-lines,.francy-labels,.francy-scatters {
 cursor:pointer
@@ -186,6 +196,10 @@ padding:0
 
 div.output_subarea.francy-view.output_result {
 max-width:inherit!important
+}
+
+.francy-tooltip-holder {
+display: none
 }
 
 .francy-tooltip {
