@@ -82,7 +82,7 @@ export default class BarChart extends Renderer {
           tooltip.unrender();
         });
 
-      bar.merge(bar);
+      bar.merge(bar).on('end', () => parent.zoomToFit());
     });
 
     // force rebuild axis again
@@ -156,6 +156,8 @@ export default class BarChart extends Renderer {
       .attr('dy', '.35em')
       .style('text-anchor', 'end')
       .text(d => d);
+
+    parent.zoomToFit();
 
     return svg;
   }

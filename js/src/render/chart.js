@@ -32,8 +32,6 @@ export default class Chart extends Renderer {
         throw new TypeError(`The chart type [${json.canvas.chart.type}] is not implemented!`);
     }
 
-    this.options.appendTo.zoomToFit();
-
     return element;
   }
 
