@@ -17,7 +17,7 @@ export default class JsonUtils {
       input = match[0];
       try {
         let json = JSON.parse(input);
-        return json.agent === 'application/vnd.francy+json' ? json : undefined;
+        return json.mime === 'application/vnd.francy+json' ? json : undefined;
       }
       catch (e) {
         /* eslint-disable no-console */

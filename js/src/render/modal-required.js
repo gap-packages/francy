@@ -1,7 +1,7 @@
 import IDUtils from '../util/id-utils';
 import Renderer from './renderer';
 
-/* global d3, Jupyter */
+/* global d3 */
 
 export default class RequiredArgsModal extends Renderer {
 
@@ -48,12 +48,13 @@ export default class RequiredArgsModal extends Renderer {
         .on('input', this.onchange)
         .on('keyup', this.onchange)
         .on('paste', this.onchange);
-      if (arg.type === 'checkbox') {
+      // wait, if it is boolean we create a checkbox
+      if (arg.type === 'boolean') {
         // well, a checkbox works this way so we need to initialize 
         // the value to false and update the value based on the checked 
         // property that triggers the onchange event
         arg.value = arg.value || false;
-        input.attr('required', null)
+        input.attr('type', 'checkbox').attr('required', null)
           .attr('value', arg.value)
           .on('change', function() { json.callback.requiredArgs[this.id].value = this.value = this.checked; });
       }
@@ -79,19 +80,6 @@ export default class RequiredArgsModal extends Renderer {
       holder.remove();
       return false;
     });
-
-    // disable keyboard shortcuts when using this modal in Jupyter
-    try {
-      Jupyter.keyboard_manager.register_events('.francy');
-      Jupyter.keyboard_manager.register_events('.francy-arg');
-      Jupyter.keyboard_manager.register_events('.francy-overlay');
-      Jupyter.keyboard_manager.register_events('.francy-modal');
-    }
-    catch (e) {
-      if (e.name == 'ReferenceError') {
-        self.logger.debug('It seems we\'re not running on Jupyter...', e);
-      }
-    }
 
     content.selectAll('.francy-arg').node().focus();
 

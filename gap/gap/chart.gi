@@ -17,7 +17,7 @@ InstallMethod(Chart,
   0,
 function(chartType, options)
   return MergeObjects(Objectify(NewType(ChartFamily, IsChart and IsChartRep), rec(
-    id   := HexStringUUID(RandomUUID()),
+    id   := GenerateID(),
     data := rec(),
     axis := DefaultAxis(chartType),
     type := chartType!.value,

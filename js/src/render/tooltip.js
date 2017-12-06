@@ -22,6 +22,7 @@ export default class Tooltip extends Renderer {
       return;
     }
 
+    // TODO fix always visible tooltip, fine until someone complains about :P
     this.tooltip.attr('transform', `translate(${d3.event.offsetX + 5},${d3.event.offsetY + 5})`);
 
     // check if it exists already
@@ -30,7 +31,8 @@ export default class Tooltip extends Renderer {
     }
 
     var table = this.tooltip.append('xhtml:div').attr('class', 'francy-tooltip')
-      .append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
+      .append('div').attr('class', 'francy-table')
+      .append('div').attr('class', 'francy-table-body');
     Object.keys(object).map(function(key) {
       var row = table.append('div').attr('class', 'francy-table-row');
       row.append('div').attr('class', 'francy-table-cell').text(key);

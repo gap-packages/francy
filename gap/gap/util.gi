@@ -104,6 +104,7 @@ function(list, result)
   od;
   return result;
 end);
+
 #############################################################################
 ##
 #O  MergeRecord( <obj>, <obj> )  . . . . . . . . simple properties merge
@@ -119,4 +120,18 @@ function(dst, src)
     dst!.(name) := src!.(name);
   od;
   return dst;
+end);
+
+#############################################################################
+##
+#O  GenerateID( )  . . . . . . . .
+##
+InstallMethod(GenerateID,
+  "",
+  true,
+  [],
+  0,
+function()
+  FrancyGeneratedID := FrancyGeneratedID + 1;
+  return String(FrancyGeneratedID); # HexStringUUID(RandomUUID())
 end);

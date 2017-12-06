@@ -11,12 +11,13 @@
 ##
 #! @Section Operations
 #! In this section we show the Francy Util Operations.
+#! Contains utility methods to handle Object printing/viewing, Sanitizing, etc.
 
 #! @Description
-#! This method will clone a <C>Object</C> and return a record, traversing all the
+#! This method will clone a <C>Object</C> and return a sanitized record, traversing all the
 #! components and sanitizing when appropriate.
-#! This method removes components of type IsFunction, as they can't be
-#! converted to a JSON string!
+#! Sanitizing in this context means, replace everything with it's string representation 
+#! that can't be converted into JSON!
 #! @Arguments IsObject
 #! @Returns <C>rec</C>
 DeclareOperation("Sanitize", [IsObject]);
@@ -26,3 +27,13 @@ DeclareOperation("Sanitize", [IsObject]);
 #! @Arguments IsFrancyObject, IsFrancyObject
 #! @Returns <C>rec</C>
 DeclareOperation("MergeObjects", [IsFrancyObject, IsFrancyObject]);
+
+#! @Description
+#! This method will generate a sequential ID for use as object identifier.
+#! @Returns <C>IsString</C>
+DeclareOperation("GenerateID", []);
+
+#! @Description
+#! Holds the latest generated ID.
+#! @Returns <C>IsString</C>
+BindGlobal("FrancyGeneratedID", 0);

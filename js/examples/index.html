@@ -15,7 +15,7 @@
     console.log(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
   }
   
-  var francy = new Francy({verbose: true, appendTo: '#francy', callbackHandler: trigger});
+  var francy = new Francy({verbose: true, appendTo: 'body', callbackHandler: trigger});
   
   d3.json("json1.json", function (error, json) {
     var element = francy.render(json);
@@ -62,6 +62,11 @@
     document.getElementById('francy').append(element);
   });
   
+  
+  d3.json("json9.json", function (error, json) {
+    var element = francy.render(json);
+    document.getElementById('francy').append(element);
+  });
 </script>
 </body>
 </html>

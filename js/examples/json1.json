@@ -1,7 +1,6 @@
 {
-  "agent": "application/vnd.francy+json",
+  "mime": "application/vnd.francy+json",
   "canvas": {
-    "h": 400,
     "width": "800",
     "height": "600",
     "id": "A197731FA6674899EC0A97DF399ED5BC",

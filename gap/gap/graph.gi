@@ -17,10 +17,10 @@ InstallMethod(Graph,
   0,
 function(graphType, options)
   return MergeObjects(Objectify(NewType(GraphFamily, IsGraph and IsGraphRep), rec(
-    id        := HexStringUUID(RandomUUID()),
-    nodes     := rec(),
-    links     := rec(),
-    type      := graphType!.value,
+    id    := GenerateID(),
+    nodes := rec(),
+    links := rec(),
+    type  := graphType!.value,
   )), options);
 end);
 
@@ -121,7 +121,7 @@ InstallMethod(Shape,
   0,
 function(shapeType, title, options)
   return MergeObjects(Objectify(NewType(ShapeFamily, IsShape and IsShapeRep), rec(
-    id        := HexStringUUID(RandomUUID()),
+    id        := GenerateID(),
     type      := shapeType!.value,
     title     := title,
     callbacks := rec(),
@@ -270,6 +270,82 @@ end);
 
 #############################################################################
 ##
+#M  InfoLabel( <string>, <string> )  . .  create a Info for a shape
+##
+InstallMethod(InfoLabel,
+  "a title, a value",
+  true,
+  [IsString,
+   IsString],
+  0,
+function(title, value)
+  return Objectify(NewType(InfoLabelFamily, IsInfoLabel and IsInfoLabelRep), rec(
+    title := title,
+    value := value
+  ));
+end);
+
+#############################################################################
+##
+#M  Add( <graph>, <info> ) . . . . . add objects to shape
+##
+InstallMethod(Add,
+  "a shape, a info",
+  true,
+  [IsShape,
+   IsInfoLabel],
+  0,
+function(shape, info)
+    shape!.info!.(info!.title) := info!.value;
+  return shape;
+end);
+
+InstallOtherMethod(Add,
+  "a shape, a list of infos",
+  true,
+  [IsShape,
+   IsList],
+  0,
+function(shape, infos)
+  local info;
+  for info in infos do
+    Add(shape, info);
+  od;
+  return shape;
+end);
+
+#############################################################################
+##
+#M  Remove( <graph>, <info> ) . . . . . remove object from shape
+##
+InstallMethod(Remove,
+  "a shape, a info",
+  true,
+  [IsShape,
+   IsInfoLabel],
+  0,
+function(shape, info)
+  Unbind(shape!.info!.(info!.title));
+  return shape;
+end);
+
+InstallOtherMethod(Remove,
+  "a shape, a list of infos",
+  true,
+  [IsShape,
+   IsList],
+  0,
+function(shape, infos)
+  local info;
+  for info in infos do
+    Remove(shape, info);
+  od;
+  return shape;
+end);
+
+
+#############################################################################
+##
 #M  Link( <obj1>, <obj2> )
 ##
 InstallMethod(Link,
@@ -281,7 +357,7 @@ InstallMethod(Link,
 
 function(source, target)
   return Objectify(NewType(LinkFamily, IsLink and IsLinkRep), rec(
-    id     := HexStringUUID(RandomUUID()),
+    id     := GenerateID(),
     source := source!.id,
     target := target!.id
   ));

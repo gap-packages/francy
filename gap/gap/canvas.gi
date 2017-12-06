@@ -17,7 +17,7 @@ InstallMethod(Canvas,
   0,
 function(title, options)
   return MergeObjects(Objectify(NewType(CanvasFamily, IsCanvas and IsCanvasRep), rec(
-    id    := HexStringUUID(RandomUUID()),
+    id    := GenerateID(),
     menus := rec(),
     graph := rec(),
     chart := rec(),
@@ -121,7 +121,14 @@ InstallMethod(Draw,
 function(canvas)
   local object;
   object := rec();
-  object!.agent := FrancyMIMEType;
-  object!.canvas := Sanitize(canvas);
-  return rec(json := true, source := "gap", data := rec((FrancyMIMEType) := GapToJsonString(object)));
+  object!.mime   := FrancyMIMEType;
+  object!.version := InstalledPackageVersion("francy");
+  object!.canvas  := Sanitize(canvas);
+  return rec(
+    json := true, 
+    source := "gap", 
+    data := rec(
+      (FrancyMIMEType) := GapToJsonString(object)
+      )
+    );
 end);

@@ -5,6 +5,9 @@
 #Y  Copyright (C) 2017 Manuel Martins
 ##
 #! @Chapter Francy Menus
+#! Menus are agregators of actions that are represented here by <C>Callbacks</C>.
+#! Menus can have SubMenus, and are constituted by a Title and a Callback.
+#! <P/>
 #! Please see Francy-JS for client implementation.
 
 
@@ -48,13 +51,14 @@ DeclareRepresentation("IsMenuRep",
 
 #! @Description
 #! Creates a Menu for a <C>Callback</C>
-#! @Arguments IsString(title)[, IsCallback]
+#! Is up to the client implementation to sort out the Menu and invoke the <C>Callback</C>
+#! @Arguments IsString(title), [IsCallback]
 #! @Returns <C>Menu</C>
 DeclareOperation("Menu", [IsString, IsCallback]);
 
 #! @Description
 #! Add <C>Menu</C> to a specific <C>Menu</C> creating a Submenu.
-#! The client should be able to handle this.
+#! Is up to the client implementation to handle this.
 #! @Arguments IsMenu, [IsMenu, List(IsMenu)]
 #! @Returns <C>Menu</C>
 DeclareOperation("Add", [IsMenu, IsMenu]);

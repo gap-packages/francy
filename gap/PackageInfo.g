@@ -7,7 +7,7 @@ SetPackageInfo(rec(
 
   PackageName := "Francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
-  Version     := "0.2.0",
+  Version     := "0.5.0",
   Date        := "25/10/2017",
 
   Persons := [

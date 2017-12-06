@@ -17,7 +17,7 @@ InstallMethod(Menu,
   0,
 function(title, callback)
   return Objectify(NewType(MenuFamily, IsMenu and IsMenuRep), rec(
-    id       := HexStringUUID(RandomUUID()),
+    id       := GenerateID(),
     title    := title,
     callback := callback,
     menus    := rec()

@@ -25,7 +25,7 @@ define([
 
   loadCss('./../css/style.css');
 
-  // start francy
+  // Start Francy
   let francy = new FrancyBundle.Francy({
     verbose: true,
     appendTo: '#francy-drawing-div',
@@ -34,7 +34,7 @@ define([
         iopub: {
           output: function(msg) {
             if (msg.content && msg.content.data && msg.content.data[MIME_TYPE]) {
-              // This will update the existing canvas!
+              // This will update an existing canvas by its ID!
               francy.render(msg.content.data[MIME_TYPE]);
               return;
             }
@@ -44,7 +44,7 @@ define([
     }
   });
 
-  // create a 'display: none;' div for drawing
+  // Create a 'display: none;' div for drawing
   d3.select('body').append('div').attr('id', 'francy-drawing-div').attr('style', 'display: none;');
 
   return {
@@ -85,6 +85,12 @@ define([
           francy.unrender(id);
         }
       };
+
+      // Disable keyboard shortcuts when using francy components
+      Jupyter.keyboard_manager.register_events('.francy');
+      Jupyter.keyboard_manager.register_events('.francy-arg');
+      Jupyter.keyboard_manager.register_events('.francy-overlay');
+      Jupyter.keyboard_manager.register_events('.francy-modal');
 
       // Handle when an output is cleared or removed
       events.on('clear_output.CodeCell', handleClearOutput);

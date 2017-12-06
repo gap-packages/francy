@@ -1,7 +1,6 @@
 {
-  "agent": "application/vnd.francy+json",
+  "mime": "application/vnd.francy+json",
   "canvas": {
-    "h": 400,
     "width": "800",
     "height": "600",
     "id": "A197731FA6674899EC0A97DF399ED5BC",
@@ -15,7 +14,7 @@
         "85A237CE30554A1FF46170E35B1B80BD": {
           "x": 0,
           "y": 0,
-          "type": "diamond",
+          "type": "text",
           "size": 10,
           "id": "85A237CE30554A1FF46170E35B1B80BD",
           "title": "G",

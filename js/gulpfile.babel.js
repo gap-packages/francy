@@ -60,7 +60,7 @@ gulp.task('test', function(cb) {
 
 gulp.task('docs', function(cb) {
   return gulp.src('./src')
-    .pipe(esdoc({ destination: "./docs" }));
+    .pipe(esdoc({ destination: "./doc" }));
 });
 
 gulp.task('lint', function(cb) {

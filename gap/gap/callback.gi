@@ -23,7 +23,7 @@ InstallMethod(Callback,
 function(triggerEvent, func, knownArgs)
   local object;
   object := Objectify(NewType(CallbackFamily, IsCallback and IsCallbackRep), rec(
-    id           := HexStringUUID(RandomUUID()),
+    id           := GenerateID(),
     trigger      := triggerEvent!.value,
     func         := func,
     knownArgs    := knownArgs,
@@ -90,7 +90,7 @@ InstallMethod(RequiredArg,
 function(argType, title)
   # FIXME might have to add a new property with order of the arg!
   return Objectify(NewType(CallbackFamily, IsRequiredArg and IsRequiredArgRep), rec(
-    id    := HexStringUUID(RandomUUID()),
+    id    := GenerateID(),
     type  := argType!.value,
     title := title,
     value := ""

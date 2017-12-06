@@ -224,7 +224,7 @@ export default class Graph extends Renderer {
 
     legend = legend.enter()
       .append('g')
-      .attr('id', d => `legendLayer${d}`)
+      .attr('id', d => `legendLayer${d.id}`)
       .attr('transform', (d, i) => `translate(${10},${(i + 5) * 12})`)
       .merge(legend);
 
