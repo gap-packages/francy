@@ -37,4 +37,4 @@ DeclareOperation("GenerateID", []);
 #! Holds the latest generated ID.
 #! @Returns <C>IsString</C>
 BindGlobal("FrancyGeneratedID", 0);
-MakeReadWriteGlobal( "FrancySequentialID" );
+MakeReadWriteGlobal("FrancyGeneratedID");
