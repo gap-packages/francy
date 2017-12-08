@@ -86,12 +86,6 @@ define([
         }
       };
 
-      // Disable keyboard shortcuts when using francy components
-      Jupyter.keyboard_manager.register_events('.francy');
-      Jupyter.keyboard_manager.register_events('.francy-arg');
-      Jupyter.keyboard_manager.register_events('.francy-overlay');
-      Jupyter.keyboard_manager.register_events('.francy-modal');
-
       // Handle when an output is cleared or removed
       events.on('clear_output.CodeCell', handleClearOutput);
       events.on('delete.Cell', handleClearOutput);

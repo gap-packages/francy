@@ -1,6 +1,6 @@
 import Renderer from './renderer';
 
-/* global d3 */
+/* global d3 Jupyter */
 
 export default class AboutModal extends Renderer {
 
@@ -43,6 +43,19 @@ export default class AboutModal extends Renderer {
       event.preventDefault();
       return false;
     });
+
+    // disable keyboard shortcuts when using this modal in Jupyter
+    try {
+      Jupyter.keyboard_manager.register_events('.francy');
+      Jupyter.keyboard_manager.register_events('.francy-arg');
+      Jupyter.keyboard_manager.register_events('.francy-overlay');
+      Jupyter.keyboard_manager.register_events('.francy-modal');
+    }
+    catch (e) {
+      if (e.name == 'ReferenceError') {
+        self.logger.debug('It seems we\'re not running on Jupyter...', e);
+      }
+    }
 
     this.logger.debug(`Callback About updated [${modalId}]...`);
 

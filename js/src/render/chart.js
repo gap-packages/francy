@@ -28,8 +28,6 @@ export default class Chart extends Renderer {
       case "scatter":
         element = new ScatterChart(this.options).render(json);
         break;
-      default:
-        throw new TypeError(`The chart type [${json.canvas.chart.type}] is not implemented!`);
     }
 
     return element;
