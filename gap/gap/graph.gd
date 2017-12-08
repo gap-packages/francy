@@ -16,15 +16,15 @@
 
 #! @Description
 #! Identifies <C>Graph</C> objects.
-DeclareCategory("IsGraph", IsFrancyObject);
+DeclareCategory("IsFrancyGraph", IsFrancyObject);
 
 #! @Description
 #! Identifies <C>GraphType</C> objects.
-DeclareCategory("IsGraphType", IsFrancyObject);
+DeclareCategory("IsFrancyGraphType", IsFrancyObject);
 
 #! @Description
 #! Identifies <C>GraphDefaults</C> objects.
-DeclareCategory("IsGraphDefaults", IsFrancyDefaults);
+DeclareCategory("IsFrancyGraphDefaults", IsFrancyDefaults);
 
 #! @Description
 #! Identifies <C>Shape</C> objects.
@@ -54,7 +54,7 @@ DeclareCategory("IsInfoLabel", IsFrancyObject);
 #! @Description
 #! This Family identifies all <C>Graph</C> objects
 #! @Returns <C>GraphFamily</C>
-BindGlobal("GraphFamily", NewFamily("GraphFamily", IsGraph));
+BindGlobal("GraphFamily", NewFamily("GraphFamily", IsFrancyGraph));
 
 #! @Description
 #! This Family identifies all <C>Shape</C> objects
@@ -78,21 +78,21 @@ BindGlobal("InfoLabelFamily", NewFamily("InfoLabelFamily", IsInfoLabel));
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Graph</C> internal representation.
-DeclareRepresentation("IsGraphRep",
+DeclareRepresentation("IsFrancyGraphRep",
   IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "type", "nodes", "links"], IsGraph);
+  ["id", "type", "nodes", "links"], IsFrancyGraph);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>GraphDefaults</C> internal representation.
-DeclareRepresentation("IsGraphDefaultsRep",
+DeclareRepresentation("IsFrancyGraphDefaultsRep",
   IsComponentObjectRep and IsAttributeStoringRep,
-  ["simulation", "forces"], IsGraphDefaults);
+  ["simulation", "forces"], IsFrancyGraphDefaults);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>GraphType</C> internal representation.
-DeclareRepresentation("IsGraphTypeRep",
+DeclareRepresentation("IsFrancyGraphTypeRep",
   IsComponentObjectRep and IsAttributeStoringRep,
-  ["value"], IsGraphType);
+  ["value"], IsFrancyGraphType);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Shape</C> internal representation.
@@ -145,21 +145,21 @@ DeclareRepresentation("IsInfoLabelRep",
 #! Create a simple <C>Graph</C> of type <C>GraphType.UNDIRECTED</C> and a simple <C>Shape</C> with a <C>TriggerEvent.RIGHT_CLICK</C> <C>Callback</C>:
 #! @InsertChunk Example_Create_Graph_3
 #! <P/>
-#! @Arguments IsGraphType[, IsGraphDefaults]
+#! @Arguments IsFrancyGraphType[, IsFrancyGraphDefaults]
 #! @Returns <C>Graph</C>
-DeclareOperation("Graph", [IsGraphType, IsGraphDefaults]);
+DeclareOperation("Graph", [IsFrancyGraphType, IsFrancyGraphDefaults]);
 
 #! @Description
 #! Add <C>FrancyObject</C> to a specific <C>Graph</C>.
-#! @Arguments IsGraph, [IsFrancyObject, List(IsFrancyObject)]
+#! @Arguments IsFrancyGraph, [IsFrancyObject, List(IsFrancyObject)]
 #! @Returns <C>Graph</C>
-DeclareOperation("Add", [IsGraph, IsFrancyObject]);
+DeclareOperation("Add", [IsFrancyGraph, IsFrancyObject]);
 
 #! @Description
 #! Remove <C>FrancyObject</C> from a specific <C>Graph</C>.
-#! @Arguments IsGraph, [IsFrancyObject, List(IsFrancyObject)]
+#! @Arguments IsFrancyGraph, [IsFrancyObject, List(IsFrancyObject)]
 #! @Returns <C>Graph</C>
-DeclareOperation("Remove", [IsGraph, IsFrancyObject]);
+DeclareOperation("Remove", [IsFrancyGraph, IsFrancyObject]);
 
 #! @Description
 #! Every object to draw will be a subclass of this object. This will allow
@@ -235,15 +235,15 @@ DeclareOperation("Links", [IsList, IsList]);
 #! The various types of Graph supported.
 #! @Returns <C>rec</C> of <C>GraphType</C>
 BindGlobal("GraphType", rec(
-  UNDIRECTED := Objectify(NewType(GraphFamily, IsGraphType and IsGraphTypeRep), rec(value := "undirected")),
-  DIRECTED   := Objectify(NewType(GraphFamily, IsGraphType and IsGraphTypeRep), rec(value := "directed")),
-  HASSE      := Objectify(NewType(GraphFamily, IsGraphType and IsGraphTypeRep), rec(value := "hasse"))
+  UNDIRECTED := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "undirected")),
+  DIRECTED   := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "directed")),
+  HASSE      := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "hasse"))
 ));
 
 #! @Description
 #! The default configuration for a graph.
 #! @Returns <C>rec</C> of <C>GraphDefaults</C>
-BindGlobal("GraphDefaults", Objectify(NewType(GraphFamily, IsGraphDefaults and IsGraphDefaultsRep), rec(
+BindGlobal("GraphDefaults", Objectify(NewType(GraphFamily, IsFrancyGraphDefaults and IsFrancyGraphDefaultsRep), rec(
   simulation := true,
   forces     := true
 )));

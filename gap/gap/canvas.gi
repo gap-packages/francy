@@ -45,7 +45,7 @@ InstallMethod(Add,
    IsFrancyObject],
   0,
 function(canvas, object)
-  if IsGraph(object) then
+  if IsFrancyGraph(object) then
     canvas!.graph := object;
     # unbind the chart, only one should exist!
     Unbind(canvas!.chart);
@@ -85,7 +85,7 @@ InstallMethod(Remove,
   0,
 function(canvas, object)
   local link;
-  if IsGraph(object) then
+  if IsFrancyGraph(object) then
     Unbind(canvas!.graph);
   elif IsChart(object) then
     Unbind(canvas!.chart);
@@ -127,8 +127,56 @@ function(canvas)
   return rec(
     json := true, 
     source := "gap", 
-    data := rec(
-      (FrancyMIMEType) := GapToJsonString(object)
-      )
-    );
+    data := rec((FrancyMIMEType) := GapToJsonString(object))
+  );
+end);
+
+#############################################################################
+##
+#M  DrawSplash( ) . . . . . 
+##
+InstallMethod(DrawSplash,
+  "",
+  true,
+  [IsCanvas],
+  0,
+function(canvas)
+    local name, result, page;
+
+    name := Filename(DirectoryTemporary(), Concatenation("francy_", LowercaseString(ReplacedString(canvas!.title, " ", "_")) ,".html"));
+    
+    result := Draw(canvas);
+
+    page := Concatenation(
+    "<!DOCTYPE html>\n\
+    <html>\n\
+      <head>\n\
+        <meta charset=\"utf-8\" content=\"text/html\" property=\"GAP,francy,d3.v4\"></meta>\n\
+        <link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/dist/francy/css/style.css\"></link>\n\
+        <script src=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/dist/francy/lib/d3.min.js\"></script>\n\
+        <script src=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/dist/francy/browser/francy.bundle.js\"></script>\n\
+        <title>Francy</title>\n\
+      </head>\n\
+      <body>\n\
+        <div id=\"francy\"></div>\n\
+        <script>\n\
+          var francy = new Francy({verbose: true, appendTo: 'body', callbackHandler: console.log});\n\
+          francy.render(", result.data.(FrancyMIMEType), ");\n\
+        </script>\n\
+      </body>\n\
+    </html>");
+    
+    PrintTo(name, page);
+
+    if ARCH_IS_MAC_OS_X() then
+        Exec("open ",name);
+    fi;
+    if ARCH_IS_WINDOWS() then
+        Exec("start firefox ",name);
+    fi;
+    if ARCH_IS_UNIX() then
+        Exec("cat ",name);
+    fi;
+
+    return page;
 end);

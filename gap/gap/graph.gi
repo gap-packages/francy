@@ -12,11 +12,11 @@
 InstallMethod(Graph,
   "a graph type",
   true,
-  [IsGraphType,
-   IsGraphDefaults],
+  [IsFrancyGraphType,
+   IsFrancyGraphDefaults],
   0,
 function(graphType, options)
-  return MergeObjects(Objectify(NewType(GraphFamily, IsGraph and IsGraphRep), rec(
+  return MergeObjects(Objectify(NewType(GraphFamily, IsFrancyGraph and IsFrancyGraphRep), rec(
     id    := GenerateID(),
     nodes := rec(),
     links := rec(),
@@ -27,7 +27,7 @@ end);
 InstallOtherMethod(Graph,
   "a graph type",
   true,
-  [IsGraphType],
+  [IsFrancyGraphType],
   0,
 function(graphType)
   return Graph(graphType, GraphDefaults);
@@ -40,7 +40,7 @@ end);
 InstallMethod(Add,
   "a graph, a shape",
   true,
-  [IsGraph,
+  [IsFrancyGraph,
    IsFrancyObject],
   0,
 function(graph, object)
@@ -55,7 +55,7 @@ end);
 InstallOtherMethod(Add,
   "a graph, a list of francy objects",
   true,
-  [IsGraph,
+  [IsFrancyGraph,
    IsList],
   0,
 function(graph, objects)
@@ -73,7 +73,7 @@ end);
 InstallMethod(Remove,
   "a graph, a shape",
   true,
-  [IsGraph,
+  [IsFrancyGraph,
    IsFrancyObject],
   0,
 function(graph, object)
@@ -97,7 +97,7 @@ end);
 InstallOtherMethod(Remove,
   "a graph, a list of francy objects",
   true,
-  [IsGraph,
+  [IsFrancyGraph,
    IsList],
   0,
 function(graph, objects)

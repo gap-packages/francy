@@ -89,6 +89,13 @@ DeclareOperation("Remove", [IsCanvas, IsFrancyObject]);
 #! @Returns <C>rec</C> with json representation of the canvas
 DeclareOperation("Draw", [IsCanvas]);
 
+#! @Description
+#! Generates the an HTML page and opens it within the default browser of the system
+#! @Arguments IsCanvas
+#! @Returns <C>rec</C> with html generated
+DeclareOperation("DrawSplash", [IsCanvas]);
+
+
 #############################################################################
 ##
 #! @Section Global
