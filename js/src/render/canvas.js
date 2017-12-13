@@ -43,27 +43,29 @@ export default class Canvas extends Composite {
     canvas.on("click", stopped, true);
 
     canvas.zoomToFit = function() {
-      var bounds = content.node().getBBox();
+      if (json.canvas.zoomToFit) {
+        var bounds = content.node().getBBox();
 
-      var fullWidth = canvas.node().clientWidth,
-        fullHeight = canvas.node().clientHeight + 45; //well, the menu is part of the canvas +-40px
+        var fullWidth = canvas.node().clientWidth,
+          fullHeight = canvas.node().clientHeight + 45; //well, the menu is part of the canvas +-40px
 
-      var width = bounds.width,
-        height = bounds.height;
+        var width = bounds.width,
+          height = bounds.height;
 
-      if (width == 0 || height == 0) return;
+        if (width == 0 || height == 0) return;
 
-      var midX = bounds.x + width / 2,
-        midY = bounds.y + height / 2;
+        var midX = bounds.x + width / 2,
+          midY = bounds.y + height / 2;
 
-      var scale = (0.75) / Math.max(width / fullWidth, height / fullHeight);
-      var translateX = fullWidth / 2 - scale * midX,
-        translateY = fullHeight / 2 - scale * midY;
+        var scale = (0.75) / Math.max(width / fullWidth, height / fullHeight);
+        var translateX = fullWidth / 2 - scale * midX,
+          translateY = fullHeight / 2 - scale * midY;
 
-      content.transition()
-        .duration(2000)
-        .attr('transform', `translate(${translateX},${translateY})scale(${scale},${scale})`)
-        .on('end', () => updateZoom(translateX, translateY, scale));
+        content.transition()
+          .duration(2000)
+          .attr('transform', `translate(${translateX},${translateY})scale(${scale},${scale})`)
+          .on('end', () => updateZoom(translateX, translateY, scale));
+      }
     };
 
     function updateZoom(translateX, translateY, scale) {

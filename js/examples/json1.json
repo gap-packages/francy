@@ -7,13 +7,13 @@
     "title": "Quaternion Group Subgroup Lattice",
     "menus": {},
     "graph": {
-      "type": "hasse",
+      "type": "custom",
       "id": "585C13EF00EC4E71DCCF4C7246C86807",
       "simulation": true,
       "nodes": {
         "85A237CE30554A1FF46170E35B1B80BD": {
-          "x": 0,
-          "y": 0,
+          "x": 10,
+          "y": 10,
           "type": "diamond",
           "size": 10,
           "id": "85A237CE30554A1FF46170E35B1B80BD",
@@ -24,8 +24,8 @@
           "highlight": true
         },
         "F827B91B58E84D8B1C8AF64FAE72BCC9": {
-          "x": 0,
-          "y": 0,
+          "x": 20,
+          "y": 20,
           "type": "wye",
           "size": 10,
           "id": "F827B91B58E84D8B1C8AF64FAE72BCC9",
@@ -36,8 +36,8 @@
           "highlight": true
         },
         "1FA9D518A51B4422D4BCFDD58129403D": {
-          "x": 0,
-          "y": 0,
+          "x": 30,
+          "y": 30,
           "type": "circle",
           "size": 10,
           "id": "1FA9D518A51B4422D4BCFDD58129403D",
@@ -48,8 +48,8 @@
           "highlight": true
         },
         "5C86291270454B2204CE851D9700D815": {
-          "x": 0,
-          "y": 0,
+          "x": 40,
+          "y": 40,
           "type": "circle",
           "size": 10,
           "id": "5C86291270454B2204CE851D9700D815",
@@ -60,8 +60,8 @@
           "highlight": true
         },
         "A097FBE57B75448F7411A2D059F57F96": {
-          "x": 0,
-          "y": 0,
+          "x": 50,
+          "y": 50,
           "type": "circle",
           "size": 10,
           "id": "A097FBE57B75448F7411A2D059F57F96",
@@ -72,8 +72,8 @@
           "highlight": true
         },
         "B7AB8F184B4445538CF142F0306DBEB1": {
-          "x": 0,
-          "y": 0,
+          "x": 60,
+          "y": 60,
           "type": "circle",
           "size": 10,
           "id": "B7AB8F184B4445538CF142F0306DBEB1",

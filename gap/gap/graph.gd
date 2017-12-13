@@ -224,7 +224,7 @@ BindGlobal("GraphType", rec(
 #! @Returns <C>rec</C> of <C>GraphDefaults</C>
 BindGlobal("GraphDefaults", Objectify(NewType(GraphFamily, IsFrancyGraphDefaults and IsFrancyGraphDefaultsRep), rec(
   simulation := true,
-  forces     := true
+  drag       := true
 )));
 
 #! @Description

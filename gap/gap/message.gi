@@ -33,7 +33,7 @@ InstallOtherMethod(HintMessage,
    IsString],
   0,
 function(title, value)
-  return HintMessage(MessageType.INFO, title, value);
+  return HintMessage(MessageType.DEFAULT, title, value);
 end);
 
 InstallOtherMethod(HintMessage,
@@ -52,5 +52,5 @@ InstallOtherMethod(HintMessage,
   [IsString],
   0,
 function(value)
-  return HintMessage(MessageType.INFO, "", value);
+  return HintMessage(MessageType.DEFAULT, "", value);
 end);

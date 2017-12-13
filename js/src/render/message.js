@@ -10,7 +10,7 @@ export default class Message extends Renderer {
     // check if the window is already present
     if (!this.alerts.node()) {
       this.alerts = this.SVGParent.append('foreignObject').attr('class', 'francy-alerts-holder')
-        .attr('transform', 'translate(100,55)').append('xhtml:div').attr('class', 'francy-alerts');
+        .attr('transform', 'translate(10,55)').append('xhtml:div').attr('class', 'francy-alerts');
     }
     else {
       this.alerts = this.alerts.select('div.francy-alerts');

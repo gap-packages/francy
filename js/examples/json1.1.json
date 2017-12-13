@@ -7,7 +7,7 @@
     "title": "Quaternion Group Subgroup Lattice",
     "menus": {},
     "graph": {
-      "type": "hasse",
+      "type": "custom",
       "id": "585C13EF00EC4E71DCCF4C7246C86807",
       "simulation": true,
       "nodes": {

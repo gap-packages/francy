@@ -77,5 +77,6 @@ BindGlobal("MessageType", rec(
   INFO    := Objectify(NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep), rec(value := "info")),
   ERROR   := Objectify(NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep), rec(value := "error")),
   SUCCESS := Objectify(NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep), rec(value := "success")),
-  WARNING := Objectify(NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep), rec(value := "warning"))
+  WARNING := Objectify(NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep), rec(value := "warning")),
+  DEFAULT := Objectify(NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep), rec(value := "default"))
 ));

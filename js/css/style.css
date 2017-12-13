@@ -322,7 +322,8 @@ padding:.75rem 1.25rem;
 margin:.2rem 0 0 .2rem;
 border:1px solid transparent;
 border-radius:.25rem;
-cursor:pointer
+cursor:pointer;
+display:inline-block
 }
 
 .francy-alert:hover span:last-of-type {
@@ -330,22 +331,34 @@ display:inline!important;
 float:right
 }
 
-.francy-alert.info {
+.francy-alerts .francy-alert.info {
 color:#0c5460;
 background-color:#d1ecf1;
 border-color:#bee5eb
 }
 
-.francy-alert.error {
+.francy-alerts .francy-alert.error {
 color:#721c24;
 background-color:#f8d7da;
 border-color:#f5c6cb
 }
 
-.francy-alert.success {
+.francy-alerts .francy-alert.success {
 color:#155724;
 background-color:#d4edda;
 border-color:#c3e6cb
+}
+
+.francy-alerts .francy-alert.default {
+color:#1b1e21;
+background-color:#f6f6f6;
+border-color:#cfcfcf
+}
+
+.francy-alerts .francy-alert.warning {
+color: #856404;
+background-color: #fff3cd;
+border-color: #ffeeba
 }
 
 .strong {

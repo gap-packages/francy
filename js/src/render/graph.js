@@ -77,6 +77,10 @@ export default class Graph extends Renderer {
     link = link.enter().append('line')
       .attr('class', 'francy-link')
       .attr('id', d => `${d.source},${d.target}`)
+      .attr('x1', d => d.source.x)
+      .attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x)
+      .attr('y2', d => d.target.y)
       .merge(link);
 
     if (json.canvas.graph.type === 'directed') {
@@ -110,15 +114,21 @@ export default class Graph extends Renderer {
 
     node = node.enter().append('path')
       .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
-      .attr('transform', 'translate(0,0)')
+      .attr('transform', d => `translate(${d.x},${d.y})`)
+      .style('fill', d => Graph.colors(d.layer * 5))
       .attr('class', d => 'francy-node' + (d.highlight ? ' francy-highlight' : '') + (Object.values(d.menus).length ? ' francy-context' : ''))
       .attr('id', d => d.id)
       .merge(node);
 
-    node.call(d3.drag()
-        .on('start', dragstarted)
-        .on('drag', dragged)
-        .on('end', dragended))
+    if (json.canvas.graph.drag) {
+      node
+        .call(d3.drag()
+          .on('start', dragstarted)
+          .on('drag', dragged)
+          .on('end', dragended));
+    }
+
+    node
       .on('contextmenu', function(d) {
         // default, build context menu
         contextMenu.render(d);
@@ -157,6 +167,8 @@ export default class Graph extends Renderer {
     label = label.enter().append('text')
       .attr('class', 'francy-label')
       .text(d => d.title)
+      .attr('x', d => d.x - d.title.length - Math.sqrt(d.size * d.title.length * 2))
+      .attr('y', d => d.y - Math.sqrt(d.size * 2))
       .merge(label);
 
     label
@@ -185,72 +197,46 @@ export default class Graph extends Renderer {
         tooltip.unrender();
       });
 
-    var legendGroup = parent.selectAll('.francy-legend');
+    if (json.canvas.graph.simulation) {
+      // Canvas Forces
+      var centerForce = d3.forceCenter().x(width / 2).y(height / 2);
+      var manyForce = d3.forceManyBody().strength(-canvasNodes.length * 30);
+      var linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
+      var collideForce = d3.forceCollide(d => d.size * 2);
 
-    if (!legendGroup.node()) {
-      legendGroup = parent.append('g').attr('class', 'francy-legend');
-    }
-
-    // force rebuild legend again
-    legendGroup.selectAll('*').remove();
-
-    var legend = legendGroup.selectAll('g')
-      .data(d3.map(canvasNodes, d => d.layer).values().sort((a, b) => a.layer > b.layer), d => d.id);
-
-    legend.exit().remove();
-
-    legend = legend.enter()
-      .append('g')
-      .attr('id', d => `legendLayer${d.id}`)
-      .attr('transform', (d, i) => `translate(${10},${(i + 5) * 12})`)
-      .merge(legend);
-
-    legend.append('rect')
-      .attr('width', 10)
-      .attr('height', 8)
-      .style('fill', d => Graph.colors(d.layer * 6))
-      .style('stroke', d => Graph.colors(d.layer * 6));
-
-    legend.append('text')
-      .attr('style', 'font-size: 10px;')
-      .attr('x', 10 + 5)
-      .attr('y', 10 - 2)
-      .text(d => `Index ${d.layer}`);
-
-    // Canvas Forces
-    var centerForce = d3.forceCenter().x(width / 2).y(height / 2);
-    var manyForce = d3.forceManyBody().strength(-canvasNodes.length * 30);
-    var linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
-    var collideForce = d3.forceCollide(d => d.size * 2);
-
-    //Generic gravity for the X position
-    var forceX = d3.forceX(width / 2).strength(0.05);
-
-    //Generic gravity for the Y position - undirected/directed graphs fall here
-    var forceY = d3.forceY(height / 2).strength(0.25);
-
-    if (json.canvas.graph.type === 'hasse') {
       //Generic gravity for the X position
-      forceX = d3.forceX(width / 2).strength(0.5);
-      //Strong y positioning based on layer to simulate the hasse diagram
-      forceY = d3.forceY(d => d.layer * 50).strength(5);
+      var forceX = d3.forceX(width / 2).strength(0.05);
+
+      //Generic gravity for the Y position - undirected/directed graphs fall here
+      var forceY = d3.forceY(height / 2).strength(0.25);
+
+      if (json.canvas.graph.type === 'hasse') {
+        //Generic gravity for the X position
+        forceX = d3.forceX(width / 2).strength(0.5);
+        //Strong y positioning based on layer to simulate the hasse diagram
+        forceY = d3.forceY(d => d.layer * 50).strength(5);
+      }
+
+      var simulation = d3.forceSimulation(canvasNodes)
+        .force("charge", manyForce)
+        .force("link", linkForce)
+        .force("center", centerForce)
+        .force("x", forceX)
+        .force("y", forceY)
+        .force("collide", collideForce)
+        .on('tick', ticked)
+        .on("end", function() {
+          // zoom to fit when simulation is over
+          parent.zoomToFit();
+        });
+
+      //force simulation restart
+      simulation.restart();
     }
-
-    var simulation = d3.forceSimulation(canvasNodes)
-      .force("charge", manyForce)
-      .force("link", linkForce)
-      .force("center", centerForce)
-      .force("x", forceX)
-      .force("y", forceY)
-      .force("collide", collideForce)
-      .on('tick', ticked)
-      .on("end", function() {
-        // zoom to fit when simulation is over
-        parent.zoomToFit();
-      });
-
-    //force simulation restart
-    simulation.restart();
+    else {
+      // well, simulation is off, zoom to fit now
+      parent.zoomToFit();
+    }
 
     function ticked() {
       link
@@ -259,9 +245,7 @@ export default class Graph extends Renderer {
         .attr('x2', d => d.target.x)
         .attr('y2', d => d.target.y);
 
-      node
-        .style('fill', d => Graph.colors(d.layer * 5))
-        .attr('transform', d => `translate(${d.x},${d.y})`);
+      node.attr('transform', d => `translate(${d.x},${d.y})`);
 
       label
         .attr('x', d => d.x - d.title.length - Math.sqrt(d.size * d.title.length * 2))
