@@ -17,11 +17,12 @@ InstallMethod(Canvas,
   0,
 function(title, options)
   return MergeObjects(Objectify(NewType(CanvasFamily, IsCanvas and IsCanvasRep), rec(
-    id    := GenerateID(),
-    menus := rec(),
-    graph := rec(),
-    chart := rec(),
-    title := title
+    id       := GenerateID(),
+    menus    := rec(),
+    graph    := rec(),
+    chart    := rec(),
+    messages := rec(),
+    title    := title
   )), options);
 end);
 
@@ -47,11 +48,11 @@ InstallMethod(Add,
 function(canvas, object)
   if IsFrancyGraph(object) then
     canvas!.graph := object;
-    # unbind the chart, only one should exist!
+    # unbind the chart, only graph should exist!
     Unbind(canvas!.chart);
   elif IsChart(object) then
     canvas!.chart := object;
-    # unbind the graph, only one should exist!
+    # unbind the graph, only chart should exist!
     Unbind(canvas!.graph);
   elif IsMenu(object) then
     canvas!.menus!.(object!.id) := object;
@@ -105,6 +106,65 @@ function(canvas, objects)
   local object;
   for object in objects do
     Remove(canvas, object);
+  od;
+  return canvas;
+end);
+
+
+#############################################################################
+##
+#M  Add( <canvas>, <info> ) . . . . . add objects to canvas
+##
+InstallMethod(Add,
+  "a canvas, a message",
+  true,
+  [IsCanvas,
+   IsHintMessage],
+  0,
+function(canvas, message)
+  canvas!.messages!.(message!.id) := message;
+  return canvas;
+end);
+
+InstallOtherMethod(Add,
+  "a canvas, a list of messages",
+  true,
+  [IsCanvas,
+   IsList],
+  0,
+function(canvas, messages)
+  local message;
+  for message in messages do
+    Add(canvas, message);
+  od;
+  return canvas;
+end);
+
+#############################################################################
+##
+#M  Remove( <canvas>, <info> ) . . . . . remove object from canvas
+##
+InstallMethod(Remove,
+  "a canvas, a message",
+  true,
+  [IsCanvas,
+   IsHintMessage],
+  0,
+function(canvas, message)
+  Unbind(canvas!.messages!.(message!.id));
+  return canvas;
+end);
+
+InstallOtherMethod(Remove,
+  "a canvas, a list of messages",
+  true,
+  [IsCanvas,
+   IsList],
+  0,
+function(canvas, messages)
+  local message;
+  for message in messages do
+    Remove(canvas, message);
   od;
   return canvas;
 end);

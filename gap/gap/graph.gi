@@ -126,7 +126,7 @@ function(shapeType, title, options)
     title     := title,
     callbacks := rec(),
     menus     := rec(),
-    info      := rec()
+    messages  := rec()
   )), options);
 end);
 
@@ -270,75 +270,58 @@ end);
 
 #############################################################################
 ##
-#M  InfoLabel( <string>, <string> )  . .  create a Info for a shape
-##
-InstallMethod(InfoLabel,
-  "a title, a value",
-  true,
-  [IsString,
-   IsString],
-  0,
-function(title, value)
-  return Objectify(NewType(InfoLabelFamily, IsInfoLabel and IsInfoLabelRep), rec(
-    title := title,
-    value := value
-  ));
-end);
-
-#############################################################################
-##
-#M  Add( <graph>, <info> ) . . . . . add objects to shape
+#M  Add( <shape>, <info> ) . . . . . add objects to shape
 ##
 InstallMethod(Add,
-  "a shape, a info",
+  "a shape, a message",
   true,
   [IsShape,
-   IsInfoLabel],
+   IsHintMessage],
   0,
-function(shape, info)
-    shape!.info!.(info!.title) := info!.value;
+function(shape, message)
+  shape!.messages!.(message!.id) := message;
   return shape;
 end);
 
 InstallOtherMethod(Add,
-  "a shape, a list of infos",
+  "a shape, a list of messages",
   true,
   [IsShape,
    IsList],
   0,
-function(shape, infos)
-  local info;
-  for info in infos do
-    Add(shape, info);
+function(shape, messages)
+  local message;
+  for message in messages do
+    Add(shape, message);
   od;
   return shape;
 end);
 
 #############################################################################
 ##
-#M  Remove( <graph>, <info> ) . . . . . remove object from shape
+#M  Remove( <shape>, <info> ) . . . . . remove object from shape
 ##
 InstallMethod(Remove,
-  "a shape, a info",
+  "a shape, a message",
   true,
   [IsShape,
-   IsInfoLabel],
+   IsHintMessage],
   0,
-function(shape, info)
-  Unbind(shape!.info!.(info!.title));
+function(shape, message)
+  Unbind(shape!.messages!.(message!.id));
   return shape;
 end);
 
 InstallOtherMethod(Remove,
-  "a shape, a list of infos",
+  "a shape, a list of messages",
   true,
   [IsShape,
    IsList],
   0,
-function(shape, infos)
-  local info;
-  for info in infos do
-    Remove(shape, info);
+function(shape, messages)
+  local message;
+  for message in messages do
+    Remove(shape, message);
   od;
   return shape;
 end);

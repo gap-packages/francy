@@ -133,5 +133,5 @@ InstallMethod(GenerateID,
   0,
 function()
   FrancyGeneratedID := FrancyGeneratedID + 1;
-  return String(FrancyGeneratedID); # HexStringUUID(RandomUUID())
+  return Concatenation("A", String(FrancyGeneratedID));
 end);

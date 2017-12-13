@@ -1,5 +1,5 @@
-import IDUtils from '../util/id-utils';
 import Composite from './composite';
+import Message from './message';
 
 /* global d3 */
 
@@ -12,7 +12,7 @@ export default class Canvas extends Composite {
   render(json) {
     var parent = d3.select(this.options.appendTo);
 
-    var canvasId = IDUtils.getCanvasId(json.canvas.id);
+    var canvasId = json.canvas.id;
     var canvas = d3.select(`svg#${canvasId}`);
     // check if the canvas is already present
     if (!canvas.node()) {
@@ -79,6 +79,11 @@ export default class Canvas extends Composite {
     }
 
     this.logger.debug(`Canvas updated [${canvasId}]...`);
+
+    // add messages to canvas
+    this.options.appendTo = canvas;
+    var messages = new Message(this.options);
+    messages.render(json.canvas.messages);
 
     this.renderChildren(canvas, json);
 

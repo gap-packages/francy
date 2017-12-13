@@ -8,7 +8,7 @@ SetPackageInfo(rec(
   PackageName := "Francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
   Version     := "0.5.0",
-  Date        := "25/10/2017",
+  Date        := "25/12/2017",
 
   Persons := [
     rec(
@@ -61,8 +61,7 @@ SetPackageInfo(rec(
   Dependencies := rec(
     GAP                    := ">=4.7",
     NeededOtherPackages    := [["GAPDoc", ">= 1.5"],
-                              ["json", ">= 1.1.0"],
-                              ["uuid", ">= 0.4"]],
+                              ["json", ">= 1.1.0"]],
     SuggestedOtherPackages := [],
     ExternalConditions     := []
   ),

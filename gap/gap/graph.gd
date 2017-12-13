@@ -42,9 +42,6 @@ DeclareCategory("IsShapeDefaults", IsFrancyDefaults);
 #! Identifies <C>Link</C> objects.
 DeclareCategory("IsLink", IsFrancyObject);
 
-#! @Description
-#! Identifies <C>IsInfoLabel</C> objects.
-DeclareCategory("IsInfoLabel", IsFrancyObject);
 
 #############################################################################
 ##
@@ -65,11 +62,6 @@ BindGlobal("ShapeFamily", NewFamily("ShapeFamily", IsShape));
 #! This Family identifies all <C>Link</C> objects
 #! @Returns <C>LinkFamily</C>
 BindGlobal("LinkFamily", NewFamily("LinkFamily", IsLink));
-
-#! @Description
-#! This Family identifies all <C>InfoLabel</C> objects
-#! @Returns <C>InfoFamily</C>
-BindGlobal("InfoLabelFamily", NewFamily("InfoLabelFamily", IsInfoLabel));
 
 #############################################################################
 ##
@@ -117,12 +109,6 @@ DeclareRepresentation("IsShapeTypeRep",
 DeclareRepresentation("IsLinkRep",
   IsComponentObjectRep and IsAttributeStoringRep,
   ["id", "source", "target"], IsLink);
-  
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>InfoLabel</C> internal representation.
-DeclareRepresentation("IsInfoLabelRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "title", "value"], IsInfoLabel);
   
 
 #############################################################################
@@ -194,23 +180,16 @@ DeclareOperation("Add", [IsShape, IsCallback]);
 DeclareOperation("Remove", [IsShape, IsCallback]);
 
 #! @Description
-#! Adds an info label with the format label: value
-#! <P/>
-#! @Arguments IsString, IsString
-#! @Returns <C>InfoLabel</C>
-DeclareOperation("InfoLabel", [IsString, IsString]);
-
-#! @Description
 #! Add <C>Callback</C> to a specific <C>Shape</C>.
-#! @Arguments IsShape, [IsInfo, List(IsInfo)]
+#! @Arguments IsShape, [IsHintMessage, List(IsHintMessage)]
 #! @Returns <C>Shape</C>
-DeclareOperation("Add", [IsShape, IsInfoLabel]);
+DeclareOperation("Add", [IsShape, IsHintMessage]);
 
 #! @Description
 #! Remove <C>Callback</C> from a specific <C>Shape</C>.
-#! @Arguments IsShape, [IsInfo, List(IsInfo)]
+#! @Arguments IsShape, [IsHintMessage, List(IsHintMessage)]
 #! @Returns <C>Shape</C>
-DeclareOperation("Remove", [IsShape, IsInfoLabel]);
+DeclareOperation("Remove", [IsShape, IsHintMessage]);
 
 #! @Description
 #! Creates a <C>Link</C> between the two <C>Shape</C>.

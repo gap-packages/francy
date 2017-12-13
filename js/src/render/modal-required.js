@@ -1,4 +1,3 @@
-import IDUtils from '../util/id-utils';
 import Renderer from './renderer';
 
 /* global d3 Jupyter */
@@ -12,7 +11,7 @@ export default class RequiredArgsModal extends Renderer {
   render(json) {
     var self = this;
 
-    var modalId = IDUtils.getWindowId(json.callback.id);
+    var modalId = json.callback.id;
 
     this.logger.debug(`Creating Callback Modal [${modalId}]...`);
 

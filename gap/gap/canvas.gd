@@ -84,6 +84,18 @@ DeclareOperation("Add", [IsCanvas, IsFrancyObject]);
 DeclareOperation("Remove", [IsCanvas, IsFrancyObject]);
 
 #! @Description
+#! Add <C>Callback</C> to a specific <C>Shape</C>.
+#! @Arguments IsCanvas, [IsHintMessage, List(IsHintMessage)]
+#! @Returns <C>Shape</C>
+DeclareOperation("Add", [IsCanvas, IsHintMessage]);
+
+#! @Description
+#! Remove <C>Callback</C> from a specific <C>Shape</C>.
+#! @Arguments IsCanvas, [IsHintMessage, List(IsHintMessage)]
+#! @Returns <C>Shape</C>
+DeclareOperation("Remove", [IsCanvas, IsHintMessage]);
+
+#! @Description
 #! Generates the JSON representation of the canvas and children objects
 #! @Arguments IsCanvas
 #! @Returns <C>rec</C> with json representation of the canvas

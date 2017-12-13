@@ -1,5 +1,4 @@
 import JsonUtils from './util/json-utils';
-import IDUtils from './util/id-utils';
 import Canvas from './render/canvas';
 import MainMenu from './render/menu-main';
 import Graph from './render/graph';
@@ -73,7 +72,7 @@ export default class Francy {
       canvas.add(graph);
       canvas.add(chart);
       var element = canvas.render(json);
-      ALL_CANVAS[IDUtils.getCanvasId(json.canvas.id)] = element;
+      ALL_CANVAS[json.canvas.id] = element;
       return element.node();
     }
   }

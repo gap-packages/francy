@@ -16,7 +16,7 @@ export default class Tooltip extends Renderer {
 
   render(object) {
 
-    // just ignore rendering if no info are present
+    // just ignore rendering if no messages are present
     if (!object || !Object.values(object).length) {
       //this.logger.debug('Nothing to render here... continuing...');
       return;
@@ -35,8 +35,8 @@ export default class Tooltip extends Renderer {
       .append('div').attr('class', 'francy-table-body');
     Object.keys(object).map(function(key) {
       var row = table.append('div').attr('class', 'francy-table-row');
-      row.append('div').attr('class', 'francy-table-cell').text(key);
-      row.append('div').attr('class', 'francy-table-cell').text(object[key]);
+      row.append('div').attr('class', 'francy-table-cell').text(object[key].title);
+      row.append('div').attr('class', 'francy-table-cell').text(object[key].text);
     });
 
     // show tooltip

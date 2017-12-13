@@ -12,17 +12,17 @@
       "A1": {
         "type": "info",
         "title": "title1",
-        "text": "Valor1 ed wed "
+        "text": "Valor1"
       },
       "A2": {
         "type": "info",
-        "title": "",
-        "text": "Valor2 ed wdw ed"
+        "title": "title2",
+        "text": "Valor2"
       },
-      "A3": {
-        "type": "error",
-        "title": "title3v ev ",
-        "text": "Valor3 sad  ed wed wed wed wed "
+      "A4": {
+        "type": "success",
+        "title": "title4",
+        "text": "Valor4"
       }
     },
     "graph": {

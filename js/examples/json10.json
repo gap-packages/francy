@@ -1,0 +1,197 @@
+{
+  "version": "0.5.0",
+  "mime": "application/vnd.francy+json",
+  "canvas": {
+    "width": "800",
+    "height": "600",
+    "id": "A487",
+    "title": "Apery",
+    "zoomToFit": true,
+    "menus": {},
+    "graph": {
+      "type": "hasse",
+      "id": "A467",
+      "simulation": true,
+      "forces": true,
+      "nodes": {
+        "A468": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A468",
+          "title": "0",
+          "layer": 0,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A469": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A469",
+          "title": "11",
+          "layer": -1,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A470": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A470",
+          "title": "22",
+          "layer": -2,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A471": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A471",
+          "title": "33",
+          "layer": -3,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A472": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A472",
+          "title": "44",
+          "layer": -4,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A473": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A473",
+          "title": "55",
+          "layer": -5,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A474": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A474",
+          "title": "66",
+          "layer": -6,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A475": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A475",
+          "title": "57",
+          "layer": -3,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A476": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A476",
+          "title": "38",
+          "layer": -2,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A477": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A477",
+          "title": "19",
+          "layer": -1,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        }
+      },
+      "links": {
+        "A478": {
+          "source": "A469",
+          "id": "A478",
+          "target": "A468"
+        },
+        "A479": {
+          "source": "A470",
+          "id": "A479",
+          "target": "A469"
+        },
+        "A480": {
+          "source": "A471",
+          "id": "A480",
+          "target": "A470"
+        },
+        "A481": {
+          "source": "A472",
+          "id": "A481",
+          "target": "A471"
+        },
+        "A482": {
+          "source": "A473",
+          "id": "A482",
+          "target": "A472"
+        },
+        "A483": {
+          "source": "A474",
+          "id": "A483",
+          "target": "A473"
+        },
+        "A484": {
+          "source": "A475",
+          "id": "A484",
+          "target": "A476"
+        },
+        "A485": {
+          "source": "A476",
+          "id": "A485",
+          "target": "A477"
+        },
+        "A486": {
+          "source": "A477",
+          "id": "A486",
+          "target": "A468"
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,5 @@
 import Menu from './menu';
 import AboutModal from './modal-about';
-import IDUtils from '../util/id-utils';
 
 /* global d3 window */
 
@@ -15,7 +14,8 @@ export default class MainMenu extends Menu {
 
     var aboutModal = new AboutModal(this.options);
 
-    var menuId = IDUtils.getMenuId(json.canvas.id);
+    // otherwise clashes with the canvas itself!
+    var menuId = `M${json.canvas.id}`;
     var menu = d3.select(`#${menuId}`);
 
     // Check if the menu is already present

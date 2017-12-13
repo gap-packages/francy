@@ -64,29 +64,6 @@ export default class Graph extends Renderer {
       width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
       height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
 
-    //Generic gravity for the X position
-    var forceX = d3.forceX(-500).strength(0.35);
-
-    //Generic gravity for the Y position - undirected/directed graphs fall here
-    var forceY = d3.forceY(500).strength(0.35);
-
-    if (json.canvas.graph.type === 'hasse') {
-      //Strong y positioning based on layer to simulate the hasse diagram
-      forceY = d3.forceY(d => d.layer * (d.size * 5)).strength(1);
-    }
-
-    var simulation = d3.forceSimulation()
-      .force('link', d3.forceLink().id(d => d.id).strength(0.001))
-      .force('charge', d3.forceManyBody().strength(-250))
-      .force('collide', d3.forceCollide(d => d.size))
-      .force('x', forceX)
-      .force('y', forceY)
-      .force('center', d3.forceCenter(width / 2, height / 2))
-      .on("end", function() {
-        // zoom to fit when simulation is over
-        parent.zoomToFit();
-      });
-
     var linkGroup = svg.selectAll('g.francy-links');
 
     if (!linkGroup.node()) {
@@ -160,7 +137,7 @@ export default class Graph extends Renderer {
       })
       .on("mouseover", d => {
         // default, show tooltip
-        tooltip.render(d.info);
+        tooltip.render(d.messages);
       })
       .on("mouseout", () => {
         // default, hide tooltip
@@ -201,7 +178,7 @@ export default class Graph extends Renderer {
       })
       .on("mouseover", d => {
         // default, show tooltip
-        tooltip.render(d.info);
+        tooltip.render(d.messages);
       })
       .on("mouseout", () => {
         // default, hide tooltip
@@ -240,11 +217,40 @@ export default class Graph extends Renderer {
       .attr('y', 10 - 2)
       .text(d => `Index ${d.layer}`);
 
-    simulation.nodes(canvasNodes).on('tick', ticked);
-    simulation.force('link').links(canvasLinks);
+    // Canvas Forces
+    var centerForce = d3.forceCenter().x(width / 2).y(height / 2);
+    var manyForce = d3.forceManyBody().strength(-canvasNodes.length * 30);
+    var linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
+    var collideForce = d3.forceCollide(d => d.size * 2);
+
+    //Generic gravity for the X position
+    var forceX = d3.forceX(width / 2).strength(0.05);
+
+    //Generic gravity for the Y position - undirected/directed graphs fall here
+    var forceY = d3.forceY(height / 2).strength(0.25);
+
+    if (json.canvas.graph.type === 'hasse') {
+      //Generic gravity for the X position
+      forceX = d3.forceX(width / 2).strength(0.5);
+      //Strong y positioning based on layer to simulate the hasse diagram
+      forceY = d3.forceY(d => d.layer * 50).strength(5);
+    }
+
+    var simulation = d3.forceSimulation(canvasNodes)
+      .force("charge", manyForce)
+      .force("link", linkForce)
+      .force("center", centerForce)
+      .force("x", forceX)
+      .force("y", forceY)
+      .force("collide", collideForce)
+      .on('tick', ticked)
+      .on("end", function() {
+        // zoom to fit when simulation is over
+        parent.zoomToFit();
+      });
 
     //force simulation restart
-    simulation.alpha(1).restart();
+    simulation.restart();
 
     function ticked() {
       link
@@ -261,16 +267,16 @@ export default class Graph extends Renderer {
         .attr('x', d => d.x - d.title.length - Math.sqrt(d.size * d.title.length * 2))
         .attr('y', d => d.y - Math.sqrt(d.size * 2));
 
-      node.each(collide(0.9));
+      node.each(collide(1));
     }
 
     // COLLISION
-    var padding = 1; // separation between circles;
+    var padding = 10; // separation between circles;
 
     function collide(alpha) {
       let quadTree = d3.quadtree(canvasNodes);
       return function(d) {
-        let rb = 2 * d.size + padding,
+        let rb = 100 * d.size + padding,
           nx1 = d.x - rb,
           nx2 = d.x + rb,
           ny1 = d.y - rb,

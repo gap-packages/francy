@@ -2,14 +2,17 @@ let gulp = require('gulp');
 let browserify = require('browserify');
 let babelify = require('babelify');
 let source = require('vinyl-source-stream');
-let gutil = require('gulp-util');
+//let gutil = require('gulp-util');
 let del = require('del');
 let webpack = require('webpack-stream');
 let webpackConfig = require('./webpack.config.js');
+let sourcemaps = require('gulp-sourcemaps');
 let gulpSequence = require('gulp-sequence');
 let mocha = require('gulp-mocha');
 let esdoc = require('gulp-esdoc');
 let eslint = require('gulp-eslint');
+let uglify = require('gulp-uglify-es').default;
+let buffer = require('vinyl-buffer');
 
 gulp.task('clean-dist', function(cb) {
   return del(['./dist']);
@@ -31,10 +34,12 @@ gulp.task('browserify', function(cb) {
       debug: true
     })
     .transform(babelify)
-    .on('error', gutil.log)
     .bundle()
-    .on('error', gutil.log)
     .pipe(source('francy.bundle.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init())
+    .pipe(uglify())
+    .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest('./dist/francy/browser'));
 });
 

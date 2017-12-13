@@ -16,7 +16,7 @@
   }
   
   var francy = new Francy({verbose: true, appendTo: 'body', callbackHandler: trigger});
-  
+
   d3.json("json1.json", function (error, json) {
     var element = francy.render(json);
     document.getElementById('francy').append(element);
@@ -24,7 +24,7 @@
        d3.json("json1.1.json", function (error, json) {
           francy.render(json);
        });
-    }, 3000);
+    }, 5000);
   });
   
   d3.json("json2.json", function (error, json) {
@@ -62,11 +62,21 @@
     document.getElementById('francy').append(element);
   });
   
-  
   d3.json("json9.json", function (error, json) {
     var element = francy.render(json);
     document.getElementById('francy').append(element);
+     setTimeout(function(){
+       d3.json("json9.1.json", function (error, json) {
+          francy.render(json);
+       });
+    }, 5000);
   });
+  
+  d3.json("json10.json", function (error, json) {
+    var element = francy.render(json);
+    document.getElementById('francy').append(element);
+  });
+
 </script>
 </body>
 </html>
