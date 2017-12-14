@@ -31,7 +31,7 @@ export default class Message extends Renderer {
       // only render new ones
       if (!self.alerts.select(`div#${id}`).node()) {
         var row = self.alerts.append('div').attr('id', id)
-          .attr('class', `francy-alert ${messages[id].type}`).on('click', function() {
+          .attr('class', `francy-alert alert-${messages[id].type}`).on('click', function() {
             d3.select(this).style('display', 'none');
           });
         row.append('span').attr('class', 'strong').text(messages[id].title);

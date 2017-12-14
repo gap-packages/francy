@@ -37,12 +37,13 @@ export default class Canvas extends Composite {
     if (!content.node()) {
       content = canvas.append('g').attr('class', 'francy-content');
       zoom.on("zoom", zoomed);
-      canvas.call(zoom).on("dblclick.zoom", null); //.transform, d3.zoomIdentity);
+      canvas.call(zoom).on("dblclick.zoom", null);
     }
 
     canvas.on("click", stopped, true);
 
     canvas.zoomToFit = function() {
+      // only execute if enable, of course
       if (json.canvas.zoomToFit) {
         var bounds = content.node().getBBox();
 
@@ -57,7 +58,7 @@ export default class Canvas extends Composite {
         var midX = bounds.x + width / 2,
           midY = bounds.y + height / 2;
 
-        var scale = (0.75) / Math.max(width / fullWidth, height / fullHeight);
+        var scale = 0.75 / Math.max(width / fullWidth, height / fullHeight);
         var translateX = fullWidth / 2 - scale * midX,
           translateY = fullHeight / 2 - scale * midY;
 

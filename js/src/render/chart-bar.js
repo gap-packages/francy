@@ -82,7 +82,7 @@ export default class BarChart extends Renderer {
           tooltip.unrender();
         });
 
-      bar.merge(bar).on('end', () => parent.zoomToFit());
+      bar.merge(bar);
     });
 
     // force rebuild axis again

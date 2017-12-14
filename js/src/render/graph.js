@@ -51,6 +51,7 @@ export default class Graph extends Renderer {
       return;
     }
 
+    var dataChanged = false;
     var tooltip = new Tooltip(this.options);
     var contextMenu = new ContextMenu(this.options);
     var callback = new Callback(this.options);
@@ -71,6 +72,10 @@ export default class Graph extends Renderer {
     }
 
     var link = linkGroup.selectAll('line.francy-link').data(canvasLinks);
+
+    if (link.enter().data().length > 0 || link.enter().data().length > 0) {
+      dataChanged = true;
+    }
 
     link.exit().remove();
 
@@ -110,26 +115,27 @@ export default class Graph extends Renderer {
 
     var node = nodeGroup.selectAll('path.francy-node').data(canvasNodes);
 
+    if (node.enter().data().length > 0 || node.enter().data().length > 0) {
+      dataChanged = true;
+    }
+
     node.exit().remove();
 
-    node = node.enter().append('path')
+    node = node.enter().append('path').merge(node)
       .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
       .attr('transform', d => `translate(${d.x},${d.y})`)
       .style('fill', d => Graph.colors(d.layer * 5))
       .attr('class', d => 'francy-node' + (d.highlight ? ' francy-highlight' : '') + (Object.values(d.menus).length ? ' francy-context' : ''))
-      .attr('id', d => d.id)
-      .merge(node);
+      .attr('id', d => d.id);
 
     if (json.canvas.graph.drag) {
-      node
-        .call(d3.drag()
-          .on('start', dragstarted)
-          .on('drag', dragged)
-          .on('end', dragended));
+      node.call(d3.drag()
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended));
     }
 
-    node
-      .on('contextmenu', function(d) {
+    node.on('contextmenu', function(d) {
         // default, build context menu
         contextMenu.render(d);
         // any callbacks will be handled here
@@ -164,12 +170,11 @@ export default class Graph extends Renderer {
 
     label.exit().remove();
 
-    label = label.enter().append('text')
+    label = label.enter().append('text').merge(label)
       .attr('class', 'francy-label')
       .text(d => d.title)
       .attr('x', d => d.x - d.title.length - Math.sqrt(d.size * d.title.length * 2))
-      .attr('y', d => d.y - Math.sqrt(d.size * 2))
-      .merge(label);
+      .attr('y', d => d.y - Math.sqrt(d.size * 2));
 
     label
       .on('contextmenu', function(d) {
@@ -197,7 +202,7 @@ export default class Graph extends Renderer {
         tooltip.unrender();
       });
 
-    if (json.canvas.graph.simulation) {
+    if (json.canvas.graph.simulation && dataChanged) {
       // Canvas Forces
       var centerForce = d3.forceCenter().x(width / 2).y(height / 2);
       var manyForce = d3.forceManyBody().strength(-canvasNodes.length * 30);

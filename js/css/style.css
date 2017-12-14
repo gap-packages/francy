@@ -331,31 +331,31 @@ display:inline!important;
 float:right
 }
 
-.francy-alerts .francy-alert.info {
+.francy-alert.alert-info {
 color:#0c5460;
 background-color:#d1ecf1;
 border-color:#bee5eb
 }
 
-.francy-alerts .francy-alert.error {
+.francy-alert.alert-error {
 color:#721c24;
 background-color:#f8d7da;
 border-color:#f5c6cb
 }
 
-.francy-alerts .francy-alert.success {
+.francy-alert.alert-success {
 color:#155724;
 background-color:#d4edda;
 border-color:#c3e6cb
 }
 
-.francy-alerts .francy-alert.default {
+.francy-alert.alert-default {
 color:#1b1e21;
 background-color:#f6f6f6;
 border-color:#cfcfcf
 }
 
-.francy-alerts .francy-alert.warning {
+.francy-alert.alert-warning {
 color: #856404;
 background-color: #fff3cd;
 border-color: #ffeeba
