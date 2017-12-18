@@ -1,5 +1,6 @@
 import Menu from './menu';
 import AboutModal from './modal-about';
+import * as SvgToPng from '../../node_modules/save-svg-as-png/saveSvgAsPng';
 
 /* global d3 window */
 
@@ -14,22 +15,21 @@ export default class MainMenu extends Menu {
 
     var aboutModal = new AboutModal(this.options);
 
-    // otherwise clashes with the canvas itself!
-    var menuId = `M${json.canvas.id}`;
+    // Otherwise clashes with the canvas itself!
+    var menuId = `MainMenu-${json.canvas.id}`;
     var menu = d3.select(`#${menuId}`);
 
     // Check if the menu is already present
     if (!menu.node()) {
       // create a div element detached from the DOM!
       this.logger.debug(`Creating Main Menu [${menuId}]...`);
-      menu = parent.append('foreignObject').attr('transform', `translate(0,0)`)
-        .attr('class', 'francy-main-menu-holder').attr('id', menuId);
+      menu = parent.append('div').attr('class', 'francy-main-menu-holder').attr('id', menuId);
     }
 
     // Force rebuild menu again
     menu.selectAll('*').remove();
 
-    menu = menu.append('xhtml:ul').attr('class', 'francy-main-menu');
+    menu = menu.append('ul').attr('class', 'francy-main-menu');
 
     if (json.canvas.title) {
       menu.append('li').attr('class', 'francy-title').append('a').html(json.canvas.title);
@@ -39,9 +39,9 @@ export default class MainMenu extends Menu {
     entry.append('a').html('Francy');
     var content = entry.append('ul');
     if (json.canvas.zoomToFit) {
-      content.append('li').append('a').on('click', () => parent.zoomToFit()).attr('title', 'Zoom to Fit').html('Zoom to Fit');
+      content.append('li').append('a').on('click', () => parent.canvas.zoomToFit()).attr('title', 'Zoom to Fit').html('Zoom to Fit');
     }
-    content.append('li').append('a').on('click', () => this.logger.info('Save to PNG pressed... Not Implemented!')).attr('title', 'Save to PNG').html('Save to PNG');
+    content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(document.getElementById(json.canvas.id), "diagram.png")).attr('title', 'Save to PNG').html('Save to PNG');
     content.append('li').append('a').on('click', () => aboutModal.render(json)).attr('title', 'About').html('About');
 
     // Traverse all menus and flatten them!

@@ -235,7 +235,7 @@ function(canvas)
         Exec("start firefox ",name);
     fi;
     if ARCH_IS_UNIX() then
-        Exec("cat ",name);
+        Exec("open ",name);
     fi;
 
     return page;

@@ -17,7 +17,7 @@ export default class JsonUtils {
       input = match[0];
       try {
         let json = JSON.parse(input);
-        return json.mime === 'application/vnd.francy+json' ? json : undefined;
+        return json.mime === JsonUtils.MIME ? json : undefined;
       }
       catch (e) {
         /* eslint-disable no-console */
@@ -26,5 +26,9 @@ export default class JsonUtils {
       }
     }
     return undefined;
+  }
+
+  static get MIME() {
+    return 'application/vnd.francy+json';
   }
 }

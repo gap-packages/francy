@@ -6,10 +6,10 @@ export default class Tooltip extends Renderer {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
-    this.tooltip = this.SVGParent.select('foreignObject.francy-tooltip-holder');
+    this.tooltip = this.HTMLParent.select('div.francy-tooltip-holder');
     // check if the window is already present
     if (!this.tooltip.node()) {
-      this.tooltip = this.SVGParent.append('foreignObject')
+      this.tooltip = this.HTMLParent.append('div')
         .attr('class', 'francy-tooltip-holder');
     }
   }
@@ -22,15 +22,17 @@ export default class Tooltip extends Renderer {
       return;
     }
 
+    var pos = d3.mouse(this.SVGParent.node());
+
     // TODO fix always visible tooltip, fine until someone complains about :P
-    this.tooltip.attr('transform', `translate(${d3.event.offsetX + 5},${d3.event.offsetY + 5})`);
+    this.tooltip.style('left', pos[0] + 'px').style('top', pos[1] + 'px');
 
     // check if it exists already
     if (this.tooltip.selectAll('*').node()) {
       return;
     }
 
-    var table = this.tooltip.append('xhtml:div').attr('class', 'francy-tooltip')
+    var table = this.tooltip.append('div').attr('class', 'francy-tooltip')
       .append('div').attr('class', 'francy-table')
       .append('div').attr('class', 'francy-table-body');
     Object.keys(object).map(function(key) {

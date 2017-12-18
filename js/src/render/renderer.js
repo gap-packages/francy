@@ -18,11 +18,11 @@ export default class Renderer extends Base {
   }
 
   get HTMLParent() {
-    return d3.select(this.options.appendTo.node().parentNode);
+    return this.options.appendTo.node().tagName === 'SVG' ? d3.select(this.options.appendTo.node().parentNode) : this.options.appendTo;
   }
 
   get SVGParent() {
-    return this.options.appendTo;
+    return this.options.appendTo.node().tagName === 'DIV' ? this.options.appendTo.select('svg') : this.options.appendTo;
   }
 
 }
