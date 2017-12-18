@@ -1,5 +1,6 @@
 import Composite from './composite';
-import Message from './message';
+import Graph from './graph';
+import Chart from './chart';
 
 /* global d3 */
 
@@ -7,10 +8,14 @@ export default class Canvas extends Composite {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+    this.graph = new Graph(this.options);
+    this.chart = new Chart(this.options);
+    this.add(this.graph);
+    this.add(this.chart);
   }
 
   render(json) {
-    var parent = d3.select(this.options.appendTo);
+    var parent = this.options.appendTo;
 
     var canvasId = json.canvas.id;
     var canvas = d3.select(`svg#${canvasId}`);
@@ -20,7 +25,7 @@ export default class Canvas extends Composite {
       this.logger.debug(`Creating Canvas [${canvasId}]...`);
       canvas = parent.append('svg')
         .attr('id', canvasId)
-        .attr('class', 'francy francy-canvas');
+        .attr('class', 'francy-canvas');
     }
 
     // cannot continue if canvas is not present
@@ -42,14 +47,14 @@ export default class Canvas extends Composite {
 
     canvas.on("click", stopped, true);
 
-    canvas.zoomToFit = function() {
+    canvas.zoomToFit = this.zoomToFit = function() {
       // only execute if enable, of course
       if (json.canvas.zoomToFit) {
         var bounds = content.node().getBBox();
 
         var clientBounds = canvas.node().getBoundingClientRect(),
           fullWidth = clientBounds.right - clientBounds.left,
-          fullHeight = clientBounds.bottom - clientBounds.top + 45; //well, the menu is part of the canvas +-45px
+          fullHeight = clientBounds.bottom - clientBounds.top;
 
         var width = bounds.width,
           height = bounds.height;
@@ -83,11 +88,6 @@ export default class Canvas extends Composite {
     }
 
     this.logger.debug(`Canvas updated [${canvasId}]...`);
-
-    // add messages to canvas
-    this.options.appendTo = canvas;
-    var messages = new Message(this.options);
-    messages.render(json.canvas.messages);
 
     this.renderChildren(canvas, json);
 

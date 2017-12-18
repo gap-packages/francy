@@ -45,6 +45,8 @@ export default class Graph extends Renderer {
 
   render(json) {
 
+    var parent = this.options.appendTo;
+
     // just ignore rendering if no graph is present
     if (!json.canvas.graph) {
       this.logger.debug('No Graph to render here... continuing...');
@@ -52,11 +54,11 @@ export default class Graph extends Renderer {
     }
 
     var dataChanged = false;
-    var tooltip = new Tooltip(this.options);
+    var options = this.options;
+    options.appendTo = d3.select(parent.node().parentNode);
+    var tooltip = new Tooltip(options);
     var contextMenu = new ContextMenu(this.options);
     var callback = new Callback(this.options);
-
-    var parent = this.options.appendTo;
 
     var canvasNodes = json.canvas.graph.nodes ? Object.values(json.canvas.graph.nodes) : [],
       canvasLinks = json.canvas.graph.links ? Object.values(json.canvas.graph.links) : [];
@@ -115,7 +117,7 @@ export default class Graph extends Renderer {
 
     var node = nodeGroup.selectAll('path.francy-node').data(canvasNodes);
 
-    if (node.enter().data().length > 0 || node.enter().data().length > 0) {
+    if (node.exit().data().length > 0 || node.enter().data().length > 0) {
       dataChanged = true;
     }
 
@@ -151,11 +153,11 @@ export default class Graph extends Renderer {
         // any callbacks will be handled here
         executeCallback.call(this, d, 'dblclick');
       })
-      .on("mouseover", d => {
+      .on("mouseenter", d => {
         // default, show tooltip
         tooltip.render(d.messages);
       })
-      .on("mouseout", () => {
+      .on("mouseleave", () => {
         // default, hide tooltip
         tooltip.unrender();
       });

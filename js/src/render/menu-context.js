@@ -6,10 +6,10 @@ export default class ContextMenu extends Menu {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
-    this.contextMenu = this.SVGParent.select('foreignObject.francy-context-menu-holder');
+    this.contextMenu = this.HTMLParent.select('div.francy-context-menu-holder');
     // check if the window is already present
     if (!this.contextMenu.node()) {
-      this.contextMenu = this.SVGParent.append('foreignObject')
+      this.contextMenu = this.HTMLParent.append('div')
         .attr('class', 'francy-context-menu-holder');
     }
   }
@@ -24,10 +24,12 @@ export default class ContextMenu extends Menu {
       return;
     }
 
+    var pos = d3.mouse(this.SVGParent.node());
+
     this.contextMenu
       .transition()
       .duration(1000)
-      .attr('transform', `translate(${d3.event.offsetX + 5},${d3.event.offsetY + 5})`);
+      .style('left', pos[0] + 5 + 'px').style('top', pos[1] + 5 + 'px');
 
     // show the context menu
     this.contextMenu.style('display', 'block');
@@ -41,7 +43,7 @@ export default class ContextMenu extends Menu {
     d3.select('body').on('click.francy-context-menu', () => this.unrender());
 
     // this gets executed when a contextmenu event occurs
-    var menu = this.contextMenu.append('xhtml:div').append('div').attr('class', 'francy-context-menu').append('ul');
+    var menu = this.contextMenu.append('div').attr('class', 'francy-context-menu').append('ul');
     var menusIterator = this.iterator(Object.values(object.menus));
     this.traverse(menu, menusIterator);
 
