@@ -47,8 +47,9 @@ export default class Canvas extends Composite {
       if (json.canvas.zoomToFit) {
         var bounds = content.node().getBBox();
 
-        var fullWidth = canvas.node().clientWidth,
-          fullHeight = canvas.node().clientHeight + 45; //well, the menu is part of the canvas +-40px
+        var clientBounds = canvas.node().getBoundingClientRect(),
+          fullWidth = clientBounds.right - clientBounds.left,
+          fullHeight = clientBounds.bottom - clientBounds.top + 45; //well, the menu is part of the canvas +-45px
 
         var width = bounds.width,
           height = bounds.height;
