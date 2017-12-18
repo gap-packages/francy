@@ -16,7 +16,7 @@ export default class MainMenu extends Menu {
     var aboutModal = new AboutModal(this.options);
 
     // Otherwise clashes with the canvas itself!
-    var menuId = `M${json.canvas.id}`;
+    var menuId = `MainMenu-${json.canvas.id}`;
     var menu = d3.select(`#${menuId}`);
 
     // Check if the menu is already present

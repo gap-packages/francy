@@ -310,11 +310,11 @@ display:none
 }
 }
 
-.francy-alerts {
+.francy-message-holder {
 position:absolute;
-width: 50%;
-top: 60px;
-left: 20px;
+width:fit-content;
+top:60px;
+left:20px;
 }
 
 .francy-alert > span {

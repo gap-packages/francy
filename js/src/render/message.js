@@ -20,11 +20,11 @@ export default class Message extends Renderer {
 
     messages = Object.keys(json.canvas.messages).map((d) => { return { id: d, type: messages[d].type, title: messages[d].title, text: messages[d].text }; });
 
-    var alertsId = `A${json.canvas.id}`;
-    var alerts = parent.select(`div.francy-alerts#${alertsId}`);
+    var alertsId = `Messages-${json.canvas.id}`;
+    var alerts = d3.select(`#${alertsId}`);
     // check if the window is already present
     if (!alerts.node()) {
-      alerts = parent.append('div').attr('class', 'francy-alerts').attr('id', alertsId);
+      alerts = parent.append('div').attr('class', 'francy-message-holder').attr('id', alertsId);
     }
 
     messages.map(function(d) {
