@@ -10,7 +10,7 @@ define([
 ], function(require, Jupyter, events, outputHandler, d3, FrancyBundle) {
   "use strict";
 
-  var MIME_TYPE = FrancyBundle.JsonUtils.MIME;
+  var MIME_TYPE = 'application/vnd.francy+json';
   var CLASS_NAME = 'francy-view';
 
   window.d3 = d3;
