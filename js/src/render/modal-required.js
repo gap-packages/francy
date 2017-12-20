@@ -8,10 +8,10 @@ export default class RequiredArgsModal extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  render(json) {
+  render() {
     var self = this;
 
-    var modalId = json.callback.id;
+    var modalId = this.data.callback.id;
 
     this.logger.debug(`Creating Callback Modal [${modalId}]...`);
 
@@ -20,22 +20,22 @@ export default class RequiredArgsModal extends Renderer {
       .attr('class', 'francy-overlay');
     var holder = d3.select('body').append('div')
       .attr('class', 'francy');
-    var modal = holder.append('div')
+    this.element = holder.append('div')
       .attr('id', modalId)
       .attr('class', 'francy-modal');
 
-    var form = modal.append('form');
+    var form = this.element.append('form');
 
     var header = form.append('div').attr('class', 'francy-modal-header');
 
     var headerTitle = header.append('span').html('Required arguments&nbsp;');
-    if (json.title) {
-      headerTitle.append('span').attr('style', 'font-weight: bold;').text(`for ${json.title}`);
+    if (this.data.title) {
+      headerTitle.append('span').attr('style', 'font-weight: bold;').text(`for ${this.data.title}`);
     }
 
     var content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
 
-    for (var arg of Object.values(json.callback.requiredArgs)) {
+    for (var arg of Object.values(this.data.callback.requiredArgs)) {
       var row = content.append('div').attr('class', 'francy-table-row');
       row.append('div').attr('class', 'francy-table-cell').append('label').attr('for', arg.id).text(arg.title);
       var input = row.append('div').attr('class', 'francy-table-cell').append('input').attr('id', arg.id).attr('class', 'francy-arg')
@@ -43,7 +43,7 @@ export default class RequiredArgsModal extends Renderer {
         .attr('name', arg.id)
         .attr('type', arg.type)
         .attr('value', arg.value)
-        .on('change', function() { json.callback.requiredArgs[this.id].value = this.value; })
+        .on('change', function() { self.data.callback.requiredArgs[this.id].value = this.value; })
         .on('input', this.onchange)
         .on('keyup', this.onchange)
         .on('paste', this.onchange);
@@ -55,7 +55,7 @@ export default class RequiredArgsModal extends Renderer {
         arg.value = arg.value || false;
         input.attr('type', 'checkbox').attr('required', null)
           .attr('value', arg.value)
-          .on('change', function() { json.callback.requiredArgs[this.id].value = this.value = this.checked; });
+          .on('change', function() { self.data.callback.requiredArgs[this.id].value = this.value = this.checked; });
       }
       row.append('span').attr('class', 'validity');
     }
@@ -64,19 +64,19 @@ export default class RequiredArgsModal extends Renderer {
 
     footer.append('button').text('Ok').on('click', function() {
       if (form.node().checkValidity()) {
-        self.options.callbackHandler(json.callback);
+        d3.event.preventDefault();
+        self.options.callbackHandler(self.data.callback);
         overlay.remove();
-        modal.remove();
+        self.element.remove();
         holder.remove();
-        event.preventDefault();
       }
       return false;
     });
     footer.append('button').text('Cancel').on('click', () => {
-      event.preventDefault();
       overlay.remove();
-      modal.remove();
+      self.element.remove();
       holder.remove();
+      d3.event.preventDefault();
       return false;
     });
 
@@ -97,7 +97,7 @@ export default class RequiredArgsModal extends Renderer {
 
     this.logger.debug(`Callback Modal updated [${modalId}]...`);
 
-    return modal;
+    return this;
   }
 
   unrender() {}

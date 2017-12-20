@@ -38,7 +38,7 @@ gulp.task('browserify', function(cb) {
     .pipe(source('francy.bundle.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init())
-    //.pipe(uglify())
+    .pipe(uglify())
     .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest('./dist/francy/browser'));
 });

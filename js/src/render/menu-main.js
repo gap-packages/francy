@@ -10,47 +10,47 @@ export default class MainMenu extends Menu {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  render(json) {
-    var parent = this.options.appendTo;
+  render() {
+    var parent = this.options.appendTo.element;
 
     var aboutModal = new AboutModal(this.options);
 
     // Otherwise clashes with the canvas itself!
-    var menuId = `MainMenu-${json.canvas.id}`;
-    var menu = d3.select(`#${menuId}`);
+    var menuId = `MainMenu-${this.data.canvas.id}`;
+    this.element = d3.select(`#${menuId}`);
 
     // Check if the menu is already present
-    if (!menu.node()) {
+    if (!this.element.node()) {
       // create a div element detached from the DOM!
       this.logger.debug(`Creating Main Menu [${menuId}]...`);
-      menu = parent.append('div').attr('class', 'francy-main-menu-holder').attr('id', menuId);
+      this.element = parent.append('div').attr('class', 'francy-main-menu-holder').attr('id', menuId);
     }
 
     // Force rebuild menu again
-    menu.selectAll('*').remove();
+    this.element.selectAll('*').remove();
 
-    menu = menu.append('ul').attr('class', 'francy-main-menu');
+    this.element = this.element.append('ul').attr('class', 'francy-main-menu');
 
-    if (json.canvas.title) {
-      menu.append('li').attr('class', 'francy-title').append('a').html(json.canvas.title);
+    if (this.data.canvas.title) {
+      this.element.append('li').attr('class', 'francy-title').append('a').html(this.data.canvas.title);
     }
 
-    var entry = menu.append('li');
+    var entry = this.element.append('li');
     entry.append('a').html('Francy');
     var content = entry.append('ul');
-    if (json.canvas.zoomToFit) {
-      content.append('li').append('a').on('click', () => parent.canvas.zoomToFit()).attr('title', 'Zoom to Fit').html('Zoom to Fit');
+    if (this.data.canvas.zoomToFit) {
+      content.append('li').append('a').on('click', () => this.options.appendTo.canvas.zoomToFit()).attr('title', 'Zoom to Fit').html('Zoom to Fit');
     }
-    content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(document.getElementById(json.canvas.id), "diagram.png")).attr('title', 'Save to PNG').html('Save to PNG');
-    content.append('li').append('a').on('click', () => aboutModal.render(json)).attr('title', 'About').html('About');
+    content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(document.getElementById(this.data.canvas.id), "diagram.png")).attr('title', 'Save to PNG').html('Save to PNG');
+    content.append('li').append('a').on('click', () => aboutModal.load(this.data).render()).attr('title', 'About').html('About');
 
     // Traverse all menus and flatten them!
-    var menusIterator = this.iterator(Object.values(json.canvas.menus));
-    this.traverse(menu, menusIterator);
+    var menusIterator = this.iterator(Object.values(this.data.canvas.menus));
+    this.traverse(this.element, menusIterator);
 
     this.logger.debug(`Main Menu updated [${menuId}]...`);
 
-    return menu;
+    return this;
   }
 
   unrender() {}

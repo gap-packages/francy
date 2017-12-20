@@ -8,7 +8,10 @@ export default class JsonUtils {
    * @param input - the input to parse
    * @returns {json} - if the input is a valid JSON object, otherwise returns {undefined}
    */
-  static parse(input) {
+  static parse(input, partial) {
+    if (!input) {
+      return;
+    }
     input = typeof input !== "string" ? JSON.stringify(input) : input;
     input = input.replace(/[\n\r\b\\]+|(gap>)/g, '');
     let jsonRegex = /{(?:[^])*}/g;
@@ -17,7 +20,7 @@ export default class JsonUtils {
       input = match[0];
       try {
         let json = JSON.parse(input);
-        return json.mime === JsonUtils.MIME ? json : undefined;
+        return json.mime === JsonUtils.MIME || partial ? json : undefined;
       }
       catch (e) {
         /* eslint-disable no-console */
@@ -25,7 +28,7 @@ export default class JsonUtils {
         /* eslint-enable no-console */
       }
     }
-    return undefined;
+    return;
   }
 
   static get MIME() {

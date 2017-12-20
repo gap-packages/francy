@@ -13,7 +13,7 @@ export default class Menu extends Renderer {
       var entry = appendTo.append('li');
       var action = entry.selectAll('a').data([menuItem]).enter().append('a').attr('title', menuItem.title).html(menuItem.title);
       if (menuItem.callback && Object.values(menuItem.callback).length) {
-        action.on('click', (d) => new Callback(this.options).execute(d));
+        action.on('click', (d) => new Callback(this.options).load(d, true).execute());
       }
       if (menuItem.menus && Object.values(menuItem.menus).length > 0) {
         var content = entry.append('ul');

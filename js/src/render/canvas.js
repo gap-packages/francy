@@ -1,6 +1,7 @@
 import Composite from './composite';
 import Graph from './graph';
 import Chart from './chart';
+import { dontExecuteIfNoData } from '../decorator/data';
 
 /* global d3 */
 
@@ -10,49 +11,50 @@ export default class Canvas extends Composite {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
     this.graph = new Graph(this.options);
     this.chart = new Chart(this.options);
-    this.add(this.graph);
-    this.add(this.chart);
+    this.add(this.graph).add(this.chart);
   }
 
-  render(json) {
-    var parent = this.options.appendTo;
+  @dontExecuteIfNoData()
+  render() {
+    var parent = this.options.appendTo.element;
 
-    var canvasId = json.canvas.id;
-    var canvas = d3.select(`svg#${canvasId}`);
+    var canvasId = this.data.canvas.id;
+    this.element = d3.select(`svg#${canvasId}`);
     // check if the canvas is already present
-    if (!canvas.node()) {
+    if (!this.element.node()) {
       // create a svg element detached from the DOM!
       this.logger.debug(`Creating Canvas [${canvasId}]...`);
-      canvas = parent.append('svg')
-        .attr('id', canvasId)
-        .attr('class', 'francy-canvas');
+      this.element = parent.append('svg')
+        .attr('class', 'francy-canvas')
+        .attr('id', canvasId);
     }
 
     // cannot continue if canvas is not present
-    if (!canvas.node()) {
+    if (!this.element.node()) {
       throw new Error(`Oops, could not create canvas with id [${canvasId}]... Cannot proceed.`);
     }
 
-    canvas.attr('width', json.canvas.width).attr('height', json.canvas.height);
+    this.element.attr('width', this.data.canvas.width).attr('height', this.data.canvas.height);
 
     var zoom = d3.zoom();
 
-    var content = canvas.select('g.francy-content');
+    var content = this.element.select('g.francy-content');
 
     if (!content.node()) {
-      content = canvas.append('g').attr('class', 'francy-content');
+      content = this.element.append('g').attr('class', 'francy-content');
       zoom.on("zoom", zoomed);
-      canvas.call(zoom).on("dblclick.zoom", null);
+      this.element.call(zoom).on("dblclick.zoom", null);
     }
 
-    canvas.on("click", stopped, true);
+    this.element.on("click", stopped, true);
 
-    canvas.zoomToFit = this.zoomToFit = function() {
+    var self = this;
+    this.element.zoomToFit = this.zoomToFit = function() {
       // only execute if enable, of course
-      if (json.canvas.zoomToFit) {
+      if (self.data.canvas.zoomToFit) {
         var bounds = content.node().getBBox();
 
-        var clientBounds = canvas.node().getBoundingClientRect(),
+        var clientBounds = self.element.node().getBoundingClientRect(),
           fullWidth = clientBounds.right - clientBounds.left,
           fullHeight = clientBounds.bottom - clientBounds.top;
 
@@ -76,7 +78,7 @@ export default class Canvas extends Composite {
     };
 
     function updateZoom(translateX, translateY, scale) {
-      canvas.call(zoom.transform, d3.zoomIdentity.translate(translateX, translateY).scale(scale, scale));
+      self.element.call(zoom.transform, d3.zoomIdentity.translate(translateX, translateY).scale(scale, scale));
     }
 
     function zoomed() {
@@ -89,9 +91,9 @@ export default class Canvas extends Composite {
 
     this.logger.debug(`Canvas updated [${canvasId}]...`);
 
-    this.renderChildren(canvas, json);
+    this.renderChildren();
 
-    return canvas;
+    return this;
   }
 
   unrender() {}

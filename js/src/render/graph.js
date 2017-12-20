@@ -2,6 +2,7 @@ import Renderer from './renderer';
 import ContextMenu from './menu-context';
 import Tooltip from './tooltip';
 import Callback from './callback';
+import { dontExecuteIfNoData } from '../decorator/data';
 
 /* global d3 */
 
@@ -43,34 +44,28 @@ export default class Graph extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  render(json) {
+  @dontExecuteIfNoData('canvas.graph')
+  render() {
 
-    var parent = this.options.appendTo;
-
-    // just ignore rendering if no graph is present
-    if (!json.canvas.graph) {
-      this.logger.debug('No Graph to render here... continuing...');
-      return;
-    }
+    var parent = this.options.appendTo.element;
 
     var dataChanged = false;
-    var options = this.options;
-    options.appendTo = d3.select(parent.node().parentNode);
-    var tooltip = new Tooltip(options);
+    var tooltip = new Tooltip(this.options);
     var contextMenu = new ContextMenu(this.options);
     var callback = new Callback(this.options);
 
-    var canvasNodes = json.canvas.graph.nodes ? Object.values(json.canvas.graph.nodes) : [],
-      canvasLinks = json.canvas.graph.links ? Object.values(json.canvas.graph.links) : [];
+    var canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
+      canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
 
-    var svg = parent.select('g.francy-content'),
-      width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
+    this.element = parent.select('g.francy-content');
+
+    var width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
       height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
 
-    var linkGroup = svg.selectAll('g.francy-links');
+    var linkGroup = this.element.selectAll('g.francy-links');
 
     if (!linkGroup.node()) {
-      linkGroup = svg.append('g').attr('class', 'francy-links');
+      linkGroup = this.element.append('g').attr('class', 'francy-links');
     }
 
     var link = linkGroup.selectAll('line.francy-link').data(canvasLinks);
@@ -90,7 +85,7 @@ export default class Graph extends Renderer {
       .attr('y2', d => d.target.y)
       .merge(link);
 
-    if (json.canvas.graph.type === 'directed') {
+    if (this.data.canvas.graph.type === 'directed') {
       // this means we need arrows, so we append the marker
       parent.append('defs').selectAll('marker')
         .data(['arrow'])
@@ -109,10 +104,10 @@ export default class Graph extends Renderer {
       link.style('marker-end', 'url(#arrow)');
     }
 
-    var nodeGroup = svg.selectAll('g.francy-nodes');
+    var nodeGroup = this.element.selectAll('g.francy-nodes');
 
     if (!nodeGroup.node()) {
-      nodeGroup = svg.append('g').attr('class', 'francy-nodes');
+      nodeGroup = this.element.append('g').attr('class', 'francy-nodes');
     }
 
     var node = nodeGroup.selectAll('path.francy-node').data(canvasNodes);
@@ -130,7 +125,7 @@ export default class Graph extends Renderer {
       .attr('class', d => 'francy-node' + (d.highlight ? ' francy-highlight' : '') + (Object.values(d.menus).length ? ' francy-context' : ''))
       .attr('id', d => d.id);
 
-    if (json.canvas.graph.drag) {
+    if (this.data.canvas.graph.drag) {
       node.call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
@@ -139,7 +134,7 @@ export default class Graph extends Renderer {
 
     node.on('contextmenu', function(d) {
         // default, build context menu
-        contextMenu.render(d);
+        contextMenu.load(d, true).render();
         // any callbacks will be handled here
         executeCallback.call(this, d, 'contextmenu');
       })
@@ -155,17 +150,17 @@ export default class Graph extends Renderer {
       })
       .on("mouseenter", d => {
         // default, show tooltip
-        tooltip.render(d.messages);
+        tooltip.load(d.messages, true).render();
       })
       .on("mouseleave", () => {
         // default, hide tooltip
         tooltip.unrender();
       });
 
-    var labelGroup = svg.selectAll('.francy-labels');
+    var labelGroup = this.element.selectAll('.francy-labels');
 
     if (!labelGroup.node()) {
-      labelGroup = svg.append('g').attr('class', 'francy-labels');
+      labelGroup = this.element.append('g').attr('class', 'francy-labels');
     }
 
     var label = labelGroup.selectAll('text').data(canvasNodes);
@@ -181,7 +176,7 @@ export default class Graph extends Renderer {
     label
       .on('contextmenu', function(d) {
         // default, build context menu
-        contextMenu.render(d);
+        contextMenu.load(d, true).render();
         // any callbacks will be handled here
         executeCallback.call(this, d, 'contextmenu');
       })
@@ -197,14 +192,14 @@ export default class Graph extends Renderer {
       })
       .on("mouseover", d => {
         // default, show tooltip
-        tooltip.render(d.messages);
+        tooltip.load(d.messages, true).render();
       })
       .on("mouseout", () => {
         // default, hide tooltip
         tooltip.unrender();
       });
 
-    if (json.canvas.graph.simulation && dataChanged) {
+    if (this.data.canvas.graph.simulation && dataChanged) {
       // Canvas Forces
       var centerForce = d3.forceCenter().x(width / 2).y(height / 2);
       var manyForce = d3.forceManyBody().strength(-canvasNodes.length * 30);
@@ -217,7 +212,7 @@ export default class Graph extends Renderer {
       //Generic gravity for the Y position - undirected/directed graphs fall here
       var forceY = d3.forceY(height / 2).strength(0.25);
 
-      if (json.canvas.graph.type === 'hasse') {
+      if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
         forceX = d3.forceX(width / 2).strength(0.5);
         //Strong y positioning based on layer to simulate the hasse diagram
@@ -351,12 +346,12 @@ export default class Graph extends Renderer {
       if (data.callbacks) {
         Object.values(data.callbacks).forEach((cb) => {
           // execute the ones that match the event!
-          cb.trigger === event && callback.execute({ callback: cb });
+          cb.trigger === event && callback.load({ callback: cb }).execute();
         });
       }
     }
 
-    return svg;
+    return this;
 
   }
 

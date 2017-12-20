@@ -10,7 +10,7 @@ define([
 ], function(require, Jupyter, events, outputHandler, d3, FrancyBundle) {
   "use strict";
 
-  var MIME_TYPE = 'application/vnd.francy+json';
+  var MIME_TYPE = FrancyBundle.JsonUtils.MIME;
   var CLASS_NAME = 'francy-view';
 
   window.d3 = d3;
@@ -29,13 +29,13 @@ define([
   let francy = new FrancyBundle.Francy({
     verbose: true,
     appendTo: '#francy-drawing-div',
-    callbackHandler: function(json) {
-      Jupyter.notebook.kernel.execute(`Trigger(${JSON.stringify(JSON.stringify(json))});`, {
+    callbackHandler: function(command) {
+      Jupyter.notebook.kernel.execute(command, {
         iopub: {
           output: function(msg) {
             if (msg.content && msg.content.data && msg.content.data[MIME_TYPE]) {
               // This will update an existing canvas by its ID!
-              francy.render(msg.content.data[MIME_TYPE]);
+              francy.load(msg.content.data[MIME_TYPE]).render();
               return;
             }
           }
@@ -54,7 +54,7 @@ define([
 
       // `this` is the output area we are appending to
       let appendMime = function(json, md, element) {
-        var francyObject = francy.render(json);
+        var francyObject = francy.load(json).render();
         var toinsert = this.create_output_subarea(md, CLASS_NAME, MIME_TYPE);
         toinsert.append(francyObject);
         element.append(toinsert);

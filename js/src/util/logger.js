@@ -1,5 +1,3 @@
-let singleton = null;
-
 /**
  * This class is a singleton that provides a logger for the Francy application.
  */
@@ -11,14 +9,8 @@ export default class Logger {
    * @param verbose prints extra log information to console.log, default false
    */
   constructor({ verbose = false } = {}) {
-    if (!singleton) {
-      this.verbose = verbose;
-      this.console = console;
-      singleton = this;
-    }
-    else {
-      return singleton;
-    }
+    this.verbose = verbose;
+    this.console = console;
   }
 
   /**

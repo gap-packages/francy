@@ -8,7 +8,7 @@ export default class AboutModal extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  render(json) {
+  render() {
     var modalId = 'AboutModalWindow';
 
     this.logger.debug(`Creating About Modal [${modalId}]...`);
@@ -18,26 +18,26 @@ export default class AboutModal extends Renderer {
       .attr('class', 'francy-overlay');
     var holder = d3.select('body').append('div')
       .attr('class', 'francy');
-    var modal = holder.append('div')
+    this.element = holder.append('div')
       .attr('id', modalId)
       .attr('class', 'francy-modal');
 
-    var form = modal.append('form');
+    var form = this.element.append('form');
 
     var header = form.append('div').attr('class', 'francy-modal-header');
 
-    header.append('span').html(`About Francy v${json.version}`);
+    header.append('span').html(`About Francy v${this.data.version || 'N/A'}`);
 
     var content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
 
     content.append('span').text('Loaded Object:');
-    content.append('pre').attr('class', 'francy').html(this.syntaxHighlight(JSON.stringify(json.canvas, null, 2)));
+    content.append('pre').attr('class', 'francy').html(this.syntaxHighlight(JSON.stringify(this.data.canvas, null, 2)));
     content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
 
     var footer = form.append('div').attr('class', 'francy-modal-footer');
 
     footer.append('button').text('Ok').on('click', function() {
-      modal.remove();
+      this.element.remove();
       holder.remove();
       overlay.remove();
       event.preventDefault();
@@ -59,7 +59,7 @@ export default class AboutModal extends Renderer {
 
     this.logger.debug(`Callback About updated [${modalId}]...`);
 
-    return modal;
+    return this;
   }
 
   unrender() {}

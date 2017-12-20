@@ -10,19 +10,20 @@ export default class Renderer extends Base {
       throw new TypeError('Cannot construct [Renderer] instances directly!');
     }
     if (this.render === undefined || typeof this.render !== 'function') {
-      throw new TypeError('Must override [render(json)] method!');
+      throw new TypeError('Must override [render()] method!');
     }
     if (this.unrender === undefined) {
       this.logger.debug('No [unrender()] method specified...');
     }
+    this.element = undefined;
   }
 
   get HTMLParent() {
-    return this.options.appendTo.node().tagName === 'SVG' ? d3.select(this.options.appendTo.node().parentNode) : this.options.appendTo;
+    return this.options.appendTo.element.node().tagName.toUpperCase() === 'SVG' ? d3.select(this.options.appendTo.element.node().parentNode) : this.options.appendTo.element;
   }
 
   get SVGParent() {
-    return this.options.appendTo.node().tagName === 'DIV' ? this.options.appendTo.select('svg') : this.options.appendTo;
+    return this.options.appendTo.element.node().tagName.toUpperCase() === 'DIV' ? this.options.appendTo.element.select('svg') : this.options.appendTo.element;
   }
 
 }

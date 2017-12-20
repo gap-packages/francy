@@ -10,24 +10,19 @@ export default class BarChart extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  render(json) {
-
-    // just ignore rendering if no chart is present
-    if (!json.canvas.chart) {
-      this.logger.debug('No BarChart to render here... continuing...');
-      return;
-    }
+  render() {
 
     var tooltip = new Tooltip(this.options);
 
-    var parent = this.options.appendTo;
+    var parent = this.options.appendTo.element;
 
-    var axis = json.canvas.chart.axis,
-      datasets = json.canvas.chart.data,
+    var axis = this.data.canvas.chart.axis,
+      datasets = this.data.canvas.chart.data,
       datasetNames = Object.keys(datasets);
 
-    var svg = parent.select('g.francy-content'),
-      margin = { top: 50, right: 50, bottom: 50, left: 50 },
+    this.element = parent.select('g.francy-content');
+
+    var margin = { top: 50, right: 50, bottom: 50, left: 50 },
       width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
       height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
 
@@ -51,10 +46,10 @@ export default class BarChart extends Renderer {
       x.domain(axis.x.domain);
     }
 
-    var barsGroup = svg.selectAll('g.francy-bars');
+    var barsGroup = this.element.selectAll('g.francy-bars');
 
     if (!barsGroup.node()) {
-      barsGroup = svg.append('g').attr('class', 'francy-bars');
+      barsGroup = this.element.append('g').attr('class', 'francy-bars');
     }
 
     datasetNames.forEach(function(key, index) {
@@ -71,12 +66,12 @@ export default class BarChart extends Renderer {
         .attr('width', (x.bandwidth() / datasetNames.length) - 1)
         .attr('y', function(d) { return y(d); })
         .attr('height', function(d) { return height - y(d); })
-        .on("mouseover", function(d) {
+        .on("mouseenter", function(d) {
           d3.select(this).transition()
             .duration(250).style("fill-opacity", 0.5);
-          tooltip.render({ 'Dataset': key, 'Value': d });
+          tooltip.load(Chart.tooltip(key, d), true).render();
         })
-        .on("mouseout", function() {
+        .on("mouseleave", function() {
           d3.select(this).transition()
             .duration(250).style("fill-opacity", 1);
           tooltip.unrender();
@@ -86,10 +81,10 @@ export default class BarChart extends Renderer {
     });
 
     // force rebuild axis again
-    var xAxisGroup = svg.selectAll('g.francy-x-axis');
+    var xAxisGroup = this.element.selectAll('g.francy-x-axis');
 
     if (!xAxisGroup.node()) {
-      xAxisGroup = svg.append('g').attr('class', 'francy-x-axis');
+      xAxisGroup = this.element.append('g').attr('class', 'francy-x-axis');
     }
 
     xAxisGroup.selectAll('*').remove();
@@ -107,10 +102,10 @@ export default class BarChart extends Renderer {
       .text(axis.x.title);
 
     // force rebuild axis again
-    var yAxisGroup = svg.selectAll('g.francy-y-axis');
+    var yAxisGroup = this.element.selectAll('g.francy-y-axis');
 
     if (!yAxisGroup.node()) {
-      yAxisGroup = svg.append('g').attr('class', 'francy-y-axis');
+      yAxisGroup = this.element.append('g').attr('class', 'francy-y-axis');
     }
 
     yAxisGroup.selectAll('*').remove();
@@ -126,10 +121,10 @@ export default class BarChart extends Renderer {
       .style('text-anchor', 'end')
       .text(axis.y.title);
 
-    var legendGroup = svg.selectAll('.francy-legend');
+    var legendGroup = this.element.selectAll('.francy-legend');
 
     if (!legendGroup.node()) {
-      legendGroup = svg.append('g').attr('class', 'francy-legend');
+      legendGroup = this.element.append('g').attr('class', 'francy-legend');
     }
 
     // force rebuild legend again
@@ -159,7 +154,7 @@ export default class BarChart extends Renderer {
 
     parent.zoomToFit();
 
-    return svg;
+    return this;
   }
 
   unrender() {}

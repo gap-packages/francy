@@ -2,6 +2,7 @@ import Renderer from './renderer';
 import BarChart from './chart-bar';
 import LineChart from './chart-line';
 import ScatterChart from './chart-scatter';
+import { dontExecuteIfNoData } from '../decorator/data';
 
 /* global d3 */
 
@@ -11,26 +12,27 @@ export default class Chart extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  render(json) {
-
-    if (!json.canvas.chart) {
-      return;
-    }
+  @dontExecuteIfNoData('canvas.chart')
+  render() {
 
     var element = undefined;
-    switch (json.canvas.chart.type) {
+    switch (this.data.canvas.chart.type) {
       case "bar":
-        element = new BarChart(this.options).render(json);
+        element = new BarChart(this.options).load(this.data).render();
         break;
       case "line":
-        element = new LineChart(this.options).render(json);
+        element = new LineChart(this.options).load(this.data).render();
         break;
       case "scatter":
-        element = new ScatterChart(this.options).render(json);
+        element = new ScatterChart(this.options).load(this.data).render();
         break;
     }
 
     return element;
+  }
+
+  static tooltip(dataset, value) {
+    return { "A": { 'title': 'Dataset', 'text': dataset }, "B": { 'title': 'Value', 'text': value } };
   }
 
   static get colors() {
