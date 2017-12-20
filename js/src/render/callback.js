@@ -6,16 +6,23 @@ export default class CallbackHandler extends Base {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+    this.callback = callbackHandler;
   }
 
   @dontExecuteIfNoData()
   execute() {
     if (Object.keys(this.data.callback.requiredArgs).length) {
-      return new RequiredArgsModal(this.options).load(this.data, true).render();
+      var options = this.options;
+      options.callbackHandler = (calbackObj) => this._execute.call(this, calbackObj);
+      return new RequiredArgsModal(options).load(this.data, true).render();
     }
     else {
       // Trigger is the expected command on GAP for this events!
-      return this.options.callbackHandler(`Trigger(${JSON.stringify(JSON.stringify(this.data.callback))});`);
+      this._execute(this.data.callback);
     }
+  }
+
+  _execute(calbackObj) {
+    this.callback(`Trigger(${JSON.stringify(JSON.stringify(calbackObj))});`);
   }
 }
