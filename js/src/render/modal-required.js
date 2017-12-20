@@ -64,7 +64,7 @@ export default class RequiredArgsModal extends Renderer {
 
     footer.append('button').text('Ok').on('click', function() {
       if (form.node().checkValidity()) {
-        d3.event.preventDefault(self.data.callback);
+        d3.event.preventDefault();
         self.options.callbackHandler(self.data.callback);
         overlay.remove();
         self.element.remove();

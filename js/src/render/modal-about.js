@@ -40,7 +40,7 @@ export default class AboutModal extends Renderer {
       this.element.remove();
       holder.remove();
       overlay.remove();
-      event.preventDefault();
+      d3.event.preventDefault();
       return false;
     });
 
