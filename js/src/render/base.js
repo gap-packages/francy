@@ -34,7 +34,7 @@ export default class Base {
   load(json, partial) {
     let data = JsonUtils.parse(json, partial);
     if (data) {
-      this.data = json;
+      this.data = data;
     }
     return this;
   }
