@@ -199,9 +199,7 @@ export default class Graph extends Renderer {
         tooltip.unrender();
       });
 
-    var simulation = d3.forceSimulation(canvasNodes);
-
-    if (this.data.canvas.graph.simulation && dataChanged) {
+    if (this.data.canvas.graph.simulation) { // && dataChanged) {
       // Canvas Forces
       var centerForce = d3.forceCenter().x(width / 2).y(height / 2);
       var manyForce = d3.forceManyBody().strength(-canvasNodes.length * 30);
@@ -221,7 +219,7 @@ export default class Graph extends Renderer {
         forceY = d3.forceY(d => d.layer * 50).strength(5);
       }
 
-      simulation
+      var simulation = d3.forceSimulation(canvasNodes)
         .force("charge", manyForce)
         .force("link", linkForce)
         .force("center", centerForce)
@@ -324,7 +322,7 @@ export default class Graph extends Renderer {
     }
 
     function dragstarted(d) {
-      if (!d3.event.active) {
+      if (!d3.event.active && this.data.canvas.graph.simulation && dataChanged) {
         simulation.alphaTarget(0.01).restart();
       }
       d.fx = d.x;
@@ -337,7 +335,7 @@ export default class Graph extends Renderer {
     }
 
     function dragended(d) {
-      if (!d3.event.active) {
+      if (!d3.event.active && this.data.canvas.graph.simulation && dataChanged) {
         simulation.alphaTarget(0);
       }
       d.fx = null;

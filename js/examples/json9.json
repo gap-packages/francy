@@ -59,6 +59,35 @@
           "highlight": true,
           "menus": {},
           "callbacks": {}
+        },
+        "92C780AE49344AAB9C4130C7E437EAF01": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "messages": {
+            "A1": {
+              "type": "info",
+              "title": "title1",
+              "text": "Valor1"
+            },
+            "A2": {
+              "type": "info",
+              "title": "title2",
+              "text": "Valor2"
+            },
+            "A3": {
+              "type": "info",
+              "title": "title3",
+              "text": "Valor3"
+            }
+          },
+          "id": "92C780AE49344AAB9C4130C7E437EAF01",
+          "title": "",
+          "layer": 0,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
         }
       },
       "links": {}
