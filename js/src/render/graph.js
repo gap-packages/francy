@@ -199,6 +199,8 @@ export default class Graph extends Renderer {
         tooltip.unrender();
       });
 
+    var simulation = d3.forceSimulation(canvasNodes);
+
     if (this.data.canvas.graph.simulation && dataChanged) {
       // Canvas Forces
       var centerForce = d3.forceCenter().x(width / 2).y(height / 2);
@@ -219,7 +221,7 @@ export default class Graph extends Renderer {
         forceY = d3.forceY(d => d.layer * 50).strength(5);
       }
 
-      var simulation = d3.forceSimulation(canvasNodes)
+      simulation
         .force("charge", manyForce)
         .force("link", linkForce)
         .force("center", centerForce)

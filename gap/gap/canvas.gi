@@ -232,7 +232,7 @@ function(canvas)
         Exec("open ",name);
     fi;
     if ARCH_IS_WINDOWS() then
-        Exec("start firefox ",name);
+        Exec("start ",name);
     fi;
     if ARCH_IS_UNIX() then
         Exec("open ",name);
