@@ -346,7 +346,7 @@ export default class Graph extends Renderer {
       if (data.callbacks) {
         Object.values(data.callbacks).forEach((cb) => {
           // execute the ones that match the event!
-          cb.trigger === event && callback.load({ callback: cb }).execute();
+          cb.trigger === event && callback.load({ callback: cb }, true).execute();
         });
       }
     }
