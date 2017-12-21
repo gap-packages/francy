@@ -4,6 +4,7 @@
     "width": "800",
     "id": "BBD6B49E746F45D42483770446A32F42",
     "title": "Bar Chart",
+    "zoomToFit": true,
     "menus": {},
     "height": "600",
     "chart": {

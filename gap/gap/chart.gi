@@ -48,6 +48,9 @@ function(chartType)
   if chartType!.value = ChartType.LINE!.value then
     axis.x := XAxis(AxisScaleType.LINEAR, "", []);
     axis.y := XAxis(AxisScaleType.LINEAR, "", []);
+  elif chartType!.value = ChartType.SCATTER!.value then
+    axis.x := XAxis(AxisScaleType.LINEAR, "", []);
+    axis.y := XAxis(AxisScaleType.LINEAR, "", []);
   elif chartType!.value = ChartType.BAR!.value then
     axis.x := XAxis(AxisScaleType.BAND, "", []);
     axis.y := XAxis(AxisScaleType.LINEAR, "", []);

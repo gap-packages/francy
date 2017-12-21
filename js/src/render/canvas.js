@@ -66,12 +66,12 @@ export default class Canvas extends Composite {
         var midX = bounds.x + width / 2,
           midY = bounds.y + height / 2;
 
-        var scale = 0.75 / Math.max(width / fullWidth, height / fullHeight);
+        var scale = 0.9 / Math.max(width / fullWidth, height / fullHeight);
         var translateX = fullWidth / 2 - scale * midX,
           translateY = fullHeight / 2 - scale * midY;
 
         content.transition()
-          .duration(2000)
+          .duration(1000)
           .attr('transform', `translate(${translateX},${translateY})scale(${scale},${scale})`)
           .on('end', () => updateZoom(translateX, translateY, scale));
       }
