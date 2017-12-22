@@ -157,8 +157,6 @@ export default class LineChart extends Renderer {
       .style('text-anchor', 'end')
       .text(d => d);
 
-    parent.zoomToFit();
-
     return this;
   }
 

@@ -28,6 +28,8 @@ export default class Chart extends Renderer {
         break;
     }
 
+    this.options.appendTo.element.zoomToFit();
+
     return element;
   }
 
