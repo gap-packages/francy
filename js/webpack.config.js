@@ -13,8 +13,8 @@ module.exports = {
     }]
   },
   plugins: [
-    //new UglifyJsPlugin({
-    //  exclude: /.*test.js/
-    //})
+    new UglifyJsPlugin({
+      exclude: /.*test.js/
+    })
   ]
 };
