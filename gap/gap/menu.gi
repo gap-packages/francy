@@ -16,6 +16,14 @@ InstallMethod(Menu,
    IsCallback],
   0,
 function(title, callback)
+    #
+    # I don't think you have to create a new type for every new menu, so
+    # just BindGlobal("MenuType", NewType(MenuFamily, IsMenu and IsMenuRep ) )
+    #
+    # (this holds for all types).
+    #
+    # If you want to separate different menus you should use families
+    # (which i can explain on skype in tw oweeks if needed, but I don't think it is)
   return Objectify(NewType(MenuFamily, IsMenu and IsMenuRep), rec(
     id       := GenerateID(),
     title    := title,
@@ -35,8 +43,11 @@ end);
 
 #############################################################################
 ##
-#M  Add( <menu>, <menu> ) . . . . . add menu to canvas
+#M  Add( <menu>, <menu> ) . . . . . add menu to canvas 
 ##
+
+# does this merge menus? then you should call it "Merge", does it add
+# a submenu to a menu? then document it that way.
 InstallMethod(Add,
   "a menu, a menu",
   true,

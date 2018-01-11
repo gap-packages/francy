@@ -22,16 +22,34 @@ end);
 ##
 #M  ViewObj( <obj> )  . . . . . . . . . . . . .  override for IsFrancyObjects
 ##
-InstallMethod(ViewObj,
+#InstallMethod(ViewObj,
+# If you do this, you get proper display in jupyter today,
+# 
+# If you install JUPYTER_ViewString for any object, you can also
+# do custom display for it (for instance returning a record that has json in it)
+InstallMethod(ViewString,
   "a francy object",
   true,
   [IsFrancyObject],
   0,
 function(object)
-  Print(Concatenation( "<",
-       CategoriesOfObject( object )[1],
-       "/", CategoriesOfObject( object )[2], ">"));
+  return Concatenation( "<",
+                        CategoriesOfObject( object )[1],
+                        "/", CategoriesOfObject( object )[2], ">" );
 end);
+# example:
+
+InstallMethod(JUPYTER_ViewString,
+  "a francy object",
+  [IsFrancyObject],
+  function(o)
+      return rec( json := true
+                , source := "gap"
+                , data := rec(("text/html") := "<h1> Hello, object </h1>")
+                , metadata := rec( ) );
+  end);
+
+
 
 #############################################################################
 ##
