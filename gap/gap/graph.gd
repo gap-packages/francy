@@ -192,6 +192,18 @@ DeclareOperation("Add", [IsShape, IsHintMessage]);
 DeclareOperation("Remove", [IsShape, IsHintMessage]);
 
 #! @Description
+#! Add <C>Callback</C> to a specific <C>Shape</C>.
+#! @Arguments IsShape, [IsShape, List(IsShape)]
+#! @Returns <C>Shape</C>
+DeclareOperation("Add", [IsShape, IsShape]);
+
+#! @Description
+#! Remove <C>Callback</C> from a specific <C>Shape</C>.
+#! @Arguments IsShape, [IsShape, List(IsShape)]
+#! @Returns <C>Shape</C>
+DeclareOperation("Remove", [IsShape, IsShape]);
+
+#! @Description
 #! Creates a <C>Link</C> between the two <C>Shape</C>.
 #! <P/>
 #! @Arguments IsShape IsShape
@@ -216,7 +228,9 @@ DeclareOperation("Links", [IsList, IsList]);
 BindGlobal("GraphType", rec(
   UNDIRECTED := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "undirected")),
   DIRECTED   := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "directed")),
-  HASSE      := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "hasse"))
+  CUSTOM     := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "custom")),
+  HASSE      := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "hasse")),
+  TREE       := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "tree"))
 ));
 
 #! @Description
@@ -245,7 +259,6 @@ BindGlobal("ShapeType", rec(
 #! @Returns <C>rec</C> of <C>ShapeDefaults</C>
 BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and IsShapeDefaultsRep), rec(
   highlight := true,
-  layer     := 0,
   size      := 10,
   x         := 0,
   y         := 0 

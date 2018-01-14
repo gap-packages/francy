@@ -1,4 +1,4 @@
-export function dontExecuteIfNoData(props) {
+export function dataRequired(props) {
   return function decorator(target, name, descriptor) {
     var oldValue = descriptor.value;
 

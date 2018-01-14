@@ -1,7 +1,7 @@
 import Composite from './composite';
 import Graph from './graph';
 import Chart from './chart';
-import { dontExecuteIfNoData } from '../decorator/data';
+import { dataRequired } from '../decorator/data';
 
 /* global d3 */
 
@@ -14,7 +14,7 @@ export default class Canvas extends Composite {
     this.add(this.graph).add(this.chart);
   }
 
-  @dontExecuteIfNoData()
+  @dataRequired()
   render() {
     var parent = this.options.appendTo.element;
 

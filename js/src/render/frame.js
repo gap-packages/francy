@@ -2,7 +2,7 @@ import Composite from './composite';
 import Canvas from './canvas';
 import MainMenu from './menu-main';
 import Message from './message';
-import { dontExecuteIfNoData } from '../decorator/data';
+import { dataRequired } from '../decorator/data';
 
 /* global d3 */
 
@@ -17,7 +17,7 @@ export default class Frame extends Composite {
     this.element = undefined;
   }
 
-  @dontExecuteIfNoData()
+  @dataRequired()
   render() {
     var parent = d3.select(this.options.appendTo);
 

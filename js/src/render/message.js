@@ -1,5 +1,5 @@
 import Renderer from './renderer';
-import { dontExecuteIfNoData } from '../decorator/data';
+import { dataRequired } from '../decorator/data';
 
 /* global d3 */
 
@@ -9,7 +9,7 @@ export default class Message extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @dontExecuteIfNoData('canvas.messages')
+  @dataRequired('canvas.messages')
   render() {
     var parent = this.options.appendTo.element;
 

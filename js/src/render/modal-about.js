@@ -1,6 +1,7 @@
 import Renderer from './renderer';
+import { RegisterJupyterKeyboardEvents } from '../util/component';
 
-/* global d3 Jupyter */
+/* global d3 */
 
 export default class AboutModal extends Renderer {
 
@@ -9,6 +10,8 @@ export default class AboutModal extends Renderer {
   }
 
   render() {
+    var self = this;
+
     var modalId = 'AboutModalWindow';
 
     this.logger.debug(`Creating About Modal [${modalId}]...`);
@@ -36,26 +39,16 @@ export default class AboutModal extends Renderer {
 
     var footer = form.append('div').attr('class', 'francy-modal-footer');
 
-    footer.append('button').text('Ok').on('click', function() {
-      this.element.remove();
-      holder.remove();
+    footer.append('button').text('Ok').on('click', () => {
       overlay.remove();
+      self.element.remove();
+      holder.remove();
       d3.event.preventDefault();
       return false;
     });
 
     // disable keyboard shortcuts when using this modal in Jupyter
-    try {
-      Jupyter.keyboard_manager.register_events('.francy');
-      Jupyter.keyboard_manager.register_events('.francy-arg');
-      Jupyter.keyboard_manager.register_events('.francy-overlay');
-      Jupyter.keyboard_manager.register_events('.francy-modal');
-    }
-    catch (e) {
-      if (e.name == 'ReferenceError') {
-        self.logger.debug('It seems we\'re not running on Jupyter...', e);
-      }
-    }
+    RegisterJupyterKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
 
     this.logger.debug(`Callback About updated [${modalId}]...`);
 

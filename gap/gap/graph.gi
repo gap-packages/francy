@@ -126,7 +126,9 @@ function(shapeType, title, options)
     title     := title,
     callbacks := rec(),
     menus     := rec(),
-    messages  := rec()
+    messages  := rec(),
+    layer     := 0,
+    parent    := ""
   )), options);
 end);
 
@@ -147,6 +149,65 @@ InstallOtherMethod(Shape,
   0,
 function(shapeType)
   return Shape(shapeType, "", ShapeDefaults);
+end);
+
+
+#############################################################################
+##
+#M  Add( <shape>, <shape> ) . . . . . add shape children
+##
+InstallMethod(Add,
+  "a shape, a shape",
+  true,
+  [IsShape,
+   IsShape],
+  0,
+function(shape1, shape2)
+  shape2!.parent := shape1!.id;
+  return shape1;
+end);
+
+InstallOtherMethod(Add,
+  "a shape, a list of shape",
+  true,
+  [IsShape,
+   IsList],
+  0,
+function(shape, shapes)
+  local shp;
+  for shp in shapes do
+    Add(shape, shp);
+  od;
+  return shape;
+end);
+
+#############################################################################
+##
+#M  Remove( <shape>, <shape> ) . . . . . remove shape children
+##
+InstallMethod(Remove,
+  "a shape, a shape",
+  true,
+  [IsShape,
+   IsShape],
+  0,
+function(shape1, shape2)
+  shape2!.parent := "";
+  return shape1;
+end);
+
+InstallOtherMethod(Remove,
+  "a shape, a list of shape",
+  true,
+  [IsShape,
+   IsList],
+  0,
+function(shape, shapes)
+  local shp;
+  for shp in shapes do
+    Remove(shape, shp);
+  od;
+  return shape;
 end);
 
 
