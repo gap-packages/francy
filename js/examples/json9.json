@@ -1,96 +1,198 @@
 {
+  "version": "0.5.0",
   "mime": "application/vnd.francy+json",
-  "version": "0.2.0",
   "canvas": {
     "width": "800",
     "height": "600",
-    "id": "C2232D710B7840D7AC0B65170CB76F5A",
-    "title": "",
+    "id": "A487",
+    "title": "Apery",
     "zoomToFit": true,
     "menus": {},
-    "messages": {
-      "A1": {
-        "type": "info",
-        "title": "title1",
-        "text": "Valor1 ed wed "
-      },
-      "A2": {
-        "type": "info",
-        "title": "",
-        "text": "Valor2 ed wdw ed"
-      },
-      "A3": {
-        "type": "error",
-        "title": "title3v ev ",
-        "text": "Valor3 sad  ed wed wed wed wed "
-      }
-    },
     "graph": {
       "type": "hasse",
-      "id": "381B78FE811840038CCD1ACBA164C267",
+      "id": "A467",
       "simulation": true,
       "forces": true,
+      "drag": true,
       "nodes": {
-        "92C780AE49344AAB9C4130C7E437EAF0": {
+        "A468": {
           "x": 0,
           "y": 0,
           "type": "circle",
           "size": 10,
-          "messages": {
-            "A1": {
-              "type": "info",
-              "title": "title1",
-              "text": "Valor1"
-            },
-            "A2": {
-              "type": "info",
-              "title": "title2",
-              "text": "Valor2"
-            },
-            "A3": {
-              "type": "info",
-              "title": "title3",
-              "text": "Valor3"
-            }
-          },
-          "id": "92C780AE49344AAB9C4130C7E437EAF0",
-          "title": "",
+          "info": {},
+          "id": "A468",
+          "title": "0",
           "layer": 0,
           "highlight": true,
           "menus": {},
           "callbacks": {}
         },
-        "92C780AE49344AAB9C4130C7E437EAF01": {
+        "A469": {
           "x": 0,
           "y": 0,
           "type": "circle",
           "size": 10,
-          "messages": {
-            "A1": {
-              "type": "info",
-              "title": "title1",
-              "text": "Valor1"
-            },
-            "A2": {
-              "type": "info",
-              "title": "title2",
-              "text": "Valor2"
-            },
-            "A3": {
-              "type": "info",
-              "title": "title3",
-              "text": "Valor3"
-            }
-          },
-          "id": "92C780AE49344AAB9C4130C7E437EAF01",
-          "title": "",
-          "layer": 0,
+          "info": {},
+          "id": "A469",
+          "title": "11",
+          "layer": -1,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A470": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A470",
+          "title": "22",
+          "layer": -2,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A471": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A471",
+          "title": "33",
+          "layer": -3,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A472": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A472",
+          "title": "44",
+          "layer": -4,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A473": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A473",
+          "title": "55",
+          "layer": -5,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A474": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A474",
+          "title": "66",
+          "layer": -6,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A475": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A475",
+          "title": "57",
+          "layer": -3,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A476": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A476",
+          "title": "38",
+          "layer": -2,
+          "highlight": true,
+          "menus": {},
+          "callbacks": {}
+        },
+        "A477": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "info": {},
+          "id": "A477",
+          "title": "19",
+          "layer": -1,
           "highlight": true,
           "menus": {},
           "callbacks": {}
         }
       },
-      "links": {}
+      "links": {
+        "A478": {
+          "source": "A469",
+          "id": "A478",
+          "target": "A468"
+        },
+        "A479": {
+          "source": "A470",
+          "id": "A479",
+          "target": "A469"
+        },
+        "A480": {
+          "source": "A471",
+          "id": "A480",
+          "target": "A470"
+        },
+        "A481": {
+          "source": "A472",
+          "id": "A481",
+          "target": "A471"
+        },
+        "A482": {
+          "source": "A473",
+          "id": "A482",
+          "target": "A472"
+        },
+        "A483": {
+          "source": "A474",
+          "id": "A483",
+          "target": "A473"
+        },
+        "A484": {
+          "source": "A475",
+          "id": "A484",
+          "target": "A476"
+        },
+        "A485": {
+          "source": "A476",
+          "id": "A485",
+          "target": "A477"
+        },
+        "A486": {
+          "source": "A477",
+          "id": "A486",
+          "target": "A468"
+        }
+      }
     }
   }
 }

@@ -44,7 +44,7 @@ export default class Francy extends Renderer {
     //tracker.subscribe(function(obj) { console.log(obj); });
     //return new Draw(this.options).handle(tracker.object);
     var frame = new Frame(this.options).load(this.data).render();
-    ALL_CANVAS[this.data.canvas.id] = frame.canvas;
+    ALL_CANVAS[this.data.canvas.id] = frame;
     return frame.element.node();
   }
 
@@ -59,8 +59,8 @@ try {
   var oldResize = window.onresize;
   window.onresize = function() {
     // zoom to fit all canvas on resize
-    Object.values(ALL_CANVAS).forEach(function(canvas) {
-      canvas.zoomToFit();
+    Object.values(ALL_CANVAS).forEach(function(frame) {
+      frame.canvas.zoomToFit();
     });
     // call old resize function if any!
     if (typeof oldResize === 'function') {

@@ -52,16 +52,18 @@ export default class ScatterChart extends Renderer {
     }
 
     datasetNames.forEach(function(key, index) {
-      var scatter = scatterGroup.selectAll(`.scatter${index}`).data(datasets[key]);
+      var scatter = scatterGroup.selectAll(`.francy-scatter-${index}`).data(datasets[key]);
 
-      scatter.exit().remove();
+      scatter.exit().transition().duration(750)
+        .style("fill-opacity", 1e-6)
+        .remove();
 
       // append the rectangles for the bar chart
-      scatter
+      var scatterEnter = scatter
         .enter()
         .append('circle')
         .style('fill', () => Chart.colors(index * 5))
-        .attr('class', `francy-scatter${index}`)
+        .attr('class', `francy-scatter-${index}`)
         .attr("r", 5)
         .attr("cx", function(d, i) { return x(i); })
         .attr("cy", function(d) { return y(d); })
@@ -80,7 +82,7 @@ export default class ScatterChart extends Renderer {
           tooltip.unrender();
         });
 
-      scatter.merge(scatter);
+      scatterEnter.merge(scatter);
     });
 
     // force rebuild axis again

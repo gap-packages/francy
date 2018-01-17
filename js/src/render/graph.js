@@ -4,7 +4,7 @@ import GenericGraph from './graph-generic';
 import ContextMenu from './menu-context';
 import Tooltip from './tooltip';
 import Callback from './callback';
-import { dataRequired } from '../decorator/data';
+import { requires } from '../decorator/data';
 
 /* global d3 */
 
@@ -14,7 +14,7 @@ export default class Graph extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @dataRequired('canvas.graph')
+  @requires('canvas.graph')
   render() {
 
     var element = undefined;
@@ -25,10 +25,6 @@ export default class Graph extends Renderer {
       default:
         element = new GenericGraph(this.options).load(this.data).render();
     }
-
-    setTimeout(() => {
-      this.options.appendTo.element.zoomToFit();
-    }, 10);
 
     return element;
   }

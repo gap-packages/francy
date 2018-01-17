@@ -56,16 +56,18 @@ export default class LineChart extends Renderer {
         .x(function(d, i) { return x(i); })
         .y(function(d) { return y(d); });
 
-      var line = linesGroup.selectAll(`.line${index}`).data([datasets[key]]);
+      var line = linesGroup.selectAll(`.francy-line-${index}`).data([datasets[key]]);
 
-      line.exit().remove();
+      line.exit().transition().duration(750)
+        .style("fill-opacity", 1e-6)
+        .remove();
 
       // append the rectangles for the bar chart
-      line.enter()
+      var lineEnter = line.enter()
         .append('path')
         .style('stroke', () => Chart.colors(index * 5))
         .style('stroke-width', '5px')
-        .attr('class', `francy-line${index}`)
+        .attr('class', `francy-line-${index}`)
         .attr('d', valueLine)
         .on("mouseenter", function(d) {
           d3.select(this).transition()
@@ -82,7 +84,7 @@ export default class LineChart extends Renderer {
           tooltip.unrender();
         });
 
-      line.merge(line);
+      lineEnter.merge(line);
     });
 
     // force rebuild axis again

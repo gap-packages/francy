@@ -16,6 +16,7 @@ export default class Renderer extends Base {
       this.logger.debug('No [unrender()] method specified...');
     }
     this.element = undefined;
+    this.transitionDuration = 750; //ms
   }
 
   get HTMLParent() {

@@ -6,10 +6,29 @@
     "id": "A197731FA6674899EC0A97DF399ED5BC",
     "title": "Quaternion Group Subgroup Lattice",
     "menus": {},
+    "zoomToFit": true,
+    "messages": {
+      "A1": {
+        "type": "info",
+        "title": "title1",
+        "text": "Valor1"
+      },
+      "A2": {
+        "type": "info",
+        "title": "title2",
+        "text": "Valor2"
+      },
+      "A4": {
+        "type": "success",
+        "title": "title4",
+        "text": "Valor4"
+      }
+    },
     "graph": {
       "type": "custom",
       "id": "585C13EF00EC4E71DCCF4C7246C86807",
       "simulation": true,
+      "drag": true,
       "nodes": {
         "85A237CE30554A1FF46170E35B1B80BD": {
           "x": 0,

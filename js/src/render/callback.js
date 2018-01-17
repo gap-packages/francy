@@ -1,6 +1,6 @@
 import Base from './base';
 import RequiredArgsModal from './modal-required';
-import { dataRequired } from '../decorator/data';
+import { requires } from '../decorator/data';
 
 export default class CallbackHandler extends Base {
 
@@ -9,7 +9,7 @@ export default class CallbackHandler extends Base {
     this.callback = callbackHandler;
   }
 
-  @dataRequired()
+  @requires('callback')
   execute() {
     if (Object.keys(this.data.callback.requiredArgs).length) {
       var options = this.options;

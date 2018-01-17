@@ -1,5 +1,5 @@
 import Renderer from './renderer';
-import { dataRequired } from '../decorator/data';
+import { requires } from '../decorator/data';
 
 /* global d3 */
 
@@ -9,9 +9,10 @@ export default class Message extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @dataRequired('canvas.messages')
+  @requires('canvas.messages')
   render() {
     var parent = this.options.appendTo.element;
+    var self = this;
 
     var messages = Object.keys(this.data.canvas.messages).map((key) => {
       return {
@@ -24,12 +25,12 @@ export default class Message extends Renderer {
 
     var alertsId = `Messages-${this.data.canvas.id}`;
     this.element = d3.select(`#${alertsId}`);
-    // check if the window is already present
+    // check if the div is already present
     if (!this.element.node()) {
       this.element = parent.append('div').attr('class', 'francy-message-holder').attr('id', alertsId);
     }
 
-    var self = this;
+    // FIXME this shall use the update pattern!
     messages.map(function(d) {
       // only render new ones
       if (!self.element.select(`div#${d.id}`).node()) {

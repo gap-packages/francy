@@ -30,7 +30,7 @@ export default class GenericGraph extends Renderer {
       linkGroup = this.element.append('g').attr('class', 'francy-links');
     }
 
-    var link = linkGroup.selectAll('line.francy-link').data(canvasLinks);
+    var link = linkGroup.selectAll('g.francy-link').data(canvasLinks, d => d.id);
 
     var nodeGroup = this.element.selectAll('g.francy-nodes');
 
@@ -38,25 +38,34 @@ export default class GenericGraph extends Renderer {
       nodeGroup = this.element.append('g').attr('class', 'francy-nodes');
     }
 
-    var node = nodeGroup.selectAll('g.francy-node').data(canvasNodes);
+    var nodes = nodeGroup.selectAll('g.francy-node').data();
+    var nodesToAdd = [];
+    canvasNodes.forEach(n => {
+      var node = nodes.find(d => d.id === n.id);
+      if (node) {
+        nodesToAdd.push(node);
+      }
+      else {
+        nodesToAdd.push(n);
+      }
+    });
+
+    var node = nodeGroup.selectAll('g.francy-node').data(nodesToAdd);
 
     if (node.exit().data().length == 0 &&
       node.enter().data().length == 0 &&
       link.enter().data().length == 0 &&
-      link.enter().data().length == 0) {
+      link.exit().data().length == 0) {
       return;
     }
 
+    var linkEnter = link.enter().append('g').attr('class', 'francy-link');
+
+    linkEnter.append('line').attr('class', 'francy-edge');
+
     link.exit().remove();
 
-    link = link.enter().append('line')
-      .attr('class', 'francy-link')
-      .attr('id', d => `${d.source},${d.target}`)
-      .attr('x1', d => d.source.x)
-      .attr('y1', d => d.source.y)
-      .attr('x2', d => d.target.x)
-      .attr('y2', d => d.target.y)
-      .merge(link);
+    link = linkGroup.selectAll('g.francy-link line.francy-edge');
 
     if (this.data.canvas.graph.type === 'directed') {
       // this means we need arrows, so we append the marker
@@ -78,34 +87,19 @@ export default class GenericGraph extends Renderer {
     }
 
     var nodeEnter = node.enter().append('g')
-      .attr('class', 'francy-node')
-      .attr('transform', d => `translate(${d.x},${d.y})`);
+      .attr('class', 'francy-node').attr('id', d => d.id);
 
     nodeEnter.append('path')
       .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
       .style('fill', d => Graph.colors(d.layer * 5))
-      .attr('class', d => 'francy-node' + (d.highlight ? ' francy-highlight' : '') + (Object.values(d.menus).length ? ' francy-context' : ''))
-      .attr('id', d => d.id);
+      .attr('class', d => 'francy-symbol' + (d.highlight ? ' francy-highlight' : '') + (Object.values(d.menus).length ? ' francy-context' : ''));
 
     nodeEnter.append('text')
       .attr('class', 'francy-label')
       .attr('x', d => -(d.title.length * 2.5))
       .text(d => d.title);
 
-    var nodeUpdate = nodeEnter.merge(node);
-
-    nodeUpdate.transition()
-      .duration(750)
-      .attr('transform', d => `translate(${d.y},${d.x})`);
-
-    nodeUpdate.select('.francy-node').attr('cursor', 'pointer');
-
-    var nodeExit = node.exit().transition().duration(750)
-      .attr('transform', () => `translate(0,0)`)
-      .remove();
-
-    nodeExit.select('path').style('fill-opacity', 1e-6);
-    nodeExit.select('text').style('fill-opacity', 1e-6);
+    node.exit().remove();
 
     node = nodeGroup.selectAll('g.francy-node');
 
@@ -116,20 +110,23 @@ export default class GenericGraph extends Renderer {
         .on('end', dragended));
     }
 
-    Graph.applyEvents(node, this.options);
+    if (node && !node.empty()) {
 
-    var nodeOnClick = node.on('click');
-    node.on('click', function(d) {
-      // default, highlight connected nodes
-      connectedNodes.call(this);
-      // any callbacks will be handled here
-      nodeOnClick.call(this, d);
-    });
+      Graph.applyEvents(node, this.options);
+
+      var nodeOnClick = node.on('click');
+      node.on('click', function(d) {
+        // default, highlight connected nodes
+        connectedNodes.call(this);
+        // any callbacks will be handled here
+        nodeOnClick.call(this, d);
+      });
+    }
 
     if (simulationActive) {
       // Canvas Forces
       var centerForce = d3.forceCenter().x(width / 2).y(height / 2);
-      var manyForce = d3.forceManyBody().strength(-canvasNodes.length * 30);
+      var manyForce = d3.forceManyBody().strength(-nodesToAdd.length * 30);
       var linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
       var collideForce = d3.forceCollide(d => d.size * 2);
 
@@ -146,7 +143,7 @@ export default class GenericGraph extends Renderer {
         forceY = d3.forceY(d => d.layer * 50).strength(5);
       }
 
-      var simulation = d3.forceSimulation(canvasNodes)
+      var simulation = d3.forceSimulation().nodes(nodesToAdd)
         .force("charge", manyForce)
         .force("link", linkForce)
         .force("center", centerForce)

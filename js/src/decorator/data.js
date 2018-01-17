@@ -1,4 +1,4 @@
-export function dataRequired(props) {
+export function requires(props) {
   return function decorator(target, name, descriptor) {
     var oldValue = descriptor.value;
 

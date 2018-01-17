@@ -1,5 +1,5 @@
 import Renderer from './renderer';
-import { dataRequired } from '../decorator/data';
+import { requires } from '../decorator/data';
 
 /* global d3 */
 
@@ -9,7 +9,7 @@ export default class Tooltip extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @dataRequired()
+  @requires()
   render() {
 
     this.element = this.HTMLParent.select('div.francy-tooltip-holder');

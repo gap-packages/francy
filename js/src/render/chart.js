@@ -2,7 +2,7 @@ import Renderer from './renderer';
 import BarChart from './chart-bar';
 import LineChart from './chart-line';
 import ScatterChart from './chart-scatter';
-import { dataRequired } from '../decorator/data';
+import { requires } from '../decorator/data';
 
 /* global d3 */
 
@@ -12,7 +12,7 @@ export default class Chart extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @dataRequired('canvas.chart')
+  @requires('canvas.chart')
   render() {
 
     var element = undefined;
@@ -27,10 +27,6 @@ export default class Chart extends Renderer {
         element = new ScatterChart(this.options).load(this.data).render();
         break;
     }
-
-    setTimeout(() => {
-      this.options.appendTo.element.zoomToFit();
-    }, 10);
 
     return element;
   }
