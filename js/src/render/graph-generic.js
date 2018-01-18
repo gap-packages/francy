@@ -30,7 +30,19 @@ export default class GenericGraph extends Renderer {
       linkGroup = this.element.append('g').attr('class', 'francy-links');
     }
 
-    var link = linkGroup.selectAll('g.francy-link').data(canvasLinks, d => d.id);
+    var links = linkGroup.selectAll('g.francy-link').data();
+    var linksToAdd = [];
+    canvasLinks.forEach(l => {
+      var link = links.find(d => d.id === l.id);
+      if (link) {
+        linksToAdd.push(link);
+      }
+      else {
+        linksToAdd.push(l);
+      }
+    });
+
+    var link = linkGroup.selectAll('g.francy-link').data(linksToAdd);
 
     var nodeGroup = this.element.selectAll('g.francy-nodes');
 
