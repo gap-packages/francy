@@ -138,7 +138,7 @@ export default class GenericGraph extends Renderer {
     if (simulationActive) {
       // Canvas Forces
       var centerForce = d3.forceCenter().x(width / 2).y(height / 2);
-      var manyForce = d3.forceManyBody().strength(-nodesToAdd.length * 30);
+      var manyForce = d3.forceManyBody().strength(-canvasNodes.length * 30);
       var linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
       var collideForce = d3.forceCollide(d => d.size * 2);
 
@@ -152,7 +152,7 @@ export default class GenericGraph extends Renderer {
         //Generic gravity for the X position
         forceX = d3.forceX(width / 2).strength(0.5);
         //Strong y positioning based on layer to simulate the hasse diagram
-        forceY = d3.forceY(d => d.layer * 50).strength(5);
+        forceY = d3.forceY(d => d.layer * 50).strength(0.9);
       }
 
       var simulation = d3.forceSimulation().nodes(nodesToAdd)
@@ -169,7 +169,7 @@ export default class GenericGraph extends Renderer {
         });
 
       //force simulation restart
-      simulation.restart();
+      simulation.alpha(0.3).restart();
     }
     else {
       // well, simulation is off, zoom to fit now
@@ -185,11 +185,11 @@ export default class GenericGraph extends Renderer {
 
       node.attr('transform', d => `translate(${d.x},${d.y})`);
 
-      node.each(collide(1));
+      //node.each(collide(1));
     }
 
     // COLLISION
-    var padding = 10; // separation between circles;
+    /*var padding = 10; // separation between circles;
 
     function collide(alpha) {
       let quadTree = d3.quadtree(canvasNodes);
@@ -215,7 +215,7 @@ export default class GenericGraph extends Renderer {
           return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
         });
       };
-    }
+    }*/
 
     // HIGHLIGHT
     //Toggle stores whether the highlighting is on
