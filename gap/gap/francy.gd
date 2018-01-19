@@ -37,6 +37,10 @@ DeclareCategory("IsFrancyDefaults", IsFrancyObject);
 
 #! @Description
 #! Identifies all Type records in Francy.
+
+# Calling this "type" *might* be a confusing choice (but I don't have a better
+# suggestion)
+# you also do not say what a "Type" is
 DeclareCategory("IsFrancyType", IsFrancyObject);
 
 
@@ -58,6 +62,12 @@ BindGlobal("FrancyFamily", NewFamily("FrancyFamily", IsFrancyObject));
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>FrancyType</C> internal representation.
+
+# As mentioned yesterday "IsAttributeStoringRep" might be a bad choice: If you use
+# attributes (as I will suggest), and an object is in attribute storing representation,
+# then once set an attribute will not change its value (so say the position of a node in a
+# graph cannot change anymore after being setup). There are mutable attributes, but they are
+# mostly a bad idea.
 DeclareRepresentation("IsFrancyTypeRep", 
   IsComponentObjectRep and IsAttributeStoringRep, 
   ["value"], IsFrancyType);

@@ -107,6 +107,29 @@ DeclareOperation("Draw", [IsCanvas]);
 #! @Returns <C>rec</C> with html generated
 DeclareOperation("DrawSplash", [IsCanvas]);
 
+# You could use Attributes to store data for a canvas:
+# (inc)
+DeclareAttribute("Width", IsCanvas);
+DeclareAttribute("Height", IsCanvas);
+DeclareAttribute("ZoomToFit", IsCanvas);
+
+# Probably in canvas.gi you now do
+InstallMethod( Width, "for a canvas", [IsCanvas], c -> c!.width );
+InstallMethod( SetWidth, "for a canvas, and a posing"
+             , [IsCanvas, IsPosInt]
+             , function(c, w) c!.width := w; end );
+
+# This is a bit verbose, but allows you to type- and sanity check what people
+# set attributes to.
+
+# Alternatively, you can use IsAttributeStoringRep, but declare the attributes mutable:
+DeclareAttribute("Width", IsCanvas, "mutable");
+DeclareAttribute("Height", IsCanvas, "mutable");
+DeclareAttribute("ZoomToFit", IsCanvas, "mutale");
+
+# GAP then creates SetWidth and Width "accessors" (but note this will not go
+# into your rec() in the object!)
+# also, no type checking (or other code) this way.
 
 #############################################################################
 ##
@@ -116,6 +139,7 @@ DeclareOperation("DrawSplash", [IsCanvas]);
 #! @Description
 #! This <C>rec</C> holds all the default setting for a canvas
 BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
+# I find it weird to store widths/heights as strings...
   width     := "800",
   height    := "600",
   zoomToFit := true
