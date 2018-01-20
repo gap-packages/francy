@@ -68,48 +68,15 @@ BindGlobal("LinkFamily", NewFamily("LinkFamily", IsLink));
 #! @Section Representations
 #! In this section we show the Francy Graph Representations.
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>Graph</C> internal representation.
-DeclareRepresentation("IsFrancyGraphRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "type", "nodes", "links"], IsFrancyGraph);
+BindGlobal("FrancyGraphObjectType", NewType(GraphFamily, IsFrancyGraph));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>GraphDefaults</C> internal representation.
-DeclareRepresentation("IsFrancyGraphDefaultsRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["simulation", "forces"], IsFrancyGraphDefaults);
+BindGlobal("ShapeObjectType", NewType(ShapeFamily, IsShape));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>GraphType</C> internal representation.
-DeclareRepresentation("IsFrancyGraphTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["value"], IsFrancyGraphType);
+BindGlobal("LinkObjectType", NewType(LinkFamily, IsLink));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>Shape</C> internal representation.
-DeclareRepresentation("IsShapeRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "type", "title", "menus", "callbacks", "info"], IsShape);
+BindGlobal("ShapeTypeObjectType", NewType(ShapeFamily, IsShapeType));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>ShapeDeafults</C> internal representation.
-DeclareRepresentation("IsShapeDefaultsRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["layer", "x", "y", "size", "highlight"], IsShapeDefaults);
-
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>ShapeType</C> internal representation.
-DeclareRepresentation("IsShapeTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["value"], IsShapeType);
-
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>Link</C> internal representation.
-DeclareRepresentation("IsLinkRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "source", "target"], IsLink);
-  
+BindGlobal("GraphTypeObjectType", NewType(GraphFamily, IsFrancyGraphType));
 
 #############################################################################
 ##
@@ -226,39 +193,40 @@ DeclareOperation("Links", [IsList, IsList]);
 #! The various types of Graph supported.
 #! @Returns <C>rec</C> of <C>GraphType</C>
 BindGlobal("GraphType", rec(
-  UNDIRECTED := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "undirected")),
-  DIRECTED   := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "directed")),
-  CUSTOM     := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "custom")),
-  HASSE      := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "hasse")),
-  TREE       := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "tree"))
+  UNDIRECTED := Objectify(GraphTypeObjectType, rec(value := "undirected")),
+  DIRECTED   := Objectify(GraphTypeObjectType, rec(value := "directed")),
+  CUSTOM     := Objectify(GraphTypeObjectType, rec(value := "custom")),
+  HASSE      := Objectify(GraphTypeObjectType, rec(value := "hasse")),
+  TREE       := Objectify(GraphTypeObjectType, rec(value := "tree"))
 ));
 
 #! @Description
 #! The default configuration for a graph.
 #! @Returns <C>rec</C> of <C>GraphDefaults</C>
-BindGlobal("GraphDefaults", Objectify(NewType(GraphFamily, IsFrancyGraphDefaults and IsFrancyGraphDefaultsRep), rec(
+BindGlobal("GraphDefaults", Objectify(NewType(GraphFamily, IsFrancyGraphDefaults), rec(
   simulation := true,
   collapse   := true,
-  drag       := false
+  drag       := false,
+  neighbours := false
 )));
 
 #! @Description
 #! The various shape types supported
 #! @Returns <C>rec</C> of <C>ShapeType</C>
 BindGlobal("ShapeType", rec(
-  TRIANGLE := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "triangle")),
-  DIAMOND  := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "diamond")),
-  CIRCLE   := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "circle")),
-  SQUARE   := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "square")),
-  CROSS    := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "cross")),
-  STAR     := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "star")),
-  WYE      := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "wye"))
+  TRIANGLE := Objectify(ShapeTypeObjectType, rec(value := "triangle")),
+  DIAMOND  := Objectify(ShapeTypeObjectType, rec(value := "diamond")),
+  CIRCLE   := Objectify(ShapeTypeObjectType, rec(value := "circle")),
+  SQUARE   := Objectify(ShapeTypeObjectType, rec(value := "square")),
+  CROSS    := Objectify(ShapeTypeObjectType, rec(value := "cross")),
+  STAR     := Objectify(ShapeTypeObjectType, rec(value := "star")),
+  WYE      := Objectify(ShapeTypeObjectType, rec(value := "wye"))
 ));
 
 #! @Description
 #! The default configuration for a shape.
 #! @Returns <C>rec</C> of <C>ShapeDefaults</C>
-BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and IsShapeDefaultsRep), rec(
+BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults), rec(
   highlight := true,
   size      := 10,
   x         := 0,

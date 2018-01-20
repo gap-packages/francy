@@ -5,9 +5,10 @@ define([
   'base/js/namespace',
   'base/js/events',
   'notebook/js/outputarea',
+  'base/js/promises',
   'nbextensions/francy/lib/d3.min',
   'nbextensions/francy/amd/francy.bundle',
-], function(require, Jupyter, events, outputHandler, d3, FrancyBundle) {
+], function(require, Jupyter, events, outputHandler, promises, d3, FrancyBundle) {
   "use strict";
 
   var MIME_TYPE = 'application/vnd.francy+json';
@@ -24,6 +25,13 @@ define([
   };
 
   loadCss('./../css/style.css');
+
+  // configure MathJax for SVG
+  promises.app_initialized.then(function(appname) {
+    if (appname === 'NotebookApp') {
+      appname.mathjax_config = 'TeX-MML-AM_SVG,Safe';
+    }
+  });
 
   // Start Francy
   let francy = new FrancyBundle.Francy({

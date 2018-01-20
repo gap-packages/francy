@@ -62,41 +62,17 @@ BindGlobal("ChartFamily", NewFamily("ChartFamily", IsChart));
 #! @Section Representations
 #! In this section we show the Francy Chart Representations.
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>Chart</C> internal representation.
-DeclareRepresentation("IsChartRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "type", "title", "options"], IsChart);
+BindGlobal("ChartObjectType", NewType(ChartFamily, IsChart));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>ChartDefaults</C> internal representation.
-DeclareRepresentation("IsChartDefaultsRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["layer", "x", "y", "size", "highlight"], IsChartDefaults);
+BindGlobal("DatasetObjectType", NewType(ChartFamily, IsDataset));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>ChartType</C> internal representation.
-DeclareRepresentation("IsChartTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["value"], IsChartType);
+BindGlobal("XAxisObjectType", NewType(ChartFamily, IsXAxis));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>AxisScaleType</C> internal representation.
-DeclareRepresentation("IsAxisScaleTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["value"], IsChartType);
+BindGlobal("YAxisObjectType", NewType(ChartFamily, IsYAxis));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>AxisRep</C> internal representation.
-DeclareRepresentation("IsAxisRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["scale", "title", "domain"], IsChartType);
+BindGlobal("ChartTypeObjectType",  NewType(ChartFamily, IsChartType));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>DatasetRep</C> internal representation.
-DeclareRepresentation("IsDatasetRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  [], IsChartType);
+BindGlobal("AxisScaleTypeObjectType",  NewType(ChartFamily, IsAxisScaleType));
 
 
 #############################################################################
@@ -172,23 +148,23 @@ DeclareOperation("YAxis", [IsAxisScaleType, IsString, IsList]);
 #! The various types of Charts supported.
 #! @Returns <C>rec</C> of <C>GraphType</C>
 BindGlobal("ChartType", rec(
-  LINE    := Objectify(NewType(ChartFamily, IsChartType and IsChartTypeRep), rec(value := "line")),
-  BAR     := Objectify(NewType(ChartFamily, IsChartType and IsChartTypeRep), rec(value := "bar")),
-  SCATTER := Objectify(NewType(ChartFamily, IsChartType and IsChartTypeRep), rec(value := "scatter"))
+  LINE    := Objectify(ChartTypeObjectType, rec(value := "line")),
+  BAR     := Objectify(ChartTypeObjectType, rec(value := "bar")),
+  SCATTER := Objectify(ChartTypeObjectType, rec(value := "scatter"))
 ));
 
 #! @Description
 #! The various types of Axis Scales supported.
 #! @Returns <C>rec</C> of <C>AxisScaleType</C>
 BindGlobal("AxisScaleType", rec(
-  LINEAR := Objectify(NewType(ChartFamily, IsAxisScaleType and IsAxisScaleTypeRep), rec(value := "linear")),
-  BAND   := Objectify(NewType(ChartFamily, IsAxisScaleType and IsAxisScaleTypeRep), rec(value := "band"))
+  LINEAR := Objectify(AxisScaleTypeObjectType, rec(value := "linear")),
+  BAND   := Objectify(AxisScaleTypeObjectType, rec(value := "band"))
 ));
 
 #! @Description
 #! The various types of Charts Defaults
 #! @Returns <C>rec</C> of <C>ChartDefaults</C>
-BindGlobal("ChartDefaults", Objectify(NewType(ChartFamily, IsChartDefaults and IsChartDefaultsRep), rec(
+BindGlobal("ChartDefaults", Objectify(NewType(ChartFamily, IsChartDefaults), rec(
   labels := true,
   legend := true
 )));

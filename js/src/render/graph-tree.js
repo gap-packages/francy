@@ -60,24 +60,22 @@ export default class TreeGraph extends Renderer {
         .data(links, d => d.id || (d.id = ++i));
 
       var linkEnter = link.enter()
-        .append('g').attr('class', 'francy-link')
         .append('path').attr('class', 'francy-edge')
         .attr('d', () => {
           var o = { x: source.x0, y: source.y0 };
           return diagonal(o, o);
         });
 
-      var linkUpdate = linkEnter.merge(link);
-
-      linkUpdate.transition().duration(this.transitionDuration).attr('d', d => diagonal(d, d.parent));
+      linkEnter.merge(link)
+        .transition().duration(this.transitionDuration).attr('d', d => diagonal(d, d.parent));
 
       link.exit().transition().duration(this.transitionDuration)
         .attr('d', () => {
           var o = { x: source.x, y: source.y };
           return diagonal(o, o);
-        }).each(function() { d3.select(this.parentNode).remove(); });
+        }).remove();
 
-      linkGroup.selectAll('.francy-edge')
+      linkGroup.selectAll('path.francy-edge')
         .style('fill', 'none')
         .style('stroke', '#ccc')
         .style('stroke-width', '1px');
@@ -114,6 +112,7 @@ export default class TreeGraph extends Renderer {
       nodeEnter.append('text')
         .attr('class', 'francy-label')
         .attr('x', d => -(d.data.title.length * 2.5))
+        .style('cursor', d => d.children || d._children ? 'pointer' : 'default')
         .text(d => d.data.title);
 
       var nodeUpdate = nodeEnter.merge(node);
@@ -122,13 +121,13 @@ export default class TreeGraph extends Renderer {
         .duration(this.transitionDuration)
         .attr('transform', d => `translate(${d.y},${d.x})`);
 
-      nodeUpdate.select('.francy-node').attr('cursor', 'pointer');
-
       node.exit().transition().duration(this.transitionDuration)
         .attr('transform', () => `translate(${source.y},${source.x})`)
         .remove();
 
-      nodeGroup.selectAll('.francy-symbol').style('fill', d => d.children || d._children ? 'lightsteelblue' : Graph.colors(d.data.layer * 5));
+      nodeGroup.selectAll('path.francy-symbol')
+        .style('fill', d => d.children || d._children ? 'lightsteelblue' : Graph.colors(d.data.layer * 5))
+        .style('cursor', d => d.children || d._children ? 'pointer' : 'default');
 
       node = nodeGroup.selectAll('g.francy-node');
       Graph.applyEvents(node, this.options);

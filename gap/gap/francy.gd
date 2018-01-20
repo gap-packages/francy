@@ -35,10 +35,6 @@ DeclareCategory("IsFrancyObject", IsObject);
 #! Identifies all Default records in Francy.
 DeclareCategory("IsFrancyDefaults", IsFrancyObject);
 
-#! @Description
-#! Identifies all Type records in Francy.
-DeclareCategory("IsFrancyType", IsFrancyObject);
-
 
 #############################################################################
 ##
@@ -50,17 +46,6 @@ DeclareCategory("IsFrancyType", IsFrancyObject);
 #! @Returns <C>FrancyFamily<C>
 BindGlobal("FrancyFamily", NewFamily("FrancyFamily", IsFrancyObject));
 
-
-#############################################################################
-##
-#! @Section Representations
-#! In this section we show the Francy Core Representations.
-
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>FrancyType</C> internal representation.
-DeclareRepresentation("IsFrancyTypeRep", 
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["value"], IsFrancyType);
 
 #############################################################################
 ##

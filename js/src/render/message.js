@@ -12,7 +12,7 @@ export default class Message extends Renderer {
   @requires('canvas.messages')
   render() {
     var parent = this.options.appendTo.element;
-    var self = this;
+    //var self = this;
 
     var messages = Object.keys(this.data.canvas.messages).map((key) => {
       return {
@@ -30,19 +30,18 @@ export default class Message extends Renderer {
       this.element = parent.append('div').attr('class', 'francy-message-holder').attr('id', alertsId);
     }
 
-    // FIXME this shall use the update pattern!
-    messages.map(function(d) {
-      // only render new ones
-      if (!self.element.select(`div#${d.id}`).node()) {
-        var row = self.element.append('div').attr('id', d.id)
-          .attr('class', `francy-alert alert-${d.type}`).on('click', function() {
-            d3.select(this).style('display', 'none');
-          });
-        row.append('span').attr('class', 'strong').text(d.title);
-        row.append('span').text(d.text);
-        row.append('span').attr('class', 'strong').style('display', 'none').text("x");
-      }
-    });
+    var message = this.element.selectAll('div.francy-alert').data(messages, d => d.id);
+    var messageEnter = message.enter().append('div').attr('id', d => d.id)
+      .attr('class', d => `francy-alert alert-${d.type}`).on('click', function() {
+        d3.select(this).style('display', 'none');
+      });
+    messageEnter.append('span').attr('class', 'strong').text(d => d.title);
+    messageEnter.append('span').text(d => d.text);
+    messageEnter.append('span').attr('class', 'strong').style('display', 'none').text("x");
+
+    messageEnter.merge(message);
+
+    message.exit().remove();
 
     this.element.style('display', 'block');
 

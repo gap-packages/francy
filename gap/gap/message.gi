@@ -18,7 +18,7 @@ InstallMethod(HintMessage,
    IsString],
   0,
 function(messageType, title, value)
-  return Objectify(NewType(HintMessageFamily, IsHintMessage and IsHintMessageRep), rec(
+  return Objectify(HintMessageObjectType, rec(
     id    := GenerateID(),
     type  := messageType!.value,
     title := title,

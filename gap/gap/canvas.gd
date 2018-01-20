@@ -40,17 +40,7 @@ BindGlobal("CanvasFamily", NewFamily("CanvasFamily", IsCanvas));
 #! @Section Representations
 #! In this section we show the Francy Canvas Representations.
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>Canvas</C> internal representation.
-DeclareRepresentation("IsCanvasRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["id", "title", "options", "width", "height", "zoomToFit"], IsCanvas);
-
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>CanvasDefaults</C> internal representation.
-DeclareRepresentation("IsCanvasDefaultsRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["width", "height", "zoomToFit"], IsCanvasDefaults);
+BindGlobal("CanvasObjectType", NewType(CanvasFamily, IsCanvas));
 
 
 #############################################################################
@@ -115,7 +105,7 @@ DeclareOperation("DrawSplash", [IsCanvas]);
 
 #! @Description
 #! This <C>rec</C> holds all the default setting for a canvas
-BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
+BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults), rec(
   width     := "800",
   height    := "600",
   zoomToFit := true

@@ -62,29 +62,13 @@ BindGlobal("TriggerFamily", NewFamily("TriggerFamily", IsTrigger));
 #! @Section Representations
 #! In this section we show the Francy Callback Representations.
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>Callback</C> internal representation.
-DeclareRepresentation("IsCallbackRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["id", "func", "knownArgs", "requiredArgs"], IsCallback);
+BindGlobal("CallbackObjectType", NewType(CallbackFamily, IsCallback));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>RequiredArg</C> internal representation.
-DeclareRepresentation("IsRequiredArgRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["id", "type", "title", "value"], IsRequiredArg);
+BindGlobal("RequiredArgObjectType", NewType(CallbackFamily, IsRequiredArg));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>ArgType</C> internal representation.
-DeclareRepresentation("IsArgTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["value"], IsArgType);
+BindGlobal("ArgTypeObjectType",  NewType(CallbackFamily, IsArgType));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>TriggerEvent</C> internal representation.
-DeclareRepresentation("IsTriggerEventRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["value"], IsTriggerEvent);
+BindGlobal("TriggerEventObjectType", NewType(TriggerFamily, IsTriggerEvent));
 
 
 #############################################################################
@@ -171,9 +155,9 @@ BindGlobal("FrancyCallbacks", rec());
 #! The available <C>ArgType</C> specify the type of argument a <C>Callback</C> is expecting.
 #! @Returns <C>rec</C> of <C>ArgType</C>: <C>ArgType.INTEGER</C>,<C>ArgType.BOOLEAN</C>,<C>ArgType.STRING</C>,<C>ArgType.NUMBER</C>
 BindGlobal("ArgType", rec(
-  BOOLEAN := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "boolean")),
-  STRING  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "text")),
-  NUMBER  := Objectify(NewType(CallbackFamily, IsArgType and IsArgTypeRep), rec(value := "number"))
+  BOOLEAN := Objectify(ArgTypeObjectType, rec(value := "boolean")),
+  STRING  := Objectify(ArgTypeObjectType, rec(value := "text")),
+  NUMBER  := Objectify(ArgTypeObjectType, rec(value := "number"))
 ));
 
 #! @Description
@@ -181,7 +165,7 @@ BindGlobal("ArgType", rec(
 #! The available <C>TriggerEvent</C> specify the event that will trigger this <C>Callback</C>.
 #! @Returns <C>rec</C> of <C>TriggerEvent</C>: <C>TriggerEvent.DOUBLE_CLICK</C> mouse event, double click, <C>TriggerEvent.RIGHT_CLICK</C> mouse event, right click or context-menu,  <C>TriggerEvent.CLICK</C> mouse event, ledft click and **default for <C>Menu</C> <C>Callback</C>**
 BindGlobal("TriggerEvent", rec(
-  DOUBLE_CLICK := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "dblclick")),
-  RIGHT_CLICK  := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "context")),
-  CLICK        := Objectify(NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep), rec(value := "click"))
+  DOUBLE_CLICK := Objectify(TriggerEventObjectType, rec(value := "dblclick")),
+  RIGHT_CLICK  := Objectify(TriggerEventObjectType, rec(value := "context")),
+  CLICK        := Objectify(TriggerEventObjectType, rec(value := "click"))
 ));

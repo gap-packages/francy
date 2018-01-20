@@ -40,18 +40,9 @@ BindGlobal("HintMessageFamily", NewFamily("HintMessageFamily", IsFrancyObject));
 #! @Section Representations
 #! In this section we show the Francy HintMessage Representations.
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>HintMessage</C> internal representation.
-DeclareRepresentation("IsHintMessageRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "title", "value"], IsHintMessage);
+BindGlobal("HintMessageObjectType", NewType(HintMessageFamily, IsHintMessage));
 
-#! @Description
-#! Checks whether an <C>Object</C> has a <C>HintMessage</C> internal representation.
-DeclareRepresentation("IsMessageTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["value"], IsMessageType);
-
+BindGlobal("MessageTypeObjectType", NewType(HintMessageFamily, IsMessageType));
 
 #############################################################################
 ##
@@ -74,9 +65,9 @@ DeclareOperation("HintMessage", [IsMessageType, IsString, IsString]);
 #! The various types of Graph supported.
 #! @Returns <C>rec</C> of <C>MessageType</C>
 BindGlobal("MessageType", rec(
-  INFO    := Objectify(NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep), rec(value := "info")),
-  ERROR   := Objectify(NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep), rec(value := "error")),
-  SUCCESS := Objectify(NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep), rec(value := "success")),
-  WARNING := Objectify(NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep), rec(value := "warning")),
-  DEFAULT := Objectify(NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep), rec(value := "default"))
+  INFO    := Objectify(MessageTypeObjectType, rec(value := "info")),
+  ERROR   := Objectify(MessageTypeObjectType, rec(value := "error")),
+  SUCCESS := Objectify(MessageTypeObjectType, rec(value := "success")),
+  WARNING := Objectify(MessageTypeObjectType, rec(value := "warning")),
+  DEFAULT := Objectify(MessageTypeObjectType, rec(value := "default"))
 ));

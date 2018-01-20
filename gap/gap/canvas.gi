@@ -16,7 +16,7 @@ InstallMethod(Canvas,
    IsCanvasDefaults],
   0,
 function(title, options)
-  return MergeObjects(Objectify(NewType(CanvasFamily, IsCanvas and IsCanvasRep), rec(
+  return MergeObjects(Objectify(CanvasObjectType, rec(
     id       := GenerateID(),
     menus    := rec(),
     graph    := rec(),
@@ -221,21 +221,18 @@ function(canvas)
         <div id=\"francy\"></div>\n\
         <script>\n\
           var francy = new Francy({verbose: true, appendTo: 'body', callbackHandler: console.log});\n\
-          francy.render(", result.data.(FrancyMIMEType), ");\n\
+          francy.load(", result.data.(FrancyMIMEType), ").render();\n\
         </script>\n\
       </body>\n\
     </html>");
     
     PrintTo(name, page);
 
-    if ARCH_IS_MAC_OS_X() then
+    if ARCH_IS_MAC_OS_X() or ARCH_IS_UNIX() then
         Exec("open ",name);
     fi;
     if ARCH_IS_WINDOWS() then
         Exec("start ",name);
-    fi;
-    if ARCH_IS_UNIX() then
-        Exec("open ",name);
     fi;
 
     return page;

@@ -8,6 +8,8 @@ export function RegisterMathJax(element) {
     try {
       MathJax.Hub.Config({
         tex2jax: {
+          availableFonts: ["TeX"],
+          preferredFont: "TeX",
           inlineMath: [
             ['$', '$'],
             ['\\(', '\\)']

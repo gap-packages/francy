@@ -19,15 +19,15 @@ export default class Tooltip extends Renderer {
         .attr('class', 'francy-tooltip-holder');
     }
 
-    var pos = d3.mouse(this.SVGParent.node());
-
-    // TODO fix always visible tooltip, fine until someone complains about :P
-    this.element.style('left', pos[0] + 'px').style('top', pos[1] + 'px');
-
     // check if it exists already
     if (this.element.selectAll('*').node()) {
       return;
     }
+
+    var pos = d3.mouse(this.SVGParent.node());
+
+    // TODO fix always visible tooltip, fine until someone complains about :P
+    this.element.style('left', (pos[0] + 5) + 'px').style('top', (pos[1] - 5) + 'px');
 
     var table = this.element.append('div').attr('class', 'francy-tooltip')
       .append('div').attr('class', 'francy-table')

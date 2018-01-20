@@ -16,7 +16,7 @@ InstallMethod(Graph,
    IsFrancyGraphDefaults],
   0,
 function(graphType, options)
-  return MergeObjects(Objectify(NewType(GraphFamily, IsFrancyGraph and IsFrancyGraphRep), rec(
+  return MergeObjects(Objectify(FrancyGraphObjectType, rec(
     id    := GenerateID(),
     nodes := rec(),
     links := rec(),
@@ -120,7 +120,7 @@ InstallMethod(Shape,
    IsShapeDefaults],
   0,
 function(shapeType, title, options)
-  return MergeObjects(Objectify(NewType(ShapeFamily, IsShape and IsShapeRep), rec(
+  return MergeObjects(Objectify(ShapeObjectType, rec(
     id        := GenerateID(),
     type      := shapeType!.value,
     title     := title,
@@ -400,7 +400,7 @@ InstallMethod(Link,
   0,
 
 function(source, target)
-  return Objectify(NewType(LinkFamily, IsLink and IsLinkRep), rec(
+  return Objectify(LinkObjectType, rec(
     id     := GenerateID(),
     source := source!.id,
     target := target!.id

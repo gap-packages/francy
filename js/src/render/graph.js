@@ -19,7 +19,7 @@ export default class Graph extends Renderer {
 
     var element = undefined;
     switch (this.data.canvas.graph.type) {
-      case "tree":
+      case 'tree':
         element = new TreeGraph(this.options).load(this.data).render();
         break;
       default:
@@ -56,12 +56,12 @@ export default class Graph extends Renderer {
         // any callbacks will be handled here
         executeCallback.call(this, d, 'dblclick');
       })
-      .on("mouseenter", d => {
+      .on('mouseenter', d => {
         d = d.data || d;
         // default, show tooltip
         tooltip.load(d.messages, true).render();
       })
-      .on("mouseout", () => {
+      .on('mouseleave', () => {
         // default, hide tooltip
         tooltip.unrender();
       });

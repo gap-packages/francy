@@ -126,19 +126,21 @@ export default class GenericGraph extends Renderer {
 
       Graph.applyEvents(node, this.options);
 
-      var nodeOnClick = node.on('click');
-      node.on('click', function(d) {
-        // default, highlight connected nodes
-        connectedNodes.call(this);
-        // any callbacks will be handled here
-        nodeOnClick.call(this, d);
-      });
+      if (this.data.canvas.graph.neighbours) {
+        var nodeOnClick = node.on('click');
+        node.on('click', function(d) {
+          // default, highlight connected nodes
+          connectedNodes.call(this);
+          // any callbacks will be handled here
+          nodeOnClick.call(this, d);
+        });
+      }
     }
 
     if (simulationActive) {
       // Canvas Forces
       var centerForce = d3.forceCenter().x(width / 2).y(height / 2);
-      var manyForce = d3.forceManyBody().strength(-canvasNodes.length * 30);
+      var manyForce = d3.forceManyBody().strength(-canvasNodes.length * 50);
       var linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
       var collideForce = d3.forceCollide(d => d.size * 2);
 
@@ -150,9 +152,9 @@ export default class GenericGraph extends Renderer {
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
-        forceX = d3.forceX(width / 2).strength(0.5);
+        forceX = d3.forceX(width / 2).strength(0.3);
         //Strong y positioning based on layer to simulate the hasse diagram
-        forceY = d3.forceY(d => d.layer * 50).strength(0.9);
+        forceY = d3.forceY(d => d.layer * 75).strength(0.7);
       }
 
       var simulation = d3.forceSimulation().nodes(nodesToAdd)
@@ -169,7 +171,7 @@ export default class GenericGraph extends Renderer {
         });
 
       //force simulation restart
-      simulation.alpha(0.3).restart();
+      simulation.alpha(0.5).restart();
     }
     else {
       // well, simulation is off, zoom to fit now
@@ -184,38 +186,7 @@ export default class GenericGraph extends Renderer {
         .attr('y2', d => d.target.y);
 
       node.attr('transform', d => `translate(${d.x},${d.y})`);
-
-      //node.each(collide(1));
     }
-
-    // COLLISION
-    /*var padding = 10; // separation between circles;
-
-    function collide(alpha) {
-      let quadTree = d3.quadtree(canvasNodes);
-      return function(d) {
-        let rb = 100 * d.size + padding,
-          nx1 = d.x - rb,
-          nx2 = d.x + rb,
-          ny1 = d.y - rb,
-          ny2 = d.y + rb;
-        quadTree.visit(function(quad, x1, y1, x2, y2) {
-          if (quad.point && (quad.point !== d)) {
-            let x = d.x - quad.point.x,
-              y = d.y - quad.point.y,
-              l = Math.sqrt(x * x + y * y);
-            if (l < rb) {
-              l = (l - rb) / l * alpha;
-              d.x -= x *= l;
-              d.y -= y *= l;
-              quad.point.x += x;
-              quad.point.y += y;
-            }
-          }
-          return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-        });
-      };
-    }*/
 
     // HIGHLIGHT
     //Toggle stores whether the highlighting is on

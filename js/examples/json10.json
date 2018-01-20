@@ -1,106 +1,107 @@
 {
+  "version": "0.5.0",
   "mime": "application/vnd.francy+json",
   "canvas": {
     "width": "800",
-    "height": "600",
+    "height": "400",
+    "id": "A39",
+    "title": "Example Tree Graph",
     "zoomToFit": true,
-    "id": "F1",
-    "title": "Trees",
     "menus": {},
     "graph": {
       "type": "tree",
-      "id": "F2",
+      "collapse": true,
+      "id": "A40",
       "simulation": true,
+      "drag": false,
       "nodes": {
-        "F3": {
-          "x": 10,
-          "y": 10,
+        "A41": {
+          "x": 0,
+          "y": 0,
           "type": "square",
           "size": 10,
-          "id": "F3",
-          "title": "${ax^2 + bx + c = 0}$",
+          "id": "A41",
+          "title": "G",
           "layer": 0,
-          "parent": "F0",
-          "menus": {},
           "highlight": true,
-          "callbacks": {
-            "9A4E435F8A234BBD34DD34C838182A5C": {
-              "type": "server",
-              "id": "9A4E435F8A234BBD34DD34C838182A5C",
-              "trigger": "dblclick",
-              "knownArgs": [],
-              "requiredArgs": {
-                "8F794C1FA828467404CA41218DCFC68D": {
-                  "type": "number",
-                  "id": "8F794C1FA828467404CA41218DCFC68D",
-                  "title": "How many Circles?",
-                  "value": ""
-                }
-              }
-            }
-          }
+          "menus": {},
+          "messages": {},
+          "callbacks": {},
+          "parent": "A43"
         },
-        "F4": {
-          "x": 20,
-          "y": 20,
-          "type": "circle",
+        "A42": {
+          "x": 0,
+          "y": 0,
+          "type": "square",
           "size": 10,
-          "id": "F4",
+          "id": "A42",
           "title": "1",
-          "layer": 3,
-          "parent": "F3",
+          "layer": 0,
+          "highlight": true,
           "menus": {},
-          "highlight": true
+          "messages": {},
+          "callbacks": {},
+          "parent": "A41"
         },
-        "F5": {
-          "x": 30,
-          "y": 30,
-          "type": "circle",
+        "A43": {
+          "x": 0,
+          "y": 0,
+          "type": "square",
           "size": 10,
-          "id": "F5",
+          "id": "A43",
           "title": "SG1",
-          "layer": 1,
-          "parent": "F3",
+          "layer": 0,
+          "highlight": true,
           "menus": {},
-          "highlight": true
+          "messages": {},
+          "callbacks": {},
+          "parent": ""
         },
-        "F6": {
-          "x": 40,
-          "y": 40,
-          "type": "circle",
+        "A44": {
+          "x": 0,
+          "y": 0,
+          "type": "square",
           "size": 10,
-          "id": "F6",
-          "title": "${ax^2 + bx + c = 0}$",
-          "layer": 2,
-          "parent": "F4",
+          "id": "A44",
+          "title": "SG2",
+          "layer": 0,
+          "highlight": true,
           "menus": {},
-          "highlight": true
+          "messages": {},
+          "callbacks": {},
+          "parent": "A43"
         },
-        "F7": {
-          "x": 50,
-          "y": 50,
-          "type": "circle",
+        "A45": {
+          "x": 0,
+          "y": 0,
+          "type": "square",
           "size": 10,
-          "id": "F7",
+          "id": "A45",
           "title": "SG3",
-          "layer": 2,
-          "parent": "F4",
+          "layer": 0,
+          "highlight": true,
           "menus": {},
-          "highlight": true
+          "messages": {},
+          "callbacks": {},
+          "parent": "A43"
         },
-        "F8": {
-          "x": 60,
-          "y": 60,
-          "type": "circle",
+        "A46": {
+          "x": 0,
+          "y": 0,
+          "type": "square",
           "size": 10,
-          "id": "F8",
+          "id": "A46",
           "title": "SG4",
-          "layer": 2,
-          "parent": "F7",
+          "layer": 0,
+          "highlight": true,
           "menus": {},
-          "highlight": true
+          "messages": {},
+          "callbacks": {},
+          "parent": "A45"
         }
-      }
-    }
+      },
+      "links": {}
+    },
+    "messages": {}
   }
 }
