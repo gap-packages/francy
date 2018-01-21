@@ -37,7 +37,13 @@ BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
 #! @Section Representations
 #! In this section we show the Francy Menu Representations.
 
-BindGlobal("MenuObjectType", NewType(MenuFamily, IsMenu));
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>Menu</C> internal representation.
+DeclareRepresentation("IsMenuRep",
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["id", "title", "callback", "menus"], IsMenu);
+  
+BindGlobal("MenuObjectType", NewType(MenuFamily, IsMenu and IsMenuRep));
 
 
 #############################################################################

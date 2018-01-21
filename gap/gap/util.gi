@@ -35,6 +35,21 @@ end);
 
 #############################################################################
 ##
+#M  JUPYTER_ViewString( <obj> )  . . . . . . . . . . . . .  override for IsFrancyObjects
+##
+InstallMethod(JUPYTER_ViewString,
+  "a francy object",
+  [IsFrancyObject],
+  function(object)
+    return rec( json := true, 
+      source := "gap", 
+      data := rec(("text/html") := ViewString(object)), 
+      metadata := rec( ) );
+end);
+
+
+#############################################################################
+##
 #M  Sanitize( <obj> )  . . . . . . . . simple properties clone for FrancyObjects
 ##
 ## This method will clone a FrancyObject and return a record, traversing all the

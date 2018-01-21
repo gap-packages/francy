@@ -62,13 +62,37 @@ BindGlobal("TriggerFamily", NewFamily("TriggerFamily", IsTrigger));
 #! @Section Representations
 #! In this section we show the Francy Callback Representations.
 
-BindGlobal("CallbackObjectType", NewType(CallbackFamily, IsCallback));
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>Callback</C> internal representation.
+DeclareRepresentation("IsCallbackRep",
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["id", "func", "knownArgs", "requiredArgs"], IsCallback);
 
-BindGlobal("RequiredArgObjectType", NewType(CallbackFamily, IsRequiredArg));
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>RequiredArg</C> internal representation.
+DeclareRepresentation("IsRequiredArgRep",
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["id", "type", "title", "value"], IsRequiredArg);
 
-BindGlobal("ArgTypeObjectType",  NewType(CallbackFamily, IsArgType));
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>ArgType</C> internal representation.
+DeclareRepresentation("IsArgTypeRep",
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["value"], IsArgType);
 
-BindGlobal("TriggerEventObjectType", NewType(TriggerFamily, IsTriggerEvent));
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>TriggerEvent</C> internal representation.
+DeclareRepresentation("IsTriggerEventRep",
+  IsComponentObjectRep and IsAttributeStoringRep, 
+  ["value"], IsTriggerEvent);
+  
+BindGlobal("CallbackObjectType", NewType(CallbackFamily, IsCallback and IsCallbackRep));
+
+BindGlobal("RequiredArgObjectType", NewType(CallbackFamily, IsRequiredArg and IsRequiredArgRep));
+
+BindGlobal("ArgTypeObjectType",  NewType(CallbackFamily, IsArgType and IsArgTypeRep));
+
+BindGlobal("TriggerEventObjectType", NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep));
 
 
 #############################################################################

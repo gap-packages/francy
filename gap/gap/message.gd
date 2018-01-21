@@ -40,9 +40,21 @@ BindGlobal("HintMessageFamily", NewFamily("HintMessageFamily", IsFrancyObject));
 #! @Section Representations
 #! In this section we show the Francy HintMessage Representations.
 
-BindGlobal("HintMessageObjectType", NewType(HintMessageFamily, IsHintMessage));
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>HintMessage</C> internal representation.
+DeclareRepresentation("IsHintMessageRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["id", "title", "value"], IsHintMessage);
 
-BindGlobal("MessageTypeObjectType", NewType(HintMessageFamily, IsMessageType));
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>HintMessage</C> internal representation.
+DeclareRepresentation("IsMessageTypeRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["value"], IsMessageType);
+
+BindGlobal("HintMessageObjectType", NewType(HintMessageFamily, IsHintMessage and IsHintMessageRep));
+
+BindGlobal("MessageTypeObjectType", NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep));
 
 #############################################################################
 ##

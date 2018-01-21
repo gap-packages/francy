@@ -68,15 +68,57 @@ BindGlobal("LinkFamily", NewFamily("LinkFamily", IsLink));
 #! @Section Representations
 #! In this section we show the Francy Graph Representations.
 
-BindGlobal("FrancyGraphObjectType", NewType(GraphFamily, IsFrancyGraph));
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>Graph</C> internal representation.
+DeclareRepresentation("IsFrancyGraphRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["id", "type", "nodes", "links"], IsFrancyGraph);
 
-BindGlobal("ShapeObjectType", NewType(ShapeFamily, IsShape));
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>GraphDefaults</C> internal representation.
+DeclareRepresentation("IsFrancyGraphDefaultsRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["simulation", "forces"], IsFrancyGraphDefaults);
 
-BindGlobal("LinkObjectType", NewType(LinkFamily, IsLink));
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>GraphType</C> internal representation.
+DeclareRepresentation("IsFrancyGraphTypeRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["value"], IsFrancyGraphType);
 
-BindGlobal("ShapeTypeObjectType", NewType(ShapeFamily, IsShapeType));
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>Shape</C> internal representation.
+DeclareRepresentation("IsShapeRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["id", "type", "title", "menus", "callbacks", "info"], IsShape);
 
-BindGlobal("GraphTypeObjectType", NewType(GraphFamily, IsFrancyGraphType));
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>ShapeDeafults</C> internal representation.
+DeclareRepresentation("IsShapeDefaultsRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["layer", "x", "y", "size", "highlight"], IsShapeDefaults);
+
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>ShapeType</C> internal representation.
+DeclareRepresentation("IsShapeTypeRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["value"], IsShapeType);
+
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>Link</C> internal representation.
+DeclareRepresentation("IsLinkRep",
+  IsComponentObjectRep and IsAttributeStoringRep,
+  ["id", "source", "target"], IsLink);
+  
+BindGlobal("FrancyGraphObjectType", NewType(GraphFamily, IsFrancyGraph and IsFrancyGraphRep));
+
+BindGlobal("ShapeObjectType", NewType(ShapeFamily, IsShape and IsShapeRep));
+
+BindGlobal("LinkObjectType", NewType(LinkFamily, IsLink and IsLinkRep));
+
+BindGlobal("ShapeTypeObjectType", NewType(ShapeFamily, IsShapeType and IsShapeTypeRep));
+
+BindGlobal("GraphTypeObjectType", NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep));
 
 #############################################################################
 ##
@@ -203,7 +245,7 @@ BindGlobal("GraphType", rec(
 #! @Description
 #! The default configuration for a graph.
 #! @Returns <C>rec</C> of <C>GraphDefaults</C>
-BindGlobal("GraphDefaults", Objectify(NewType(GraphFamily, IsFrancyGraphDefaults), rec(
+BindGlobal("GraphDefaults", Objectify(NewType(GraphFamily, IsFrancyGraphDefaults and IsFrancyGraphDefaultsRep), rec(
   simulation := true,
   collapse   := true,
   drag       := false,
@@ -226,7 +268,7 @@ BindGlobal("ShapeType", rec(
 #! @Description
 #! The default configuration for a shape.
 #! @Returns <C>rec</C> of <C>ShapeDefaults</C>
-BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults), rec(
+BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and IsShapeDefaultsRep), rec(
   highlight := true,
   size      := 10,
   x         := 0,

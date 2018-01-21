@@ -13,6 +13,8 @@
 #! In this section we show the Francy Util Operations.
 #! Contains utility methods to handle Object printing/viewing, Sanitizing, etc.
 
+DeclareOperation("JUPYTER_ViewString", [IsObject]);
+
 #! @Description
 #! This method will clone a <C>Object</C> and return a sanitized record, traversing all the
 #! components and sanitizing when appropriate.
