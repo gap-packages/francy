@@ -15,7 +15,7 @@ See [Graphics Interface using Javascritp and D3.v4](/js)
 
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/develop)
 
-[MyBinder](https://mybinder.org/) allows opening Jupyter notebooks in an executable environment. Try the *francy.ipynb*.
+[MyBinder](https://mybinder.org/) allows opening Jupyter notebooks in an executable environment. Try any of the notebooks present or create your own.
 
 # License
 

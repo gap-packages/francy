@@ -77,5 +77,6 @@ DeclareAttribute("Id", IsFrancyObject);
 InstallMethod( Id, "francyObject", [IsFrancyObject], o -> o!.id);
 
 #! @Description
-#! Use with care...
-InstallMethod( SetId, "francyObject, string", [IsFrancyObject, IsString], function(o, s) o!.id := s; end);
+#! Use with care! Changing the unique ID might be useful in certain cases, 
+#! but bare in mind it might cause unexpected behavior if you're not sure about!
+InstallMethod(SetId, "francyObject, string", [IsFrancyObject, IsString], function(o, s) o!.id := s; end);

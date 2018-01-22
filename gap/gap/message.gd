@@ -90,9 +90,9 @@ BindGlobal("FrancyMessageType", rec(
 #! In this section we show the Francy Core Attributes
 
 DeclareAttribute("Title", IsFrancyMessage);
-InstallMethod( Title, "message", [IsFrancyMessage], o -> o!.title);
-InstallMethod( SetTitle, "message, string", [IsFrancyMessage, IsString], function(o, s) o!.title := s; end);
+InstallMethod(Title, "message", [IsFrancyMessage], o -> o!.title);
+InstallMethod(SetTitle, "message, string", [IsFrancyMessage, IsString], function(o, s) o!.title := s; end);
 
 DeclareAttribute("Value", IsFrancyMessage);
-InstallMethod( Value, "message", [IsFrancyMessage], o -> o!.value);
-InstallMethod( SetValue, "message, string", [IsFrancyMessage, IsString], function(o, s) o!.value := s; end);
+InstallMethod(Value, "message", [IsFrancyMessage], o -> o!.value);
+InstallMethod(SetValue, "message, string", [IsFrancyMessage, IsString], function(o, s) o!.value := s; end);

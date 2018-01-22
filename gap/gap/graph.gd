@@ -277,45 +277,45 @@ BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and I
 #! In this section we show the Francy Core Attributes
 
 DeclareAttribute("Title", IsShape);
-InstallMethod( Title, "shape", [IsShape], o -> o!.title);
-InstallMethod( SetTitle, "shape, string", [IsShape, IsString], function(o, s) o!.title := s; end);
+InstallMethod(Title, "shape", [IsShape], o -> o!.title);
+InstallMethod(SetTitle, "shape, string", [IsShape, IsString], function(o, s) o!.title := s; end);
 
 DeclareAttribute("PosX", IsShape);
-InstallMethod( PosX, "shape", [IsShape], o -> o!.x);
-InstallMethod( SetPosX, "shape, int", [IsShape, IsInt], function(o, i) o!.x := i; end);
+InstallMethod(PosX, "shape", [IsShape], o -> o!.x);
+InstallMethod(SetPosX, "shape, int", [IsShape, IsInt], function(o, i) o!.x := i; end);
 
 DeclareAttribute("PosY", IsShape);
-InstallMethod( PosY, "shape", [IsShape], o -> o!.y);
-InstallMethod( SetPosY, "shape, int", [IsShape, IsInt], function(o, i) o!.y := i; end);
+InstallMethod(PosY, "shape", [IsShape], o -> o!.y);
+InstallMethod(SetPosY, "shape, int", [IsShape, IsInt], function(o, i) o!.y := i; end);
 
 DeclareAttribute("Size", IsShape);
-InstallMethod( Size, "shape", [IsShape], o -> o!.zoomToFit);
-InstallMethod( SetSize, "shape, int", [IsShape, IsInt], function(o, i) o!.size := i; end);
+InstallMethod(Size, "shape", [IsShape], o -> o!.zoomToFit);
+InstallMethod(SetSize, "shape, int", [IsShape, IsInt], function(o, i) o!.size := i; end);
 
 DeclareAttribute("Highlight", IsShape);
-InstallMethod( Highlight, "shape", [IsShape], o -> o!.highlight);
-InstallMethod( SetHighlight, "shape, boolean", [IsShape, IsBool], function(o, b) o!.highlight := b; end);
+InstallMethod(Highlight, "shape", [IsShape], o -> o!.highlight);
+InstallMethod(SetHighlight, "shape, boolean", [IsShape, IsBool], function(o, b) o!.highlight := b; end);
 
 DeclareAttribute("Layer", IsShape);
-InstallMethod( Layer, "shape", [IsShape], o -> o!.zoomToFit);
-InstallMethod( SetLayer, "shape, int", [IsShape, IsInt], function(o, i) o!.layer := i; end);
+InstallMethod(Layer, "shape", [IsShape], o -> o!.zoomToFit);
+InstallMethod(SetLayer, "shape, int", [IsShape, IsInt], function(o, i) o!.layer := i; end);
 
 DeclareAttribute("ParentNode", IsShape);
-InstallMethod( ParentNode, "shape", [IsShape], o -> o!.highlight);
-InstallMethod( SetParentNode, "shape, string", [IsShape, IsString], function(o, s) if not o!.type = "tree" then Error("This is only for GraphType.TREE!"); fi; o!.parent := s; end);
+InstallMethod(ParentNode, "shape", [IsShape], o -> o!.highlight);
+InstallMethod(SetParentNode, "shape, string", [IsShape, IsString], function(o, s) if not o!.type = "tree" then Error("This is only for GraphType.TREE!"); fi; o!.parent := s; end);
 
 DeclareAttribute("Simulation", IsFrancyGraph);
-InstallMethod( Simulation, "graph", [IsFrancyGraph], o -> o!.simulation);
-InstallMethod( SetSimulation, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.simulation := b; end);
+InstallMethod(Simulation, "graph", [IsFrancyGraph], o -> o!.simulation);
+InstallMethod(SetSimulation, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.simulation := b; end);
 
 DeclareAttribute("Collapsed", IsFrancyGraph);
-InstallMethod( Collapsed, "graph", [IsFrancyGraph], o -> o!.collapsed);
-InstallMethod( SetCollapsed, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.collapsed := b; end);
+InstallMethod(Collapsed, "graph", [IsFrancyGraph], o -> o!.collapsed);
+InstallMethod(SetCollapsed, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.collapsed := b; end);
 
 DeclareAttribute("Drag", IsFrancyGraph);
-InstallMethod( Drag, "graph", [IsFrancyGraph], o -> o!.drag);
-InstallMethod( SetDrag, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.drag := b; end);
+InstallMethod(Drag, "graph", [IsFrancyGraph], o -> o!.drag);
+InstallMethod(SetDrag, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.drag := b; end);
 
 DeclareAttribute("ShowNeighbours", IsFrancyGraph);
-InstallMethod( ShowNeighbours, "graph", [IsFrancyGraph], o -> o!.showNeighbours);
-InstallMethod( SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.showNeighbours := b; end);
+InstallMethod(ShowNeighbours, "graph", [IsFrancyGraph], o -> o!.showNeighbours);
+InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.showNeighbours := b; end);

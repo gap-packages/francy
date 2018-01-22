@@ -156,6 +156,8 @@ export default class TreeGraph extends Renderer {
       }
 
       RegisterMathJax(this.SVGParent);
+
+      parent.zoomToFit();
     }
 
     return this;

@@ -204,10 +204,6 @@ BindGlobal("ChartDefaults", Objectify(NewType(ChartFamily, IsChartDefaults and I
   showLegend := true
 )));
 
-DeclareAttribute("ShowLabels", IsChart);
-InstallMethod( ShowLabels, "chart", [IsChart], o -> o!.showLabels);
-InstallMethod( SetShowLabels, "chart, boolean", [IsChart, IsBool], function(o, b) o!.showLabels := b; end);
-
 DeclareAttribute("ShowLegend", IsChart);
-InstallMethod( ShowLegend, "chart", [IsChart], o -> o!.showLegend);
-InstallMethod( SetShowLegend, "chart, boolean", [IsChart, IsBool], function(o, b) o!.showLegend := b; end);
+InstallMethod(ShowLegend, "chart", [IsChart], o -> o!.showLegend);
+InstallMethod(SetShowLegend, "chart, boolean", [IsChart, IsBool], function(o, b) o!.showLegend := b; end);

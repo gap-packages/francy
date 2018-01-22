@@ -18,11 +18,6 @@ by Christopher Jefferson (http://caj.host.cs.st-andrews.ac.uk/).
 Homepage: http://gap-packages.github.io/json/
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-Loading  uuid 0.4 (RFC 4122 UUIDs)
-by Markus Pfeiffer (http://www.morphism.de/~markusp/).
-Homepage: https://gap-packages.github.io/uuid/
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 Loading  Francy 0.2.0 (FRANCY - A Framework for Interactive Discrete Mathematics)
 by Manuel Martins (http://github.com/mcmartins).
 Homepage: https://github.com/mcmartins/francy
@@ -95,4 +90,3 @@ in any Framework / Programing Language / OS.
 
 Note: An external library is needed in order to translate the JSON produced into its Graphical representation, 
 see _Francy - JS_ a javascript implementation module.
-

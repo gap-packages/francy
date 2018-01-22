@@ -127,17 +127,17 @@ BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults an
 #! In this section we show the Francy Core Attributes
 
 DeclareAttribute("Width", IsCanvas);
-InstallMethod( Width, "canvas", [IsCanvas], o -> o!.width);
-InstallMethod( SetWidth, "canvas, positive int", [IsCanvas, IsPosInt], function(o, i) o!.width := i; end);
+InstallMethod(Width, "canvas", [IsCanvas], o -> o!.width);
+InstallMethod(SetWidth, "canvas, positive int", [IsCanvas, IsPosInt], function(o, i) o!.width := i; end);
 
 DeclareAttribute("Height", IsCanvas);
-InstallMethod( Height, "canvas", [IsCanvas], o -> o!.height);
-InstallMethod( SetHeight, "canvas, positive int", [IsCanvas, IsPosInt], function(o, i) o!.height := i; end);
+InstallMethod(Height, "canvas", [IsCanvas], o -> o!.height);
+InstallMethod(SetHeight, "canvas, positive int", [IsCanvas, IsPosInt], function(o, i) o!.height := i; end);
 
 DeclareAttribute("ZoomToFit", IsCanvas);
-InstallMethod( ZoomToFit, "canvas", [IsCanvas], o -> o!.zoomToFit);
-InstallMethod( SetZoomToFit, "canvas, boolean", [IsCanvas, IsBool], function(o, b) o!.zoomToFit := b; end);
+InstallMethod(ZoomToFit, "canvas", [IsCanvas], o -> o!.zoomToFit);
+InstallMethod(SetZoomToFit, "canvas, boolean", [IsCanvas, IsBool], function(o, b) o!.zoomToFit := b; end);
 
 DeclareAttribute("Title", IsCanvas);
-InstallMethod( Title, "canvas", [IsCanvas], o -> o!.title);
-InstallMethod( SetTitle, "canvas, string", [IsCanvas, IsString], function(o, s) o!.title := s; end);
+InstallMethod(Title, "canvas", [IsCanvas], o -> o!.title);
+InstallMethod(SetTitle, "canvas, string", [IsCanvas, IsString], function(o, s) o!.title := s; end);

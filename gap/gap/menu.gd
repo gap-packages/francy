@@ -79,5 +79,5 @@ DeclareOperation("Remove", [IsMenu, IsMenu]);
 #! In this section we show the Francy Core Attributes
 
 DeclareAttribute("Title", IsMenu);
-InstallMethod( Title, "menu", [IsMenu], o -> o!.title);
-InstallMethod( SetTitle, "menu, string", [IsMenu, IsString], function(o, s) o!.title := s; end);
+InstallMethod(Title, "menu", [IsMenu], o -> o!.title);
+InstallMethod(SetTitle, "menu, string", [IsMenu, IsString], function(o, s) o!.title := s; end);
