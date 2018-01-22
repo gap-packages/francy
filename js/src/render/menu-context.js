@@ -1,5 +1,5 @@
 import Menu from './menu';
-import { dontExecuteIfNoData } from '../decorator/data';
+import { requires } from '../decorator/data';
 
 /* global d3 */
 
@@ -9,7 +9,7 @@ export default class ContextMenu extends Menu {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @dontExecuteIfNoData('menus')
+  @requires('menus')
   render() {
 
     d3.event.preventDefault();

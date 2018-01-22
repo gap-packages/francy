@@ -16,7 +16,7 @@ InstallMethod(Menu,
    IsCallback],
   0,
 function(title, callback)
-  return Objectify(NewType(MenuFamily, IsMenu and IsMenuRep), rec(
+  return Objectify(MenuObjectType, rec(
     id       := GenerateID(),
     title    := title,
     callback := callback,

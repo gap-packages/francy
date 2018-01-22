@@ -19,7 +19,7 @@ Francy depends on [d3.v4](https://d3js.org/) to produce graphics.
 
   var francy = new Francy({verbose: true, appendTo: '#francy', callbackHandler: console.log});
   d3.json("json.json", function (error, json) {
-    francy.render(json);
+    francy.load(json).render();
   });
 
 </script>

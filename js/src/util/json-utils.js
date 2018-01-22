@@ -9,9 +9,7 @@ export default class JsonUtils {
    * @returns {json} - if the input is a valid JSON object, otherwise returns {undefined}
    */
   static parse(input, partial) {
-    if (!input) {
-      return;
-    }
+    if (!input) return;
     input = typeof input !== "string" ? JSON.stringify(input) : input;
     input = input.replace(/[\n\r\b\\]+|(gap>)/g, '');
     let jsonRegex = /{(?:[^])*}/g;

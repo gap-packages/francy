@@ -24,7 +24,7 @@ DeclareCategory("IsFrancyGraphType", IsFrancyObject);
 
 #! @Description
 #! Identifies <C>GraphDefaults</C> objects.
-DeclareCategory("IsFrancyGraphDefaults", IsFrancyDefaults);
+DeclareCategory("IsFrancyGraphDefaults", IsFrancyDefaultObject);
 
 #! @Description
 #! Identifies <C>Shape</C> objects.
@@ -36,7 +36,7 @@ DeclareCategory("IsShapeType", IsFrancyObject);
 
 #! @Description
 #! Identifies <C>ShapeDefaults</C> objects.
-DeclareCategory("IsShapeDefaults", IsFrancyDefaults);
+DeclareCategory("IsShapeDefaults", IsFrancyDefaultObject);
 
 #! @Description
 #! Identifies <C>Link</C> objects.
@@ -70,46 +70,51 @@ BindGlobal("LinkFamily", NewFamily("LinkFamily", IsLink));
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Graph</C> internal representation.
-DeclareRepresentation("IsFrancyGraphRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "type", "nodes", "links"], IsFrancyGraph);
+DeclareRepresentation("IsFrancyGraphRep", IsComponentObjectRep, [], IsFrancyGraph);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>GraphDefaults</C> internal representation.
-DeclareRepresentation("IsFrancyGraphDefaultsRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["simulation", "forces"], IsFrancyGraphDefaults);
+DeclareRepresentation("IsFrancyGraphDefaultsRep", IsComponentObjectRep, [], IsFrancyGraphDefaults);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>GraphType</C> internal representation.
-DeclareRepresentation("IsFrancyGraphTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["value"], IsFrancyGraphType);
+DeclareRepresentation("IsFrancyGraphTypeRep", IsComponentObjectRep, [], IsFrancyGraphType);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Shape</C> internal representation.
-DeclareRepresentation("IsShapeRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "type", "title", "menus", "callbacks", "info"], IsShape);
+DeclareRepresentation("IsShapeRep", IsComponentObjectRep, [], IsShape);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>ShapeDeafults</C> internal representation.
-DeclareRepresentation("IsShapeDefaultsRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["layer", "x", "y", "size", "highlight"], IsShapeDefaults);
+DeclareRepresentation("IsShapeDefaultsRep", IsComponentObjectRep, [], IsShapeDefaults);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>ShapeType</C> internal representation.
-DeclareRepresentation("IsShapeTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["value"], IsShapeType);
+DeclareRepresentation("IsShapeTypeRep", IsComponentObjectRep, [], IsShapeType);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Link</C> internal representation.
-DeclareRepresentation("IsLinkRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "source", "target"], IsLink);
+DeclareRepresentation("IsLinkRep", IsComponentObjectRep, [], IsLink);
   
+#! @Description
+#! Creates a new type for <C>FrancyGraph/C> objects.
+BindGlobal("FrancyGraphObjectType", NewType(GraphFamily, IsFrancyGraph and IsFrancyGraphRep));
+
+#! @Description
+#! Creates a new type for <C>Shape/C> objects.
+BindGlobal("ShapeObjectType", NewType(ShapeFamily, IsShape and IsShapeRep));
+
+#! @Description
+#! Creates a new type for <C>Link/C> objects.
+BindGlobal("LinkObjectType", NewType(LinkFamily, IsLink and IsLinkRep));
+
+#! @Description
+#! Creates a new type for <C>ShapeType/C> objects.
+BindGlobal("ShapeTypeObjectType", NewType(ShapeFamily, IsShapeType and IsShapeTypeRep));
+
+#! @Description
+#! Creates a new type for <C>GraphType/C> objects.
+BindGlobal("GraphTypeObjectType", NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep));
 
 #############################################################################
 ##
@@ -181,15 +186,27 @@ DeclareOperation("Remove", [IsShape, IsCallback]);
 
 #! @Description
 #! Add <C>Callback</C> to a specific <C>Shape</C>.
-#! @Arguments IsShape, [IsHintMessage, List(IsHintMessage)]
+#! @Arguments IsShape, [IsFrancyMessage, List(IsFrancyMessage)]
 #! @Returns <C>Shape</C>
-DeclareOperation("Add", [IsShape, IsHintMessage]);
+DeclareOperation("Add", [IsShape, IsFrancyMessage]);
 
 #! @Description
 #! Remove <C>Callback</C> from a specific <C>Shape</C>.
-#! @Arguments IsShape, [IsHintMessage, List(IsHintMessage)]
+#! @Arguments IsShape, [IsFrancyMessage, List(IsFrancyMessage)]
 #! @Returns <C>Shape</C>
-DeclareOperation("Remove", [IsShape, IsHintMessage]);
+DeclareOperation("Remove", [IsShape, IsFrancyMessage]);
+
+#! @Description
+#! Add <C>Callback</C> to a specific <C>Shape</C>.
+#! @Arguments IsShape, [IsShape, List(IsShape)]
+#! @Returns <C>Shape</C>
+DeclareOperation("Add", [IsShape, IsShape]);
+
+#! @Description
+#! Remove <C>Callback</C> from a specific <C>Shape</C>.
+#! @Arguments IsShape, [IsShape, List(IsShape)]
+#! @Returns <C>Shape</C>
+DeclareOperation("Remove", [IsShape, IsShape]);
 
 #! @Description
 #! Creates a <C>Link</C> between the two <C>Shape</C>.
@@ -214,30 +231,33 @@ DeclareOperation("Links", [IsList, IsList]);
 #! The various types of Graph supported.
 #! @Returns <C>rec</C> of <C>GraphType</C>
 BindGlobal("GraphType", rec(
-  UNDIRECTED := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "undirected")),
-  DIRECTED   := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "directed")),
-  HASSE      := Objectify(NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep), rec(value := "hasse"))
+  UNDIRECTED := Objectify(GraphTypeObjectType, rec(value := "undirected")),
+  DIRECTED   := Objectify(GraphTypeObjectType, rec(value := "directed")),
+  HASSE      := Objectify(GraphTypeObjectType, rec(value := "hasse")),
+  TREE       := Objectify(GraphTypeObjectType, rec(value := "tree"))
 ));
 
 #! @Description
 #! The default configuration for a graph.
 #! @Returns <C>rec</C> of <C>GraphDefaults</C>
 BindGlobal("GraphDefaults", Objectify(NewType(GraphFamily, IsFrancyGraphDefaults and IsFrancyGraphDefaultsRep), rec(
-  simulation := true,
-  drag       := true
+  simulation     := true,
+  collapsed      := true,
+  drag           := false,
+  showNeighbours := false
 )));
 
 #! @Description
 #! The various shape types supported
 #! @Returns <C>rec</C> of <C>ShapeType</C>
 BindGlobal("ShapeType", rec(
-  TRIANGLE := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "triangle")),
-  DIAMOND  := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "diamond")),
-  CIRCLE   := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "circle")),
-  SQUARE   := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "square")),
-  CROSS    := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "cross")),
-  STAR     := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "star")),
-  WYE      := Objectify(NewType(ShapeFamily, IsShapeType and IsShapeTypeRep), rec(value := "wye"))
+  TRIANGLE := Objectify(ShapeTypeObjectType, rec(value := "triangle")),
+  DIAMOND  := Objectify(ShapeTypeObjectType, rec(value := "diamond")),
+  CIRCLE   := Objectify(ShapeTypeObjectType, rec(value := "circle")),
+  SQUARE   := Objectify(ShapeTypeObjectType, rec(value := "square")),
+  CROSS    := Objectify(ShapeTypeObjectType, rec(value := "cross")),
+  STAR     := Objectify(ShapeTypeObjectType, rec(value := "star")),
+  WYE      := Objectify(ShapeTypeObjectType, rec(value := "wye"))
 ));
 
 #! @Description
@@ -245,8 +265,57 @@ BindGlobal("ShapeType", rec(
 #! @Returns <C>rec</C> of <C>ShapeDefaults</C>
 BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and IsShapeDefaultsRep), rec(
   highlight := true,
-  layer     := 0,
   size      := 10,
   x         := 0,
   y         := 0 
 )));
+
+
+#############################################################################
+##
+#! @Section Attributes
+#! In this section we show the Francy Core Attributes
+
+DeclareAttribute("Title", IsShape);
+InstallMethod( Title, "shape", [IsShape], o -> o!.title);
+InstallMethod( SetTitle, "shape, string", [IsShape, IsString], function(o, s) o!.title := s; end);
+
+DeclareAttribute("PosX", IsShape);
+InstallMethod( PosX, "shape", [IsShape], o -> o!.x);
+InstallMethod( SetPosX, "shape, int", [IsShape, IsInt], function(o, i) o!.x := i; end);
+
+DeclareAttribute("PosY", IsShape);
+InstallMethod( PosY, "shape", [IsShape], o -> o!.y);
+InstallMethod( SetPosY, "shape, int", [IsShape, IsInt], function(o, i) o!.y := i; end);
+
+DeclareAttribute("Size", IsShape);
+InstallMethod( Size, "shape", [IsShape], o -> o!.zoomToFit);
+InstallMethod( SetSize, "shape, int", [IsShape, IsInt], function(o, i) o!.size := i; end);
+
+DeclareAttribute("Highlight", IsShape);
+InstallMethod( Highlight, "shape", [IsShape], o -> o!.highlight);
+InstallMethod( SetHighlight, "shape, boolean", [IsShape, IsBool], function(o, b) o!.highlight := b; end);
+
+DeclareAttribute("Layer", IsShape);
+InstallMethod( Layer, "shape", [IsShape], o -> o!.zoomToFit);
+InstallMethod( SetLayer, "shape, int", [IsShape, IsInt], function(o, i) o!.layer := i; end);
+
+DeclareAttribute("ParentNode", IsShape);
+InstallMethod( ParentNode, "shape", [IsShape], o -> o!.highlight);
+InstallMethod( SetParentNode, "shape, string", [IsShape, IsString], function(o, s) if not o!.type = "tree" then Error("This is only for GraphType.TREE!"); fi; o!.parent := s; end);
+
+DeclareAttribute("Simulation", IsFrancyGraph);
+InstallMethod( Simulation, "graph", [IsFrancyGraph], o -> o!.simulation);
+InstallMethod( SetSimulation, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.simulation := b; end);
+
+DeclareAttribute("Collapsed", IsFrancyGraph);
+InstallMethod( Collapsed, "graph", [IsFrancyGraph], o -> o!.collapsed);
+InstallMethod( SetCollapsed, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.collapsed := b; end);
+
+DeclareAttribute("Drag", IsFrancyGraph);
+InstallMethod( Drag, "graph", [IsFrancyGraph], o -> o!.drag);
+InstallMethod( SetDrag, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.drag := b; end);
+
+DeclareAttribute("ShowNeighbours", IsFrancyGraph);
+InstallMethod( ShowNeighbours, "graph", [IsFrancyGraph], o -> o!.showNeighbours);
+InstallMethod( SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.showNeighbours := b; end);

@@ -6,6 +6,24 @@
     "id": "A197731FA6674899EC0A97DF399ED5BC",
     "title": "Quaternion Group Subgroup Lattice",
     "menus": {},
+    "zoomToFit": true,
+    "messages": {
+      "A1": {
+        "type": "info",
+        "title": "title1",
+        "text": "Valor1 ed wed "
+      },
+      "A2": {
+        "type": "info",
+        "title": "",
+        "text": "Valor2 ed wdw ed"
+      },
+      "A3": {
+        "type": "error",
+        "title": "title3v ev ",
+        "text": "Valor3 sad  ed wed wed wed wed "
+      }
+    },
     "graph": {
       "type": "custom",
       "id": "585C13EF00EC4E71DCCF4C7246C86807",

@@ -16,7 +16,7 @@ InstallMethod(Chart,
    IsChartDefaults],
   0,
 function(chartType, options)
-  return MergeObjects(Objectify(NewType(ChartFamily, IsChart and IsChartRep), rec(
+  return MergeObjects(Objectify(ChartObjectType, rec(
     id   := GenerateID(),
     data := rec(),
     axis := DefaultAxis(chartType),
@@ -139,7 +139,7 @@ InstallMethod(Dataset,
    IsList],
   0,
 function(title, list)
-  return Objectify(NewType(ChartFamily, IsDataset and IsDatasetRep), rec(
+  return Objectify(DatasetObjectType, rec(
     title := title,
     data  := list
   ));
@@ -157,7 +157,7 @@ InstallMethod(XAxis,
    IsList],
   0,
 function(axisScale, title, list)
-  return Objectify(NewType(ChartFamily, IsXAxis and IsAxisRep), rec(
+  return Objectify(XAxisObjectType, rec(
     scale  := axisScale!.value,
     title  := title,
     domain := list
@@ -186,7 +186,7 @@ InstallMethod(YAxis,
    IsList],
   0,
 function(axisScale, title, list)
-  return Objectify(NewType(ChartFamily, IsYAxis and IsAxisRep), rec(
+  return Objectify(YAxisObjectType, rec(
     scale  := axisScale!.value,
     title  := title,
     domain := list

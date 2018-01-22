@@ -56,16 +56,18 @@ export default class LineChart extends Renderer {
         .x(function(d, i) { return x(i); })
         .y(function(d) { return y(d); });
 
-      var line = linesGroup.selectAll(`.line${index}`).data([datasets[key]]);
+      var line = linesGroup.selectAll(`.francy-line-${index}`).data([datasets[key]]);
 
-      line.exit().remove();
+      line.exit().transition().duration(750)
+        .style("fill-opacity", 1e-6)
+        .remove();
 
       // append the rectangles for the bar chart
-      line.enter()
+      var lineEnter = line.enter()
         .append('path')
         .style('stroke', () => Chart.colors(index * 5))
         .style('stroke-width', '5px')
-        .attr('class', `francy-line${index}`)
+        .attr('class', `francy-line-${index}`)
         .attr('d', valueLine)
         .on("mouseenter", function(d) {
           d3.select(this).transition()
@@ -82,7 +84,7 @@ export default class LineChart extends Renderer {
           tooltip.unrender();
         });
 
-      line.merge(line);
+      lineEnter.merge(line);
     });
 
     // force rebuild axis again
@@ -126,36 +128,40 @@ export default class LineChart extends Renderer {
       .style('text-anchor', 'end')
       .text(axis.y.title);
 
-    var legendGroup = this.element.selectAll('.francy-legend');
+    if (this.data.canvas.chart.showLegend) {
 
-    if (!legendGroup.node()) {
-      legendGroup = this.element.append('g').attr('class', 'francy-legend');
+      var legendGroup = this.element.selectAll('.francy-legend');
+
+      if (!legendGroup.node()) {
+        legendGroup = this.element.append('g').attr('class', 'francy-legend');
+      }
+
+      // force rebuild legend again
+      legendGroup.selectAll('*').remove();
+
+      var legend = legendGroup.selectAll('g').data(datasetNames.slice());
+
+      legend.exit().remove();
+
+      legend = legend.enter()
+        .append('g')
+        .attr('transform', (d, i) => `translate(0,${i * 20})`)
+        .merge(legend);
+
+      legend.append('rect')
+        .attr('x', width + 20)
+        .attr('width', 19)
+        .attr('height', 19)
+        .style('fill', (d, i) => Chart.colors(i * 5));
+
+      legend.append('text')
+        .attr('x', width + 80)
+        .attr('y', 9)
+        .attr('dy', '.35em')
+        .style('text-anchor', 'end')
+        .text(d => d);
+
     }
-
-    // force rebuild legend again
-    legendGroup.selectAll('*').remove();
-
-    var legend = legendGroup.selectAll('g').data(datasetNames.slice());
-
-    legend.exit().remove();
-
-    legend = legend.enter()
-      .append('g')
-      .attr('transform', (d, i) => `translate(0,${i * 20})`)
-      .merge(legend);
-
-    legend.append('rect')
-      .attr('x', width + 20)
-      .attr('width', 19)
-      .attr('height', 19)
-      .style('fill', (d, i) => Chart.colors(i * 5));
-
-    legend.append('text')
-      .attr('x', width + 80)
-      .attr('y', 9)
-      .attr('dy', '.35em')
-      .style('text-anchor', 'end')
-      .text(d => d);
 
     return this;
   }

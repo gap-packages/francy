@@ -16,14 +16,15 @@ export default class Renderer extends Base {
       this.logger.debug('No [unrender()] method specified...');
     }
     this.element = undefined;
+    this.transitionDuration = 750; //ms
   }
 
   get HTMLParent() {
-    return this.options.appendTo.element.node().tagName.toUpperCase() === 'SVG' ? d3.select(this.options.appendTo.element.node().parentNode) : this.options.appendTo.element;
+    return this.options.appendTo.element.node().tagName.toLowerCase() === 'svg' ? d3.select(this.options.appendTo.element.node().parentNode) : this.options.appendTo.element;
   }
 
   get SVGParent() {
-    return this.options.appendTo.element.node().tagName.toUpperCase() === 'DIV' ? this.options.appendTo.element.select('svg') : this.options.appendTo.element;
+    return this.options.appendTo.element.node().tagName.toLowerCase() === 'div' ? this.options.appendTo.element.select('svg') : this.options.appendTo.element;
   }
 
 }

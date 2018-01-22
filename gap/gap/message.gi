@@ -8,17 +8,17 @@
 
 #############################################################################
 ##
-#M  HintMessage( <messageType>, <string>, <string> )  . .  create a Label
+#M  FrancyMessage( <messageType>, <string>, <string> )  . .  create a Label
 ##
-InstallMethod(HintMessage,
+InstallMethod(FrancyMessage,
   "message type, a title, a value",
   true,
-  [IsMessageType,
+  [IsFrancyMessageType,
    IsString,
    IsString],
   0,
 function(messageType, title, value)
-  return Objectify(NewType(HintMessageFamily, IsHintMessage and IsHintMessageRep), rec(
+  return Objectify(FrancyMessageObjectType, rec(
     id    := GenerateID(),
     type  := messageType!.value,
     title := title,
@@ -26,31 +26,31 @@ function(messageType, title, value)
   ));
 end);
 
-InstallOtherMethod(HintMessage,
+InstallOtherMethod(FrancyMessage,
   "a title, a value",
   true,
   [IsString,
    IsString],
   0,
 function(title, value)
-  return HintMessage(MessageType.DEFAULT, title, value);
+  return FrancyMessage(FrancyMessageType.DEFAULT, title, value);
 end);
 
-InstallOtherMethod(HintMessage,
+InstallOtherMethod(FrancyMessage,
   "message type, a value",
   true,
-  [IsMessageType,
+  [IsFrancyMessageType,
    IsString],
   0,
 function(messageType, value)
-  return HintMessage(messageType, "", value);
+  return FrancyMessage(messageType, "", value);
 end);
 
-InstallOtherMethod(HintMessage,
+InstallOtherMethod(FrancyMessage,
   "a value",
   true,
   [IsString],
   0,
 function(value)
-  return HintMessage(MessageType.DEFAULT, "", value);
+  return FrancyMessage(FrancyMessageType.DEFAULT, "", value);
 end);

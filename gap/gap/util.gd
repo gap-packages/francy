@@ -14,6 +14,11 @@
 #! Contains utility methods to handle Object printing/viewing, Sanitizing, etc.
 
 #! @Description
+#! This method will pretty print in jupyter environment.
+#! @Returns <C>String</C>
+DeclareOperation("JUPYTER_ViewString", [IsObject]);
+
+#! @Description
 #! This method will clone a <C>Object</C> and return a sanitized record, traversing all the
 #! components and sanitizing when appropriate.
 #! Sanitizing in this context means, replace everything with it's string representation 

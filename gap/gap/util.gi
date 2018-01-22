@@ -20,18 +20,33 @@ end);
 
 #############################################################################
 ##
-#M  ViewObj( <obj> )  . . . . . . . . . . . . .  override for IsFrancyObjects
+#M  ViewString( <obj> )  . . . . . . . . . . . . .  override for IsFrancyObjects
 ##
-InstallMethod(ViewObj,
+InstallMethod(ViewString,
   "a francy object",
   true,
   [IsFrancyObject],
   0,
 function(object)
-  Print(Concatenation( "<",
-       CategoriesOfObject( object )[1],
-       "/", CategoriesOfObject( object )[2], ">"));
+  return (Concatenation( "<",
+      CategoriesOfObject( object )[1],
+      "/", CategoriesOfObject( object )[2], ">"));
 end);
+
+#############################################################################
+##
+#M  JUPYTER_ViewString( <obj> )  . . . . . . . . . . . . .  override for IsFrancyObjects
+##
+InstallMethod(JUPYTER_ViewString,
+  "a francy object",
+  [IsFrancyObject],
+  function(object)
+    return rec( json := true, 
+      source := "gap", 
+      data := rec(("text/html") := ViewString(object)), 
+      metadata := rec( ) );
+end);
+
 
 #############################################################################
 ##
@@ -133,5 +148,5 @@ InstallMethod(GenerateID,
   0,
 function()
   FrancyGeneratedID := FrancyGeneratedID + 1;
-  return Concatenation("A", String(FrancyGeneratedID));
+  return Concatenation("F", String(FrancyGeneratedID));
 end);

@@ -1,0 +1,206 @@
+{
+  "version": "0.5.0",
+  "mime": "application/vnd.francy+json",
+  "canvas": {
+    "width": "800",
+    "height": "600",
+    "id": "A29",
+    "title": "Sons of a numerical semigroup",
+    "zoomToFit": true,
+    "menus": {},
+    "graph": {
+      "type": "hasse",
+      "collapse": true,
+      "id": "A30",
+      "simulation": true,
+      "drag": false,
+      "nodes": {
+        "A31": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "A31",
+          "title": "S",
+          "layer": 3,
+          "highlight": true,
+          "menus": {},
+          "messages": {
+            "A32": {
+              "type": "default",
+              "id": "A32",
+              "text": "[ 3, 5, 7 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {},
+          "parent": ""
+        },
+        "A33": {
+          "x": 0,
+          "y": 0,
+          "String": "<object>",
+          "type": "circle",
+          "size": 10,
+          "id": "A33",
+          "title": "S:1",
+          "layer": 4,
+          "highlight": true,
+          "menus": {},
+          "messages": {
+            "A35": {
+              "type": "default",
+              "id": "A35",
+              "text": "[ 3, 7, 8 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "A34": {
+              "func": "unknown",
+              "id": "A34",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>",
+                "S:1"
+              ],
+              "requiredArgs": {}
+            }
+          },
+          "parent": ""
+        },
+        "A37": {
+          "x": 0,
+          "y": 0,
+          "String": "<object>",
+          "type": "circle",
+          "size": 10,
+          "id": "A37",
+          "title": "S:2",
+          "layer": 4,
+          "highlight": true,
+          "menus": {},
+          "messages": {
+            "A39": {
+              "type": "default",
+              "id": "A39",
+              "text": "[ 3, 5 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "A38": {
+              "func": "unknown",
+              "id": "A38",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>",
+                "S:2"
+              ],
+              "requiredArgs": {}
+            }
+          },
+          "parent": ""
+        },
+        "A42": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "A42",
+          "title": "S:1:1",
+          "layer": 5,
+          "highlight": true,
+          "menus": {},
+          "messages": {
+            "A44": {
+              "type": "default",
+              "id": "A44",
+              "text": "[ 3, 8, 10 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "A43": {
+              "func": "unknown",
+              "id": "A43",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>",
+                "S:1:1"
+              ],
+              "requiredArgs": {}
+            }
+          },
+          "parent": ""
+        },
+        "A46": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "A46",
+          "title": "S:1:2",
+          "layer": 5,
+          "highlight": true,
+          "menus": {},
+          "messages": {
+            "A48": {
+              "type": "default",
+              "id": "A48",
+              "text": "[ 3, 7, 11 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "A47": {
+              "func": "unknown",
+              "id": "A47",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>",
+                "S:1:2"
+              ],
+              "requiredArgs": {}
+            }
+          },
+          "parent": ""
+        }
+      },
+      "links": {
+        "A36": {
+          "source": "A31",
+          "id": "A36",
+          "target": "A33"
+        },
+        "A40": {
+          "source": "A31",
+          "id": "A40",
+          "target": "A37"
+        },
+        "A45": {
+          "source": "A33",
+          "id": "A45",
+          "target": "A42"
+        },
+        "A49": {
+          "source": "A33",
+          "id": "A49",
+          "target": "A46"
+        }
+      }
+    },
+    "messages": {
+      "A41": {
+        "type": "warning",
+        "id": "A41",
+        "text": "This semigroup is a leaf",
+        "title": ""
+      }
+    }
+  }
+}

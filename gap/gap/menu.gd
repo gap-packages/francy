@@ -39,9 +39,11 @@ BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Menu</C> internal representation.
-DeclareRepresentation("IsMenuRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["id", "title", "callback", "menus"], IsMenu);
+DeclareRepresentation("IsMenuRep", IsComponentObjectRep, [], IsMenu);
+
+#! @Description
+#! Creates a new type for <C>Menu/C> objects.
+BindGlobal("MenuObjectType", NewType(MenuFamily, IsMenu and IsMenuRep));
 
 
 #############################################################################
@@ -69,3 +71,13 @@ DeclareOperation("Add", [IsMenu, IsMenu]);
 #! @Arguments IsMenu, [IsMenu, List(IsMenu)]
 #! @Returns <C>Menu</C>
 DeclareOperation("Remove", [IsMenu, IsMenu]);
+
+
+#############################################################################
+##
+#! @Section Attributes
+#! In this section we show the Francy Core Attributes
+
+DeclareAttribute("Title", IsMenu);
+InstallMethod( Title, "menu", [IsMenu], o -> o!.title);
+InstallMethod( SetTitle, "menu, string", [IsMenu, IsString], function(o, s) o!.title := s; end);

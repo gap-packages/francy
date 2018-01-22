@@ -1,6 +1,7 @@
 import Renderer from './renderer';
+import { RegisterJupyterKeyboardEvents } from '../util/component';
 
-/* global d3 Jupyter */
+/* global d3 */
 
 export default class RequiredArgsModal extends Renderer {
 
@@ -81,17 +82,7 @@ export default class RequiredArgsModal extends Renderer {
     });
 
     // disable keyboard shortcuts when using this modal in Jupyter
-    try {
-      Jupyter.keyboard_manager.register_events('.francy');
-      Jupyter.keyboard_manager.register_events('.francy-arg');
-      Jupyter.keyboard_manager.register_events('.francy-overlay');
-      Jupyter.keyboard_manager.register_events('.francy-modal');
-    }
-    catch (e) {
-      if (e.name == 'ReferenceError') {
-        self.logger.debug('It seems we\'re not running on Jupyter...', e);
-      }
-    }
+    RegisterJupyterKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
 
     content.selectAll('.francy-arg').node().focus();
 

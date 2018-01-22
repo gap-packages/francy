@@ -16,7 +16,7 @@ InstallMethod(Graph,
    IsFrancyGraphDefaults],
   0,
 function(graphType, options)
-  return MergeObjects(Objectify(NewType(GraphFamily, IsFrancyGraph and IsFrancyGraphRep), rec(
+  return MergeObjects(Objectify(FrancyGraphObjectType, rec(
     id    := GenerateID(),
     nodes := rec(),
     links := rec(),
@@ -120,13 +120,15 @@ InstallMethod(Shape,
    IsShapeDefaults],
   0,
 function(shapeType, title, options)
-  return MergeObjects(Objectify(NewType(ShapeFamily, IsShape and IsShapeRep), rec(
+  return MergeObjects(Objectify(ShapeObjectType, rec(
     id        := GenerateID(),
     type      := shapeType!.value,
     title     := title,
     callbacks := rec(),
     menus     := rec(),
-    messages  := rec()
+    messages  := rec(),
+    layer     := 0,
+    parent    := ""
   )), options);
 end);
 
@@ -147,6 +149,65 @@ InstallOtherMethod(Shape,
   0,
 function(shapeType)
   return Shape(shapeType, "", ShapeDefaults);
+end);
+
+
+#############################################################################
+##
+#M  Add( <shape>, <shape> ) . . . . . add shape children
+##
+InstallMethod(Add,
+  "a shape, a shape",
+  true,
+  [IsShape,
+   IsShape],
+  0,
+function(shape1, shape2)
+  shape2!.parent := shape1!.id;
+  return shape1;
+end);
+
+InstallOtherMethod(Add,
+  "a shape, a list of shape",
+  true,
+  [IsShape,
+   IsList],
+  0,
+function(shape, shapes)
+  local shp;
+  for shp in shapes do
+    Add(shape, shp);
+  od;
+  return shape;
+end);
+
+#############################################################################
+##
+#M  Remove( <shape>, <shape> ) . . . . . remove shape children
+##
+InstallMethod(Remove,
+  "a shape, a shape",
+  true,
+  [IsShape,
+   IsShape],
+  0,
+function(shape1, shape2)
+  shape2!.parent := "";
+  return shape1;
+end);
+
+InstallOtherMethod(Remove,
+  "a shape, a list of shape",
+  true,
+  [IsShape,
+   IsList],
+  0,
+function(shape, shapes)
+  local shp;
+  for shp in shapes do
+    Remove(shape, shp);
+  od;
+  return shape;
 end);
 
 
@@ -276,7 +337,7 @@ InstallMethod(Add,
   "a shape, a message",
   true,
   [IsShape,
-   IsHintMessage],
+   IsFrancyMessage],
   0,
 function(shape, message)
   shape!.messages!.(message!.id) := message;
@@ -305,7 +366,7 @@ InstallMethod(Remove,
   "a shape, a message",
   true,
   [IsShape,
-   IsHintMessage],
+   IsFrancyMessage],
   0,
 function(shape, message)
   Unbind(shape!.messages!.(message!.id));
@@ -339,7 +400,7 @@ InstallMethod(Link,
   0,
 
 function(source, target)
-  return Objectify(NewType(LinkFamily, IsLink and IsLinkRep), rec(
+  return Objectify(LinkObjectType, rec(
     id     := GenerateID(),
     source := source!.id,
     target := target!.id
