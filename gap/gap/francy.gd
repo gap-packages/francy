@@ -33,7 +33,11 @@ DeclareCategory("IsFrancyObject", IsObject);
 
 #! @Description
 #! Identifies all Default records in Francy.
-DeclareCategory("IsFrancyDefaults", IsFrancyObject);
+DeclareCategory("IsFrancyDefaultObject", IsObject);
+
+#! @Description
+#! Identifies all Type records in Francy.
+DeclareCategory("IsFrancyTypeObject", IsObject);
 
 
 #############################################################################
@@ -60,3 +64,18 @@ BindGlobal("FrancyFamily", NewFamily("FrancyFamily", IsFrancyObject));
 #! Using this mime, the client should be able to now how to render the JSON Metadata.
 #! @Returns <C>IsString</C> with content 'application/vnd.francy+json'
 BindGlobal("FrancyMIMEType", "application/vnd.francy+json");
+
+#############################################################################
+##
+#! @Section Attributes
+#! In this section we show the Francy Core Attributes
+
+#! @Description
+#! All Objects created in Francy have a generated identifier.
+#! @Returns <C>IsString</C> with the id of the object
+DeclareAttribute("Id", IsFrancyObject);
+InstallMethod( Id, "francyObject", [IsFrancyObject], o -> o!.id);
+
+#! @Description
+#! Use with care...
+InstallMethod( SetId, "francyObject, string", [IsFrancyObject, IsString], function(o, s) o!.id := s; end);

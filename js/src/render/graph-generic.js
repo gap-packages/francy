@@ -42,7 +42,7 @@ export default class GenericGraph extends Renderer {
       }
     });
 
-    var link = linkGroup.selectAll('g.francy-link').data(linksToAdd);
+    var link = linkGroup.selectAll('g.francy-link').data(linksToAdd, d => d.id);
 
     var nodeGroup = this.element.selectAll('g.francy-nodes');
 
@@ -62,7 +62,7 @@ export default class GenericGraph extends Renderer {
       }
     });
 
-    var node = nodeGroup.selectAll('g.francy-node').data(nodesToAdd);
+    var node = nodeGroup.selectAll('g.francy-node').data(nodesToAdd, d => d.id);
 
     if (node.exit().data().length == 0 &&
       node.enter().data().length == 0 &&
@@ -126,7 +126,7 @@ export default class GenericGraph extends Renderer {
 
       Graph.applyEvents(node, this.options);
 
-      if (this.data.canvas.graph.neighbours) {
+      if (this.data.canvas.graph.showNeighbours) {
         var nodeOnClick = node.on('click');
         node.on('click', function(d) {
           // default, highlight connected nodes
@@ -174,7 +174,8 @@ export default class GenericGraph extends Renderer {
       simulation.alpha(0.5).restart();
     }
     else {
-      // well, simulation is off, zoom to fit now
+      // well, simulation is off, apply fixed positions and zoom to fit now
+      ticked();
       parent.zoomToFit();
     }
 

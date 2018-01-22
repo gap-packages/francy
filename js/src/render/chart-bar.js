@@ -127,36 +127,39 @@ export default class BarChart extends Renderer {
       .style('text-anchor', 'end')
       .text(axis.y.title);
 
-    var legendGroup = this.element.selectAll('.francy-legend');
+    if (this.data.canvas.chart.showLegend) {
 
-    if (!legendGroup.node()) {
-      legendGroup = this.element.append('g').attr('class', 'francy-legend');
+      var legendGroup = this.element.selectAll('.francy-legend');
+
+      if (!legendGroup.node()) {
+        legendGroup = this.element.append('g').attr('class', 'francy-legend');
+      }
+
+      // force rebuild legend again
+      legendGroup.selectAll('*').remove();
+
+      var legend = legendGroup.selectAll('g').data(datasetNames.slice());
+
+      legend.exit().remove();
+
+      legend = legend.enter()
+        .append('g')
+        .attr('transform', (d, i) => `translate(0,${i * 20})`)
+        .merge(legend);
+
+      legend.append('rect')
+        .attr('x', width + 20)
+        .attr('width', 19)
+        .attr('height', 19)
+        .style('fill', (d, i) => Chart.colors(i * 5));
+
+      legend.append('text')
+        .attr('x', width + 80)
+        .attr('y', 9)
+        .attr('dy', '.35em')
+        .style('text-anchor', 'end')
+        .text(d => d);
     }
-
-    // force rebuild legend again
-    legendGroup.selectAll('*').remove();
-
-    var legend = legendGroup.selectAll('g').data(datasetNames.slice());
-
-    legend.exit().remove();
-
-    legend = legend.enter()
-      .append('g')
-      .attr('transform', (d, i) => `translate(0,${i * 20})`)
-      .merge(legend);
-
-    legend.append('rect')
-      .attr('x', width + 20)
-      .attr('width', 19)
-      .attr('height', 19)
-      .style('fill', (d, i) => Chart.colors(i * 5));
-
-    legend.append('text')
-      .attr('x', width + 80)
-      .attr('y', 9)
-      .attr('dy', '.35em')
-      .style('text-anchor', 'end')
-      .text(d => d);
 
     return this;
   }

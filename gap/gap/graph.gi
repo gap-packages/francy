@@ -337,7 +337,7 @@ InstallMethod(Add,
   "a shape, a message",
   true,
   [IsShape,
-   IsHintMessage],
+   IsFrancyMessage],
   0,
 function(shape, message)
   shape!.messages!.(message!.id) := message;
@@ -366,7 +366,7 @@ InstallMethod(Remove,
   "a shape, a message",
   true,
   [IsShape,
-   IsHintMessage],
+   IsFrancyMessage],
   0,
 function(shape, message)
   Unbind(shape!.messages!.(message!.id));

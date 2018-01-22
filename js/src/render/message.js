@@ -12,7 +12,6 @@ export default class Message extends Renderer {
   @requires('canvas.messages')
   render() {
     var parent = this.options.appendTo.element;
-    //var self = this;
 
     var messages = Object.keys(this.data.canvas.messages).map((key) => {
       return {

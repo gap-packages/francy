@@ -119,7 +119,7 @@ InstallMethod(Add,
   "a canvas, a message",
   true,
   [IsCanvas,
-   IsHintMessage],
+   IsFrancyMessage],
   0,
 function(canvas, message)
   canvas!.messages!.(message!.id) := message;
@@ -148,7 +148,7 @@ InstallMethod(Remove,
   "a canvas, a message",
   true,
   [IsCanvas,
-   IsHintMessage],
+   IsFrancyMessage],
   0,
 function(canvas, message)
   Unbind(canvas!.messages!.(message!.id));
@@ -230,8 +230,7 @@ function(canvas)
 
     if ARCH_IS_MAC_OS_X() or ARCH_IS_UNIX() then
         Exec("open ",name);
-    fi;
-    if ARCH_IS_WINDOWS() then
+    elif ARCH_IS_WINDOWS() then
         Exec("start ",name);
     fi;
 

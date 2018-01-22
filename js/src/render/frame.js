@@ -14,7 +14,6 @@ export default class Frame extends Composite {
     this.menu = new MainMenu(this.options);
     this.messages = new Message(this.options);
     this.add(this.messages).add(this.menu).add(this.canvas);
-    this.element = undefined;
   }
 
   @requires('canvas')

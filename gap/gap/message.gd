@@ -5,7 +5,7 @@
 #Y  Copyright (C) 2017 Manuel Martins
 ##
 #! @Chapter Francy Messages
-#! TODO HintMessage
+#! TODO FrancyMessage
 #! <P/>
 #! Please see Francy-JS for client implementation.
 
@@ -13,60 +13,60 @@
 #############################################################################
 ##
 #! @Section Categories
-#! In this section we show the Francy HintMessage Categories.
+#! In this section we show the Francy FrancyMessage Categories.
 
 #! @Description
-#! Identifies <C>HintMessage</C> objects.
-DeclareCategory("IsHintMessage", IsFrancyObject);
+#! Identifies <C>FrancyMessage</C> objects.
+DeclareCategory("IsFrancyMessage", IsFrancyObject);
 
 #! @Description
 #! Identifies <C>MessageType</C> objects.
-DeclareCategory("IsMessageType", IsFrancyObject);
+DeclareCategory("IsFrancyMessageType", IsFrancyObject);
 
 
 #############################################################################
 ##
 #! @Section Families
-#! In this section we show the Francy HintMessage Families.
+#! In this section we show the Francy FrancyMessage Families.
 
 #! @Description
-#! This Family identifies all <C>HintMessages</C> objects
-#! @Returns <C>HintMessageFamily</C>
-BindGlobal("HintMessageFamily", NewFamily("HintMessageFamily", IsFrancyObject));
+#! This Family identifies all <C>FrancyMessages</C> objects
+#! @Returns <C>FrancyMessageFamily</C>
+BindGlobal("FrancyMessageFamily", NewFamily("FrancyMessageFamily", IsFrancyObject));
 
 
 #############################################################################
 ##
 #! @Section Representations
-#! In this section we show the Francy HintMessage Representations.
+#! In this section we show the Francy FrancyMessage Representations.
 
 #! @Description
-#! Checks whether an <C>Object</C> has a <C>HintMessage</C> internal representation.
-DeclareRepresentation("IsHintMessageRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "title", "value"], IsHintMessage);
+#! Checks whether an <C>Object</C> has a <C>FrancyMessage</C> internal representation.
+DeclareRepresentation("IsFrancyMessageRep", IsComponentObjectRep, [], IsFrancyMessage);
 
 #! @Description
-#! Checks whether an <C>Object</C> has a <C>HintMessage</C> internal representation.
-DeclareRepresentation("IsMessageTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["value"], IsMessageType);
+#! Checks whether an <C>Object</C> has a <C>FrancyMessage</C> internal representation.
+DeclareRepresentation("IsFrancyMessageTypeRep", IsComponentObjectRep, [], IsFrancyMessageType);
 
-BindGlobal("HintMessageObjectType", NewType(HintMessageFamily, IsHintMessage and IsHintMessageRep));
+#! @Description
+#! Creates a new type for <C>FrancyMessage/C> objects.
+BindGlobal("FrancyMessageObjectType", NewType(FrancyMessageFamily, IsFrancyMessage and IsFrancyMessageRep));
 
-BindGlobal("MessageTypeObjectType", NewType(HintMessageFamily, IsMessageType and IsMessageTypeRep));
+#! @Description
+#! Creates a new type for <C>FrancyMessageType/C> objects.
+BindGlobal("FrancyMessageTypeObjectType", NewType(FrancyMessageFamily, IsFrancyMessageType and IsFrancyMessageTypeRep));
 
 #############################################################################
 ##
 #! @Section Operations
-#! In this section we show the Francy HintMessage Operations.
+#! In this section we show the Francy FrancyMessage Operations.
 
 #! @Description
 #! Adds an info label with the format label: value
 #! <P/>
 #! @Arguments IsString, IsString
-#! @Returns <C>HintMessage</C>
-DeclareOperation("HintMessage", [IsMessageType, IsString, IsString]);
+#! @Returns <C>FrancyMessage</C>
+DeclareOperation("FrancyMessage", [IsFrancyMessageType, IsString, IsString]);
 
 #############################################################################
 ##
@@ -76,10 +76,23 @@ DeclareOperation("HintMessage", [IsMessageType, IsString, IsString]);
 #! @Description
 #! The various types of Graph supported.
 #! @Returns <C>rec</C> of <C>MessageType</C>
-BindGlobal("MessageType", rec(
-  INFO    := Objectify(MessageTypeObjectType, rec(value := "info")),
-  ERROR   := Objectify(MessageTypeObjectType, rec(value := "error")),
-  SUCCESS := Objectify(MessageTypeObjectType, rec(value := "success")),
-  WARNING := Objectify(MessageTypeObjectType, rec(value := "warning")),
-  DEFAULT := Objectify(MessageTypeObjectType, rec(value := "default"))
+BindGlobal("FrancyMessageType", rec(
+  INFO    := Objectify(FrancyMessageTypeObjectType, rec(value := "info")),
+  ERROR   := Objectify(FrancyMessageTypeObjectType, rec(value := "error")),
+  SUCCESS := Objectify(FrancyMessageTypeObjectType, rec(value := "success")),
+  WARNING := Objectify(FrancyMessageTypeObjectType, rec(value := "warning")),
+  DEFAULT := Objectify(FrancyMessageTypeObjectType, rec(value := "default"))
 ));
+
+#############################################################################
+##
+#! @Section Attributes
+#! In this section we show the Francy Core Attributes
+
+DeclareAttribute("Title", IsFrancyMessage);
+InstallMethod( Title, "message", [IsFrancyMessage], o -> o!.title);
+InstallMethod( SetTitle, "message, string", [IsFrancyMessage, IsString], function(o, s) o!.title := s; end);
+
+DeclareAttribute("Value", IsFrancyMessage);
+InstallMethod( Value, "message", [IsFrancyMessage], o -> o!.value);
+InstallMethod( SetValue, "message, string", [IsFrancyMessage, IsString], function(o, s) o!.value := s; end);

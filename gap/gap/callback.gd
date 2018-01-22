@@ -30,15 +30,11 @@ DeclareCategory( "IsRequiredArg", IsFrancyObject );
 
 #! @Description
 #! Identifies <C>ArgType</C> objects.
-DeclareCategory("IsArgType", IsFrancyObject);
+DeclareCategory("IsArgType", IsFrancyTypeObject);
 
 #! @Description
-#! Identifies <C>Trigger</C> objects.
-DeclareCategory("IsTrigger", IsFrancyObject);
-
-#! @Description
-#! Identifies <C>TriggerEvent</C> objects.
-DeclareCategory("IsTriggerEvent", IsFrancyObject);
+#! Identifies <C>TriggerType</C> objects.
+DeclareCategory("IsTriggerType", IsFrancyTypeObject);
 
 
 #############################################################################
@@ -51,11 +47,6 @@ DeclareCategory("IsTriggerEvent", IsFrancyObject);
 #! @Returns <C>CallbackFamily</C>
 BindGlobal("CallbackFamily", NewFamily("CallbackFamily", IsCallback));
 
-#! @Description
-#! This Family identifies all <C>Trigger</C> objects
-#! @Returns <C>TriggerFamily</C>
-BindGlobal("TriggerFamily", NewFamily("TriggerFamily", IsTrigger));
-
 
 #############################################################################
 ##
@@ -64,35 +55,35 @@ BindGlobal("TriggerFamily", NewFamily("TriggerFamily", IsTrigger));
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Callback</C> internal representation.
-DeclareRepresentation("IsCallbackRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["id", "func", "knownArgs", "requiredArgs"], IsCallback);
+DeclareRepresentation("IsCallbackRep", IsComponentObjectRep, [], IsCallback);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>RequiredArg</C> internal representation.
-DeclareRepresentation("IsRequiredArgRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["id", "type", "title", "value"], IsRequiredArg);
+DeclareRepresentation("IsRequiredArgRep", IsComponentObjectRep, [], IsRequiredArg);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>ArgType</C> internal representation.
-DeclareRepresentation("IsArgTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["value"], IsArgType);
+DeclareRepresentation("IsArgTypeRep", IsComponentObjectRep, [], IsArgType);
 
 #! @Description
-#! Checks whether an <C>Object</C> has a <C>TriggerEvent</C> internal representation.
-DeclareRepresentation("IsTriggerEventRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["value"], IsTriggerEvent);
-  
+#! Checks whether an <C>Object</C> has a <C>TriggerType</C> internal representation.
+DeclareRepresentation("IsTriggerTypeRep", IsComponentObjectRep, [], IsTriggerType);
+
+#! @Description
+#! Creates a new type for <C>Callback/C> objects.
 BindGlobal("CallbackObjectType", NewType(CallbackFamily, IsCallback and IsCallbackRep));
 
+#! @Description
+#! Creates a new type for <C>RequiredArg/C> objects.
 BindGlobal("RequiredArgObjectType", NewType(CallbackFamily, IsRequiredArg and IsRequiredArgRep));
 
+#! @Description
+#! Creates a new type for <C>ArgType/C> objects.
 BindGlobal("ArgTypeObjectType",  NewType(CallbackFamily, IsArgType and IsArgTypeRep));
 
-BindGlobal("TriggerEventObjectType", NewType(TriggerFamily, IsTriggerEvent and IsTriggerEventRep));
+#! @Description
+#! Creates a new type for <C>TriggerType/C> objects.
+BindGlobal("TriggerTypeObjectType", NewType(CallbackFamily, IsTriggerType and IsTriggerTypeRep));
 
 
 #############################################################################
@@ -120,15 +111,15 @@ BindGlobal("TriggerEventObjectType", NewType(TriggerFamily, IsTriggerEvent and I
 #! Create a <C>Callback</C> with one known argument and one required argument of type string:
 #! @InsertChunk Example_Create_Callback_4
 #! <P/>
-#! Create a <C>Callback</C> with one known argument and one required argument of type string and double click trigger event:
+#! Create a <C>Callback</C> with one known argument and one required argument of type string and double click trigger Type:
 #! @InsertChunk Example_Create_Callback_5
 #! <P/>
 #! In order to see the output of the previous examples, we have to simulate the external call to <C>Trigger</C> operation:
 #! @InsertChunk Example_Create_Callback_6
 #! <P/>
-#! @Arguments IsTriggerEvent, IsFunction, IsList(object)
+#! @Arguments IsTriggerType, IsFunction, IsList(object)
 #! @Returns <C>Callback</C>
-DeclareOperation("Callback", [IsTriggerEvent, IsFunction, IsList]);
+DeclareOperation("Callback", [IsTriggerType, IsFunction, IsList]);
 
 #! @Description
 #! Creates an empty Callback object that does nothing.
@@ -185,11 +176,11 @@ BindGlobal("ArgType", rec(
 ));
 
 #! @Description
-#! This <C>rec</C> holds all the <C>TriggerEvent</C> supported by Francy.
-#! The available <C>TriggerEvent</C> specify the event that will trigger this <C>Callback</C>.
-#! @Returns <C>rec</C> of <C>TriggerEvent</C>: <C>TriggerEvent.DOUBLE_CLICK</C> mouse event, double click, <C>TriggerEvent.RIGHT_CLICK</C> mouse event, right click or context-menu,  <C>TriggerEvent.CLICK</C> mouse event, ledft click and **default for <C>Menu</C> <C>Callback</C>**
-BindGlobal("TriggerEvent", rec(
-  DOUBLE_CLICK := Objectify(TriggerEventObjectType, rec(value := "dblclick")),
-  RIGHT_CLICK  := Objectify(TriggerEventObjectType, rec(value := "context")),
-  CLICK        := Objectify(TriggerEventObjectType, rec(value := "click"))
+#! This <C>rec</C> holds all the <C>TriggerType</C> supported by Francy.
+#! The available <C>TriggerType</C> specify the Type that will trigger this <C>Callback</C>.
+#! @Returns <C>rec</C> of <C>TriggerType</C>: <C>TriggerType.DOUBLE_CLICK</C> mouse event, double click, <C>TriggerType.RIGHT_CLICK</C> mouse event, right click or context-menu,  <C>TriggerType.CLICK</C> mouse event, ledft click and **default for <C>Menu</C> <C>Callback</C>**
+BindGlobal("TriggerType", rec(
+  DOUBLE_CLICK := Objectify(TriggerTypeObjectType, rec(value := "dblclick")),
+  RIGHT_CLICK  := Objectify(TriggerTypeObjectType, rec(value := "context")),
+  CLICK        := Objectify(TriggerTypeObjectType, rec(value := "click"))
 ));

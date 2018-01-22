@@ -28,7 +28,7 @@ export default class TreeGraph extends Renderer {
     root.x0 = height / 2;
     root.y0 = 0;
 
-    if (this.data.canvas.graph.collapse) {
+    if (this.data.canvas.graph.collapsed) {
       root.children.forEach(collapse);
     }
 

@@ -23,15 +23,15 @@ DeclareCategory("IsChart", IsFrancyObject);
 
 #! @Description
 #! Identifies <C>ChartType</C> objects.
-DeclareCategory("IsChartType", IsFrancyObject);
+DeclareCategory("IsChartType", IsFrancyTypeObject);
 
 #! @Description
 #! Identifies <C>ChartDefaults</C> objects.
-DeclareCategory("IsChartDefaults", IsFrancyDefaults);
+DeclareCategory("IsChartDefaults", IsFrancyDefaultObject);
 
 #! @Description
 #! Identifies <C>AxisScaleType</C> objects.
-DeclareCategory("IsAxisScaleType", IsFrancyObject);
+DeclareCategory("IsAxisScaleType", IsFrancyTypeObject);
 
 #! @Description
 #! Identifies <C>XAxis</C> objects.
@@ -62,53 +62,52 @@ BindGlobal("ChartFamily", NewFamily("ChartFamily", IsChart));
 #! @Section Representations
 #! In this section we show the Francy Chart Representations.
 
-
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Chart</C> internal representation.
-DeclareRepresentation("IsChartRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["id", "type", "title", "options"], IsChart);
+DeclareRepresentation("IsChartRep", IsComponentObjectRep, [], IsChart);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>ChartDefaults</C> internal representation.
-DeclareRepresentation("IsChartDefaultsRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["layer", "x", "y", "size", "highlight"], IsChartDefaults);
+DeclareRepresentation("IsChartDefaultsRep", IsComponentObjectRep, [], IsChartDefaults);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>ChartType</C> internal representation.
-DeclareRepresentation("IsChartTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["value"], IsChartType);
+DeclareRepresentation("IsChartTypeRep", IsComponentObjectRep, [], IsChartType);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>AxisScaleType</C> internal representation.
-DeclareRepresentation("IsAxisScaleTypeRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["value"], IsChartType);
+DeclareRepresentation("IsAxisScaleTypeRep", IsComponentObjectRep, [], IsChartType);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>AxisRep</C> internal representation.
-DeclareRepresentation("IsAxisRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  ["scale", "title", "domain"], IsChartType);
+DeclareRepresentation("IsAxisRep", IsComponentObjectRep, [], IsChartType);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>DatasetRep</C> internal representation.
-DeclareRepresentation("IsDatasetRep",
-  IsComponentObjectRep and IsAttributeStoringRep,
-  [], IsChartType);
+DeclareRepresentation("IsDatasetRep", IsComponentObjectRep, [], IsChartType);
 
+#! @Description
+#! Creates a new type for <C>Chart/C> objects.
 BindGlobal("ChartObjectType", NewType(ChartFamily, IsChart and IsChartRep));
 
+#! @Description
+#! Creates a new type for <C>Dataset/C> objects.
 BindGlobal("DatasetObjectType", NewType(ChartFamily, IsDataset and IsDatasetRep));
 
+#! @Description
+#! Creates a new type for <C>XAxis/C> objects.
 BindGlobal("XAxisObjectType", NewType(ChartFamily, IsXAxis and IsAxisRep));
 
+#! @Description
+#! Creates a new type for <C>YAxis/C> objects.
 BindGlobal("YAxisObjectType", NewType(ChartFamily, IsYAxis and IsAxisRep));
 
+#! @Description
+#! Creates a new type for <C>ChartType/C> objects.
 BindGlobal("ChartTypeObjectType",  NewType(ChartFamily, IsChartType and IsChartTypeRep));
 
+#! @Description
+#! Creates a new type for <C>AxisScale/C> objects.
 BindGlobal("AxisScaleTypeObjectType",  NewType(ChartFamily, IsAxisScaleType and IsAxisScaleTypeRep));
 
 
@@ -202,6 +201,13 @@ BindGlobal("AxisScaleType", rec(
 #! The various types of Charts Defaults
 #! @Returns <C>rec</C> of <C>ChartDefaults</C>
 BindGlobal("ChartDefaults", Objectify(NewType(ChartFamily, IsChartDefaults and IsChartDefaultsRep), rec(
-  labels := true,
-  legend := true
+  showLegend := true
 )));
+
+DeclareAttribute("ShowLabels", IsChart);
+InstallMethod( ShowLabels, "chart", [IsChart], o -> o!.showLabels);
+InstallMethod( SetShowLabels, "chart, boolean", [IsChart, IsBool], function(o, b) o!.showLabels := b; end);
+
+DeclareAttribute("ShowLegend", IsChart);
+InstallMethod( ShowLegend, "chart", [IsChart], o -> o!.showLegend);
+InstallMethod( SetShowLegend, "chart, boolean", [IsChart, IsBool], function(o, b) o!.showLegend := b; end);

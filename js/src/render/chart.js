@@ -15,20 +15,19 @@ export default class Chart extends Renderer {
   @requires('canvas.chart')
   render() {
 
-    var element = undefined;
     switch (this.data.canvas.chart.type) {
       case "bar":
-        element = new BarChart(this.options).load(this.data).render();
+        this.element = new BarChart(this.options).load(this.data).render();
         break;
       case "line":
-        element = new LineChart(this.options).load(this.data).render();
+        this.element = new LineChart(this.options).load(this.data).render();
         break;
       case "scatter":
-        element = new ScatterChart(this.options).load(this.data).render();
+        this.element = new ScatterChart(this.options).load(this.data).render();
         break;
     }
 
-    return element;
+    return this;
   }
 
   static tooltip(dataset, value) {

@@ -36,8 +36,5 @@ function getProperty(obj, propertyPath) {
 }
 
 function hasData(obj) {
-  if (obj && ((obj instanceof Array && obj.length) || (obj instanceof Object && Object.values(obj).length))) {
-    return true;
-  }
-  return false;
+  return obj && ((obj instanceof Array && obj.length) || (obj instanceof Object && Object.values(obj).length));
 }

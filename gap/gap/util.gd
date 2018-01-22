@@ -13,6 +13,9 @@
 #! In this section we show the Francy Util Operations.
 #! Contains utility methods to handle Object printing/viewing, Sanitizing, etc.
 
+#! @Description
+#! This method will pretty print in jupyter environment.
+#! @Returns <C>String</C>
 DeclareOperation("JUPYTER_ViewString", [IsObject]);
 
 #! @Description

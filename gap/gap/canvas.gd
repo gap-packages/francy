@@ -21,7 +21,7 @@ DeclareCategory("IsCanvas", IsFrancyObject);
 
 #! @Description
 #! Identifies <C>CanvasDefaults</C> objects.
-DeclareCategory("IsCanvasDefaults", IsFrancyDefaults);
+DeclareCategory("IsCanvasDefaults", IsFrancyDefaultObject);
 
 
 #############################################################################
@@ -42,16 +42,14 @@ BindGlobal("CanvasFamily", NewFamily("CanvasFamily", IsCanvas));
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Canvas</C> internal representation.
-DeclareRepresentation("IsCanvasRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["id", "title", "options"], IsCanvas);
+DeclareRepresentation("IsCanvasRep", IsComponentObjectRep, [], IsCanvas);
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>CanvasDefaults</C> internal representation.
-DeclareRepresentation("IsCanvasDefaultsRep",
-  IsComponentObjectRep and IsAttributeStoringRep, 
-  ["width", "height"], IsCanvasDefaults);
+DeclareRepresentation("IsCanvasDefaultsRep", IsComponentObjectRep, [], IsCanvasDefaults);
 
+#! @Description
+#! Creates a new type for <C>Canvas/C> objects.
 BindGlobal("CanvasObjectType", NewType(CanvasFamily, IsCanvas and IsCanvasRep));
 
 
@@ -87,15 +85,15 @@ DeclareOperation("Remove", [IsCanvas, IsFrancyObject]);
 
 #! @Description
 #! Add <C>Callback</C> to a specific <C>Shape</C>.
-#! @Arguments IsCanvas, [IsHintMessage, List(IsHintMessage)]
+#! @Arguments IsCanvas, [IsFrancyMessage, List(IsFrancyMessage)]
 #! @Returns <C>Shape</C>
-DeclareOperation("Add", [IsCanvas, IsHintMessage]);
+DeclareOperation("Add", [IsCanvas, IsFrancyMessage]);
 
 #! @Description
 #! Remove <C>Callback</C> from a specific <C>Shape</C>.
-#! @Arguments IsCanvas, [IsHintMessage, List(IsHintMessage)]
+#! @Arguments IsCanvas, [IsFrancyMessage, List(IsFrancyMessage)]
 #! @Returns <C>Shape</C>
-DeclareOperation("Remove", [IsCanvas, IsHintMessage]);
+DeclareOperation("Remove", [IsCanvas, IsFrancyMessage]);
 
 #! @Description
 #! Generates the JSON representation of the canvas and children objects
@@ -118,7 +116,28 @@ DeclareOperation("DrawSplash", [IsCanvas]);
 #! @Description
 #! This <C>rec</C> holds all the default setting for a canvas
 BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
-  width     := "800",
-  height    := "600",
+  width     := 800,
+  height    := 600,
   zoomToFit := true
 )));
+
+#############################################################################
+##
+#! @Section Attributes
+#! In this section we show the Francy Core Attributes
+
+DeclareAttribute("Width", IsCanvas);
+InstallMethod( Width, "canvas", [IsCanvas], o -> o!.width);
+InstallMethod( SetWidth, "canvas, positive int", [IsCanvas, IsPosInt], function(o, i) o!.width := i; end);
+
+DeclareAttribute("Height", IsCanvas);
+InstallMethod( Height, "canvas", [IsCanvas], o -> o!.height);
+InstallMethod( SetHeight, "canvas, positive int", [IsCanvas, IsPosInt], function(o, i) o!.height := i; end);
+
+DeclareAttribute("ZoomToFit", IsCanvas);
+InstallMethod( ZoomToFit, "canvas", [IsCanvas], o -> o!.zoomToFit);
+InstallMethod( SetZoomToFit, "canvas, boolean", [IsCanvas, IsBool], function(o, b) o!.zoomToFit := b; end);
+
+DeclareAttribute("Title", IsCanvas);
+InstallMethod( Title, "canvas", [IsCanvas], o -> o!.title);
+InstallMethod( SetTitle, "canvas, string", [IsCanvas, IsString], function(o, s) o!.title := s; end);

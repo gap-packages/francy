@@ -7,7 +7,7 @@
 
 #############################################################################
 ##
-#M  Callback( <callback type>, <trigger event>,  <function>, <known args> ) . 
+#M  Callback( <callback type>, <trigger Type>,  <function>, <known args> ) . 
 ##  
 ## triggers a callback with a list of known args.
 ## Extra args, or required args, should be registered using:
@@ -16,15 +16,15 @@
 InstallMethod(Callback,
   "a function, a list of known args",
   true,
-  [IsTriggerEvent,
+  [IsTriggerType,
    IsFunction,
    IsList],
   0,
-function(triggerEvent, func, knownArgs)
+function(triggerType, func, knownArgs)
   local object;
   object := Objectify(CallbackObjectType, rec(
     id           := GenerateID(),
-    trigger      := triggerEvent!.value,
+    trigger      := triggerType!.value,
     func         := func,
     knownArgs    := knownArgs,
     requiredArgs := rec()
@@ -36,11 +36,11 @@ end);
 InstallOtherMethod(Callback,
   "a trigger type, a function",
   true,
-  [IsTriggerEvent,
+  [IsTriggerType,
    IsFunction],
   0,
-function(triggerEvent, func)
-  return Callback(triggerEvent, func, []);
+function(triggerType, func)
+  return Callback(triggerType, func, []);
 end);
 
 InstallOtherMethod(Callback,
@@ -50,7 +50,7 @@ InstallOtherMethod(Callback,
    IsList],
   0,
 function(func, knownArgs)
-  return Callback(TriggerEvent.CLICK, func, knownArgs);
+  return Callback(TriggerType.CLICK, func, knownArgs);
 end);
 
 InstallOtherMethod(Callback,
@@ -59,7 +59,7 @@ InstallOtherMethod(Callback,
   [IsFunction],
   0,
 function(func)
-  return Callback(TriggerEvent.CLICK, func, []);
+  return Callback(TriggerType.CLICK, func, []);
 end);
 
 #############################################################################
