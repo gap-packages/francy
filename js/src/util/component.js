@@ -20,7 +20,7 @@ export function RegisterMathJax(element) {
           ],
           processEscapes: true
         },
-        SVG: { availableFonts: ["STIX-Web"] }
+        skipStartupTypeset: true
       });
 
       MathJax.Hub.Register.StartupHook('End', function() {
