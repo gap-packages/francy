@@ -6,11 +6,21 @@ export function RegisterMathJax(element) {
   if (!element) return;
   setTimeout(() => {
     try {
-      // TODO https://www.google.co.uk/search?q=mthjaxhub+config+svg&oq=mthjaxhub+config+svg&aqs=chrome..69i57.7296j0j7&sourceid=chrome&ie=UTF-8
-      // TODO http://docs.mathjax.org/en/latest/output.html
-      // TODO http://docs.mathjax.org/en/latest/options/output-processors/SVG.html
       MathJax.Hub.Config({
-        jax: ["input/TeX", "output/SVG"]
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/SVG"],
+        tex2jax: {
+          inlineMath: [
+            ['$', '$'],
+            ["\\(", "\\)"]
+          ],
+          displayMath: [
+            ['$$', '$$'],
+            ["\\[", "\\]"]
+          ],
+          processEscapes: true
+        },
+        "SVG": { availableFonts: ["TeX"] }
       });
 
       MathJax.Hub.Register.StartupHook('End', function() {
