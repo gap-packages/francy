@@ -20,7 +20,7 @@ export function RegisterMathJax(element) {
           ],
           processEscapes: true
         },
-        SVG: { availableFonts: ["TeX"] }
+        SVG: { availableFonts: ["STIX-Web"] }
       });
 
       MathJax.Hub.Register.StartupHook('End', function() {
@@ -43,6 +43,8 @@ export function RegisterMathJax(element) {
       });
 
       MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "SVG"], ['Typeset', MathJax.Hub, element.node()]);
+
+      MathJax.Hub.Configured();
     }
     catch (e) {
       if (e.name == 'ReferenceError') {
