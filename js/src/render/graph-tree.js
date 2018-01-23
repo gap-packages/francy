@@ -22,11 +22,27 @@ export default class TreeGraph extends Renderer {
     var i = 0,
       root;
 
-    var treemap = d3.tree().size([height, width]);
-
     root = d3.hierarchy(this.treeData, d => d.children);
     root.x0 = height / 2;
     root.y0 = 0;
+
+    // compute height based on the depth of the graph
+    var levelWidth = [1];
+    var childCount = function(level, n) {
+
+      if (n.children && n.children.length > 0) {
+        if (levelWidth.length <= level + 1) levelWidth.push(0);
+
+        levelWidth[level + 1] += n.children.length;
+        n.children.forEach(function(d) {
+          childCount(level + 1, d);
+        });
+      }
+    };
+    childCount(0, root);
+    var newHeight = d3.max(levelWidth) * 100;
+
+    var treemap = d3.tree().size([newHeight, width]);
 
     if (this.data.canvas.graph.collapsed) {
       root.children.forEach(collapse);
@@ -48,7 +64,7 @@ export default class TreeGraph extends Renderer {
       var nodes = treeData.descendants(),
         links = treeData.descendants().slice(1);
 
-      nodes.forEach(d => d.y = d.depth * 150);
+      nodes.forEach(d => d.y = d.depth * 180);
 
       var linkGroup = this.element.selectAll('g.francy-links');
 

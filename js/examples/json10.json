@@ -98,6 +98,34 @@
           "messages": {},
           "callbacks": {},
           "parent": "A45"
+        },
+        "A47": {
+          "x": 0,
+          "y": 0,
+          "type": "square",
+          "size": 10,
+          "id": "A47",
+          "title": "SG4",
+          "layer": 0,
+          "highlight": true,
+          "menus": {},
+          "messages": {},
+          "callbacks": {},
+          "parent": "A44"
+        },
+        "A48": {
+          "x": 0,
+          "y": 0,
+          "type": "square",
+          "size": 10,
+          "id": "A48",
+          "title": "SG4",
+          "layer": 0,
+          "highlight": true,
+          "menus": {},
+          "messages": {},
+          "callbacks": {},
+          "parent": "A45"
         }
       },
       "links": {}

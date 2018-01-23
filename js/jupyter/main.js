@@ -26,13 +26,6 @@ define([
 
   loadCss('./../css/style.css');
 
-  // configure MathJax for SVG
-  promises.app_initialized.then(function(appname) {
-    if (appname === 'NotebookApp') {
-      appname.mathjax_config = 'TeX-MML-AM_SVG,Safe';
-    }
-  });
-
   // Start Francy
   let francy = new FrancyBundle.Francy({
     verbose: true,
