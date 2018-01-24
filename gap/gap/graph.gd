@@ -197,18 +197,6 @@ DeclareOperation("Add", [IsShape, IsFrancyMessage]);
 DeclareOperation("Remove", [IsShape, IsFrancyMessage]);
 
 #! @Description
-#! Add <C>Callback</C> to a specific <C>Shape</C>.
-#! @Arguments IsShape, [IsShape, List(IsShape)]
-#! @Returns <C>Shape</C>
-DeclareOperation("Add", [IsShape, IsShape]);
-
-#! @Description
-#! Remove <C>Callback</C> from a specific <C>Shape</C>.
-#! @Arguments IsShape, [IsShape, List(IsShape)]
-#! @Returns <C>Shape</C>
-DeclareOperation("Remove", [IsShape, IsShape]);
-
-#! @Description
 #! Creates a <C>Link</C> between the two <C>Shape</C>.
 #! <P/>
 #! @Arguments IsShape IsShape
@@ -289,7 +277,7 @@ InstallMethod(PosY, "shape", [IsShape], o -> o!.y);
 InstallMethod(SetPosY, "shape, int", [IsShape, IsInt], function(o, i) o!.y := i; end);
 
 DeclareAttribute("Size", IsShape);
-InstallMethod(Size, "shape", [IsShape], o -> o!.zoomToFit);
+InstallMethod(Size, "shape", [IsShape], o -> o!.size);
 InstallMethod(SetSize, "shape, int", [IsShape, IsInt], function(o, i) o!.size := i; end);
 
 DeclareAttribute("Highlight", IsShape);
@@ -297,12 +285,13 @@ InstallMethod(Highlight, "shape", [IsShape], o -> o!.highlight);
 InstallMethod(SetHighlight, "shape, boolean", [IsShape, IsBool], function(o, b) o!.highlight := b; end);
 
 DeclareAttribute("Layer", IsShape);
-InstallMethod(Layer, "shape", [IsShape], o -> o!.zoomToFit);
+InstallMethod(Layer, "shape", [IsShape], o -> o!.layer);
 InstallMethod(SetLayer, "shape, int", [IsShape, IsInt], function(o, i) o!.layer := i; end);
 
 DeclareAttribute("ParentNode", IsShape);
-InstallMethod(ParentNode, "shape", [IsShape], o -> o!.highlight);
-InstallMethod(SetParentNode, "shape, string", [IsShape, IsString], function(o, s) if not o!.type = "tree" then Error("This is only for GraphType.TREE!"); fi; o!.parent := s; end);
+InstallMethod(ParentNode, "shape", [IsShape], o -> o!.parent);
+InstallMethod(SetParentNode, "shape, shape", [IsShape, IsShape], function(o, p) if not o!.type = "tree" then Error("This is only for GraphType.TREE!"); fi; o!.parent := p!.id; end);
+InstallMethod(UnsetParentNode, "shape", [IsShape], function(o) if not o!.type = "tree" then Error("This is only for GraphType.TREE!"); fi; o!.parent := ""; end);
 
 DeclareAttribute("Simulation", IsFrancyGraph);
 InstallMethod(Simulation, "graph", [IsFrancyGraph], o -> o!.simulation);
@@ -318,4 +307,8 @@ InstallMethod(SetDrag, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b)
 
 DeclareAttribute("ShowNeighbours", IsFrancyGraph);
 InstallMethod(ShowNeighbours, "graph", [IsFrancyGraph], o -> o!.showNeighbours);
-InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.showNeighbours := b; end);
+InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) if o!.type = "tree" then Error("This is only for GraphType.TREE!"); fi; o!.showNeighbours := b; end);
+
+DeclareAttribute("Nodes", IsFrancyGraph);
+InstallMethod(Nodes, "graph", [IsFrancyGraph], o -> o!.nodes);
+InstallMethod(UnsetNodes, "graph", [IsFrancyGraph], function(o) o!.nodes := rec(); end);

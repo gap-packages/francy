@@ -207,3 +207,15 @@ BindGlobal("ChartDefaults", Objectify(NewType(ChartFamily, IsChartDefaults and I
 DeclareAttribute("ShowLegend", IsChart);
 InstallMethod(ShowLegend, "chart", [IsChart], o -> o!.showLegend);
 InstallMethod(SetShowLegend, "chart, boolean", [IsChart, IsBool], function(o, b) o!.showLegend := b; end);
+
+DeclareAttribute("AxisXTitle", IsChart);
+InstallMethod(AxisXTitle, "chart", [IsChart], o -> o!.axis!.x!.title);
+InstallMethod(SetAxisXTitle, "chart, string", [IsChart, IsString], function(o, s) o!.axis!.x!.title := s; end);
+
+DeclareAttribute("AxisYTitle", IsChart);
+InstallMethod(AxisYTitle, "chart", [IsChart], o -> o!.axis!.y!.title);
+InstallMethod(SetAxisYTitle, "chart, string", [IsChart, IsString], function(o, s) o!.axis!.y!.title := s; end);
+
+DeclareAttribute("AxisXDomain", IsChart);
+InstallMethod(AxisXDomain, "chart", [IsChart], o -> o!.axis!.x!.domain);
+InstallMethod(SetAxisXDomain, "chart, list", [IsChart, IsList], function(o, l) o!.axis!.x!.domain := l; end);

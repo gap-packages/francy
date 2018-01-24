@@ -1,6 +1,6 @@
 import Menu from './menu';
 import AboutModal from './modal-about';
-//import * as SvgToPng from '../../node_modules/save-svg-as-png/saveSvgAsPng';
+import * as SvgToPng from '../../node_modules/save-svg-as-png/saveSvgAsPng';
 
 /* global d3 window */
 
@@ -38,10 +38,8 @@ export default class MainMenu extends Menu {
     var entry = this.element.append('li');
     entry.append('a').html('Francy');
     var content = entry.append('ul');
-    if (this.data.canvas.zoomToFit) {
-      content.append('li').append('a').on('click', () => this.options.appendTo.canvas.zoomToFit()).attr('title', 'Zoom to Fit').html('Zoom to Fit');
-    }
-    //content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(document.getElementById(this.data.canvas.id), "diagram.png")).attr('title', 'Save to PNG').html('Save to PNG');
+    content.append('li').append('a').on('click', () => this.options.appendTo.canvas.zoomToFit()).attr('title', 'Zoom to Fit').html('Zoom to Fit');
+    content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(this.SVGParent.node(), "diagram.png")).attr('title', 'Save to PNG').html('Save to PNG');
     content.append('li').append('a').on('click', () => aboutModal.load(this.data).render()).attr('title', 'About').html('About');
 
     // Traverse all menus and flatten them!
