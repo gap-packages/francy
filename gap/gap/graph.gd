@@ -290,8 +290,8 @@ InstallMethod(SetLayer, "shape, int", [IsShape, IsInt], function(o, i) o!.layer 
 
 DeclareAttribute("ParentNode", IsShape);
 InstallMethod(ParentNode, "shape", [IsShape], o -> o!.parent);
-InstallMethod(SetParentNode, "shape, shape", [IsShape, IsShape], function(o, p) if not o!.type = "tree" then Error("This is only for GraphType.TREE!"); fi; o!.parent := p!.id; end);
-InstallMethod(UnsetParentNode, "shape", [IsShape], function(o) if not o!.type = "tree" then Error("This is only for GraphType.TREE!"); fi; o!.parent := ""; end);
+InstallMethod(SetParentNode, "shape, shape", [IsShape, IsShape], function(o, p) o!.parent := p!.id; end);
+InstallMethod(UnsetParentNode, "shape", [IsShape], function(o)  fi; o!.parent := ""; end);
 
 DeclareAttribute("Simulation", IsFrancyGraph);
 InstallMethod(Simulation, "graph", [IsFrancyGraph], o -> o!.simulation);
