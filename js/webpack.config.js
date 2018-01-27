@@ -1,4 +1,4 @@
-//let UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+let UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: './src/francy.js',
@@ -13,8 +13,8 @@ module.exports = {
     }]
   },
   plugins: [
-    //new UglifyJsPlugin({
-    //  exclude: /.*test.js/
-    //})
+    new UglifyJsPlugin({
+      exclude: /.*test.js/
+    })
   ]
 };

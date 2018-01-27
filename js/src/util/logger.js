@@ -1,12 +1,11 @@
 /**
- * This class is a singleton that provides a logger for the Francy application.
+ * This class provides a logger for the Francy application.
  */
 export default class Logger {
 
   /**
-   * Singleton: Creates an instance of the logger and will returned that instance,
-   * everytime a new instance is requested.
-   * @param verbose prints extra log information to console.log, default false
+   * Logger constructor
+   * @param verbose prints extra log information to console.log, defaults to false
    */
   constructor({ verbose = false } = {}) {
     this.verbose = verbose;

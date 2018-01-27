@@ -141,6 +141,10 @@ BindGlobal("GraphTypeObjectType", NewType(GraphFamily, IsFrancyGraphType and IsF
 DeclareOperation("Graph", [IsFrancyGraphType, IsFrancyGraphDefaults]);
 
 #! @Description
+#! Removes all nodes from gaph
+DeclareOperation("UnsetNodes", [IsFrancyGraph]);
+
+#! @Description
 #! Add <C>FrancyObject</C> to a specific <C>Graph</C>.
 #! @Arguments IsFrancyGraph, [IsFrancyObject, List(IsFrancyObject)]
 #! @Returns <C>Graph</C>
@@ -278,7 +282,7 @@ InstallMethod(SetPosY, "shape, int", [IsShape, IsInt], function(o, i) o!.y := i;
 
 DeclareAttribute("Size", IsShape);
 InstallMethod(Size, "shape", [IsShape], o -> o!.size);
-InstallMethod(SetSize, "shape, int", [IsShape, IsInt], function(o, i) o!.size := i; end);
+InstallMethod(SetSize, "shape, int", [IsShape, IsPosInt], function(o, i) o!.size := i; end);
 
 DeclareAttribute("Highlight", IsShape);
 InstallMethod(Highlight, "shape", [IsShape], o -> o!.highlight);
@@ -291,7 +295,6 @@ InstallMethod(SetLayer, "shape, int", [IsShape, IsInt], function(o, i) o!.layer 
 DeclareAttribute("ParentNode", IsShape);
 InstallMethod(ParentNode, "shape", [IsShape], o -> o!.parent);
 InstallMethod(SetParentNode, "shape, shape", [IsShape, IsShape], function(o, p) o!.parent := p!.id; end);
-InstallMethod(UnsetParentNode, "shape", [IsShape], function(o)  fi; o!.parent := ""; end);
 
 DeclareAttribute("Simulation", IsFrancyGraph);
 InstallMethod(Simulation, "graph", [IsFrancyGraph], o -> o!.simulation);
@@ -308,7 +311,3 @@ InstallMethod(SetDrag, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b)
 DeclareAttribute("ShowNeighbours", IsFrancyGraph);
 InstallMethod(ShowNeighbours, "graph", [IsFrancyGraph], o -> o!.showNeighbours);
 InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) if o!.type = "tree" then Error("This is only for GraphType.TREE!"); fi; o!.showNeighbours := b; end);
-
-DeclareAttribute("Nodes", IsFrancyGraph);
-InstallMethod(Nodes, "graph", [IsFrancyGraph], o -> o!.nodes);
-InstallMethod(UnsetNodes, "graph", [IsFrancyGraph], function(o) o!.nodes := rec(); end);

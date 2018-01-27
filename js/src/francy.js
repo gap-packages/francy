@@ -1,8 +1,6 @@
 import Frame from './render/frame';
 import Renderer from './render/renderer';
 
-//import Tracker from './tracker/change';
-
 let ALL_CANVAS = {};
 
 /* global d3 */
@@ -40,9 +38,6 @@ export default class Francy extends Renderer {
    * @returns {Object} the html element created
    */
   render() {
-    //var tracker = new Tracker(json, this.options);
-    //tracker.subscribe(function(obj) { console.log(obj); });
-    //return new Draw(this.options).handle(tracker.object);
     var frame = new Frame(this.options).load(this.data).render();
     ALL_CANVAS[this.data.canvas.id] = frame;
     return frame.element.node();

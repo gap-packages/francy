@@ -5,11 +5,10 @@ define([
   'base/js/namespace',
   'base/js/events',
   'notebook/js/outputarea',
-  'base/js/promises',
   'nbextensions/francy/lib/d3.min',
   'nbextensions/francy/amd/francy.bundle',
-], function(require, Jupyter, events, outputHandler, promises, d3, FrancyBundle) {
-  "use strict";
+], function(require, Jupyter, events, outputHandler, d3, FrancyBundle) {
+  'use strict';
 
   var MIME_TYPE = 'application/vnd.francy+json';
   var CLASS_NAME = 'francy-view';

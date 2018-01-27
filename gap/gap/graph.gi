@@ -35,6 +35,21 @@ end);
 
 #############################################################################
 ##
+#M  UnsetNodes( <graph> ) . . . . . removes all nodes from graph
+##
+InstallMethod(UnsetNodes,
+  "a graph",
+  true,
+  [IsFrancyGraph],
+  0,
+function(graph)
+  graph!.nodes := rec();
+  return graph;
+end);
+
+
+#############################################################################
+##
 #M  Add( <graph>, <francy object> ) . . . . . add objects to graph
 ##
 InstallMethod(Add,

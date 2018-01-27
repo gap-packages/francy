@@ -8,7 +8,7 @@ SetPackageInfo(rec(
   PackageName := "Francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
   Version     := "0.5.0",
-  Date        := "25/12/2017",
+  Date        := "25/01/2018",
 
   Persons := [
     rec(
@@ -70,6 +70,6 @@ SetPackageInfo(rec(
 
   TestFile := "tst/testall.g",
 
-  Keywords := ["Interactive", "Graphics", "Plot"]
+  Keywords := ["Interactive", "Graphics", "Charts", "Graphs"]
 
 ));
