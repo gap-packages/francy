@@ -1,0 +1,2 @@
+graft francy_renderer/nbextension
+include francy_renderer/labextension/*.tgz
