@@ -47,7 +47,7 @@ export function RegisterMathJax(element) {
       MathJax.Hub.Configured();
     }
     catch (e) {
-      if (e.name == 'ReferenceError') {
+      if (e.name === 'ReferenceError') {
         new Logger().info('It seems MathJax is not loaded...', e);
       }
     }
@@ -64,7 +64,7 @@ export function RegisterJupyterKeyboardEvents(classes) {
     });
   }
   catch (e) {
-    if (e.name == 'ReferenceError') {
+    if (e.name === 'ReferenceError') {
       new Logger().info('It seems we\'re not running on Jupyter...', e);
     }
   }

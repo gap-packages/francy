@@ -3,7 +3,7 @@
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v4">
   <link rel="stylesheet" type="text/css" href="../dist/francy/css/style.css">
   <script src="../dist/francy/lib/d3.min.js"></script>
-  <script src="../dist/francy/browser/francy.bundle.js"></script>
+  <script src="../dist/francy/browser/francy.settings(settings).bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG,Safe"></script>
   <title>Francy</title>
 </head>
@@ -16,10 +16,11 @@
     console.log(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
   }
   
-  var francy = new Francy({verbose: true, appendTo: 'body', callbackHandler: trigger});
+  let settings = {verbose: true, appendTo: 'body', callbackHandler: trigger};
+  Francy.settings(settings);
   
   d3.json("json1.json", function (error, json) {
-    var element = francy.load(json).render();
+    let element = francy.load(json).render();
     document.getElementById('francy').append(element);
     setInterval(function(){
        d3.json("json1.1.json", function (error, json) {
@@ -29,7 +30,7 @@
   });
   
   d3.json("json2.json", function (error, json) {
-    var element = francy.load(json).render();
+    let element = francy.load(json).render();
     document.getElementById('francy').append(element);
      setInterval(function(){
        d3.json("json2.1.json", function (error, json) {
@@ -39,47 +40,47 @@
   });
   
   d3.json("json3.json", function (error, json) {
-    var element = francy.load(json).render();
+    let element = francy.load(json).render();
     document.getElementById('francy').append(element);
   });
   
   d3.json("json4.json", function (error, json) {
-    var element = francy.load(json).render();
+    let element = francy.load(json).render();
     document.getElementById('francy').append(element);
   });
 
   d3.json("json5.json", function (error, json) {
-    var element = francy.load(json).render();
+    let element = francy.load(json).render();
     document.getElementById('francy').append(element);
   });
   
   d3.json("json6.json", function (error, json) {
-    var element = francy.load(json).render();
+    let element = francy.load(json).render();
     document.getElementById('francy').append(element);
   });
 
   d3.json("json7.json", function (error, json) {
-    var element = francy.load(json).render();
+    let element = francy.load(json).render();
     document.getElementById('francy').append(element);
   });
   
   d3.json("json8.json", function (error, json) {
-    var element = francy.load(json).render();
+    let element = francy.load(json).render();
     document.getElementById('francy').append(element);
   });
   
   d3.json("json9.json", function (error, json) {
-    var element = francy.load(json).render();
+    let element = francy.load(json).render();
     document.getElementById('francy').append(element);
   });
   
   d3.json("json10.json", function (error, json) {
-    var element = francy.load(json).render();
+    let element = francy.load(json).render();
     document.getElementById('francy').append(element);
   });
 
   d3.json("json11.json", function (error, json) {
-    var element = francy.load(json).render();
+    let element = francy.load(json).render();
     document.getElementById('francy').append(element);
      setInterval(function(){
        d3.json("json11.1.json", function (error, json) {

@@ -6,6 +6,7 @@ export default class JsonUtils {
   /**
    * Parses an input nd checks whether this input is valid and returns a JSON object.
    * @param input - the input to parse
+   * @param partial - if the input is not a complete Francy JSON Object
    * @returns {json} - if the input is a valid JSON object, otherwise returns {undefined}
    */
   static parse(input, partial) {
@@ -26,7 +27,6 @@ export default class JsonUtils {
         /* eslint-enable no-console */
       }
     }
-    return;
   }
 
   static get MIME() {

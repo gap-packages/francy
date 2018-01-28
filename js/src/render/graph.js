@@ -17,7 +17,7 @@ export default class Graph extends Renderer {
   @requires('canvas.graph')
   render() {
 
-    var element = undefined;
+    let element = undefined;
     switch (this.data.canvas.graph.type) {
       case 'tree':
         element = new TreeGraph(this.options).load(this.data).render();
@@ -34,9 +34,9 @@ export default class Graph extends Renderer {
   static applyEvents(element, options) {
     if (!element) return;
 
-    var tooltip = new Tooltip(options);
-    var contextMenu = new ContextMenu(options);
-    var callback = new Callback(options);
+    let tooltip = new Tooltip(options);
+    let contextMenu = new ContextMenu(options);
+    let callback = new Callback(options);
 
     element
       .on('contextmenu', function(d) {

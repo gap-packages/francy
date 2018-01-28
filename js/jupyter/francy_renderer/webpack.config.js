@@ -66,7 +66,9 @@ module.exports = [
     }),
     externals: [
       'nbextensions/francy_renderer/index',
-      'base/js/namespace'
+      'base/js/namespace',
+      'nbextensions/francy_renderer/d3.min',
+      'nbextensions/francy_renderer/francy.bundle.min'
     ]
   }),
   /**

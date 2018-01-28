@@ -12,17 +12,17 @@ export default class ScatterChart extends Renderer {
 
   render() {
 
-    var tooltip = new Tooltip(this.options);
+    let tooltip = new Tooltip(this.options);
 
-    var parent = this.options.appendTo.element;
+    let parent = this.options.appendTo.element;
 
-    var axis = this.data.canvas.chart.axis,
+    let axis = this.data.canvas.chart.axis,
       datasets = this.data.canvas.chart.data,
       datasetNames = Object.keys(datasets);
 
     this.element = parent.select('g.francy-content');
 
-    var margin = { top: 50, right: 50, bottom: 50, left: 50 },
+    let margin = {top: 50, right: 50, bottom: 50, left: 50},
       width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
       height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
 
@@ -31,10 +31,10 @@ export default class ScatterChart extends Renderer {
     height = height - margin.top - margin.bottom;
 
     // set the ranges
-    var x = d3.scaleLinear().range([0, width]).domain(axis.x.domain);
-    var y = d3.scaleLinear().range([height, 0]).domain(axis.y.domain);
+    let x = d3.scaleLinear().range([0, width]).domain(axis.x.domain);
+    let y = d3.scaleLinear().range([height, 0]).domain(axis.y.domain);
 
-    var tmp = [];
+    let tmp = [];
     datasetNames.forEach(key => tmp = tmp.concat(datasets[key]));
 
     if (!axis.y.domain.length) {
@@ -45,36 +45,40 @@ export default class ScatterChart extends Renderer {
       x.domain([0, tmp.length / datasetNames.length]);
     }
 
-    var scatterGroup = this.element.selectAll('g.francy-scatters');
+    let scatterGroup = this.element.selectAll('g.francy-scatters');
 
     if (!scatterGroup.node()) {
       scatterGroup = this.element.append('g').attr('class', 'francy-scatters');
     }
 
     datasetNames.forEach(function(key, index) {
-      var scatter = scatterGroup.selectAll(`.francy-scatter-${index}`).data(datasets[key]);
+      let scatter = scatterGroup.selectAll(`.francy-scatter-${index}`).data(datasets[key]);
 
       scatter.exit().transition().duration(750)
         .style("fill-opacity", 1e-6)
         .remove();
 
       // append the rectangles for the bar chart
-      var scatterEnter = scatter
+      let scatterEnter = scatter
         .enter()
         .append('circle')
         .style('fill', () => Chart.colors(index * 5))
         .attr('class', `francy-scatter-${index}`)
         .attr("r", 5)
-        .attr("cx", function(d, i) { return x(i); })
-        .attr("cy", function(d) { return y(d); })
-        .on("mouseenter", function(d) {
+        .attr("cx", function (d, i) {
+          return x(i);
+        })
+        .attr("cy", function (d) {
+          return y(d);
+        })
+        .on("mouseenter", function (d) {
           d3.select(this).transition()
             .duration(250)
             .style("fill-opacity", 0.5)
             .attr('r', 10);
           tooltip.load(Chart.tooltip(key, d), true).render();
         })
-        .on("mouseleave", function() {
+        .on("mouseleave", function () {
           d3.select(this).transition()
             .duration(250)
             .style("fill-opacity", 1)
@@ -86,7 +90,7 @@ export default class ScatterChart extends Renderer {
     });
 
     // force rebuild axis again
-    var xAxisGroup = this.element.selectAll('g.francy-x-axis');
+    let xAxisGroup = this.element.selectAll('g.francy-x-axis');
 
     if (!xAxisGroup.node()) {
       xAxisGroup = this.element.append('g').attr('class', 'francy-x-axis');
@@ -107,7 +111,7 @@ export default class ScatterChart extends Renderer {
       .text(axis.x.title);
 
     // force rebuild axis again
-    var yAxisGroup = this.element.selectAll('g.francy-y-axis');
+    let yAxisGroup = this.element.selectAll('g.francy-y-axis');
 
     if (!yAxisGroup.node()) {
       yAxisGroup = this.element.append('g').attr('class', 'francy-y-axis');
@@ -128,7 +132,7 @@ export default class ScatterChart extends Renderer {
 
     if (this.data.canvas.chart.showLegend) {
 
-      var legendGroup = this.element.selectAll('.francy-legend');
+      let legendGroup = this.element.selectAll('.francy-legend');
 
       if (!legendGroup.node()) {
         legendGroup = this.element.append('g').attr('class', 'francy-legend');
@@ -137,7 +141,7 @@ export default class ScatterChart extends Renderer {
       // force rebuild legend again
       legendGroup.selectAll('*').remove();
 
-      var legend = legendGroup.selectAll('g').data(datasetNames.slice());
+      let legend = legendGroup.selectAll('g').data(datasetNames.slice());
 
       legend.exit().remove();
 

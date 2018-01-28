@@ -12,8 +12,8 @@ export default class CallbackHandler extends Base {
   @requires('callback')
   execute() {
     if (Object.keys(this.data.callback.requiredArgs).length) {
-      var options = this.options;
-      options.callbackHandler = (calbackObj) => this._execute.call(this, calbackObj);
+      let options = this.options;
+      options.callbackHandler = (callbackObj) => this._execute.call(this, callbackObj);
       return new RequiredArgsModal(options).load(this.data, true).render();
     }
     else {

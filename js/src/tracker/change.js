@@ -8,6 +8,7 @@ export default class Tracker {
    * Creates a instance of ModelTracker.
    * @param {object} object - the object object to keep track of changes.
    * @param verbose
+   * @param throttle
    */
   constructor(object, { verbose = false, throttle = 1000 } = {}) {
     this.verbose = verbose;

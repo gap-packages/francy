@@ -11,9 +11,9 @@ export default class Message extends Renderer {
 
   @requires('canvas.messages')
   render() {
-    var parent = this.options.appendTo.element;
+    let parent = this.options.appendTo.element;
 
-    var messages = Object.keys(this.data.canvas.messages).map((key) => {
+    let messages = Object.keys(this.data.canvas.messages).map((key) => {
       return {
         id: key,
         type: this.data.canvas.messages[key].type,
@@ -22,16 +22,16 @@ export default class Message extends Renderer {
       };
     });
 
-    var alertsId = `Messages-${this.data.canvas.id}`;
+    let alertsId = `Messages-${this.data.canvas.id}`;
     this.element = d3.select(`#${alertsId}`);
     // check if the div is already present
     if (!this.element.node()) {
       this.element = parent.append('div').attr('class', 'francy-message-holder').attr('id', alertsId);
     }
 
-    var message = this.element.selectAll('div.francy-alert').data(messages, d => d.id);
-    var messageEnter = message.enter().append('div').attr('id', d => d.id)
-      .attr('class', d => `francy-alert alert-${d.type}`).on('click', function() {
+    let message = this.element.selectAll('div.francy-alert').data(messages, d => d.id);
+    let messageEnter = message.enter().append('div').attr('id', d => d.id)
+      .attr('class', d => `francy-alert alert-${d.type}`).on('click', function () {
         d3.select(this).style('display', 'none');
       });
     messageEnter.append('span').attr('class', 'strong').text(d => d.title);

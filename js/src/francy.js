@@ -3,8 +3,6 @@ import Renderer from './render/renderer';
 
 let ALL_CANVAS = {};
 
-/* global d3 */
-
 /**
  * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.handle} function,
  * Francy will handle the creation of that json as long it is a valid and understandable json object to Francy.
@@ -27,9 +25,9 @@ export default class Francy extends Renderer {
    */
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
-    if (!d3) {
-      throw new Error('D3 is not imported! Francy won\'t work without it... please import D3 v4+.');
-    }
+    //if (!d3) {
+    //  throw new Error('D3 is not imported! Francy won\'t work without it... please import D3 v4+.');
+    //}
   }
 
   /**
@@ -38,20 +36,23 @@ export default class Francy extends Renderer {
    * @returns {Object} the html element created
    */
   render() {
-    var frame = new Frame(this.options).load(this.data).render();
+    let frame = new Frame(this.options).load(this.data).render();
     ALL_CANVAS[this.data.canvas.id] = frame;
     return frame.element.node();
   }
 
-  unrender(id) {
+  static unrender(id) {
     delete ALL_CANVAS[id];
   }
 }
+/* eslint-disable no-console */
+let francy = new Francy({verbose: false, appendTo: 'body', callbackHandler: console.log});
+/* eslint-enable no-console */
 
 try {
-  exports.Francy = window.Francy = Francy;
+  exports.Francy = window.Francy = francy;
   // handle events on resize
-  var oldResize = window.onresize;
+  let oldResize = window.onresize;
   window.onresize = function() {
     // zoom to fit all canvas on resize
     Object.values(ALL_CANVAS).forEach(function(frame) {
@@ -64,5 +65,5 @@ try {
   };
 }
 catch (e) {
-  exports.Francy = Francy;
+  exports.Francy = francy;
 }

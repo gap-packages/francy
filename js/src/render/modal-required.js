@@ -10,41 +10,43 @@ export default class RequiredArgsModal extends Renderer {
   }
 
   render() {
-    var self = this;
+    let self = this;
 
-    var modalId = this.data.callback.id;
+    let modalId = this.data.callback.id;
 
     this.logger.debug(`Creating Callback Modal [${modalId}]...`);
 
     // we want to overlay everything, hence 'body' must be used
-    var overlay = d3.select('body').append('div')
+    let overlay = d3.select('body').append('div')
       .attr('class', 'francy-overlay');
-    var holder = d3.select('body').append('div')
+    let holder = d3.select('body').append('div')
       .attr('class', 'francy');
     this.element = holder.append('div')
       .attr('id', modalId)
       .attr('class', 'francy-modal');
 
-    var form = this.element.append('form');
+    let form = this.element.append('form');
 
-    var header = form.append('div').attr('class', 'francy-modal-header');
+    let header = form.append('div').attr('class', 'francy-modal-header');
 
-    var headerTitle = header.append('span').html('Required arguments&nbsp;');
+    let headerTitle = header.append('span').html('Required arguments&nbsp;');
     if (this.data.title) {
       headerTitle.append('span').attr('style', 'font-weight: bold;').text(`for ${this.data.title}`);
     }
 
-    var content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
+    let content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
 
-    for (var arg of Object.values(this.data.callback.requiredArgs)) {
-      var row = content.append('div').attr('class', 'francy-table-row');
+    for (let arg of Object.values(this.data.callback.requiredArgs)) {
+      let row = content.append('div').attr('class', 'francy-table-row');
       row.append('div').attr('class', 'francy-table-cell').append('label').attr('for', arg.id).text(arg.title);
-      var input = row.append('div').attr('class', 'francy-table-cell').append('input').attr('id', arg.id).attr('class', 'francy-arg')
+      let input = row.append('div').attr('class', 'francy-table-cell').append('input').attr('id', arg.id).attr('class', 'francy-arg')
         .attr('required', '')
         .attr('name', arg.id)
         .attr('type', arg.type)
         .attr('value', arg.value)
-        .on('change', function() { self.data.callback.requiredArgs[this.id].value = this.value; })
+        .on('change', function () {
+          self.data.callback.requiredArgs[this.id].value = this.value;
+        })
         .on('input', this.onchange)
         .on('keyup', this.onchange)
         .on('paste', this.onchange);
@@ -61,7 +63,7 @@ export default class RequiredArgsModal extends Renderer {
       row.append('span').attr('class', 'validity');
     }
 
-    var footer = form.append('div').attr('class', 'francy-modal-footer');
+    let footer = form.append('div').attr('class', 'francy-modal-footer');
 
     footer.append('button').text('Ok').on('click', function() {
       if (form.node().checkValidity()) {

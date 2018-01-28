@@ -82,7 +82,7 @@ define([
           // well, when Draw is invoked for a canvas inside another cell it moves the svg to another output cell!
           var svg = d3.select(toinsert[0]).select('svg');
           var id = svg ? svg.attr('id') : undefined;
-          francy.unrender(id);
+          Francy.unrender(id);
         }
       };
 

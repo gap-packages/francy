@@ -24,17 +24,17 @@ export default class Tooltip extends Renderer {
       return;
     }
 
-    var pos = d3.mouse(this.SVGParent.node());
+    let pos = d3.mouse(this.SVGParent.node());
 
     // TODO fix always visible tooltip, fine until someone complains about :P
     this.element.style('left', (pos[0] + 5) + 'px').style('top', (pos[1] - 5) + 'px');
 
-    var table = this.element.append('div').attr('class', 'francy-tooltip')
+    let table = this.element.append('div').attr('class', 'francy-tooltip')
       .append('div').attr('class', 'francy-table')
       .append('div').attr('class', 'francy-table-body');
-    var self = this;
+    let self = this;
     Object.keys(this.data).map(function(key) {
-      var row = table.append('div').attr('class', 'francy-table-row');
+      let row = table.append('div').attr('class', 'francy-table-row');
       row.append('div').attr('class', 'francy-table-cell').text(self.data[key].title);
       row.append('div').attr('class', 'francy-table-cell').text(self.data[key].text);
     });
@@ -42,7 +42,7 @@ export default class Tooltip extends Renderer {
     // show tooltip
     this.element.style('display', 'block');
 
-    this;
+    return this;
   }
 
   unrender() {

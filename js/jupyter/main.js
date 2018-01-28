@@ -10,8 +10,8 @@ define([
 ], function(require, Jupyter, events, outputHandler, d3, FrancyBundle) {
   'use strict';
 
-  var MIME_TYPE = 'application/vnd.francy+json';
-  var CLASS_NAME = 'francy-view';
+  const MIME_TYPE = 'application/vnd.francy+json';
+  const CLASS_NAME = 'francy-view';
 
   window.d3 = d3;
 
@@ -26,7 +26,7 @@ define([
   loadCss('./../css/style.css');
 
   // Start Francy
-  let francy = new FrancyBundle.Francy({
+  let Francy = FrancyBundle.settings({
     verbose: true,
     appendTo: '#francy-drawing-div',
     callbackHandler: function(command) {
@@ -35,8 +35,7 @@ define([
           output: function(msg) {
             if (msg.content && msg.content.data && msg.content.data[MIME_TYPE]) {
               // This will update an existing canvas by its ID!
-              francy.load(msg.content.data[MIME_TYPE]).render();
-              return;
+              Francy.load(msg.content.data[MIME_TYPE]).render();
             }
           }
         }
@@ -54,8 +53,8 @@ define([
 
       // `this` is the output area we are appending to
       let appendMime = function(json, md, element) {
-        var francyObject = francy.load(json).render();
-        var toinsert = this.create_output_subarea(md, CLASS_NAME, MIME_TYPE);
+        let francyObject = Francy.load(json).render();
+        let toinsert = this.create_output_subarea(md, CLASS_NAME, MIME_TYPE);
         toinsert.append(francyObject);
         element.append(toinsert);
         return toinsert;
@@ -80,9 +79,9 @@ define([
         if (toinsert[0]) {
           // The svg might be gone to another cell (!?)
           // well, when Draw is invoked for a canvas inside another cell it moves the svg to another output cell!
-          var svg = d3.select(toinsert[0]).select('svg');
-          var id = svg ? svg.attr('id') : undefined;
-          francy.unrender(id);
+          let svg = d3.select(toinsert[0]).select('svg');
+          let id = svg ? svg.attr('id') : undefined;
+          Francy.unrender(id);
         }
       };
 

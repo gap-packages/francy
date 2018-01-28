@@ -22,9 +22,15 @@ if (window.require) {
  */
 export function load_ipython_extension() {
   define(
-    ['nbextensions/francy_renderer/index', 'base/js/namespace'],
-    (Extension, Jupyter) => {
+    [
+      'nbextensions/francy_renderer/index',
+      'base/js/namespace',
+      'nbextensions/francy_renderer/d3.min',
+      'nbextensions/francy_renderer/francy.bundle.min'
+    ],
+    (Extension, Jupyter, d3, FrancyBundle) => {
       const { notebook } = Jupyter;
+      Extension.init(Jupyter, d3, FrancyBundle);
       Extension.register_renderer(notebook);
       Extension.render_cells(notebook);
     }

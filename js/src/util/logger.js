@@ -18,7 +18,7 @@ export default class Logger {
    */
   debug(message) {
     if (this.verbose) {
-      this.console.debug(this._format('DEBUG', message));
+      this.console.debug(Logger._format('DEBUG', message));
     }
   }
 
@@ -27,7 +27,7 @@ export default class Logger {
    * @param message the message to print
    */
   info(message) {
-    this.console.info(this._format('INFO', message));
+    this.console.info(Logger._format('INFO', message));
   }
 
   /**
@@ -36,7 +36,7 @@ export default class Logger {
    * @param error the error Object to attach to the message
    */
   error(message, error) {
-    this.console.error(this._format('ERROR', message), error);
+    this.console.error(Logger._format('ERROR', message), error);
   }
 
   /**
@@ -46,14 +46,15 @@ export default class Logger {
    */
   warn(message, error) {
     error = error || {};
-    this.console.error(this._format('WARN', message), error);
+    this.console.error(Logger._format('WARN', message), error);
   }
 
   /**
    * This is a private method that formats all log messages
+   * @param level the log level
    * @param message the message to print
    */
-  _format(level, message) {
+  static _format(level, message) {
     return `[${level}] - ${new Date().toISOString()} - ${message}`;
   }
 }
