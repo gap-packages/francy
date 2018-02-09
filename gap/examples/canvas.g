@@ -17,7 +17,7 @@ Add(graph, [shapeG, shape1]);
 canvas := Canvas("Quaternion Group Subgroup Lattice");
 SetHeight(canvas, 400); # default 600
 SetWidth(canvas, 400); # default 800
-setZoomToFit(canvas, false); # default true
+SetZoomToFit(canvas, false); # default true
 
 Draw(canvas);
 
