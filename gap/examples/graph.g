@@ -34,7 +34,7 @@ Add(graph, [shape1, shape2]);
 graph := Graph(GraphType.UNDIRECTED);
 shape := Shape(ShapeType.SQUARE);
 MyFunction := function() Add(graph, Shape(ShapeType.Circle)); return graph; end;
-callback := Callback(TriggerEvent.RIGHT_CLICK, MyFunction);
+callback := Callback(TriggerType.RIGHT_CLICK, MyFunction);
 Add(shape, callback);
 Add(graph, shape);
 
