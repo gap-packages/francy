@@ -24,7 +24,7 @@ make -j4
 make bootstrap-pkg-minimal
 
 # install latest version of json
-if [ !-d pkg/json* ]; then
+if [ ! -d pkg/json* ]; then
   git clone https://github.com/gap-packages/json $GAPROOT/pkg/json
 fi
 
