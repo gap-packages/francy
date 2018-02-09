@@ -12,20 +12,21 @@ export default class ChartFactory extends Renderer {
 
   @requires('canvas.chart')
   render() {
-
+    
+    let element = undefined;
     switch (this.data.canvas.chart.type) {
     case 'bar':
-      this.element = new BarChart(this.options).load(this.data).render();
+      element = new BarChart(this.options).load(this.data).render();
       break;
     case 'line':
-      this.element = new LineChart(this.options).load(this.data).render();
+      element = new LineChart(this.options).load(this.data).render();
       break;
     case 'scatter':
-      this.element = new ScatterChart(this.options).load(this.data).render();
+      element = new ScatterChart(this.options).load(this.data).render();
       break;
     }
 
-    return this;
+    return element;
   }
 
   unrender() {}

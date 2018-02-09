@@ -7,11 +7,11 @@
 
 ## Develop
 
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/develop)
-[![Build Status](https://travis-ci.org/mcmartins/francy.svg?branch=develop)](https://travis-ci.org/mcmartins/francy)
-[![Coverage Status](https://coveralls.io/repos/github/mcmartins/francy/badge.svg?branch=develop)](https://coveralls.io/github/mcmartins/francy?branch=develop)
-[![Maintainability](https://api.codeclimate.com/v1/badges/db52d89d90ab0d7e6fd4/maintainability)](https://codeclimate.com/github/mcmartins/francy/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/db52d89d90ab0d7e6fd4/test_coverage)](https://codeclimate.com/github/mcmartins/francy/test_coverage)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/lab_extension)
+[![Build Status](https://travis-ci.org/mcmartins/francy.svg?branch=lab_extension)](https://travis-ci.org/mcmartins/francy)
+[![GAP Coverage Status](https://codecov.io/gh/mcmartins/francy/branch/lab_extension/graph/badge.svg)](https://codecov.io/gh/mcmartins/francy)
+[![JS Coverage Status](https://api.codeclimate.com/v1/badges/db52d89d90ab0d7e6fd4/test_coverage)](https://codeclimate.com/github/mcmartins/francy/test_coverage)
+[![JS Maintainability](https://api.codeclimate.com/v1/badges/db52d89d90ab0d7e6fd4/maintainability)](https://codeclimate.com/github/mcmartins/francy/maintainability)
 
 Francy is a framework for Interactive Discrete Mathematics package for GAP.
 

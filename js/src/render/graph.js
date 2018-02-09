@@ -65,28 +65,32 @@ export default class Graph extends Renderer {
   }
 
   static getSymbol(type) {
-    let element = d3.symbolCircle;
-    if (type === 'circle') {
-      element = d3.symbolCircle;
-    }
-    else if (type === 'cross') {
+    
+    let element = undefined;
+    switch (type) {
+    case 'cross':
       element = d3.symbolCross;
-    }
-    else if (type === 'diamond') {
+      break;
+    case 'diamond':
       element = d3.symbolDiamond;
-    }
-    else if (type === 'square') {
+      break;
+    case 'square':
       element = d3.symbolSquare;
-    }
-    else if (type === 'triangle') {
+      break;
+    case 'triangle':
+      element = d3.symbolSquare;
+      break;
+    case 'star':
+      element = d3.symbolStar;
+      break;
+    case 'wye':
+      element = d3.symbolWye;
+      break;
+    case 'circle':
+    default:
       element = d3.symbolTriangle;
     }
-    else if (type === 'star') {
-      element = d3.symbolStar;
-    }
-    else if (type === 'wye') {
-      element = d3.symbolWye;
-    }
+
     return element;
   }
 
