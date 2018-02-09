@@ -2,7 +2,7 @@
 
 set -e
 
-ls -lrt
+CURRENT=`pwd`
 
 ################################################################################
 #
@@ -23,24 +23,21 @@ make -j4
 
 make bootstrap-pkg-minimal
 
-ls -lrt
-
 # install latest version of json
-if [ -d $GAPROOT/pkg/json ]; then
+if [ -d pkg/json ]; then
   git clone https://github.com/gap-packages/json $GAPROOT/pkg/json
 fi
 
-cd $GAPROOT/pkg/json
+cd pkg/json
 ./autogen.sh
 ./configure $CONFIGFLAGS
 make -j4 V=1
-cd -
+cd $CURRENT
 
 ################################################################################
 #
 # Install francy on GAP
 #
-cd ..
 mv gap $GAPROOT/pkg/francy
 
 ################################################################################
@@ -49,7 +46,7 @@ mv gap $GAPROOT/pkg/francy
 #
 cd js
 npm install
-cd -
+cd $CURRENT
 
 ################################################################################
 #
