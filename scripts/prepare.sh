@@ -36,6 +36,16 @@ cd json
 ./autogen.sh
 ./configure
 make -j4 V=1
+
+cd ..
+
+# install latest version of profiling
+git clone https://github.com/gap-packages/profiling
+cd profiling
+./autogen.sh
+./configure $CONFIGFLAGS
+make -j4 V=1
+
 cd $CURRENT
 
 ################################################################################
