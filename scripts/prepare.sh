@@ -30,20 +30,27 @@ fi
 
 cd pkg
 
+# install latest version of io
+git clone https://github.com/gap-packages/io
+cd io
+./autogen.sh
+./configure
+make -j4 V=1
+cd ..
+
 # install latest version of json
 git clone https://github.com/gap-packages/json
 cd json
 ./autogen.sh
 ./configure
 make -j4 V=1
-
 cd ..
 
 # install latest version of profiling
 git clone https://github.com/gap-packages/profiling
 cd profiling
 ./autogen.sh
-./configure $CONFIGFLAGS
+./configure
 make -j4 V=1
 
 cd $CURRENT

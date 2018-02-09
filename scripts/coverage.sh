@@ -22,7 +22,8 @@ OutputJsonCoverage(r, "gap-coverage.json");;
 QUIT_GAP(0);
 GAPInput
 
+# FIXME
 # generate source coverage reports by running gcov
-gcov -o . src/*.c*
+#gcov -o . $COVDIR/*.c*
 
 ./cc-test-reporter after-build -p ./js

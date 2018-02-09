@@ -48,7 +48,7 @@ Add(callback, arg);
 
 MyFunction := function(a,b) return Concatenation(a, b); end;
 
-callback := Callback(TriggerEvent.DOUBLE_CLICK, MyFunction, ["Hello "]);
+callback := Callback(TriggerType.DOUBLE_CLICK, MyFunction, ["Hello "]);
 arg := RequiredArg(ArgType.STRING, "Your Name");
 Add(callback, arg);
 
@@ -60,7 +60,7 @@ Add(callback, arg);
 #! @BeginExample
 
 arg!.value := "Manuel"; # simulate the user input
-Trigger(GapToJsonString(Clone(callback))); # simulate the external trigger
+Trigger(GapToJsonString(Sanitize(callback))); # simulate the external trigger
 
 #! @EndExample
 #! @EndChunk
