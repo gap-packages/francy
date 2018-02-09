@@ -1,20 +1,33 @@
-language: python
-python:
-  - 3.6
-sudo: false
-cache:
-  pip: true
-  directories:
-    - $HOME/.npm
-before_install:
-  - pip install -U pip setuptools
-  - nvm install 6
-install:
-  - pip install --upgrade ".[test]" -v
+dist: trusty
+language: c
+env:
+  global:
+    - GAPROOT=gaproot
+    - COVDIR=coverage
+
+addons:
+  apt_packages:
+    - nodejs
+    - npm
+
+matrix:
+  include:
+    - env: CFLAGS="-O2"
+      compiler: clang
+    - env: CFLAGS="-O2"
+      compiler: gcc
+    - env: CFLAGS=""  # test build w/o optimization
+    - env: ABI=32
+
+branches:
+  only:
+    - lab_extension
+
+before_script:
+  - scripts/prepare.sh
 script:
-  - jupyter nbextension list
-  - jupyter nbextension enable --py --sys-prefix francy
-  - pip install jupyterlab
-  - jupyter labextension list
-  - jupyter labextension list 2>&1 | grep -q francy
-  - jupyter labextension link
+  - scripts/tests.sh
+after_script:
+  - scripts/coverage.sh
+  - bash <(curl -s https://codecov.io/bash)
+  - ./cc-test-reporter after-build -p francy/js

@@ -2,7 +2,7 @@ import Composite from './composite';
 import Canvas from './canvas';
 import MainMenu from './menu-main';
 import Message from './message';
-import { requires } from '../decorator/data';
+import { requires } from '../util/data-decorator';
 
 /* global d3 */
 

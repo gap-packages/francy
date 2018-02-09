@@ -1,4 +1,4 @@
-import Logger from '../util/logger';
+import Logger from './logger';
 
 /* global Jupyter, MathJax, d3 */
 
@@ -7,16 +7,16 @@ export function RegisterMathJax(element) {
   setTimeout(() => {
     try {
       MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/SVG"],
+        extensions: ['tex2jax.js'],
+        jax: ['input/TeX', 'output/SVG'],
         tex2jax: {
           inlineMath: [
             ['$', '$'],
-            ["\\(", "\\)"]
+            ['\\(', '\\)']
           ],
           displayMath: [
             ['$$', '$$'],
-            ["\\[", "\\]"]
+            ['\\[', '\\]']
           ],
           processEscapes: true
         },
@@ -42,7 +42,7 @@ export function RegisterMathJax(element) {
         }, 250);
       });
 
-      MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "SVG"], ['Typeset', MathJax.Hub, element.node()]);
+      MathJax.Hub.Queue(['setRenderer', MathJax.Hub, 'SVG'], ['Typeset', MathJax.Hub, element.node()]);
 
       MathJax.Hub.Configured();
     }

@@ -35,3 +35,11 @@
 .iml
 
 *-lock.json
+.c9
+.ipynb_*
+.nyc*
+
+# istanbul
+.nyc_output
+
+coverage

@@ -1,28 +1,22 @@
-import Renderer from './renderer';
 import Graph from './graph';
 import { RegisterMathJax } from '../util/component';
 
 /* global d3 */
 
-export default class GenericGraph extends Renderer {
+export default class GenericGraph extends Graph {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   render() {
-
-    let parent = this.options.appendTo.element;
-
+    var self = this;
+    this._initialize();
+    
     let simulationActive = this.data.canvas.graph.simulation;
 
     let canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
       canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
-
-    this.element = parent.select('g.francy-content');
-
-    let width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
-      height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
 
     let linkGroup = this.element.selectAll('g.francy-links');
 
@@ -81,7 +75,7 @@ export default class GenericGraph extends Renderer {
 
     if (this.data.canvas.graph.type === 'directed') {
       // this means we need arrows, so we append the marker
-      parent.append('defs').selectAll('marker')
+      self.parent.append('defs').selectAll('marker')
         .data(['arrow'])
         .enter().append('marker')
         .attr('class', 'francy-arrows')
@@ -124,7 +118,7 @@ export default class GenericGraph extends Renderer {
 
     if (node && !node.empty()) {
 
-      Graph.applyEvents(node, this.options);
+      this._applyEvents(node);
 
       if (this.data.canvas.graph.showNeighbours) {
         let nodeOnClick = node.on('click');
@@ -139,35 +133,35 @@ export default class GenericGraph extends Renderer {
 
     if (simulationActive) {
       // Canvas Forces
-      let centerForce = d3.forceCenter().x(width / 2).y(height / 2);
+      let centerForce = d3.forceCenter().x(this.width / 2).y(this.height / 2);
       let manyForce = d3.forceManyBody().strength(-canvasNodes.length * 50);
       let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
       let collideForce = d3.forceCollide(d => d.size * 2);
 
       //Generic gravity for the X position
-      let forceX = d3.forceX(width / 2).strength(0.05);
+      let forceX = d3.forceX(this.width / 2).strength(0.05);
 
       //Generic gravity for the Y position - undirected/directed graphs fall here
-      let forceY = d3.forceY(height / 2).strength(0.25);
+      let forceY = d3.forceY(this.height / 2).strength(0.25);
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
-        forceX = d3.forceX(width / 2).strength(0.3);
+        forceX = d3.forceX(this.width / 2).strength(0.3);
         //Strong y positioning based on layer to simulate the hasse diagram
         forceY = d3.forceY(d => d.layer * 75).strength(0.7);
       }
 
       var simulation = d3.forceSimulation().nodes(nodesToAdd)
-        .force("charge", manyForce)
-        .force("link", linkForce)
-        .force("center", centerForce)
-        .force("x", forceX)
-        .force("y", forceY)
-        .force("collide", collideForce)
+        .force('charge', manyForce)
+        .force('link', linkForce)
+        .force('center', centerForce)
+        .force('x', forceX)
+        .force('y', forceY)
+        .force('collide', collideForce)
         .on('tick', ticked)
-        .on("end", function() {
+        .on('end', function() {
           // zoom to fit when simulation is over
-          parent.zoomToFit();
+          self.parent.zoomToFit();
         });
 
       //force simulation restart
@@ -176,7 +170,7 @@ export default class GenericGraph extends Renderer {
     else {
       // well, simulation is off, apply fixed positions and zoom to fit now
       ticked();
-      parent.zoomToFit();
+      self.parent.zoomToFit();
     }
 
     function ticked() {

@@ -1,29 +1,23 @@
-import Renderer from './renderer';
 import Graph from './graph';
 import { RegisterMathJax } from '../util/component';
 
 /* global d3 */
 
-export default class TreeGraph extends Renderer {
+export default class TreeGraph extends Graph {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   render() {
-
-    let parent = this.options.appendTo.element;
-
-    this.element = parent.select('g.francy-content');
-
-    let width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
-      height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
+    
+    this._initialize();
 
     let i = 0,
       root;
 
     root = d3.hierarchy(this.treeData, d => d.children);
-    root.x0 = height / 2;
+    root.x0 = this.height / 2;
     root.y0 = 0;
 
     // compute height based on the depth of the graph
@@ -42,7 +36,7 @@ export default class TreeGraph extends Renderer {
     childCount(0, root);
     let newHeight = d3.max(levelWidth) * 100;
 
-    let treemap = d3.tree().size([newHeight, width]);
+    let treemap = d3.tree().size([newHeight, this.width]);
 
     if (this.data.canvas.graph.collapsed) {
       root.children.forEach(collapse);
@@ -146,7 +140,7 @@ export default class TreeGraph extends Renderer {
         .style('cursor', d => d.children || d._children ? 'pointer' : 'default');
 
       node = nodeGroup.selectAll('g.francy-node');
-      Graph.applyEvents(node, this.options);
+      this._applyEvents(node);
 
       let nodeOnClick = node.on('click');
       node.on('click', (d) => {
@@ -174,7 +168,7 @@ export default class TreeGraph extends Renderer {
       RegisterMathJax(this.SVGParent);
 
       setTimeout(() => {
-        parent.zoomToFit();
+        this.parent.zoomToFit();
       }, this.transitionDuration);
     }
 

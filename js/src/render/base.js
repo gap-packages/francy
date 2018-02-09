@@ -26,7 +26,7 @@ export default class Base {
      * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
      */
     this.options.verbose = verbose || this.options.verbose;
-    this.options.appendTo = appendTo || this.options.verbose;
+    this.options.appendTo = appendTo || this.options.appendTo;
     this.options.callbackHandler = callbackHandler || this.options.callbackHandler;
     return this;
   }

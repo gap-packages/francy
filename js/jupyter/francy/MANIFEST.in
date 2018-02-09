@@ -1,0 +1,2 @@
+graft francy/nbextension
+include francy/labextension/*.tgz

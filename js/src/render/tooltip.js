@@ -1,5 +1,5 @@
 import Renderer from './renderer';
-import { requires } from '../decorator/data';
+import { requires } from '../util/data-decorator';
 
 /* global d3 */
 

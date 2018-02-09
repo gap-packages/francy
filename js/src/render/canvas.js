@@ -1,7 +1,7 @@
 import Composite from './composite';
-import Graph from './graph';
-import Chart from './chart';
-import { requires } from '../decorator/data';
+import GraphFactory from './graph-factory';
+import ChartFactory from './chart-factory';
+import { requires } from '../util/data-decorator';
 
 /* global d3 */
 
@@ -9,16 +9,15 @@ export default class Canvas extends Composite {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
-    this.graph = new Graph(this.options);
-    this.chart = new Chart(this.options);
-    this.add(this.graph).add(this.chart);
+    this.graph = new GraphFactory(this.options);
+    this.chartFactory = new ChartFactory(this.options);
+    this.add(this.graph).add(this.chartFactory);
   }
 
   @requires('canvas')
   render() {
     let content;
     let zoom = d3.zoom();
-    let parent = this.options.appendTo.element;
     let self = this;
 
     function updateZoom(translateX, translateY, scale) {
@@ -26,7 +25,7 @@ export default class Canvas extends Composite {
     }
 
     function zoomed() {
-      content.attr("transform", d3.event.transform);
+      content.attr('transform', d3.event.transform);
     }
 
     function stopped() {
@@ -67,7 +66,7 @@ export default class Canvas extends Composite {
     if (!this.element.node()) {
       // create a svg element detached from the DOM!
       this.logger.debug(`Creating Canvas [${canvasId}]...`);
-      this.element = parent.append('svg')
+      this.element = this.parent.append('svg')
         .attr('class', 'francy-canvas')
         .attr('id', canvasId);
     }
@@ -83,12 +82,12 @@ export default class Canvas extends Composite {
 
     if (!content.node()) {
       content = this.element.append('g').attr('class', 'francy-content');
-      zoom.on("zoom", zoomed);
+      zoom.on('zoom', zoomed);
       // remove zoom on double click!
-      this.element.call(zoom).on("dblclick.zoom", null);
+      this.element.call(zoom).on('dblclick.zoom', null);
     }
 
-    this.element.on("click", stopped, true);
+    this.element.on('click', stopped, true);
 
     this.element.zoomToFit = this.zoomToFit = zoomToFit;
 

@@ -11,8 +11,6 @@ export default class MainMenu extends Menu {
   }
 
   render() {
-    let parent = this.options.appendTo.element;
-
     let aboutModal = new AboutModal(this.options);
 
     // Otherwise clashes with the canvas itself!
@@ -23,7 +21,7 @@ export default class MainMenu extends Menu {
     if (!this.element.node()) {
       // create a div element detached from the DOM!
       this.logger.debug(`Creating Main Menu [${menuId}]...`);
-      this.element = parent.append('div').attr('class', 'francy-main-menu-holder').attr('id', menuId);
+      this.element = this.parent.append('div').attr('class', 'francy-main-menu-holder').attr('id', menuId);
     }
 
     // Force rebuild menu again
@@ -39,7 +37,7 @@ export default class MainMenu extends Menu {
     entry.append('a').html('Francy');
     let content = entry.append('ul');
     content.append('li').append('a').on('click', () => this.options.appendTo.canvas.zoomToFit()).attr('title', 'Zoom to Fit').html('Zoom to Fit');
-    content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(this.SVGParent.node(), "diagram.png")).attr('title', 'Save to PNG').html('Save to PNG');
+    content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(this.SVGParent.node(), 'diagram.png')).attr('title', 'Save to PNG').html('Save to PNG');
     content.append('li').append('a').on('click', () => aboutModal.load(this.data).render()).attr('title', 'About').html('About');
 
     // Traverse all menus and flatten them!
