@@ -27,7 +27,7 @@ cd -
 #
 # Install francy on GAP
 #
-mv francy/gap $GAPROOT/pkg/francy
+mv gap $GAPROOT/pkg/francy
 
 # install latest version of json
 if [ -d $GAPROOT/pkg/json ]; then
@@ -44,7 +44,7 @@ cd -
 #
 # Install francy-js build tools
 #
-cd francy/js
+cd js
 
 npm install
 

@@ -24,3 +24,5 @@ GAPInput
 
 # generate source coverage reports by running gcov
 gcov -o . src/*.c*
+
+./cc-test-reporter after-build -p ./js
