@@ -28,9 +28,13 @@ if [ ! -d pkg/json* ]; then
   git clone https://github.com/gap-packages/json $GAPROOT/pkg/json
 fi
 
-cd pkg/json*
+cd pkg
+
+# install latest version of json
+git clone https://github.com/gap-packages/json
+cd json
 ./autogen.sh
-./configure $CONFIGFLAGS
+./configure
 make -j4 V=1
 cd $CURRENT
 
