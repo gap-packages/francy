@@ -9,7 +9,7 @@
 #! <P/>
 #! Currently, Francy, supports Bar, Line and Scatter Charts.
 #! <P/>
-#! Please see Francy-JS for client implementation.#
+#! Please see Francy-JS for client implementation.
 
 
 #############################################################################

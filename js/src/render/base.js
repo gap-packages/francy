@@ -32,7 +32,6 @@ export default class Base {
   }
 
   load(json, partial) {
-    this.log.debug('Got data...');
     let data = JsonUtils.parse(json, partial);
     if (data) {
       this.data = data;

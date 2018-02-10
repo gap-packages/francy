@@ -78,7 +78,7 @@ export default class Graph extends Renderer {
       element = d3.symbolSquare;
       break;
     case 'triangle':
-      element = d3.symbolSquare;
+      element = d3.symbolTriangle;
       break;
     case 'star':
       element = d3.symbolStar;
@@ -88,7 +88,7 @@ export default class Graph extends Renderer {
       break;
     case 'circle':
     default:
-      element = d3.symbolTriangle;
+      element = d3.symbolCircle;
     }
 
     return element;

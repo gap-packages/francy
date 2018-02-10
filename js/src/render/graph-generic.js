@@ -25,16 +25,7 @@ export default class GenericGraph extends Graph {
     }
 
     let links = linkGroup.selectAll('g.francy-link').data();
-    let linksToAdd = [];
-    canvasLinks.forEach(l => {
-      let link = links.find(d => d.id === l.id);
-      if (link) {
-        linksToAdd.push(link);
-      }
-      else {
-        linksToAdd.push(l);
-      }
-    });
+    let linksToAdd = this._filterNewElements(canvasLinks, links);
 
     let link = linkGroup.selectAll('g.francy-link').data(linksToAdd, d => d.id);
 
@@ -45,16 +36,7 @@ export default class GenericGraph extends Graph {
     }
 
     let nodes = nodeGroup.selectAll('g.francy-node').data();
-    let nodesToAdd = [];
-    canvasNodes.forEach(n => {
-      let node = nodes.find(d => d.id === n.id);
-      if (node) {
-        nodesToAdd.push(node);
-      }
-      else {
-        nodesToAdd.push(n);
-      }
-    });
+    let nodesToAdd = this._filterNewElements(canvasNodes, nodes);
 
     let node = nodeGroup.selectAll('g.francy-node').data(nodesToAdd, d => d.id);
 
@@ -247,5 +229,19 @@ export default class GenericGraph extends Graph {
   }
 
   unrender() {}
+  
+  _filterNewElements(canvasObjects, d3Element) {
+    let newElements = [];
+    canvasObjects.forEach(o => {
+      let link = d3Element.find(d => d.id === o.id);
+      if (link) {
+        newElements.push(link);
+      }
+      else {
+        newElements.push(o);
+      }
+    });
+    return newElements;
+  }
 
 }

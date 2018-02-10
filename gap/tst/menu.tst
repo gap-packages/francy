@@ -25,10 +25,22 @@ gap> menu := Menu("Example Menu Holder");
 <IsFrancyObject/IsMenu>
 gap> menu1 := Menu("Hello Menu Action", callback1 );
 <IsFrancyObject/IsMenu>
+gap> menu2 := Menu("Hello Menu Action", callback1 );
+<IsFrancyObject/IsMenu>
 gap> Add(menu, menu1);
+gap> Remove(menu, menu1);
+<IsFrancyObject/IsMenu>
+gap> Add(menu, [menu1, menu2]);
+gap> Remove(menu, [menu1, menu2]);
+<IsFrancyObject/IsMenu>
 gap> 
 gap> Add(canvas, [menu, menu1]);
 gap> Remove(canvas, menu1);
 <IsFrancyObject/IsCanvas>
 gap> Add(canvas, menu1);
 gap> Add(shape, menu1);
+gap> Remove(shape, menu1);
+<IsFrancyObject/IsShape>
+gap> Add(shape, [menu1, menu2]);
+gap> Remove(shape, [menu1, menu2]);
+<IsFrancyObject/IsShape>

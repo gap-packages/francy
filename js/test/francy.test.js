@@ -26,8 +26,14 @@ describe("A simple window", () => {
     expect(window.francy).to.be.an('object');
   });
   
+  it("should return undefined if no data is present", () => {
+    // TODO this should be a test for each type and the content dhould be tested!
+    expect(window.francy.load('invalid').render()).to.be.an('undefined');
+  });
+  
   it("should load a json", () => {
     // TODO this should be a test for each type and the content dhould be tested!
+    expect(window.francy.load('invalid').render()).to.be.an('undefined');
     expect(window.francy.load(json1).render()).to.be.a('htmldivelement');
     expect(window.francy.load(json2).render()).to.be.a('htmldivelement');
     expect(window.francy.load(json3).render()).to.be.a('htmldivelement');

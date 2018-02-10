@@ -102,7 +102,7 @@ DeclareOperation("Remove", [IsCanvas, IsFrancyMessage]);
 DeclareOperation("Draw", [IsCanvas]);
 
 #! @Description
-#! Generates the an HTML page and opens it within the default browser of the system
+#! Generates an HTML page and opens it within the default browser of the system
 #! @Arguments IsCanvas
 #! @Returns <C>rec</C> with html generated
 DeclareOperation("DrawSplash", [IsCanvas]);

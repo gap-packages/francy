@@ -53,19 +53,27 @@ end);
 #M  Add( <graph>, <francy object> ) . . . . . add objects to graph
 ##
 InstallMethod(Add,
+  "a graph, a link",
+  true,
+  [IsFrancyGraph,
+   IsLink],
+  0,
+function(graph, link)
+  graph!.links!.(link!.id) := link;
+  return graph;
+end);
+
+InstallMethod(Add,
   "a graph, a shape",
   true,
   [IsFrancyGraph,
-   IsFrancyObject],
+   IsShape],
   0,
-function(graph, object)
-  if IsShape(object) then
-    graph!.nodes!.(object!.id) := object;
-  elif IsLink(object) then
-    graph!.links!.(object!.id) := object;
-  fi;
+function(graph, shape)
+  graph!.nodes!.(shape!.id) := shape;
   return graph;
 end);
+
 
 InstallOtherMethod(Add,
   "a graph, a list of francy objects",
@@ -89,23 +97,28 @@ InstallMethod(Remove,
   "a graph, a shape",
   true,
   [IsFrancyGraph,
-   IsFrancyObject],
+   IsShape],
   0,
-function(graph, object)
+function(graph, shape)
   local link;
-  if IsShape(object) then
-    Unbind(graph!.nodes!.(object!.id));
-    # remove also links to this object
-    for link in object!.links do
-      if link!.source!.id = object!.id or link!.target!.id = object!.id then
-        Unbind(graph!.links!.(link!.id));
-      fi;
-    od;
-  elif IsLink(object) then
-    Unbind(graph!.links!.(object!.id));
-  elif IsMenu(object) then
-    Unbind(graph!.menus!.(object!.id));
-  fi;
+  Unbind(graph!.nodes!.(shape!.id));
+  # remove also links to this object
+  for link in graph!.links do
+    if link!.source!.id = shape!.id or link!.target!.id = shape!.id then
+      Unbind(graph!.links!.(link!.id));
+    fi;
+  od;
+  return graph;
+end);
+
+InstallMethod(Remove,
+  "a graph, a link",
+  true,
+  [IsFrancyGraph,
+   IsLink],
+  0,
+function(graph, link)
+  Unbind(graph!.links!.(link!.id));
   return graph;
 end);
 
@@ -207,7 +220,7 @@ InstallMethod(Remove,
    IsMenu],
   0,
 function(shape, menu)
-  Unbind(shape!.menu!.(menu!.id));
+  Unbind(shape!.menus!.(menu!.id));
   return shape;
 end);
 
@@ -237,7 +250,7 @@ InstallMethod(Add,
    IsCallback],
   0,
 function(shape, callback)
-    shape!.callbacks!.(callback!.id) := callback;
+  shape!.callbacks!.(callback!.id) := callback;
   return shape;
 end);
 
