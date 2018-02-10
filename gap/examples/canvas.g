@@ -2,22 +2,16 @@
 #! @BeginChunk Example_Create_Canvas_1
 #! @BeginExample
 
-graph := Graph(GraphType.HASSE);
-
-shapeG := Shape(ShapeType.DIAMOND, "G");
-SetLayer(shapeG, 1);
-
-shape1 := Shape(ShapeType.WYE, "1");
-SetLayer(shape1, 3);
-
-Add(graph, Link(shapeG, shape1));
-
-Add(graph, [shapeG, shape1]);
-
-canvas := Canvas("Quaternion Group Subgroup Lattice");
+canvas := Canvas("");
+Id(canvas);
+SetTitle(canvas, "Quaternion Group Subgroup Lattice");
+Title(canvas);
 SetHeight(canvas, 400); # default 600
+Height(canvas);
 SetWidth(canvas, 400); # default 800
+Width(canvas);
 SetZoomToFit(canvas, false); # default true
+ZoomToFit(canvas);
 
 Draw(canvas);
 

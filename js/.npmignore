@@ -51,3 +51,11 @@ wepack.config.js
 
 # istanbul
 .nyc_output
+
+src
+jupyter
+doc
+coverage
+test
+
+package-lock.json

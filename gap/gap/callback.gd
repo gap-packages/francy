@@ -184,3 +184,11 @@ BindGlobal("TriggerType", rec(
   RIGHT_CLICK  := Objectify(TriggerTypeObjectType, rec(value := "context")),
   CLICK        := Objectify(TriggerTypeObjectType, rec(value := "click"))
 ));
+
+DeclareAttribute("Title", IsRequiredArg);
+InstallMethod(Title, "requiredArg", [IsRequiredArg], o -> o!.title);
+InstallMethod(SetTitle, "requiredArg, string", [IsRequiredArg, IsString], function(o, s) o!.title := s; end);
+
+DeclareAttribute("Value", IsRequiredArg);
+InstallMethod(Value, "requiredArg", [IsRequiredArg], o -> o!.value);
+InstallMethod(SetValue, "requiredArg, string", [IsRequiredArg, IsString], function(o, s) o!.value := s; end);

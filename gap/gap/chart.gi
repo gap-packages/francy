@@ -45,15 +45,11 @@ InstallMethod(DefaultAxis,
 function(chartType)
   local axis;
   axis := rec();
-  if chartType!.value = ChartType.LINE!.value then
-    axis.x := XAxis(AxisScaleType.LINEAR, "", []);
-    axis.y := XAxis(AxisScaleType.LINEAR, "", []);
-  elif chartType!.value = ChartType.SCATTER!.value then
-    axis.x := XAxis(AxisScaleType.LINEAR, "", []);
-    axis.y := XAxis(AxisScaleType.LINEAR, "", []);
-  elif chartType!.value = ChartType.BAR!.value then
+  # default is linear
+  axis.x := XAxis(AxisScaleType.LINEAR, "", []);
+  axis.y := XAxis(AxisScaleType.LINEAR, "", []);
+  if chartType!.value = ChartType.BAR!.value then
     axis.x := XAxis(AxisScaleType.BAND, "", []);
-    axis.y := XAxis(AxisScaleType.LINEAR, "", []);
   fi;
   return axis;
 end);
@@ -105,11 +101,11 @@ InstallMethod(Remove,
   0,
 function(chart, object)
   if IsXAxis(object) then
-    Unbind(chart!.nodes!.x);
+    Unbind(chart!.axis!.x);
   elif IsYAxis(object) then
-    Unbind(chart!.nodes!.y);
+    Unbind(chart!.axis!.y);
   elif IsDataset(object) then
-    Unbind(chart!.nodes!.(object!.title));
+    Unbind(chart!.data!.(object!.title));
   fi;
   return chart;
 end);
