@@ -4,6 +4,14 @@ checks:
     config:
       threshold: 50
 
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        javascript:
+          mass_threshold: 60
+
 exclude_patterns:
   - "**/test/*"
   - "**/dist/*"

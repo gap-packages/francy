@@ -39,7 +39,7 @@ export default class Francy extends Renderer {
    * trigger the drawing of a json object.
    * @returns {Object} the html element created
    */
-   @requires('canvas')
+  @requires('canvas')
   render() {
     let frame = new Frame(this.options).load(this.data).render();
     ALL_CANVAS[this.data.canvas.id] = frame;
