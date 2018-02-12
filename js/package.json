@@ -20,7 +20,7 @@
     "lint": "./node_modules/.bin/eslint ./src/**",
     "lint:fix": "./node_modules/.bin/eslint --fix ./src/**",
     "test": "./node_modules/.bin/mocha --require babel-register --require chai -R spec --ui bdd ./test/**/*.test.js",
-    "coverage": "./node_modules/.bin/nyc --reporter=lcov --reporter=text-lcov npm run tests",
+    "coverage": "./node_modules/.bin/nyc --reporter=lcov --reporter=text-lcov npm run test",
     "dependencies:style": "echo ./extensions/browser ./extensions/jupyter_francy/style | xargs -n 1 cp ./src/style/index.css",
     "dependencies:js": "echo ./extensions/jupyter_francy/src | xargs -n 1 cp ./node_modules/d3/build/d3.min.js",
     "dependencies:all": "npm run dependencies:js && npm run dependencies:style",
