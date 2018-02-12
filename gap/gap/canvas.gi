@@ -210,9 +210,9 @@ function(canvas)
     <html>\n\
       <head>\n\
         <meta charset=\"utf-8\" content=\"text/html\" property=\"GAP,francy,d3.v4\"></meta>\n\
-        <link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/dist/francy/css/style.css\"></link>\n\
-        <script src=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/dist/francy/lib/d3.min.js\"></script>\n\
-        <script src=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/dist/francy/browser/francy.bundle.js\"></script>\n\
+        <link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/extensions/browser/index.css\"></link>\n\
+        <script src=\"https://d3js.org/d3.v4.js\"></script>\n\
+        <script src=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/extensions/browser/francy.bundle.js\"></script>\n\
         <title>Francy</title>\n\
       </head>\n\
       <body>\n\

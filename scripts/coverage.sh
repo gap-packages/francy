@@ -27,5 +27,4 @@ GAPInput
 #gcov -o . $COVDIR/*.c*
 
 cd js
-ls -lrt
 ./cc-test-reporter after-build
