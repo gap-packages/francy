@@ -27,6 +27,9 @@ true
 gap> 
 gap> chart:=Chart(ChartType.LINE);
 <IsFrancyObject/IsChart>
+gap> SetShowLegend(chart, false);
+gap> ShowLegend(chart) = false;
+true
 gap> SetAxisXTitle(chart, "X Axis");
 gap> SetAxisYTitle(chart, "Y Axis");
 gap> data1 := Dataset("data1", [100,20,30,47,90]);

@@ -86,7 +86,10 @@ export default class RequiredArgsModal extends Renderer {
     // disable keyboard shortcuts when using this modal in Jupyter
     RegisterJupyterKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
 
-    content.selectAll('.francy-arg').node().focus();
+    let inputElement = content.selectAll('.francy-arg').node();
+    if (inputElement) {
+      inputElement.focus();
+    }
 
     this.logger.debug(`Callback Modal updated [${modalId}]...`);
 

@@ -31,3 +31,5 @@ gap> Add(canvas, FrancyMessage(FrancyMessageType.SUCCESS, "Hello"));
 gap> Add(shape, FrancyMessage(FrancyMessageType.SUCCESS, "Hello"));
 gap> Add(canvas, FrancyMessage("Hello", "World"));
 gap> Add(shape, FrancyMessage("Hello", "World"));
+gap> Add(canvas, FrancyMessage("Hello World"));
+gap> Add(shape, FrancyMessage("Hello World"));
