@@ -46,3 +46,11 @@ gap> SetParentNode(shape1, shape);
 gap> SetCollapsed(graph, false);
 gap> Collapsed(graph) = false;
 true
+gap> canvas := Canvas("");
+<IsFrancyObject/IsCanvas>
+gap> Add(canvas, graph);
+gap> Remove(canvas, graph);
+<IsFrancyObject/IsCanvas>
+gap> Add(canvas, [graph]);
+gap> Remove(canvas, [graph]);
+<IsFrancyObject/IsCanvas>

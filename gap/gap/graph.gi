@@ -195,16 +195,38 @@ function(shape, menu)
   return shape;
 end);
 
+InstallMethod(Add,
+  "a shape, a callback",
+  true,
+  [IsShape,
+   IsCallback],
+  0,
+function(shape, callback)
+  shape!.callbacks!.(callback!.id) := callback;
+  return shape;
+end);
+
+InstallMethod(Add,
+  "a shape, a message",
+  true,
+  [IsShape,
+   IsFrancyMessage],
+  0,
+function(shape, message)
+  shape!.messages!.(message!.id) := message;
+  return shape;
+end);
+
 InstallOtherMethod(Add,
-  "a shape, a list of menu",
+  "a shape, a list of objects",
   true,
   [IsShape,
    IsList],
   0,
-function(shape, menus)
-  local menu;
-  for menu in menus do
-    Add(shape, menu);
+function(shape, objects)
+  local object;
+  for object in objects do
+    Add(shape, object);
   od;
   return shape;
 end);
@@ -224,54 +246,6 @@ function(shape, menu)
   return shape;
 end);
 
-InstallOtherMethod(Remove,
-  "a shape, a list of menus",
-  true,
-  [IsShape,
-   IsList],
-  0,
-function(shape, menus)
-  local menu;
-  for menu in menus do
-    Remove(shape, menu);
-  od;
-  return shape;
-end);
-
-
-#############################################################################
-##
-#M  Add( <graph>, <callback> ) . . . . . add objects to graph
-##
-InstallMethod(Add,
-  "a shape, a callback",
-  true,
-  [IsShape,
-   IsCallback],
-  0,
-function(shape, callback)
-  shape!.callbacks!.(callback!.id) := callback;
-  return shape;
-end);
-
-InstallOtherMethod(Add,
-  "a shape, a list of callback",
-  true,
-  [IsShape,
-   IsList],
-  0,
-function(shape, callbacks)
-  local callback;
-  for callback in callbacks do
-    Add(shape, callback);
-  od;
-  return shape;
-end);
-
-#############################################################################
-##
-#M  Remove( <graph>, <callback> ) . . . . . remove object from graph
-##
 InstallMethod(Remove,
   "a shape, a callback",
   true,
@@ -283,54 +257,6 @@ function(shape, callback)
   return shape;
 end);
 
-InstallOtherMethod(Remove,
-  "a shape, a list of callbacks",
-  true,
-  [IsShape,
-   IsList],
-  0,
-function(shape, callbacks)
-  local callback;
-  for callback in callbacks do
-    Remove(shape, callback);
-  od;
-  return shape;
-end);
-
-
-#############################################################################
-##
-#M  Add( <shape>, <info> ) . . . . . add objects to shape
-##
-InstallMethod(Add,
-  "a shape, a message",
-  true,
-  [IsShape,
-   IsFrancyMessage],
-  0,
-function(shape, message)
-  shape!.messages!.(message!.id) := message;
-  return shape;
-end);
-
-InstallOtherMethod(Add,
-  "a shape, a list of messages",
-  true,
-  [IsShape,
-   IsList],
-  0,
-function(shape, messages)
-  local message;
-  for message in messages do
-    Add(shape, message);
-  od;
-  return shape;
-end);
-
-#############################################################################
-##
-#M  Remove( <shape>, <info> ) . . . . . remove object from shape
-##
 InstallMethod(Remove,
   "a shape, a message",
   true,
@@ -343,15 +269,15 @@ function(shape, message)
 end);
 
 InstallOtherMethod(Remove,
-  "a shape, a list of messages",
+  "a shape, a list of objects",
   true,
   [IsShape,
    IsList],
   0,
-function(shape, messages)
-  local message;
-  for message in messages do
-    Remove(shape, message);
+function(shape, objects)
+  local object;
+  for object in objects do
+    Remove(shape, object);
   od;
   return shape;
 end);

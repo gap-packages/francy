@@ -33,9 +33,9 @@ describe("A simple window", () => {
   
   it("should load a json", () => {
     // TODO this should be a test for each type and the content should be tested!
+    // FIXME JSDOM does not support SVG, so cannot count number of nodes etc :/
     let object = window.francy.load(json1).render();
     expect(object).to.be.a('htmldivelement');
-    // FIXME JSDOM does not support SVG!
     //expect(window.d3.select(object).selectAll('.francy-node').size()).to.be.equals(6);
     expect(window.d3.select(object).selectAll('svg').size()).to.be.equals(1);
     expect(window.francy.load(json2).render()).to.be.a('htmldivelement');

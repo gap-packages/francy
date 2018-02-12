@@ -40,3 +40,11 @@ gap> SetAxisYTitle(chart, "Y Axis");
 gap> data1 := Dataset("data1", [100,20,30,47,90]);
 <IsFrancyObject/IsChart>
 gap> Add(chart, data1);
+gap> canvas := Canvas("");
+<IsFrancyObject/IsCanvas>
+gap> Add(canvas, chart);
+gap> Remove(canvas, chart);
+<IsFrancyObject/IsCanvas>
+gap> Add(canvas, [chart]);
+gap> Remove(canvas, [chart]);
+<IsFrancyObject/IsCanvas>

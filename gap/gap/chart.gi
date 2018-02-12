@@ -59,19 +59,35 @@ end);
 #M  Add( <chart>, <francy object> ) . . . . . add objects to canvas
 ##
 InstallMethod(Add,
-  "a Chart, an object",
+  "a chart, a x axis",
   true,
   [IsChart,
-   IsFrancyObject],
+   IsXAxis],
   0,
 function(chart, object)
-  if IsXAxis(object) then
-    chart!.axis!.x := object;
-  elif IsYAxis(object) then
-    chart!.axis!.y := object;
-  elif IsDataset(object) then
-    chart!.data!.(object!.title) := object!.data;
-  fi;
+  chart!.axis!.x := object;
+  return chart;
+end);
+
+InstallMethod(Add,
+  "a chart, a y axis",
+  true,
+  [IsChart,
+   IsYAxis],
+  0,
+function(chart, object)
+  chart!.axis!.y := object;
+  return chart;
+end);
+
+InstallMethod(Add,
+  "a Chart, a dataset",
+  true,
+  [IsChart,
+   IsDataset],
+  0,
+function(chart, object)
+  chart!.data!.(object!.title) := object!.data;
   return chart;
 end);
 
@@ -81,12 +97,12 @@ InstallOtherMethod(Add,
   [IsChart,
    IsList],
   0,
-function(Chart, objects)
+function(chart, objects)
   local object;
   for object in objects do
-    Add(Chart, object);
+    Add(chart, object);
   od;
-  return Chart;
+  return chart;
 end);
 
 #############################################################################
@@ -94,19 +110,35 @@ end);
 #M  Remove( <chart>, <francy object> ) . . . . . remove object from canvas
 ##
 InstallMethod(Remove,
-  "a canvas, a shape",
+  "a chart, a x axis",
   true,
   [IsChart,
-   IsFrancyObject],
+   IsXAxis],
   0,
 function(chart, object)
-  if IsXAxis(object) then
-    Unbind(chart!.axis!.x);
-  elif IsYAxis(object) then
-    Unbind(chart!.axis!.y);
-  elif IsDataset(object) then
-    Unbind(chart!.data!.(object!.title));
-  fi;
+  Unbind(chart!.axis!.x);
+  return chart;
+end);
+
+InstallMethod(Remove,
+  "a chart, a y axis",
+  true,
+  [IsChart,
+   IsYAxis],
+  0,
+function(chart, object)
+  Unbind(chart!.axis!.y);
+  return chart;
+end);
+
+InstallMethod(Remove,
+  "a chart, a dataset",
+  true,
+  [IsChart,
+   IsDataset],
+  0,
+function(chart, object)
+  Unbind(chart!.data!.(object!.title));
   return chart;
 end);
 

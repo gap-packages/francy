@@ -23,6 +23,9 @@ gap> Add(callback1, arg1);
 gap> 
 gap> menu := Menu("Example Menu Holder");
 <IsFrancyObject/IsMenu>
+gap> SetTitle(menu, "Menu Holder");
+gap> Title(menu) = "Menu Holder";
+true
 gap> menu1 := Menu("Hello Menu Action", callback1 );
 <IsFrancyObject/IsMenu>
 gap> menu2 := Menu("Hello Menu Action", callback1 );
