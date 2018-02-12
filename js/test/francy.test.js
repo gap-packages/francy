@@ -28,13 +28,16 @@ describe("A simple window", () => {
   
   it("should return undefined if no data is present", () => {
     // TODO this should be a test for each type and the content dhould be tested!
-    expect(window.francy.load('invalid').render()).to.be.an('undefined');
+    expect(window.francy.render()).to.be.an('undefined');
   });
   
   it("should load a json", () => {
-    // TODO this should be a test for each type and the content dhould be tested!
-    expect(window.francy.load('invalid').render()).to.be.an('undefined');
-    expect(window.francy.load(json1).render()).to.be.a('htmldivelement');
+    // TODO this should be a test for each type and the content should be tested!
+    let object = window.francy.load(json1).render();
+    expect(object).to.be.a('htmldivelement');
+    // FIXME JSDOM does not support SVG!
+    //expect(window.d3.select(object).selectAll('.francy-node').size()).to.be.equals(6);
+    expect(window.d3.select(object).selectAll('svg').size()).to.be.equals(1);
     expect(window.francy.load(json2).render()).to.be.a('htmldivelement');
     expect(window.francy.load(json3).render()).to.be.a('htmldivelement');
     expect(window.francy.load(json4).render()).to.be.a('htmldivelement');
@@ -43,7 +46,7 @@ describe("A simple window", () => {
     expect(window.francy.load(json7).render()).to.be.a('htmldivelement');
     expect(window.francy.load(json8).render()).to.be.a('htmldivelement');
     expect(window.francy.load(json9).render()).to.be.a('htmldivelement');
-    //expect(window.francy.load(json10).render()).to.be.a('htmldivelement');
+    expect(window.francy.load(json10).render()).to.be.a('htmldivelement');
     expect(window.francy.load(json11).render()).to.be.a('htmldivelement');
   });
 

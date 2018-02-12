@@ -40,8 +40,13 @@ gap> callback := Callback(TriggerType.DOUBLE_CLICK, MyFunction, ["Hello "]);
 <IsFrancyObject/IsCallback>
 gap> arg := RequiredArg(ArgType.STRING, "Your Name");
 <IsFrancyObject/IsCallback>
+gap> SetTitle(arg, "Enter your name");
+gap> Title(arg) = "Enter your name";
+true
 gap> Add(callback, arg);
 gap> SetValue(arg, "Manuel"); # simulate the user input
+gap> Value(arg) = "Manuel";
+true
 gap> Trigger(GapToJsonString(Sanitize(callback))); # simulate the external trigger
 "Hello Manuel"
 gap> 

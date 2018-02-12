@@ -140,15 +140,18 @@ export default class TreeGraph extends Graph {
         .style('cursor', d => d.children || d._children ? 'pointer' : 'default');
 
       node = nodeGroup.selectAll('g.francy-node');
-      this._applyEvents(node);
+      
+      if (node.node()) {
+        this._applyEvents(node);
 
-      let nodeOnClick = node.on('click');
-      node.on('click', (d) => {
+        let nodeOnClick = node.on('click');
+        node.on('click', (d) => {
         // any callbacks will be handled here
-        nodeOnClick.call(this, d.data);
-        // default, highlight connected nodes
-        click.call(this, d);
-      });
+          nodeOnClick.call(this, d.data);
+          // default, highlight connected nodes
+          click.call(this, d);
+        });
+      }
 
       // Toggle children on click.
       let self = this;
