@@ -17,6 +17,8 @@ matrix:
 
 branches:
   only:
+    - master
+    - develop
     - lab_extension
 
 before_script:
@@ -25,4 +27,3 @@ script:
   - scripts/tests.sh
 after_script:
   - scripts/coverage.sh
-  - bash <(curl -s https://codecov.io/bash)

@@ -18,3 +18,5 @@ ignore:
   - "read.g"
   - "tst/*"     # ignore test harness code
   - "tst/**/*"  # ignore test harness code
+  - "test/*"     # ignore test harness code
+  - "test/**/*"  # ignore test harness code

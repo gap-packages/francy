@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -ex
 
+CURRENT=`pwd`
+
 GAP="$GAPROOT/bin/gap.sh --quitonbreak -q"
 
 # generate library coverage reports
@@ -28,3 +30,6 @@ GAPInput
 
 cd js
 ./cc-test-reporter after-build
+
+cd $CURRENT
+bash <(curl -s https://codecov.io/bash)

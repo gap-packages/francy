@@ -14,7 +14,5 @@ engines:
 
 exclude_patterns:
   - "**/test/*"
-  - "**/dist/*"
-  - "**/doc/*"
-  - "**/jupyter/*"
-  - "**/examples/*"
+  - "**/*.min.js"
+  - "**/*.bundle.js/*"
