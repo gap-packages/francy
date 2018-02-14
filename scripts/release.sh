@@ -3,4 +3,4 @@ set -ex
 
 CURRENT=`pwd`
 
-# TODO implement release process on TAG creation!
+tar -czf gap-$TRAVIS_TAG.tgz gap/
