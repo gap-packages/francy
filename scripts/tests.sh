@@ -25,7 +25,8 @@ pyenv local 3.6
 pip3.6 install jupyter
 pip3.6 install jupyterlab
 
-pip3.6 install --upgrade "ipython[all]"
+#pip3.6 install --upgrade "ipython[all]"
+export jupyter=`pyenv which jupyter`
 
 # install extension on pip
 pip3.6 install -e .
