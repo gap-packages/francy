@@ -25,19 +25,16 @@ pyenv local 3.6
 pip3.6 install jupyter
 pip3.6 install jupyterlab
 
-#pip3.6 install --upgrade "ipython[all]"
-export jupyter=`pyenv which jupyter`
-
 # install extension on pip
 pip3.6 install -e .
 
 # install extension link on jupyter notebook
-jupyter nbextension install --symlink --py --sys-prefix jupyter_francy
-jupyter nbextension enable --py --sys-prefix jupyter_francy
-jupyter nbextension list 2>&1 | grep -q jupyter_francy
+`pyenv which jupyter` nbextension install --symlink --py --sys-prefix jupyter_francy
+`pyenv which jupyter` nbextension enable --py --sys-prefix jupyter_francy
+`pyenv which jupyter` nbextension list 2>&1 | grep -q jupyter_francy
 
 # install extension link on jupyter lab
-jupyter labextension link
-jupyter labextension list 2>&1 | grep -q jupyter_francy
+`pyenv which jupyter` labextension link
+`pyenv which jupyter` labextension list 2>&1 | grep -q jupyter_francy
 
 cd $CURRENT
