@@ -19,12 +19,12 @@ npm run webpack:all
 # Test Extensions - won't produce any coverage obviously
 cd extensions/jupyter_francy
 
-pip3 install -e .
+pip3.6 install -e .
 jupyter nbextension install --symlink --py --sys-prefix jupyter_francy
 jupyter nbextension enable --py --sys-prefix jupyter_francy
 jupyter nbextension list 2>&1 | grep -q jupyter_francy
 
-pip3 install jupyterlab
+pip3.6 install jupyterlab
 jupyter labextension link
 jupyter labextension list 2>&1 | grep -q jupyter_francy
 
