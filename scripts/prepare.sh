@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
 CURRENT=`pwd`
 
@@ -73,11 +73,4 @@ npm install
 sudo apt-get update
 sudo apt-get install python3
 
-################################################################################
-#
-# Install codeclimate agent
-#
-curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-chmod +x ./cc-test-reporter
-./cc-test-reporter before-build
 cd $CURRENT
