@@ -29,12 +29,12 @@ pip3.6 install jupyterlab
 pip3.6 install -e .
 
 # install extension link on jupyter notebook
-jupyter nbextension install --symlink --py --sys-prefix jupyter_francy
-jupyter nbextension enable --py --sys-prefix jupyter_francy
-jupyter nbextension list 2>&1 | grep -q jupyter_francy
+~/.local/bin/jupyter nbextension install --symlink --py --sys-prefix jupyter_francy
+~/.local/bin/jupyter nbextension enable --py --sys-prefix jupyter_francy
+~/.local/bin/jupyter nbextension list 2>&1 | grep -q jupyter_francy
 
 # install extension link on jupyter lab
-jupyter labextension link
-jupyter labextension list 2>&1 | grep -q jupyter_francy
+~/.local/bin/jupyter labextension link
+~/.local/bin/jupyter labextension list 2>&1 | grep -q jupyter_francy
 
 cd $CURRENT
