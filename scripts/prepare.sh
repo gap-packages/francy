@@ -69,8 +69,5 @@ cd js
 npm install
 cd extensions/jupyter_francy
 npm install
-# this will be needed later
-sudo apt-get update
-sudo apt-get install python3
 
 cd $CURRENT
