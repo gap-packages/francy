@@ -21,12 +21,19 @@ cd extensions/jupyter_francy
 
 pyenv local 3.6
 
+# install jupyter
+pip3.6 install jupyter
+pip3.6 install jupyterlab
+
+# install extension on pip
 pip3.6 install -e .
+
+# install extension link on jupyter notebook
 jupyter nbextension install --symlink --py --sys-prefix jupyter_francy
 jupyter nbextension enable --py --sys-prefix jupyter_francy
 jupyter nbextension list 2>&1 | grep -q jupyter_francy
 
-pip3.6 install jupyterlab
+# install extension link on jupyter lab
 jupyter labextension link
 jupyter labextension list 2>&1 | grep -q jupyter_francy
 
