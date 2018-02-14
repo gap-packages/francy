@@ -19,6 +19,8 @@ npm run webpack:all
 # Test Extensions - won't produce any coverage obviously
 cd extensions/jupyter_francy
 
+pyenv local 3.6
+
 pip3.6 install -e .
 jupyter nbextension install --symlink --py --sys-prefix jupyter_francy
 jupyter nbextension enable --py --sys-prefix jupyter_francy
