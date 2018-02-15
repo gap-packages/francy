@@ -30,12 +30,8 @@ after_script:
   - scripts/coverage.sh
 
 deploy:
-  - provider: script
-    script: bash scripts/release.sh
-  - provider: pypi
-  - provider: releases
-    api_key: $GITHUB_API_KEY
-    file: "gap-.tgz"
-    skip_cleanup: true
+  provider: script
+  script: bash scripts/release.sh
+  skip_cleanup: true
   on:
     tags: true
