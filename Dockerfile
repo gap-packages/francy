@@ -27,11 +27,11 @@ COPY . /home/gap/francy
 USER root
 
 RUN mv /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
-RUN apt-get install -y nodejs npm
-RUN ls -l /usr/local/bin
+RUN apt-get update && apt-get install -y nodejs npm python3.6
+RUN pip3.6 install jupyter
 RUN cd /home/gap/francy/js \
   && npm install && npm run webpack:all \
   && cd extensions/jupyter_francy && npm install && npm run build:all \
-  && pip3.4 install -e . && jupyter labextension link
+  && pip3.6 install -e . && jupyter labextension link
 
 USER gap
