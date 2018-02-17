@@ -28,14 +28,14 @@ USER root
 
 RUN mv /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
 RUN apt-get update && apt-get install -y nodejs npm python3.6 python3-pip
-RUN pip3 install jupyter
+#RUN pip3 install jupyter
 # lab extension installation
 RUN cd /home/gap/francy/js \
   && npm install && npm run webpack:all \
   && cd extensions/jupyter_francy && npm install && npm run build:all \
   && pip3 install -e . && jupyter labextension link
 # notebook extension installation
-RUN jupyter nbextension install /home/gap/js/extensions/jupyter_francy/jupyter_francy/nbextension --system
+RUN jupyter nbextension install /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/nbextension --system
 RUN jupyter nbextension enable francy/extension --system
 
 RUN cd /home/gap/francy
