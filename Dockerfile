@@ -27,7 +27,7 @@ COPY . /home/gap/francy
 USER root
 
 RUN mv /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
-RUN apt-get update && apt-get install -y nodejs npm python3.6
+RUN apt-get update && apt-get install -y nodejs npm python3.6 pip3
 RUN pip3 install jupyter
 RUN cd /home/gap/francy/js \
   && npm install && npm run webpack:all \
