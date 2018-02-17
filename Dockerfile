@@ -28,9 +28,10 @@ USER root
 
 RUN mv /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
 RUN apt-get install -y nodejs npm
+RUN ls -l /usr/local/bin
 RUN cd /home/gap/francy/js \
   && npm install && npm run webpack:all \
   && cd extensions/jupyter_francy && npm install && npm run build:all \
-  && pip3.6 install -e . && jupyter labextension link
+  && pip3.4 install -e . && jupyter labextension link
 
 USER gap
