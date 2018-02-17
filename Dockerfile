@@ -27,6 +27,8 @@ COPY . /home/gap/francy
 USER root
 
 RUN mv /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
+RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - \
+  sudo apt-get install -y nodejs
 RUN cd /home/gap/francy/js \
   && npm install && npm run webpack:all \
   && cd extensions/jupyter_francy && npm install && npm run build:all \
