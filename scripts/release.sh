@@ -18,10 +18,10 @@ JSON="Content-Type: application/json"
 STREAM="Content-Type: application/octet-stream"
 
 # Validate token.
-curl -o /dev/null -sH "$AUTH" $GH_REPO || { echo "Error: Invalid repo, token or network issue!";  exit 1; }
+echo curl -o /dev/null -sH "$AUTH" $GH_REPO || { echo "Error: Invalid repo, token or network issue!";  exit 1; }
 
 # Read asset tags.
-response=$(curl -H "$AUTH" -H "$JSON" -x POST -d "$GH_RELEASE_BODY" $GH_RELEASE)
+response=$(curl -H "$AUTH" -H "$JSON" -X POST -d "$GH_RELEASE_BODY" $GH_RELEASE)
 
 # Get ID of the asset based on given filename.
 eval $(echo "$response" | grep -m 1 "id.:" | grep -w id | tr : = | tr -cd '[[:alnum:]]=')
