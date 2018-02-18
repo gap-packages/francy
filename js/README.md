@@ -4,6 +4,8 @@ This Javascript module produces graphics based on the semantic model produced by
 
 ## Usage
 
+## Browser integration
+
 Francy depends on [d3.v4](https://d3js.org/) to produce graphics.
 
 ```html

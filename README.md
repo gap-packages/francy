@@ -8,10 +8,10 @@
 
 ## Develop
 
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/lab_extension)
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/lab_extension?urlpath=lab)
-[![Build Status](https://travis-ci.org/mcmartins/francy.svg?branch=lab_extension)](https://travis-ci.org/mcmartins/francy)
-[![Test Coverage Status](https://codecov.io/gh/mcmartins/francy/branch/lab_extension/graph/badge.svg)](https://codecov.io/gh/mcmartins/francy)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/develop)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/develop?urlpath=lab)
+[![Build Status](https://travis-ci.org/mcmartins/francy.svg?branch=develop)](https://travis-ci.org/mcmartins/francy)
+[![Test Coverage Status](https://codecov.io/gh/mcmartins/francy/branch/develop/graph/badge.svg)](https://codecov.io/gh/mcmartins/francy)
 [![JS Maintainability](https://api.codeclimate.com/v1/badges/db52d89d90ab0d7e6fd4/maintainability)](https://codeclimate.com/github/mcmartins/francy/maintainability)
 
 Francy is a framework for Interactive Discrete Mathematics package for GAP.
@@ -22,6 +22,12 @@ this package is responsible for the generating a semantic model that can be used
 See [Graphics Semantics package for GAP](/gap)
 
 As an example, there is javascript implementation of the graphical representation that works in Jupyter, embeded in a Web page or as a Desktop Application (e.g. using electron).
+
+See [Graphics Interface using Javascritp and D3.v4](/js)
+
+# Jupyter Integration
+
+See [GAP Kernel](https://github.com/gap-packages/JupyterKernel)
 
 See [Graphics Interface using Javascritp and D3.v4](/js)
 
