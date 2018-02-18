@@ -1,0 +1,121 @@
+{
+  "version": "0.5.0",
+  "mime": "application/vnd.francy+json",
+  "canvas": {
+    "width": "800",
+    "height": "600",
+    "id": "A29",
+    "title": "Sons of a numerical semigroup",
+    "zoomToFit": true,
+    "menus": {},
+    "graph": {
+      "type": "hasse",
+      "collapse": true,
+      "id": "A30",
+      "simulation": true,
+      "drag": false,
+      "nodes": {
+        "A31": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "A31",
+          "title": "S",
+          "layer": 3,
+          "highlight": true,
+          "menus": {},
+          "messages": {
+            "A32": {
+              "type": "default",
+              "id": "A32",
+              "text": "[ 3, 5, 7 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {},
+          "parent": ""
+        },
+        "A33": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "A33",
+          "title": "S:1",
+          "layer": 4,
+          "highlight": true,
+          "menus": {},
+          "messages": {
+            "A35": {
+              "type": "default",
+              "id": "A35",
+              "text": "[ 3, 7, 8 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "A34": {
+              "func": "unknown",
+              "id": "A34",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>",
+                "S:1"
+              ],
+              "requiredArgs": {}
+            }
+          },
+          "parent": ""
+        },
+        "A37": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "A37",
+          "title": "S:2",
+          "layer": 4,
+          "highlight": true,
+          "menus": {},
+          "messages": {
+            "A39": {
+              "type": "default",
+              "id": "A39",
+              "text": "[ 3, 5 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "A38": {
+              "func": "unknown",
+              "id": "A38",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>",
+                "S:2"
+              ],
+              "requiredArgs": {}
+            }
+          },
+          "parent": ""
+        }
+      },
+      "links": {
+        "A36": {
+          "source": "A31",
+          "id": "A36",
+          "target": "A33"
+        },
+        "A40": {
+          "source": "A31",
+          "id": "A40",
+          "target": "A37"
+        }
+      }
+    },
+    "messages": {}
+  }
+}

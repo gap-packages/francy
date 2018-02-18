@@ -4,59 +4,80 @@
 ##
 #Y  Copyright (C) 2017 Manuel Martins
 ##
+#! @Chapter Francy Menus
+#! Menus are agregators of actions that are represented here by <C>Callbacks</C>.
+#! Menus can have SubMenus, and are constituted by a Title and a Callback.
+#! <P/>
+#! Please see Francy-JS for client implementation.
+
 
 #############################################################################
 ##
-## Categories
-##
+#! @Section Categories
+#! In this section we show the Francy Menu Categories.
 
-#############################################################################
-##
-#C  IsMenu( <obj> ) . . . . . . . . . . . category of menus
-##
+#! @Description
+#! Identifies <C>Menu</C> objects.
 DeclareCategory("IsMenu", IsFrancyObject);
 
 
 #############################################################################
 ##
-## Families
-##
+#! @Section Families
+#! In this section we show the Francy Menu Families.
 
-#############################################################################
-##
-#V  MenuFamily
-##
+#! @Description
+#! This Family identifies all <C>Menu</C> objects
+#! @Returns <C>MenuFamily</C>
 BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
 
 
 #############################################################################
 ##
-## Representations
-##
+#! @Section Representations
+#! In this section we show the Francy Menu Representations.
+
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>Menu</C> internal representation.
+DeclareRepresentation("IsMenuRep", IsComponentObjectRep, [], IsMenu);
+
+#! @Description
+#! Creates a new type for <C>Menu/C> objects.
+BindGlobal("MenuObjectType", NewType(MenuFamily, IsMenu and IsMenuRep));
+
 
 #############################################################################
 ##
-#R  IsMenuRep  . . . . . . . . . . . . . . . . . . .  default representation
-##
-DeclareRepresentation("IsMenuRep",
-  IsComponentObjectRep and IsAttributeStoringRep, ["model"], IsMenu);
+#! @Section Operations
+#! In this section we show the Francy Menu Operations.
+
+#! @Description
+#! Creates a Menu for a <C>Callback</C>
+#! Is up to the client implementation to sort out the Menu and invoke the <C>Callback</C>
+#! @Arguments IsString(title), [IsCallback]
+#! @Returns <C>Menu</C>
+DeclareOperation("Menu", [IsString, IsCallback]);
+
+#! @Description
+#! Add <C>Menu</C> to a specific <C>Menu</C> creating a Submenu.
+#! Is up to the client implementation to handle this.
+#! @Arguments IsMenu, [IsMenu, List(IsMenu)]
+#! @Returns <C>Menu</C>
+DeclareOperation("Add", [IsMenu, IsMenu]);
+
+#! @Description
+#! Remove <C>Menu</C> from a specific <C>Menu</C>.
+#! The client should be able to handle this.
+#! @Arguments IsMenu, [IsMenu, List(IsMenu)]
+#! @Returns <C>Menu</C>
+DeclareOperation("Remove", [IsMenu, IsMenu]);
 
 
 #############################################################################
 ##
-## Operations
-##
+#! @Section Attributes
+#! In this section we show the Francy Core Attributes
 
-#############################################################################
-##
-#O  Menu( <title>, <object> )
-##
-##
-DeclareOperation("Menu", [IsString, IsCallbackFunction]);
-
-#############################################################################
-##
-#O  Callback( <function> )
-##
-##
-DeclareOperation("Callback", [IsCanvas, IsInt, IsList]);
+DeclareAttribute("Title", IsMenu);
+InstallMethod(Title, "menu", [IsMenu], o -> o!.title);
+InstallMethod(SetTitle, "menu, string", [IsMenu, IsString], function(o, s) o!.title := s; end);

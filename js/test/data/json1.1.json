@@ -1,0 +1,176 @@
+{
+  "mime": "application/vnd.francy+json",
+  "canvas": {
+    "width": "800",
+    "height": "600",
+    "id": "A197731FA6674899EC0A97DF399ED5BC",
+    "title": "Quaternion Group Subgroup Lattice",
+    "menus": {},
+    "zoomToFit": true,
+    "messages": {
+      "A1": {
+        "type": "info",
+        "title": "title1",
+        "text": "Valor1"
+      },
+      "A2": {
+        "type": "info",
+        "title": "title2",
+        "text": "Valor2"
+      },
+      "A4": {
+        "type": "success",
+        "title": "title4",
+        "text": "Valor4"
+      }
+    },
+    "graph": {
+      "type": "custom",
+      "id": "585C13EF00EC4E71DCCF4C7246C86807",
+      "simulation": true,
+      "drag": true,
+      "nodes": {
+        "85A237CE30554A1FF46170E35B1B80BD": {
+          "x": 0,
+          "y": 0,
+          "type": "text",
+          "size": 10,
+          "id": "85A237CE30554A1FF46170E35B1B80BD",
+          "title": "G",
+          "layer": 0,
+          "menus": {},
+          "highlight": true
+        },
+        "F827B91B58E84D8B1C8AF64FAE72BCC9": {
+          "x": 0,
+          "y": 0,
+          "type": "wye",
+          "size": 10,
+          "id": "F827B91B58E84D8B1C8AF64FAE72BCC9",
+          "title": "1",
+          "layer": 3,
+          "menus": {},
+          "highlight": true
+        },
+        "1FA9D518A51B4422D4BCFDD58129403D": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "1FA9D518A51B4422D4BCFDD58129403D",
+          "title": "SG1",
+          "layer": 1,
+          "menus": {},
+          "highlight": true
+        },
+        "5C86291270454B2204CE851D9700D815": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "5C86291270454B2204CE851D9700D815",
+          "title": "SG2",
+          "layer": 2,
+          "menus": {},
+          "info": {
+            "Something": "nice",
+            "Another Something": "nice"
+          },
+          "callbacks": {
+            "9A4E435F8A234BBD34DD34C838182A5C": {
+              "type": "server",
+              "id": "9A4E435F8A234BBD34DD34C838182A5C",
+              "trigger": "dblclick",
+              "knownArgs": [],
+              "requiredArgs": {
+                "8F794C1FA828467404CA41218DCFC68D": {
+                  "type": "number",
+                  "id": "8F794C1FA828467404CA41218DCFC68D",
+                  "title": "How many Circles?",
+                  "value": ""
+                }
+              }
+            }
+          },
+          "highlight": true
+        },
+        "A097FBE57B75448F7411A2D059F57F96": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "A097FBE57B75448F7411A2D059F57F96",
+          "title": "SG3",
+          "layer": 2,
+          "menus": {},
+          "highlight": true
+        },
+        "B7AB8F184B4445538CF142F0306DBEB1": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "B7AB8F184B4445538CF142F0306DBEB1",
+          "title": "SG4",
+          "layer": 2,
+          "menus": {},
+          "highlight": true
+        },
+        "B7AB8F184B4445538CF142F0306DBEB11": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 10,
+          "id": "B7AB8F184B4445538CF142F0306DBEB11",
+          "title": "SG4",
+          "layer": 2,
+          "menus": {},
+          "highlight": true
+        }
+      },
+      "links": {
+        "4B5B4F8B7FFF40EB1CCB52D91AE1A625": {
+          "source": "85A237CE30554A1FF46170E35B1B80BD",
+          "id": "4B5B4F8B7FFF40EB1CCB52D91AE1A625",
+          "target": "1FA9D518A51B4422D4BCFDD58129403D"
+        },
+        "CF7A947230684DF1ACD7F5C1030A5179": {
+          "source": "1FA9D518A51B4422D4BCFDD58129403D",
+          "id": "CF7A947230684DF1ACD7F5C1030A5179",
+          "target": "5C86291270454B2204CE851D9700D815"
+        },
+        "3B872359ED7C47E8DC89F84643911735": {
+          "source": "5C86291270454B2204CE851D9700D815",
+          "id": "3B872359ED7C47E8DC89F84643911735",
+          "target": "F827B91B58E84D8B1C8AF64FAE72BCC9"
+        },
+        "AC9B1FCA063B4B6634DB9D8DD19DB6CE": {
+          "source": "1FA9D518A51B4422D4BCFDD58129403D",
+          "id": "AC9B1FCA063B4B6634DB9D8DD19DB6CE",
+          "target": "A097FBE57B75448F7411A2D059F57F96"
+        },
+        "F56ECE9B1067405C8C71CE7F402A0087": {
+          "source": "A097FBE57B75448F7411A2D059F57F96",
+          "id": "F56ECE9B1067405C8C71CE7F402A0087",
+          "target": "F827B91B58E84D8B1C8AF64FAE72BCC9"
+        },
+        "6E0B4C4D860245AA045E144DCD838345": {
+          "source": "1FA9D518A51B4422D4BCFDD58129403D",
+          "id": "6E0B4C4D860245AA045E144DCD838345",
+          "target": "B7AB8F184B4445538CF142F0306DBEB1"
+        },
+        "2EE9B76F2B0246D8746CD9F9BA69E208": {
+          "source": "B7AB8F184B4445538CF142F0306DBEB1",
+          "id": "2EE9B76F2B0246D8746CD9F9BA69E208",
+          "target": "F827B91B58E84D8B1C8AF64FAE72BCC9"
+        }
+        ,
+        "2EE9B76F2B0246D8746CD9F9BA69E20811": {
+          "source": "B7AB8F184B4445538CF142F0306DBEB11",
+          "id": "2EE9B76F2B0246D8746CD9F9BA69E20811",
+          "target": "F827B91B58E84D8B1C8AF64FAE72BCC9"
+        }
+      }
+    }
+  }
+}

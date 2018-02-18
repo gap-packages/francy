@@ -1,0 +1,36 @@
+dist: trusty
+sudo: required
+language: c
+env:
+  global:
+    - GAPROOT=gaproot
+    - COVDIR=coverage
+
+addons:
+  apt_packages:
+    - nodejs
+    - npm
+
+matrix:
+  include:
+    - env: CFLAGS="-O2"
+      compiler: gcc
+
+branches:
+  only:
+    - master
+    - develop
+
+before_script:
+  - scripts/prepare.sh
+script:
+  - scripts/tests.sh
+after_script:
+  - scripts/coverage.sh
+
+deploy:
+  provider: script
+  script: bash scripts/release.sh
+  skip_cleanup: true
+  on:
+    tags: true

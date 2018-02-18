@@ -1,64 +1,71 @@
-import JsonUtils from "./util/json-utils";
-import Draw from "./handler/draw";
-import Plot from "./handler/plot";
+import Frame from './render/frame';
+import Renderer from './render/renderer';
+import { requires } from './util/data-decorator';
+
+/* global d3 */
+
+let ALL_CANVAS = {};
 
 /**
- * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.handle} function,
+ * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.load} function,
  * Francy will handle the creation of that json as long it is a valid and understandable json object to Francy.
+ *  
+ * @access public
+ * 
+ * @version 0.5.0
+ * 
+ * @example
+ * let francy = new Francy({verbose: true, appendTo: '#div-id', callbackHandler: console.log});
+ * francy.load(json).render();
  */
-export class Francy {
+export default class Francy extends Renderer {
 
   /**
    * Creates an instance of Francy with the following options:
-   * @param verbose prints extra log information to console.log, default false
-   * @param appendTo where the generated html/svg components will be attached to, default body
-   * @param menuActionHandler this handler will be used to invoke actions from the menu, default console.log
-   * @param changeTrackerHandler this handler will be used to report any changes detected by the ChangeTracker, default console.log
+   * @typedef {Object} Options
+   * @property {Boolean} verbose prints extra log information to console.log, default false
+   * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
+   * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
-  constructor({verbose = false, appendTo = 'body', menuActionHandler = console.log, changeTrackerHandler = console.log} = {}) {
-    this.options = {
-      verbose: verbose,
-      appendTo: appendTo,
-      changeTrackerHandler: changeTrackerHandler,
-      menuActionHandler: menuActionHandler
-    };
-    if (!jQuery) {
-      throw new Error('JQuery is not imported! Francy won\'t work without it... please import JQuery v3.1.1+.');
-    }
-    if (!jQuery.ui) {
-      throw new Error('JQueryUI is not imported! Francy won\'t work without it... please import JQueryUI v1.12.1+.');
-    }
-    if (typeof _ !== 'function') {
-      throw new Error('UnderscoreJS is not imported! Francy won\'t work without it... please import UnderscoreJS v1.8.3+.');
-    }
+  constructor({ verbose = false, appendTo, callbackHandler }) {
+    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
     if (!d3) {
       throw new Error('D3 is not imported! Francy won\'t work without it... please import D3 v4+.');
     }
-    this.draw = new Draw(this.options);
-    this.plot = new Plot(this.options);
   }
 
   /**
-   * Main entry point. Calling handle passing a json representation string will trigger the drawing of a json object.
-   * @param input - a json string/object to get drawn
+   * Main entry point. Calling render passing a json representation string will 
+   * trigger the drawing of a json object.
+   * @returns {Object} the html element created
    */
-  handle(input) {
-    let json = JsonUtils.parse(input);
-    if (json) {
-      console.info(`Francy will [${json.agent.method}] the following object: `, json);
-      switch (json.agent.method) {
-        case 'draw':
-          return this.draw.handle(json);
-          break;
-        case 'plot':
-          return this.plot.handle(json);
-          break;
-        default:
-          throw new Error(`[${json.agent.method}] is not a valid method for Francy! Valid methods are: [draw, plot].`);
-          break;
-      }
-    }
+  @requires('canvas')
+  render() {
+    let frame = new Frame(this.options).load(this.data).render();
+    ALL_CANVAS[this.data.canvas.id] = frame;
+    return frame.element.node();
+  }
+
+  static unrender(id) {
+    delete ALL_CANVAS[id];
   }
 }
 
-exports.Francy = window.Francy = Francy;
+try {
+  exports.Francy = window.Francy = Francy;
+  // handle events on resize
+  let oldResize = window.onresize;
+  window.onresize = function() {
+    // zoom to fit all canvas on resize
+    Object.values(ALL_CANVAS).forEach(function(frame) {
+      frame.canvas.zoomToFit();
+    });
+    // call old resize function if any!
+    if (typeof oldResize === 'function') {
+      oldResize();
+    }
+  };
+}
+catch (e) {
+  exports.Francy = Francy;
+}

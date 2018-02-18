@@ -1,0 +1,96 @@
+<html>
+
+<head>
+  <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v4">
+  <link rel="stylesheet" type="text/css" href="../../extensions/browser/index.css">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="../../extensions/browser/francy.bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG,Safe"></script>
+  <title>Francy</title>
+</head>
+
+<body>
+  <div id="francy"></div>
+  <script>
+    /* global d3 Francy */
+
+    function trigger(json) {
+      console.log(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
+    }
+
+    let settings = { verbose: true, appendTo: 'body', callbackHandler: trigger };
+    const francy = new Francy(settings);
+
+    d3.json("json1.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementById('francy').append(element);
+      setInterval(function() {
+        d3.json("json1.1.json", function(error, json) {
+          francy.load(json).render();
+        });
+      }, 10000);
+    });
+
+    d3.json("json2.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementById('francy').append(element);
+      setInterval(function() {
+        d3.json("json2.1.json", function(error, json) {
+          francy.load(json).render();
+        });
+      }, 5000);
+    });
+
+    d3.json("json3.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementById('francy').append(element);
+    });
+
+    d3.json("json4.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementById('francy').append(element);
+    });
+
+    d3.json("json5.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementById('francy').append(element);
+    });
+
+    d3.json("json6.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementById('francy').append(element);
+    });
+
+    d3.json("json7.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementById('francy').append(element);
+    });
+
+    d3.json("json8.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementById('francy').append(element);
+    });
+
+    d3.json("json9.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementById('francy').append(element);
+    });
+
+    d3.json("json10.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementById('francy').append(element);
+    });
+
+    d3.json("json11.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementById('francy').append(element);
+      setInterval(function() {
+        d3.json("json11.1.json", function(error, json) {
+          francy.load(json).render();
+        });
+      }, 10000);
+    });
+  </script>
+</body>
+
+</html>

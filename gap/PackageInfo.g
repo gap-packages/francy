@@ -3,12 +3,12 @@
 ##  PackageInfo.g for the GAP package FRANCY
 ##
 
-SetPackageInfo( rec(
+SetPackageInfo(rec(
 
   PackageName := "Francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
-  Version     := "0.2.0",
-  Date        := "25/10/2017",
+  Version     := "0.5.0",
+  Date        := "25/01/2018",
 
   Persons := [
     rec(
@@ -52,7 +52,7 @@ SetPackageInfo( rec(
   PackageDoc := rec(
     BookName         := "Francy",
     ArchiveURLSubset := ["htm","doc"],
-    HTMLStart        := "htm/chapters.htm",
+    HTMLStart        := "doc/chapters.htm",
     PDFFile          := "doc/manual.pdf",
     SixFile          := "doc/manual.six",
     LongTitle        := "FRANCY - A Framework for Interactive Discrete Mathematics"
@@ -61,8 +61,7 @@ SetPackageInfo( rec(
   Dependencies := rec(
     GAP                    := ">=4.7",
     NeededOtherPackages    := [["GAPDoc", ">= 1.5"],
-                              ["json", ">= 1.0.1"],
-                              ["uuid", ">= 0.4"]],
+                              ["json", ">= 1.1.0"]],
     SuggestedOtherPackages := [],
     ExternalConditions     := []
   ),
@@ -71,6 +70,6 @@ SetPackageInfo( rec(
 
   TestFile := "tst/testall.g",
 
-  Keywords := ["Interactive", "Graphics", "Plot"]
+  Keywords := ["Interactive", "Graphics", "Charts", "Graphs"]
 
 ));

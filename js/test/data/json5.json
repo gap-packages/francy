@@ -1,0 +1,74 @@
+{
+  "mime": "application/vnd.francy+json",
+  "canvas": {
+    "width": "800",
+    "height": "600",
+    "id": "BADFB1FBB15143125C5771BF1E49AAAC",
+    "title": "Add circles on demand and a bigger title just because",
+    "menus": {
+      "366688A254054F9AFC43A6EA5008CAD2": {
+        "id": "366688A254054F9AFC43A6EA5008CAD2",
+        "title": "Add Circle",
+        "callback": {
+          "type": "server",
+          "id": "9A4E435F8A234BBD34DD34C838182A5C",
+          "trigger": "click",
+          "knownArgs": [],
+          "requiredArgs": {
+            "8F794C1FA828467404CA41218DCFC68D": {
+              "type": "number",
+              "id": "8F794C1FA828467404CA41218DCFC68D",
+              "title": "How many Circles?",
+              "value": ""
+            },
+            "8F794C1FA828467404CA41218DCFC68E": {
+              "type": "checkbox",
+              "id": "8F794C1FA828467404CA41218DCFC68E",
+              "title": "How many Circles?",
+              "value": ""
+            }
+          }
+        },
+        "menus": {}
+      },
+      "682E684B60AC4F4CCCEED7EAB57AE7DA": {
+        "id": "682E684B60AC4F4CCCEED7EAB57AE7DA",
+        "title": "Add Square",
+        "callback": {
+          "type": "server",
+          "id": "12AC5E185BB641038431E4B4C3456293",
+          "trigger": "click",
+          "knownArgs": [],
+          "requiredArgs": {
+            "4509A7188928455C64B962BCBF295BF1": {
+              "type": "number",
+              "id": "4509A7188928455C64B962BCBF295BF1",
+              "title": "How many Squares?",
+              "value": ""
+            }
+          }
+        },
+        "menus": {}
+      },
+      "8C1F96C773474A8154A4C46BB113E35E": {
+        "id": "8C1F96C773474A8154A4C46BB113E35E",
+        "title": "Clear",
+        "callback": {
+          "type": "server",
+          "id": "E3F02797F57E4022DCE98F0FCF04CBA8",
+          "trigger": "click",
+          "knownArgs": [],
+          "requiredArgs": {}
+        },
+        "menus": {}
+      }
+    },
+    "graph": {
+      "type": "hasse",
+      "id": "BC3E1C907D124ABCB4D37AFC978D49C0",
+      "simulation": true,
+      "nodes": {},
+      "links": {}
+    }
+  }
+}
