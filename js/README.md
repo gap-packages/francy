@@ -30,10 +30,8 @@ Francy depends on [d3.v4](https://d3js.org/) to produce graphics.
 
 ## Jupyter integration
 
-In order to use this module in Jupyter, it can be installed as a notebook extension:
+In order to use this module in Jupyter, it can be installed as a notebook extension and lab extension:
 
 ```bash
-mcmartins@local:~$ git clone https://github.com/mcmartins/francy.git
-mcmartins@local:~$ npm install
-mcmartins@local:~$ npm run jupyter
+mcmartins@local:~$ pip install jupyter_francy
 ```
