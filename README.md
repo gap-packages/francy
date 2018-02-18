@@ -27,6 +27,14 @@ See [Graphics Interface using Javascritp and D3.v4](/js)
 
 # Jupyter Integration
 
+[![PyPI version](https://badge.fury.io/py/jupyter-francy.svg)](https://badge.fury.io/py/jupyter-francy)
+
+In order to use this module in Jupyter, it can be installed as a notebook extension and lab extension:
+
+```bash
+mcmartins@local:~$ pip install jupyter_francy
+```
+
 See [GAP Kernel](https://github.com/gap-packages/JupyterKernel)
 
 See [Graphics Interface using Javascritp and D3.v4](/js)
