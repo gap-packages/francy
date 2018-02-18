@@ -20,6 +20,7 @@ branches:
   only:
     - master
     - develop
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
 before_script:
   - scripts/prepare.sh
