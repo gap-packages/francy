@@ -10,9 +10,9 @@ Francy depends on [d3.v4](https://d3js.org/) to produce graphics.
 <html>
 <header>
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v4">
-  <link rel="stylesheet" type="text/css" href="../dist/francy/css/style.css">
-  <script src="../dist/francy/lib/d3.v4.min.js"></script>
-  <script src="../dist/francy/browser/francy.bundle.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/mcmartins/francy/develop/js/extensions/browser/index.css">
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="https://cdn.rawgit.com/mcmartins/francy/develop/js/extensions/browser/francy.bundle.js"></script>
 </header>
 <body>
 <script>
