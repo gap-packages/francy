@@ -9,22 +9,22 @@ export default class Menu extends Renderer {
 
   traverse(appendTo, menusIterator) {
     while (menusIterator.hasNext()) {
-      var menuItem = menusIterator.next();
-      var entry = appendTo.append('li');
-      var action = entry.selectAll('a').data([menuItem]).enter().append('a').attr('title', menuItem.title).html(menuItem.title);
+      let menuItem = menusIterator.next();
+      let entry = appendTo.append('li');
+      let action = entry.selectAll('a').data([menuItem]).enter().append('a').attr('title', menuItem.title).html(menuItem.title);
       if (menuItem.callback && Object.values(menuItem.callback).length) {
         action.on('click', (d) => new Callback(this.options).load(d, true).execute());
       }
       if (menuItem.menus && Object.values(menuItem.menus).length > 0) {
-        var content = entry.append('ul');
-        var subMenusIterator = this.iterator(Object.values(menuItem.menus));
+        let content = entry.append('ul');
+        let subMenusIterator = this.iterator(Object.values(menuItem.menus));
         this.traverse(content, subMenusIterator);
       }
     }
   }
 
   iterator(array) {
-    var nextIndex = 0;
+    let nextIndex = 0;
     return {
       next: function() {
         return this.hasNext() ? array[nextIndex++] : undefined;

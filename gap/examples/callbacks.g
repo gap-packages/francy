@@ -4,6 +4,7 @@
 
 MyFunction := function() return "Hello World!"; end;
 callback := Callback(MyFunction);
+Id(callback);
 
 #! @EndExample
 #! @EndChunk
@@ -48,7 +49,7 @@ Add(callback, arg);
 
 MyFunction := function(a,b) return Concatenation(a, b); end;
 
-callback := Callback(TriggerEvent.DOUBLE_CLICK, MyFunction, ["Hello "]);
+callback := Callback(TriggerType.DOUBLE_CLICK, MyFunction, ["Hello "]);
 arg := RequiredArg(ArgType.STRING, "Your Name");
 Add(callback, arg);
 
@@ -59,8 +60,41 @@ Add(callback, arg);
 #! @BeginChunk Example_Create_Callback_6
 #! @BeginExample
 
-arg!.value := "Manuel"; # simulate the user input
-Trigger(GapToJsonString(Clone(callback))); # simulate the external trigger
+MyFunction := function(a,b) return Concatenation(a, b); end;
+
+callback := Callback(TriggerType.DOUBLE_CLICK, MyFunction, ["Hello "]);
+arg := RequiredArg(ArgType.STRING, "Your Name");
+SetTitle(arg, "Enter your name");
+Title(arg);
+Add(callback, arg);
+SetValue(arg, "Manuel"); # simulate the user input
+Value(arg);
+Trigger(GapToJsonString(Sanitize(callback))); # simulate the external trigger
+
+#! @EndExample
+#! @EndChunk
+
+#################################################
+#! @BeginChunk Example_Create_Callback_7
+#! @BeginExample
+
+callback := NoopCallback();
+
+#! @EndExample
+#! @EndChunk
+
+#################################################
+#! @BeginChunk Example_Create_Callback_8
+#! @BeginExample
+
+MyFunction := function(str) return Concatenation("Hello", " ", str); end;
+callback := Callback(MyFunction);
+arg1 := RequiredArg(ArgType.STRING, "Your Name");
+arg2 := RequiredArg(ArgType.STRING, "Your Age");
+Add(callback, [arg1, arg2]);
+Remove(callback, arg1);
+Add(callback, arg1);
+Remove(callback, [arg2]);
 
 #! @EndExample
 #! @EndChunk

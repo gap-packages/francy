@@ -2,7 +2,7 @@ import Composite from './composite';
 import Canvas from './canvas';
 import MainMenu from './menu-main';
 import Message from './message';
-import { requires } from '../decorator/data';
+import { requires } from '../util/data-decorator';
 
 /* global d3 */
 
@@ -18,9 +18,9 @@ export default class Frame extends Composite {
 
   @requires('canvas')
   render() {
-    var parent = d3.select(this.options.appendTo);
+    let parent = d3.select(this.options.appendTo);
 
-    var frameId = `Frame-${this.data.canvas.id}`;
+    const frameId = `Frame-${this.data.canvas.id}`;
     this.element = d3.select(`div#${frameId}`);
     // check if the canvas is already present
     if (!this.element.node()) {

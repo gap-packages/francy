@@ -1,10 +1,7 @@
 import Renderer from './renderer';
-import TreeGraph from './graph-tree';
-import GenericGraph from './graph-generic';
 import ContextMenu from './menu-context';
 import Tooltip from './tooltip';
 import Callback from './callback';
-import { requires } from '../decorator/data';
 
 /* global d3 */
 
@@ -13,30 +10,17 @@ export default class Graph extends Renderer {
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
-
-  @requires('canvas.graph')
-  render() {
-
-    var element = undefined;
-    switch (this.data.canvas.graph.type) {
-      case 'tree':
-        element = new TreeGraph(this.options).load(this.data).render();
-        break;
-      default:
-        element = new GenericGraph(this.options).load(this.data).render();
-    }
-
-    return element;
+  
+  _initialize() {
+    this.element = this.parent.select('g.francy-content');
   }
 
-  unrender() {}
-
-  static applyEvents(element, options) {
+  _applyEvents(element) {
     if (!element) return;
 
-    var tooltip = new Tooltip(options);
-    var contextMenu = new ContextMenu(options);
-    var callback = new Callback(options);
+    let tooltip = new Tooltip(this.options);
+    let contextMenu = new ContextMenu(this.options);
+    let callback = new Callback(this.options);
 
     element
       .on('contextmenu', function(d) {
@@ -81,30 +65,33 @@ export default class Graph extends Renderer {
   }
 
   static getSymbol(type) {
-    if (type === 'circle') {
-      return d3.symbolCircle;
+    
+    let element = undefined;
+    switch (type) {
+    case 'cross':
+      element = d3.symbolCross;
+      break;
+    case 'diamond':
+      element = d3.symbolDiamond;
+      break;
+    case 'square':
+      element = d3.symbolSquare;
+      break;
+    case 'triangle':
+      element = d3.symbolTriangle;
+      break;
+    case 'star':
+      element = d3.symbolStar;
+      break;
+    case 'wye':
+      element = d3.symbolWye;
+      break;
+    case 'circle':
+    default:
+      element = d3.symbolCircle;
     }
-    else if (type === 'cross') {
-      return d3.symbolCross;
-    }
-    else if (type === 'diamond') {
-      return d3.symbolDiamond;
-    }
-    else if (type === 'square') {
-      return d3.symbolSquare;
-    }
-    else if (type === 'triangle') {
-      return d3.symbolTriangle;
-    }
-    else if (type === 'star') {
-      return d3.symbolStar;
-    }
-    else if (type === 'wye') {
-      return d3.symbolWye;
-    }
-    else {
-      return d3.symbolCircle;
-    }
+
+    return element;
   }
 
 }

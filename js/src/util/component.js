@@ -1,4 +1,4 @@
-import Logger from '../util/logger';
+import Logger from './logger';
 
 /* global Jupyter, MathJax, d3 */
 
@@ -7,20 +7,18 @@ export function RegisterMathJax(element) {
   setTimeout(() => {
     try {
       MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/SVG"],
         tex2jax: {
+          jax: ['input/TeX', 'output/SVG'],
           inlineMath: [
             ['$', '$'],
-            ["\\(", "\\)"]
+            ['\\(', '\\)']
           ],
           displayMath: [
             ['$$', '$$'],
-            ["\\[", "\\]"]
+            ['\\[', '\\]']
           ],
           processEscapes: true
-        },
-        skipStartupTypeset: true
+        }
       });
 
       MathJax.Hub.Register.StartupHook('End', function() {
@@ -42,12 +40,12 @@ export function RegisterMathJax(element) {
         }, 250);
       });
 
-      MathJax.Hub.Queue(["setRenderer", MathJax.Hub, "SVG"], ['Typeset', MathJax.Hub, element.node()]);
+      MathJax.Hub.Queue(['Typeset', MathJax.Hub, element.node()]);
 
       MathJax.Hub.Configured();
     }
     catch (e) {
-      if (e.name == 'ReferenceError') {
+      if (e.name === 'ReferenceError') {
         new Logger().info('It seems MathJax is not loaded...', e);
       }
     }
@@ -64,7 +62,7 @@ export function RegisterJupyterKeyboardEvents(classes) {
     });
   }
   catch (e) {
-    if (e.name == 'ReferenceError') {
+    if (e.name === 'ReferenceError') {
       new Logger().info('It seems we\'re not running on Jupyter...', e);
     }
   }

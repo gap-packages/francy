@@ -20,7 +20,7 @@ end);
 
 #############################################################################
 ##
-#M  ViewString( <obj> )  . . . . . . . . . . . . .  override for IsFrancyObjects
+#M  ViewString( <obj> )  . . . . . . . . . . . . override for IsFrancyObjects
 ##
 InstallMethod(ViewString,
   "a francy object",
@@ -35,17 +35,13 @@ end);
 
 #############################################################################
 ##
-#M  JUPYTER_ViewString( <obj> )  . . . . . . . . . . . . .  override for IsFrancyObjects
+#M  JUPYTER_ViewString( <obj> )  . . . . . . . . override for IsFrancyObjects
 ##
 InstallMethod(JUPYTER_ViewString,
   "a francy object",
   [IsFrancyObject],
-  function(object)
-    return rec( json := true, 
-      source := "gap", 
-      data := rec(("text/html") := ViewString(object)), 
-      metadata := rec( ) );
-end);
+  ViewString
+);
 
 
 #############################################################################
@@ -56,7 +52,8 @@ end);
 ## components and converting when appropriate.
 ##
 ## This method removes components of type IsFunction, as they can't be
-## converted to JSON string.
+## converted to JSON string, converts lists of objects into lists of strings
+## and everything else that is not a FrancyObject and therefore unknown!
 ##
 InstallMethod(Sanitize,
   "an object",
@@ -102,7 +99,7 @@ end);
 ##
 #M  Sanitize( <obj> )  . . . . . . . . simple properties clone for Records
 ##
-## This method will clone a FrancyObject into the given record
+## This method will return a sanitized list from another list
 ##
 InstallOtherMethod(Sanitize,
   "a list, another list",
@@ -114,7 +111,9 @@ function(list, result)
   local item;
   for item in list do
     # well, everything that is important for the client is in records
-    # everything inside arrays we just convert to string
+    # everything inside arrays we just convert to string...
+    # ...if you wonder, these are most likely known arguments that are stored
+    # in order to execute callbacks, so the client does nothing with them
     Add(result, String(item));
   od;
   return result;
@@ -139,7 +138,7 @@ end);
 
 #############################################################################
 ##
-#O  GenerateID( )
+#O  GenerateID( ) . . . . . . . . . . . Generates sequential ids for objects
 ##
 InstallMethod(GenerateID,
   "",

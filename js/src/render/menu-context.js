@@ -1,5 +1,5 @@
 import Menu from './menu';
-import { requires } from '../decorator/data';
+import { requires } from '../util/data-decorator';
 
 /* global d3 */
 
@@ -21,7 +21,7 @@ export default class ContextMenu extends Menu {
         .attr('class', 'francy-context-menu-holder');
     }
 
-    var pos = d3.mouse(this.SVGParent.node());
+    let pos = d3.mouse(this.SVGParent.node());
 
     this.element.style('left', pos[0] + 5 + 'px').style('top', pos[1] + 5 + 'px');
 
@@ -37,8 +37,8 @@ export default class ContextMenu extends Menu {
     d3.select('body').on('click.francy-context-menu', () => this.unrender());
 
     // this gets executed when a contextmenu event occurs
-    var menu = this.element.append('div').attr('class', 'francy-context-menu').append('ul');
-    var menusIterator = this.iterator(Object.values(this.data.menus));
+    let menu = this.element.append('div').attr('class', 'francy-context-menu').append('ul');
+    let menusIterator = this.iterator(Object.values(this.data.menus));
     this.traverse(menu, menusIterator);
 
     return this;

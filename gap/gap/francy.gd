@@ -74,7 +74,10 @@ BindGlobal("FrancyMIMEType", "application/vnd.francy+json");
 #! All Objects created in Francy have a generated identifier.
 #! @Returns <C>IsString</C> with the id of the object
 DeclareAttribute("Id", IsFrancyObject);
-InstallMethod( Id, "francyObject", [IsFrancyObject], o -> o!.id);
+#! @Description
+#! Prints the object unique identifier.
+#! @Returns <C>IsString</C> with the id of the object
+InstallMethod(Id, "francyObject", [IsFrancyObject], o -> o!.id);
 
 #! @Description
 #! Use with care! Changing the unique ID might be useful in certain cases, 

@@ -3,7 +3,7 @@ import JsonUtils from '../util/json-utils';
 
 export default class Base {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
+  constructor({ verbose = false, appendTo = 'body', callbackHandler }) {
     this.settings({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
     /**
      * @type {Logger} the logger for this class
@@ -12,10 +12,11 @@ export default class Base {
   }
 
   settings({ verbose, appendTo, callbackHandler }) {
-    if (!callbackHandler) {
+    this.options = this.options || {};
+    if (!this.options.callbackHandler && !callbackHandler) {
       throw new Error('A Callback Handler must be provided! This will be used to trigger events from the graphics produced...');
     }
-    if (!appendTo) {
+    if (!this.options.appendTo && !appendTo) {
       throw new Error('Missing an element or id to append the graphics to...!');
     }
     /**
@@ -24,9 +25,8 @@ export default class Base {
      * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
      * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
      */
-    this.options = {};
     this.options.verbose = verbose || this.options.verbose;
-    this.options.appendTo = appendTo || this.options.verbose;
+    this.options.appendTo = appendTo || this.options.appendTo;
     this.options.callbackHandler = callbackHandler || this.options.callbackHandler;
     return this;
   }

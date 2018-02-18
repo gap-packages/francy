@@ -17,10 +17,10 @@ export default class Composite extends Renderer {
 
   renderChildren() {
     // update children rendering with a new parent!
-    var options = this.options;
+    let options = this.options;
     options.appendTo = this;
     // render other components
-    for (var renderer of this.renderers) {
+    for (let renderer of this.renderers) {
       renderer.settings(options).load(this.data).render();
     }
   }

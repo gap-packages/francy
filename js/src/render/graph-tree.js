@@ -1,48 +1,42 @@
-import Renderer from './renderer';
 import Graph from './graph';
 import { RegisterMathJax } from '../util/component';
 
 /* global d3 */
 
-export default class TreeGraph extends Renderer {
+export default class TreeGraph extends Graph {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   render() {
+    
+    this._initialize();
 
-    var parent = this.options.appendTo.element;
-
-    this.element = parent.select('g.francy-content');
-
-    var width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
-      height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
-
-    var i = 0,
+    let i = 0,
       root;
 
     root = d3.hierarchy(this.treeData, d => d.children);
-    root.x0 = height / 2;
+    root.x0 = this.height / 2;
     root.y0 = 0;
 
     // compute height based on the depth of the graph
-    var levelWidth = [1];
-    var childCount = function(level, n) {
+    let levelWidth = [1];
+    let childCount = function (level, n) {
 
       if (n.children && n.children.length > 0) {
         if (levelWidth.length <= level + 1) levelWidth.push(0);
 
         levelWidth[level + 1] += n.children.length;
-        n.children.forEach(function(d) {
+        n.children.forEach(function (d) {
           childCount(level + 1, d);
         });
       }
     };
     childCount(0, root);
-    var newHeight = d3.max(levelWidth) * 100;
+    let newHeight = d3.max(levelWidth) * 100;
 
-    var treemap = d3.tree().size([newHeight, width]);
+    let treemap = d3.tree().size([newHeight, this.width]);
 
     if (this.data.canvas.graph.collapsed) {
       root.children.forEach(collapse);
@@ -59,26 +53,26 @@ export default class TreeGraph extends Renderer {
     }
 
     function update(source) {
-      var treeData = treemap(root);
+      let treeData = treemap(root);
 
-      var nodes = treeData.descendants(),
+      let nodes = treeData.descendants(),
         links = treeData.descendants().slice(1);
 
       nodes.forEach(d => d.y = d.depth * 180);
 
-      var linkGroup = this.element.selectAll('g.francy-links');
+      let linkGroup = this.element.selectAll('g.francy-links');
 
       if (!linkGroup.node()) {
         linkGroup = this.element.append('g').attr('class', 'francy-links');
       }
 
-      var link = linkGroup.selectAll('path.francy-edge')
+      let link = linkGroup.selectAll('path.francy-edge')
         .data(links, d => d.id || (d.id = ++i));
 
-      var linkEnter = link.enter()
+      let linkEnter = link.enter()
         .append('path').attr('class', 'francy-edge')
         .attr('d', () => {
-          var o = { x: source.x0, y: source.y0 };
+          let o = {x: source.x0, y: source.y0};
           return diagonal(o, o);
         });
 
@@ -87,7 +81,7 @@ export default class TreeGraph extends Renderer {
 
       link.exit().transition().duration(this.transitionDuration)
         .attr('d', () => {
-          var o = { x: source.x, y: source.y };
+          let o = {x: source.x, y: source.y};
           return diagonal(o, o);
         }).remove();
 
@@ -108,16 +102,16 @@ export default class TreeGraph extends Renderer {
               ${d.y} ${d.x}`;
       }
 
-      var nodeGroup = this.element.selectAll('g.francy-nodes');
+      let nodeGroup = this.element.selectAll('g.francy-nodes');
 
       if (!nodeGroup.node()) {
         nodeGroup = this.element.append('g').attr('class', 'francy-nodes');
       }
 
-      var node = nodeGroup.selectAll('g.francy-node')
+      let node = nodeGroup.selectAll('g.francy-node')
         .data(nodes, d => d.id || (d.id = ++i));
 
-      var nodeEnter = node.enter().append('g')
+      let nodeEnter = node.enter().append('g')
         .attr('class', 'francy-node')
         .attr('transform', () => `translate(${source.y0},${source.x0})`);
 
@@ -131,7 +125,7 @@ export default class TreeGraph extends Renderer {
         .style('cursor', d => d.children || d._children ? 'pointer' : 'default')
         .text(d => d.data.title);
 
-      var nodeUpdate = nodeEnter.merge(node);
+      let nodeUpdate = nodeEnter.merge(node);
 
       nodeUpdate.transition()
         .duration(this.transitionDuration)
@@ -146,18 +140,21 @@ export default class TreeGraph extends Renderer {
         .style('cursor', d => d.children || d._children ? 'pointer' : 'default');
 
       node = nodeGroup.selectAll('g.francy-node');
-      Graph.applyEvents(node, this.options);
+      
+      if (node.node()) {
+        this._applyEvents(node);
 
-      var nodeOnClick = node.on('click');
-      node.on('click', (d) => {
+        let nodeOnClick = node.on('click');
+        node.on('click', (d) => {
         // any callbacks will be handled here
-        nodeOnClick.call(this, d.data);
-        // default, highlight connected nodes
-        click.call(this, d);
-      });
+          nodeOnClick.call(this, d.data);
+          // default, highlight connected nodes
+          click.call(this, d);
+        });
+      }
 
       // Toggle children on click.
-      var self = this;
+      let self = this;
 
       function click(d) {
         if (d.children) {
@@ -174,7 +171,7 @@ export default class TreeGraph extends Renderer {
       RegisterMathJax(this.SVGParent);
 
       setTimeout(() => {
-        parent.zoomToFit();
+        this.parent.zoomToFit();
       }, this.transitionDuration);
     }
 
@@ -189,14 +186,14 @@ export default class TreeGraph extends Renderer {
    * @returns {Object} the data transformed in tree data
    */
   get treeData() {
-    var canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [];
-    var dataMap = canvasNodes.reduce(function(map, node) {
+    let canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [];
+    let dataMap = canvasNodes.reduce(function (map, node) {
       map[node.id] = node;
       return map;
     }, {});
-    var treeData = [];
+    let treeData = [];
     canvasNodes.forEach(function(node) {
-      var parent = dataMap[node.parent];
+      let parent = dataMap[node.parent];
       if (parent) {
         (parent.children || (parent.children = [])).push(node);
       }

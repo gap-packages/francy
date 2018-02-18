@@ -40,23 +40,50 @@ end);
 #M  Add( <canvas>, <francy object> ) . . . . . add objects to canvas
 ##
 InstallMethod(Add,
-  "a canvas, a shape",
+  "a canvas, a graph",
   true,
   [IsCanvas,
-   IsFrancyObject],
+   IsFrancyGraph],
   0,
-function(canvas, object)
-  if IsFrancyGraph(object) then
-    canvas!.graph := object;
-    # unbind the chart, only graph should exist!
-    Unbind(canvas!.chart);
-  elif IsChart(object) then
-    canvas!.chart := object;
-    # unbind the graph, only chart should exist!
-    Unbind(canvas!.graph);
-  elif IsMenu(object) then
-    canvas!.menus!.(object!.id) := object;
-  fi;
+function(canvas, graph)
+  canvas!.graph := graph;
+  # unbind the chart, only graph should exist!
+  Unbind(canvas!.chart);
+  return canvas;
+end);
+
+InstallMethod(Add,
+  "a canvas, a chart",
+  true,
+  [IsCanvas,
+   IsChart],
+  0,
+function(canvas, chart)
+  canvas!.chart := chart;
+  # unbind the graph, only chart should exist!
+  Unbind(canvas!.graph);
+  return canvas;
+end);
+
+InstallMethod(Add,
+  "a canvas, a menu",
+  true,
+  [IsCanvas,
+   IsMenu],
+  0,
+function(canvas, menu)
+  canvas!.menus!.(menu!.id) := menu;
+  return canvas;
+end);
+
+InstallMethod(Add,
+  "a canvas, a message",
+  true,
+  [IsCanvas,
+   IsFrancyMessage],
+  0,
+function(canvas, message)
+  canvas!.messages!.(message!.id) := message;
   return canvas;
 end);
 
@@ -79,20 +106,50 @@ end);
 #M  Remove( <canvas>, <francy object> ) . . . . . remove object from canvas
 ##
 InstallMethod(Remove,
-  "a canvas, a shape",
+  "a canvas, a graph",
   true,
   [IsCanvas,
-   IsFrancyObject],
+   IsFrancyGraph],
   0,
-function(canvas, object)
-  local link;
-  if IsFrancyGraph(object) then
-    Unbind(canvas!.graph);
-  elif IsChart(object) then
-    Unbind(canvas!.chart);
-  elif IsMenu(object) then
-    Unbind(canvas!.menus!.(object!.id));
-  fi;
+function(canvas, graph)
+  Unbind(canvas!.graph);
+  canvas!.graph := rec();
+  canvas!.chart := rec();
+  return canvas;
+end);
+
+InstallMethod(Remove,
+  "a canvas, a chart",
+  true,
+  [IsCanvas,
+   IsChart],
+  0,
+function(canvas, chart)
+  Unbind(canvas!.chart);
+  canvas!.graph := rec();
+  canvas!.chart := rec();
+  return canvas;
+end);
+
+InstallMethod(Remove,
+  "a canvas, a menu",
+  true,
+  [IsCanvas,
+   IsMenu],
+  0,
+function(canvas, menu)
+  Unbind(canvas!.menus!.(menu!.id));
+  return canvas;
+end);
+
+InstallMethod(Remove,
+  "a canvas, a message",
+  true,
+  [IsCanvas,
+   IsFrancyMessage],
+  0,
+function(canvas, message)
+  Unbind(canvas!.messages!.(message!.id));
   return canvas;
 end);
 
@@ -110,78 +167,19 @@ function(canvas, objects)
   return canvas;
 end);
 
-
-#############################################################################
-##
-#M  Add( <canvas>, <info> ) . . . . . add objects to canvas
-##
-InstallMethod(Add,
-  "a canvas, a message",
-  true,
-  [IsCanvas,
-   IsFrancyMessage],
-  0,
-function(canvas, message)
-  canvas!.messages!.(message!.id) := message;
-  return canvas;
-end);
-
-InstallOtherMethod(Add,
-  "a canvas, a list of messages",
-  true,
-  [IsCanvas,
-   IsList],
-  0,
-function(canvas, messages)
-  local message;
-  for message in messages do
-    Add(canvas, message);
-  od;
-  return canvas;
-end);
-
-#############################################################################
-##
-#M  Remove( <canvas>, <info> ) . . . . . remove object from canvas
-##
-InstallMethod(Remove,
-  "a canvas, a message",
-  true,
-  [IsCanvas,
-   IsFrancyMessage],
-  0,
-function(canvas, message)
-  Unbind(canvas!.messages!.(message!.id));
-  return canvas;
-end);
-
-InstallOtherMethod(Remove,
-  "a canvas, a list of messages",
-  true,
-  [IsCanvas,
-   IsList],
-  0,
-function(canvas, messages)
-  local message;
-  for message in messages do
-    Remove(canvas, message);
-  od;
-  return canvas;
-end);
-
 #############################################################################
 ##
 #M  Draw( ) . . . . . 
 ##
 InstallMethod(Draw,
-  "",
+  "a canvas",
   true,
   [IsCanvas],
   0,
 function(canvas)
   local object;
   object := rec();
-  object!.mime   := FrancyMIMEType;
+  object!.mime    := FrancyMIMEType;
   object!.version := InstalledPackageVersion("francy");
   object!.canvas  := Sanitize(canvas);
   return rec(
@@ -196,7 +194,7 @@ end);
 #M  DrawSplash( ) . . . . . 
 ##
 InstallMethod(DrawSplash,
-  "",
+  "a canvas",
   true,
   [IsCanvas],
   0,
@@ -212,9 +210,9 @@ function(canvas)
     <html>\n\
       <head>\n\
         <meta charset=\"utf-8\" content=\"text/html\" property=\"GAP,francy,d3.v4\"></meta>\n\
-        <link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/dist/francy/css/style.css\"></link>\n\
-        <script src=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/dist/francy/lib/d3.min.js\"></script>\n\
-        <script src=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/dist/francy/browser/francy.bundle.js\"></script>\n\
+        <link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/extensions/browser/index.css\"></link>\n\
+        <script src=\"https://d3js.org/d3.v4.js\"></script>\n\
+        <script src=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/extensions/browser/francy.bundle.js\"></script>\n\
         <title>Francy</title>\n\
       </head>\n\
       <body>\n\

@@ -1,6 +1,6 @@
 import Base from './base';
 import RequiredArgsModal from './modal-required';
-import { requires } from '../decorator/data';
+import { requires } from '../util/data-decorator';
 
 export default class CallbackHandler extends Base {
 
@@ -12,14 +12,14 @@ export default class CallbackHandler extends Base {
   @requires('callback')
   execute() {
     if (Object.keys(this.data.callback.requiredArgs).length) {
-      var options = this.options;
-      options.callbackHandler = (calbackObj) => this._execute.call(this, calbackObj);
+      let options = this.options;
+      options.callbackHandler = (callbackObj) => this._execute.call(this, callbackObj);
       return new RequiredArgsModal(options).load(this.data, true).render();
     }
-    else {
-      // Trigger is the expected command on GAP for this events!
-      this._execute(this.data.callback);
-    }
+    
+    // Trigger is the expected command on GAP for this events!
+    this._execute(this.data.callback);
+    
   }
 
   _execute(calbackObj) {

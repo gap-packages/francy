@@ -1,77 +1,53 @@
-import Renderer from './renderer';
 import Graph from './graph';
 import { RegisterMathJax } from '../util/component';
 
 /* global d3 */
 
-export default class GenericGraph extends Renderer {
+export default class GenericGraph extends Graph {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   render() {
+    var self = this;
+    this._initialize();
+    
+    let simulationActive = this.data.canvas.graph.simulation;
 
-    var parent = this.options.appendTo.element;
-
-    var simulationActive = this.data.canvas.graph.simulation;
-
-    var canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
+    let canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
       canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
 
-    this.element = parent.select('g.francy-content');
-
-    var width = +parent.attr('width') || d3.select('body').node().getBoundingClientRect().width,
-      height = +parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
-
-    var linkGroup = this.element.selectAll('g.francy-links');
+    let linkGroup = this.element.selectAll('g.francy-links');
 
     if (!linkGroup.node()) {
       linkGroup = this.element.append('g').attr('class', 'francy-links');
     }
 
-    var links = linkGroup.selectAll('g.francy-link').data();
-    var linksToAdd = [];
-    canvasLinks.forEach(l => {
-      var link = links.find(d => d.id === l.id);
-      if (link) {
-        linksToAdd.push(link);
-      }
-      else {
-        linksToAdd.push(l);
-      }
-    });
+    let links = linkGroup.selectAll('g.francy-link').data();
+    let linksToAdd = this._filterNewElements(canvasLinks, links);
 
-    var link = linkGroup.selectAll('g.francy-link').data(linksToAdd, d => d.id);
+    let link = linkGroup.selectAll('g.francy-link').data(linksToAdd, d => d.id);
 
-    var nodeGroup = this.element.selectAll('g.francy-nodes');
+    let nodeGroup = this.element.selectAll('g.francy-nodes');
 
     if (!nodeGroup.node()) {
       nodeGroup = this.element.append('g').attr('class', 'francy-nodes');
     }
 
-    var nodes = nodeGroup.selectAll('g.francy-node').data();
-    var nodesToAdd = [];
-    canvasNodes.forEach(n => {
-      var node = nodes.find(d => d.id === n.id);
-      if (node) {
-        nodesToAdd.push(node);
-      }
-      else {
-        nodesToAdd.push(n);
-      }
-    });
+    let nodes = nodeGroup.selectAll('g.francy-node').data();
+    let nodesToAdd = this._filterNewElements(canvasNodes, nodes);
 
-    var node = nodeGroup.selectAll('g.francy-node').data(nodesToAdd, d => d.id);
+    let node = nodeGroup.selectAll('g.francy-node').data(nodesToAdd, d => d.id);
 
-    if (node.exit().data().length == 0 &&
-      node.enter().data().length == 0 &&
-      link.enter().data().length == 0 &&
-      link.exit().data().length == 0) {
+    if (node.exit().data().length === 0 &&
+      node.enter().data().length === 0 &&
+      link.enter().data().length === 0 &&
+      link.exit().data().length === 0) {
       return;
     }
 
-    var linkEnter = link.enter().append('g').attr('class', 'francy-link');
+    let linkEnter = link.enter().append('g').attr('class', 'francy-link');
 
     linkEnter.append('line').attr('class', 'francy-edge');
 
@@ -81,7 +57,7 @@ export default class GenericGraph extends Renderer {
 
     if (this.data.canvas.graph.type === 'directed') {
       // this means we need arrows, so we append the marker
-      parent.append('defs').selectAll('marker')
+      self.parent.append('defs').selectAll('marker')
         .data(['arrow'])
         .enter().append('marker')
         .attr('class', 'francy-arrows')
@@ -98,7 +74,7 @@ export default class GenericGraph extends Renderer {
       link.style('marker-end', 'url(#arrow)');
     }
 
-    var nodeEnter = node.enter().append('g')
+    let nodeEnter = node.enter().append('g')
       .attr('class', 'francy-node').attr('id', d => d.id);
 
     nodeEnter.append('path')
@@ -124,10 +100,10 @@ export default class GenericGraph extends Renderer {
 
     if (node && !node.empty()) {
 
-      Graph.applyEvents(node, this.options);
+      this._applyEvents(node);
 
       if (this.data.canvas.graph.showNeighbours) {
-        var nodeOnClick = node.on('click');
+        let nodeOnClick = node.on('click');
         node.on('click', function(d) {
           // default, highlight connected nodes
           connectedNodes.call(this);
@@ -139,35 +115,35 @@ export default class GenericGraph extends Renderer {
 
     if (simulationActive) {
       // Canvas Forces
-      var centerForce = d3.forceCenter().x(width / 2).y(height / 2);
-      var manyForce = d3.forceManyBody().strength(-canvasNodes.length * 50);
-      var linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
-      var collideForce = d3.forceCollide(d => d.size * 2);
+      let centerForce = d3.forceCenter().x(this.width / 2).y(this.height / 2);
+      let manyForce = d3.forceManyBody().strength(-canvasNodes.length * 50);
+      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
+      let collideForce = d3.forceCollide(d => d.size * 2);
 
       //Generic gravity for the X position
-      var forceX = d3.forceX(width / 2).strength(0.05);
+      let forceX = d3.forceX(this.width / 2).strength(0.05);
 
       //Generic gravity for the Y position - undirected/directed graphs fall here
-      var forceY = d3.forceY(height / 2).strength(0.25);
+      let forceY = d3.forceY(this.height / 2).strength(0.25);
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
-        forceX = d3.forceX(width / 2).strength(0.3);
+        forceX = d3.forceX(this.width / 2).strength(0.3);
         //Strong y positioning based on layer to simulate the hasse diagram
         forceY = d3.forceY(d => d.layer * 75).strength(0.7);
       }
 
       var simulation = d3.forceSimulation().nodes(nodesToAdd)
-        .force("charge", manyForce)
-        .force("link", linkForce)
-        .force("center", centerForce)
-        .force("x", forceX)
-        .force("y", forceY)
-        .force("collide", collideForce)
+        .force('charge', manyForce)
+        .force('link', linkForce)
+        .force('center', centerForce)
+        .force('x', forceX)
+        .force('y', forceY)
+        .force('collide', collideForce)
         .on('tick', ticked)
-        .on("end", function() {
+        .on('end', function() {
           // zoom to fit when simulation is over
-          parent.zoomToFit();
+          self.parent.zoomToFit();
         });
 
       //force simulation restart
@@ -176,7 +152,7 @@ export default class GenericGraph extends Renderer {
     else {
       // well, simulation is off, apply fixed positions and zoom to fit now
       ticked();
-      parent.zoomToFit();
+      self.parent.zoomToFit();
     }
 
     function ticked() {
@@ -191,9 +167,9 @@ export default class GenericGraph extends Renderer {
 
     // HIGHLIGHT
     //Toggle stores whether the highlighting is on
-    var toggle = 0;
+    let toggle = 0;
     //Create an array logging what is connected to what
-    var linkedByIndex = {};
+    let linkedByIndex = {};
 
     for (let i = 0; i < canvasNodes.length; i++) {
       linkedByIndex[`${i},${i}`] = 1;
@@ -253,5 +229,19 @@ export default class GenericGraph extends Renderer {
   }
 
   unrender() {}
+  
+  _filterNewElements(canvasObjects, d3Element) {
+    let newElements = [];
+    canvasObjects.forEach(o => {
+      let link = d3Element.find(d => d.id === o.id);
+      if (link) {
+        newElements.push(link);
+      }
+      else {
+        newElements.push(o);
+      }
+    });
+    return newElements;
+  }
 
 }

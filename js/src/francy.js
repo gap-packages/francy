@@ -1,13 +1,15 @@
 import Frame from './render/frame';
 import Renderer from './render/renderer';
-
-let ALL_CANVAS = {};
+import { requires } from './util/data-decorator';
 
 /* global d3 */
 
+let ALL_CANVAS = {};
+
 /**
- * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.handle} function,
+ * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.load} function,
  * Francy will handle the creation of that json as long it is a valid and understandable json object to Francy.
+ *  
  * @access public
  * 
  * @version 0.5.0
@@ -37,13 +39,14 @@ export default class Francy extends Renderer {
    * trigger the drawing of a json object.
    * @returns {Object} the html element created
    */
+  @requires('canvas')
   render() {
-    var frame = new Frame(this.options).load(this.data).render();
+    let frame = new Frame(this.options).load(this.data).render();
     ALL_CANVAS[this.data.canvas.id] = frame;
     return frame.element.node();
   }
 
-  unrender(id) {
+  static unrender(id) {
     delete ALL_CANVAS[id];
   }
 }
@@ -51,7 +54,7 @@ export default class Francy extends Renderer {
 try {
   exports.Francy = window.Francy = Francy;
   // handle events on resize
-  var oldResize = window.onresize;
+  let oldResize = window.onresize;
   window.onresize = function() {
     // zoom to fit all canvas on resize
     Object.values(ALL_CANVAS).forEach(function(frame) {

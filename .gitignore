@@ -29,9 +29,33 @@
 */gh-pages/
 
 **/node_modules/
-!/js/lib/
 
 .idea
 .iml
 
 *-lock.json
+.c9
+.ipynb_*
+.nyc*
+
+# istanbul
+**/.nyc_output/
+
+**/coverage/
+
+coverage
+
+**/labextension/
+**/nbextension/
+**/*.egg-info/
+**/build/
+**/dist/
+**/lib/
+
+# Compiled javascript
+**/jupyter_francy/__pycache__/
+**/jupyter_francy/static/
+**/jupyter_francy/jupyter_francy.egg-info/
+
+# OS X
+**/.DS_Store

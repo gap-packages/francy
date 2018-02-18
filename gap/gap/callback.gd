@@ -184,3 +184,32 @@ BindGlobal("TriggerType", rec(
   RIGHT_CLICK  := Objectify(TriggerTypeObjectType, rec(value := "context")),
   CLICK        := Objectify(TriggerTypeObjectType, rec(value := "click"))
 ));
+
+#############################################################################
+##
+#! @Section Attributes
+#! In this section we show the Francy Core Attributes
+
+#! @Description
+#! A title on a required arg is used to ask the user what is expected to input.
+#! @Returns <C>IsString</C> with the title of the object
+DeclareAttribute("Title", IsRequiredArg);
+#! @Description
+#! A title on a required arg is used to ask the user what is expected to input.
+#! @Returns <C>IsString</C> with the title of the object
+InstallMethod(Title, "requiredArg", [IsRequiredArg], o -> o!.title);
+#! @Description
+#! Sets the title of the required arg.
+InstallMethod(SetTitle, "requiredArg, string", [IsRequiredArg, IsString], function(o, s) o!.title := s; end);
+
+#! @Description
+#! A value on a required arg is the actual input.
+#! @Returns <C>IsString</C> with the value of the object
+DeclareAttribute("Value", IsRequiredArg);
+#! @Description
+#! A value on a required arg is the actual input.
+#! @Returns <C>IsString</C> with the value of the object
+InstallMethod(Value, "requiredArg", [IsRequiredArg], o -> o!.value);
+#! @Description
+#! Sets the title of the required arg.
+InstallMethod(SetValue, "requiredArg, string", [IsRequiredArg, IsString], function(o, s) o!.value := s; end);
