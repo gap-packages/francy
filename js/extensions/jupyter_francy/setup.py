@@ -86,7 +86,7 @@ setup_args = dict(
     url                  = 'http://jupyter.org',
     license              = 'BSD',
     platforms            = "Linux, Mac OS X, Windows",
-    keywords             = ['ipython', 'jupyter'],
+    keywords             = ['ipython', 'jupyter', 'francy', 'gap'],
     classifiers          = [
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
