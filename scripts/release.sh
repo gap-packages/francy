@@ -40,9 +40,10 @@ cd js/extensions/jupyter_francy
 
 pyenv local 3.6
 
+pip3.6 install wheel
+pip3.6 install twine
+
 python3.6 setup.py sdist
 python3.6 setup.py bdist_wheel --universal
-
-pip3.6 install twine
 
 `pyenv which twine` upload dist/*
