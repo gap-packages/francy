@@ -1,4 +1,4 @@
-export function initialize(value) {
+export function initialize() {
   return function (target, key, descriptor) {
     var oldValue = descriptor.value;
 
@@ -6,6 +6,6 @@ export function initialize(value) {
       this._initialize();
       return oldValue.apply(this, arguments);
     };
-     return descriptor;
+    return descriptor;
   };
 }
