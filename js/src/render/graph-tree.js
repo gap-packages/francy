@@ -1,5 +1,6 @@
 import Graph from './graph';
 import { RegisterMathJax } from '../util/component';
+import { initialize } from '../util/initialize-decorator';
 
 /* global d3 */
 
@@ -9,9 +10,8 @@ export default class TreeGraph extends Graph {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
+  @initialize()
   render() {
-    
-    this._initialize();
 
     let i = 0,
       root;

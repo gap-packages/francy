@@ -1,5 +1,6 @@
 import Graph from './graph';
 import { RegisterMathJax } from '../util/component';
+import { initialize } from '../util/initialize-decorator';
 
 /* global d3 */
 
@@ -9,9 +10,9 @@ export default class GenericGraph extends Graph {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
+  @initialize()
   render() {
     var self = this;
-    this._initialize();
     
     let simulationActive = this.data.canvas.graph.simulation;
 
@@ -114,11 +115,16 @@ export default class GenericGraph extends Graph {
     }
 
     if (simulationActive) {
+      //iterate through the data and recalculate its size
+      node.each(function(d){
+        let bound = this.getBBox();
+        return d.size = bound.width;
+      });
       // Canvas Forces
       let centerForce = d3.forceCenter().x(this.width / 2).y(this.height / 2);
       let manyForce = d3.forceManyBody().strength(-canvasNodes.length * 50);
       let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
-      let collideForce = d3.forceCollide(d => d.size * 2);
+      let collideForce = d3.forceCollide(d => d.size);
 
       //Generic gravity for the X position
       let forceX = d3.forceX(this.width / 2).strength(0.05);

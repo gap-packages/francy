@@ -1,5 +1,6 @@
 import Renderer from './renderer';
 import { RegisterJupyterKeyboardEvents } from '../util/component';
+import { initialize } from '../util/initialize-decorator';
 
 /* global d3 */
 
@@ -9,6 +10,7 @@ export default class RequiredArgsModal extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
+  @initialize()
   render() {
     let self = this;
 
@@ -16,12 +18,7 @@ export default class RequiredArgsModal extends Renderer {
 
     this.logger.debug(`Creating Callback Modal [${modalId}]...`);
 
-    // we want to overlay everything, hence 'body' must be used
-    let overlay = d3.select('body').append('div')
-      .attr('class', 'francy-overlay');
-    let holder = d3.select('body').append('div')
-      .attr('class', 'francy');
-    this.element = holder.append('div')
+    this.element = this.holder.append('div')
       .attr('id', modalId)
       .attr('class', 'francy-modal');
 
@@ -69,19 +66,11 @@ export default class RequiredArgsModal extends Renderer {
       if (form.node().checkValidity()) {
         d3.event.preventDefault();
         self.options.callbackHandler(self.data.callback);
-        overlay.remove();
-        self.element.remove();
-        holder.remove();
+        self.unrender();
       }
       return false;
     });
-    footer.append('button').text('Cancel').on('click', () => {
-      overlay.remove();
-      self.element.remove();
-      holder.remove();
-      d3.event.preventDefault();
-      return false;
-    });
+    footer.append('button').text('Cancel').on('click', this.unrender);
 
     // disable keyboard shortcuts when using this modal in Jupyter
     RegisterJupyterKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
@@ -95,6 +84,4 @@ export default class RequiredArgsModal extends Renderer {
 
     return this;
   }
-
-  unrender() {}
 }

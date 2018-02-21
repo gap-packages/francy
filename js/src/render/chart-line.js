@@ -1,4 +1,5 @@
 import Chart from './chart';
+import { initialize } from '../util/initialize-decorator';
 
 /* global d3 */
 
@@ -8,9 +9,8 @@ export default class LineChart extends Chart {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
+  @initialize()
   render() {
-    
-    this._initialize();
     
     let linesGroup = this.element.selectAll('g.francy-lines');
 

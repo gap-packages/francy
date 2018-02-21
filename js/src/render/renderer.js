@@ -18,6 +18,8 @@ export default class Renderer extends Base {
     this.element = undefined;
     this.transitionDuration = 750; //ms
   }
+  
+  _initialize() {}
 
   get HTMLParent() {
     return this.options.appendTo.element.node().tagName.toLowerCase() === 'svg' ? d3.select(this.options.appendTo.element.node().parentNode) : this.options.appendTo.element;

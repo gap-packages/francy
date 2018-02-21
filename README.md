@@ -14,14 +14,14 @@
 [![Test Coverage Status](https://codecov.io/gh/mcmartins/francy/branch/develop/graph/badge.svg)](https://codecov.io/gh/mcmartins/francy)
 [![JS Maintainability](https://api.codeclimate.com/v1/badges/db52d89d90ab0d7e6fd4/maintainability)](https://codeclimate.com/github/mcmartins/francy/maintainability)
 
-Francy is a framework for Interactive Discrete Mathematics package for GAP.
+Francy is a package for GAP and provides a framework for Interactive Discrete Mathematics.
 
 Unlike [XGAP](https://github.com/gap-packages/xgap), Francy is not linked with any GUI framework and instead, 
-this package is responsible for the generating a semantic model that can be used to produce a graphical representation using any other framework / language.
+this package is responsible for the generation of a semantic model that can be used to produce a graphical representation using any other framework / language.
 
 See [Graphics Semantics package for GAP](/gap)
 
-As an example, there is javascript implementation of the graphical representation that works in Jupyter, embeded in a Web page or as a Desktop Application (e.g. using electron).
+There is javascript implementation of the graphical representation that works in Jupyter, embeded in a Web page or as a Desktop Application (e.g. using electron).
 
 See [Graphics Interface using Javascritp and D3.v4](/js)
 
