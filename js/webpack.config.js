@@ -11,7 +11,9 @@ module.exports = (env = {}) => {
   
   if (clean) {
     console.log('Removing files from output directories...');
-    del.sync(['./extensions/jupyter_francy/src/francy.bundle.*', './extensions/browser/francy.bundle.*']);
+    del.sync(['./extensions/jupyter_francy/src/francy.bundle.*', 
+    './extensions/jupyter_francy/src/d3.*',
+    './extensions/browser/francy.bundle.*']);
   }
   
   let plugins = [];

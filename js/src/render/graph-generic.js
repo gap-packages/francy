@@ -119,21 +119,24 @@ export default class GenericGraph extends Graph {
 
     if (simulationActive) {
       //iterate through the data and recalculate its size
-      node.each(function(d){
+      let radius = 0;
+      node.each(function(){
         let bound = this.getBBox();
-        return d.size = bound.width;
+        if (radius < bound.width) {
+          radius = bound.width;
+        }
       });
       // Canvas Forces
       let centerForce = d3.forceCenter().x(this.width / 2).y(this.height / 2);
       let manyForce = d3.forceManyBody().strength(-canvasNodes.length * 50);
       let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
-      let collideForce = d3.forceCollide().radius(d => d.size).iterations(3);
+      let collideForce = d3.forceCollide().radius(radius/2).iterations(3);
 
       //Generic gravity for the X position
       let forceX = d3.forceX(this.width / 2).strength(0.05);
 
       //Generic gravity for the Y position - undirected/directed graphs fall here
-      let forceY = d3.forceY(-this.height / 2).strength(0.25);
+      let forceY = d3.forceY(this.height / 2).strength(0.25);
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
