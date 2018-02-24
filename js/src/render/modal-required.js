@@ -1,14 +1,16 @@
-import Renderer from './renderer';
+import Modal from './modal';
 import { RegisterJupyterKeyboardEvents } from '../util/component';
+import { initialize } from '../util/initialize-decorator';
 
 /* global d3 */
 
-export default class RequiredArgsModal extends Renderer {
+export default class RequiredArgsModal extends Modal {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
+  @initialize()
   render() {
     let self = this;
 
@@ -16,12 +18,7 @@ export default class RequiredArgsModal extends Renderer {
 
     this.logger.debug(`Creating Callback Modal [${modalId}]...`);
 
-    // we want to overlay everything, hence 'body' must be used
-    let overlay = d3.select('body').append('div')
-      .attr('class', 'francy-overlay');
-    let holder = d3.select('body').append('div')
-      .attr('class', 'francy');
-    this.element = holder.append('div')
+    this.element = this.holder.append('div')
       .attr('id', modalId)
       .attr('class', 'francy-modal');
 
@@ -65,22 +62,17 @@ export default class RequiredArgsModal extends Renderer {
 
     let footer = form.append('div').attr('class', 'francy-modal-footer');
 
-    footer.append('button').text('Ok').on('click', function() {
+    footer.append('button').text('Ok').on('click', () => {
       if (form.node().checkValidity()) {
         d3.event.preventDefault();
-        self.options.callbackHandler(self.data.callback);
-        overlay.remove();
-        self.element.remove();
-        holder.remove();
+        this.options.callbackHandler(this.data.callback);
+        this.unrender.call(this);
       }
       return false;
     });
-    footer.append('button').text('Cancel').on('click', () => {
-      overlay.remove();
-      self.element.remove();
-      holder.remove();
-      d3.event.preventDefault();
-      return false;
+    footer.append('button').text('Cancel').on('click', () => { 
+      d3.event.preventDefault(); 
+      this.unrender.call(this); 
     });
 
     // disable keyboard shortcuts when using this modal in Jupyter
@@ -95,6 +87,4 @@ export default class RequiredArgsModal extends Renderer {
 
     return this;
   }
-
-  unrender() {}
 }

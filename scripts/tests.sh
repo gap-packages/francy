@@ -14,7 +14,7 @@ cd js
 
 npm run lint
 npm run coverage
-npm run webpack:all
+npm run build:all
 
 # Test Extensions - won't produce any coverage obviously
 cd extensions/jupyter_francy

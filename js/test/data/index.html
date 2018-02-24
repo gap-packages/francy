@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <div id="francy"></div>
+  <div id="francy" style="visibility:false;"></div>
   <script>
     /* global d3 Francy */
 
@@ -18,12 +18,12 @@
       console.log(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
     }
 
-    let settings = { verbose: true, appendTo: 'body', callbackHandler: trigger };
+    let settings = { verbose: true, appendTo: '#francy', callbackHandler: trigger };
     const francy = new Francy(settings);
 
     d3.json("json1.json", function(error, json) {
       let element = francy.load(json).render();
-      document.getElementById('francy').append(element);
+      document.getElementsByTagName('body')[0].appendChild(element);
       setInterval(function() {
         d3.json("json1.1.json", function(error, json) {
           francy.load(json).render();
@@ -33,7 +33,7 @@
 
     d3.json("json2.json", function(error, json) {
       let element = francy.load(json).render();
-      document.getElementById('francy').append(element);
+      document.getElementsByTagName('body')[0].appendChild(element);
       setInterval(function() {
         d3.json("json2.1.json", function(error, json) {
           francy.load(json).render();
@@ -43,52 +43,57 @@
 
     d3.json("json3.json", function(error, json) {
       let element = francy.load(json).render();
-      document.getElementById('francy').append(element);
+      document.getElementsByTagName('body')[0].appendChild(element);
     });
 
     d3.json("json4.json", function(error, json) {
       let element = francy.load(json).render();
-      document.getElementById('francy').append(element);
+      document.getElementsByTagName('body')[0].appendChild(element);
     });
 
     d3.json("json5.json", function(error, json) {
       let element = francy.load(json).render();
-      document.getElementById('francy').append(element);
+      document.getElementsByTagName('body')[0].appendChild(element);
     });
 
     d3.json("json6.json", function(error, json) {
       let element = francy.load(json).render();
-      document.getElementById('francy').append(element);
+      document.getElementsByTagName('body')[0].appendChild(element);
     });
 
     d3.json("json7.json", function(error, json) {
       let element = francy.load(json).render();
-      document.getElementById('francy').append(element);
+      document.getElementsByTagName('body')[0].appendChild(element);
     });
 
     d3.json("json8.json", function(error, json) {
       let element = francy.load(json).render();
-      document.getElementById('francy').append(element);
+      document.getElementsByTagName('body')[0].appendChild(element);
     });
 
     d3.json("json9.json", function(error, json) {
       let element = francy.load(json).render();
-      document.getElementById('francy').append(element);
+      document.getElementsByTagName('body')[0].appendChild(element);
     });
 
     d3.json("json10.json", function(error, json) {
       let element = francy.load(json).render();
-      document.getElementById('francy').append(element);
+      document.getElementsByTagName('body')[0].appendChild(element);
     });
 
     d3.json("json11.json", function(error, json) {
       let element = francy.load(json).render();
-      document.getElementById('francy').append(element);
+      document.getElementsByTagName('body')[0].appendChild(element);
       setInterval(function() {
         d3.json("json11.1.json", function(error, json) {
           francy.load(json).render();
         });
       }, 10000);
+    });
+
+    d3.json("json12.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementsByTagName('body')[0].appendChild(element);
     });
   </script>
 </body>
