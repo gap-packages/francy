@@ -90,6 +90,11 @@
         });
       }, 10000);
     });
+
+    d3.json("json12.json", function(error, json) {
+      let element = francy.load(json).render();
+      document.getElementById('francy').append(element);
+    });
   </script>
 </body>
 

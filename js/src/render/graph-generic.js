@@ -127,7 +127,7 @@ export default class GenericGraph extends Graph {
       let centerForce = d3.forceCenter().x(this.width / 2).y(this.height / 2);
       let manyForce = d3.forceManyBody().strength(-canvasNodes.length * 50);
       let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
-      let collideForce = d3.forceCollide(d => d.size);
+      let collideForce = d3.forceCollide().radius(d => d.size).iterations(3);
 
       //Generic gravity for the X position
       let forceX = d3.forceX(this.width / 2).strength(0.05);

@@ -26,7 +26,8 @@
     "dependencies:all": "npm run dependencies:js && npm run dependencies:style",
     "webpack": "./node_modules/.bin/webpack --progress --env.clean",
     "webpack:production": "./node_modules/.bin/webpack --env.production --env.clean --progress",
-    "webpack:all": "./node_modules/.bin/webpack --progress && ./node_modules/.bin/webpack --env.production --progress"
+    "webpack:all": "./node_modules/.bin/webpack --progress && ./node_modules/.bin/webpack --env.production --progress",
+    "build:all": "npm run webpack:all && npm run dependencies:all"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
