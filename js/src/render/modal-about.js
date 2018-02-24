@@ -2,6 +2,8 @@ import Modal from './modal';
 import { RegisterJupyterKeyboardEvents, syntaxHighlight } from '../util/component';
 import { initialize } from '../util/initialize-decorator';
 
+/* global d3 */
+
 export default class AboutModal extends Modal {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
@@ -35,7 +37,10 @@ export default class AboutModal extends Modal {
 
     let footer = form.append('div').attr('class', 'francy-modal-footer');
 
-    footer.append('button').text('Ok').on('click', this.unrender);
+    footer.append('button').text('Ok').on('click', () => { 
+      d3.event.preventDefault(); 
+      this.unrender.call(this); 
+    });
 
     // disable keyboard shortcuts when using this modal in Jupyter
     RegisterJupyterKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);

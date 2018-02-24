@@ -121,9 +121,12 @@ export default class TreeGraph extends Graph {
 
       nodeEnter.append('text')
         .attr('class', 'francy-label')
-        .attr('x', d => -(d.data.title.length * 2.5))
-        .style('cursor', d => d.children || d._children ? 'pointer' : 'default')
-        .text(d => d.data.title);
+        .text(d => d.data.title)
+        .attr('x',  function() {
+          let bound = this.getBBox();
+          return -(bound.width / 2);
+        })
+        .style('cursor', d => d.children || d._children ? 'pointer' : 'default');
 
       let nodeUpdate = nodeEnter.merge(node);
 

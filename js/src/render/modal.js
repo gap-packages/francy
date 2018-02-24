@@ -20,7 +20,6 @@ export default class Modal extends Renderer {
     this.overlay.remove();
     this.element.remove();
     this.holder.remove();
-    d3.event.preventDefault();
     return false;
   }
 

@@ -1,10 +1,10 @@
-import Renderer from './renderer';
+import Modal from './modal';
 import { RegisterJupyterKeyboardEvents } from '../util/component';
 import { initialize } from '../util/initialize-decorator';
 
 /* global d3 */
 
-export default class RequiredArgsModal extends Renderer {
+export default class RequiredArgsModal extends Modal {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
@@ -62,15 +62,18 @@ export default class RequiredArgsModal extends Renderer {
 
     let footer = form.append('div').attr('class', 'francy-modal-footer');
 
-    footer.append('button').text('Ok').on('click', function() {
+    footer.append('button').text('Ok').on('click', () => {
       if (form.node().checkValidity()) {
         d3.event.preventDefault();
-        self.options.callbackHandler(self.data.callback);
-        self.unrender();
+        this.options.callbackHandler(this.data.callback);
+        this.unrender.call(this);
       }
       return false;
     });
-    footer.append('button').text('Cancel').on('click', this.unrender);
+    footer.append('button').text('Cancel').on('click', () => { 
+      d3.event.preventDefault(); 
+      this.unrender.call(this); 
+    });
 
     // disable keyboard shortcuts when using this modal in Jupyter
     RegisterJupyterKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);

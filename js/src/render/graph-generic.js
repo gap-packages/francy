@@ -85,8 +85,11 @@ export default class GenericGraph extends Graph {
 
     nodeEnter.append('text')
       .attr('class', 'francy-label')
-      .attr('x', d => -(d.title.length * 2.5))
-      .text(d => d.title);
+      .text(d => d.title)
+      .attr('x', function() {
+        let bound = this.getBBox();
+        return -(bound.width / 2);
+      });
 
     node.exit().remove();
 
@@ -130,7 +133,7 @@ export default class GenericGraph extends Graph {
       let forceX = d3.forceX(this.width / 2).strength(0.05);
 
       //Generic gravity for the Y position - undirected/directed graphs fall here
-      let forceY = d3.forceY(this.height / 2).strength(0.25);
+      let forceY = d3.forceY(-this.height / 2).strength(0.25);
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
