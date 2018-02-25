@@ -8,7 +8,6 @@ export function RegisterMathJax(element) {
     try {
       MathJax.Hub.Config({
         tex2jax: {
-          jax: ['input/TeX', 'output/SVG'],
           inlineMath: [
             ['$', '$'],
             ['\\(', '\\)']
@@ -18,6 +17,13 @@ export function RegisterMathJax(element) {
             ['\\[', '\\]']
           ],
           processEscapes: true
+        },
+        SVG: {
+          availableFonts: [],
+          imageFont: null,
+          preferredFont: null,
+          webFont: "STIX-Web",
+          linebreaks: { automatic: true }
         }
       });
 
