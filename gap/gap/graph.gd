@@ -145,16 +145,28 @@ DeclareOperation("Graph", [IsFrancyGraphType, IsFrancyGraphDefaults]);
 DeclareOperation("UnsetNodes", [IsFrancyGraph]);
 
 #! @Description
-#! Add <C>FrancyObject</C> to a specific <C>Graph</C>.
-#! @Arguments IsFrancyGraph, [IsFrancyObject, List(IsFrancyObject)]
+#! Add <C>IsLink</C> to a specific <C>Graph</C>.
+#! @Arguments IsFrancyGraph, [IsLink, List(IsLink)]
 #! @Returns <C>Graph</C>
-DeclareOperation("Add", [IsFrancyGraph, IsFrancyObject]);
+#DeclareOperation("Add", [IsFrancyGraph, IsLink]);
 
 #! @Description
-#! Remove <C>FrancyObject</C> from a specific <C>Graph</C>.
-#! @Arguments IsFrancyGraph, [IsFrancyObject, List(IsFrancyObject)]
+#! Remove <C>IsLink</C> from a specific <C>Graph</C>.
+#! @Arguments IsFrancyGraph, [IsLink, List(IsLink)]
 #! @Returns <C>Graph</C>
-DeclareOperation("Remove", [IsFrancyGraph, IsFrancyObject]);
+#DeclareOperation("Remove", [IsFrancyGraph, IsLink]);
+
+#! @Description
+#! Add <C>IsShape</C> to a specific <C>Graph</C>.
+#! @Arguments IsFrancyGraph, [IsShape, List(IsShape)]
+#! @Returns <C>Graph</C>
+#DeclareOperation("Add", [IsFrancyGraph, IsShape]);
+
+#! @Description
+#! Remove <C>IsShape</C> from a specific <C>Graph</C>.
+#! @Arguments IsFrancyGraph, [IsShape, List(IsShape)]
+#! @Returns <C>Graph</C>
+#DeclareOperation("Remove", [IsFrancyGraph, IsShape]);
 
 #! @Description
 #! Every object to draw will be a subclass of this object. This will allow
@@ -168,37 +180,37 @@ DeclareOperation("Shape", [IsShapeType, IsString, IsShapeDefaults]);
 #! Add <C>Menu</C> to a specific <C>Shape</C>.
 #! @Arguments IsShape, [IsMenu, List(IsMenu)]
 #! @Returns <C>Shape</C>
-DeclareOperation("Add", [IsShape, IsMenu]);
+#DeclareOperation("Add", [IsShape, IsMenu]);
 
 #! @Description
 #! Remove <C>Menu</C> from a specific <C>Shape</C>.
 #! @Arguments IsShape, [IsMenu, List(IsMenu)]
 #! @Returns <C>Shape</C>
-DeclareOperation("Remove", [IsShape, IsMenu]);
+#DeclareOperation("Remove", [IsShape, IsMenu]);
 
 #! @Description
 #! Add <C>Callback</C> to a specific <C>Shape</C>.
 #! @Arguments IsShape, [IsCallback, List(IsCallback)]
 #! @Returns <C>Shape</C>
-DeclareOperation("Add", [IsShape, IsCallback]);
+#DeclareOperation("Add", [IsShape, IsCallback]);
 
 #! @Description
 #! Remove <C>Callback</C> from a specific <C>Shape</C>.
 #! @Arguments IsShape, [IsCallback, List(IsCallback)]
 #! @Returns <C>Shape</C>
-DeclareOperation("Remove", [IsShape, IsCallback]);
+#DeclareOperation("Remove", [IsShape, IsCallback]);
 
 #! @Description
 #! Add <C>Callback</C> to a specific <C>Shape</C>.
 #! @Arguments IsShape, [IsFrancyMessage, List(IsFrancyMessage)]
 #! @Returns <C>Shape</C>
-DeclareOperation("Add", [IsShape, IsFrancyMessage]);
+#DeclareOperation("Add", [IsShape, IsFrancyMessage]);
 
 #! @Description
 #! Remove <C>Callback</C> from a specific <C>Shape</C>.
 #! @Arguments IsShape, [IsFrancyMessage, List(IsFrancyMessage)]
 #! @Returns <C>Shape</C>
-DeclareOperation("Remove", [IsShape, IsFrancyMessage]);
+#DeclareOperation("Remove", [IsShape, IsFrancyMessage]);
 
 #! @Description
 #! Creates a <C>Link</C> between the two <C>Shape</C>.
@@ -268,46 +280,119 @@ BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and I
 #! @Section Attributes
 #! In this section we show the Francy Core Attributes
 
+
+#! @Description
+#! Sets the title on the Shape.
+#! Supports LaTex syntax that gets translated, if enabled on the client.
+#! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Title", IsShape);
 InstallMethod(Title, "shape", [IsShape], o -> o!.title);
+#! @Description
+#! Sets the title of the Shape.
+#! @Arguments IsRequiredArg, IsString
 InstallMethod(SetTitle, "shape, string", [IsShape, IsString], function(o, s) o!.title := s; end);
 
+#! @Description
+#! The Position in the X Axis of the Shape in the Canvas in pixels
+#! @Returns <C>IsInt</C>
 DeclareAttribute("PosX", IsShape);
 InstallMethod(PosX, "shape", [IsShape], o -> o!.x);
+#! @Description
+#! Sets the Position in the X Axis of the Shape in the Canvas in pixels
+#! @Arguments IsShape, IsInt
 InstallMethod(SetPosX, "shape, int", [IsShape, IsInt], function(o, i) o!.x := i; end);
 
+#! @Description
+#! The Position in the Y Axis of the Shape in the Canvas in pixels
+#! @Returns <C>IsInt</C>
 DeclareAttribute("PosY", IsShape);
 InstallMethod(PosY, "shape", [IsShape], o -> o!.y);
+#! @Description
+#! Sets the Position in the Y Axis of the Shape in the Canvas in pixels
+#! @Arguments IsShape, IsInt
 InstallMethod(SetPosY, "shape, int", [IsShape, IsInt], function(o, i) o!.y := i; end);
 
+#! @Description
+#! The <C>Size</C> of the Shape 
+#! @Returns <C>IsPosInt</C>
 DeclareAttribute("Size", IsShape);
 InstallMethod(Size, "shape", [IsShape], o -> o!.size);
+#! @Description
+#! Sets the Size of the Shape
+#! @Arguments IsShape, IsPosInt
 InstallMethod(SetSize, "shape, int", [IsShape, IsPosInt], function(o, i) o!.size := i; end);
 
+#! @Description
+#! <C>Highlight</C> is a property that sets the highlight behavior on mouse over in the client implementation.
+#! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("Highlight", IsShape);
 InstallMethod(Highlight, "shape", [IsShape], o -> o!.highlight);
+#! @Description
+#! Sets the <C>Highlight</C> behavior on mouse over in the client implementation.
+#! @Arguments IsCanvas, IsBool
 InstallMethod(SetHighlight, "shape, boolean", [IsShape, IsBool], function(o, b) o!.highlight := b; end);
 
+#! @Description
+#! The <C>Layer</C> in which the node will be placed when HASSE diagram is selected.
+#! This property is also used to apply a color based on a scale
+#! @Returns <C>IsInt</C>
 DeclareAttribute("Layer", IsShape);
 InstallMethod(Layer, "shape", [IsShape], o -> o!.layer);
+#! @Description
+#! Sets the <C>Layer</C> number.
+#! @Arguments IsShape, IsInt
 InstallMethod(SetLayer, "shape, int", [IsShape, IsInt], function(o, i) o!.layer := i; end);
 
+#! @Description
+#! The <C>ParentNode</C> in which the node will be placed when HASSE diagram is selected.
+#! This property is also used to apply a color based on a scale
+#! @Returns <C>IsShape</C>
 DeclareAttribute("ParentNode", IsShape);
 InstallMethod(ParentNode, "shape", [IsShape], o -> o!.parent);
+#! @Description
+#! Sets the <C>ParentNode</C>.
+#! @Arguments IsShape, IsShape
 InstallMethod(SetParentNode, "shape, shape", [IsShape, IsShape], function(o, p) o!.parent := p!.id; end);
 
+#! @Description
+#! <C>Simulation</C> is a property that sets the simulation behavior by 
+#! applying forces to organize the graphics, without the need to provide 
+#! custom positions, in the client implementation.
+#! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("Simulation", IsFrancyGraph);
 InstallMethod(Simulation, "graph", [IsFrancyGraph], o -> o!.simulation);
+#! @Description
+#! Sets the <C>Simulation</C> behavior.
+#! @Arguments IsCanvas, IsBool
 InstallMethod(SetSimulation, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.simulation := b; end);
 
+#! @Description
+#! <C>Collapsed</C> is a property that sets to collapsed the graphic structure by default
+#! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("Collapsed", IsFrancyGraph);
 InstallMethod(Collapsed, "graph", [IsFrancyGraph], o -> o!.collapsed);
+#! @Description
+#! Sets the <C>Collapsed</C> behavior.
+#! @Arguments IsCanvas, IsBool
 InstallMethod(SetCollapsed, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.collapsed := b; end);
 
+#! @Description
+#! <C>Drag</C> is a property that sets the drag behavior on mouse drag, in the client implementation.
+#! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("Drag", IsFrancyGraph);
 InstallMethod(Drag, "graph", [IsFrancyGraph], o -> o!.drag);
+#! @Description
+#! Sets the <C>Drag</C> behavior.
+#! @Arguments IsCanvas, IsBool
 InstallMethod(SetDrag, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.drag := b; end);
 
+#! @Description
+#! <C>ShowNeighbours</C> is a property that sets the behavior of showing 
+#! connected nodes on click, in the client implementation.
+#! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("ShowNeighbours", IsFrancyGraph);
 InstallMethod(ShowNeighbours, "graph", [IsFrancyGraph], o -> o!.showNeighbours);
-InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) if o!.type = "tree" then Error("This is only for GraphType.TREE!"); fi; o!.showNeighbours := b; end);
+#! @Description
+#! Sets the <C>ShowNeighbours</C> behavior.
+#! @Arguments IsCanvas, IsBool
+InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) if o!.type = "tree" then Error("Only supported by GraphType TREE!"); fi; o!.showNeighbours := b; end);

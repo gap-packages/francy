@@ -136,19 +136,19 @@ BindGlobal("AxisScaleTypeObjectType",  NewType(ChartFamily, IsAxisScaleType and 
 DeclareOperation("Chart", [IsChartType, IsChartDefaults]);
 
 #! @Description
-#! Add <C>FrancyObject</C> to a specific <C>Chart</C>.
-#! @Arguments IsChart, [IsFrancyObject, List(IsFrancyObject)]
+#! Adds a <C>Dataset</C> to a specific <C>Chart</C>.
+#! @Arguments IsChart, [IsDataset, List(IsDataset)]
 #! @Returns <C>Chart</C>
-DeclareOperation("Add", [IsChart, IsFrancyObject]);
+#DeclareOperation("Add", [IsChart, IsDataset]);
 
 #! @Description
-#! Remove <C>FrancyObject</C> from a specific <C>Chart</C>.
-#! @Arguments IsChart, [IsFrancyObject, List(IsFrancyObject)]
+#! Removes a <C>Dataset</C> from a specific <C>Chart</C>.
+#! @Arguments IsChart, [IsDataset, List(IsDataset)]
 #! @Returns <C>Chart</C>
-DeclareOperation("Remove", [IsChart, IsFrancyObject]);
+#DeclareOperation("Remove", [IsChart, IsDataset]);
 
 #! @Description
-#! Creates a dataset
+#! Creates a dataset.
 #! <P/>
 #! @Arguments IsString(title), IsList(data)
 #! @Returns <C>Dataset</C>
@@ -172,7 +172,7 @@ DeclareOperation("XAxis", [IsAxisScaleType, IsString, IsList]);
 #! Creates a YAxis
 #! <P/>
 #! @Arguments IsAxisScaleType, IsString(title), IsList(domain)
-#! @Returns <C>v</C>
+#! @Returns <C>YAxis</C>
 DeclareOperation("YAxis", [IsAxisScaleType, IsString, IsList]);
 
 #############################################################################
@@ -204,18 +204,48 @@ BindGlobal("ChartDefaults", Objectify(NewType(ChartFamily, IsChartDefaults and I
   showLegend := true
 )));
 
+
+#############################################################################
+##
+#! @Section Attributes
+#! In this section we show the Francy Attributes
+
+#! @Description
+#! <C>ShowLegend</C> is a property that enables or disables the legend in the client implementation.
+#! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("ShowLegend", IsChart);
 InstallMethod(ShowLegend, "chart", [IsChart], o -> o!.showLegend);
+#! @Description
+#! <C>ShowLegend</C> is a property that enables or disables the legend in the client implementation.
+#! @Arguments IsChart, IsBool
 InstallMethod(SetShowLegend, "chart, boolean", [IsChart, IsBool], function(o, b) o!.showLegend := b; end);
 
+#! @Description
+#! This title is used to display the X Axis Title in the client implementation.
+#! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("AxisXTitle", IsChart);
 InstallMethod(AxisXTitle, "chart", [IsChart], o -> o!.axis!.x!.title);
+#! @Description
+#! This title is used to display the X Axis Title in the client implementation.
+#! @Arguments IsChart, IsString
 InstallMethod(SetAxisXTitle, "chart, string", [IsChart, IsString], function(o, s) o!.axis!.x!.title := s; end);
 
+#! @Description
+#! This title is used to display the Y Axis Title in the client implementation.
+#! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("AxisYTitle", IsChart);
 InstallMethod(AxisYTitle, "chart", [IsChart], o -> o!.axis!.y!.title);
+#! @Description
+#! This title is used to display the Y Axis Title in the client implementation.
+#! @Arguments IsChart, IsString
 InstallMethod(SetAxisYTitle, "chart, string", [IsChart, IsString], function(o, s) o!.axis!.y!.title := s; end);
 
+#! @Description
+#! This is the domain of the X Axis values in the client implementation.
+#! @Returns <C>IsList</C>
 DeclareAttribute("AxisXDomain", IsChart);
 InstallMethod(AxisXDomain, "chart", [IsChart], o -> o!.axis!.x!.domain);
+#! @Description
+#! This is the domain of the X Axis values in the client implementation.
+#! @Arguments IsList, IsList
 InstallMethod(SetAxisXDomain, "chart, list", [IsChart, IsList], function(o, l) o!.axis!.x!.domain := l; end);

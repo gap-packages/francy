@@ -63,14 +63,14 @@ DeclareOperation("Menu", [IsString, IsCallback]);
 #! Is up to the client implementation to handle this.
 #! @Arguments IsMenu, [IsMenu, List(IsMenu)]
 #! @Returns <C>Menu</C>
-DeclareOperation("Add", [IsMenu, IsMenu]);
+#DeclareOperation("Add", [IsMenu, IsMenu]);
 
 #! @Description
 #! Remove <C>Menu</C> from a specific <C>Menu</C>.
 #! The client should be able to handle this.
 #! @Arguments IsMenu, [IsMenu, List(IsMenu)]
 #! @Returns <C>Menu</C>
-DeclareOperation("Remove", [IsMenu, IsMenu]);
+#DeclareOperation("Remove", [IsMenu, IsMenu]);
 
 
 #############################################################################
@@ -78,6 +78,12 @@ DeclareOperation("Remove", [IsMenu, IsMenu]);
 #! @Section Attributes
 #! In this section we show the Francy Core Attributes
 
+#! @Description
+#! A title on a <C>Menu</C> is used to identify the menu entry.
+#! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Title", IsMenu);
 InstallMethod(Title, "menu", [IsMenu], o -> o!.title);
+#! @Description
+#! Sets the title of the <C>Menu</C>.
+#! @Arguments IsMenu, IsString
 InstallMethod(SetTitle, "menu, string", [IsMenu, IsString], function(o, s) o!.title := s; end);

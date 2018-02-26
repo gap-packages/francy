@@ -52,7 +52,7 @@ end);
 ##
 #M  Add( <graph>, <francy object> ) . . . . . add objects to graph
 ##
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a graph, a link",
   true,
   [IsFrancyGraph,
@@ -63,7 +63,7 @@ function(graph, link)
   return graph;
 end);
 
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a graph, a shape",
   true,
   [IsFrancyGraph,
@@ -93,7 +93,7 @@ end);
 ##
 #M  Remove( <graph>, <francy object> ) . . . . . remove object from graph
 ##
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a graph, a shape",
   true,
   [IsFrancyGraph,
@@ -111,7 +111,7 @@ function(graph, shape)
   return graph;
 end);
 
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a graph, a link",
   true,
   [IsFrancyGraph,
@@ -184,7 +184,7 @@ end);
 ##
 #M  Add( <graph>, <francy object> ) . . . . . add objects to graph
 ##
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a shape, a menu",
   true,
   [IsShape,
@@ -195,7 +195,7 @@ function(shape, menu)
   return shape;
 end);
 
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a shape, a callback",
   true,
   [IsShape,
@@ -206,7 +206,7 @@ function(shape, callback)
   return shape;
 end);
 
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a shape, a message",
   true,
   [IsShape,
@@ -235,7 +235,7 @@ end);
 ##
 #M  Remove( <graph>, <francy object> ) . . . . . remove object from graph
 ##
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a shape, a menu",
   true,
   [IsShape,
@@ -246,7 +246,7 @@ function(shape, menu)
   return shape;
 end);
 
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a shape, a callback",
   true,
   [IsShape,
@@ -257,7 +257,7 @@ function(shape, callback)
   return shape;
 end);
 
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a shape, a message",
   true,
   [IsShape,

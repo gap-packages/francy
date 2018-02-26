@@ -118,7 +118,7 @@ export default class GenericGraph extends Graph {
     }
 
     if (simulationActive) {
-      //iterate through the data and recalculate its size
+      //iterate through the data and get the widest node group including label
       let radius = 0;
       node.each(function(){
         let bound = this.getBBox();
@@ -126,21 +126,20 @@ export default class GenericGraph extends Graph {
           radius = bound.width;
         }
       });
-      // Canvas Forces
+      //Canvas Forces
       //let centerForce = d3.forceCenter().x(this.width / 2).y(this.height / 2);
-      let manyForce = d3.forceManyBody().strength(-canvasNodes.length * 50);
+      let manyForce = d3.forceManyBody().strength(-canvasNodes.length * 75);
       let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
       let collideForce = d3.forceCollide().radius(radius/2).iterations(3);
 
       //Generic gravity for the X position
       let forceX = d3.forceX(this.width).strength(0.05);
-
       //Generic gravity for the Y position - undirected/directed graphs fall here
       let forceY = d3.forceY(-this.height).strength(0.25);
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
-        forceX = d3.forceX(this.width).strength(0.3);
+        forceX = d3.forceX(this.width).strength(0.4);
         //Strong y positioning based on layer to simulate the hasse diagram
         forceY = d3.forceY(d => d.layer * 75).strength(0.7);
       }

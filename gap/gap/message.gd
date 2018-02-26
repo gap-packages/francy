@@ -84,15 +84,28 @@ BindGlobal("FrancyMessageType", rec(
   DEFAULT := Objectify(FrancyMessageTypeObjectType, rec(value := "default"))
 ));
 
+
 #############################################################################
 ##
 #! @Section Attributes
 #! In this section we show the Francy Core Attributes
 
+#! @Description
+#! A title on a <C>FrancyMessage</C> is used to display the title information to the user.
+#! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Title", IsFrancyMessage);
 InstallMethod(Title, "message", [IsFrancyMessage], o -> o!.title);
+#! @Description
+#! Sets the title of the <C>FrancyMessage</C>.
+#! @Arguments IsFrancyMessage, IsString
 InstallMethod(SetTitle, "message, string", [IsFrancyMessage, IsString], function(o, s) o!.title := s; end);
 
+#! @Description
+#! A value on a <C>FrancyMessage</C> is used to display the information to the user.
+#! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Value", IsFrancyMessage);
 InstallMethod(Value, "message", [IsFrancyMessage], o -> o!.value);
+#! @Description
+#! Sets the actual message of the <C>FrancyMessage</C>.
+#! @Arguments IsFrancyMessage, IsString
 InstallMethod(SetValue, "message, string", [IsFrancyMessage, IsString], function(o, s) o!.value := s; end);

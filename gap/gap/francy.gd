@@ -12,7 +12,7 @@
 #! GUI framework (client), this enables complete SoC (Separation of Concerns).
 #! <P/>
 #! A JSON schema is present and can be used to produce clients for this package.
-#! See TODO link to schema
+#! **See schema/francy.json**
 #! Francy can be used to provide a graphical interactive environment on existing
 #! GAP packages.
 #! <P/>

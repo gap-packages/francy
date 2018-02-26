@@ -7,6 +7,8 @@ export function RegisterMathJax(element) {
   setTimeout(() => {
     try {
       MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ['input/TeX', 'output/SVG'],
         tex2jax: {
           inlineMath: [
             ['$', '$'],
@@ -18,13 +20,7 @@ export function RegisterMathJax(element) {
           ],
           processEscapes: true
         },
-        SVG: {
-          availableFonts: [],
-          imageFont: null,
-          preferredFont: null,
-          webFont: "STIX-Web",
-          linebreaks: { automatic: true }
-        }
+        SVG: { linebreaks: { automatic: true } }
       });
 
       MathJax.Hub.Register.StartupHook('End', function() {
@@ -48,7 +44,7 @@ export function RegisterMathJax(element) {
 
       MathJax.Hub.Queue(['Typeset', MathJax.Hub, element.node()]);
 
-      MathJax.Hub.Configured();
+      //MathJax.Hub.Configured();
     }
     catch (e) {
       if (e.name === 'ReferenceError') {

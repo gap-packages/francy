@@ -58,7 +58,7 @@ end);
 ##
 #M  Add( <chart>, <francy object> ) . . . . . add objects to canvas
 ##
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a chart, a x axis",
   true,
   [IsChart,
@@ -69,7 +69,7 @@ function(chart, object)
   return chart;
 end);
 
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a chart, a y axis",
   true,
   [IsChart,
@@ -80,7 +80,7 @@ function(chart, object)
   return chart;
 end);
 
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a Chart, a dataset",
   true,
   [IsChart,
@@ -109,7 +109,7 @@ end);
 ##
 #M  Remove( <chart>, <francy object> ) . . . . . remove object from canvas
 ##
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a chart, a x axis",
   true,
   [IsChart,
@@ -120,7 +120,7 @@ function(chart, object)
   return chart;
 end);
 
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a chart, a y axis",
   true,
   [IsChart,
@@ -131,7 +131,7 @@ function(chart, object)
   return chart;
 end);
 
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a chart, a dataset",
   true,
   [IsChart,
