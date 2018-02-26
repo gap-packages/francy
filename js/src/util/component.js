@@ -7,7 +7,7 @@ export function RegisterMathJax(element) {
   setTimeout(() => {
     try {
       MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
+        extensions: ['tex2jax.js'],
         jax: ['input/TeX', 'output/SVG'],
         tex2jax: {
           inlineMath: [
