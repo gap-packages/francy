@@ -25,8 +25,7 @@ function getProperty(obj, propertyPath) {
       if (!tmp.hasOwnProperty(property)) {
         tmp = undefined;
         break;
-      }
-      else {
+      } else {
         tmp = tmp[property];
       }
     }

@@ -65,7 +65,6 @@ try {
       oldResize();
     }
   };
-}
-catch (e) {
+} catch (e) {
   exports.Francy = Francy;
 }

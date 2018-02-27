@@ -129,7 +129,7 @@ export default class GenericGraph extends Graph {
       //Canvas Forces
       //let centerForce = d3.forceCenter().x(this.width / 2).y(this.height / 2);
       let manyForce = d3.forceManyBody().strength(-canvasNodes.length * 75);
-      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
+      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(75);
       let collideForce = d3.forceCollide().radius(radius/2).iterations(3);
 
       //Generic gravity for the X position
@@ -158,9 +158,8 @@ export default class GenericGraph extends Graph {
         });
 
       //force simulation restart
-      simulation.alpha(0.5).restart();
-    }
-    else {
+      simulation.restart();
+    } else {
       // well, simulation is off, apply fixed positions and zoom to fit now
       ticked();
       self.parent.zoomToFit();
@@ -203,8 +202,7 @@ export default class GenericGraph extends Graph {
         link.style('opacity', o => d.index === o.source.index || d.index === o.target.index ? 1 : 0.1);
         //Reduce the op
         toggle = 1;
-      }
-      else {
+      } else {
         //Put them back to opacity=1
         node.style('opacity', 1);
         link.style('opacity', 1);
@@ -247,8 +245,7 @@ export default class GenericGraph extends Graph {
       let link = d3Element.find(d => d.id === o.id);
       if (link) {
         newElements.push(link);
-      }
-      else {
+      } else {
         newElements.push(o);
       }
     });

@@ -20,8 +20,7 @@ export default class JsonUtils {
       try {
         let json = JSON.parse(input);
         return json.mime === JsonUtils.MIME || partial ? json : undefined;
-      }
-      catch (e) {
+      } catch (e) {
         /* eslint-disable no-console */
         console.error(e);
         /* eslint-enable no-console */

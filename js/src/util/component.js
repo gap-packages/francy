@@ -3,24 +3,56 @@ import Logger from './logger';
 /* global Jupyter, MathJax, d3 */
 
 export function RegisterMathJax(element) {
-  if (!element) return;
+  if (!element) {
+    return;
+  } else if (element.node().tagName.toLowerCase() === 'svg') {
+    return _convertMathJaxOutputSVG(element);
+  } else if (element.node().tagName.toLowerCase() === 'div') {
+    return _convertMathJaxOutputHTML(element);
+  }
+}
+
+function _convertMathJaxOutputHTML(element) {
   setTimeout(() => {
     try {
       MathJax.Hub.Config({
-        extensions: ['tex2jax.js'],
-        jax: ['input/TeX', 'output/SVG'],
-        tex2jax: {
-          inlineMath: [
-            ['$', '$'],
-            ['\\(', '\\)']
-          ],
-          displayMath: [
-            ['$$', '$$'],
-            ['\\[', '\\]']
-          ],
-          processEscapes: true
-        },
-        SVG: { linebreaks: { automatic: true } }
+        showMathMenu: false,
+        skipStartupTypeset: true,
+        'HTML-CSS': { 
+          font: 'STIX-Web', 
+          linebreaks: { 
+            automatic: true 
+          }
+        }
+      });
+
+      MathJax.Hub.Queue(
+        ['setRenderer', MathJax.Hub, 'HTML-CSS'],
+        ['Typeset', MathJax.Hub, element.node()]
+      );
+      
+      MathJax.Hub.Configured();
+    } catch (e) {
+      if (e.name === 'ReferenceError') {
+        new Logger().info('It seems MathJax is not loaded...', e);
+      }
+    }
+
+  }, 10);
+}
+
+function _convertMathJaxOutputSVG(element) {
+  setTimeout(() => {
+    try {
+      MathJax.Hub.Config({
+        showMathMenu: false,
+        skipStartupTypeset: true,
+        SVG: { 
+          font: 'STIX-Web', 
+          linebreaks: { 
+            automatic: true 
+          }
+        }
       });
 
       MathJax.Hub.Register.StartupHook('End', function() {
@@ -30,8 +62,11 @@ export function RegisterMathJax(element) {
               mathJax = self.select('text>span>svg');
             if (mathJax.node()) {
               setTimeout(() => {
-                mathJax.attr('x', self.attr('x'));
-                mathJax.attr('y', -15);
+                setTimeout(() => {
+                  let bound = mathJax.node().getBoundingClientRect();
+                  mathJax.attr('x', -bound.width / 2);
+                  mathJax.attr('y', -15);
+                }, 10);
                 d3.select(self.node().parentNode).append(function() {
                   return mathJax.node();
                 });
@@ -42,11 +77,13 @@ export function RegisterMathJax(element) {
         }, 250);
       });
 
-      MathJax.Hub.Queue(['Typeset', MathJax.Hub, element.node()]);
-
-      //MathJax.Hub.Configured();
-    }
-    catch (e) {
+      MathJax.Hub.Queue(
+        ['setRenderer', MathJax.Hub, 'SVG'], 
+        ['Typeset', MathJax.Hub, element.node()]
+      );
+      
+      MathJax.Hub.Configured();
+    } catch (e) {
       if (e.name === 'ReferenceError') {
         new Logger().info('It seems MathJax is not loaded...', e);
       }
@@ -62,8 +99,7 @@ export function RegisterJupyterKeyboardEvents(classes) {
     classes.map((cl) => {
       Jupyter.keyboard_manager.register_events(cl);
     });
-  }
-  catch (e) {
+  } catch (e) {
     if (e.name === 'ReferenceError') {
       new Logger().info('It seems we\'re not running on Jupyter...', e);
     }
@@ -78,15 +114,12 @@ export function syntaxHighlight(json) {
     if (/^"/.test(match)) {
       if (/:$/.test(match)) {
         cls = 'key';
-      }
-      else {
+      } else {
         cls = 'string';
       }
-    }
-    else if (/true|false/.test(match)) {
+    } else if (/true|false/.test(match)) {
       cls = 'boolean';
-    }
-    else if (/null/.test(match)) {
+    } else if (/null/.test(match)) {
       cls = 'null';
     }
     return '<span class="' + cls + '">' + match + '</span>';

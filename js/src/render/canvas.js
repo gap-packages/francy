@@ -29,7 +29,9 @@ export default class Canvas extends Composite {
     }
 
     function stopped() {
-      if (d3.event.defaultPrevented) { d3.event.stopPropagation(); }
+      if (d3.event.defaultPrevented) {
+        d3.event.stopPropagation(); 
+      }
     }
 
     function zoomToFit() {
