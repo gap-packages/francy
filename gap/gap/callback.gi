@@ -101,7 +101,7 @@ end);
 ##
 #M  Add( <callback>, <required arg> ) . . . . . add objects to canvas
 ##
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a callback, a required arg",
   true,
   [IsCallback,
@@ -130,7 +130,7 @@ end);
 ##
 #M  Remove( <callback>, <required arg> ) . . . . . add objects to canvas
 ##
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a callback, a required arg",
   true,
   [IsCallback,

@@ -61,10 +61,16 @@ export default class BarChart extends Chart {
         });
 
       barEnter.merge(bar)
-        .attr('x', function(d, i) { return self.xScale(self.axis.x.domain[i]) + index * (self.xScale.bandwidth() / self.datasetNames.length); })
+        .attr('x', function(d, i) {
+          return self.xScale(self.axis.x.domain[i]) + index * (self.xScale.bandwidth() / self.datasetNames.length); 
+        })
         .attr('width', (self.xScale.bandwidth() / self.datasetNames.length) - 1)
-        .attr('y', function(d) { return self.yScale(d); })
-        .attr('height', function(d) { return self.height - self.yScale(d); });
+        .attr('y', function(d) {
+          return self.yScale(d); 
+        })
+        .attr('height', function(d) {
+          return self.height - self.yScale(d); 
+        });
     });
 
     this._renderAxis();

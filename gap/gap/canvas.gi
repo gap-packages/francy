@@ -39,7 +39,7 @@ end);
 ##
 #M  Add( <canvas>, <francy object> ) . . . . . add objects to canvas
 ##
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a canvas, a graph",
   true,
   [IsCanvas,
@@ -52,7 +52,7 @@ function(canvas, graph)
   return canvas;
 end);
 
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a canvas, a chart",
   true,
   [IsCanvas,
@@ -65,7 +65,7 @@ function(canvas, chart)
   return canvas;
 end);
 
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a canvas, a menu",
   true,
   [IsCanvas,
@@ -76,7 +76,7 @@ function(canvas, menu)
   return canvas;
 end);
 
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a canvas, a message",
   true,
   [IsCanvas,
@@ -105,7 +105,7 @@ end);
 ##
 #M  Remove( <canvas>, <francy object> ) . . . . . remove object from canvas
 ##
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a canvas, a graph",
   true,
   [IsCanvas,
@@ -118,7 +118,7 @@ function(canvas, graph)
   return canvas;
 end);
 
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a canvas, a chart",
   true,
   [IsCanvas,
@@ -131,7 +131,7 @@ function(canvas, chart)
   return canvas;
 end);
 
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a canvas, a menu",
   true,
   [IsCanvas,
@@ -142,7 +142,7 @@ function(canvas, menu)
   return canvas;
 end);
 
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a canvas, a message",
   true,
   [IsCanvas,

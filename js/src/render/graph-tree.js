@@ -163,8 +163,7 @@ export default class TreeGraph extends Graph {
         if (d.children) {
           d._children = d.children;
           d.children = null;
-        }
-        else {
+        } else {
           d.children = d._children;
           d._children = null;
         }
@@ -199,8 +198,7 @@ export default class TreeGraph extends Graph {
       let parent = dataMap[node.parent];
       if (parent) {
         (parent.children || (parent.children = [])).push(node);
-      }
-      else {
+      } else {
         treeData.push(node);
       }
     });

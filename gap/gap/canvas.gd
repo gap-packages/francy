@@ -72,28 +72,58 @@ BindGlobal("CanvasObjectType", NewType(CanvasFamily, IsCanvas and IsCanvasRep));
 DeclareOperation("Canvas", [IsString, IsCanvasDefaults]);
 
 #! @Description
-#! Add <C>FrancyObject</C> to a specific <C>Canvas</C>.
-#! @Arguments IsCanvas, [IsFrancyObject, List(IsFrancyObject)]
+#! Adds a <C>FrancyGraph</C> to a specific <C>Canvas</C>.
+#! Well, the api is abstract enough to allow Adding a list of <C>IsFrancyGraph</C> 
+#! to a canvas, but this results in setting the graph property only to the last 
+#! <C>IsFrancyGraph</C> in the list.
+#! @Arguments IsCanvas, [IsFrancyGraph, List(IsFrancyGraph)]
 #! @Returns <C>Canvas</C>
-DeclareOperation("Add", [IsCanvas, IsFrancyObject]);
+#DeclareOperation("Add", [IsCanvas, IsFrancyGraph]);
 
 #! @Description
-#! Remove <C>FrancyObject</C> from a <C>Canvas</C>.
-#! @Arguments IsCanvas, [IsFrancyObject, List(IsFrancyObject)]
+#! Removes a <C>FrancyGraph</C> from a <C>Canvas</C>.
+#! @Arguments IsCanvas, [IsFrancyGraph, List(IsFrancyGraph)]
 #! @Returns <C>Canvas</C>
-DeclareOperation("Remove", [IsCanvas, IsFrancyObject]);
+#DeclareOperation("Remove", [IsCanvas, IsFrancyGraph]);
 
 #! @Description
-#! Add <C>Callback</C> to a specific <C>Shape</C>.
-#! @Arguments IsCanvas, [IsFrancyMessage, List(IsFrancyMessage)]
-#! @Returns <C>Shape</C>
-DeclareOperation("Add", [IsCanvas, IsFrancyMessage]);
+#! Adds a <C>Chart</C> to a specific <C>Canvas</C>.
+#! Well, the api is abstract enough to allow Adding a list of <C>IsChart</C> 
+#! to a canvas, but this results in setting the graph property only to the last 
+#! <C>IsChart</C> in the list.
+#! @Arguments IsCanvas, [IsChart, List(IsChart)]
+#! @Returns <C>Canvas</C>
+#DeclareOperation("Add", [IsCanvas, IsChart]);
 
 #! @Description
-#! Remove <C>Callback</C> from a specific <C>Shape</C>.
+#! Removes a <C>Chart</C> from a <C>Canvas</C>.
+#! @Arguments IsCanvas, [IsChart, List(IsChart)]
+#! @Returns <C>Canvas</C>
+#DeclareOperation("Remove", [IsCanvas, IsChart]);
+
+#! @Description
+#! Adds a <C>Menu</C> to a specific <C>Canvas</C>.
+#! @Arguments IsCanvas, [IsMenu, List(IsMenu)]
+#! @Returns <C>Canvas</C>
+#DeclareOperation("Add", [IsCanvas, IsMenu]);
+
+#! @Description
+#! Removes a <C>Menu</C> from a <C>Canvas</C>.
+#! @Arguments IsCanvas, [IsMenu, List(IsMenu)]
+#! @Returns <C>Canvas</C>
+#DeclareOperation("Remove", [IsCanvas, IsMenu]);
+
+#! @Description
+#! Adds a <C>FrancyMessage</C> to a specific <C>IsCanvas</C>.
 #! @Arguments IsCanvas, [IsFrancyMessage, List(IsFrancyMessage)]
-#! @Returns <C>Shape</C>
-DeclareOperation("Remove", [IsCanvas, IsFrancyMessage]);
+#! @Returns <C>IsCanvas</C>
+#DeclareOperation("Add", [IsCanvas, IsFrancyMessage]);
+
+#! @Description
+#! Removes a <C>FrancyMessage</C> from a specific <C>IsCanvas</C>.
+#! @Arguments IsCanvas, [IsFrancyMessage, List(IsFrancyMessage)]
+#! @Returns <C>IsCanvas</C>
+#DeclareOperation("Remove", [IsCanvas, IsFrancyMessage]);
 
 #! @Description
 #! Generates the JSON representation of the canvas and children objects
@@ -124,20 +154,44 @@ BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults an
 #############################################################################
 ##
 #! @Section Attributes
-#! In this section we show the Francy Core Attributes
+#! In this section we show the Francy Attributes
 
+#! @Description
+#! The Width of the canvas in pixels
+#! @Returns <C>IsPosInt</C>
 DeclareAttribute("Width", IsCanvas);
 InstallMethod(Width, "canvas", [IsCanvas], o -> o!.width);
+#! @Description
+#! Sets the Width of the canvas in pixels
+#! @Arguments IsCanvas, IsPosInt
 InstallMethod(SetWidth, "canvas, positive int", [IsCanvas, IsPosInt], function(o, i) o!.width := i; end);
 
+#! @Description
+#! The Height of the canvas in pixels
+#! @Returns <C>IsPosInt</C>
 DeclareAttribute("Height", IsCanvas);
 InstallMethod(Height, "canvas", [IsCanvas], o -> o!.height);
+#! @Description
+#! Sets the Height of the canvas in pixels
+#! @Arguments IsCanvas, IsPosInt
 InstallMethod(SetHeight, "canvas, positive int", [IsCanvas, IsPosInt], function(o, i) o!.height := i; end);
 
+#! @Description
+#! <C>ZoomToFit</C> is a property that sets the zoom to fit behavior on change in the client implementation.
+#! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("ZoomToFit", IsCanvas);
 InstallMethod(ZoomToFit, "canvas", [IsCanvas], o -> o!.zoomToFit);
+#! @Description
+#! <C>ZoomToFit</C> is a property that sets the zoom to fit behavior on change in the client.
+#! @Arguments IsCanvas, IsBool
 InstallMethod(SetZoomToFit, "canvas, boolean", [IsCanvas, IsBool], function(o, b) o!.zoomToFit := b; end);
 
+#! @Description
+#! A title on a required arg is used to ask the user what is expected from his input.
+#! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Title", IsCanvas);
 InstallMethod(Title, "canvas", [IsCanvas], o -> o!.title);
+#! @Description
+#! Sets the title of the required arg.
+#! @Arguments IsCanvas, IsString
 InstallMethod(SetTitle, "canvas, string", [IsCanvas, IsString], function(o, s) o!.title := s; end);

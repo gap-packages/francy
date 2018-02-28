@@ -1,12 +1,14 @@
 # Francy - Javascript module
 
 This Javascript module produces graphics based on the semantic model produced by Francy GAP.
+This implementation follows a nondeterministic approach, so different behavior on rendering 
+of Mathematical Structures can be observed, e.g. when drawing Graphs.
+
+Francy depends on [d3.v4](https://d3js.org/) to produce graphics.
 
 ## Usage
 
 ## Browser integration
-
-Francy depends on [d3.v4](https://d3js.org/) to produce graphics.
 
 ```html
 <html>

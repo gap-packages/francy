@@ -1,4 +1,5 @@
 import Renderer from './renderer';
+import { RegisterMathJax } from '../util/component';
 import { requires } from '../util/data-decorator';
 
 /* global d3 */
@@ -35,13 +36,15 @@ export default class Message extends Renderer {
       });
     messageEnter.append('span').attr('class', 'strong').text(d => d.title);
     messageEnter.append('span').text(d => d.text);
-    messageEnter.append('span').attr('class', 'strong').style('display', 'none').text('x');
+    messageEnter.append('span').attr('class', 'strong closeme').style('display', 'none').text('x');
 
     messageEnter.merge(message);
 
     message.exit().remove();
 
     this.element.style('display', 'block');
+    
+    RegisterMathJax(this.element);
 
     return this;
   }

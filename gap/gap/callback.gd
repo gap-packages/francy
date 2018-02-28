@@ -26,7 +26,7 @@ DeclareCategory("IsCallback", IsFrancyObject);
 
 #! @Description
 #! Identifies <C>RequiredArg</C> objects.
-DeclareCategory( "IsRequiredArg", IsFrancyObject );
+DeclareCategory( "IsRequiredArg", IsFrancyObject);
 
 #! @Description
 #! Identifies <C>ArgType</C> objects.
@@ -117,6 +117,9 @@ BindGlobal("TriggerTypeObjectType", NewType(CallbackFamily, IsTriggerType and Is
 #! In order to see the output of the previous examples, we have to simulate the external call to <C>Trigger</C> operation:
 #! @InsertChunk Example_Create_Callback_6
 #! <P/>
+#! Create a Noop Callback, useful for Menu holders, where no function is required:
+#! @InsertChunk Example_Create_Callback_7
+#! <P/>
 #! @Arguments IsTriggerType, IsFunction, IsList(object)
 #! @Returns <C>Callback</C>
 DeclareOperation("Callback", [IsTriggerType, IsFunction, IsList]);
@@ -136,27 +139,27 @@ DeclareOperation("NoopCallback", []);
 DeclareOperation("RequiredArg", [IsArgType, IsString]);
 
 #! @Description
-#! Add <C>RequiredArg</C> to a specific <C>Callback</C>.
-#! @Arguments IsCallback, [IsRequiredArg, List(IsRequiredArg)]
-#! @Returns <C>Callback</C>
-DeclareOperation("Add", [IsCallback, IsRequiredArg]);
-
-#! @Description
-#! Remove required args from a specific callback.
-#! @Arguments IsCallback, [IsRequiredArg, List(IsRequiredArg)]
-#! @Returns <C>Callback</C>
-DeclareOperation("Remove", [IsCallback, IsRequiredArg]);
-
-#! @Description
 #! Triggers a callback function in GAP.
 #! Gets a JSON String object representation of the callback to execute.
 #! @Arguments IsString(JSON)
 #! @Returns the result of the execution of the <C>Callback</C> defined <C>Function</C>
 DeclareOperation("Trigger", [IsString]);
 
+#! @Description
+#! Adds a <C>RequiredArg</C> to a specific <C>Callback</C>.
+#! @Arguments IsCallback, [IsRequiredArg, List(IsRequiredArg)]
+#! @Returns <C>Callback</C>
+#DeclareOperation("Add", [IsCallback, IsRequiredArg]);
+
+#! @Description
+#! Removes a <C>RequiredArg</C> from a specific callback.
+#! @Arguments IsCallback, [IsRequiredArg, List(IsRequiredArg)]
+#! @Returns <C>Callback</C>
+#DeclareOperation("Remove", [IsCallback, IsRequiredArg]);
+
 #############################################################################
 ##
-#! @Section Global
+#! @Section Globals
 #! In this section we show the Global Callback Francy Records for multi purpose.
 
 #! @Description
@@ -178,7 +181,11 @@ BindGlobal("ArgType", rec(
 #! @Description
 #! This <C>rec</C> holds all the <C>TriggerType</C> supported by Francy.
 #! The available <C>TriggerType</C> specify the Type that will trigger this <C>Callback</C>.
-#! @Returns <C>rec</C> of <C>TriggerType</C>: <C>TriggerType.DOUBLE_CLICK</C> mouse event, double click, <C>TriggerType.RIGHT_CLICK</C> mouse event, right click or context-menu,  <C>TriggerType.CLICK</C> mouse event, ledft click and **default for <C>Menu</C> <C>Callback</C>**
+#! Supported types are:
+#! - <C>TriggerType.DOUBLE_CLICK</C> mouse event, double click, 
+#! - <C>TriggerType.RIGHT_CLICK</C> mouse event, right click or context-menu,  
+#! - <C>TriggerType.CLICK</C> mouse event, left click and **default for <C>Menu</C> <C>Callback</C>**
+#! @Returns <C>rec</C> of <C>TriggerType</C>
 BindGlobal("TriggerType", rec(
   DOUBLE_CLICK := Objectify(TriggerTypeObjectType, rec(value := "dblclick")),
   RIGHT_CLICK  := Objectify(TriggerTypeObjectType, rec(value := "context")),
@@ -188,28 +195,27 @@ BindGlobal("TriggerType", rec(
 #############################################################################
 ##
 #! @Section Attributes
-#! In this section we show the Francy Core Attributes
+#! In this section we show the Francy Callback Attributes
 
 #! @Description
-#! A title on a required arg is used to ask the user what is expected to input.
+#! A title on a required arg is used to ask the user what is expected from his input.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Title", IsRequiredArg);
-#! @Description
-#! A title on a required arg is used to ask the user what is expected to input.
-#! @Returns <C>IsString</C> with the title of the object
 InstallMethod(Title, "requiredArg", [IsRequiredArg], o -> o!.title);
 #! @Description
 #! Sets the title of the required arg.
+#! @Arguments IsRequiredArg, IsString
 InstallMethod(SetTitle, "requiredArg, string", [IsRequiredArg, IsString], function(o, s) o!.title := s; end);
 
 #! @Description
-#! A value on a required arg is the actual input.
+#! A value on a required arg is the actual input to be passed to gap.
+#! These values are stored as <C>String</C> for convenience, 
+#! even if the <C>ArgType</C> specified for the <C>RequiredArg</C> is another.
+#! Explicit conversion is required within the <C>Callback</C>function.
 #! @Returns <C>IsString</C> with the value of the object
 DeclareAttribute("Value", IsRequiredArg);
-#! @Description
-#! A value on a required arg is the actual input.
-#! @Returns <C>IsString</C> with the value of the object
 InstallMethod(Value, "requiredArg", [IsRequiredArg], o -> o!.value);
 #! @Description
-#! Sets the title of the required arg.
+#! Sets the value of the required arg.
+#! @Arguments IsRequiredArg, IsString
 InstallMethod(SetValue, "requiredArg, string", [IsRequiredArg, IsString], function(o, s) o!.value := s; end);

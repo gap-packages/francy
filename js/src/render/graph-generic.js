@@ -118,7 +118,7 @@ export default class GenericGraph extends Graph {
     }
 
     if (simulationActive) {
-      //iterate through the data and recalculate its size
+      //iterate through the data and get the widest node group including label
       let radius = 0;
       node.each(function(){
         let bound = this.getBBox();
@@ -126,21 +126,20 @@ export default class GenericGraph extends Graph {
           radius = bound.width;
         }
       });
-      // Canvas Forces
+      //Canvas Forces
       //let centerForce = d3.forceCenter().x(this.width / 2).y(this.height / 2);
-      let manyForce = d3.forceManyBody().strength(-canvasNodes.length * 50);
-      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(50);
+      let manyForce = d3.forceManyBody().strength(-canvasNodes.length * 75);
+      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(75);
       let collideForce = d3.forceCollide().radius(radius/2).iterations(3);
 
       //Generic gravity for the X position
       let forceX = d3.forceX(this.width).strength(0.05);
-
       //Generic gravity for the Y position - undirected/directed graphs fall here
       let forceY = d3.forceY(-this.height).strength(0.25);
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
-        forceX = d3.forceX(this.width).strength(0.3);
+        forceX = d3.forceX(this.width).strength(0.4);
         //Strong y positioning based on layer to simulate the hasse diagram
         forceY = d3.forceY(d => d.layer * 75).strength(0.7);
       }
@@ -159,9 +158,8 @@ export default class GenericGraph extends Graph {
         });
 
       //force simulation restart
-      simulation.alpha(0.5).restart();
-    }
-    else {
+      simulation.restart();
+    } else {
       // well, simulation is off, apply fixed positions and zoom to fit now
       ticked();
       self.parent.zoomToFit();
@@ -204,8 +202,7 @@ export default class GenericGraph extends Graph {
         link.style('opacity', o => d.index === o.source.index || d.index === o.target.index ? 1 : 0.1);
         //Reduce the op
         toggle = 1;
-      }
-      else {
+      } else {
         //Put them back to opacity=1
         node.style('opacity', 1);
         link.style('opacity', 1);
@@ -248,8 +245,7 @@ export default class GenericGraph extends Graph {
       let link = d3Element.find(d => d.id === o.id);
       if (link) {
         newElements.push(link);
-      }
-      else {
+      } else {
         newElements.push(o);
       }
     });

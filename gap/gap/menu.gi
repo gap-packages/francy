@@ -37,7 +37,7 @@ end);
 ##
 #M  Add( <menu>, <menu> ) . . . . . add menu to canvas
 ##
-InstallMethod(Add,
+InstallOtherMethod(Add,
   "a menu, a menu",
   true,
   [IsMenu,
@@ -66,7 +66,7 @@ end);
 ##
 #M  Remove( <menu>, <menu> ) . . . . . remove menu from menu
 ##
-InstallMethod(Remove,
+InstallOtherMethod(Remove,
   "a menu, a menu",
   true,
   [IsMenu,
