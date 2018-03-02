@@ -9,7 +9,7 @@
 ##
 #M  PrintObj( <obj> ) . . . . . . . . . . . . .  override for IsFrancyObjects
 ##
-InstallMethod(PrintObj,
+InstallOtherMethod(PrintObj,
   "a francy object",
   true,
   [IsFrancyObject],
@@ -22,7 +22,7 @@ end);
 ##
 #M  ViewString( <obj> )  . . . . . . . . . . . . override for IsFrancyObjects
 ##
-InstallMethod(ViewString,
+InstallOtherMethod(ViewString,
   "a francy object",
   true,
   [IsFrancyObject],
@@ -37,12 +37,13 @@ end);
 ##
 #M  JUPYTER_ViewString( <obj> )  . . . . . . . . override for IsFrancyObjects
 ##
-InstallMethod(JUPYTER_ViewString,
+InstallOtherMethod(JUPYTER_ViewString,
   "a francy object",
+  true,
   [IsFrancyObject],
+  0,
   ViewString
 );
-
 
 #############################################################################
 ##

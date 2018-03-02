@@ -1,5 +1,4 @@
 import Renderer from './renderer';
-import { RegisterMathJax } from '../util/component';
 import { requires } from '../util/data-decorator';
 
 /* global d3 */
@@ -43,8 +42,6 @@ export default class Message extends Renderer {
     message.exit().remove();
 
     this.element.style('display', 'block');
-    
-    RegisterMathJax(this.element);
 
     return this;
   }

@@ -27,7 +27,7 @@ export default class Tooltip extends Renderer {
     let pos = d3.mouse(this.SVGParent.node());
 
     // TODO fix always visible tooltip, fine until someone complains about :P
-    this.element.style('left', (pos[0] + 5) + 'px').style('top', (pos[1] - 5) + 'px');
+    this.element.style('left', (pos[0] + 15) + 'px').style('top', (pos[1] - 15) + 'px');
 
     let table = this.element.append('div').attr('class', 'francy-tooltip')
       .append('div').attr('class', 'francy-table')

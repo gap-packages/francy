@@ -7,6 +7,7 @@
     "title": "Quaternion Group Subgroup Lattice",
     "menus": {},
     "zoomToFit": true,
+    "mathjax": true,
     "messages": {
       "A1": {
         "type": "info",
@@ -21,7 +22,7 @@
       "A4": {
         "type": "success",
         "title": "title4",
-        "text": "Valor4"
+        "text": "$x^2$",
       }
     },
     "graph": {
@@ -163,8 +164,7 @@
           "source": "B7AB8F184B4445538CF142F0306DBEB1",
           "id": "2EE9B76F2B0246D8746CD9F9BA69E208",
           "target": "F827B91B58E84D8B1C8AF64FAE72BCC9"
-        }
-        ,
+        },
         "2EE9B76F2B0246D8746CD9F9BA69E20811": {
           "source": "B7AB8F184B4445538CF142F0306DBEB11",
           "id": "2EE9B76F2B0246D8746CD9F9BA69E20811",

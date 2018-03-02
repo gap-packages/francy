@@ -2,6 +2,7 @@ import Composite from './composite';
 import Canvas from './canvas';
 import MainMenu from './menu-main';
 import Message from './message';
+import MathJaxWrapper from './mathjax-wrapper';
 import { requires } from '../util/data-decorator';
 
 /* global d3 */
@@ -13,12 +14,13 @@ export default class Frame extends Composite {
     this.canvas = new Canvas(this.options);
     this.menu = new MainMenu(this.options);
     this.messages = new Message(this.options);
-    this.add(this.messages).add(this.menu).add(this.canvas);
+    this.mathjax = new MathJaxWrapper(this.options);
+    this.add(this.messages).add(this.menu).add(this.canvas).add(this.mathjax);
   }
 
   @requires('canvas')
   render() {
-    let parent = d3.select(this.options.appendTo);
+    let parent = this.options.appendTo;
 
     const frameId = `Frame-${this.data.canvas.id}`;
     this.element = d3.select(`div#${frameId}`);

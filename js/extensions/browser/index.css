@@ -375,3 +375,7 @@ div.output_subarea.francy-view.output_result {
 .strong {
   font-weight: 700
 }
+
+div.output_subarea {
+  max-width: 100%;
+}

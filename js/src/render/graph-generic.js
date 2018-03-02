@@ -1,5 +1,4 @@
 import Graph from './graph';
-import { RegisterMathJax } from '../util/component';
 import { initialize } from '../util/initialize-decorator';
 
 /* global d3 */
@@ -230,8 +229,6 @@ export default class GenericGraph extends Graph {
       d.fx = null;
       d.fy = null;
     }
-
-    RegisterMathJax(this.SVGParent);
 
     return this;
 

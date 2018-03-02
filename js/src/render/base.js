@@ -1,6 +1,8 @@
 import Logger from '../util/logger';
 import JsonUtils from '../util/json-utils';
 
+/* global d3 */
+
 export default class Base {
 
   constructor({ verbose = false, appendTo = 'body', callbackHandler }) {
@@ -18,6 +20,9 @@ export default class Base {
     }
     if (!this.options.appendTo && !appendTo) {
       throw new Error('Missing an element or id to append the graphics to...!');
+    }
+    if (typeof appendTo === 'string') {
+      appendTo = d3.select(appendTo);
     }
     /**
      * @typedef {Object} Options

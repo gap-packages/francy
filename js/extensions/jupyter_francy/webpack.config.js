@@ -93,7 +93,7 @@ module.exports = [
    * It must be an amd module
    */
   Object.assign({}, base, {
-    entry: path.join(__dirname, 'src', 'francy.bundle.js'),
+    entry: path.join(__dirname, 'src', 'francy.bundle.min.js'),
     output: Object.assign({}, base.output, {
       filename: 'francy.js',
       path: path.join(

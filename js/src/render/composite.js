@@ -16,12 +16,9 @@ export default class Composite extends Renderer {
   }
 
   renderChildren() {
-    // update children rendering with a new parent!
-    let options = this.options;
-    options.appendTo = this;
     // render other components
     for (let renderer of this.renderers) {
-      renderer.settings(options).load(this.data).render();
+      renderer.settings({appendTo: this}).load(this.data).render();
     }
   }
 }

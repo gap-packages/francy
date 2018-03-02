@@ -1,5 +1,4 @@
 import Graph from './graph';
-import { RegisterMathJax } from '../util/component';
 import { initialize } from '../util/initialize-decorator';
 
 /* global d3 */
@@ -169,8 +168,6 @@ export default class TreeGraph extends Graph {
         }
         update.call(self, d);
       }
-
-      RegisterMathJax(this.SVGParent);
 
       setTimeout(() => {
         this.parent.zoomToFit();
