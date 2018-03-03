@@ -146,9 +146,10 @@ DeclareOperation("DrawSplash", [IsCanvas]);
 #! @Description
 #! This <C>rec</C> holds all the default setting for a canvas
 BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
-  width     := 800,
-  height    := 600,
-  zoomToFit := true
+  width          := 800,
+  height         := 600,
+  zoomToFit      := true,
+  texTypesetting := false
 )));
 
 #############################################################################

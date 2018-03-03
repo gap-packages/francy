@@ -47,11 +47,11 @@ export default class MathJaxWrapper extends Renderer {
                 let bound = svgMathJaxElement.select('g').node().getBoundingClientRect();
                 svgMathJaxElement.attr('x', -bound.width / 2);
                 svgMathJaxElement.attr('y', -15);
-              }, 10);
+              }, 50);
               d3.select(mathJaxElement.node().parentNode.parentNode).append(function() {
                 return svgMathJaxElement.node();
               });
-            }, 10);
+            }, 25);
           }
         }
       });
