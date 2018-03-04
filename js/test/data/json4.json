@@ -5,6 +5,7 @@
     "height": "400",
     "id": "A8DCD5BBDED624AE18C514461B4AAEA75",
     "title": "Multi Chained Menu Gets Flatenned!",
+    "texTypesetting": true,
     "menus": {
       "1B09C45784694781CC3D3E68AF1F5CFF": {
         "id": "1B09C45784694781CC3D3E68AF1F5CFF",
@@ -83,7 +84,7 @@
           "type": "diamond",
           "size": 10,
           "id": "85A237CE30554A1FF46170E35B1B80BD",
-          "title": "${ax^2 = 0}$",
+          "title": "$x^2$",
           "layer": 0,
           "menus": {
             "366688A254054F9AFC43A6EA5008CAD2": {

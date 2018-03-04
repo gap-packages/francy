@@ -146,9 +146,10 @@ DeclareOperation("DrawSplash", [IsCanvas]);
 #! @Description
 #! This <C>rec</C> holds all the default setting for a canvas
 BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
-  width     := 800,
-  height    := 600,
-  zoomToFit := true
+  width          := 800,
+  height         := 600,
+  zoomToFit      := true,
+  texTypesetting := false
 )));
 
 #############################################################################
@@ -195,3 +196,13 @@ InstallMethod(Title, "canvas", [IsCanvas], o -> o!.title);
 #! Sets the title of the required arg.
 #! @Arguments IsCanvas, IsString
 InstallMethod(SetTitle, "canvas, string", [IsCanvas, IsString], function(o, s) o!.title := s; end);
+
+#! @Description
+#! Enables Tex typestting on the client implementation
+#! @Returns <C>IsBool</C> with the title of the object
+DeclareAttribute("TexTypesetting", IsCanvas);
+InstallMethod(TexTypesetting, "canvas", [IsCanvas], o -> o!.texTypesetting);
+#! @Description
+#! Sets Tex typestting on the canvas objects
+#! @Arguments IsCanvas, IsBool
+InstallMethod(SetTexTypesetting, "canvas, boolean", [IsCanvas, IsBool], function(o, b) o!.texTypesetting := b; end);

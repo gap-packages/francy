@@ -12,7 +12,7 @@ let ALL_CANVAS = {};
  *  
  * @access public
  * 
- * @version 0.5.0
+ * @version 0.5.x
  * 
  * @example
  * let francy = new Francy({verbose: true, appendTo: '#div-id', callbackHandler: console.log});

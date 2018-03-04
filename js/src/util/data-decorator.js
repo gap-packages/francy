@@ -14,6 +14,22 @@ export function requires(props) {
   };
 }
 
+export function enabled(props) {
+  return function decorator(target, name, descriptor) {
+    var oldValue = descriptor.value;
+
+    descriptor.value = function() {
+      if (!getProperty(this.data, props)) {
+        this.logger.debug(`No data here [${props}], nothing to render... continuing...`);
+        return;
+      }
+      return oldValue.apply(this, arguments);
+    };
+
+    return descriptor;
+  };
+}
+
 function getProperty(obj, propertyPath) {
 
   var tmp = obj;

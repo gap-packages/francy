@@ -1,11 +1,15 @@
 {
   "name": "jupyter_francy",
-  "version": "0.5.2",
+  "version": "0.5.4",
   "description": "A package for rendering application/vnd.francy+json in Jupyter",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "main": "lib/index.js",
   "keywords": [
     "jupyter",
+    "francy",
+    "gap",
+    "jupyter notebook",
+    "jupyter notebook extension",
     "jupyterlab",
     "jupyterlab extension"
   ],

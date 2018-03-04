@@ -1,4 +1,5 @@
 import Renderer from './renderer';
+import MathJaxWrapper from './mathjax-wrapper';
 import ContextMenu from './menu-context';
 import Tooltip from './tooltip';
 import Callback from './callback';
@@ -21,31 +22,34 @@ export default class Graph extends Renderer {
     let tooltip = new Tooltip(this.options);
     let contextMenu = new ContextMenu(this.options);
     let callback = new Callback(this.options);
+    let mathjax = new MathJaxWrapper(this.options);
 
     element
       .on('contextmenu', function(d) {
-        d = d.data || d;
+        let data = d.data || d;
         // default, build context menu
-        contextMenu.load(d, true).render();
+        contextMenu.load(data, true).render();
         // any callbacks will be handled here
-        executeCallback.call(this, d, 'contextmenu');
+        executeCallback.call(this, data, 'contextmenu');
       })
       .on('click', function(d) {
-        d = d.data || d;
+        let data = d.data || d;
         // any callbacks will be handled here
-        executeCallback.call(this, d, 'click');
+        executeCallback.call(this, data, 'click');
       })
       .on('dblclick', function(d) {
-        d = d.data || d;
+        let data = d.data || d;
         // any callbacks will be handled here
-        executeCallback.call(this, d, 'dblclick');
+        executeCallback.call(this, data, 'dblclick');
       })
-      .on('mouseenter', d => {
-        d = d.data || d;
+      .on('mouseover', d => {
+        let data = d.data || d;
         // default, show tooltip
-        tooltip.load(d.messages, true).render();
+        tooltip.load(data.messages, true).render();
+        // add to do it here because of this.data to check for property canvas.texTypesetting 
+        mathjax.settings({appendTo: tooltip}).load(this.data).render();
       })
-      .on('mouseleave', () => {
+      .on('mouseout', () => {
         // default, hide tooltip
         tooltip.unrender();
       });
