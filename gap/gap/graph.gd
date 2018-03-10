@@ -42,6 +42,10 @@ DeclareCategory("IsShapeDefaults", IsFrancyDefaultObject);
 #! Identifies <C>Link</C> objects.
 DeclareCategory("IsLink", IsFrancyObject);
 
+#! @Description
+#! Identifies <C>LinkDefaults</C> objects.
+DeclareCategory("IsLinkDefaults", IsFrancyDefaultObject);
+
 
 #############################################################################
 ##
@@ -96,6 +100,10 @@ DeclareRepresentation("IsShapeTypeRep", IsComponentObjectRep, [], IsShapeType);
 #! Checks whether an <C>Object</C> has a <C>Link</C> internal representation.
 DeclareRepresentation("IsLinkRep", IsComponentObjectRep, [], IsLink);
   
+#! @Description
+#! Checks whether an <C>Object</C> has a <C>LinkDeafults</C> internal representation.
+DeclareRepresentation("IsLinkDefaultsRep", IsComponentObjectRep, [], IsLinkDefaults);
+
 #! @Description
 #! Creates a new type for <C>FrancyGraph/C> objects.
 BindGlobal("FrancyGraphObjectType", NewType(GraphFamily, IsFrancyGraph and IsFrancyGraphRep));
@@ -217,14 +225,14 @@ DeclareOperation("Shape", [IsShapeType, IsString, IsShapeDefaults]);
 #! <P/>
 #! @Arguments IsShape IsShape
 #! @Returns <C>Link</C>
-DeclareOperation("Link", [IsShape, IsShape]);
+DeclareOperation("Link", [IsShape, IsShape, IsLinkDefaults]);
 
 #! @Description
 #! Creates a <C>Link</C> between the <C>Shape</C> of the first list and the second list.
 #! <P/>
 #! @Arguments List(IsShape), List(IsShape)
 #! @Returns <C>List(Link)</C>
-DeclareOperation("Links", [IsList, IsList]);
+DeclareOperation("Links", [IsList, IsList, IsLinkDefaults]);
 
 #############################################################################
 ##
@@ -268,10 +276,19 @@ BindGlobal("ShapeType", rec(
 #! The default configuration for a shape.
 #! @Returns <C>rec</C> of <C>ShapeDefaults</C>
 BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and IsShapeDefaultsRep), rec(
+  color     := "",
   highlight := true,
   size      := 10,
   x         := 0,
   y         := 0 
+)));
+
+#! @Description
+#! The default configuration for a shape.
+#! @Returns <C>rec</C> of <C>ShapeDefaults</C>
+BindGlobal("LinkDefaults", Objectify(NewType(LinkFamily, IsLinkDefaults and IsLinkDefaultsRep), rec(
+  color  := "",
+  weight := 1
 )));
 
 
@@ -291,6 +308,16 @@ InstallMethod(Title, "shape", [IsShape], o -> o!.title);
 #! Sets the title of the Shape.
 #! @Arguments IsRequiredArg, IsString
 InstallMethod(SetTitle, "shape, string", [IsShape, IsString], function(o, s) o!.title := s; end);
+
+#! @Description
+#! The <C>Color</C> of the current shape.
+#! @Returns <C>IsInt</C>
+DeclareAttribute("Color", IsShape);
+InstallMethod(Color, "shape", [IsShape], o -> o!.color);
+#! @Description
+#! Sets the <C>Color</C> value.
+#! @Arguments IsShape, IsString
+InstallMethod(SetColor, "shape, string", [IsShape, IsString], function(o, s) o!.color := s; end);
 
 #! @Description
 #! The Position in the X Axis of the Shape in the Canvas in pixels
@@ -396,3 +423,33 @@ InstallMethod(ShowNeighbours, "graph", [IsFrancyGraph], o -> o!.showNeighbours);
 #! Sets the <C>ShowNeighbours</C> behavior.
 #! @Arguments IsCanvas, IsBool
 InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) if o!.type = "tree" then Error("Only supported by GraphType TREE!"); fi; o!.showNeighbours := b; end);
+
+#! @Description
+#! The <C>Weight</C> of the current link.
+#! @Returns <C>IsInt</C>
+DeclareAttribute("Weight", IsLink);
+InstallMethod(Weight, "link", [IsLink], o -> o!.weight);
+#! @Description
+#! Sets the <C>Weight</C> value.
+#! @Arguments IsLink, IsInt
+InstallMethod(SetWeight, "link, int", [IsLink, IsInt], function(o, i) o!.weight := i; end);
+
+#! @Description
+#! The <C>Color</C> of the current link.
+#! @Returns <C>IsInt</C>
+DeclareAttribute("Color", IsLink);
+InstallMethod(Color, "link", [IsLink], o -> o!.color);
+#! @Description
+#! Sets the <C>Color</C> value.
+#! @Arguments IsShape, IsString
+InstallMethod(SetColor, "link, string", [IsLink, IsString], function(o, s) o!.color := s; end);
+
+#! @Description
+#! The <C>Title</C> of the current link.
+#! @Returns <C>IsInt</C>
+DeclareAttribute("Title", IsLink);
+InstallMethod(Title, "link", [IsLink], o -> o!.title);
+#! @Description
+#! Sets the <C>Title</C> value.
+#! @Arguments IsShape, IsString
+InstallMethod(SetTitle, "link, int", [IsLink, IsString], function(o, s) o!.title := s; end);

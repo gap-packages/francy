@@ -133,7 +133,10 @@
         "4B5B4F8B7FFF40EB1CCB52D91AE1A625": {
           "source": "85A237CE30554A1FF46170E35B1B80BD",
           "id": "4B5B4F8B7FFF40EB1CCB52D91AE1A625",
-          "target": "1FA9D518A51B4422D4BCFDD58129403D"
+          "target": "1FA9D518A51B4422D4BCFDD58129403D",
+          "color": "red",
+          "weight": 5,
+          "title": "Wow"
         },
         "CF7A947230684DF1ACD7F5C1030A5179": {
           "source": "1FA9D518A51B4422D4BCFDD58129403D",

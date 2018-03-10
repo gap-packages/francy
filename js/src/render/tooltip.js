@@ -9,7 +9,7 @@ export default class Tooltip extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @requires()
+  @requires('messages')
   render() {
 
     this.element = this.HTMLParent.select('div.francy-tooltip-holder');
@@ -20,23 +20,21 @@ export default class Tooltip extends Renderer {
     }
 
     // check if it exists already
-    if (this.element.selectAll('*').node()) {
-      return;
-    }
+    if (this.element.selectAll('*').node()) return;
 
     let pos = d3.mouse(this.SVGParent.node());
 
-    // TODO fix always visible tooltip, fine until someone complains about :P
+    // TODO this won't be visible all the times, fine until someone complains about :P
     this.element.style('left', (pos[0] + 15) + 'px').style('top', (pos[1] - 15) + 'px');
 
     let table = this.element.append('div').attr('class', 'francy-tooltip')
       .append('div').attr('class', 'francy-table')
       .append('div').attr('class', 'francy-table-body');
-    let self = this;
-    Object.keys(this.data).map(function(key) {
+
+    Object.keys(this.data.messages).map((key) => {
       let row = table.append('div').attr('class', 'francy-table-row');
-      row.append('div').attr('class', 'francy-table-cell').text(self.data[key].title);
-      row.append('div').attr('class', 'francy-table-cell').text(self.data[key].text);
+      row.append('div').attr('class', 'francy-table-cell').text(this.data.messages[key].title);
+      row.append('div').attr('class', 'francy-table-cell').text(this.data.messages[key].text);
     });
 
     // show tooltip

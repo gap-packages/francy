@@ -14,6 +14,7 @@ export default class GenericGraph extends Graph {
     var self = this;
     
     let simulationActive = this.data.canvas.graph.simulation;
+    let radius = 0;
 
     let canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
       canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
@@ -21,7 +22,7 @@ export default class GenericGraph extends Graph {
     let linkGroup = this.element.selectAll('g.francy-links');
 
     if (!linkGroup.node()) {
-      linkGroup = this.element.append('g').attr('class', 'francy-links');
+      linkGroup = this.element.append('g').classed('francy-links', true);
     }
 
     let links = linkGroup.selectAll('g.francy-link').data();
@@ -32,7 +33,7 @@ export default class GenericGraph extends Graph {
     let nodeGroup = this.element.selectAll('g.francy-nodes');
 
     if (!nodeGroup.node()) {
-      nodeGroup = this.element.append('g').attr('class', 'francy-nodes');
+      nodeGroup = this.element.append('g').classed('francy-nodes', true);
     }
 
     let nodes = nodeGroup.selectAll('g.francy-node').data();
@@ -40,53 +41,85 @@ export default class GenericGraph extends Graph {
 
     let node = nodeGroup.selectAll('g.francy-node').data(nodesToAdd, d => d.id);
 
+    // this means no changes, so we can safely return
     if (node.exit().data().length === 0 &&
       node.enter().data().length === 0 &&
       link.enter().data().length === 0 &&
-      link.exit().data().length === 0) {
-      return;
-    }
+      link.exit().data().length === 0) return;
 
-    let linkEnter = link.enter().append('g').attr('class', 'francy-link');
+    let linkEnter = link.enter().append('g')
+      .classed('francy-link', true);
 
-    linkEnter.append('line').attr('class', 'francy-edge');
+    linkEnter.append('line')
+      .classed('francy-edge', true)
+      .style('stroke-width', d => {
+        if (d.weight >= 3) {
+          d.weight = 3; d.pos = 15;
+        } else if (d.weight <= 1) {
+          d.weight = 1; d.pos = 28;
+        } else {
+          d.pos = 18;
+        }
+        return d.weight;
+      })
+      .style('stroke', d => d.color || undefined);
+
+    linkEnter.append('text')
+      .classed('francy-label', true)
+      .classed('francy-size10', true)
+      .text(d => d.title)
+      .attr('text-anchor', 'middle');
 
     link.exit().remove();
 
-    link = linkGroup.selectAll('g.francy-link line.francy-edge');
+    link = linkGroup.selectAll('g.francy-link');
 
     if (this.data.canvas.graph.type === 'directed') {
       // this means we need arrows, so we append the marker
       self.parent.append('defs').selectAll('marker')
-        .data(['arrow'])
+        .data(linksToAdd)
         .enter().append('marker')
-        .attr('class', 'francy-arrows')
-        .attr('id', d => d)
-        .attr('viewBox', '0 -5 10 10')
-        .attr('refX', 25)
-        .attr('refY', 0)
-        .attr('markerWidth', 10)
-        .attr('markerHeight', 10)
+        .classed('francy-arrows', true)
+        .attr('id', d => `arrow-${d.id}`)
+        .attr('viewBox', '0 0 12 12')
+        .attr('refX', d  => d.pos)
+        .attr('refY', 6)
+        .attr('markerHeight', 12)
+        .attr('markerWidth', 12)
+        .attr('markerUnits', 'strokeWidth')
         .attr('orient', 'auto')
         .append('path')
-        .attr('d', 'M0,-5L10,0L0,5 L10,0 L0, -5');
+        .attr('d', 'M2,2 L10,6 L2,10 L6,6 L2,2')
+        .style('fill', d => d.color || undefined);
       // update the style of the link
-      link.style('marker-end', 'url(#arrow)');
+      link.selectAll('line.francy-edge').style('marker-end', d => `url(#arrow-${d.id})`);
     }
 
     let nodeEnter = node.enter().append('g')
-      .attr('class', 'francy-node').attr('id', d => d.id);
+      .classed('francy-node', true)
+      .attr('id', d => d.id);
 
     nodeEnter.append('path')
       .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
-      .style('fill', d => Graph.colors(d.layer * 5))
-      .attr('class', d => 'francy-symbol' + (d.highlight ? ' francy-highlight' : '') + (Object.values(d.menus).length ? ' francy-context' : ''));
+      .style('fill', d => d.color || Graph.colors(d.layer * 5))
+      .classed('francy-symbol', true)
+      .classed('francy-highlight', d => d.highlight)
+      .classed('francy-context', d => Object.values(d.menus).length && Object.values(d.menus).length > 0);
 
     nodeEnter.append('text')
-      .attr('class', 'francy-label')
+      .classed('francy-label', true)
       .text(d => d.title)
       .attr('x', function() {
+        // apply mathjax if this is the case
+        let text = d3.select(this);
+        if (text.text().startsWith('$') && text.text().endsWith('$')) {
+          self.mathjax.settings({appendTo: {element: text}}).renderSVG();
+        }
         let bound = this.getBBox();
+        // check the widest label so that we use it as default radius for colisions
+        if (radius < bound.width) {
+          radius = bound.width;
+        }
         return -(bound.width / 2);
       });
 
@@ -117,14 +150,6 @@ export default class GenericGraph extends Graph {
     }
 
     if (simulationActive) {
-      //iterate through the data and get the widest node group including label
-      let radius = 0;
-      node.each(function(){
-        let bound = this.getBBox();
-        if (radius < bound.width) {
-          radius = bound.width;
-        }
-      });
       //Canvas Forces
       //let centerForce = d3.forceCenter().x(this.width / 2).y(this.height / 2);
       let manyForce = d3.forceManyBody().strength(-canvasNodes.length * 75);
@@ -138,9 +163,9 @@ export default class GenericGraph extends Graph {
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
-        forceX = d3.forceX(this.width).strength(0.4);
+        //forceX = d3.forceX(this.width).strength(0.4);
         //Strong y positioning based on layer to simulate the hasse diagram
-        forceY = d3.forceY(d => d.layer * 75).strength(0.7);
+        forceY = d3.forceY(d => d.layer * 75).strength(1);
       }
 
       var simulation = d3.forceSimulation().nodes(nodesToAdd)
@@ -165,11 +190,20 @@ export default class GenericGraph extends Graph {
     }
 
     function ticked() {
-      link
+      link.selectAll('line.francy-edge')
         .attr('x1', d => d.source.x)
         .attr('y1', d => d.source.y)
         .attr('x2', d => d.target.x)
         .attr('y2', d => d.target.y);
+
+      link.selectAll('text.francy-label')
+        .attr('x', function(d) { 
+          return Graph.linkXPos(d.target, d.source); 
+          
+        })
+        .attr('y', function(d) { 
+          return Graph.linkYPos(d.target, d.source); 
+        });
 
       node.attr('transform', d => `translate(${d.x},${d.y})`);
     }

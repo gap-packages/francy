@@ -57,7 +57,7 @@ export default class TreeGraph extends Graph {
       let nodes = treeData.descendants(),
         links = treeData.descendants().slice(1);
 
-      nodes.forEach(d => d.y = d.depth * 180);
+      nodes.forEach(d => d.y = d.depth * 150);
 
       let linkGroup = this.element.selectAll('g.francy-links');
 

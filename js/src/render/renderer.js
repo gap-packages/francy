@@ -1,4 +1,5 @@
 import Base from './base';
+import MathJaxWrapper from './mathjax-wrapper';
 
 /* global d3 */
 
@@ -15,6 +16,7 @@ export default class Renderer extends Base {
     if (this.unrender === undefined) {
       this.logger.debug('No [unrender()] method specified...');
     }
+    this.mathjaxWrapper = new MathJaxWrapper(this.options);
     this.element = undefined;
     this.transitionDuration = 750; //ms
   }
@@ -22,15 +24,11 @@ export default class Renderer extends Base {
   _initialize() {}
 
   get HTMLParent() {
-    return this.options.appendTo.element.node().tagName.toLowerCase() === 'svg' ? d3.select(this.options.appendTo.element.node().parentNode) : this.options.appendTo.element;
+    return this.parent.node().tagName.toLowerCase() === 'svg' ? d3.select(this.parent.node().parentNode) : this.parent;
   }
 
   get SVGParent() {
-    return this.options.appendTo.element.node().tagName.toLowerCase() === 'div' ? this.options.appendTo.element.select('svg') : this.options.appendTo.element;
-  }
-  
-  get parent() {
-    return this.options.appendTo.element;
+    return this.parent.node().tagName.toLowerCase() === 'div' ? this.parent.select('svg') : this.parent;
   }
   
   get margin() {
@@ -45,6 +43,10 @@ export default class Renderer extends Base {
   get height() {
     let height = +this.parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
     return height - this.margin.top - this.margin.bottom;
+  }
+  
+  get mathjax() {
+    return this.mathjaxWrapper.load(this.data);
   }
 
 }

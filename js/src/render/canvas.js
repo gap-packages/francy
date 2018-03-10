@@ -9,9 +9,9 @@ export default class Canvas extends Composite {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
-    this.graph = new GraphFactory(this.options);
+    this.graphFactory = new GraphFactory(this.options);
     this.chartFactory = new ChartFactory(this.options);
-    this.add(this.graph).add(this.chartFactory);
+    this.add(this.graphFactory).add(this.chartFactory);
   }
 
   @requires('canvas')
