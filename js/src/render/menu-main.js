@@ -36,7 +36,7 @@ export default class MainMenu extends Menu {
     let entry = this.element.append('li');
     entry.append('a').html('Francy');
     let content = entry.append('ul');
-    content.append('li').append('a').on('click', () => this.options.appendTo.canvas.zoomToFit()).attr('title', 'Zoom to Fit').html('Zoom to Fit');
+    content.append('li').append('a').on('click', () => this.options.appendTo.canvas.zoomToFit(true)).attr('title', 'Zoom to Fit').html('Zoom to Fit');
     content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(this.SVGParent.node(), 'diagram.png')).attr('title', 'Save to PNG').html('Save to PNG');
     content.append('li').append('a').on('click', () => aboutModal.load(this.data).render()).attr('title', 'About').html('About');
 

@@ -34,9 +34,9 @@ export default class Canvas extends Composite {
       }
     }
 
-    function zoomToFit() {
+    function zoomToFit(force) {
       // only execute if enable, of course
-      if (self.data.canvas.zoomToFit) {
+      if (self.data.canvas.zoomToFit || force) {
         let bounds = content.node().getBBox();
 
         let clientBounds = self.element.node().getBoundingClientRect(),

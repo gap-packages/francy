@@ -84,11 +84,16 @@
     d3.json("json11.json", function(error, json) {
       let element = francy.load(json).render();
       document.getElementsByTagName('body')[0].appendChild(element);
-      setInterval(function() {
+      setTimeout(function() {
         d3.json("json11.1.json", function(error, json) {
           francy.load(json).render();
+          setInterval(function() {
+            d3.json("json11.2.json", function(error, json) {
+              francy.load(json).render();
+            });
+          }, 5000);
         });
-      }, 10000);
+      }, 5000);
     });
 
     d3.json("json12.json", function(error, json) {

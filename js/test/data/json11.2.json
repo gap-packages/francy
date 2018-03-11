@@ -347,6 +347,138 @@
             }
           }
         },
+        "〈3,13,14〉": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 1,
+          "id": "〈3,13,14〉",
+          "title": "〈3,13,14〉",
+          "layer": 8,
+          "color": "",
+          "highlight": true,
+          "parent": "",
+          "menus": {},
+          "messages": {
+            "F338": {
+              "type": "default",
+              "id": "F338",
+              "text": "[ 3, 13, 14 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "F337": {
+              "func": "unknown",
+              "id": "F337",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>"
+              ],
+              "requiredArgs": {}
+            }
+          }
+        },
+        "〈3,11,16〉": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 1,
+          "id": "〈3,11,16〉",
+          "title": "〈3,11,16〉",
+          "layer": 8,
+          "color": "",
+          "highlight": true,
+          "parent": "",
+          "menus": {},
+          "messages": {
+            "F342": {
+              "type": "default",
+              "id": "F342",
+              "text": "[ 3, 11, 16 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "F341": {
+              "func": "unknown",
+              "id": "F341",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>"
+              ],
+              "requiredArgs": {}
+            }
+          }
+        },
+        "〈3,14,16〉": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 1,
+          "id": "〈3,14,16〉",
+          "title": "〈3,14,16〉",
+          "layer": 9,
+          "color": "",
+          "highlight": true,
+          "parent": "",
+          "menus": {},
+          "messages": {
+            "F346": {
+              "type": "default",
+              "id": "F346",
+              "text": "[ 3, 14, 16 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "F345": {
+              "func": "unknown",
+              "id": "F345",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>"
+              ],
+              "requiredArgs": {}
+            }
+          }
+        },
+        "〈3,13,17〉": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 1,
+          "id": "〈3,13,17〉",
+          "title": "〈3,13,17〉",
+          "layer": 9,
+          "color": "",
+          "highlight": true,
+          "parent": "",
+          "menus": {},
+          "messages": {
+            "F350": {
+              "type": "default",
+              "id": "F350",
+              "text": "[ 3, 13, 17 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "F349": {
+              "func": "unknown",
+              "id": "F349",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>"
+              ],
+              "requiredArgs": {}
+            }
+          }
+        },
         "F291": {
           "x": 0,
           "y": 0,
@@ -368,6 +500,138 @@
             }
           },
           "callbacks": {}
+        },
+        "〈3,13,20〉": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 1,
+          "id": "〈3,13,20〉",
+          "title": "〈3,13,20〉",
+          "layer": 10,
+          "color": "",
+          "highlight": true,
+          "parent": "",
+          "menus": {},
+          "messages": {
+            "F354": {
+              "type": "default",
+              "id": "F354",
+              "text": "[ 3, 13, 20 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "F353": {
+              "func": "unknown",
+              "id": "F353",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>"
+              ],
+              "requiredArgs": {}
+            }
+          }
+        },
+        "〈3,11,19〉": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 1,
+          "id": "〈3,11,19〉",
+          "title": "〈3,11,19〉",
+          "layer": 9,
+          "color": "",
+          "highlight": true,
+          "parent": "",
+          "menus": {},
+          "messages": {
+            "F358": {
+              "type": "default",
+              "id": "F358",
+              "text": "[ 3, 11, 19 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "F357": {
+              "func": "unknown",
+              "id": "F357",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>"
+              ],
+              "requiredArgs": {}
+            }
+          }
+        },
+        "〈3,16,17〉": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 1,
+          "id": "〈3,16,17〉",
+          "title": "〈3,16,17〉",
+          "layer": 10,
+          "color": "",
+          "highlight": true,
+          "parent": "",
+          "menus": {},
+          "messages": {
+            "F362": {
+              "type": "default",
+              "id": "F362",
+              "text": "[ 3, 16, 17 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "F361": {
+              "func": "unknown",
+              "id": "F361",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>"
+              ],
+              "requiredArgs": {}
+            }
+          }
+        },
+        "〈3,14,19〉": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 1,
+          "id": "〈3,14,19〉",
+          "title": "〈3,14,19〉",
+          "layer": 10,
+          "color": "",
+          "highlight": true,
+          "parent": "",
+          "menus": {},
+          "messages": {
+            "F366": {
+              "type": "default",
+              "id": "F366",
+              "text": "[ 3, 14, 19 ]",
+              "title": ""
+            }
+          },
+          "callbacks": {
+            "F365": {
+              "func": "unknown",
+              "id": "F365",
+              "trigger": "click",
+              "knownArgs": [
+                "<object>",
+                "<object>"
+              ],
+              "requiredArgs": {}
+            }
+          }
         }
       },
       "links": {
@@ -440,9 +704,78 @@
           "id": "F333",
           "color": "",
           "target": "〈3,8〉"
+        },
+        "F339": {
+          "source": "〈3,11,13〉",
+          "weight": 1,
+          "id": "F339",
+          "color": "",
+          "target": "〈3,13,14〉"
+        },
+        "F343": {
+          "source": "〈3,11,13〉",
+          "weight": 1,
+          "id": "F343",
+          "color": "",
+          "target": "〈3,11,16〉"
+        },
+        "F347": {
+          "source": "〈3,13,14〉",
+          "weight": 1,
+          "id": "F347",
+          "color": "",
+          "target": "〈3,14,16〉"
+        },
+        "F351": {
+          "source": "〈3,13,14〉",
+          "weight": 1,
+          "id": "F351",
+          "color": "",
+          "target": "〈3,13,17〉"
+        },
+        "F355": {
+          "source": "〈3,13,17〉",
+          "weight": 1,
+          "id": "F355",
+          "color": "",
+          "target": "〈3,13,20〉"
+        },
+        "F359": {
+          "source": "〈3,11,16〉",
+          "weight": 1,
+          "id": "F359",
+          "color": "",
+          "target": "〈3,11,19〉"
+        },
+        "F363": {
+          "source": "〈3,14,16〉",
+          "weight": 1,
+          "id": "F363",
+          "color": "",
+          "target": "〈3,16,17〉"
+        },
+        "F367": {
+          "source": "〈3,14,16〉",
+          "weight": 1,
+          "id": "F367",
+          "color": "",
+          "target": "〈3,14,19〉"
         }
       }
     },
-    "messages": {}
+    "messages": {
+      "F334": {
+        "type": "warning",
+        "id": "F334",
+        "text": "This semigroup is a leaf",
+        "title": ""
+      },
+      "F335": {
+        "type": "warning",
+        "id": "F335",
+        "text": "This semigroup is a leaf",
+        "title": ""
+      }
+    }
   }
 }

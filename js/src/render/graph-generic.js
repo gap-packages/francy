@@ -152,18 +152,18 @@ export default class GenericGraph extends Graph {
     if (simulationActive) {
       //Canvas Forces
       //let centerForce = d3.forceCenter().x(this.width / 2).y(this.height / 2);
-      let manyForce = d3.forceManyBody().strength(-canvasNodes.length * 75);
+      let manyForce = d3.forceManyBody().strength(-nodesToAdd.length * 75);
       let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(75);
-      let collideForce = d3.forceCollide().radius(radius/2).iterations(3);
+      let collideForce = d3.forceCollide().strength(0.25).radius(radius/2).iterations(3);
 
       //Generic gravity for the X position
       let forceX = d3.forceX(this.width).strength(0.05);
       //Generic gravity for the Y position - undirected/directed graphs fall here
-      let forceY = d3.forceY(-this.height).strength(0.25);
+      let forceY = d3.forceY(this.height).strength(0.25);
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
-        //forceX = d3.forceX(this.width).strength(0.4);
+        forceX = d3.forceX(this.width).strength(0.1);
         //Strong y positioning based on layer to simulate the hasse diagram
         forceY = d3.forceY(d => d.layer * 75).strength(1);
       }
@@ -176,10 +176,7 @@ export default class GenericGraph extends Graph {
         .force('y', forceY)
         .force('collide', collideForce)
         .on('tick', ticked)
-        .on('end', function() {
-          // zoom to fit when simulation is over
-          self.parent.zoomToFit();
-        });
+        .on('end', self.parent.zoomToFit);
 
       //force simulation restart
       simulation.restart();
