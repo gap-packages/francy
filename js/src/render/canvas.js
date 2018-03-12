@@ -9,9 +9,9 @@ export default class Canvas extends Composite {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
-    this.graph = new GraphFactory(this.options);
+    this.graphFactory = new GraphFactory(this.options);
     this.chartFactory = new ChartFactory(this.options);
-    this.add(this.graph).add(this.chartFactory);
+    this.add(this.graphFactory).add(this.chartFactory);
   }
 
   @requires('canvas')
@@ -34,9 +34,9 @@ export default class Canvas extends Composite {
       }
     }
 
-    function zoomToFit() {
+    function zoomToFit(force) {
       // only execute if enable, of course
-      if (self.data.canvas.zoomToFit) {
+      if (self.data.canvas.zoomToFit || force) {
         let bounds = content.node().getBBox();
 
         let clientBounds = self.element.node().getBoundingClientRect(),

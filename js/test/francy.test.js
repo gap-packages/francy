@@ -17,6 +17,16 @@ import json11 from './data/json11.json';
 describe("A simple window", () => {
   
   window.d3 = global.d3 = d3;
+  global.MathJax = window.MathJax = {
+      Hub: {
+        Config: c=>c,
+        Register: {
+          MessageHook: c=>c
+        },
+        Configured: () => {},
+        Queue: c=>c
+      }
+  };
 
   window.francy = new Francy({ verbose: true, callbackHandler: console.log, appendTo: 'body' });
 

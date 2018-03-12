@@ -1,118 +1,125 @@
 {
-  "version": "0.5.0",
+  "version": "0.5.4",
   "mime": "application/vnd.francy+json",
   "canvas": {
-    "width": "800",
-    "height": "600",
-    "id": "A29",
+    "width": 800,
+    "height": 600,
+    "id": "F301",
     "title": "Sons of a numerical semigroup",
     "zoomToFit": true,
+    "texTypesetting": false,
     "menus": {},
     "graph": {
       "type": "hasse",
-      "collapse": true,
-      "id": "A30",
+      "id": "F290",
       "simulation": true,
+      "collapsed": true,
       "drag": false,
+      "showNeighbours": false,
       "nodes": {
-        "A31": {
+        "〈3,7,8〉": {
           "x": 0,
           "y": 0,
           "type": "circle",
-          "size": 10,
-          "id": "A31",
-          "title": "S",
-          "layer": 3,
-          "highlight": true,
-          "menus": {},
-          "messages": {
-            "A32": {
-              "type": "default",
-              "id": "A32",
-              "text": "[ 3, 5, 7 ]",
-              "title": ""
-            }
-          },
-          "callbacks": {},
-          "parent": ""
-        },
-        "A33": {
-          "x": 0,
-          "y": 0,
-          "type": "circle",
-          "size": 10,
-          "id": "A33",
-          "title": "S:1",
+          "size": 1,
+          "id": "〈3,7,8〉",
+          "title": "〈3,7,8〉",
           "layer": 4,
+          "color": "",
           "highlight": true,
+          "parent": "",
           "menus": {},
           "messages": {
-            "A35": {
+            "F295": {
               "type": "default",
-              "id": "A35",
+              "id": "F295",
               "text": "[ 3, 7, 8 ]",
               "title": ""
             }
           },
           "callbacks": {
-            "A34": {
+            "F294": {
               "func": "unknown",
-              "id": "A34",
+              "id": "F294",
               "trigger": "click",
               "knownArgs": [
                 "<object>",
-                "<object>",
-                "S:1"
+                "<object>"
               ],
               "requiredArgs": {}
             }
-          },
-          "parent": ""
+          }
         },
-        "A37": {
+        "〈3,5〉": {
           "x": 0,
           "y": 0,
           "type": "circle",
-          "size": 10,
-          "id": "A37",
-          "title": "S:2",
+          "size": 1,
+          "id": "〈3,5〉",
+          "title": "〈3,5〉",
           "layer": 4,
+          "color": "",
           "highlight": true,
+          "parent": "",
           "menus": {},
           "messages": {
-            "A39": {
+            "F299": {
               "type": "default",
-              "id": "A39",
+              "id": "F299",
               "text": "[ 3, 5 ]",
               "title": ""
             }
           },
           "callbacks": {
-            "A38": {
+            "F298": {
               "func": "unknown",
-              "id": "A38",
+              "id": "F298",
               "trigger": "click",
               "knownArgs": [
                 "<object>",
-                "<object>",
-                "S:2"
+                "<object>"
               ],
               "requiredArgs": {}
             }
+          }
+        },
+        "F291": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 1,
+          "id": "F291",
+          "title": "〈3,5,7〉",
+          "layer": 3,
+          "color": "",
+          "highlight": true,
+          "parent": "",
+          "menus": {},
+          "messages": {
+            "F292": {
+              "type": "default",
+              "id": "F292",
+              "text": "[ 3, 5, 7 ]",
+              "title": ""
+            }
           },
-          "parent": ""
+          "callbacks": {}
         }
       },
       "links": {
-        "A36": {
-          "source": "A31",
-          "id": "A36",
-          "target": "A33"
+        "F296": {
+          "source": "F291",
+          "weight": 1,
+          "id": "F296",
+          "color": "",
+          "target": "〈3,7,8〉"
         },
-        "A40": {
-          "source": "A31",
-          "id": "A40",
-          "target": "A37"
+        "F300": {
+          "source": "F291",
+          "weight": 1,
+          "id": "F300",
+          "color": "",
+          "target": "〈3,5〉"
         }
       }
     },

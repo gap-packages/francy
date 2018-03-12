@@ -30,13 +30,13 @@ export default class Francy extends Renderer {
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
     if (!d3) {
-      throw new Error('D3 is not imported! Francy won\'t work without it... please import D3 v4+.');
+      throw new Error('D3 is not imported and Francy won\'t work without it... please import D3 v4+ library.');
     }
   }
 
   /**
-   * Main entry point. Calling render passing a json representation string will 
-   * trigger the drawing of a json object.
+   * Main entry point. Calling render will trigger the drawing of a json object 
+   * passed through the load method.
    * @returns {Object} the html element created
    */
   @requires('canvas')
@@ -55,9 +55,9 @@ try {
   exports.Francy = window.Francy = Francy;
   // handle events on resize
   let oldResize = window.onresize;
-  window.onresize = function() {
+  window.onresize = () => {
     // zoom to fit all canvas on resize
-    Object.values(ALL_CANVAS).forEach(function(frame) {
+    Object.values(ALL_CANVAS).forEach((frame) => {
       frame.canvas.zoomToFit();
     });
     // call old resize function if any!

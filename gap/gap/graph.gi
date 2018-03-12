@@ -288,33 +288,54 @@ end);
 #M  Link( <obj1>, <obj2> )
 ##
 InstallMethod(Link,
+  "a shape, another shape, link defaults",
+  true,
+  [IsShape,
+   IsShape,
+   IsLinkDefaults],
+  0,
+function(source, target, options)
+  return MergeObjects(Objectify(LinkObjectType, rec(
+    id     := GenerateID(),
+    source := source!.id,
+    target := target!.id
+  )), options);
+end);
+
+InstallOtherMethod(Link,
   "a shape, another shape",
   true,
   [IsShape,
    IsShape],
   0,
-
 function(source, target)
-  return Objectify(LinkObjectType, rec(
-    id     := GenerateID(),
-    source := source!.id,
-    target := target!.id
-  ));
+  return Link(source, target, LinkDefaults);
 end);
 
 InstallMethod(Links,
   "a list of shape, a list of shape",
   true,
   [IsList,
-   IsList],
+   IsList,
+   IsLinkDefaults],
   0,
-function(source, target)
+function(source, target, options)
   local list, src, tgt;
   list := [];
   for src in source do
     for tgt in target do
-      AddSet(list, Link(src, tgt));
+      AddSet(list, Link(src, tgt, options));
     od;
   od;
   return list;
+end);
+
+InstallOtherMethod(Links,
+  "a list of shape, a list of shape",
+  true,
+  [IsList,
+   IsList],
+  0,
+function(source, target)
+  return Links(source, target, LinkDefaults);
 end);

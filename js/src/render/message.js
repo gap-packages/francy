@@ -42,6 +42,9 @@ export default class Message extends Renderer {
     message.exit().remove();
 
     this.element.style('display', 'block');
+    
+    // render mathjax
+    this.mathjax.settings({appendTo: this}).renderHTML();
 
     return this;
   }

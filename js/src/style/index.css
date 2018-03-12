@@ -5,9 +5,13 @@
   border: solid 1px #cfcfcf
 }
 
+.francy-size10 {
+  font-size: 10px!important
+}
+
 .francy-highlight:hover {
   stroke: #fffd00;
-  stroke-width: 2px
+  stroke-width: 2
 }
 
 .francy-context {
@@ -18,10 +22,9 @@
   cursor: auto
 }
 
-.francy-links line,
-.francy-arrows path {
+.francy-links line {
   stroke: #999;
-  stroke-opacity: .6
+  fill: #999
 }
 
 .francy a {

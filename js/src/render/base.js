@@ -6,7 +6,18 @@ import JsonUtils from '../util/json-utils';
 export default class Base {
 
   constructor({ verbose = false, appendTo = 'body', callbackHandler }) {
+    /**
+     * @typedef {Object} Options
+     * @property {Boolean} verbose prints extra log information to console.log, default false
+     * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
+     * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
+     */
+    this.options = undefined;
     this.settings({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+    /**
+     * @Type {Object} the internal data model object
+     */
+    this.data = undefined;
     /**
      * @type {Logger} the logger for this class
      */
@@ -24,12 +35,6 @@ export default class Base {
     if (typeof appendTo === 'string') {
       appendTo = d3.select(appendTo);
     }
-    /**
-     * @typedef {Object} Options
-     * @property {Boolean} verbose prints extra log information to console.log, default false
-     * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
-     * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
-     */
     this.options.verbose = verbose || this.options.verbose;
     this.options.appendTo = appendTo || this.options.appendTo;
     this.options.callbackHandler = callbackHandler || this.options.callbackHandler;
@@ -42,6 +47,10 @@ export default class Base {
       this.data = data;
     }
     return this;
+  }
+
+  get parent() {
+    return this.options.appendTo.element;
   }
 
   get logger() {

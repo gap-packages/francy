@@ -11,21 +11,14 @@ export default class JsonUtils {
    */
   static parse(input, partial = false) {
     if (!input) return;
-    input = typeof input !== 'string' ? JSON.stringify(input) : input;
-    input = input.replace(/[\n\r\b\\]+|(gap>)/g, '');
-    let jsonRegex = /{(?:[^])*}/g;
-    let match = jsonRegex.exec(input);
-    if (match) {
-      input = match[0];
-      try {
-        let json = JSON.parse(input);
-        return json.mime === JsonUtils.MIME || partial ? json : undefined;
-      } catch (e) {
-        /* eslint-disable no-console */
-        console.error(e);
-        /* eslint-enable no-console */
-      }
+    if (typeof input === 'string') {
+      input = input.replace(/[\n\r\b]+|(gap>)/g, '');
+      let jsonRegex = /{(?:[^])*}/g;
+      let match = jsonRegex.exec(input);
+      if (!match) return;
+      input = JSON.parse(match[0]);
     }
+    return input.mime === JsonUtils.MIME || partial ? input : undefined;
   }
 
   /**

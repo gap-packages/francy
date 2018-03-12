@@ -15,7 +15,7 @@ export default class ContextMenu extends Menu {
     d3.event.preventDefault();
 
     this.element = this.HTMLParent.select('div.francy-context-menu-holder');
-    // check if the window is already present
+    // check if the menu holder is already present
     if (!this.element.node()) {
       this.element = this.HTMLParent.append('div')
         .attr('class', 'francy-context-menu-holder');
@@ -29,9 +29,7 @@ export default class ContextMenu extends Menu {
     this.element.style('display', 'block');
 
     // check if it exists already
-    if (this.element.selectAll('*').node()) {
-      return;
-    }
+    if (this.element.selectAll('*').node()) return;
 
     // destroy menu
     d3.select('body').on('click.francy-context-menu', () => this.unrender());

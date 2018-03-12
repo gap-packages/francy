@@ -20,7 +20,7 @@ export function enabled(props) {
 
     descriptor.value = function() {
       if (!getProperty(this.data, props)) {
-        this.logger.debug(`No data here [${props}], nothing to render... continuing...`);
+        this.logger.debug(`Property disabled [${props}], skip execution... continuing...`);
         return;
       }
       return oldValue.apply(this, arguments);

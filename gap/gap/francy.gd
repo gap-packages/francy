@@ -10,11 +10,18 @@
 #! tools / libraries / frameworks to add a visual representation. This JSON
 #! representation defines the contract between this package (server) and a
 #! GUI framework (client), this enables complete SoC (Separation of Concerns).
+#! Francy can be used to provide a graphical interactive environment on existing
+#! GAP packages.
 #! <P/>
 #! A JSON schema is present and can be used to produce clients for this package.
 #! **See schema/francy.json**
-#! Francy can be used to provide a graphical interactive environment on existing
-#! GAP packages.
+#! <P/>
+#! To map required / optional attributes from the schema into GAP code, the 
+#! implementation follows the following criteria:
+#! - Object creation requests mandatory attributes, i.e. required with no default value, e.g. canvas:=Canvas("Title")
+#! - Object creation accepts an object of defaults, i.e. default values for mandatory fields but that might repeat througout the creation of multiple similar objects, e.g. defaults:=DefaultCanvas; defaults!.zoomToFit:=false; canvas:=Canvas("Title",defaults); Where DefaultCanvas contains defaults for width (800) and height (600)
+#! - Attributes associated with the object that can be set, .i.e. optional with no defaults, e.g. canvas:=Canvas("Title"); SetTexTypesetting(canvas,true);
+#! The API follows a common convention and adding objects to other objects is done using Add(objectHolder,object)
 #! <P/>
 #! Although Francy has the concept of a <C>Graph</C>, it does not implement any 
 #! Mathematics Graphs Theory.

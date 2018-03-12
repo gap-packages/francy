@@ -11,7 +11,9 @@ export default class Composite extends Renderer {
   }
 
   add(renderer) {
-    this.renderers.push(renderer);
+    if (renderer) {
+      this.renderers.push(renderer);
+    }
     return this;
   }
 

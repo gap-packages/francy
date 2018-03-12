@@ -1,5 +1,4 @@
 import Renderer from './renderer';
-import MathJaxWrapper from './mathjax-wrapper';
 import ContextMenu from './menu-context';
 import Tooltip from './tooltip';
 import Callback from './callback';
@@ -10,6 +9,9 @@ export default class Graph extends Renderer {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+    this.tooltip = new Tooltip(this.options);
+    this.contextMenu = new ContextMenu(this.options);
+    this.callback = new Callback(this.options);
   }
   
   _initialize() {
@@ -18,22 +20,20 @@ export default class Graph extends Renderer {
 
   _applyEvents(element) {
     if (!element) return;
-
-    let tooltip = new Tooltip(this.options);
-    let contextMenu = new ContextMenu(this.options);
-    let callback = new Callback(this.options);
-    let mathjax = new MathJaxWrapper(this.options);
-
+    
+    var self = this;
     element
       .on('contextmenu', function(d) {
         let data = d.data || d;
         // default, build context menu
-        contextMenu.load(data, true).render();
+        self.contextMenu.load(data, true).render();
         // any callbacks will be handled here
         executeCallback.call(this, data, 'contextmenu');
       })
       .on('click', function(d) {
         let data = d.data || d;
+        // TODO make some sense of selection on nodes
+        d.selected = !d.selected;
         // any callbacks will be handled here
         executeCallback.call(this, data, 'click');
       })
@@ -42,26 +42,42 @@ export default class Graph extends Renderer {
         // any callbacks will be handled here
         executeCallback.call(this, data, 'dblclick');
       })
-      .on('mouseover', d => {
+      .on('mouseover', function(d) {
         let data = d.data || d;
-        // default, show tooltip
-        tooltip.load(data.messages, true).render();
-        // add to do it here because of this.data to check for property canvas.texTypesetting 
-        mathjax.settings({appendTo: tooltip}).load(this.data).render();
+        if (data.messages) {
+          // default, show tooltip
+          self.tooltip.load({messages: data.messages}, true).render();
+          // ok, this is almost a hack, because this should be rendered on
+          // the tooltip itself.. but because a tooltip gets only the messages 
+          // object to render and not the whole this.data object, 
+          // we can't check for the property canvas.texTypesetting, 
+          // hence this:
+          self.mathjax.settings({appendTo: self.tooltip}).renderHTML();
+        } 
       })
-      .on('mouseout', () => {
+      .on('mouseout', function() {
         // default, hide tooltip
-        tooltip.unrender();
+        self.tooltip.unrender();
       });
 
     function executeCallback(data, event) {
       if (data.callbacks) {
         Object.values(data.callbacks).forEach((cb) => {
-          // execute the ones that match the event!
-          cb.trigger === event && callback.load({ callback: cb }, true).execute();
+          // execute only the ones that match the event!
+          cb.trigger === event && self.callback.load({ callback: cb }, true).execute();
         });
       }
     }
+  }
+  
+  static linkXPos(s, t) {
+    let angle = Math.atan2(t.y - s.y, t.x - s.x);
+    return Math.cos(angle) + (s.x + t.x)/2;
+  }
+    
+  static linkYPos(s, t) {
+    let angle = Math.atan2(t.y - s.y, t.x - s.x);
+    return Math.sin(angle) + (s.y + t.y) / 2;
   }
 
   static get colors() {
