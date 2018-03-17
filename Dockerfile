@@ -25,6 +25,8 @@ RUN jupyter nbextension enable jupyter_francy/extension --system
 # NOTE: THIS IS FOR DEVELOPMENT ONLY!
 # IF YOU ARE LOOKING HOW TO MAKE JUPYTER_FRANCY WORK, YOU JUST NEED TO: pip install jupyter_francy
 
+RUN chown -R gap /home/gap
+
 RUN cd /home/gap/francy/notebooks
 
 USER gap
