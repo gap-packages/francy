@@ -10,7 +10,7 @@ export default class ScatterChart extends Chart {
   }
 
   @initialize()
-  render() {
+  async render() {
 
     let scatterGroup = this.element.selectAll('g.francy-scatters');
 

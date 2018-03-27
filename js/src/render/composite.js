@@ -17,10 +17,10 @@ export default class Composite extends Renderer {
     return this;
   }
 
-  renderChildren() {
+  async renderChildren() {
     // render other components
     for (let renderer of this.renderers) {
-      renderer.settings({appendTo: this}).load(this.data).render();
+      await renderer.settings({appendTo: this}).load(this.data).render();
     }
   }
 }

@@ -10,7 +10,7 @@ export default class TreeGraph extends Graph {
   }
 
   @initialize()
-  render() {
+  async render() {
 
     let i = 0,
       root;
@@ -41,7 +41,7 @@ export default class TreeGraph extends Graph {
       root.children.forEach(collapse);
     }
 
-    update.call(this, root);
+    update.call(this, root).then(setTimeout(this.parent.zoomToFit, this.transitionDuration));
 
     function collapse(d) {
       if (d.children) {
@@ -51,7 +51,7 @@ export default class TreeGraph extends Graph {
       }
     }
 
-    function update(source) {
+    async function update(source) {
       let treeData = treemap(root);
 
       let nodes = treeData.descendants(),
@@ -148,7 +148,7 @@ export default class TreeGraph extends Graph {
 
         let nodeOnClick = node.on('click');
         node.on('click', (d) => {
-        // any callbacks will be handled here
+          // any callbacks will be handled here
           nodeOnClick.call(this, d.data);
           // default, highlight connected nodes
           click.call(this, d);
@@ -166,12 +166,8 @@ export default class TreeGraph extends Graph {
           d.children = d._children;
           d._children = null;
         }
-        update.call(self, d);
+        update.call(self, d).then(setTimeout(self.parent.zoomToFit, self.transitionDuration));
       }
-
-      setTimeout(() => {
-        this.parent.zoomToFit();
-      }, this.transitionDuration);
     }
 
     return this;

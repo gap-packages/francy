@@ -15,7 +15,7 @@ export default class Canvas extends Composite {
   }
 
   @requires('canvas')
-  render() {
+  async render() {
     let content;
     let zoom = d3.zoom();
     let self = this;
@@ -34,7 +34,7 @@ export default class Canvas extends Composite {
       }
     }
 
-    function zoomToFit(force) {
+    async function zoomToFit(force) {
       // only execute if enable, of course
       if (self.data.canvas.zoomToFit || force) {
         let bounds = content.node().getBBox();
@@ -95,11 +95,7 @@ export default class Canvas extends Composite {
 
     this.logger.debug(`Canvas updated [${canvasId}]...`);
 
-    this.renderChildren();
-
-    setTimeout(() => {
-      zoomToFit();
-    }, this.transitionDuration);
+    this.renderChildren().then(setTimeout(zoomToFit, this.transitionDuration));
 
     return this;
   }

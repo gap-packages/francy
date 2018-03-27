@@ -6,7 +6,7 @@ import * as d3 from './d3.min';
 import * as FrancyBundle from './francy.bundle.min';
 
 window.d3 = d3;
-const francy = new FrancyBundle.Francy({ verbose: true, appendTo: `#${APPEND_ID}`, callbackHandler: console.log });
+const francy = new FrancyBundle.Francy({ verbose: false, appendTo: `#${APPEND_ID}`, callbackHandler: console.log });
 
 /**
  * A widget for rendering 'application/vnd.francy+json'
@@ -43,8 +43,7 @@ export class OutputWidget extends Widget {
    * Render 'application/vnd.francy+json' into this widget's node.
    */
   renderModel(model) {
-    let francyObject = francy.load(model.data[this._mimeType]).render();
-    this.node.appendChild(francyObject);
+    francy.load(model.data[this._mimeType]).render().then(element => this.node.appendChild(element));
   }
 
 }

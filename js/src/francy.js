@@ -2,7 +2,7 @@ import Frame from './render/frame';
 import Renderer from './render/renderer';
 import { requires } from './util/data-decorator';
 
-/* global d3 */
+/* global d3 VERSION */
 
 let ALL_CANVAS = {};
 
@@ -11,8 +11,6 @@ let ALL_CANVAS = {};
  * Francy will handle the creation of that json as long it is a valid and understandable json object to Francy.
  *  
  * @access public
- * 
- * @version 0.5.x
  * 
  * @example
  * let francy = new Francy({verbose: true, appendTo: '#div-id', callbackHandler: console.log});
@@ -32,6 +30,7 @@ export default class Francy extends Renderer {
     if (!d3) {
       throw new Error('D3 is not imported and Francy won\'t work without it... please import D3 v4+ library.');
     }
+    this.logger.info(`Francy JS v${VERSION} initialized!`);
   }
 
   /**
@@ -40,8 +39,9 @@ export default class Francy extends Renderer {
    * @returns {Object} the html element created
    */
   @requires('canvas')
-  render() {
-    let frame = new Frame(this.options).load(this.data).render();
+  async render() {
+    this.logger.debug(`Rendering data generated in version: ${this.data.version}`);
+    let frame = await new Frame(this.options).load(this.data).render();
     ALL_CANVAS[this.data.canvas.id] = frame;
     return frame.element.node();
   }

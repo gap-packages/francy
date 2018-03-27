@@ -1,6 +1,11 @@
 const path = require('path');
 const del = require('del');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
+const fPackage = require('./package.json');
+const defaultPlugins = [
+  new webpack.DefinePlugin({VERSION: JSON.stringify(fPackage.version)}), 
+  new webpack.BannerPlugin(`${fPackage.name}, v${fPackage.version}, ${fPackage.description}, ${fPackage.author}.`)
+];
 
 module.exports = (env = {}) => {
 
@@ -15,39 +20,37 @@ module.exports = (env = {}) => {
     './extensions/jupyter_francy/src/d3.*',
     './extensions/browser/francy.bundle.*']);
   }
-  
-  let plugins = [];
+
   let fileName = 'francy.bundle.js';
-  let sourceMap = 'inline-source-map';
+  let sourceMap = '';
   
   if (isProduction) {
-    // FIXME this stopped working !?
-    plugins.push(new UglifyJsPlugin({exclude: /.*test.js/}));
     fileName = 'francy.bundle.min.js';
-    sourceMap = 'hidden-source-map';
+    sourceMap = 'nosources-source-map';
   }
 
   let amd = {
-    entry: './src/francy.js',
+    mode: isProduction ? 'production' : 'development',
+    entry: ['babel-polyfill', './src/francy.js'],
     output: {
+      libraryTarget: 'amd',
       filename: fileName,
       path: path.join(__dirname, './extensions/jupyter_francy/src'),
-      libraryTarget: 'amd'
     },
     devtool: sourceMap,
     module: {
-      loaders: [{
-        loader: 'babel-loader'
+      rules: [{
+        loader: 'babel-loader',
       }]
     },
-    plugins: plugins
+    plugins: defaultPlugins
   };
   
   let browser = JSON.parse(JSON.stringify(amd));
   browser.target = 'web';
   browser.output.libraryTarget = 'umd';
   browser.output.path = path.join(__dirname, './extensions/browser');
-  browser.plugins = [];
+  browser.plugins = defaultPlugins;
   
   return [ amd, browser ];
 };

@@ -14,7 +14,7 @@ export function init(Jupyter, d3, FrancyBundle) {
 
   // start Francy
   francy = new FrancyBundle.Francy({
-    verbose: true,
+    verbose: false,
     appendTo: `#${APPEND_ID}`,
     callbackHandler: function(command) {
       Jupyter.notebook.kernel.execute(command, {
@@ -36,8 +36,7 @@ export function init(Jupyter, d3, FrancyBundle) {
  * Render data to the DOM node
  */
 function render(props, node) {
-  let francyObject = francy.load(props.data).render();
-  node.append(francyObject);
+  francy.load(props.data).render().then(element => node.append(element));
 }
 
 /**

@@ -10,7 +10,7 @@ export default class Message extends Renderer {
   }
 
   @requires('canvas.messages')
-  render() {
+  async render() {
 
     let messages = Object.keys(this.data.canvas.messages).map((key) => {
       return {

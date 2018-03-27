@@ -17,9 +17,8 @@ export default class CallbackHandler extends Base {
       return new RequiredArgsModal(options).load(this.data, true).render();
     }
     
-    // Trigger is the expected command on GAP for this events!
+    // Trigger is the expected command on GAP for this event!
     this._execute(this.data.callback);
-    
   }
 
   _execute(calbackObj) {

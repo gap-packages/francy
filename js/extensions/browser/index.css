@@ -27,6 +27,10 @@
   fill: #999
 }
 
+.francy-arrows path {
+  fill: #999
+}
+
 .francy a {
   color: inherit
 }
@@ -186,7 +190,8 @@
 }
 
 .francy svg {
-  cursor: move
+  cursor: move;
+  background-color: white
 }
 
 .francy text {
@@ -381,4 +386,35 @@ div.output_subarea.francy-view.output_result {
 
 div.output_subarea {
   max-width: 100%;
+}
+
+.loader {
+  border: 3px solid #cfcfcf;
+  border-radius: 50%;
+  border-top: 3px solid #3498db;
+  width: 15px;
+  height: 15px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  margin: 10px 0 0 5px;
+}
+
+/* Safari */
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

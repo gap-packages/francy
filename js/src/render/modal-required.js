@@ -11,7 +11,7 @@ export default class RequiredArgsModal extends Modal {
   }
 
   @initialize()
-  render() {
+  async render() {
     let self = this;
 
     let modalId = this.data.callback.id;

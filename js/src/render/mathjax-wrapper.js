@@ -51,21 +51,17 @@ export default class MathJaxWrapper extends Base {
       }
     });
 
-    MathJax.Hub.Register.MessageHook('New Math', function(id) {
+    MathJax.Hub.Register.MessageHook('New Math', async function(id) {
       if (id && id.length > 1) {
         var mathJaxElement = d3.select(`#${id[1]}-Frame`);
         var svgMathJaxElement = mathJaxElement.select('svg');
         if (svgMathJaxElement.node()) {
-          setTimeout(() => {
-            setTimeout(() => {
-              let width = svgMathJaxElement.node().width.baseVal.value;
-              svgMathJaxElement.attr('x', -width / 2);
-              svgMathJaxElement.attr('y', -15);
-            }, 50);
-            d3.select(mathJaxElement.node().parentNode.parentNode).append(function() {
-              return svgMathJaxElement.node();
-            });
-          }, 50);
+          let width = svgMathJaxElement.node().width.baseVal.value;
+          svgMathJaxElement.attr('x', -width / 2);
+          svgMathJaxElement.attr('y', -15);
+          d3.select(mathJaxElement.node().parentNode.parentNode).append(function() {
+            return svgMathJaxElement.node();
+          });
         }
       }
     });
@@ -77,7 +73,7 @@ export default class MathJaxWrapper extends Base {
 
   @initialize()
   @enabled('canvas.texTypesetting')
-  renderSVG() {
+  async renderSVG() {
     // if no element here just return...
     if (!this.parent || !this.parent.node()) return;
     MathJax.Hub.Queue(
@@ -88,7 +84,7 @@ export default class MathJaxWrapper extends Base {
   
   @initialize()
   @enabled('canvas.texTypesetting')
-  renderHTML() {
+  async renderHTML() {
     // if no element here just return...
     if (!this.parent || !this.parent.node()) return;
     MathJax.Hub.Queue(

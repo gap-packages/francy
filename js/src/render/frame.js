@@ -17,7 +17,7 @@ export default class Frame extends Composite {
   }
 
   @requires('canvas')
-  render() {
+  async render() {
     let parent = this.options.appendTo;
 
     const frameId = `Frame-${this.data.canvas.id}`;
@@ -36,7 +36,8 @@ export default class Frame extends Composite {
 
     this.logger.debug(`Frame updated [${frameId}]...`);
 
-    this.renderChildren();
+    // call zoom to fit when we finish rendering children
+    this.renderChildren().then(() => this.canvas.zoomToFit());
 
     return this;
   }

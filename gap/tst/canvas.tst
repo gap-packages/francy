@@ -20,7 +20,7 @@ rec(
   data := 
     rec( 
       ("application/vnd.francy+json") := "{\"mime\" : \"application\\/vnd.fran\
-cy+json\",\"version\" : \"0.5.6\",\"canvas\" : {\"width\" : 400,\"height\" : 4\
+cy+json\",\"version\" : \"0.6.0\",\"canvas\" : {\"width\" : 400,\"height\" : 4\
 00,\"id\" : \"F14\",\"title\" : \"Quaternion Group Subgroup Lattice\",\"zoomTo\
 Fit\" : false,\"texTypesetting\" : false,\"menus\" : {},\"graph\" : {},\"chart\
 \" : {},\"messages\" : {}}}" ), json := true, source := "gap" )
@@ -39,7 +39,7 @@ om/mcmartins/francy/develop/js/extensions/browser/francy.bundle.js\"></script>\
 \n        <title>Francy</title>\n      </head>\n      <body>\n        <div id=\
 \"francy\"></div>\n        <script>\n          var francy = new Francy({verbos\
 e: true, appendTo: 'body', callbackHandler: console.log});\n          francy.l\
-oad({\"mime\" : \"application\\/vnd.francy+json\",\"version\" : \"0.5.6\",\"ca\
+oad({\"mime\" : \"application\\/vnd.francy+json\",\"version\" : \"0.6.0\",\"ca\
 nvas\" : {\"width\" : 400,\"height\" : 400,\"id\" : \"F14\",\"title\" : \"Quat\
 ernion Group Subgroup Lattice\",\"zoomToFit\" : false,\"texTypesetting\" : tru\
 e,\"menus\" : {},\"graph\" : {},\"chart\" : {},\"messages\" : {}}}).render();\

@@ -10,7 +10,7 @@ export default class ContextMenu extends Menu {
   }
 
   @requires('menus')
-  render() {
+  async render() {
 
     d3.event.preventDefault();
 

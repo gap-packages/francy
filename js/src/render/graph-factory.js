@@ -2,6 +2,7 @@ import Renderer from './renderer';
 import TreeGraph from './graph-tree';
 import GenericGraph from './graph-generic';
 import { requires } from '../util/data-decorator';
+import { loader } from '../util/loader-decorator';
 
 export default class Graph extends Renderer {
 
@@ -9,16 +10,17 @@ export default class Graph extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
+  @loader()
   @requires('canvas.graph')
-  render() {
+  async render() {
 
     let element = undefined;
     switch (this.data.canvas.graph.type) {
     case 'tree':
-      element = new TreeGraph(this.options).load(this.data).render();
+      element = await new TreeGraph(this.options).load(this.data).render();
       break;
     default:
-      element = new GenericGraph(this.options).load(this.data).render();
+      element = await new GenericGraph(this.options).load(this.data).render();
     }
 
     return element;

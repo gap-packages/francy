@@ -23,7 +23,7 @@ export default class Logger {
   }
 
   /**
-   * Creates a [INFO] entry in the console log
+   * Creates an [INFO] entry in the console log
    * @param message the message to print
    */
   info(message) {
@@ -31,7 +31,7 @@ export default class Logger {
   }
 
   /**
-   * Creates a [ERROR] entry in the console log
+   * Creates an [ERROR] entry in the console log
    * @param message the message to print
    * @param error the error Object to attach to the message
    */

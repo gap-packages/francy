@@ -47,9 +47,9 @@ export default class Graph extends Renderer {
         if (data.messages) {
           // default, show tooltip
           self.tooltip.load({messages: data.messages}, true).render();
-          // ok, this is almost a hack, because this should be rendered on
+          // ok, this is almost an hack, because this should be rendered on
           // the tooltip itself.. but because a tooltip gets only the messages 
-          // object to render and not the whole this.data object, 
+          // object to render and not the whole `this.data` object, 
           // we can't check for the property canvas.texTypesetting, 
           // hence this:
           self.mathjax.settings({appendTo: self.tooltip}).renderHTML();

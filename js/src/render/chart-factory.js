@@ -3,6 +3,7 @@ import BarChart from './chart-bar';
 import LineChart from './chart-line';
 import ScatterChart from './chart-scatter';
 import { requires } from '../util/data-decorator';
+import { loader } from '../util/loader-decorator';
 
 export default class ChartFactory extends Renderer {
 
@@ -10,8 +11,9 @@ export default class ChartFactory extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
+  @loader()
   @requires('canvas.chart')
-  render() {
+  async render() {
     
     let element = undefined;
     switch (this.data.canvas.chart.type) {

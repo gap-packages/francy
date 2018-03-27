@@ -10,7 +10,7 @@ export default class MainMenu extends Menu {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  render() {
+  async render() {
     let aboutModal = new AboutModal(this.options);
 
     // Otherwise clashes with the canvas itself!
@@ -33,6 +33,10 @@ export default class MainMenu extends Menu {
       this.element.append('li').attr('class', 'francy-title').append('a').html(this.data.canvas.title);
     }
 
+    // Fixed loader
+    this.element.append('li').append('div').datum({}).classed('loader', true).style('visibility', 'hidden');
+
+    // Default menu
     let entry = this.element.append('li');
     entry.append('a').html('Francy');
     let content = entry.append('ul');

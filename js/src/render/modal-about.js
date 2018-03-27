@@ -11,7 +11,7 @@ export default class AboutModal extends Modal {
   }
 
   @initialize()
-  render() {
+  async render() {
 
     let modalId = 'AboutModalWindow';
 

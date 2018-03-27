@@ -40,7 +40,14 @@
           "title": "G",
           "layer": 0,
           "menus": {},
-          "highlight": true
+          "highlight": true,
+          "messages": {
+            "A1": {
+              "type": "info",
+              "title": "$x^2$",
+              "text": "Valor1 ed wed "
+            }
+          }
         },
         "F827B91B58E84D8B1C8AF64FAE72BCC9": {
           "x": 20,

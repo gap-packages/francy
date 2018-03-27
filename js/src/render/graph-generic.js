@@ -10,11 +10,10 @@ export default class GenericGraph extends Graph {
   }
 
   @initialize()
-  render() {
+  async render() {
     var self = this;
     
     let simulationActive = this.data.canvas.graph.simulation;
-    let radius = 0;
 
     let canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
       canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
@@ -116,10 +115,6 @@ export default class GenericGraph extends Graph {
           self.mathjax.settings({appendTo: {element: text}}).renderSVG();
         }
         let bound = this.getBBox();
-        // check the widest label so that we use it as default radius for colisions
-        if (radius < bound.width) {
-          radius = bound.width;
-        }
         return -(bound.width / 2);
       });
 
@@ -150,40 +145,45 @@ export default class GenericGraph extends Graph {
     }
 
     if (simulationActive) {
+      let radius = 0;
+      node.each(function() {
+        let bound = this.getBBox();
+        // check the widest BBox so that we use it as default radius for colisions
+        if (radius < bound.width) {
+          radius = bound.width;
+        }
+      });
       //Canvas Forces
-      //let centerForce = d3.forceCenter().x(this.width / 2).y(this.height / 2);
-      let manyForce = d3.forceManyBody().strength(-nodesToAdd.length * 75);
-      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(75);
-      let collideForce = d3.forceCollide().strength(0.25).radius(radius/2).iterations(3);
+      let manyForce = d3.forceManyBody().strength(-nodesToAdd.length * 25).distanceMin(radius * 2.5);
+      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100);
+      let collideForce = d3.forceCollide().radius(radius / 2).strength(0.5);//.iterations(3);
 
       //Generic gravity for the X position
-      let forceX = d3.forceX(this.width).strength(0.05);
+      let forceX = d3.forceX(this.width/2).strength(1 / nodesToAdd.length);
       //Generic gravity for the Y position - undirected/directed graphs fall here
-      let forceY = d3.forceY(this.height).strength(0.25);
+      let forceY = d3.forceY(this.height/2).strength(0.85);
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
-        forceX = d3.forceX(this.width).strength(0.1);
+        forceX = d3.forceX(this.width/2).strength(0.15);
         //Strong y positioning based on layer to simulate the hasse diagram
-        forceY = d3.forceY(d => d.layer * 75).strength(1);
+        forceY = d3.forceY(d => d.layer * 75).strength(0.85);
       }
 
-      var simulation = d3.forceSimulation().nodes(nodesToAdd)
+      var simulation = d3.forceSimulation()
+        .nodes(nodesToAdd)
         .force('charge', manyForce)
-        .force('link', linkForce)
-        //.force('center', centerForce)
-        .force('x', forceX)
-        .force('y', forceY)
         .force('collide', collideForce)
+        .force('link', linkForce)
+        .force('y', forceY)
+        .force('x', forceX)
         .on('tick', ticked)
-        .on('end', self.parent.zoomToFit);
+        .on('end', self.parent.zoomToFit)
+        .restart();
 
-      //force simulation restart
-      simulation.restart();
     } else {
-      // well, simulation is off, apply fixed positions and zoom to fit now
+      // well, simulation is off, apply fixed positions
       ticked();
-      self.parent.zoomToFit();
     }
 
     function ticked() {
@@ -196,7 +196,6 @@ export default class GenericGraph extends Graph {
       link.selectAll('text.francy-label')
         .attr('x', function(d) { 
           return Graph.linkXPos(d.target, d.source); 
-          
         })
         .attr('y', function(d) { 
           return Graph.linkYPos(d.target, d.source); 
