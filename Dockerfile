@@ -6,6 +6,10 @@ COPY . /home/gap/francy
 
 USER root
 
+ENV NB_USER gap
+ENV NB_UID 1000
+ENV HOME /home/${NB_USER}
+
 # update dependencies
 RUN mv /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
 RUN apt-get update && apt-get install -y nodejs npm python3.6 python3-pip
@@ -24,6 +28,8 @@ RUN jupyter nbextension enable jupyter_francy/extension --system
 
 # NOTE: THIS IS FOR DEVELOPMENT ONLY!
 # IF YOU ARE LOOKING HOW TO MAKE JUPYTER_FRANCY WORK, YOU JUST NEED TO: pip install jupyter_francy
+
+RUN chown -R gap /home/gap
 
 RUN cd /home/gap/francy/notebooks
 
