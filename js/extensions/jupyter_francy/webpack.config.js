@@ -71,6 +71,7 @@ module.exports = [
       'nbextensions/jupyter_francy/francy'
     ]
   }),
+
   /**
    * This bundle contains the implementation of the extension.
    *
@@ -87,7 +88,8 @@ module.exports = [
       )
     })
   }),
-    /**
+
+  /**
    * This bundle contains the implementation of the extension.
    *
    * It must be an amd module
@@ -103,7 +105,8 @@ module.exports = [
       )
     })
   }),
-      /**
+
+  /**
    * This bundle contains the implementation of the extension.
    *
    * It must be an amd module

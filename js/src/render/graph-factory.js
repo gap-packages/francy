@@ -2,7 +2,6 @@ import Renderer from './renderer';
 import TreeGraph from './graph-tree';
 import GenericGraph from './graph-generic';
 import { requires } from '../util/data-decorator';
-import { loader } from '../util/loader-decorator';
 
 export default class Graph extends Renderer {
 
@@ -10,7 +9,6 @@ export default class Graph extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @loader()
   @requires('canvas.graph')
   async render() {
 

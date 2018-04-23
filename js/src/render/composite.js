@@ -20,7 +20,7 @@ export default class Composite extends Renderer {
   async renderChildren() {
     // render other components
     for (let renderer of this.renderers) {
-      await renderer.settings({appendTo: this}).load(this.data).render();
+      await this.handlePromise(renderer.settings({appendTo: this}).load(this.data).render());
     }
   }
 }

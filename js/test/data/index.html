@@ -20,14 +20,80 @@
 
     function resolvePromise(francy) {
       francy.render().catch(error => alert(error)).then(element => {
-        document.getElementsByTagName('body')[0].appendChild(element);
+        // NOTE: we're using a visible div to append the object so no need to do anything here
+        //document.getElementsByTagName('body')[0].appendChild(element);
+        console.log('Object rendered...', element);
       });
     }
 
     let settings = { verbose: true, appendTo: '#francy', callbackHandler: trigger };
     const francy = new Francy(settings);
 
-    d3.json("json12.json").then(json => {
+    d3.json('json1.json').then(json => {
+      resolvePromise(francy.load(json));
+      setInterval(() => {
+        d3.json('json1.1.json').then(json => {
+          francy.load(json).render();
+        });
+      }, 10000);
+    });
+
+    d3.json('json2.json').then(json => {
+      resolvePromise(francy.load(json));
+      setInterval(() => {
+        d3.json('json2.1.json').then(json => {
+          francy.load(json).render();
+        });
+      }, 10000);
+    });
+
+    d3.json('json3.json').then(json => {
+      resolvePromise(francy.load(json));
+    });
+
+    d3.json('json4.json').then(json => {
+      resolvePromise(francy.load(json));
+    });
+
+    d3.json('json5.json').then(json => {
+      resolvePromise(francy.load(json));
+    });
+
+    d3.json('json6.json').then(json => {
+      resolvePromise(francy.load(json));
+    });
+
+    d3.json('json7.json').then(json => {
+      resolvePromise(francy.load(json));
+    });
+
+    d3.json('json8.json').then(json => {
+      resolvePromise(francy.load(json));
+    });
+
+    d3.json('json9.json').then(json => {
+      resolvePromise(francy.load(json));
+    });
+
+    d3.json('json10.json').then(json => {
+      resolvePromise(francy.load(json));
+    });
+
+    d3.json('json11.json').then(json => {
+      resolvePromise(francy.load(json));
+      setTimeout(() => {
+        d3.json('json11.1.json').then(json => {
+          francy.load(json).render();
+          setInterval(() => {
+            d3.json('json11.2.json').then(json => {
+              francy.load(json).render();
+            });
+          }, 10000);
+        });
+      }, 5000);
+    });
+
+    d3.json('json12.json').then(json => {
       resolvePromise(francy.load(json));
     });
   </script>

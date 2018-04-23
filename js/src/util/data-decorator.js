@@ -1,11 +1,12 @@
+import { Exception } from './exception';
+
 export function requires(props) {
   return function decorator(target, name, descriptor) {
     var oldValue = descriptor.value;
 
     descriptor.value = function() {
       if (!hasData(getProperty(this.data, props))) {
-        this.logger.debug(`No data here [${props}], nothing to render... continuing...`);
-        return;
+        return Promise.reject(new Exception(`No data here [${props}], nothing to render... continuing...`));
       }
       return oldValue.apply(this, arguments);
     };
@@ -20,8 +21,7 @@ export function enabled(props) {
 
     descriptor.value = function() {
       if (!getProperty(this.data, props)) {
-        this.logger.debug(`Property disabled [${props}], skip execution... continuing...`);
-        return;
+        return Promise.reject(new Exception(`Property disabled [${props}], skip execution... continuing...`));
       }
       return oldValue.apply(this, arguments);
     };

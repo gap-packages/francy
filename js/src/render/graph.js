@@ -52,7 +52,7 @@ export default class Graph extends Renderer {
           // object to render and not the whole `this.data` object, 
           // we can't check for the property canvas.texTypesetting, 
           // hence this:
-          self.mathjax.settings({appendTo: self.tooltip}).renderHTML();
+          self.handlePromise(self.mathjax.settings({appendTo: self.tooltip}).renderHTML());
         } 
       })
       .on('mouseout', function() {

@@ -1,10 +1,11 @@
+/* global d3 */
+
 export function loader() {
   return function (target, key, descriptor) {
     var oldValue = descriptor.value;
 
     descriptor.value = function() {
-      let loaderId = generateId();
-      showLoader.call(this, loaderId);
+      let loaderId = showLoader.call(this);
       let result = oldValue.apply(this, arguments);
       hideLoader.call(this, loaderId);
       return result;
@@ -13,18 +14,20 @@ export function loader() {
   };
 }
 
-function showLoader(loaderId) {
-  let element = this.HTMLParent.select(`div.loader`);
-  element.data()[0][loaderId] = true;
+export function showLoader() {
+  let id = generateId();
+  let element = d3.select(`div.loader#Loader-${this.data.canvas.id}`);
+  element.data()[0][id] = true;
   element.style('visibility', 'visible');
+  return id;
 }
 
-function hideLoader(loaderId) {
-  let element = this.HTMLParent.select(`div.loader`);
+export function hideLoader(loaderId) {
+  let element = d3.select(`div.loader#Loader-${this.data.canvas.id}`);
   delete element.data()[0][loaderId];
   // hide only if no more loaders present
   if (Object.values(element.data()[0]).length == 0) {
-    this.HTMLParent.select(`div.loader`).style('visibility', 'hidden');
+    d3.select(`div.loader#Loader-${this.data.canvas.id}`).style('visibility', null);
   }
 }
 

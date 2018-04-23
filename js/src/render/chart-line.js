@@ -10,7 +10,7 @@ export default class LineChart extends Chart {
   }
 
   @initialize()
-  async render() {
+  render() {
     
     let linesGroup = this.element.selectAll('g.francy-lines');
 

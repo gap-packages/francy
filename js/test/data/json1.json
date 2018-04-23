@@ -1,156 +1,92 @@
 {
+  "version": "0.6.0",
   "mime": "application/vnd.francy+json",
   "canvas": {
-    "width": "800",
-    "height": "600",
-    "id": "A197731FA6674899EC0A97DF399ED5BC",
-    "title": "Quaternion Group Subgroup Lattice",
-    "menus": {},
+    "width": 800,
+    "height": 600,
+    "id": "F224",
+    "title": "Rosales graph",
     "zoomToFit": true,
-    "texTypesetting": true,
-    "messages": {
-      "A1": {
-        "type": "info",
-        "title": "$x^2$",
-        "text": "Valor1 ed wed "
-      },
-      "A2": {
-        "type": "info",
-        "title": "",
-        "text": "Valor2 ed wdw ed"
-      },
-      "A3": {
-        "type": "error",
-        "title": "title3v ev ",
-        "text": "Valor3 sad ed wed wed wed wed "
-      }
-    },
+    "texTypesetting": false,
+    "menus": {},
     "graph": {
-      "type": "custom",
-      "id": "585C13EF00EC4E71DCCF4C7246C86807",
+      "type": "undirected",
+      "id": "F217",
       "simulation": true,
+      "collapsed": true,
       "drag": true,
+      "showNeighbours": false,
       "nodes": {
-        "85A237CE30554A1FF46170E35B1B80BD": {
-          "x": 10,
-          "y": 10,
-          "type": "diamond",
-          "size": 10,
-          "id": "85A237CE30554A1FF46170E35B1B80BD",
-          "title": "G",
+        "F218": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "size": 1,
+          "id": "F218",
+          "title": "5",
           "layer": 0,
-          "menus": {},
+          "color": "",
           "highlight": true,
-          "messages": {
-            "A1": {
-              "type": "info",
-              "title": "$x^2$",
-              "text": "Valor1 ed wed "
-            }
-          }
-        },
-        "F827B91B58E84D8B1C8AF64FAE72BCC9": {
-          "x": 20,
-          "y": 20,
-          "type": "wye",
-          "size": 10,
-          "id": "F827B91B58E84D8B1C8AF64FAE72BCC9",
-          "title": "1",
-          "layer": 3,
+          "parent": "",
           "menus": {},
-          "highlight": true
+          "messages": {},
+          "callbacks": {}
         },
-        "1FA9D518A51B4422D4BCFDD58129403D": {
-          "x": 30,
-          "y": 30,
+        "F219": {
+          "x": 0,
+          "y": 0,
           "type": "circle",
-          "size": 10,
-          "id": "1FA9D518A51B4422D4BCFDD58129403D",
-          "title": "SG1",
-          "layer": 1,
+          "size": 1,
+          "id": "F219",
+          "title": "7",
+          "layer": 0,
+          "color": "",
+          "highlight": true,
+          "parent": "",
           "menus": {},
-          "highlight": true
+          "messages": {},
+          "callbacks": {}
         },
-        "5C86291270454B2204CE851D9700D815": {
-          "x": 40,
-          "y": 40,
+        "F220": {
+          "x": 0,
+          "y": 0,
           "type": "circle",
-          "size": 10,
-          "id": "5C86291270454B2204CE851D9700D815",
-          "title": "SG2",
-          "layer": 2,
+          "size": 1,
+          "id": "F220",
+          "title": "9",
+          "layer": 0,
+          "color": "",
+          "highlight": true,
+          "parent": "",
           "menus": {},
-          "highlight": true
-        },
-        "A097FBE57B75448F7411A2D059F57F96": {
-          "x": 50,
-          "y": 50,
-          "type": "circle",
-          "size": 10,
-          "id": "A097FBE57B75448F7411A2D059F57F96",
-          "title": "SG3",
-          "layer": 2,
-          "menus": {},
-          "highlight": true
-        },
-        "B7AB8F184B4445538CF142F0306DBEB1": {
-          "x": 60,
-          "y": 60,
-          "type": "circle",
-          "size": 10,
-          "id": "B7AB8F184B4445538CF142F0306DBEB1",
-          "title": "SG4",
-          "layer": 2,
-          "menus": {},
-          "highlight": true
+          "messages": {},
+          "callbacks": {}
         }
       },
       "links": {
-        "4B5B4F8B7FFF40EB1CCB52D91AE1A625": {
-          "source": "85A237CE30554A1FF46170E35B1B80BD",
-          "id": "4B5B4F8B7FFF40EB1CCB52D91AE1A625",
-          "target": "1FA9D518A51B4422D4BCFDD58129403D",
-          "color": "red",
-          "weight": 5,
-          "title": "Test"
+        "F221": {
+          "source": "F218",
+          "weight": 1,
+          "id": "F221",
+          "color": "",
+          "target": "F219"
         },
-        "CF7A947230684DF1ACD7F5C1030A5179": {
-          "source": "1FA9D518A51B4422D4BCFDD58129403D",
-          "id": "CF7A947230684DF1ACD7F5C1030A5179",
-          "target": "5C86291270454B2204CE851D9700D815",
-          "title": "Test1"
+        "F222": {
+          "source": "F218",
+          "weight": 1,
+          "id": "F222",
+          "color": "",
+          "target": "F220"
         },
-        "3B872359ED7C47E8DC89F84643911735": {
-          "source": "5C86291270454B2204CE851D9700D815",
-          "id": "3B872359ED7C47E8DC89F84643911735",
-          "target": "F827B91B58E84D8B1C8AF64FAE72BCC9",
-          "title": "Test2"
-        },
-        "AC9B1FCA063B4B6634DB9D8DD19DB6CE": {
-          "source": "1FA9D518A51B4422D4BCFDD58129403D",
-          "id": "AC9B1FCA063B4B6634DB9D8DD19DB6CE",
-          "target": "A097FBE57B75448F7411A2D059F57F96",
-          "title": "Test3"
-        },
-        "F56ECE9B1067405C8C71CE7F402A0087": {
-          "source": "A097FBE57B75448F7411A2D059F57F96",
-          "id": "F56ECE9B1067405C8C71CE7F402A0087",
-          "target": "F827B91B58E84D8B1C8AF64FAE72BCC9",
-          "title": "Test4"
-        },
-        "6E0B4C4D860245AA045E144DCD838345": {
-          "source": "1FA9D518A51B4422D4BCFDD58129403D",
-          "id": "6E0B4C4D860245AA045E144DCD838345",
-          "target": "B7AB8F184B4445538CF142F0306DBEB1",
-          "title": "Test5"
-        },
-        "2EE9B76F2B0246D8746CD9F9BA69E208": {
-          "source": "B7AB8F184B4445538CF142F0306DBEB1",
-          "id": "2EE9B76F2B0246D8746CD9F9BA69E208",
-          "target": "F827B91B58E84D8B1C8AF64FAE72BCC9",
-          "title": "Test6"
+        "F223": {
+          "source": "F219",
+          "weight": 1,
+          "id": "F223",
+          "color": "",
+          "target": "F220"
         }
       }
-    }
+    },
+    "messages": {}
   }
 }

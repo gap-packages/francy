@@ -1,5 +1,7 @@
 import Logger from '../util/logger';
 import JsonUtils from '../util/json-utils';
+import { Exception, RuntimeException } from '../util/exception';
+import { showLoader, hideLoader } from '../util/loader-decorator';
 
 /* global d3 */
 
@@ -86,6 +88,28 @@ export default class Base {
    */
   get logger() {
     return this.log;
+  }
+  
+  handleErrors(error) {
+    if (error instanceof Exception) {
+      this.logger.debug(error.message);
+    } else if (error instanceof RuntimeException) {
+      this.logger.error(error.message);
+    } else {
+      throw error;
+    }
+  }
+
+  handlePromise(promise) {
+   let loaderId = showLoader.call(this);
+   let result = promise.then(data => {
+     hideLoader.call(this, loaderId);
+     return data;
+   }).catch(error => {
+     hideLoader.call(this, loaderId);
+     this.handleErrors(error);
+   });
+   return result;
   }
 
 }

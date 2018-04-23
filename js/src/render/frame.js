@@ -36,8 +36,10 @@ export default class Frame extends Composite {
 
     this.logger.debug(`Frame updated [${frameId}]...`);
 
+    await this.handlePromise(this.renderChildren());
+
     // call zoom to fit when we finish rendering children
-    this.renderChildren().then(() => this.canvas.zoomToFit());
+    this.canvas.zoomToFit();
 
     return this;
   }

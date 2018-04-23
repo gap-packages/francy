@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import JsonUtils from '../src/util/json-utils';
 
-describe("Json utils should handle strings and objects", () => {
+describe("Json utils", () => {
 
   beforeEach(() => {});
 

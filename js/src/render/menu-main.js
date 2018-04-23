@@ -29,12 +29,15 @@ export default class MainMenu extends Menu {
 
     this.element = this.element.append('ul').attr('class', 'francy-main-menu');
 
+    // Fixed loader
+    let loaderId = `Loader-${this.data.canvas.id}`;
+    this.element.append('li').attr('class', 'francy-loader')
+    .append('div').datum({}).attr('id', loaderId).classed('loader', true);
+
+    // Title
     if (this.data.canvas.title) {
       this.element.append('li').attr('class', 'francy-title').append('a').html(this.data.canvas.title);
     }
-
-    // Fixed loader
-    this.element.append('li').append('div').datum({}).classed('loader', true).style('visibility', 'hidden');
 
     // Default menu
     let entry = this.element.append('li');

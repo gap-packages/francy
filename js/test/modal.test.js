@@ -1,13 +1,12 @@
-import 'jsdom-global/register';
 import * as d3 from 'd3';
 import { expect } from 'chai';
 import json1 from './data/json1.json';
 import RequiredArgsModal  from '../src/render/modal-required';
 import AboutModal  from '../src/render/modal-about';
 
-describe("Json utils should handle strings and objects", () => {
+describe("Modal Windows", () => {
 
-window.d3 = global.d3 = d3;
+  window.d3 = global.d3 = d3;
 
   beforeEach(() => {});
 

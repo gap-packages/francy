@@ -10,7 +10,7 @@ export default class Tooltip extends Renderer {
   }
 
   @requires('messages')
-  async render() {
+  render() {
 
     this.element = this.HTMLParent.select('div.francy-tooltip-holder');
     // check if the window is already present

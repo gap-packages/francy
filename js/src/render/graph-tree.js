@@ -10,7 +10,7 @@ export default class TreeGraph extends Graph {
   }
 
   @initialize()
-  async render() {
+  render() {
 
     let i = 0,
       root;
@@ -121,6 +121,7 @@ export default class TreeGraph extends Graph {
       nodeEnter.append('text')
         .attr('class', 'francy-label')
         .text(d => d.data.title)
+        .style('font-size', d => 10 * Math.log10(d.data.size + 5))
         .attr('x',  function() {
           let bound = this.getBBox();
           return -(bound.width / 2);

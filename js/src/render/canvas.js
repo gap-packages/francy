@@ -95,7 +95,9 @@ export default class Canvas extends Composite {
 
     this.logger.debug(`Canvas updated [${canvasId}]...`);
 
-    this.renderChildren().then(setTimeout(zoomToFit, this.transitionDuration));
+    await this.handlePromise(this.renderChildren());
+
+    setTimeout(zoomToFit, this.transitionDuration);
 
     return this;
   }

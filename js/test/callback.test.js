@@ -1,11 +1,10 @@
-import 'jsdom-global/register';
 import * as d3 from 'd3';
 import { expect } from 'chai';
 import Callback from '../src/render/callback';
 
-describe("Json utils should handle strings and objects", () => {
+describe("Callbacks", () => {
 
-window.d3 = global.d3 = d3;
+  window.d3 = global.d3 = d3;
 
   beforeEach(() => {});
 
@@ -28,7 +27,7 @@ window.d3 = global.d3 = d3;
                   title: "How many Circles?",
                   value: "15"
                 }
-              }}}).execute();
+              }}}, true).execute();
     function handler(result) {
       expect(result).to.have.string('Trigger(');
     }
@@ -42,7 +41,7 @@ window.d3 = global.d3 = d3;
               trigger: "click",
               knownArgs: [],
               requiredArgs: {}
-              }}).execute();
+              }}, true).execute();
     function handler(result) {
       expect(result).to.have.string('Trigger(');
     }

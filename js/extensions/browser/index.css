@@ -62,7 +62,8 @@
   text-decoration: none
 }
 
-.francy-main-menu li.francy-title {
+.francy-main-menu .francy-title,
+.francy-main-menu .francy-loader {
   float: right!important;
   cursor: auto
 }
@@ -204,7 +205,9 @@
   padding: 0
 }
 
-div.output_subarea.francy-view.output_result {
+
+div.output_subarea.jp-OutputWidget-Francy.output_result {
+  padding: 0;
   max-width: inherit!important
 }
 
@@ -396,7 +399,8 @@ div.output_subarea {
   height: 15px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
-  margin: 10px 0 0 5px;
+  margin: 10px 10px 0 0;
+  visibility: hidden;
 }
 
 /* Safari */

@@ -22,11 +22,11 @@ module.exports = (env = {}) => {
   }
 
   let fileName = 'francy.bundle.js';
-  let sourceMap = '';
+  let sourceMap = 'source-map';
   
   if (isProduction) {
     fileName = 'francy.bundle.min.js';
-    sourceMap = 'nosources-source-map';
+    sourceMap = undefined;
   }
 
   let amd = {
