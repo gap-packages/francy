@@ -21,6 +21,10 @@ export default class Graph extends Renderer {
       element = await new GenericGraph(this.options).load(this.data).render();
     }
 
+    if (element) {
+      setTimeout(element.parent.zoomToFit, 10);
+    }
+
     return element;
   }
 

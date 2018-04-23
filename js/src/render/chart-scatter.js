@@ -45,7 +45,7 @@ export default class ScatterChart extends Chart {
             .duration(250)
             .style('fill-opacity', 0.5)
             .attr('r', 10);
-          self.tooltip.load(Chart.tooltip(key, d), true).render();
+          self.handlePromise(self.tooltip.load(Chart.tooltip(key, d), true).render());
         })
         .on('mouseleave', function() {
           d3.select(this).transition()

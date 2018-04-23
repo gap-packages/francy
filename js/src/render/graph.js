@@ -26,7 +26,7 @@ export default class Graph extends Renderer {
       .on('contextmenu', function(d) {
         let data = d.data || d;
         // default, build context menu
-        self.contextMenu.load(data, true).render();
+        self.handlePromise(self.contextMenu.load(data, true).render());
         // any callbacks will be handled here
         executeCallback.call(this, data, 'contextmenu');
       })
@@ -46,7 +46,7 @@ export default class Graph extends Renderer {
         let data = d.data || d;
         if (data.messages) {
           // default, show tooltip
-          self.tooltip.load({messages: data.messages}, true).render();
+          self.handlePromise(self.tooltip.load({messages: data.messages}, true).render());
           // ok, this is almost an hack, because this should be rendered on
           // the tooltip itself.. but because a tooltip gets only the messages 
           // object to render and not the whole `this.data` object, 

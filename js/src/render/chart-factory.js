@@ -26,6 +26,10 @@ export default class ChartFactory extends Renderer {
       break;
     }
 
+    if (element) {
+      setTimeout(element.parent.zoomToFit, 10);
+    }
+
     return element;
   }
 

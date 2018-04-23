@@ -12410,12 +12410,9 @@ var Canvas = (_dec = (0, _dataDecorator.requires)('canvas'), (_class = function 
                 return this.handlePromise(this.renderChildren());
 
               case 19:
-
-                setTimeout(zoomToFit, this.transitionDuration);
-
                 return _context2.abrupt('return', this);
 
-              case 21:
+              case 20:
               case 'end':
                 return _context2.stop();
             }
@@ -12466,8 +12463,6 @@ var _chart2 = _interopRequireDefault(_chart);
 var _initializeDecorator = __webpack_require__(/*! ../util/initialize-decorator */ "./src/util/initialize-decorator.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -12522,81 +12517,59 @@ var BarChart = (_dec = (0, _initializeDecorator.initialize)(), (_class = functio
 
   _createClass(BarChart, [{
     key: 'render',
-    value: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var barsGroup, self;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
+    value: function render() {
 
-                this.xScale = d3.scaleBand().range([0, this.width]).padding(0.1).domain(this.axis.x.domain);
+      this.xScale = d3.scaleBand().range([0, this.width]).padding(0.1).domain(this.axis.x.domain);
 
-                if (!this.axis.x.domain.length) {
-                  this.axis.x.domain = _chart2.default.domainRange(this.allValues.length / this.datasetNames.length);
-                  this.xScale.domain(this.axis.x.domain);
-                }
-
-                barsGroup = this.element.selectAll('g.francy-bars');
-
-
-                if (!barsGroup.node()) {
-                  barsGroup = this.element.append('g').attr('class', 'francy-bars');
-                }
-
-                self = this;
-
-
-                this.datasetNames.forEach(function (key, index) {
-                  var bar = barsGroup.selectAll('.francy-bar-' + index).data(self.datasets[key]);
-
-                  bar.exit().transition().duration(750).style('fill-opacity', 1e-6).remove();
-
-                  // append the rectangles for the bar chart
-                  var barEnter = bar.enter().append('rect').style('fill', function () {
-                    return _chart2.default.colors(index * 5);
-                  }).attr('class', 'francy-bar-' + index).attr('x', function (d, i) {
-                    return self.xScale(self.axis.x.domain[i]) + index * (self.xScale.bandwidth() / self.datasetNames.length);
-                  }).attr('width', self.xScale.bandwidth() / self.datasetNames.length - 1).attr('y', function (d) {
-                    return self.yScale(d);
-                  }).attr('height', function (d) {
-                    return self.height - self.yScale(d);
-                  }).on('mouseenter', function (d) {
-                    d3.select(this).transition().duration(250).style('fill-opacity', 0.5);
-                    self.tooltip.load(_chart2.default.tooltip(key, d), true).render();
-                  }).on('mouseleave', function () {
-                    d3.select(this).transition().duration(250).style('fill-opacity', 1);
-                    self.tooltip.unrender();
-                  });
-
-                  barEnter.merge(bar).attr('x', function (d, i) {
-                    return self.xScale(self.axis.x.domain[i]) + index * (self.xScale.bandwidth() / self.datasetNames.length);
-                  }).attr('width', self.xScale.bandwidth() / self.datasetNames.length - 1).attr('y', function (d) {
-                    return self.yScale(d);
-                  }).attr('height', function (d) {
-                    return self.height - self.yScale(d);
-                  });
-                });
-
-                this._renderAxis();
-                this._renderLegend();
-
-                return _context.abrupt('return', this);
-
-              case 9:
-              case 'end':
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function render() {
-        return _ref2.apply(this, arguments);
+      if (!this.axis.x.domain.length) {
+        this.axis.x.domain = _chart2.default.domainRange(this.allValues.length / this.datasetNames.length);
+        this.xScale.domain(this.axis.x.domain);
       }
 
-      return render;
-    }()
+      var barsGroup = this.element.selectAll('g.francy-bars');
+
+      if (!barsGroup.node()) {
+        barsGroup = this.element.append('g').attr('class', 'francy-bars');
+      }
+
+      var self = this;
+
+      this.datasetNames.forEach(function (key, index) {
+        var bar = barsGroup.selectAll('.francy-bar-' + index).data(self.datasets[key]);
+
+        bar.exit().transition().duration(750).style('fill-opacity', 1e-6).remove();
+
+        // append the rectangles for the bar chart
+        var barEnter = bar.enter().append('rect').style('fill', function () {
+          return _chart2.default.colors(index * 5);
+        }).attr('class', 'francy-bar-' + index).attr('x', function (d, i) {
+          return self.xScale(self.axis.x.domain[i]) + index * (self.xScale.bandwidth() / self.datasetNames.length);
+        }).attr('width', self.xScale.bandwidth() / self.datasetNames.length - 1).attr('y', function (d) {
+          return self.yScale(d);
+        }).attr('height', function (d) {
+          return self.height - self.yScale(d);
+        }).on('mouseenter', function (d) {
+          d3.select(this).transition().duration(250).style('fill-opacity', 0.5);
+          self.handlePromise(self.tooltip.load(_chart2.default.tooltip(key, d), true).render());
+        }).on('mouseleave', function () {
+          d3.select(this).transition().duration(250).style('fill-opacity', 1);
+          self.tooltip.unrender();
+        });
+
+        barEnter.merge(bar).attr('x', function (d, i) {
+          return self.xScale(self.axis.x.domain[i]) + index * (self.xScale.bandwidth() / self.datasetNames.length);
+        }).attr('width', self.xScale.bandwidth() / self.datasetNames.length - 1).attr('y', function (d) {
+          return self.yScale(d);
+        }).attr('height', function (d) {
+          return self.height - self.yScale(d);
+        });
+      });
+
+      this._renderAxis();
+      this._renderLegend();
+
+      return this;
+    }
   }, {
     key: 'unrender',
     value: function unrender() {}
@@ -12737,9 +12710,14 @@ var ChartFactory = (_dec = (0, _dataDecorator.requires)('canvas.chart'), (_class
                 return _context.abrupt('break', 16);
 
               case 16:
+
+                if (element) {
+                  setTimeout(element.parent.zoomToFit, 10);
+                }
+
                 return _context.abrupt('return', element);
 
-              case 17:
+              case 18:
               case 'end':
                 return _context.stop();
             }
@@ -12870,7 +12848,7 @@ var LineChart = (_dec = (0, _initializeDecorator.initialize)(), (_class = functi
           return _chart2.default.colors(index * 5);
         }).style('stroke-width', '5px').attr('class', 'francy-line-' + index).attr('d', valueLine).on('mouseenter', function (d) {
           d3.select(this).transition().duration(250).style('stroke-opacity', 0.5).style('stroke-width', '10px');
-          self.tooltip.load(_chart2.default.tooltip(key, d), true).render();
+          self.handlePromise(self.tooltip.load(_chart2.default.tooltip(key, d), true).render());
         }).on('mouseleave', function () {
           d3.select(this).transition().duration(250).style('stroke-opacity', 1).style('stroke-width', '5px');
           self.tooltip.unrender();
@@ -12999,7 +12977,7 @@ var ScatterChart = (_dec = (0, _initializeDecorator.initialize)(), (_class = fun
           return self.yScale(d);
         }).on('mouseenter', function (d) {
           d3.select(this).transition().duration(250).style('fill-opacity', 0.5).attr('r', 10);
-          self.tooltip.load(_chart2.default.tooltip(key, d), true).render();
+          self.handlePromise(self.tooltip.load(_chart2.default.tooltip(key, d), true).render());
         }).on('mouseleave', function () {
           d3.select(this).transition().duration(250).style('fill-opacity', 1).attr('r', 5);
           self.tooltip.unrender();
@@ -13629,9 +13607,14 @@ var Graph = (_dec = (0, _dataDecorator.requires)('canvas.graph'), (_class = func
                 element = _context.sent;
 
               case 11:
+
+                if (element) {
+                  setTimeout(element.parent.zoomToFit, 10);
+                }
+
                 return _context.abrupt('return', element);
 
-              case 12:
+              case 13:
               case 'end':
                 return _context.stop();
             }
@@ -13886,13 +13869,13 @@ var GenericGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = fun
         var collideForce = d3.forceCollide().radius(radius / 2).strength(0.5);
 
         //Generic gravity for the X position
-        var forceX = d3.forceX(this.width).strength(1 / nodesToAdd.length);
+        var forceX = d3.forceX(this.width / 2).strength(1 / nodesToAdd.length);
         //Generic gravity for the Y position - undirected/directed graphs fall here
-        var forceY = d3.forceY(this.height).strength(0.85);
+        var forceY = d3.forceY(this.height / 2).strength(0.85);
 
         if (this.data.canvas.graph.type === 'hasse') {
           //Generic gravity for the X position
-          forceX = d3.forceX(this.width).strength(0.15);
+          forceX = d3.forceX(this.width / 2).strength(0.15);
           //Strong y positioning based on layer to simulate the hasse diagram
           forceY = d3.forceY(function (d) {
             return d.layer * 75;
@@ -14398,7 +14381,7 @@ var Graph = function (_Renderer) {
       element.on('contextmenu', function (d) {
         var data = d.data || d;
         // default, build context menu
-        self.contextMenu.load(data, true).render();
+        self.handlePromise(self.contextMenu.load(data, true).render());
         // any callbacks will be handled here
         executeCallback.call(this, data, 'contextmenu');
       }).on('click', function (d) {
@@ -14415,7 +14398,7 @@ var Graph = function (_Renderer) {
         var data = d.data || d;
         if (data.messages) {
           // default, show tooltip
-          self.tooltip.load({ messages: data.messages }, true).render();
+          self.handlePromise(self.tooltip.load({ messages: data.messages }, true).render());
           // ok, this is almost an hack, because this should be rendered on
           // the tooltip itself.. but because a tooltip gets only the messages 
           // object to render and not the whole `this.data` object, 
@@ -14757,6 +14740,8 @@ var _dataDecorator = __webpack_require__(/*! ../util/data-decorator */ "./src/ut
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -14810,39 +14795,70 @@ var ContextMenu = (_dec = (0, _dataDecorator.requires)('menus'), (_class = funct
 
   _createClass(ContextMenu, [{
     key: 'render',
-    value: function render() {
-      var _this2 = this;
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _this2 = this;
 
-      d3.event.preventDefault();
+        var pos, menu, menusIterator;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
 
-      this.element = this.HTMLParent.select('div.francy-context-menu-holder');
-      // check if the menu holder is already present
-      if (!this.element.node()) {
-        this.element = this.HTMLParent.append('div').attr('class', 'francy-context-menu-holder');
+                d3.event.preventDefault();
+
+                this.element = this.HTMLParent.select('div.francy-context-menu-holder');
+                // check if the menu holder is already present
+                if (!this.element.node()) {
+                  this.element = this.HTMLParent.append('div').attr('class', 'francy-context-menu-holder');
+                }
+
+                pos = d3.mouse(this.SVGParent.node());
+
+
+                this.element.style('left', pos[0] + 5 + 'px').style('top', pos[1] + 5 + 'px');
+
+                // show the context menu
+                this.element.style('display', 'block');
+
+                // check if it exists already
+
+                if (!this.element.selectAll('*').node()) {
+                  _context.next = 8;
+                  break;
+                }
+
+                return _context.abrupt('return');
+
+              case 8:
+
+                // destroy menu
+                d3.select('body').on('click.francy-context-menu', function () {
+                  return _this2.unrender();
+                });
+
+                // this gets executed when a contextmenu event occurs
+                menu = this.element.append('div').attr('class', 'francy-context-menu').append('ul');
+                menusIterator = this.iterator(Object.values(this.data.menus));
+
+                this.traverse(menu, menusIterator);
+
+                return _context.abrupt('return', this);
+
+              case 13:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function render() {
+        return _ref2.apply(this, arguments);
       }
 
-      var pos = d3.mouse(this.SVGParent.node());
-
-      this.element.style('left', pos[0] + 5 + 'px').style('top', pos[1] + 5 + 'px');
-
-      // show the context menu
-      this.element.style('display', 'block');
-
-      // check if it exists already
-      if (this.element.selectAll('*').node()) return;
-
-      // destroy menu
-      d3.select('body').on('click.francy-context-menu', function () {
-        return _this2.unrender();
-      });
-
-      // this gets executed when a contextmenu event occurs
-      var menu = this.element.append('div').attr('class', 'francy-context-menu').append('ul');
-      var menusIterator = this.iterator(Object.values(this.data.menus));
-      this.traverse(menu, menusIterator);
-
-      return this;
-    }
+      return render;
+    }()
   }, {
     key: 'unrender',
     value: function unrender() {
@@ -15776,6 +15792,8 @@ var _dataDecorator = __webpack_require__(/*! ../util/data-decorator */ "./src/ut
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -15829,36 +15847,66 @@ var Tooltip = (_dec = (0, _dataDecorator.requires)('messages'), (_class = functi
 
   _createClass(Tooltip, [{
     key: 'render',
-    value: function render() {
-      var _this2 = this;
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _this2 = this;
 
-      this.element = this.HTMLParent.select('div.francy-tooltip-holder');
-      // check if the window is already present
-      if (!this.element.node()) {
-        this.element = this.HTMLParent.append('div').attr('class', 'francy-tooltip-holder');
+        var pos, table;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+
+                this.element = this.HTMLParent.select('div.francy-tooltip-holder');
+                // check if the window is already present
+                if (!this.element.node()) {
+                  this.element = this.HTMLParent.append('div').attr('class', 'francy-tooltip-holder');
+                }
+
+                // check if it exists already
+
+                if (!this.element.selectAll('*').node()) {
+                  _context.next = 4;
+                  break;
+                }
+
+                return _context.abrupt('return');
+
+              case 4:
+                pos = d3.mouse(this.SVGParent.node());
+
+                // TODO this won't be visible all the times, fine until someone complains about :P
+
+                this.element.style('left', pos[0] + 15 + 'px').style('top', pos[1] - 15 + 'px');
+
+                table = this.element.append('div').attr('class', 'francy-tooltip').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
+
+
+                Object.keys(this.data.messages).map(function (key) {
+                  var row = table.append('div').attr('class', 'francy-table-row');
+                  row.append('div').attr('class', 'francy-table-cell').text(_this2.data.messages[key].title);
+                  row.append('div').attr('class', 'francy-table-cell').text(_this2.data.messages[key].text);
+                });
+
+                // show tooltip
+                this.element.style('display', 'block');
+
+                return _context.abrupt('return', this);
+
+              case 10:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function render() {
+        return _ref2.apply(this, arguments);
       }
 
-      // check if it exists already
-      if (this.element.selectAll('*').node()) return;
-
-      var pos = d3.mouse(this.SVGParent.node());
-
-      // TODO this won't be visible all the times, fine until someone complains about :P
-      this.element.style('left', pos[0] + 15 + 'px').style('top', pos[1] - 15 + 'px');
-
-      var table = this.element.append('div').attr('class', 'francy-tooltip').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
-
-      Object.keys(this.data.messages).map(function (key) {
-        var row = table.append('div').attr('class', 'francy-table-row');
-        row.append('div').attr('class', 'francy-table-cell').text(_this2.data.messages[key].title);
-        row.append('div').attr('class', 'francy-table-cell').text(_this2.data.messages[key].text);
-      });
-
-      // show tooltip
-      this.element.style('display', 'block');
-
-      return this;
-    }
+      return render;
+    }()
   }, {
     key: 'unrender',
     value: function unrender() {

@@ -97,8 +97,6 @@ export default class Canvas extends Composite {
 
     await this.handlePromise(this.renderChildren());
 
-    setTimeout(zoomToFit, this.transitionDuration);
-
     return this;
   }
 

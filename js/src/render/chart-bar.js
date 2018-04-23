@@ -10,7 +10,7 @@ export default class BarChart extends Chart {
   }
 
   @initialize()
-  async render() {
+  render() {
     
     this.xScale = d3.scaleBand().range([0, this.width]).padding(0.1).domain(this.axis.x.domain);
 
@@ -52,7 +52,7 @@ export default class BarChart extends Chart {
         .on('mouseenter', function(d) {
           d3.select(this).transition()
             .duration(250).style('fill-opacity', 0.5);
-          self.tooltip.load(Chart.tooltip(key, d), true).render();
+          self.handlePromise(self.tooltip.load(Chart.tooltip(key, d), true).render());
         })
         .on('mouseleave', function() {
           d3.select(this).transition()

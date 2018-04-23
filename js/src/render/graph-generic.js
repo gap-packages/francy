@@ -161,13 +161,13 @@ export default class GenericGraph extends Graph {
       let collideForce = d3.forceCollide().radius(radius / 2).strength(0.5);
 
       //Generic gravity for the X position
-      let forceX = d3.forceX(this.width).strength(1 / nodesToAdd.length);
+      let forceX = d3.forceX(this.width/2).strength(1 / nodesToAdd.length);
       //Generic gravity for the Y position - undirected/directed graphs fall here
-      let forceY = d3.forceY(this.height).strength(0.85);
+      let forceY = d3.forceY(this.height/2).strength(0.85);
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
-        forceX = d3.forceX(this.width).strength(0.15);
+        forceX = d3.forceX(this.width/2).strength(0.15);
         //Strong y positioning based on layer to simulate the hasse diagram
         forceY = d3.forceY(d => d.layer * 75).strength(0.85);
       }
