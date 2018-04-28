@@ -66,12 +66,17 @@ export default class GenericGraph extends Graph {
     linkEnter.append('text')
       .classed('francy-label', true)
       .style('font-size', d => 10 * Math.log10(d.weight + 5))
+      .style('opacity', 0.1)
+      .style('opacity', 0.1)
       .text(d => d.title)
       .attr('text-anchor', 'middle');
 
     link.exit().remove();
 
     link = linkGroup.selectAll('g.francy-link');
+    
+    // on mouse over show labels opacity 1
+    labelsOpacityBehavior();
 
     if (this.data.canvas.graph.type === 'directed') {
       // this means we need arrows, so we append the marker
@@ -142,6 +147,10 @@ export default class GenericGraph extends Graph {
           // any callbacks will be handled here
           nodeOnClick.call(this, d);
         });
+        link.on('click', function() {
+          // default, highlight connected nodes
+          linkConnectedNodes.call(this);
+        });
       }
     }
 
@@ -156,14 +165,14 @@ export default class GenericGraph extends Graph {
       });
 
       //Canvas Forces
-      let manyForce = d3.forceManyBody().strength(-nodesToAdd.length * 25).distanceMin(radius * 2.5);
-      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100);
-      let collideForce = d3.forceCollide().radius(radius / 2).strength(0.5);
+      let manyForce = d3.forceManyBody().strength(-nodesToAdd.length * 75).distanceMin(radius * 2.5);
+      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100).iterations(3);
+      let collideForce = d3.forceCollide().radius(radius/2).strength(0.5);
 
       //Generic gravity for the X position
-      let forceX = d3.forceX(this.width/2).strength(1 / nodesToAdd.length);
+      let forceX = d3.forceX(this.width/2).strength(0.05);
       //Generic gravity for the Y position - undirected/directed graphs fall here
-      let forceY = d3.forceY(this.height/2).strength(0.85);
+      let forceY = d3.forceY(this.height/2).strength(0.25);
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
@@ -172,16 +181,18 @@ export default class GenericGraph extends Graph {
         forceY = d3.forceY(d => d.layer * 75).strength(0.85);
       }
 
-      var simulation = d3.forceSimulation()
-        .nodes(nodesToAdd)
+      var simulation = d3.forceSimulation().nodes(nodesToAdd)
         .force('charge', manyForce)
         .force('link', linkForce)
         .force('x', forceX)
         .force('y', forceY)
         .force('collide', collideForce)
         .on('tick', ticked)
-        .on('end', self.parent.zoomToFit)
-        .restart();
+        .on('end', self.parent.zoomToFit);
+        
+      simulation.restart();
+      
+      //this.parent.zoomToFit();
 
     } else {
       // well, simulation is off, apply fixed positions
@@ -196,12 +207,8 @@ export default class GenericGraph extends Graph {
         .attr('y2', d => d.target.y);
 
       link.selectAll('text.francy-label')
-        .attr('x', function(d) { 
-          return Graph.linkXPos(d.target, d.source); 
-        })
-        .attr('y', function(d) { 
-          return Graph.linkYPos(d.target, d.source); 
-        });
+        .attr('x', d => Graph.linkXPos(d.target, d.source))
+        .attr('y', d => Graph.linkYPos(d.target, d.source));
 
       node.attr('transform', d => `translate(${d.x},${d.y})`);
     }
@@ -230,15 +237,60 @@ export default class GenericGraph extends Graph {
         //Reduce the opacity of all but the neighbouring nodes
         let d = d3.select(this).node().__data__;
         node.style('opacity', o => neighboring(d, o) || neighboring(o, d) ? 1 : 0.1);
-        link.style('opacity', o => d.index === o.source.index || d.index === o.target.index ? 1 : 0.1);
+        link.style('opacity', function(o) {
+          let opacity = d.index === o.source.index || d.index === o.target.index ? 1 : 0.1;
+          d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
+          return opacity;
+        });
         //Reduce the op
         toggle = 1;
       } else {
         //Put them back to opacity=1
         node.style('opacity', 1);
-        link.style('opacity', 1);
+        link.style('opacity', function() {
+          d3.select(this).select('text').style('opacity', 0.1);
+          return 1;
+        });
+        labelsOpacityBehavior();
         toggle = 0;
       }
+    }
+
+    function linkConnectedNodes() {
+      d3.event.preventDefault();
+      if (toggle === 0) {
+        //Reduce the opacity of all but the neighbouring nodes
+        let d = d3.select(this).node().__data__;
+        node.style('opacity', o => d.source.id === o.id || d.target.id === o.id ? 1 : 0.1);
+        link.style('opacity', function(o) {
+          let opacity = d.index === o.index ? 1 : 0.1;
+          d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
+          return opacity;
+        });
+        //Reduce the op
+        toggle = 1;
+      } else {
+        //Put them back to opacity=1
+        node.style('opacity', 1);
+        link.style('opacity', function() {
+          d3.select(this).select('text').style('opacity', 0.1);
+          return 1;
+        });
+        labelsOpacityBehavior();
+        toggle = 0;
+      }
+    }
+    
+    function labelsOpacityBehavior() {
+      link.on('mouseover', function(){
+        d3.select(this).selectAll('text')
+        .style('opacity', 1)
+        .style('opacity', 1);
+      }).on('mouseleave', function(){
+        d3.select(this).selectAll('text')
+        .style('opacity', 0.1)
+        .style('opacity', 0.1);
+      });
     }
 
     function dragstarted(d) {

@@ -13450,13 +13450,9 @@ var Frame = (_dec = (0, _dataDecorator.requires)('canvas'), (_class = function (
                 return this.handlePromise(this.renderChildren());
 
               case 9:
-
-                // call zoom to fit when we finish rendering children
-                this.canvas.zoomToFit();
-
                 return _context.abrupt('return', this);
 
-              case 11:
+              case 10:
               case 'end':
                 return _context.stop();
             }
@@ -13597,14 +13593,9 @@ var Graph = (_dec = (0, _dataDecorator.requires)('canvas.graph'), (_class = func
                 element = _context.sent;
 
               case 11:
-
-                if (element) {
-                  setTimeout(element.parent.zoomToFit, 10);
-                }
-
                 return _context.abrupt('return', element);
 
-              case 13:
+              case 12:
               case 'end':
                 return _context.stop();
             }
@@ -13763,13 +13754,16 @@ var GenericGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = fun
 
       linkEnter.append('text').classed('francy-label', true).style('font-size', function (d) {
         return 10 * Math.log10(d.weight + 5);
-      }).text(function (d) {
+      }).style('opacity', 0.1).style('opacity', 0.1).text(function (d) {
         return d.title;
       }).attr('text-anchor', 'middle');
 
       link.exit().remove();
 
       link = linkGroup.selectAll('g.francy-link');
+
+      // on mouse over show labels opacity 1
+      labelsOpacityBehavior();
 
       if (this.data.canvas.graph.type === 'directed') {
         // this means we need arrows, so we append the marker
@@ -13836,6 +13830,10 @@ var GenericGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = fun
             // any callbacks will be handled here
             nodeOnClick.call(this, d);
           });
+          link.on('click', function () {
+            // default, highlight connected nodes
+            linkConnectedNodes.call(this);
+          });
         }
       }
 
@@ -13850,18 +13848,18 @@ var GenericGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = fun
         });
 
         //Canvas Forces
-        var manyForce = d3.forceManyBody().strength(-nodesToAdd.length * 25).distanceMin(radius * 2.5);
+        var manyForce = d3.forceManyBody().strength(-nodesToAdd.length * 75).distanceMin(radius * 2.5);
         var linkForce = d3.forceLink(canvasLinks).id(function (d) {
           return d.id;
         }).distance(function (d) {
           return d.height || 100;
-        });
+        }).iterations(3);
         var collideForce = d3.forceCollide().radius(radius / 2).strength(0.5);
 
         //Generic gravity for the X position
-        var forceX = d3.forceX(this.width / 2).strength(1 / nodesToAdd.length);
+        var forceX = d3.forceX(this.width / 2).strength(0.05);
         //Generic gravity for the Y position - undirected/directed graphs fall here
-        var forceY = d3.forceY(this.height / 2).strength(0.85);
+        var forceY = d3.forceY(this.height / 2).strength(0.25);
 
         if (this.data.canvas.graph.type === 'hasse') {
           //Generic gravity for the X position
@@ -13872,7 +13870,11 @@ var GenericGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = fun
           }).strength(0.85);
         }
 
-        var simulation = d3.forceSimulation().nodes(nodesToAdd).force('charge', manyForce).force('link', linkForce).force('x', forceX).force('y', forceY).force('collide', collideForce).on('tick', ticked).on('end', self.parent.zoomToFit).restart();
+        var simulation = d3.forceSimulation().nodes(nodesToAdd).force('charge', manyForce).force('link', linkForce).force('x', forceX).force('y', forceY).force('collide', collideForce).on('tick', ticked).on('end', self.parent.zoomToFit);
+
+        simulation.restart();
+
+        //this.parent.zoomToFit();
       } else {
         // well, simulation is off, apply fixed positions
         ticked();
@@ -13927,16 +13929,57 @@ var GenericGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = fun
             return neighboring(d, o) || neighboring(o, d) ? 1 : 0.1;
           });
           link.style('opacity', function (o) {
-            return d.index === o.source.index || d.index === o.target.index ? 1 : 0.1;
+            var opacity = d.index === o.source.index || d.index === o.target.index ? 1 : 0.1;
+            d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
+            return opacity;
           });
           //Reduce the op
           toggle = 1;
         } else {
           //Put them back to opacity=1
           node.style('opacity', 1);
-          link.style('opacity', 1);
+          link.style('opacity', function () {
+            d3.select(this).select('text').style('opacity', 0.1);
+            return 1;
+          });
+          labelsOpacityBehavior();
           toggle = 0;
         }
+      }
+
+      function linkConnectedNodes() {
+        d3.event.preventDefault();
+        if (toggle === 0) {
+          //Reduce the opacity of all but the neighbouring nodes
+          var d = d3.select(this).node().__data__;
+          node.style('opacity', function (o) {
+            return d.source.id === o.id || d.target.id === o.id ? 1 : 0.1;
+          });
+          link.style('opacity', function (o) {
+            var opacity = d.index === o.index ? 1 : 0.1;
+            d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
+            return opacity;
+          });
+          //Reduce the op
+          toggle = 1;
+        } else {
+          //Put them back to opacity=1
+          node.style('opacity', 1);
+          link.style('opacity', function () {
+            d3.select(this).select('text').style('opacity', 0.1);
+            return 1;
+          });
+          labelsOpacityBehavior();
+          toggle = 0;
+        }
+      }
+
+      function labelsOpacityBehavior() {
+        link.on('mouseover', function () {
+          d3.select(this).selectAll('text').style('opacity', 1).style('opacity', 1);
+        }).on('mouseleave', function () {
+          d3.select(this).selectAll('text').style('opacity', 0.1).style('opacity', 0.1);
+        });
       }
 
       function dragstarted(d) {
