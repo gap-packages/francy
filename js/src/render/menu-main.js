@@ -32,7 +32,7 @@ export default class MainMenu extends Menu {
     // Fixed loader
     let loaderId = `Loader-${this.data.canvas.id}`;
     this.element.append('li').attr('class', 'francy-loader')
-    .append('div').datum({}).attr('id', loaderId).classed('loader', true);
+      .append('div').datum({}).attr('id', loaderId).classed('loader', true);
 
     // Title
     if (this.data.canvas.title) {

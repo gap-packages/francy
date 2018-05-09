@@ -13858,33 +13858,29 @@ var GenericGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = fun
         });
 
         //Canvas Forces
-        var manyForce = d3.forceManyBody().strength(-nodesToAdd.length * 75).distanceMin(radius * 2.5);
+        var manyForce = d3.forceManyBody().strength(-node.size() * Math.log(node.size() * linksToAdd.length)).distanceMin(radius * 2.5);
         var linkForce = d3.forceLink(canvasLinks).id(function (d) {
           return d.id;
         }).distance(function (d) {
           return d.height || 100;
-        }).iterations(3);
-        var collideForce = d3.forceCollide().radius(radius / 2).strength(0.5);
+        });
+        var collideForce = d3.forceCollide().radius(radius / 2).strength(1 / Math.log(node.size() * linksToAdd.length));
 
         //Generic gravity for the X position
-        var forceX = d3.forceX(this.width / 2).strength(0.05);
+        var forceX = d3.forceX(this.width / 2).strength(0.25);
         //Generic gravity for the Y position - undirected/directed graphs fall here
-        var forceY = d3.forceY(this.height / 2).strength(0.25);
+        var forceY = d3.forceY(this.height / 2).strength(0.5);
 
         if (this.data.canvas.graph.type === 'hasse') {
           //Generic gravity for the X position
-          forceX = d3.forceX(this.width / 2).strength(0.15);
+          forceX = d3.forceX(this.width / 2).strength(0.01);
           //Strong y positioning based on layer to simulate the hasse diagram
           forceY = d3.forceY(function (d) {
             return d.layer * 75;
-          }).strength(0.85);
+          }).strength(1);
         }
 
-        var simulation = d3.forceSimulation().nodes(nodesToAdd).force('charge', manyForce).force('link', linkForce).force('x', forceX).force('y', forceY).force('collide', collideForce).on('tick', ticked).on('end', self.parent.zoomToFit);
-
-        simulation.restart();
-
-        //this.parent.zoomToFit();
+        var simulation = d3.forceSimulation().nodes(nodesToAdd).force('charge', manyForce).force('link', linkForce).force('x', forceX).force('y', forceY).force('collide', collideForce).on('tick', ticked).on('end', self.parent.zoomToFit).restart();
       } else {
         // well, simulation is off, apply fixed positions
         ticked();

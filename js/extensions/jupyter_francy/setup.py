@@ -18,7 +18,7 @@ import sys
 v = sys.version_info
 if v[:2] < (3, 3):
     # Note: 3.3 is untested, but we'll still allow it
-    error = "ERROR: %s requires Python version 3.3 or above." % name
+    error = 'ERROR: %s requires Python version 3.3 or above.' % name
     print(error, file=sys.stderr)
     sys.exit(1)
 
@@ -48,7 +48,7 @@ jstargets = [
 ]
 
 version_ns = {}
-with io.open(pjoin(here, name, '_version.py'), encoding="utf8") as f:
+with io.open(pjoin(here, name, '_version.py'), encoding='utf8') as f:
     exec(f.read(), {}, version_ns)
 
 
@@ -73,19 +73,20 @@ data_files = expand_data_files([
 
 
 setup_args = dict(
-    name            = name,
-    version         = version_ns['__version__'],
-    scripts         = glob(pjoin('scripts', '*')),
-    cmdclass        = cmdclass,
-    packages        = find_packages(here),
-    package_data    = package_data,
+    name                 = name,
+    version              = version_ns['__version__'],
+    scripts              = glob(pjoin('scripts', '*')),
+    cmdclass             = cmdclass,
+    packages             = find_packages(here),
+    package_data         = package_data,
     include_package_data = True,
-    data_files      = data_files,
+    data_files           = data_files,
+    long_description     = 'Jupyter Notebook and Jupyter Lab plugin for Francy - An Interactive Discrete Mathematics Framework for GAP.',
     author               = 'Manuel Martins',
     author_email         = 'manuelmachadomartins@gmail.com',
     url                  = 'http://jupyter.org',
     license              = 'BSD',
-    platforms            = "Linux, Mac OS X, Windows",
+    platforms            = 'Linux, Mac OS X, Windows',
     keywords             = ['ipython', 'jupyter', 'francy', 'gap'],
     classifiers          = [
         'Intended Audience :: Developers',

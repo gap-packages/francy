@@ -165,20 +165,20 @@ export default class GenericGraph extends Graph {
       });
 
       //Canvas Forces
-      let manyForce = d3.forceManyBody().strength(-nodesToAdd.length * 75).distanceMin(radius * 2.5);
-      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100).iterations(3);
-      let collideForce = d3.forceCollide().radius(radius/2).strength(0.5);
+      let manyForce = d3.forceManyBody().strength(-node.size() * Math.log(node.size() * linksToAdd.length)).distanceMin(radius * 2.5);
+      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100);
+      let collideForce = d3.forceCollide().radius(radius / 2).strength(1 / Math.log(node.size() * linksToAdd.length));
 
       //Generic gravity for the X position
-      let forceX = d3.forceX(this.width/2).strength(0.05);
+      let forceX = d3.forceX(this.width/2).strength(0.25);
       //Generic gravity for the Y position - undirected/directed graphs fall here
-      let forceY = d3.forceY(this.height/2).strength(0.25);
+      let forceY = d3.forceY(this.height/2).strength(0.5);
 
       if (this.data.canvas.graph.type === 'hasse') {
         //Generic gravity for the X position
-        forceX = d3.forceX(this.width/2).strength(0.15);
+        forceX = d3.forceX(this.width/2).strength(0.01);
         //Strong y positioning based on layer to simulate the hasse diagram
-        forceY = d3.forceY(d => d.layer * 75).strength(0.85);
+        forceY = d3.forceY(d => d.layer * 75).strength(1);
       }
 
       var simulation = d3.forceSimulation().nodes(nodesToAdd)
@@ -188,11 +188,8 @@ export default class GenericGraph extends Graph {
         .force('y', forceY)
         .force('collide', collideForce)
         .on('tick', ticked)
-        .on('end', self.parent.zoomToFit);
-        
-      simulation.restart();
-      
-      //this.parent.zoomToFit();
+        .on('end', self.parent.zoomToFit)
+        .restart();
 
     } else {
       // well, simulation is off, apply fixed positions
@@ -284,12 +281,12 @@ export default class GenericGraph extends Graph {
     function labelsOpacityBehavior() {
       link.on('mouseover', function(){
         d3.select(this).selectAll('text')
-        .style('opacity', 1)
-        .style('opacity', 1);
+          .style('opacity', 1)
+          .style('opacity', 1);
       }).on('mouseleave', function(){
         d3.select(this).selectAll('text')
-        .style('opacity', 0.1)
-        .style('opacity', 0.1);
+          .style('opacity', 0.1)
+          .style('opacity', 0.1);
       });
     }
 
