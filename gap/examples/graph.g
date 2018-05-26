@@ -1,16 +1,4 @@
 ################################################
-#! @BeginChunk Example_Create_Graph_1
-#! @BeginExample
-
-graph := Graph(GraphType.HASSE);
-shape := Shape(ShapeType.CIRCLE, "Title");
-SetTitle(shape, "New Title");
-Add(graph, shape);
-
-#! @EndExample
-#! @EndChunk
-
-################################################
 #! @BeginChunk Example_Create_Graph_2
 #! @BeginExample
 

@@ -22,9 +22,9 @@
   cursor: pointer
 }
 
-.francy-links line {
+.francy-links path {
   stroke: #999;
-  fill: #999
+  fill: none
 }
 
 .francy-arrows path {
@@ -125,9 +125,9 @@
   cursor: pointer
 }
 
-.francy-nodes circle,
-.francy-nodes rect {
-  stroke: #fff
+.francy-node path {
+  stroke: #000;
+  stroke-width: 0.5px
 }
 
 .francy-lines path {
@@ -333,7 +333,7 @@ div.output_subarea.jp-OutputWidget-Francy.output_result {
   left: 20px;
 }
 
-.francy-alert>span {
+.francy-alert>span:not(:first-child) {
   margin-left: 5px
 }
 

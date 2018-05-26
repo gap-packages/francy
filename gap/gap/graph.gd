@@ -135,9 +135,6 @@ BindGlobal("GraphTypeObjectType", NewType(GraphFamily, IsFrancyGraphType and IsF
 #! <P/>
 #! Examples:
 #! <P/>
-#! Create a simple <C>Graph</C> of type <C>GraphType.HASSE</C>:
-#! @InsertChunk Example_Create_Graph_1
-#! <P/>
 #! Create a simple <C>Graph</C> of type <C>GraphType.DIRECTED</C> and simple <C>Shapes</C> connected with <C>Links</C>:
 #! @InsertChunk Example_Create_Graph_2
 #! <P/>
@@ -245,7 +242,6 @@ DeclareOperation("Links", [IsList, IsList, IsLinkDefaults]);
 BindGlobal("GraphType", rec(
   UNDIRECTED := Objectify(GraphTypeObjectType, rec(value := "undirected")),
   DIRECTED   := Objectify(GraphTypeObjectType, rec(value := "directed")),
-  HASSE      := Objectify(GraphTypeObjectType, rec(value := "hasse")),
   TREE       := Objectify(GraphTypeObjectType, rec(value := "tree"))
 ));
 
@@ -422,7 +418,7 @@ InstallMethod(ShowNeighbours, "graph", [IsFrancyGraph], o -> o!.showNeighbours);
 #! @Description
 #! Sets the <C>ShowNeighbours</C> behavior.
 #! @Arguments IsCanvas, IsBool
-InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) if o!.type = "tree" then Error("Only supported by GraphType TREE!"); fi; o!.showNeighbours := b; end);
+InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) if o!.type = "tree" then Error("Only supported by GraphType.TREE!"); fi; o!.showNeighbours := b; end);
 
 #! @Description
 #! The <C>Weight</C> of the current link.

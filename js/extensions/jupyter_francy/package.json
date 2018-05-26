@@ -11,7 +11,7 @@
     "jupyter notebook",
     "jupyter notebook extension",
     "jupyterlab",
-    "jupyterlab extension"
+    "jupyterlab-extension"
   ],
   "scripts": {
     "build:lib": "babel src -d lib",
