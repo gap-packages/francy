@@ -61,7 +61,8 @@ SetPackageInfo(rec(
   Dependencies := rec(
     GAP                    := ">=4.7",
     NeededOtherPackages    := [["GAPDoc", ">= 1.5"],
-                              ["json", ">= 1.1.0"]],
+                              ["json", ">= 1.1.0"],
+                              ["JupyterKernel", ">=0.11"]],
     SuggestedOtherPackages := [],
     ExternalConditions     := []
   ),

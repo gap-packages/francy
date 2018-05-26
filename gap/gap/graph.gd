@@ -356,7 +356,7 @@ InstallMethod(Highlight, "shape", [IsShape], o -> o!.highlight);
 InstallMethod(SetHighlight, "shape, boolean", [IsShape, IsBool], function(o, b) o!.highlight := b; end);
 
 #! @Description
-#! The <C>Layer</C> in which the node will be placed when HASSE diagram is selected.
+#! The <C>Layer</C> in which the node will be placed.
 #! This property is also used to apply a color based on a scale
 #! @Returns <C>IsInt</C>
 DeclareAttribute("Layer", IsShape);
@@ -367,7 +367,7 @@ InstallMethod(Layer, "shape", [IsShape], o -> o!.layer);
 InstallMethod(SetLayer, "shape, int", [IsShape, IsInt], function(o, i) o!.layer := i; end);
 
 #! @Description
-#! The <C>ParentNode</C> in which the node will be placed when HASSE diagram is selected.
+#! The <C>ParentNode</C> in which the node will be placed.
 #! This property is also used to apply a color based on a scale
 #! @Returns <C>IsShape</C>
 DeclareAttribute("ParentNode", IsShape);

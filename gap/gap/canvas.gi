@@ -211,7 +211,7 @@ function(canvas)
     "<!DOCTYPE html>\n\
     <html>\n\
       <head>\n\
-        <meta charset=\"utf-8\" content=\"text/html\" property=\"GAP,francy,d3.v4\"></meta>\n\
+        <meta charset=\"utf-8\" content=\"text/html\" property=\"GAP,francy,d3.v5\"></meta>\n\
         <link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/extensions/browser/index.css\"></link>\n\
         <script src=\"https://d3js.org/d3.v5.js\"></script>\n\
         <script src=\"https://cdn.rawgit.com/mcmartins/francy/master/js/extensions/browser/francy.bundle.js\"></script>\n\

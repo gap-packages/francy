@@ -2,7 +2,7 @@ gap> canvas := Canvas("Callbacks in action");
 <IsFrancyObject/IsCanvas>
 gap> SetHeight(canvas, 100);
 gap> 
-gap> graph := Graph(GraphType.HASSE);
+gap> graph := Graph(GraphType.UNDIRECTED);
 <IsFrancyObject/IsFrancyGraph>
 gap> shape := Shape(ShapeType.CIRCLE);
 <IsFrancyObject/IsShape>
