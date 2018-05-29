@@ -11,7 +11,7 @@ ENV NB_UID 1000
 ENV HOME /home/${NB_USER}
 
 # update dependencies
-RUN mv /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
+RUN ln -s /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
 RUN apt-get update && apt-get install -y nodejs npm python3.6 python3-pip
 
 # lab extension installation
