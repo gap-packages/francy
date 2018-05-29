@@ -52,6 +52,8 @@ export default class TreeGraph extends Graph {
     }
 
     async function update(source) {
+      let self = this;
+      
       let treeData = treemap(root);
 
       let nodes = treeData.descendants(),
@@ -121,12 +123,19 @@ export default class TreeGraph extends Graph {
       nodeEnter.append('text')
         .attr('class', 'francy-label')
         .text(d => d.data.title)
-        .style('font-size', d => 10 * Math.log10(d.data.size + 5))
-        .attr('x',  function() {
-          let bound = this.getBBox();
-          return -(bound.width / 2);
-        })
-        .style('cursor', d => d.children || d._children ? 'pointer' : 'default');
+        .style('font-size', d => 7 * Math.sqrt(d.weight))
+        .style('cursor', d => d.children || d._children ? 'pointer' : 'default')
+        .attr('x', function() {
+          // apply mathjax if this is the case
+          let text = d3.select(this);
+          if (text.text().startsWith('$') && text.text().endsWith('$')) {
+            // we need to set the position after re-render the latex
+            self.handlePromise(self.mathjax.settings({appendTo: {element: text}}).renderSVG(() => {
+              text.attr('x', self.setLabelXPosition(this));
+            }));
+          }
+          return self.setLabelXPosition(this);
+        });
 
       let nodeUpdate = nodeEnter.merge(node);
 
@@ -157,8 +166,6 @@ export default class TreeGraph extends Graph {
       }
 
       // Toggle children on click.
-      let self = this;
-
       function click(d) {
         if (d.children) {
           d._children = d.children;

@@ -36,7 +36,7 @@ export default class Frame extends Composite {
 
     this.logger.debug(`Frame updated [${frameId}]...`);
 
-    await this.handlePromise(this.renderChildren());
+    this.handlePromise(this.renderChildren());
 
     return this;
   }

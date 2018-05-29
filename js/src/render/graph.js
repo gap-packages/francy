@@ -113,5 +113,15 @@ export default class Graph extends Renderer {
 
     return element;
   }
+  
+  setLabelXPosition(element) {
+    let bound = element.getBBox();
+    return -Math.ceil(bound.width / 2);
+  }
+  
+  setLabelYPosition(element) {
+    let bound = element.getBBox();
+    return Math.floor(bound.height / 2);
+  }
 
 }

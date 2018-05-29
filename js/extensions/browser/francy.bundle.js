@@ -11765,16 +11765,19 @@ var Francy = (_dec = (0, _dataDecorator.requires)('canvas'), (_class = function 
             switch (_context.prev = _context.next) {
               case 0:
                 this.logger.debug('Rendering data generated in version: ' + this.data.version);
-                _context.next = 3;
+                if (this.data.version !== "0.6.0") {
+                  this.logger.warn('The data version differs from the Francy JS version, rendering may fail... please update your system...');
+                }
+                _context.next = 4;
                 return new _frame2.default(this.options).load(this.data).render();
 
-              case 3:
+              case 4:
                 frame = _context.sent;
 
                 ALL_CANVAS[this.data.canvas.id] = frame;
                 return _context.abrupt('return', frame.element.node());
 
-              case 6:
+              case 7:
               case 'end':
                 return _context.stop();
             }
@@ -11850,6 +11853,8 @@ var _exception = __webpack_require__(/*! ../util/exception */ "./src/util/except
 var _loaderDecorator = __webpack_require__(/*! ../util/loader-decorator */ "./src/util/loader-decorator.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -11962,19 +11967,42 @@ var Base = function () {
     }
   }, {
     key: 'handlePromise',
-    value: function handlePromise(promise) {
-      var _this = this;
+    value: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(promise) {
+        var _this = this;
 
-      var loaderId = _loaderDecorator.showLoader.call(this);
-      var result = promise.then(function (data) {
-        _loaderDecorator.hideLoader.call(_this, loaderId);
-        return data;
-      }).catch(function (error) {
-        _loaderDecorator.hideLoader.call(_this, loaderId);
-        _this.handleErrors(error);
-      });
-      return result;
-    }
+        var loaderId;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                loaderId = _loaderDecorator.showLoader.call(this);
+                _context.next = 3;
+                return promise.then(function (data) {
+                  return data;
+                }).catch(function (error) {
+                  _this.handleErrors(error);
+                }).finally(function () {
+                  return _loaderDecorator.hideLoader.call(_this, loaderId);
+                });
+
+              case 3:
+                return _context.abrupt('return', _context.sent);
+
+              case 4:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function handlePromise(_x) {
+        return _ref3.apply(this, arguments);
+      }
+
+      return handlePromise;
+    }()
   }, {
     key: 'parent',
     get: function get() {
@@ -13364,13 +13392,11 @@ var Frame = (_dec = (0, _dataDecorator.requires)('canvas'), (_class = function (
 
                 this.logger.debug('Frame updated [' + frameId + ']...');
 
-                _context.next = 9;
-                return this.handlePromise(this.renderChildren());
+                this.handlePromise(this.renderChildren());
 
-              case 9:
                 return _context.abrupt('return', this);
 
-              case 10:
+              case 9:
               case 'end':
                 return _context.stop();
             }
@@ -13681,7 +13707,7 @@ var GenericGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = fun
       }
 
       linkEnter.append('text').classed('francy-label', true).style('font-size', function (d) {
-        return 5 * Math.sqrt(d.weight);
+        return 7 * Math.sqrt(d.weight);
       }).style('opacity', 0.1).style('opacity', 0.1).text(function (d) {
         return d.title;
       }).attr('text-anchor', 'middle');
@@ -13712,16 +13738,22 @@ var GenericGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = fun
       nodeEnter.append('text').classed('francy-label', true).text(function (d) {
         return d.title;
       }).style('font-size', function (d) {
-        return 5 * Math.sqrt(d.size);
+        return 7 * Math.sqrt(d.size);
       }).attr('x', function () {
+        var _this2 = this;
+
         // apply mathjax if this is the case
         var text = d3.select(this);
         if (text.text().startsWith('$') && text.text().endsWith('$')) {
-          self.handlePromise(self.mathjax.settings({ appendTo: { element: text } }).renderSVG());
+          // we need to set the position after re-render the latex
+          self.handlePromise(self.mathjax.settings({ appendTo: { element: text } }).renderSVG(function () {
+            text.attr('x', self.setLabelXPosition(_this2));
+          }));
         }
-        var bound = this.getBBox();
-        return -bound.width / 2;
-      });
+        return self.setLabelXPosition(this);
+      }); /*.attr('y', function() {
+          return self.setLabelYPosition(this);
+          });*/
 
       node.exit().remove();
 
@@ -14032,9 +14064,9 @@ var TreeGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = functi
     value: function render() {
       var update = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(source) {
-          var _this2 = this;
+          var _this3 = this;
 
-          var treeData, nodes, links, linkGroup, link, linkEnter, diagonal, nodeGroup, node, nodeEnter, nodeUpdate, nodeOnClick, self, click;
+          var self, treeData, nodes, links, linkGroup, link, linkEnter, diagonal, nodeGroup, node, nodeEnter, nodeUpdate, nodeOnClick, click;
           return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
@@ -14054,6 +14086,7 @@ var TreeGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = functi
                     return 'M ' + s.y + ' ' + s.x + '\n            C ' + (s.y + d.y) / 2 + ' ' + s.x + ',\n              ' + (s.y + d.y) / 2 + ' ' + d.x + ',\n              ' + d.y + ' ' + d.x;
                   };
 
+                  self = this;
                   treeData = treemap(root);
                   nodes = treeData.descendants(), links = treeData.descendants().slice(1);
 
@@ -14118,12 +14151,21 @@ var TreeGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = functi
                   nodeEnter.append('text').attr('class', 'francy-label').text(function (d) {
                     return d.data.title;
                   }).style('font-size', function (d) {
-                    return 10 * Math.log10(d.data.size + 5);
-                  }).attr('x', function () {
-                    var bound = this.getBBox();
-                    return -(bound.width / 2);
+                    return 7 * Math.sqrt(d.weight);
                   }).style('cursor', function (d) {
                     return d.children || d._children ? 'pointer' : 'default';
+                  }).attr('x', function () {
+                    var _this2 = this;
+
+                    // apply mathjax if this is the case
+                    var text = d3.select(this);
+                    if (text.text().startsWith('$') && text.text().endsWith('$')) {
+                      // we need to set the position after re-render the latex
+                      self.handlePromise(self.mathjax.settings({ appendTo: { element: text } }).renderSVG(function () {
+                        text.attr('x', self.setLabelXPosition(_this2));
+                      }));
+                    }
+                    return self.setLabelXPosition(this);
                   });
 
                   nodeUpdate = nodeEnter.merge(node);
@@ -14152,14 +14194,13 @@ var TreeGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = functi
 
                     node.on('click', function (d) {
                       // any callbacks will be handled here
-                      nodeOnClick.call(_this2, d.data);
+                      nodeOnClick.call(_this3, d.data);
                       // default, highlight connected nodes
-                      click.call(_this2, d);
+                      click.call(_this3, d);
                     });
                   }
 
                   // Toggle children on click.
-                  self = this;
 
                 case 26:
                 case 'end':
@@ -14368,6 +14409,18 @@ var Graph = function (_Renderer) {
         }
       }
     }
+  }, {
+    key: 'setLabelXPosition',
+    value: function setLabelXPosition(element) {
+      var bound = element.getBBox();
+      return -Math.ceil(bound.width / 2);
+    }
+  }, {
+    key: 'setLabelYPosition',
+    value: function setLabelYPosition(element) {
+      var bound = element.getBBox();
+      return Math.floor(bound.height / 2);
+    }
   }], [{
     key: 'linkXPos',
     value: function linkXPos(s, t) {
@@ -14552,7 +14605,7 @@ var MathJaxWrapper = (_dec = (0, _initializeDecorator.initialize)(), _dec2 = (0,
 
       MathJax.Hub.Register.MessageHook('New Math', function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(id) {
-          var mathJaxElement, svgMathJaxElement, width;
+          var mathJaxElement, svgMathJaxElement, g, width, height;
           return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
@@ -14560,13 +14613,18 @@ var MathJaxWrapper = (_dec = (0, _initializeDecorator.initialize)(), _dec2 = (0,
                   if (id && id.length > 1) {
                     mathJaxElement = d3.select('#' + id[1] + '-Frame');
                     svgMathJaxElement = mathJaxElement.select('svg');
+                    g = d3.select(mathJaxElement.node().parentNode.parentNode);
 
                     if (svgMathJaxElement.node()) {
+                      // set same font-size
+                      svgMathJaxElement.style('font-size', g.select('text.francy-label').style('font-size'));
+                      // re-center component
                       width = svgMathJaxElement.node().width.baseVal.value;
+                      height = svgMathJaxElement.node().height.baseVal.value;
 
                       svgMathJaxElement.attr('x', -width / 2);
-                      svgMathJaxElement.attr('y', -15);
-                      d3.select(mathJaxElement.node().parentNode.parentNode).append(function () {
+                      svgMathJaxElement.attr('y', -height / 2);
+                      g.append(function () {
                         return svgMathJaxElement.node();
                       });
                     }
@@ -14592,7 +14650,7 @@ var MathJaxWrapper = (_dec = (0, _initializeDecorator.initialize)(), _dec2 = (0,
   }, {
     key: 'renderSVG',
     value: function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(postFunction) {
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -14605,9 +14663,10 @@ var MathJaxWrapper = (_dec = (0, _initializeDecorator.initialize)(), _dec2 = (0,
                 return _context2.abrupt('return');
 
               case 2:
-                MathJax.Hub.Queue(['setRenderer', MathJax.Hub, 'SVG'], ['Typeset', MathJax.Hub, this.parent.node()]);
+                postFunction = postFunction || function () {};
+                MathJax.Hub.Queue(['setRenderer', MathJax.Hub, 'SVG'], ['Typeset', MathJax.Hub, this.parent.node()], [postFunction]);
 
-              case 3:
+              case 4:
               case 'end':
                 return _context2.stop();
             }
@@ -14615,7 +14674,7 @@ var MathJaxWrapper = (_dec = (0, _initializeDecorator.initialize)(), _dec2 = (0,
         }, _callee2, this);
       }));
 
-      function renderSVG() {
+      function renderSVG(_x2) {
         return _ref3.apply(this, arguments);
       }
 
@@ -14624,7 +14683,7 @@ var MathJaxWrapper = (_dec = (0, _initializeDecorator.initialize)(), _dec2 = (0,
   }, {
     key: 'renderHTML',
     value: function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(postFunction) {
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -14637,9 +14696,10 @@ var MathJaxWrapper = (_dec = (0, _initializeDecorator.initialize)(), _dec2 = (0,
                 return _context3.abrupt('return');
 
               case 2:
-                MathJax.Hub.Queue(['setRenderer', MathJax.Hub, 'HTML-CSS'], ['Typeset', MathJax.Hub, this.parent.node()]);
+                postFunction = postFunction || function () {};
+                MathJax.Hub.Queue(['setRenderer', MathJax.Hub, 'HTML-CSS'], ['Typeset', MathJax.Hub, this.parent.node()], [postFunction]);
 
-              case 3:
+              case 4:
               case 'end':
                 return _context3.stop();
             }
@@ -14647,7 +14707,7 @@ var MathJaxWrapper = (_dec = (0, _initializeDecorator.initialize)(), _dec2 = (0,
         }, _callee3, this);
       }));
 
-      function renderHTML() {
+      function renderHTML(_x3) {
         return _ref4.apply(this, arguments);
       }
 
@@ -15326,9 +15386,14 @@ var AboutModal = (_dec = (0, _initializeDecorator.initialize)(), (_class = funct
 
       var content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
 
-      content.append('span').text('Loaded Object:');
-      content.append('pre').attr('class', 'francy').html((0, _component.syntaxHighlight)(JSON.stringify(this.data.canvas, null, 2)));
+      content.append('span').text('Francy is an interactive discrete mathematics framework for GAP.').append('br').append('br');
+      content.append('span').text('Developed by Manuel Martins: ');
       content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
+
+      if (this.options.verbose) {
+        content.append('span').text('Loaded Data:');
+        content.append('pre').attr('class', 'francy').html((0, _component.syntaxHighlight)(JSON.stringify(this.data.canvas, null, 2)));
+      }
 
       var footer = form.append('div').attr('class', 'francy-modal-footer');
 

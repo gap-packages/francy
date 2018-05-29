@@ -34,12 +34,14 @@ from glob import glob
 from setuptools import setup, find_packages
 
 from setupbase import (create_cmdclass, install_npm, ensure_targets,
-    combine_commands, expand_data_files)
+    combine_commands, expand_data_files, gap_installation)
+    
+from pkg_resources import resource_filename
 
 here = os.path.abspath(os.path.dirname(__file__))
 nbextension = pjoin(here, name, 'nbextension')
 labextension = pjoin(here, name, 'labextension')
-
+gapextension = pjoin(here, name, 'gap_francy')
 
 # Representative files that should exist after a successful build
 jstargets = [
@@ -51,26 +53,28 @@ version_ns = {}
 with io.open(pjoin(here, name, '_version.py'), encoding='utf8') as f:
     exec(f.read(), {}, version_ns)
 
-
-cmdclass = create_cmdclass(('jsdeps',))
+cmdclass = create_cmdclass(('jsdeps', 'gap_package'))
 cmdclass['jsdeps'] = combine_commands(
     install_npm(here, build_cmd='build:all'),
     ensure_targets(jstargets),
 )
-
+cmdclass['gap_package'] = gap_installation(
+    resource_filename(name, 'gap_francy')
+)
 
 package_data = {
     name: [
         'nbextension/*.*js*',
-        'labextension/*.tgz'
+        'labextension/*.tgz',
+        'gap_francy/*'
     ]
 }
 
 data_files = expand_data_files([
     ('share/jupyter/nbextensions/jupyter_francy', [pjoin(nbextension, '*.js*')]),
-    ('share/jupyter/lab/extensions', [pjoin(labextension, '*.tgz')])
+    ('share/jupyter/lab/extensions', [pjoin(labextension, '*.tgz')]),
+    ('share/jupyter/nbextensions/gap_francy', [pjoin(gapextension, '*')])
 ])
-
 
 setup_args = dict(
     name                 = name,
@@ -89,6 +93,7 @@ setup_args = dict(
     platforms            = 'Linux, Mac OS X, Windows',
     keywords             = ['ipython', 'jupyter', 'francy', 'gap'],
     classifiers          = [
+        'Intended Audience :: End-Users',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
         'Intended Audience :: Science/Research',

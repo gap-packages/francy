@@ -76,7 +76,7 @@ export default class GenericGraph extends Graph {
 
     linkEnter.append('text')
       .classed('francy-label', true)
-      .style('font-size', d => 5 * Math.sqrt(d.weight))
+      .style('font-size', d => 7 * Math.sqrt(d.weight))
       .style('opacity', 0.1)
       .style('opacity', 0.1)
       .text(d => d.title)
@@ -101,16 +101,20 @@ export default class GenericGraph extends Graph {
     nodeEnter.append('text')
       .classed('francy-label', true)
       .text(d => d.title)
-      .style('font-size', d => 5 * Math.sqrt(d.size))
+      .style('font-size', d => 7 * Math.sqrt(d.size))
       .attr('x', function() {
         // apply mathjax if this is the case
         let text = d3.select(this);
         if (text.text().startsWith('$') && text.text().endsWith('$')) {
-          self.handlePromise(self.mathjax.settings({appendTo: {element: text}}).renderSVG());
+          // we need to set the position after re-render the latex
+          self.handlePromise(self.mathjax.settings({appendTo: {element: text}}).renderSVG(() => {
+            text.attr('x', self.setLabelXPosition(this));
+          }));
         }
-        let bound = this.getBBox();
-        return -bound.width / 2;
-      });
+        return self.setLabelXPosition(this);
+      });/*.attr('y', function() {
+        return self.setLabelYPosition(this);
+      });*/
 
     node.exit().remove();
 

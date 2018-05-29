@@ -41,6 +41,9 @@ export default class Francy extends Renderer {
   @requires('canvas')
   async render() {
     this.logger.debug(`Rendering data generated in version: ${this.data.version}`);
+    if (this.data.version !== VERSION) {
+      this.logger.warn(`The data version differs from the Francy JS version, rendering may fail... please update your system...`);
+    }
     let frame = await new Frame(this.options).load(this.data).render();
     ALL_CANVAS[this.data.canvas.id] = frame;
     return frame.element.node();

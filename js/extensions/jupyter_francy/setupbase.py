@@ -393,3 +393,54 @@ class bdist_egg_disabled(bdist_egg):
     def run(self):
         sys.exit("Aborting implicit building of eggs. Use `pip install .` " +
                  " to install from source.")
+
+
+def gap_installation(path=None):
+    """Return a Command for managing an npm installation.
+
+    Note: The command is skipped if the `--skip-npm` flag is used.
+
+    Parameters
+    ----------
+    path: str, optional
+        The base path of the node package.  Defaults to the repo root.
+    build_dir: str, optional
+        The target build directory.  If this and source_dir are given,
+        the JavaScript will only be build if necessary.
+    source_dir: str, optional
+        The source code directory.
+    build_cmd: str, optional
+        The npm command to build assets to the build_dir.
+    """
+
+    class GAP_Package(BaseCommand):
+        description = 'install francy gap package dependency'
+
+        def run(self):
+            """ This will create a symbolic link on the gap packages installation dir
+            for francy gap package.
+            """
+            gap_installation_dir = os.environ.get("GAPROOT", "")
+                
+            if gap_installation_dir:
+                if not os.path.isdir(gap_installation_dir):
+                    raise Exception("The [GAPROOT] provided is not a directory! cannot proceed.")
+                if not os.path.exists(gap_installation_dir + '/pkg'):
+                    raise Exception("The [GAPROOT] provided does not contain a [pkg] directory! cannot proceed.")
+                
+                if os.path.exists(gap_installation_dir + '/pkg/francy'):
+                    try:
+                        print("Removing link [%s]" % gap_installation_dir + '/pkg/francy')
+                        os.unlink(gap_installation_dir + '/pkg/francy')
+                    except:
+                        raise Exception("Cannot remove current link [%s]." % gap_installation_dir + '/pkg/francy')
+            
+                try:
+                    print("Creating link [%s] from [%s]" % (gap_installation_dir + '/pkg/francy', path))
+                    os.symlink(path, gap_installation_dir + '/pkg/francy')
+                except:
+                    raise Exception("Cannot create current link [%s]." % gap_installation_dir + '/pkg/francy')
+            else:
+                 print("Please provide a environment variable [GAPROOT] to install Francy GAP Package...")
+
+    return GAP_Package

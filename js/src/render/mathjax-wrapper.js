@@ -55,11 +55,16 @@ export default class MathJaxWrapper extends Base {
       if (id && id.length > 1) {
         var mathJaxElement = d3.select(`#${id[1]}-Frame`);
         var svgMathJaxElement = mathJaxElement.select('svg');
+        var g = d3.select(mathJaxElement.node().parentNode.parentNode);
         if (svgMathJaxElement.node()) {
+          // set same font-size
+          svgMathJaxElement.style('font-size', g.select('text.francy-label').style('font-size'));
+          // re-center component
           let width = svgMathJaxElement.node().width.baseVal.value;
+          let height = svgMathJaxElement.node().height.baseVal.value;
           svgMathJaxElement.attr('x', -width / 2);
-          svgMathJaxElement.attr('y', -15);
-          d3.select(mathJaxElement.node().parentNode.parentNode).append(function() {
+          svgMathJaxElement.attr('y', -height / 2);
+          g.append(function() {
             return svgMathJaxElement.node();
           });
         }
@@ -73,23 +78,27 @@ export default class MathJaxWrapper extends Base {
 
   @initialize()
   @enabled('canvas.texTypesetting')
-  async renderSVG() {
+  async renderSVG(postFunction) {
     // if no element here just return...
     if (!this.parent || !this.parent.node()) return;
+    postFunction = postFunction || function() {};
     MathJax.Hub.Queue(
       ['setRenderer', MathJax.Hub, 'SVG'],
-      ['Typeset', MathJax.Hub, this.parent.node()]
+      ['Typeset', MathJax.Hub, this.parent.node()],
+      [postFunction]
     );
   }
   
   @initialize()
   @enabled('canvas.texTypesetting')
-  async renderHTML() {
+  async renderHTML(postFunction) {
     // if no element here just return...
     if (!this.parent || !this.parent.node()) return;
+    postFunction = postFunction || function() {};
     MathJax.Hub.Queue(
       ['setRenderer', MathJax.Hub, 'HTML-CSS'],
       ['Typeset', MathJax.Hub, this.parent.node()],
+      [postFunction]
     );
   }
 

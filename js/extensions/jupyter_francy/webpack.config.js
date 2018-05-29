@@ -95,7 +95,7 @@ module.exports = [
    * It must be an amd module
    */
   Object.assign({}, base, {
-    entry: path.join(__dirname, 'src', 'francy.bundle.js'),
+    entry: path.join(__dirname, 'src', 'francy.bundle.min.js'),
     output: Object.assign({}, base.output, {
       filename: 'francy.js',
       path: path.join(
@@ -107,7 +107,7 @@ module.exports = [
   }),
 
   /**
-   * This bundle contains the implementation of the extension.
+   * This bundle contains the implementation of the extension dependencies.
    *
    * It must be an amd module
    */

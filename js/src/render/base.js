@@ -100,16 +100,13 @@ export default class Base {
     }
   }
 
-  handlePromise(promise) {
+  async handlePromise(promise) {
     let loaderId = showLoader.call(this);
-    let result = promise.then(data => {
-      hideLoader.call(this, loaderId);
+    return await promise.then(data => {
       return data;
     }).catch(error => {
-      hideLoader.call(this, loaderId);
       this.handleErrors(error);
-    });
-    return result;
+    }).finally(() => hideLoader.call(this, loaderId));
   }
 
 }

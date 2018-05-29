@@ -25,6 +25,7 @@ RUN cd /home/gap/francy/js \
 RUN mv /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/nbextension /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy
 RUN jupyter nbextension install /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy --system
 RUN jupyter nbextension enable jupyter_francy/extension --system
+RUN cd /home/gap/inst/gap/pkg/JupyterKernel && git stash && git pull
 
 # NOTE: THIS IS FOR DEVELOPMENT ONLY!
 # IF YOU ARE LOOKING HOW TO MAKE JUPYTER_FRANCY WORK, YOU JUST NEED TO: pip install jupyter_francy
