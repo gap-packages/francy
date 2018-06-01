@@ -13,9 +13,12 @@ engines:
           mass_threshold: 60
 
 exclude_patterns:
-  - "config/"
   - "**/node_modules/"
-  - "script/"
+  - "**/scripts/"
   - "**/test/*"
   - "**/*.min.js"
   - "**/*.bundle.js*"
+  - "**/dist/"
+  - "**/lib/"
+  - "**/notebooks/"
+  - "**/gap/"

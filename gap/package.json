@@ -1,0 +1,27 @@
+{
+  "name": "francy-gap",
+  "version": "0.6.0",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP",
+  "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcmartins/francy.git"
+  },
+  "main": "",
+  "keywords": [
+    "gap",
+    "francy",
+    "graphics",
+    "interactivity"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf ./dist && mkdir -p ./dist",
+    "build:all": "cp -r ./gap/ ./schema/ ./tst/ ./*.g ./*.md ./*.json ./dist/",
+    "build": "npm run clean && npm run build:all"
+  },
+  "devDependencies": {},
+  "files": [
+    "dist/"
+  ]
+}

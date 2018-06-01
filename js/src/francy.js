@@ -28,9 +28,9 @@ export default class Francy extends Renderer {
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
     if (!d3) {
-      throw new Error('D3 is not imported and Francy won\'t work without it... please import D3 v4+ library.');
+      throw new Error('D3 is not imported and Francy won\'t work without it... please import D3 v5+ library.');
     }
-    this.logger.info(`Francy JS v${VERSION} initialized!`);
+    this.logger.info(`Francy JS v${VERSION} initialized! Enjoy...`);
   }
 
   /**
@@ -40,15 +40,17 @@ export default class Francy extends Renderer {
    */
   @requires('canvas')
   async render() {
-    this.logger.debug(`Rendering data generated in version: ${this.data.version}`);
     if (this.data.version !== VERSION) {
-      this.logger.warn(`The data version differs from the Francy JS version, rendering may fail... please update your system...`);
+      this.logger.warn(`Rendering data generated in Francy GAP [${this.data.version}] using Francy JS [${VERSION}], rendering may fail... please update your system...`);
     }
     let frame = await new Frame(this.options).load(this.data).render();
     ALL_CANVAS[this.data.canvas.id] = frame;
     return frame.element.node();
   }
 
+  /**
+   * Utility method to remove canvas from known canvas
+   */
   static unrender(id) {
     delete ALL_CANVAS[id];
   }
@@ -61,7 +63,9 @@ try {
   window.onresize = () => {
     // zoom to fit all canvas on resize
     Object.values(ALL_CANVAS).forEach((frame) => {
-      frame.canvas.zoomToFit();
+      if (frame.canvas) {
+        frame.canvas.zoomToFit();
+      }
     });
     // call old resize function if any!
     if (typeof oldResize === 'function') {

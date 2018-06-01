@@ -41,7 +41,7 @@ from pkg_resources import resource_filename
 here = os.path.abspath(os.path.dirname(__file__))
 nbextension = pjoin(here, name, 'nbextension')
 labextension = pjoin(here, name, 'labextension')
-gapextension = pjoin(here, name, 'gap_francy')
+gapextension = pjoin(here, 'node_modules', 'francy-gap')
 
 # Representative files that should exist after a successful build
 jstargets = [
@@ -59,21 +59,21 @@ cmdclass['jsdeps'] = combine_commands(
     ensure_targets(jstargets),
 )
 cmdclass['gap_package'] = gap_installation(
-    resource_filename(name, 'gap_francy')
+    resource_filename(name, 'francy-gap')
 )
 
 package_data = {
     name: [
         'nbextension/*.*js*',
         'labextension/*.tgz',
-        'gap_francy/*'
+        'node_modules/francy-gap/*'
     ]
 }
 
 data_files = expand_data_files([
     ('share/jupyter/nbextensions/jupyter_francy', [pjoin(nbextension, '*.js*')]),
     ('share/jupyter/lab/extensions', [pjoin(labextension, '*.tgz')]),
-    ('share/jupyter/nbextensions/gap_francy', [pjoin(gapextension, '*')])
+    ('share/jupyter/nbextensions/jupyter_francy/francy-gap', [pjoin(gapextension, '*')])
 ])
 
 setup_args = dict(

@@ -1,5 +1,6 @@
 import Graph from './graph';
 import { initialize } from '../util/initialize-decorator';
+import { showLoader, hideLoader } from '../util/loader-decorator';
 
 /* global d3 */
 
@@ -11,11 +12,10 @@ export default class GenericGraph extends Graph {
 
   @initialize()
   render() {
-    var self = this;
-    
-    let simulationActive = this.data.canvas.graph.simulation;
-
-    let canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
+    let self = this,
+      loaderId = showLoader.call(this),
+      simulationActive = this.data.canvas.graph.simulation,
+      canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
       canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
 
     let linkGroup = this.element.selectAll('g.francy-links');
@@ -164,12 +164,17 @@ export default class GenericGraph extends Graph {
         .force('x', d3.forceX())
         .force('y', d3.forceY(d => (d.layer + 1) * 100))
         .on('tick', ticked)
-        .on('end', self.parent.zoomToFit);
+        .on('end', end);
 
     } else {
       // well, simulation is off, apply fixed positions
       ticked();
+      end();
+    }
+    
+    function end() {
       self.parent.zoomToFit();
+      hideLoader.call(self, loaderId);
     }
 
     function ticked() {

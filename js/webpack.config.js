@@ -16,9 +16,7 @@ module.exports = (env = {}) => {
   
   if (clean) {
     console.log('Removing files from output directories...');
-    del.sync(['./extensions/jupyter_francy/src/francy.bundle.*', 
-    './extensions/jupyter_francy/src/d3.*',
-    './extensions/browser/francy.bundle.*']);
+    del.sync(['./dist/*']);
   }
 
   let fileName = 'francy.bundle.js';
@@ -35,7 +33,7 @@ module.exports = (env = {}) => {
     output: {
       libraryTarget: 'amd',
       filename: fileName,
-      path: path.join(__dirname, './extensions/jupyter_francy/src'),
+      path: path.join(__dirname, './dist/amd'),
     },
     devtool: sourceMap,
     module: {
@@ -49,7 +47,7 @@ module.exports = (env = {}) => {
   let browser = JSON.parse(JSON.stringify(amd));
   browser.target = 'web';
   browser.output.libraryTarget = 'umd';
-  browser.output.path = path.join(__dirname, './extensions/browser');
+  browser.output.path = path.join(__dirname, './dist/browser');
   browser.plugins = defaultPlugins;
   
   return [ amd, browser ];

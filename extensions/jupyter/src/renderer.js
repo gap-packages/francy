@@ -1,5 +1,5 @@
 import { MIME_TYPE, CLASS_NAME, APPEND_ID } from './utils';
-import '../style/index.css';
+import 'francy-js/style/index.css';
 
 /* global d3 */
 

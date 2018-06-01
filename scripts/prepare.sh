@@ -21,32 +21,30 @@ fi
 ./configure
 make -j4
 
-make bootstrap-pkg-minimal
+make bootstrap-pkg-full WGET="wget -N --no-check-certificate --tries=5 --waitretry=5 --retry-connrefused"
 
 cd pkg
 
-# install latest version of io
-git clone https://github.com/gap-packages/io
-cd io
-./autogen.sh
-./configure
-make -j4 V=1
-cd ..
+rm -rf uuid-* crypting-*
 
-# install latest version of json
-git clone https://github.com/gap-packages/json
-cd json
-./autogen.sh
-./configure
-make -j4 V=1
-cd ..
+# install latest version of uuid
+git clone https://github.com/gap-packages/uuid
 
-# install latest version of profiling
-git clone https://github.com/gap-packages/profiling
-cd profiling
-./autogen.sh
-./configure
-make -j4 V=1
+# install latest version of crypting
+git clone https://github.com/gap-packages/crypting
+
+# install latest version of JupyterKernel
+git clone https://github.com/gap-packages/JupyterKernel
+
+# build some packages; default is to build 'io' and 'profiling', in order to
+# generate coverage results. If you need to build additional packages (or for
+# some reason need to build a custom version of io or profiling), please set
+# the GAP_PKGS_TO_BUILD environment variable (e.g. in your .travis.yml), or
+# directly call BuildPackages.sh from .travis.yml. For an example of the
+# former, take a look at the cvec package.
+for pkg in ${GAP_PKGS_TO_BUILD-io profiling ZeroMQInterface json crypting}; do
+    ../bin/BuildPackages.sh --strict $pkg*
+done
 
 cd $CURRENT
 
@@ -54,7 +52,7 @@ cd $CURRENT
 #
 # Install francy on GAP
 #
-mv gap $GAPROOT/pkg/francy
+ln -s gap $GAPROOT/pkg/francy
 
 ################################################################################
 #
@@ -63,7 +61,9 @@ mv gap $GAPROOT/pkg/francy
 cd js
 npm install
 
-cd extensions/jupyter_francy
+cd $CURRENT
+
+cd extensions/jupyter
 npm install
 
 cd $CURRENT

@@ -11,7 +11,7 @@ export function RegisterJupyterKeyboardEvents(classes) {
     });
   } catch (e) {
     if (e.name === 'ReferenceError') {
-      new Logger().info('It seems we\'re not running on Jupyter...', e);
+      new Logger().info('It seems we\'re not running on Jupyter, cannot register events... continuing...', e);
     }
   }
 }

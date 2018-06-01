@@ -50,7 +50,7 @@ coverage
 **/nbextension/
 **/*.egg-info/
 **/build/
-**/dist/
+gap/dist/
 **/lib/
 
 # Compiled javascript
@@ -60,3 +60,5 @@ coverage
 
 # OS X
 **/.DS_Store
+
+*.tgz

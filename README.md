@@ -41,6 +41,16 @@ See [GAP Kernel](https://github.com/gap-packages/JupyterKernel)
 
 See [Graphics Semantics Package for GAP](/gap)
 
+# Package Structure
+
+|||
+|:-------------------------------------|:---|
+| scripts    | contains scripts used by travis to set-up the environment and release process|
+| notebooks  | contains some notebooks with francy examples   |
+| js         | contains the source code of francy-js | 
+| gap        | contains the source code of francy-gap |
+| extensions | contains the extensions built for Jupyter Notebook and Lab |
+
 # License
 
 [MIT](LICENSE) License

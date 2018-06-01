@@ -16,9 +16,9 @@ RUN apt-get update && apt-get install -y nodejs npm python3.6 python3-pip
 
 # lab extension installation
 RUN cd /home/gap/francy/js \
-  && npm install && npm run build:all \
+  && npm install && npm run build \
   && cd extensions/jupyter_francy \
-  && npm install && npm run build:all \
+  && npm install && npm run build \
   && pip3 install -e . && jupyter labextension link
 
 # notebook extension installation - this is an hack!

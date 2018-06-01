@@ -92,6 +92,7 @@ export default class Base {
   
   handleErrors(error) {
     if (error instanceof Exception) {
+      // well, most of these are just informative
       this.logger.debug(error.message);
     } else if (error instanceof RuntimeException) {
       this.logger.error(error.message);
@@ -102,11 +103,10 @@ export default class Base {
 
   async handlePromise(promise) {
     let loaderId = showLoader.call(this);
-    return await promise.then(data => {
-      return data;
-    }).catch(error => {
-      this.handleErrors(error);
-    }).finally(() => hideLoader.call(this, loaderId));
+    return promise
+      .then(data => data)
+      .catch(error => this.handleErrors(error))
+      .finally(() => hideLoader.call(this, loaderId));
   }
 
 }

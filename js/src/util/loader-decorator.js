@@ -4,9 +4,9 @@ export function loader() {
   return function (target, key, descriptor) {
     var oldValue = descriptor.value;
 
-    descriptor.value = function() {
+    descriptor.value = async function() {
       let loaderId = showLoader.call(this);
-      let result = oldValue.apply(this, arguments);
+      let result = await oldValue.apply(this, arguments);
       hideLoader.call(this, loaderId);
       return result;
     };
@@ -27,13 +27,13 @@ export function hideLoader(loaderId) {
   delete element.data()[0][loaderId];
   // hide only if no more loaders present
   if (Object.values(element.data()[0]).length == 0) {
-    d3.select(`div.loader#Loader-${this.data.canvas.id}`).style('visibility', null);
+    element.style('visibility', 'hidden');
   }
 }
 
 function generateId(){
-  // Math.random should be unique because of its seeding algorithm.
-  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-  // after the decimal.
+  // Math.random should be unique because of its seeding algorithm
+  // Convert it to base 36 (numbers + letters), 
+  // and grab the first 9 characters after the decimal
   return `L-${Math.random().toString(36).substr(2, 9)}`;
 }

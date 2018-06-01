@@ -53,9 +53,8 @@ wepack.config.js
 .nyc_output
 
 src
-jupyter
 doc
-coverage
+style
 test
 
 package-lock.json

@@ -5,7 +5,7 @@ export default class Composite extends Renderer {
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
     if (new.target === Composite) {
-      throw new TypeError('Cannot construct [Composite] instances directly!');
+      throw new TypeError('Cannot instantiate [Composite] classes directly!');
     }
     this.renderers = [];
   }
