@@ -13,13 +13,13 @@ ENV HOME /home/${NB_USER}
 # update dependencies
 RUN ln -s /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
 RUN apt-get update && apt-get install -yq curl sudo && curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
-  && apt-get install -yq nodejs build-essential python3.6 python3-pip \
+  && apt-get install -yq nodejs build-essential python3.4 python3-pip \
   && npm install -g npm
 
 # lab extension installation
 RUN cd /home/gap/francy/js && npm install && npm run build
 RUN cd /home/gap/francy/gap && npm install && npm run build
-RUN cd /home/gap/francy/extensions/jupyter && npm install && npm run build:all && sudo pip3 install -e . && sudo jupyter labextension link
+RUN cd /home/gap/francy/extensions/jupyter && npm install && npm run build:all && sudo pip3 -H install -e . && sudo jupyter labextension link
 
 # notebook extension installation - this is an hack!
 RUN mv /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/nbextension /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy
