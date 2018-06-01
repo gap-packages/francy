@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y nodejs npm python3.6 python3-pip
 # lab extension installation
 RUN cd /home/gap/francy/js \
   && npm install && npm run build \
-  && cd extensions/jupyter \
+  && cd ../gap && npm run build \
+  && cd ../extensions/jupyter \
   && npm install && npm run build \
   && pip3 install -e . && jupyter labextension link
 
