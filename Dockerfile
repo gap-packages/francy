@@ -22,8 +22,8 @@ RUN cd /home/gap/francy/gap && npm install && npm run build
 RUN cd /home/gap/francy/extensions/jupyter && npm install && npm run build:all && pip3 install -e . && jupyter labextension link
 
 # notebook extension installation - this is an hack!
-RUN mv /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/nbextension /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy
-RUN jupyter nbextension install /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy --system
+RUN mv /home/gap/francy/extensions/jupyter/jupyter_francy/nbextension /home/gap/francy/extensions/jupyter/jupyter_francy/jupyter_francy
+RUN jupyter nbextension install /home/gap/francy/extensions/jupyter/jupyter_francy/jupyter_francy --system
 RUN jupyter nbextension enable jupyter_francy/extension --system
 RUN chown -R gap /home/gap && cd /home/gap/inst/gap/pkg/JupyterKernel && git stash && git pull
 
