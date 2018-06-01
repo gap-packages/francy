@@ -15,13 +15,9 @@ RUN ln -s /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
 RUN apt-get update && apt-get install -y nodejs npm python3.6 python3-pip
 
 # lab extension installation
-RUN cd /home/gap/francy/js \
-  && npm install \
-  && cd /home/gap/francy/gap \
-  && npm install \
-  && cd /home/gap/francy/extensions/jupyter \
-  && npm install \
-  && pip3 install -e . && jupyter labextension link
+RUN cd /home/gap/francy/js && npm install
+RUN cd /home/gap/francy/gap && npm install
+RUN cd /home/gap/francy/extensions/jupyter && npm install && pip3 install -e . && jupyter labextension link
 
 # notebook extension installation - this is an hack!
 RUN mv /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/nbextension /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy

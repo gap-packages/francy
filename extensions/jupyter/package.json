@@ -59,8 +59,8 @@
     "url-loader": "1.0.1",
     "webpack": "4.10.1",
     "webpack-cli": "2.1.4",
-    "francy-js": "../../js/dist",
-    "francy-gap": "../../gap/dist"
+    "francy-js": "file:./../../js/dist",
+    "francy-gap": "file:./../../gap/dist"
   },
   "bundledDependencies": [
     "francy-js",
