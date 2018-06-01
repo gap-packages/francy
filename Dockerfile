@@ -17,9 +17,9 @@ RUN apt-get update && apt-get install -yq curl sudo && curl -sL https://deb.node
   && npm install -g npm
 
 # lab extension installation
-RUN cd /home/gap/francy/js && npm install && ls -lrt ./dist
-RUN cd /home/gap/francy/gap && npm install && ls -lrt ./dist
-RUN cd /home/gap/francy/extensions/jupyter &&  && ls -lrt ../../js/dist && npm install && pip3 install -e . && jupyter labextension link
+RUN cd /home/gap/francy/js && npm install && npm run build && ls -lrt ./dist
+RUN cd /home/gap/francy/gap && npm install && npm run build && ls -lrt ./dist
+RUN cd /home/gap/francy/extensions/jupyter && ls -lrt ../../js/dist ../../gap/dist && npm install && pip3 install -e . && jupyter labextension link
 
 # notebook extension installation - this is an hack!
 RUN mv /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/nbextension /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy

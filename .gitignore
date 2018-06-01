@@ -33,7 +33,6 @@
 .idea
 .iml
 
-*-lock.json
 .c9
 .ipynb_*
 .nyc*
