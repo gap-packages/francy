@@ -11988,7 +11988,8 @@ var Base = function () {
     key: 'handleErrors',
     value: function handleErrors(error) {
       if (error instanceof _exception.Exception) {
-        this.logger.warn(error.message);
+        // well, most of these are just informative
+        this.logger.debug(error.message);
       } else if (error instanceof _exception.RuntimeException) {
         this.logger.error(error.message);
       } else {

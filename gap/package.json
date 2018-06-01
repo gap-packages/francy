@@ -18,7 +18,8 @@
   "scripts": {
     "clean": "rm -rf ./dist && mkdir -p ./dist",
     "build:all": "cp -r ./gap/ ./schema/ ./tst/ ./*.g ./*.md ./*.json ./dist/",
-    "build": "npm run clean && npm run build:all"
+    "build": "npm run clean && npm run build:all",
+    "prepare": "npm run build"
   },
   "devDependencies": {},
   "files": [
