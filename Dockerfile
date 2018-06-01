@@ -13,8 +13,8 @@ ENV HOME /home/${NB_USER}
 # update dependencies
 RUN ln -s /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
 RUN apt-get update && apt-get install -yq curl sudo && curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
-  && apt-get install -yq nodejs build-essential python3.4 python3-pip \
-  && npm install -g npm
+  && apt-get install -yq nodejs build-essential python3.4 python3-pip jupyter \
+  && npm install -g npm && pip3 install --upgrade pip
 
 # lab extension installation
 RUN cd /home/gap/francy/js && npm install && npm run build
