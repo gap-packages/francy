@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -yq curl && curl -sL https://deb.nodesourc
 # lab extension installation
 RUN cd /home/gap/francy/js && npm install && npm run build
 RUN cd /home/gap/francy/gap && npm install && npm run build
-RUN cd /home/gap/francy/extensions/jupyter && npm install && pip3 install -e . && jupyter labextension link
+RUN cd /home/gap/francy/extensions/jupyter && npm install && npm run build:all && pip3 install -e . && jupyter labextension link
 
 # notebook extension installation - this is an hack!
 RUN mv /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/nbextension /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy
