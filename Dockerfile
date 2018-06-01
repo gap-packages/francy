@@ -12,7 +12,7 @@ ENV HOME /home/${NB_USER}
 
 # update dependencies
 RUN ln -s /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
-RUN apt-get update && apt-get install curl && curl -sL https://deb.nodesource.com/setup | bash - \
+RUN apt-get update && apt-get install-yq curl && curl -sL https://deb.nodesource.com/setup | bash - \
   && apt-get install -yq nodejs build-essential python3.6 python3-pip \
   && npm install -g npm
 
