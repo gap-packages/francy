@@ -12,25 +12,23 @@ ENV HOME /home/${NB_USER}
 
 # update dependencies
 RUN ln -s /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
-RUN apt-get update && apt-get install -yq curl && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+RUN apt-get update && apt-get install -yq curl sudo && curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
   && apt-get install -yq nodejs build-essential python3.6 python3-pip \
   && npm install -g npm
 
 # lab extension installation
 RUN cd /home/gap/francy/js && npm install && npm run build
 RUN cd /home/gap/francy/gap && npm install && npm run build
-RUN cd /home/gap/francy/extensions/jupyter && npm install && npm run build:all && pip3 install -e . && jupyter labextension link
+RUN cd /home/gap/francy/extensions/jupyter && npm install && npm run build:all && sudo pip3 install -e . && sudo jupyter labextension link
 
 # notebook extension installation - this is an hack!
 RUN mv /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/nbextension /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy
-RUN jupyter nbextension install /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy --system
+RUN sudo jupyter nbextension install /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy --system
 RUN jupyter nbextension enable jupyter_francy/extension --system
-RUN cd /home/gap/inst/gap/pkg/JupyterKernel && git stash && git pull
+RUN chown -R gap /home/gap && cd /home/gap/inst/gap/pkg/JupyterKernel && git stash && git pull
 
 # NOTE: THIS IS FOR DEVELOPMENT ONLY!
 # IF YOU ARE LOOKING HOW TO MAKE JUPYTER_FRANCY WORK, YOU JUST NEED TO: pip install jupyter_francy
-
-RUN chown -R gap /home/gap
 
 RUN cd /home/gap/francy/notebooks
 
