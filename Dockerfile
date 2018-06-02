@@ -13,7 +13,7 @@ COPY . /home/${NB_USER}/francy
 
 # update dependencies
 RUN apt-get update && apt-get install -yq curl && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-  && apt-get install -yq nodejs build-essential autoconf && npm install -g npm
+  && apt-get install -yq nodejs libtool pkg-config build-essential autoconf automake uuid-dev libzmq3-dev && npm install -g npm
 
 RUN chown -R ${NB_UID} /home/${NB_USER} && cd /home/${NB_USER}/francy/scripts && bash prepare.sh
 
@@ -21,7 +21,8 @@ RUN chown -R ${NB_UID} /home/${NB_USER} && cd /home/${NB_USER}/francy/scripts &&
 RUN cd /home/${NB_USER}/francy/extensions/jupyter && npm run build:all && pip install -e . && jupyter labextension link
 
 # notebook extension installation - this is an hack!
-RUN jupyter nbextension install --symlink --py --sys-prefix jupyter_francy && jupyter nbextension enable --py --sys-prefix jupyter_francy
+RUN cd /home/${NB_USER}/inst/pkg/JupyterKernel && python setup.py install --user \
+  && jupyter nbextension install --symlink --py --sys-prefix jupyter_francy && jupyter nbextension enable --py --sys-prefix jupyter_francy
 
 # NOTE: THIS IS FOR DEVELOPMENT ONLY!
 # IF YOU ARE LOOKING HOW TO MAKE JUPYTER_FRANCY WORK, YOU JUST NEED TO: pip install jupyter_francy
