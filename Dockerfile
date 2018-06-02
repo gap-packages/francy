@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -yq curl && curl -sL https://deb.nodesourc
 
 USER $NB_UID
 
-RUN cd $HOME/francy && bash scripts/prepare.sh && cd $HOME/pkg && bash ../bin/BuildPackages.sh
+RUN cd $HOME/francy && bash scripts/prepare.sh && cd $GAPROOT/pkg && bash ../bin/BuildPackages.sh
 
 # lab extension installation
 RUN cd $HOME/francy/extensions/jupyter && pip install -e . && jupyter labextension link
