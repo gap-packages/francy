@@ -7,13 +7,16 @@ USER root
 ENV NB_USER gap
 ENV NB_UID 1000
 ENV HOME /home/${NB_USER}
-ENV GAPROOT "/home/${NB_USER}/inst"
+ENV GAPROOT /home/${NB_USER}/inst
     
 COPY . /home/${NB_USER}/francy
 
 # update dependencies
-RUN apt-get update && apt-get install -yq curl && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+RUN chown -R ${NB_UID} /home/${NB_USER}  \
+  && apt-get update && apt-get install -yq curl && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
   && apt-get install -yq nodejs libtool pkg-config build-essential autoconf automake uuid-dev libzmq3-dev && npm install -g npm
+
+USER ${NB_UID}
 
 RUN cd /home/${NB_USER}/francy && bash scripts/prepare.sh
 
@@ -27,5 +30,3 @@ RUN cd /home/${NB_USER}/inst/pkg/JupyterKernel && python setup.py install --user
 WORKDIR /home/${NB_USER}/francy/notebooks
 
 RUN chown -R ${NB_UID} /home/${NB_USER}
-
-USER ${NB_UID}
