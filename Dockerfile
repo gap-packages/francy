@@ -26,7 +26,7 @@ RUN cd $HOME/francy/extensions/jupyter && pip install -e . && jupyter labextensi
 #  && jupyter nbextension install --symlink --py --sys-prefix jupyter_francy && jupyter nbextension enable --py --sys-prefix jupyter_francy
 RUN cd $GAPROOT/pkg/JupyterKernel && python setup.py install --user \
   && mv $HOME/francy/extensions/jupyter/jupyter_francy/nbextension $HOME/francy/extensions/jupyter/jupyter_francy/jupyter_francy \
-  && jupyter nbextension install $HOME/francy/extensions/jupyter/jupyter_francy/jupyter_francy --system \
-  && jupyter nbextension enable jupyter_francy/extension --system
+  && jupyter nbextension install $HOME/francy/extensions/jupyter/jupyter_francy/jupyter_francy --user \
+  && jupyter nbextension enable jupyter_francy/extension --user
 
 WORKDIR $HOME/francy/notebooks
