@@ -59,7 +59,7 @@ ln -s gap $GAPROOT/pkg/francy
 # Install francy-js and extensions build tools
 #
 cd js
-ls -lrt . ../ ../../
+ls -lart . ../ ../../
 npm install
 npm run build:all
 
