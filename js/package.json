@@ -27,8 +27,7 @@
     "webpack:production": "./node_modules/.bin/webpack --env.clean --env.production --progress",
     "webpack:all": "npm run webpack:develpment && ./node_modules/.bin/webpack --env.production --progress",
     "build:all": "npm run webpack:all && npm run dependencies:all && cp ./package.json ./*.md ./dist",
-    "build": "npm run build:all",
-    "prepare": "npm run build"
+    "build": "npm run build:all"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",

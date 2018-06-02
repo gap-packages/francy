@@ -14,13 +14,6 @@ cd js
 
 npm run lint
 npm run coverage
-npm run build
-
-cd $CURRENT
-
-cd gap
-
-npm run build
 
 cd $CURRENT
 

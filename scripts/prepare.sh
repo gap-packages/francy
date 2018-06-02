@@ -60,9 +60,15 @@ ln -s gap $GAPROOT/pkg/francy
 #
 cd js
 npm install
+npm run build:all
 
 cd $CURRENT
 
+cd gap
+npm install
+npm run build:all
+
+cd $CURRENT
 cd extensions/jupyter
 npm install
 
