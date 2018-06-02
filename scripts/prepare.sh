@@ -59,18 +59,18 @@ ln -s gap $GAPROOT/pkg/francy
 # Install francy-js and extensions build tools
 #
 cd js
-ls -lart . ../ ../../
 npm install
-npm run build:all
+npm run build
 
 cd $CURRENT
 
 cd gap
 npm install
-npm run build:all
+npm run build
 
 cd $CURRENT
 cd extensions/jupyter
 npm install
+npm run build:all
 
 cd $CURRENT

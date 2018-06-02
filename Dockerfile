@@ -5,6 +5,7 @@ MAINTAINER Manuel Martins <manuelmachadomartins@gmail.com>
 USER root
 
 ENV GAPROOT $HOME/inst
+ENV JUPYTER_GAP_EXECUTABLE $GAPROOT/bin/gap.sh
     
 COPY --chown=1000:100 . $HOME/francy
 
@@ -18,10 +19,14 @@ USER $NB_UID
 RUN cd $HOME/francy && bash scripts/prepare.sh
 
 # lab extension installation
-RUN cd $HOME/francy/extensions/jupyter && npm run build:all && pip install -e . && jupyter labextension link
+RUN cd $HOME/francy/extensions/jupyter && pip install -e . && jupyter labextension link
 
 # notebook extension installation
+#RUN cd $GAPROOT/pkg/JupyterKernel && python setup.py install --user \
+#  && jupyter nbextension install --symlink --py --sys-prefix jupyter_francy && jupyter nbextension enable --py --sys-prefix jupyter_francy
 RUN cd $GAPROOT/pkg/JupyterKernel && python setup.py install --user \
-  && jupyter nbextension install --symlink --py --sys-prefix jupyter_francy && jupyter nbextension enable --py --sys-prefix jupyter_francy
+  && mv $HOME/francy/extensions/jupyter/jupyter_francy/nbextension $HOME/francy/extensions/jupyter/jupyter_francy/jupyter_francy \
+  && jupyter nbextension install $HOME/francy/extensions/jupyter/jupyter_francy/jupyter_francy --system \
+  && jupyter nbextension enable jupyter_francy/extension --system
 
 WORKDIR $HOME/francy/notebooks
