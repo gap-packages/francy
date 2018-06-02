@@ -8,7 +8,6 @@ from __future__ import print_function
 
 # the name of the project
 name = 'jupyter_francy'
-node_modules = 'node_modules'
 
 #-----------------------------------------------------------------------------
 # Minimal Python version sanity check
@@ -42,7 +41,7 @@ from pkg_resources import resource_filename
 here = os.path.abspath(os.path.dirname(__file__))
 nbextension = pjoin(here, name, 'nbextension')
 labextension = pjoin(here, name, 'labextension')
-gapextension = pjoin(here, node_modules, 'francy-gap')
+gapextension = pjoin(here, name, 'francy-gap')
 
 # Representative files that should exist after a successful build
 jstargets = [

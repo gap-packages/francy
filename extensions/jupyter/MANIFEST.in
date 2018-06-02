@@ -1,3 +1,3 @@
 graft jupyter_francy/nbextension
 graft jupyter_francy/labextension
-graft node_modules/francy-gap
+graft jupyter_francy/francy-gap
