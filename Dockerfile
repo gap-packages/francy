@@ -6,6 +6,7 @@ USER root
 
 ENV GAPROOT $HOME/inst
 ENV JUPYTER_GAP_EXECUTABLE $GAPROOT/bin/gap.sh
+RUN ln -s $GAPROOT/pkg/JupyterKernel/bin/jupyter-kernel-gap /usr/local/bin/jupyter-kernel-gap
     
 COPY --chown=1000:100 . $HOME/francy
 
@@ -25,8 +26,6 @@ RUN cd $HOME/francy/extensions/jupyter && pip install -e . && jupyter labextensi
 #RUN cd $GAPROOT/pkg/JupyterKernel && python setup.py install --user \
 #  && jupyter nbextension install --symlink --py --sys-prefix jupyter_francy && jupyter nbextension enable --py --sys-prefix jupyter_francy
 RUN cd $GAPROOT/pkg/JupyterKernel && python setup.py install --user \
-  && echo 'export PATH="$PATH:$GAPROOT/pkg/JupyterKernel/bin"' >> ~/.bashrc \
-  && ln -s $GAPROOT/pkg/JupyterKernel/bin/jupyter-kernel-gap $HOME/.local/share/jupyter/kernels/gap-native/jupyter-kernel-gap \
   && mv $HOME/francy/extensions/jupyter/jupyter_francy/nbextension $HOME/francy/extensions/jupyter/jupyter_francy/jupyter_francy \
   && jupyter nbextension install $HOME/francy/extensions/jupyter/jupyter_francy/jupyter_francy --user \
   && jupyter nbextension enable jupyter_francy/extension --user

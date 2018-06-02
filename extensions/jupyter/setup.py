@@ -60,20 +60,19 @@ cmdclass['jsdeps'] = combine_commands(
     ensure_targets(jstargets),
 )
 cmdclass['gap_package'] = gap_installation(
-    resource_filename(node_modules, 'francy-gap')
+    resource_filename(name, 'francy-gap')
 )
 
 package_data = {
     name: [
         'nbextension/*.*js*',
         'labextension/*.tgz',
-    ],
-    node_modules: [
         'francy-gap/*'
     ]
 }
 
 data_files = expand_data_files([
+    ('share/jupyter/nbextensions/jupyter_francy/francy-gap', [pjoin(gapextension, '*')]),
     ('share/jupyter/nbextensions/jupyter_francy', [pjoin(nbextension, '*.js*')]),
     ('share/jupyter/lab/extensions', [pjoin(labextension, '*.tgz')])
 ])
