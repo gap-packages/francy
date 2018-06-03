@@ -416,7 +416,7 @@ def gap_installation(path=None):
                 
                 try:
                     print("Removing link [%s] if exists..." % (pkg_dir))
-                    if os.islink(pkg_dir):
+                    if os.path.islink(pkg_dir):
                         os.unlink(pkg_dir)
                     else:
                         shutil.rmtree(pkg_dir)
