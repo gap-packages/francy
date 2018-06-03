@@ -12,6 +12,7 @@ within a Python package.
 
 import os
 from os.path import join as pjoin
+import shutil
 import functools
 import pipes
 import sys
@@ -405,8 +406,7 @@ def gap_installation(path=None):
             for francy gap package.
             """
             gap_installation_dir = os.environ.get("GAPROOT", "")
-            
-            print("GAPROOT provided [%s]" % gap_installation_dir)
+            pkg_dir = gap_installation_dir + '/pkg/francy'
                 
             if gap_installation_dir:
                 if not os.path.isdir(gap_installation_dir):
@@ -415,16 +415,19 @@ def gap_installation(path=None):
                     raise Exception("The [GAPROOT] provided does not contain a [pkg] directory! Cannot proceed.")
                 
                 try:
-                    print("Removing link [%s] if exists..." % (gap_installation_dir + '/pkg/francy'))
-                    os.unlink(gap_installation_dir + '/pkg/francy')
+                    print("Removing link [%s] if exists..." % (pkg_dir))
+                    if os.islink(pkg_dir):
+                        os.unlink(pkg_dir)
+                    else:
+                        shutil.rmtree(pkg_dir)
                 except:
-                    print("Cannot remove current link [%s]." % (gap_installation_dir + '/pkg/francy'))
+                    print("Cannot remove current link [%s]." % (pkg_dir))
             
                 try:
-                    print("Creating link [%s] from [%s]..." % (gap_installation_dir + '/pkg/francy', path))
+                    print("Creating link [%s] from [%s]..." % (pkg_dir, path))
                     os.symlink(path, gap_installation_dir + '/pkg/francy')
                 except:
-                    raise Exception("Cannot create current link [%s]." % (gap_installation_dir + '/pkg/francy'))
+                    raise Exception("Cannot create current link [%s]." % (pkg_dir))
             else:
                  print("Please provide a environment variable [GAPROOT] to install Francy GAP Package...")
 
