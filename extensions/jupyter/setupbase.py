@@ -405,6 +405,8 @@ def gap_installation(path=None):
             for francy gap package.
             """
             gap_installation_dir = os.environ.get("GAPROOT", "")
+            
+            print("GAPROOT provided [%s]" % gap_installation_dir)
                 
             if gap_installation_dir:
                 if not os.path.isdir(gap_installation_dir):
