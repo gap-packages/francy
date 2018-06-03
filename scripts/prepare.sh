@@ -52,7 +52,7 @@ cd $CURRENT
 #
 # Install francy on GAP
 #
-ln -s gap $GAPROOT/pkg/francy
+cp -r gap $GAPROOT/pkg/francy
 
 ################################################################################
 #
