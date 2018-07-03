@@ -1,6 +1,5 @@
 import Graph from './graph';
-import { initialize } from '../util/initialize-decorator';
-import { showLoader, hideLoader } from '../util/loader-decorator';
+import { Decorators } from '../decorator/factory';
 
 /* global d3 */
 
@@ -10,10 +9,10 @@ export default class GenericGraph extends Graph {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @initialize()
-  render() {
+  @Decorators.Initializer.initialize()
+  async render() {
     let self = this,
-      loaderId = showLoader.call(this),
+      loader = Decorators.Loader.withContext(this).show(),
       simulationActive = this.data.canvas.graph.simulation,
       canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
       canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
@@ -30,8 +29,12 @@ export default class GenericGraph extends Graph {
     let link = linkGroup.selectAll('g.francy-link').data(linksToAdd, d => d.id);
 
     if (this.data.canvas.graph.type === 'directed') {
-      // this means we need arrows, so we append the marker
-      this.parent.append('defs').selectAll('marker')
+      // this means we need arrows, so we append the markers
+      let defs = this.parent.select('defs');
+      if (!defs.node()) {
+        defs = this.parent.append('defs');
+      }
+      defs.selectAll('marker')
         .data(linksToAdd)
         .enter().append('marker')
         .classed('francy-arrows', true)
@@ -107,9 +110,9 @@ export default class GenericGraph extends Graph {
         let text = d3.select(this);
         if (text.text().startsWith('$') && text.text().endsWith('$')) {
           // we need to set the position after re-render the latex
-          self.handlePromise(self.mathjax.settings({appendTo: {element: text}}).renderSVG(() => {
+          self.handlePromise(self.mathjax.settings({appendTo: {element: text}, renderType: 'SVG', postFunction: () => {
             text.attr('x', self.setLabelXPosition(this));
-          }));
+          }}).render());
         }
         return self.setLabelXPosition(this);
       });/*.attr('y', function() {
@@ -147,34 +150,53 @@ export default class GenericGraph extends Graph {
     }
 
     if (simulationActive) {
-      let radius = 0;
+      let radius = 0, 
+        symbolRadius = 0, 
+        layered = false;
+
       node.each(function() {
         let bound = this.getBBox();
-        // check the widest BBox so that we use it as default radius for colisions
+        // calculate default radius for colisions
+        // check the widest group Bounding Box
         if (radius < bound.width) {
           radius = bound.width;
+        }
+        // check the widest path Bounding Box
+        let node = d3.select(this);
+        let symbolBound = node.select('path.francy-symbol').node().getBBox();
+        if (symbolRadius < symbolBound.width) {
+          symbolRadius = symbolBound.width;
+        }
+        // check whether the graph will be layered - hasse
+        if (node.data()[0].layer != 0) {
+          layered = true;
         }
       });
 
       //Canvas Forces
-      var simulation = d3.forceSimulation().nodes(nodesToAdd)
-        .force('charge', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length))
-        .force('collide', d3.forceCollide().radius(radius / 2))
-        .force('link', d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100))
+      var simulation = d3.forceSimulation(),
+        safeTicked = Decorators.Error.wrap(ticked).withContext(self).onErrorThrow(false).onErrorExec(simulation.stop),
+        safeEnd = Decorators.Error.wrap(endSimulation).withContext(self);
+      
+      simulation.nodes(nodesToAdd)
+        .force('charge-default', layered ? undefined : d3.forceManyBody().strength(-75))
         .force('x', d3.forceX())
-        .force('y', d3.forceY(d => (d.layer + 1) * 100))
-        .on('tick', ticked)
-        .on('end', end);
+        .force('y', layered ? d3.forceY(d => (d.layer + 1) * 100).strength(1) : d3.forceY())
+        .force('charge', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length))
+        .force('link', d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100))
+        .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2))
+        .on('tick', () => safeTicked.handle())
+        .on('end', () => safeEnd.handle());
 
     } else {
       // well, simulation is off, apply fixed positions
       ticked();
-      end();
+      endSimulation();
     }
-    
-    function end() {
+
+    function endSimulation() {
       self.parent.zoomToFit();
-      hideLoader.call(self, loaderId);
+      loader.hide();
     }
 
     function ticked() {
@@ -189,10 +211,11 @@ export default class GenericGraph extends Graph {
       if (self.data.canvas.graph.type === 'directed') {
         link.each(function() {
         
-          var g = d3.select(this), data = g.data()[0],
+          let g = d3.select(this), data = g.data()[0],
             pathEl = g.select('path.francy-edge').node(),
             pathLength = pathEl.getTotalLength(),
-            nodeSize = (Math.floor(d3.select(`#${data.target.id} > path.francy-symbol`).node().getBBox().width) + 4) / 2,
+            nodeEl = d3.select(`#${data.target.id} > path.francy-symbol`).node(),
+            nodeSize = (Math.floor(nodeEl.getBBox().width) + 4) / 2,
             pathPoint = pathEl.getPointAtLength(pathLength - nodeSize - data.weight),
             pathPoint2 = pathEl.getPointAtLength(pathLength - nodeSize),
             x1 = pathPoint.x, y1 = pathPoint.y, x2 = pathPoint2.x, y2 = pathPoint2.y;

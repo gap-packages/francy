@@ -22,8 +22,10 @@
       francy.render().catch(error => console.log(error)).then(element => {
         // NOTE: we're using a visible div to append the object so no need to do anything here
         //document.getElementsByTagName('body')[0].appendChild(element);
-        document.getElementsByTagName('body')[0].appendChild(element);
-        console.log('Object rendered...', element);
+        if (element) {
+          document.getElementsByTagName('body')[0].appendChild(element);
+          console.log('Object rendered...', element);
+        }
       });
     }
 

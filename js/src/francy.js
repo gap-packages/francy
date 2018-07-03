@@ -1,8 +1,9 @@
 import Frame from './render/frame';
 import Renderer from './render/renderer';
-import { requires } from './util/data-decorator';
+import { Decorators } from './decorator/factory';
+import * as ignore from 'seedrandom';
 
-/* global d3 VERSION */
+/* global VERSION */
 
 let ALL_CANVAS = {};
 
@@ -27,9 +28,7 @@ export default class Francy extends Renderer {
    */
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
-    if (!d3) {
-      throw new Error('D3 is not imported and Francy won\'t work without it... please import D3 v5+ library.');
-    }
+    // all good!
     this.logger.info(`Francy JS v${VERSION} initialized! Enjoy...`);
   }
 
@@ -38,12 +37,14 @@ export default class Francy extends Renderer {
    * passed through the load method.
    * @returns {Object} the html element created
    */
-  @requires('canvas')
+  @Decorators.Data.requires('canvas')
   async render() {
     if (this.data.version !== VERSION) {
       this.logger.warn(`Rendering data generated in Francy GAP [${this.data.version}] using Francy JS [${VERSION}], rendering may fail... please update your system...`);
     }
-    let frame = await new Frame(this.options).load(this.data).render();
+    //set seed to produce always the same graphs
+    Math.seedrandom('Francy!');
+    let frame = await new Frame(this.options).load(this.data).render().then(element => element);
     ALL_CANVAS[this.data.canvas.id] = frame;
     return frame.element.node();
   }

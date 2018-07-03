@@ -36,6 +36,9 @@ git clone https://github.com/gap-packages/crypting
 # install latest version of JupyterKernel
 git clone https://github.com/gap-packages/JupyterKernel
 
+# install latest version of francy-monoid
+git clone https://github.com/gap-packages/FrancyMonoids.git
+
 # build some packages; default is to build 'io' and 'profiling', in order to
 # generate coverage results. If you need to build additional packages (or for
 # some reason need to build a custom version of io or profiling), please set

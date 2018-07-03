@@ -3,7 +3,7 @@ sudo: required
 language: c
 env:
   global:
-    - GAPROOT=gaproot
+    - GAPROOT=$HOME/gaproot
     - COVDIR=coverage
 
 addons:

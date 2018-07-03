@@ -11593,6 +11593,1161 @@ var __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
+/***/ "./node_modules/seedrandom/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/seedrandom/index.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// A library of seedable RNGs implemented in Javascript.
+//
+// Usage:
+//
+// var seedrandom = require('seedrandom');
+// var random = seedrandom(1); // or any seed.
+// var x = random();       // 0 <= x < 1.  Every bit is random.
+// var x = random.quick(); // 0 <= x < 1.  32 bits of randomness.
+
+// alea, a 53-bit multiply-with-carry generator by Johannes Baagøe.
+// Period: ~2^116
+// Reported to pass all BigCrush tests.
+var alea = __webpack_require__(/*! ./lib/alea */ "./node_modules/seedrandom/lib/alea.js");
+
+// xor128, a pure xor-shift generator by George Marsaglia.
+// Period: 2^128-1.
+// Reported to fail: MatrixRank and LinearComp.
+var xor128 = __webpack_require__(/*! ./lib/xor128 */ "./node_modules/seedrandom/lib/xor128.js");
+
+// xorwow, George Marsaglia's 160-bit xor-shift combined plus weyl.
+// Period: 2^192-2^32
+// Reported to fail: CollisionOver, SimpPoker, and LinearComp.
+var xorwow = __webpack_require__(/*! ./lib/xorwow */ "./node_modules/seedrandom/lib/xorwow.js");
+
+// xorshift7, by François Panneton and Pierre L'ecuyer, takes
+// a different approach: it adds robustness by allowing more shifts
+// than Marsaglia's original three.  It is a 7-shift generator
+// with 256 bits, that passes BigCrush with no systmatic failures.
+// Period 2^256-1.
+// No systematic BigCrush failures reported.
+var xorshift7 = __webpack_require__(/*! ./lib/xorshift7 */ "./node_modules/seedrandom/lib/xorshift7.js");
+
+// xor4096, by Richard Brent, is a 4096-bit xor-shift with a
+// very long period that also adds a Weyl generator. It also passes
+// BigCrush with no systematic failures.  Its long period may
+// be useful if you have many generators and need to avoid
+// collisions.
+// Period: 2^4128-2^32.
+// No systematic BigCrush failures reported.
+var xor4096 = __webpack_require__(/*! ./lib/xor4096 */ "./node_modules/seedrandom/lib/xor4096.js");
+
+// Tyche-i, by Samuel Neves and Filipe Araujo, is a bit-shifting random
+// number generator derived from ChaCha, a modern stream cipher.
+// https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
+// Period: ~2^127
+// No systematic BigCrush failures reported.
+var tychei = __webpack_require__(/*! ./lib/tychei */ "./node_modules/seedrandom/lib/tychei.js");
+
+// The original ARC4-based prng included in this library.
+// Period: ~2^1600
+var sr = __webpack_require__(/*! ./seedrandom */ "./node_modules/seedrandom/seedrandom.js");
+
+sr.alea = alea;
+sr.xor128 = xor128;
+sr.xorwow = xorwow;
+sr.xorshift7 = xorshift7;
+sr.xor4096 = xor4096;
+sr.tychei = tychei;
+
+module.exports = sr;
+
+/***/ }),
+
+/***/ "./node_modules/seedrandom/lib/alea.js":
+/*!*********************************************!*\
+  !*** ./node_modules/seedrandom/lib/alea.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_RESULT__;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+// A port of an algorithm by Johannes Baagøe <baagoe@baagoe.com>, 2010
+// http://baagoe.com/en/RandomMusings/javascript/
+// https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
+// Original work is under MIT license -
+
+// Copyright (C) 2010 by Johannes Baagøe <baagoe@baagoe.org>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+
+(function (global, module, define) {
+
+  function Alea(seed) {
+    var me = this,
+        mash = Mash();
+
+    me.next = function () {
+      var t = 2091639 * me.s0 + me.c * 2.3283064365386963e-10; // 2^-32
+      me.s0 = me.s1;
+      me.s1 = me.s2;
+      return me.s2 = t - (me.c = t | 0);
+    };
+
+    // Apply the seeding algorithm from Baagoe.
+    me.c = 1;
+    me.s0 = mash(' ');
+    me.s1 = mash(' ');
+    me.s2 = mash(' ');
+    me.s0 -= mash(seed);
+    if (me.s0 < 0) {
+      me.s0 += 1;
+    }
+    me.s1 -= mash(seed);
+    if (me.s1 < 0) {
+      me.s1 += 1;
+    }
+    me.s2 -= mash(seed);
+    if (me.s2 < 0) {
+      me.s2 += 1;
+    }
+    mash = null;
+  }
+
+  function copy(f, t) {
+    t.c = f.c;
+    t.s0 = f.s0;
+    t.s1 = f.s1;
+    t.s2 = f.s2;
+    return t;
+  }
+
+  function impl(seed, opts) {
+    var xg = new Alea(seed),
+        state = opts && opts.state,
+        prng = xg.next;
+    prng.int32 = function () {
+      return xg.next() * 0x100000000 | 0;
+    };
+    prng.double = function () {
+      return prng() + (prng() * 0x200000 | 0) * 1.1102230246251565e-16; // 2^-53
+    };
+    prng.quick = prng;
+    if (state) {
+      if ((typeof state === 'undefined' ? 'undefined' : _typeof(state)) == 'object') copy(state, xg);
+      prng.state = function () {
+        return copy(xg, {});
+      };
+    }
+    return prng;
+  }
+
+  function Mash() {
+    var n = 0xefc8249d;
+
+    var mash = function mash(data) {
+      data = data.toString();
+      for (var i = 0; i < data.length; i++) {
+        n += data.charCodeAt(i);
+        var h = 0.02519603282416938 * n;
+        n = h >>> 0;
+        h -= n;
+        h *= n;
+        n = h >>> 0;
+        h -= n;
+        n += h * 0x100000000; // 2^32
+      }
+      return (n >>> 0) * 2.3283064365386963e-10; // 2^-32
+    };
+
+    return mash;
+  }
+
+  if (module && module.exports) {
+    module.exports = impl;
+  } else if (__webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js") && __webpack_require__(/*! !webpack amd options */ "./node_modules/webpack/buildin/amd-options.js")) {
+    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+      return impl;
+    }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {
+    this.alea = impl;
+  }
+})(undefined, ( false ? undefined : _typeof(module)) == 'object' && module, // present in node.js
+__webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js") // present with an AMD loader
+);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./node_modules/seedrandom/lib/tychei.js":
+/*!***********************************************!*\
+  !*** ./node_modules/seedrandom/lib/tychei.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_RESULT__;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+// A Javascript implementaion of the "Tyche-i" prng algorithm by
+// Samuel Neves and Filipe Araujo.
+// See https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
+
+(function (global, module, define) {
+
+  function XorGen(seed) {
+    var me = this,
+        strseed = '';
+
+    // Set up generator function.
+    me.next = function () {
+      var b = me.b,
+          c = me.c,
+          d = me.d,
+          a = me.a;
+      b = b << 25 ^ b >>> 7 ^ c;
+      c = c - d | 0;
+      d = d << 24 ^ d >>> 8 ^ a;
+      a = a - b | 0;
+      me.b = b = b << 20 ^ b >>> 12 ^ c;
+      me.c = c = c - d | 0;
+      me.d = d << 16 ^ c >>> 16 ^ a;
+      return me.a = a - b | 0;
+    };
+
+    /* The following is non-inverted tyche, which has better internal
+     * bit diffusion, but which is about 25% slower than tyche-i in JS.
+    me.next = function() {
+      var a = me.a, b = me.b, c = me.c, d = me.d;
+      a = (me.a + me.b | 0) >>> 0;
+      d = me.d ^ a; d = d << 16 ^ d >>> 16;
+      c = me.c + d | 0;
+      b = me.b ^ c; b = b << 12 ^ d >>> 20;
+      me.a = a = a + b | 0;
+      d = d ^ a; me.d = d = d << 8 ^ d >>> 24;
+      me.c = c = c + d | 0;
+      b = b ^ c;
+      return me.b = (b << 7 ^ b >>> 25);
+    }
+    */
+
+    me.a = 0;
+    me.b = 0;
+    me.c = 2654435769 | 0;
+    me.d = 1367130551;
+
+    if (seed === Math.floor(seed)) {
+      // Integer seed.
+      me.a = seed / 0x100000000 | 0;
+      me.b = seed | 0;
+    } else {
+      // String seed.
+      strseed += seed;
+    }
+
+    // Mix in string seed, then discard an initial batch of 64 values.
+    for (var k = 0; k < strseed.length + 20; k++) {
+      me.b ^= strseed.charCodeAt(k) | 0;
+      me.next();
+    }
+  }
+
+  function copy(f, t) {
+    t.a = f.a;
+    t.b = f.b;
+    t.c = f.c;
+    t.d = f.d;
+    return t;
+  };
+
+  function impl(seed, opts) {
+    var xg = new XorGen(seed),
+        state = opts && opts.state,
+        prng = function prng() {
+      return (xg.next() >>> 0) / 0x100000000;
+    };
+    prng.double = function () {
+      do {
+        var top = xg.next() >>> 11,
+            bot = (xg.next() >>> 0) / 0x100000000,
+            result = (top + bot) / (1 << 21);
+      } while (result === 0);
+      return result;
+    };
+    prng.int32 = xg.next;
+    prng.quick = prng;
+    if (state) {
+      if ((typeof state === 'undefined' ? 'undefined' : _typeof(state)) == 'object') copy(state, xg);
+      prng.state = function () {
+        return copy(xg, {});
+      };
+    }
+    return prng;
+  }
+
+  if (module && module.exports) {
+    module.exports = impl;
+  } else if (__webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js") && __webpack_require__(/*! !webpack amd options */ "./node_modules/webpack/buildin/amd-options.js")) {
+    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+      return impl;
+    }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {
+    this.tychei = impl;
+  }
+})(undefined, ( false ? undefined : _typeof(module)) == 'object' && module, // present in node.js
+__webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js") // present with an AMD loader
+);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./node_modules/seedrandom/lib/xor128.js":
+/*!***********************************************!*\
+  !*** ./node_modules/seedrandom/lib/xor128.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_RESULT__;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+// A Javascript implementaion of the "xor128" prng algorithm by
+// George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
+
+(function (global, module, define) {
+
+  function XorGen(seed) {
+    var me = this,
+        strseed = '';
+
+    me.x = 0;
+    me.y = 0;
+    me.z = 0;
+    me.w = 0;
+
+    // Set up generator function.
+    me.next = function () {
+      var t = me.x ^ me.x << 11;
+      me.x = me.y;
+      me.y = me.z;
+      me.z = me.w;
+      return me.w ^= me.w >>> 19 ^ t ^ t >>> 8;
+    };
+
+    if (seed === (seed | 0)) {
+      // Integer seed.
+      me.x = seed;
+    } else {
+      // String seed.
+      strseed += seed;
+    }
+
+    // Mix in string seed, then discard an initial batch of 64 values.
+    for (var k = 0; k < strseed.length + 64; k++) {
+      me.x ^= strseed.charCodeAt(k) | 0;
+      me.next();
+    }
+  }
+
+  function copy(f, t) {
+    t.x = f.x;
+    t.y = f.y;
+    t.z = f.z;
+    t.w = f.w;
+    return t;
+  }
+
+  function impl(seed, opts) {
+    var xg = new XorGen(seed),
+        state = opts && opts.state,
+        prng = function prng() {
+      return (xg.next() >>> 0) / 0x100000000;
+    };
+    prng.double = function () {
+      do {
+        var top = xg.next() >>> 11,
+            bot = (xg.next() >>> 0) / 0x100000000,
+            result = (top + bot) / (1 << 21);
+      } while (result === 0);
+      return result;
+    };
+    prng.int32 = xg.next;
+    prng.quick = prng;
+    if (state) {
+      if ((typeof state === 'undefined' ? 'undefined' : _typeof(state)) == 'object') copy(state, xg);
+      prng.state = function () {
+        return copy(xg, {});
+      };
+    }
+    return prng;
+  }
+
+  if (module && module.exports) {
+    module.exports = impl;
+  } else if (__webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js") && __webpack_require__(/*! !webpack amd options */ "./node_modules/webpack/buildin/amd-options.js")) {
+    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+      return impl;
+    }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {
+    this.xor128 = impl;
+  }
+})(undefined, ( false ? undefined : _typeof(module)) == 'object' && module, // present in node.js
+__webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js") // present with an AMD loader
+);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./node_modules/seedrandom/lib/xor4096.js":
+/*!************************************************!*\
+  !*** ./node_modules/seedrandom/lib/xor4096.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_RESULT__;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+// A Javascript implementaion of Richard Brent's Xorgens xor4096 algorithm.
+//
+// This fast non-cryptographic random number generator is designed for
+// use in Monte-Carlo algorithms. It combines a long-period xorshift
+// generator with a Weyl generator, and it passes all common batteries
+// of stasticial tests for randomness while consuming only a few nanoseconds
+// for each prng generated.  For background on the generator, see Brent's
+// paper: "Some long-period random number generators using shifts and xors."
+// http://arxiv.org/pdf/1004.3115v1.pdf
+//
+// Usage:
+//
+// var xor4096 = require('xor4096');
+// random = xor4096(1);                        // Seed with int32 or string.
+// assert.equal(random(), 0.1520436450538547); // (0, 1) range, 53 bits.
+// assert.equal(random.int32(), 1806534897);   // signed int32, 32 bits.
+//
+// For nonzero numeric keys, this impelementation provides a sequence
+// identical to that by Brent's xorgens 3 implementaion in C.  This
+// implementation also provides for initalizing the generator with
+// string seeds, or for saving and restoring the state of the generator.
+//
+// On Chrome, this prng benchmarks about 2.1 times slower than
+// Javascript's built-in Math.random().
+
+(function (global, module, define) {
+
+  function XorGen(seed) {
+    var me = this;
+
+    // Set up generator function.
+    me.next = function () {
+      var w = me.w,
+          X = me.X,
+          i = me.i,
+          t,
+          v;
+      // Update Weyl generator.
+      me.w = w = w + 0x61c88647 | 0;
+      // Update xor generator.
+      v = X[i + 34 & 127];
+      t = X[i = i + 1 & 127];
+      v ^= v << 13;
+      t ^= t << 17;
+      v ^= v >>> 15;
+      t ^= t >>> 12;
+      // Update Xor generator array state.
+      v = X[i] = v ^ t;
+      me.i = i;
+      // Result is the combination.
+      return v + (w ^ w >>> 16) | 0;
+    };
+
+    function init(me, seed) {
+      var t,
+          v,
+          i,
+          j,
+          w,
+          X = [],
+          limit = 128;
+      if (seed === (seed | 0)) {
+        // Numeric seeds initialize v, which is used to generates X.
+        v = seed;
+        seed = null;
+      } else {
+        // String seeds are mixed into v and X one character at a time.
+        seed = seed + '\0';
+        v = 0;
+        limit = Math.max(limit, seed.length);
+      }
+      // Initialize circular array and weyl value.
+      for (i = 0, j = -32; j < limit; ++j) {
+        // Put the unicode characters into the array, and shuffle them.
+        if (seed) v ^= seed.charCodeAt((j + 32) % seed.length);
+        // After 32 shuffles, take v as the starting w value.
+        if (j === 0) w = v;
+        v ^= v << 10;
+        v ^= v >>> 15;
+        v ^= v << 4;
+        v ^= v >>> 13;
+        if (j >= 0) {
+          w = w + 0x61c88647 | 0; // Weyl.
+          t = X[j & 127] ^= v + w; // Combine xor and weyl to init array.
+          i = 0 == t ? i + 1 : 0; // Count zeroes.
+        }
+      }
+      // We have detected all zeroes; make the key nonzero.
+      if (i >= 128) {
+        X[(seed && seed.length || 0) & 127] = -1;
+      }
+      // Run the generator 512 times to further mix the state before using it.
+      // Factoring this as a function slows the main generator, so it is just
+      // unrolled here.  The weyl generator is not advanced while warming up.
+      i = 127;
+      for (j = 4 * 128; j > 0; --j) {
+        v = X[i + 34 & 127];
+        t = X[i = i + 1 & 127];
+        v ^= v << 13;
+        t ^= t << 17;
+        v ^= v >>> 15;
+        t ^= t >>> 12;
+        X[i] = v ^ t;
+      }
+      // Storing state as object members is faster than using closure variables.
+      me.w = w;
+      me.X = X;
+      me.i = i;
+    }
+
+    init(me, seed);
+  }
+
+  function copy(f, t) {
+    t.i = f.i;
+    t.w = f.w;
+    t.X = f.X.slice();
+    return t;
+  };
+
+  function impl(seed, opts) {
+    if (seed == null) seed = +new Date();
+    var xg = new XorGen(seed),
+        state = opts && opts.state,
+        prng = function prng() {
+      return (xg.next() >>> 0) / 0x100000000;
+    };
+    prng.double = function () {
+      do {
+        var top = xg.next() >>> 11,
+            bot = (xg.next() >>> 0) / 0x100000000,
+            result = (top + bot) / (1 << 21);
+      } while (result === 0);
+      return result;
+    };
+    prng.int32 = xg.next;
+    prng.quick = prng;
+    if (state) {
+      if (state.X) copy(state, xg);
+      prng.state = function () {
+        return copy(xg, {});
+      };
+    }
+    return prng;
+  }
+
+  if (module && module.exports) {
+    module.exports = impl;
+  } else if (__webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js") && __webpack_require__(/*! !webpack amd options */ "./node_modules/webpack/buildin/amd-options.js")) {
+    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+      return impl;
+    }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {
+    this.xor4096 = impl;
+  }
+})(undefined, // window object or global
+( false ? undefined : _typeof(module)) == 'object' && module, // present in node.js
+__webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js") // present with an AMD loader
+);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./node_modules/seedrandom/lib/xorshift7.js":
+/*!**************************************************!*\
+  !*** ./node_modules/seedrandom/lib/xorshift7.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_RESULT__;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+// A Javascript implementaion of the "xorshift7" algorithm by
+// François Panneton and Pierre L'ecuyer:
+// "On the Xorgshift Random Number Generators"
+// http://saluc.engr.uconn.edu/refs/crypto/rng/panneton05onthexorshift.pdf
+
+(function (global, module, define) {
+
+  function XorGen(seed) {
+    var me = this;
+
+    // Set up generator function.
+    me.next = function () {
+      // Update xor generator.
+      var X = me.x,
+          i = me.i,
+          t,
+          v,
+          w;
+      t = X[i];t ^= t >>> 7;v = t ^ t << 24;
+      t = X[i + 1 & 7];v ^= t ^ t >>> 10;
+      t = X[i + 3 & 7];v ^= t ^ t >>> 3;
+      t = X[i + 4 & 7];v ^= t ^ t << 7;
+      t = X[i + 7 & 7];t = t ^ t << 13;v ^= t ^ t << 9;
+      X[i] = v;
+      me.i = i + 1 & 7;
+      return v;
+    };
+
+    function init(me, seed) {
+      var j,
+          w,
+          X = [];
+
+      if (seed === (seed | 0)) {
+        // Seed state array using a 32-bit integer.
+        w = X[0] = seed;
+      } else {
+        // Seed state using a string.
+        seed = '' + seed;
+        for (j = 0; j < seed.length; ++j) {
+          X[j & 7] = X[j & 7] << 15 ^ seed.charCodeAt(j) + X[j + 1 & 7] << 13;
+        }
+      }
+      // Enforce an array length of 8, not all zeroes.
+      while (X.length < 8) {
+        X.push(0);
+      }for (j = 0; j < 8 && X[j] === 0; ++j) {}
+      if (j == 8) w = X[7] = -1;else w = X[j];
+
+      me.x = X;
+      me.i = 0;
+
+      // Discard an initial 256 values.
+      for (j = 256; j > 0; --j) {
+        me.next();
+      }
+    }
+
+    init(me, seed);
+  }
+
+  function copy(f, t) {
+    t.x = f.x.slice();
+    t.i = f.i;
+    return t;
+  }
+
+  function impl(seed, opts) {
+    if (seed == null) seed = +new Date();
+    var xg = new XorGen(seed),
+        state = opts && opts.state,
+        prng = function prng() {
+      return (xg.next() >>> 0) / 0x100000000;
+    };
+    prng.double = function () {
+      do {
+        var top = xg.next() >>> 11,
+            bot = (xg.next() >>> 0) / 0x100000000,
+            result = (top + bot) / (1 << 21);
+      } while (result === 0);
+      return result;
+    };
+    prng.int32 = xg.next;
+    prng.quick = prng;
+    if (state) {
+      if (state.x) copy(state, xg);
+      prng.state = function () {
+        return copy(xg, {});
+      };
+    }
+    return prng;
+  }
+
+  if (module && module.exports) {
+    module.exports = impl;
+  } else if (__webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js") && __webpack_require__(/*! !webpack amd options */ "./node_modules/webpack/buildin/amd-options.js")) {
+    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+      return impl;
+    }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {
+    this.xorshift7 = impl;
+  }
+})(undefined, ( false ? undefined : _typeof(module)) == 'object' && module, // present in node.js
+__webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js") // present with an AMD loader
+);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./node_modules/seedrandom/lib/xorwow.js":
+/*!***********************************************!*\
+  !*** ./node_modules/seedrandom/lib/xorwow.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_RESULT__;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+// A Javascript implementaion of the "xorwow" prng algorithm by
+// George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
+
+(function (global, module, define) {
+
+  function XorGen(seed) {
+    var me = this,
+        strseed = '';
+
+    // Set up generator function.
+    me.next = function () {
+      var t = me.x ^ me.x >>> 2;
+      me.x = me.y;me.y = me.z;me.z = me.w;me.w = me.v;
+      return (me.d = me.d + 362437 | 0) + (me.v = me.v ^ me.v << 4 ^ (t ^ t << 1)) | 0;
+    };
+
+    me.x = 0;
+    me.y = 0;
+    me.z = 0;
+    me.w = 0;
+    me.v = 0;
+
+    if (seed === (seed | 0)) {
+      // Integer seed.
+      me.x = seed;
+    } else {
+      // String seed.
+      strseed += seed;
+    }
+
+    // Mix in string seed, then discard an initial batch of 64 values.
+    for (var k = 0; k < strseed.length + 64; k++) {
+      me.x ^= strseed.charCodeAt(k) | 0;
+      if (k == strseed.length) {
+        me.d = me.x << 10 ^ me.x >>> 4;
+      }
+      me.next();
+    }
+  }
+
+  function copy(f, t) {
+    t.x = f.x;
+    t.y = f.y;
+    t.z = f.z;
+    t.w = f.w;
+    t.v = f.v;
+    t.d = f.d;
+    return t;
+  }
+
+  function impl(seed, opts) {
+    var xg = new XorGen(seed),
+        state = opts && opts.state,
+        prng = function prng() {
+      return (xg.next() >>> 0) / 0x100000000;
+    };
+    prng.double = function () {
+      do {
+        var top = xg.next() >>> 11,
+            bot = (xg.next() >>> 0) / 0x100000000,
+            result = (top + bot) / (1 << 21);
+      } while (result === 0);
+      return result;
+    };
+    prng.int32 = xg.next;
+    prng.quick = prng;
+    if (state) {
+      if ((typeof state === 'undefined' ? 'undefined' : _typeof(state)) == 'object') copy(state, xg);
+      prng.state = function () {
+        return copy(xg, {});
+      };
+    }
+    return prng;
+  }
+
+  if (module && module.exports) {
+    module.exports = impl;
+  } else if (__webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js") && __webpack_require__(/*! !webpack amd options */ "./node_modules/webpack/buildin/amd-options.js")) {
+    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+      return impl;
+    }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {
+    this.xorwow = impl;
+  }
+})(undefined, ( false ? undefined : _typeof(module)) == 'object' && module, // present in node.js
+__webpack_require__(/*! !webpack amd define */ "./node_modules/webpack/buildin/amd-define.js") // present with an AMD loader
+);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./node_modules/seedrandom/seedrandom.js":
+/*!***********************************************!*\
+  !*** ./node_modules/seedrandom/seedrandom.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_RESULT__;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/*
+Copyright 2014 David Bau.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
+(function (pool, math) {
+  //
+  // The following constants are related to IEEE 754 limits.
+  //
+  var global = this,
+      width = 256,
+      // each RC4 output is 0 <= x < 256
+  chunks = 6,
+      // at least six RC4 outputs for each double
+  digits = 52,
+      // there are 52 significant digits in a double
+  rngname = 'random',
+      // rngname: name for Math.random and Math.seedrandom
+  startdenom = math.pow(width, chunks),
+      significance = math.pow(2, digits),
+      overflow = significance * 2,
+      mask = width - 1,
+      nodecrypto; // node.js crypto module, initialized at the bottom.
+
+  //
+  // seedrandom()
+  // This is the seedrandom function described above.
+  //
+  function seedrandom(seed, options, callback) {
+    var key = [];
+    options = options == true ? { entropy: true } : options || {};
+
+    // Flatten the seed string or build one from local entropy if needed.
+    var shortseed = mixkey(flatten(options.entropy ? [seed, tostring(pool)] : seed == null ? autoseed() : seed, 3), key);
+
+    // Use the seed to initialize an ARC4 generator.
+    var arc4 = new ARC4(key);
+
+    // This function returns a random double in [0, 1) that contains
+    // randomness in every bit of the mantissa of the IEEE 754 value.
+    var prng = function prng() {
+      var n = arc4.g(chunks),
+          // Start with a numerator n < 2 ^ 48
+      d = startdenom,
+          //   and denominator d = 2 ^ 48.
+      x = 0; //   and no 'extra last byte'.
+      while (n < significance) {
+        // Fill up all significant digits by
+        n = (n + x) * width; //   shifting numerator and
+        d *= width; //   denominator and generating a
+        x = arc4.g(1); //   new least-significant-byte.
+      }
+      while (n >= overflow) {
+        // To avoid rounding up, before adding
+        n /= 2; //   last byte, shift everything
+        d /= 2; //   right using integer math until
+        x >>>= 1; //   we have exactly the desired bits.
+      }
+      return (n + x) / d; // Form the number within [0, 1).
+    };
+
+    prng.int32 = function () {
+      return arc4.g(4) | 0;
+    };
+    prng.quick = function () {
+      return arc4.g(4) / 0x100000000;
+    };
+    prng.double = prng;
+
+    // Mix the randomness into accumulated entropy.
+    mixkey(tostring(arc4.S), pool);
+
+    // Calling convention: what to return as a function of prng, seed, is_math.
+    return (options.pass || callback || function (prng, seed, is_math_call, state) {
+      if (state) {
+        // Load the arc4 state from the given state if it has an S array.
+        if (state.S) {
+          copy(state, arc4);
+        }
+        // Only provide the .state method if requested via options.state.
+        prng.state = function () {
+          return copy(arc4, {});
+        };
+      }
+
+      // If called as a method of Math (Math.seedrandom()), mutate
+      // Math.random because that is how seedrandom.js has worked since v1.0.
+      if (is_math_call) {
+        math[rngname] = prng;return seed;
+      }
+
+      // Otherwise, it is a newer calling convention, so return the
+      // prng directly.
+      else return prng;
+    })(prng, shortseed, 'global' in options ? options.global : this == math, options.state);
+  }
+  math['seed' + rngname] = seedrandom;
+
+  //
+  // ARC4
+  //
+  // An ARC4 implementation.  The constructor takes a key in the form of
+  // an array of at most (width) integers that should be 0 <= x < (width).
+  //
+  // The g(count) method returns a pseudorandom integer that concatenates
+  // the next (count) outputs from ARC4.  Its return value is a number x
+  // that is in the range 0 <= x < (width ^ count).
+  //
+  function ARC4(key) {
+    var t,
+        keylen = key.length,
+        me = this,
+        i = 0,
+        j = me.i = me.j = 0,
+        s = me.S = [];
+
+    // The empty key [] is treated as [0].
+    if (!keylen) {
+      key = [keylen++];
+    }
+
+    // Set up S using the standard key scheduling algorithm.
+    while (i < width) {
+      s[i] = i++;
+    }
+    for (i = 0; i < width; i++) {
+      s[i] = s[j = mask & j + key[i % keylen] + (t = s[i])];
+      s[j] = t;
+    }
+
+    // The "g" method returns the next (count) outputs as one number.
+    (me.g = function (count) {
+      // Using instance members instead of closure state nearly doubles speed.
+      var t,
+          r = 0,
+          i = me.i,
+          j = me.j,
+          s = me.S;
+      while (count--) {
+        t = s[i = mask & i + 1];
+        r = r * width + s[mask & (s[i] = s[j = mask & j + t]) + (s[j] = t)];
+      }
+      me.i = i;me.j = j;
+      return r;
+      // For robust unpredictability, the function call below automatically
+      // discards an initial batch of values.  This is called RC4-drop[256].
+      // See http://google.com/search?q=rsa+fluhrer+response&btnI
+    })(width);
+  }
+
+  //
+  // copy()
+  // Copies internal state of ARC4 to or from a plain object.
+  //
+  function copy(f, t) {
+    t.i = f.i;
+    t.j = f.j;
+    t.S = f.S.slice();
+    return t;
+  };
+
+  //
+  // flatten()
+  // Converts an object tree to nested arrays of strings.
+  //
+  function flatten(obj, depth) {
+    var result = [],
+        typ = typeof obj === 'undefined' ? 'undefined' : _typeof(obj),
+        prop;
+    if (depth && typ == 'object') {
+      for (prop in obj) {
+        try {
+          result.push(flatten(obj[prop], depth - 1));
+        } catch (e) {}
+      }
+    }
+    return result.length ? result : typ == 'string' ? obj : obj + '\0';
+  }
+
+  //
+  // mixkey()
+  // Mixes a string seed into a key that is an array of integers, and
+  // returns a shortened string seed that is equivalent to the result key.
+  //
+  function mixkey(seed, key) {
+    var stringseed = seed + '',
+        smear,
+        j = 0;
+    while (j < stringseed.length) {
+      key[mask & j] = mask & (smear ^= key[mask & j] * 19) + stringseed.charCodeAt(j++);
+    }
+    return tostring(key);
+  }
+
+  //
+  // autoseed()
+  // Returns an object for autoseeding, using window.crypto and Node crypto
+  // module if available.
+  //
+  function autoseed() {
+    try {
+      var out;
+      if (nodecrypto && (out = nodecrypto.randomBytes)) {
+        // The use of 'out' to remember randomBytes makes tight minified code.
+        out = out(width);
+      } else {
+        out = new Uint8Array(width);
+        (global.crypto || global.msCrypto).getRandomValues(out);
+      }
+      return tostring(out);
+    } catch (e) {
+      var browser = global.navigator,
+          plugins = browser && browser.plugins;
+      return [+new Date(), global, plugins, global.screen, tostring(pool)];
+    }
+  }
+
+  //
+  // tostring()
+  // Converts an array of charcodes to a string
+  //
+  function tostring(a) {
+    return String.fromCharCode.apply(0, a);
+  }
+
+  //
+  // When seedrandom.js is loaded, we immediately mix a few bits
+  // from the built-in RNG into the entropy pool.  Because we do
+  // not want to interfere with deterministic PRNG state later,
+  // seedrandom will not call math.random on its own again after
+  // initialization.
+  //
+  mixkey(math.random(), pool);
+
+  //
+  // Nodejs and AMD support: export the implementation as a module using
+  // either convention.
+  //
+  if (( false ? undefined : _typeof(module)) == 'object' && module.exports) {
+    module.exports = seedrandom;
+    // When in node.js, try using crypto package for autoseeding.
+    try {
+      nodecrypto = __webpack_require__(/*! crypto */ 1);
+    } catch (ex) {}
+  } else if (true) {
+    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+      return seedrandom;
+    }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  }
+
+  // End anonymous scope, and pass initial values.
+})([], // pool: entropy pool starts empty
+Math // math: package containing random, pow, and seedrandom
+);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/amd-define.js":
+/*!***************************************!*\
+  !*** (webpack)/buildin/amd-define.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function() {
+	throw new Error("define cannot be used indirect");
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/amd-options.js":
+/*!****************************************!*\
+  !*** (webpack)/buildin/amd-options.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
+module.exports = __webpack_amd_options__;
+
+/* WEBPACK VAR INJECTION */}.call(this, {}))
+
+/***/ }),
+
 /***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -11663,6 +12818,884 @@ module.exports = function (module) {
 
 /***/ }),
 
+/***/ "./src/component/base.js":
+/*!*******************************!*\
+  !*** ./src/component/base.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _logger = __webpack_require__(/*! ../util/logger */ "./src/util/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Base is the base of renderers and contains multiple utility methods.
+ */
+var BaseComponent = function () {
+
+  /**
+   * Base constructor
+   * 
+   * @typedef {Object} Options
+   * @property {Boolean} verbose prints extra log information to console.log, default false
+   * @property {Boolean} mandatory whether the component is mandatory or optional
+   */
+  function BaseComponent() {
+    var mandatory = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    _classCallCheck(this, BaseComponent);
+
+    if (this.initialize === undefined || typeof this.initialize !== 'function') {
+      throw new TypeError('Must override [initialize()] method!');
+    }
+    this.available = true;
+    /**
+     * @typedef {Object} Options
+     * @property {Boolean} verbose prints extra log information to console.log, default false
+     * @property {Boolean} mandatory whether the component is mandatory or optional
+     */
+    this.options = undefined;
+    this.settings({ mandatory: mandatory });
+    /**
+     * @type {Logger} the logger for this class
+     */
+    this.log = new _logger2.default(this.options);
+    // run initialization
+    var decorator = _factory.Decorators.Error.wrap(this.initialize).withContext(this).onErrorThrow(mandatory).onErrorExec(this._onError);
+    if (delay) {
+      setTimeout(function () {
+        return decorator.handle();
+      }, 10);
+    } else {
+      decorator.handle();
+    }
+  }
+
+  /**
+   * Saves the settings in an internal options object.
+   * 
+   * @typedef {Object} Options
+   * @property {Boolean} verbose prints extra log information to console.log, default false
+   * @property {Boolean} mandatory whether the component is mandatory or optional
+   */
+
+
+  _createClass(BaseComponent, [{
+    key: 'settings',
+    value: function settings(_ref) {
+      var mandatory = _ref.mandatory;
+
+      this.options = this.options || {};
+      this.options.mandatory = mandatory || this.options.mandatory;
+      return this;
+    }
+  }, {
+    key: '_onError',
+    value: function _onError() {
+      if (this.options.mandatory) {
+        this.log.error('The component [' + this.constructor.name + '] is mandatory and could not be initialized... cannot proceed!');
+      } else {
+        this.log.info('The component [' + this.constructor.name + '] could not be initialized... continuing...');
+      }
+      this.available = false;
+    }
+  }, {
+    key: 'isAvailable',
+    get: function get() {
+      return this.available;
+    }
+  }]);
+
+  return BaseComponent;
+}();
+
+exports.default = BaseComponent;
+
+/***/ }),
+
+/***/ "./src/component/d3.js":
+/*!*****************************!*\
+  !*** ./src/component/d3.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _base = __webpack_require__(/*! ./base */ "./src/component/base.js");
+
+var _base2 = _interopRequireDefault(_base);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/* global d3 */
+
+var D3Component = function (_BaseComponent) {
+  _inherits(D3Component, _BaseComponent);
+
+  function D3Component() {
+    var mandatory = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    _classCallCheck(this, D3Component);
+
+    return _possibleConstructorReturn(this, (D3Component.__proto__ || Object.getPrototypeOf(D3Component)).call(this, mandatory, delay));
+  }
+
+  _createClass(D3Component, [{
+    key: 'initialize',
+    value: function initialize() {
+      if (!d3) {
+        throw new Error('D3 is not imported and Francy won\'t work without it... please import D3 v5+ library.');
+      }
+    }
+  }]);
+
+  return D3Component;
+}(_base2.default);
+
+exports.default = D3Component;
+
+/***/ }),
+
+/***/ "./src/component/factory.js":
+/*!**********************************!*\
+  !*** ./src/component/factory.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Components = undefined;
+
+var _d = __webpack_require__(/*! ./d3 */ "./src/component/d3.js");
+
+var _d2 = _interopRequireDefault(_d);
+
+var _mathjax = __webpack_require__(/*! ./mathjax */ "./src/component/mathjax.js");
+
+var _mathjax2 = _interopRequireDefault(_mathjax);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* singleton */
+var Components = exports.Components = {
+  D3: new _d2.default(true, true),
+  MathJax: new _mathjax2.default(false, true)
+};
+
+/***/ }),
+
+/***/ "./src/component/mathjax.js":
+/*!**********************************!*\
+  !*** ./src/component/mathjax.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _base = __webpack_require__(/*! ./base */ "./src/component/base.js");
+
+var _base2 = _interopRequireDefault(_base);
+
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/* global MathJax d3 */
+
+var MathJaxComponent = function (_BaseComponent) {
+  _inherits(MathJaxComponent, _BaseComponent);
+
+  function MathJaxComponent() {
+    var mandatory = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    _classCallCheck(this, MathJaxComponent);
+
+    return _possibleConstructorReturn(this, (MathJaxComponent.__proto__ || Object.getPrototypeOf(MathJaxComponent)).call(this, mandatory, delay));
+  }
+
+  _createClass(MathJaxComponent, [{
+    key: 'initialize',
+    value: function initialize() {
+      MathJax.Hub.Config({
+        showMathMenu: false,
+        skipStartupTypeset: true,
+        tex2jax: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          processEnvironments: true
+        },
+        MathML: {
+          extensions: ['content-mathml.js']
+        },
+        displayAlign: 'center',
+        'HTML-CSS': {
+          availableFonts: [],
+          imageFont: null,
+          preferredFont: null,
+          font: 'STIX-Web',
+          webFont: 'STIX-Web',
+          styles: { '.MathJax_Display': { 'margin': 0 } },
+          linebreaks: {
+            automatic: true
+          }
+        },
+        'SVG': {
+          availableFonts: [],
+          imageFont: null,
+          preferredFont: null,
+          font: 'STIX-Web',
+          webFont: 'STIX-Web',
+          styles: { '.MathJax_Display': { 'margin': 0 } },
+          linebreaks: {
+            automatic: true
+          }
+        }
+      });
+
+      var safeOnNewMathElement = _factory.Decorators.Error.wrap(onNewMathElement).withContext(this).onErrorThrow(false);
+      MathJax.Hub.Register.MessageHook('New Math', function (id) {
+        return safeOnNewMathElement.handle(id);
+      });
+
+      function onNewMathElement(id) {
+        if (id && id.length > 1) {
+          var mathJaxElement = d3.select('#' + id[1] + '-Frame');
+          var svgMathJaxElement = mathJaxElement.select('svg');
+          var g = d3.select(mathJaxElement.node().parentNode.parentNode);
+          if (svgMathJaxElement.node()) {
+            // set same font-size
+            svgMathJaxElement.style('font-size', g.select('text.francy-label').style('font-size'));
+            // re-center component
+            var width = svgMathJaxElement.node().width.baseVal.value;
+            var height = svgMathJaxElement.node().height.baseVal.value;
+            svgMathJaxElement.attr('x', -width / 2);
+            svgMathJaxElement.attr('y', -height / 2);
+            g.append(function () {
+              return svgMathJaxElement.node();
+            });
+          }
+        }
+      }
+
+      MathJax.Hub.Configured();
+    }
+  }]);
+
+  return MathJaxComponent;
+}(_base2.default);
+
+exports.default = MathJaxComponent;
+
+/***/ }),
+
+/***/ "./src/decorator/data.js":
+/*!*******************************!*\
+  !*** ./src/decorator/data.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _exception = __webpack_require__(/*! ../util/exception */ "./src/util/exception.js");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DataDecorator = function () {
+  function DataDecorator() {
+    _classCallCheck(this, DataDecorator);
+  }
+
+  _createClass(DataDecorator, [{
+    key: 'requires',
+    value: function requires(properties) {
+      var self = this;
+      return function decorator(target, name, descriptor) {
+        var oldValue = descriptor.value;
+
+        descriptor.value = function () {
+          if (!self._hasData(self._getProperty(this.data, properties))) {
+            return Promise.reject(new _exception.Exception('No data here [' + properties + '], nothing to render... continuing...'));
+          }
+          return oldValue.apply(this, arguments);
+        };
+
+        return descriptor;
+      };
+    }
+  }, {
+    key: 'enabled',
+    value: function enabled(properties) {
+      var self = this;
+      return function decorator(target, name, descriptor) {
+        var oldValue = descriptor.value;
+
+        descriptor.value = function () {
+          if (!self._getProperty(this.data, properties)) {
+            return Promise.reject(new _exception.Exception('Property disabled [' + properties + '], skip execution... continuing...'));
+          }
+          return oldValue.apply(this, arguments);
+        };
+
+        return descriptor;
+      };
+    }
+  }, {
+    key: '_getProperty',
+    value: function _getProperty(obj, propertyPath) {
+
+      var tmp = obj;
+
+      if (tmp && propertyPath) {
+        var properties = propertyPath.split('.');
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = properties[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var property = _step.value;
+
+            if (!tmp.hasOwnProperty(property)) {
+              tmp = undefined;
+              break;
+            } else {
+              tmp = tmp[property];
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      }
+
+      return tmp;
+    }
+  }, {
+    key: '_hasData',
+    value: function _hasData(obj) {
+      return obj && (obj instanceof Array && obj.length || obj instanceof Object && Object.values(obj).length);
+    }
+  }]);
+
+  return DataDecorator;
+}();
+
+exports.default = DataDecorator;
+
+/***/ }),
+
+/***/ "./src/decorator/error.js":
+/*!********************************!*\
+  !*** ./src/decorator/error.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _logger = __webpack_require__(/*! ../util/logger */ "./src/util/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ErrorDecorator = function () {
+  function ErrorDecorator() {
+    _classCallCheck(this, ErrorDecorator);
+
+    this.logger = new _logger2.default();
+    this.onErrorFns = [];
+    this.context = undefined;
+    this.function = undefined;
+    this.throw = false;
+  }
+
+  _createClass(ErrorDecorator, [{
+    key: 'wrap',
+    value: function wrap(fn) {
+      if (typeof fn !== 'function') throw Error('[' + fn + '] is not a function!');
+      this.function = fn;
+      return this;
+    }
+  }, {
+    key: 'withContext',
+    value: function withContext(ctx) {
+      this.context = ctx;
+      return this;
+    }
+  }, {
+    key: 'onErrorExec',
+    value: function onErrorExec(fn) {
+      if (typeof fn === 'function') {
+        this.onErrorFns.push(fn);
+      }
+      return this;
+    }
+  }, {
+    key: 'onErrorThrow',
+    value: function onErrorThrow(t) {
+      if (typeof t === 'boolean') {
+        this.throw = t;
+      }
+      return this;
+    }
+  }, {
+    key: 'handle',
+    value: function handle() {
+      var _this = this;
+
+      var result = undefined;
+      try {
+        result = this.function.apply(this.context, arguments);
+        if (result && typeof result.then == 'function') {
+          result = result.catch(function (error) {
+            _this._logEntry(error);
+            _this._runOnError();
+          }).then(function (result) {
+            return result;
+          });
+        }
+      } catch (error) {
+        this._logEntry(error);
+        this._runOnError();
+        if (this.throw) {
+          throw error;
+        }
+      }
+      return result;
+    }
+  }, {
+    key: '_runOnError',
+    value: function _runOnError() {
+      var _this2 = this;
+
+      this.onErrorFns.forEach(function (fn) {
+        try {
+          fn.call(_this2.context);
+        } catch (error) {
+          _this2._logEntry(error);
+          if (_this2.throw) {
+            throw error;
+          }
+        }
+      });
+    }
+  }, {
+    key: '_logEntry',
+    value: function _logEntry(error) {
+      this.logger.info('We can\'t do anything about this! An error occurred: [' + error + ']');
+    }
+  }]);
+
+  return ErrorDecorator;
+}();
+
+exports.default = ErrorDecorator;
+
+/***/ }),
+
+/***/ "./src/decorator/factory.js":
+/*!**********************************!*\
+  !*** ./src/decorator/factory.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Decorators = undefined;
+
+var _initialize = __webpack_require__(/*! ./initialize */ "./src/decorator/initialize.js");
+
+var _initialize2 = _interopRequireDefault(_initialize);
+
+var _loader = __webpack_require__(/*! ./loader */ "./src/decorator/loader.js");
+
+var _loader2 = _interopRequireDefault(_loader);
+
+var _error = __webpack_require__(/*! ./error */ "./src/decorator/error.js");
+
+var _error2 = _interopRequireDefault(_error);
+
+var _highlight = __webpack_require__(/*! ./highlight */ "./src/decorator/highlight.js");
+
+var _highlight2 = _interopRequireDefault(_highlight);
+
+var _jupyter = __webpack_require__(/*! ./jupyter */ "./src/decorator/jupyter.js");
+
+var _jupyter2 = _interopRequireDefault(_jupyter);
+
+var _data = __webpack_require__(/*! ./data */ "./src/decorator/data.js");
+
+var _data2 = _interopRequireDefault(_data);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Decorators = exports.Decorators = {
+
+  get Data() {
+    return new _data2.default();
+  },
+
+  get Loader() {
+    return new _loader2.default();
+  },
+
+  get Initializer() {
+    return new _initialize2.default();
+  },
+
+  get Error() {
+    return new _error2.default();
+  },
+
+  get Highlight() {
+    return new _highlight2.default();
+  },
+
+  get Jupyter() {
+    new new _jupyter2.default()();
+  }
+
+};
+
+/***/ }),
+
+/***/ "./src/decorator/highlight.js":
+/*!************************************!*\
+  !*** ./src/decorator/highlight.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var HighlightDecorator = function () {
+  function HighlightDecorator() {
+    _classCallCheck(this, HighlightDecorator);
+  }
+
+  // credits here: https://stackoverflow.com/questions/4810841/how-can-i-pretty-print-json-using-javascript#answer-7220510
+
+
+  _createClass(HighlightDecorator, [{
+    key: 'syntax',
+    value: function syntax(json) {
+      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+          if (/:$/.test(match)) {
+            cls = 'key';
+          } else {
+            cls = 'string';
+          }
+        } else if (/true|false/.test(match)) {
+          cls = 'boolean';
+        } else if (/null/.test(match)) {
+          cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+      });
+    }
+  }]);
+
+  return HighlightDecorator;
+}();
+
+exports.default = HighlightDecorator;
+
+/***/ }),
+
+/***/ "./src/decorator/initialize.js":
+/*!*************************************!*\
+  !*** ./src/decorator/initialize.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var InitializerDecorator = function () {
+  function InitializerDecorator() {
+    _classCallCheck(this, InitializerDecorator);
+  }
+
+  _createClass(InitializerDecorator, [{
+    key: "initialize",
+    value: function initialize() {
+      return function (target, key, descriptor) {
+        var oldValue = descriptor.value;
+
+        descriptor.value = function () {
+          this._initialize();
+          return oldValue.apply(this, arguments);
+        };
+        return descriptor;
+      };
+    }
+  }]);
+
+  return InitializerDecorator;
+}();
+
+exports.default = InitializerDecorator;
+
+/***/ }),
+
+/***/ "./src/decorator/jupyter.js":
+/*!**********************************!*\
+  !*** ./src/decorator/jupyter.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _logger = __webpack_require__(/*! ../util/logger */ "./src/util/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/* global Jupyter */
+
+var JupyterDecorator = function () {
+  function JupyterDecorator() {
+    _classCallCheck(this, JupyterDecorator);
+
+    this.logger = new _logger2.default();
+  }
+
+  _createClass(JupyterDecorator, [{
+    key: 'registerKeyboardEvents',
+    value: function registerKeyboardEvents(classes) {
+      // disable keyboard shortcuts in Jupyter for specific css classed elements
+      if (!classes) return;
+      try {
+        classes.map(function (c) {
+          Jupyter.keyboard_manager.register_events(c);
+        });
+      } catch (e) {
+        if (e.name === 'ReferenceError') {
+          this.logger.info('It seems we\'re not running on Jupyter, cannot register events... continuing...');
+        } else {
+          this.logger.warn('We can\'t do anything about this! An error occurred: [' + e + ']');
+        }
+      }
+    }
+  }]);
+
+  return JupyterDecorator;
+}();
+
+exports.default = JupyterDecorator;
+
+/***/ }),
+
+/***/ "./src/decorator/loader.js":
+/*!*********************************!*\
+  !*** ./src/decorator/loader.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _logger = __webpack_require__(/*! ../util/logger */ "./src/util/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/* global d3 */
+
+var LoaderDecorator = function () {
+  function LoaderDecorator() {
+    _classCallCheck(this, LoaderDecorator);
+
+    this.logger = new _logger2.default();
+    this.id = LoaderDecorator._generateId();
+    this.context = undefined;
+  }
+
+  _createClass(LoaderDecorator, [{
+    key: 'withContext',
+    value: function withContext(ctx) {
+      this.context = ctx;
+      try {
+        this.element = d3.select('a.loader#Loader-' + (ctx.data.canvas ? ctx.data.canvas.id : ctx.options.appendTo.data.canvas.id));
+      } catch (e) {
+        this.logger.info('We can\'t do anything about this! An error occurred: ' + e);
+      }
+      return this;
+    }
+  }, {
+    key: 'show',
+    value: function show() {
+      if (this.element) {
+        this.element.data()[0][this.id] = true;
+        this.element.style('visibility', 'visible');
+      }
+      return this;
+    }
+  }, {
+    key: 'hide',
+    value: function hide() {
+      if (this.element) {
+        delete this.element.data()[0][this.id];
+        // hide only if no more loaders present
+        if (Object.values(this.element.data()[0]).length == 0) {
+          this.element.style('visibility', 'hidden');
+        }
+      }
+      return this;
+    }
+  }], [{
+    key: '_generateId',
+    value: function _generateId() {
+      // Math.random should be unique because of its seeding algorithm
+      // Convert it to base 36 (numbers + letters), 
+      // and grab the first 9 characters after the decimal
+      return 'L-' + Math.random().toString(36).substr(2, 9);
+    }
+  }]);
+
+  return LoaderDecorator;
+}();
+
+exports.default = LoaderDecorator;
+
+/***/ }),
+
 /***/ "./src/francy.js":
 /*!***********************!*\
   !*** ./src/francy.js ***!
@@ -11690,7 +13723,13 @@ var _renderer = __webpack_require__(/*! ./render/renderer */ "./src/render/rende
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
-var _dataDecorator = __webpack_require__(/*! ./util/data-decorator */ "./src/util/data-decorator.js");
+var _factory = __webpack_require__(/*! ./decorator/factory */ "./src/decorator/factory.js");
+
+var _seedrandom = __webpack_require__(/*! seedrandom */ "./node_modules/seedrandom/index.js");
+
+var ignore = _interopRequireWildcard(_seedrandom);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11731,7 +13770,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-/* global d3 VERSION */
+/* global VERSION */
 
 var ALL_CANVAS = {};
 
@@ -11745,7 +13784,7 @@ var ALL_CANVAS = {};
  * let francy = new Francy({verbose: true, appendTo: '#div-id', callbackHandler: console.log});
  * francy.load(json).render();
  */
-var Francy = (_dec = (0, _dataDecorator.requires)('canvas'), (_class = function (_Renderer) {
+var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = function (_Renderer) {
   _inherits(Francy, _Renderer);
 
   /**
@@ -11763,11 +13802,9 @@ var Francy = (_dec = (0, _dataDecorator.requires)('canvas'), (_class = function 
 
     _classCallCheck(this, Francy);
 
+    // all good!
     var _this = _possibleConstructorReturn(this, (Francy.__proto__ || Object.getPrototypeOf(Francy)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
 
-    if (!d3) {
-      throw new Error('D3 is not imported and Francy won\'t work without it... please import D3 v5+ library.');
-    }
     _this.logger.info('Francy JS v' + "0.6.0" + ' initialized! Enjoy...');
     return _this;
   }
@@ -11791,16 +13828,20 @@ var Francy = (_dec = (0, _dataDecorator.requires)('canvas'), (_class = function 
                 if (this.data.version !== "0.6.0") {
                   this.logger.warn('Rendering data generated in Francy GAP [' + this.data.version + '] using Francy JS [' + "0.6.0" + '], rendering may fail... please update your system...');
                 }
-                _context.next = 3;
-                return new _frame2.default(this.options).load(this.data).render();
+                //set seed to produce always the same graphs
+                Math.seedrandom('Francy!');
+                _context.next = 4;
+                return new _frame2.default(this.options).load(this.data).render().then(function (element) {
+                  return element;
+                });
 
-              case 3:
+              case 4:
                 frame = _context.sent;
 
                 ALL_CANVAS[this.data.canvas.id] = frame;
                 return _context.abrupt('return', frame.element.node());
 
-              case 6:
+              case 7:
               case 'end':
                 return _context.stop();
             }
@@ -11874,17 +13915,17 @@ var _logger = __webpack_require__(/*! ../util/logger */ "./src/util/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
 
-var _jsonUtils = __webpack_require__(/*! ../util/json-utils */ "./src/util/json-utils.js");
+var _json = __webpack_require__(/*! ../util/json */ "./src/util/json.js");
 
-var _jsonUtils2 = _interopRequireDefault(_jsonUtils);
+var _json2 = _interopRequireDefault(_json);
+
+var _factory = __webpack_require__(/*! ../component/factory */ "./src/component/factory.js");
 
 var _exception = __webpack_require__(/*! ../util/exception */ "./src/util/exception.js");
 
-var _loaderDecorator = __webpack_require__(/*! ../util/loader-decorator */ "./src/util/loader-decorator.js");
+var _factory2 = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -11893,7 +13934,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
  * Base is the base of renderers and contains multiple utility methods.
  */
-var Base = function () {
+var BaseRenderer = function () {
 
   /**
    * Base constructor
@@ -11903,15 +13944,18 @@ var Base = function () {
    * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
-  function Base(_ref) {
+  function BaseRenderer(_ref) {
     var _ref$verbose = _ref.verbose,
         verbose = _ref$verbose === undefined ? false : _ref$verbose,
         _ref$appendTo = _ref.appendTo,
         appendTo = _ref$appendTo === undefined ? 'body' : _ref$appendTo,
         callbackHandler = _ref.callbackHandler;
 
-    _classCallCheck(this, Base);
+    _classCallCheck(this, BaseRenderer);
 
+    // initialize components
+    _factory.Components.D3;
+    _factory.Components.MathJax;
     /**
      * @typedef {Object} Options
      * @property {Boolean} verbose prints extra log information to console.log, default false
@@ -11940,7 +13984,7 @@ var Base = function () {
    */
 
 
-  _createClass(Base, [{
+  _createClass(BaseRenderer, [{
     key: 'settings',
     value: function settings(_ref2) {
       var verbose = _ref2.verbose,
@@ -11973,7 +14017,7 @@ var Base = function () {
   }, {
     key: 'load',
     value: function load(json, partial) {
-      var data = _jsonUtils2.default.parse(json, partial);
+      var data = _json2.default.parse(json, partial);
       if (data) {
         this.data = data;
       }
@@ -11990,46 +14034,25 @@ var Base = function () {
       if (error instanceof _exception.Exception) {
         // well, most of these are just informative
         this.logger.debug(error.message);
-      } else if (error instanceof _exception.RuntimeException) {
-        this.logger.error(error.message);
-      } else {
-        throw error;
+        return;
       }
+      this.logger.error(error.message);
+      throw error;
     }
   }, {
     key: 'handlePromise',
-    value: function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(promise) {
-        var _this = this;
+    value: function handlePromise(promise) {
+      var _this = this;
 
-        var loaderId;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                loaderId = _loaderDecorator.showLoader.call(this);
-                return _context.abrupt('return', promise.then(function (data) {
-                  return data;
-                }).catch(function (error) {
-                  return _this.handleErrors(error);
-                }).finally(function () {
-                  return _loaderDecorator.hideLoader.call(_this, loaderId);
-                }));
-
-              case 2:
-              case 'end':
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function handlePromise(_x) {
-        return _ref3.apply(this, arguments);
-      }
-
-      return handlePromise;
-    }()
+      var loader = _factory2.Decorators.Loader.withContext(this).show();
+      return promise.then(function (data) {
+        return data;
+      }).catch(function (error) {
+        return _this.handleErrors(error);
+      }).finally(function () {
+        return loader.hide();
+      });
+    }
   }, {
     key: 'parent',
     get: function get() {
@@ -12047,10 +14070,10 @@ var Base = function () {
     }
   }]);
 
-  return Base;
+  return BaseRenderer;
 }();
 
-exports.default = Base;
+exports.default = BaseRenderer;
 
 /***/ }),
 
@@ -12081,9 +14104,11 @@ var _modalRequired = __webpack_require__(/*! ./modal-required */ "./src/render/m
 
 var _modalRequired2 = _interopRequireDefault(_modalRequired);
 
-var _dataDecorator = __webpack_require__(/*! ../util/data-decorator */ "./src/util/data-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -12120,8 +14145,8 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-var CallbackHandler = (_dec = (0, _dataDecorator.requires)('callback'), (_class = function (_Base) {
-  _inherits(CallbackHandler, _Base);
+var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_class = function (_BaseRenderer) {
+  _inherits(CallbackHandler, _BaseRenderer);
 
   function CallbackHandler(_ref) {
     var _ref$verbose = _ref.verbose,
@@ -12139,20 +14164,50 @@ var CallbackHandler = (_dec = (0, _dataDecorator.requires)('callback'), (_class 
 
   _createClass(CallbackHandler, [{
     key: 'execute',
-    value: function execute() {
-      var _this2 = this;
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _this2 = this;
 
-      if (Object.keys(this.data.callback.requiredArgs).length) {
-        var options = this.options;
-        options.callbackHandler = function (callbackObj) {
-          return _this2._execute.call(_this2, callbackObj);
-        };
-        return new _modalRequired2.default(options).load(this.data, true).render();
+        var options, modal;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!Object.keys(this.data.callback.requiredArgs).length) {
+                  _context.next = 7;
+                  break;
+                }
+
+                options = this.options;
+
+                options.callbackHandler = function (callbackObj) {
+                  return _this2._execute.call(_this2, callbackObj);
+                };
+                modal = new _modalRequired2.default(options);
+                _context.next = 6;
+                return this.handlePromise(modal.load(this.data, true).render());
+
+              case 6:
+                return _context.abrupt('return', _context.sent);
+
+              case 7:
+                _context.next = 9;
+                return this._execute(this.data.callback);
+
+              case 9:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function execute() {
+        return _ref2.apply(this, arguments);
       }
 
-      // Trigger is the expected command on GAP for this event!
-      this._execute(this.data.callback);
-    }
+      return execute;
+    }()
   }, {
     key: '_execute',
     value: function _execute(calbackObj) {
@@ -12197,7 +14252,7 @@ var _chartFactory = __webpack_require__(/*! ./chart-factory */ "./src/render/cha
 
 var _chartFactory2 = _interopRequireDefault(_chartFactory);
 
-var _dataDecorator = __webpack_require__(/*! ../util/data-decorator */ "./src/util/data-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12240,7 +14295,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var Canvas = (_dec = (0, _dataDecorator.requires)('canvas'), (_class = function (_Composite) {
+var Canvas = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = function (_Composite) {
   _inherits(Canvas, _Composite);
 
   function Canvas(_ref) {
@@ -12262,58 +14317,39 @@ var Canvas = (_dec = (0, _dataDecorator.requires)('canvas'), (_class = function 
   _createClass(Canvas, [{
     key: 'render',
     value: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var zoomToFit = function () {
-          var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(force) {
-            var bounds, clientBounds, fullWidth, fullHeight, width, height, midX, midY, scale, translateX, translateY;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    if (!(self.data.canvas.zoomToFit || force)) {
-                      _context.next = 10;
-                      break;
-                    }
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var content, zoom, self, updateZoom, zoomed, stopped, zoomToFit, canvasId;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                zoomToFit = function zoomToFit(force) {
+                  // only execute if enable, of course
+                  if (self.data.canvas.zoomToFit || force) {
+                    var bounds = content.node().getBBox();
 
-                    bounds = content.node().getBBox();
-                    clientBounds = self.element.node().getBoundingClientRect(), fullWidth = clientBounds.right - clientBounds.left, fullHeight = clientBounds.bottom - clientBounds.top;
-                    width = +bounds.width, height = +bounds.height;
+                    var clientBounds = self.element.node().getBoundingClientRect(),
+                        fullWidth = clientBounds.right - clientBounds.left,
+                        fullHeight = clientBounds.bottom - clientBounds.top;
 
-                    if (!(width === 0 || height === 0)) {
-                      _context.next = 6;
-                      break;
-                    }
+                    var width = +bounds.width,
+                        height = +bounds.height;
 
-                    return _context.abrupt('return');
+                    if (width === 0 || height === 0) return;
 
-                  case 6:
-                    midX = bounds.x + width / 2, midY = bounds.y + height / 2;
-                    scale = 0.9 / Math.max(width / fullWidth, height / fullHeight);
-                    translateX = fullWidth / 2 - scale * midX, translateY = fullHeight / 2 - scale * midY;
+                    var midX = bounds.x + width / 2,
+                        midY = bounds.y + height / 2;
 
+                    var scale = 0.9 / Math.max(width / fullWidth, height / fullHeight);
+                    var translateX = fullWidth / 2 - scale * midX,
+                        translateY = fullHeight / 2 - scale * midY;
 
                     content.transition().duration(self.transitionDuration).attr('transform', 'translate(' + translateX + ',' + translateY + ')scale(' + scale + ',' + scale + ')').on('end', function () {
                       return updateZoom(translateX, translateY, scale);
                     });
+                  }
+                };
 
-                  case 10:
-                  case 'end':
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-
-          return function zoomToFit(_x) {
-            return _ref3.apply(this, arguments);
-          };
-        }();
-
-        var content, zoom, self, updateZoom, zoomed, stopped, canvasId;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
                 stopped = function stopped() {
                   if (d3.event.defaultPrevented) {
                     d3.event.stopPropagation();
@@ -12344,13 +14380,13 @@ var Canvas = (_dec = (0, _dataDecorator.requires)('canvas'), (_class = function 
                 // cannot continue if canvas is not present
 
                 if (this.element.node()) {
-                  _context2.next = 11;
+                  _context.next = 12;
                   break;
                 }
 
                 throw new Error('Oops, could not create canvas with id [' + canvasId + ']... Cannot proceed.');
 
-              case 11:
+              case 12:
 
                 this.element.attr('width', this.data.canvas.width).attr('height', this.data.canvas.height);
 
@@ -12369,18 +14405,16 @@ var Canvas = (_dec = (0, _dataDecorator.requires)('canvas'), (_class = function 
 
                 this.logger.debug('Canvas updated [' + canvasId + ']...');
 
-                _context2.next = 19;
-                return this.handlePromise(this.renderChildren());
+                this.handlePromise(this.renderChildren());
 
-              case 19:
-                return _context2.abrupt('return', this);
+                return _context.abrupt('return', this);
 
               case 20:
               case 'end':
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee, this);
       }));
 
       function render() {
@@ -12423,9 +14457,11 @@ var _chart = __webpack_require__(/*! ./chart */ "./src/render/chart.js");
 
 var _chart2 = _interopRequireDefault(_chart);
 
-var _initializeDecorator = __webpack_require__(/*! ../util/initialize-decorator */ "./src/util/initialize-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -12464,7 +14500,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var BarChart = (_dec = (0, _initializeDecorator.initialize)(), (_class = function (_Chart) {
+var BarChart = (_dec = _factory.Decorators.Initializer.initialize(), (_class = function (_Chart) {
   _inherits(BarChart, _Chart);
 
   function BarChart(_ref) {
@@ -12480,59 +14516,81 @@ var BarChart = (_dec = (0, _initializeDecorator.initialize)(), (_class = functio
 
   _createClass(BarChart, [{
     key: 'render',
-    value: function render() {
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var barsGroup, self;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
 
-      this.xScale = d3.scaleBand().range([0, this.width]).padding(0.1).domain(this.axis.x.domain);
+                this.xScale = d3.scaleBand().range([0, this.width]).padding(0.1).domain(this.axis.x.domain);
 
-      if (!this.axis.x.domain.length) {
-        this.axis.x.domain = _chart2.default.domainRange(this.allValues.length / this.datasetNames.length);
-        this.xScale.domain(this.axis.x.domain);
+                if (!this.axis.x.domain.length) {
+                  this.axis.x.domain = _chart2.default.domainRange(this.allValues.length / this.datasetNames.length);
+                  this.xScale.domain(this.axis.x.domain);
+                }
+
+                barsGroup = this.element.selectAll('g.francy-bars');
+
+
+                if (!barsGroup.node()) {
+                  barsGroup = this.element.append('g').attr('class', 'francy-bars');
+                }
+
+                self = this;
+
+
+                this.datasetNames.forEach(function (key, index) {
+                  var bar = barsGroup.selectAll('.francy-bar-' + index).data(self.datasets[key]);
+
+                  bar.exit().transition().duration(750).style('fill-opacity', 1e-6).remove();
+
+                  // append the rectangles for the bar chart
+                  var barEnter = bar.enter().append('rect').style('fill', function () {
+                    return _chart2.default.colors(index * 5);
+                  }).attr('class', 'francy-bar-' + index).attr('x', function (d, i) {
+                    return self.xScale(self.axis.x.domain[i]) + index * (self.xScale.bandwidth() / self.datasetNames.length);
+                  }).attr('width', self.xScale.bandwidth() / self.datasetNames.length - 1).attr('y', function (d) {
+                    return self.yScale(d);
+                  }).attr('height', function (d) {
+                    return self.height - self.yScale(d);
+                  }).on('mouseenter', function (d) {
+                    d3.select(this).transition().duration(250).style('fill-opacity', 0.5);
+                    self.handlePromise(self.tooltip.load(_chart2.default.tooltip(key, d), true).render());
+                  }).on('mouseleave', function () {
+                    d3.select(this).transition().duration(250).style('fill-opacity', 1);
+                    self.tooltip.unrender();
+                  });
+
+                  barEnter.merge(bar).attr('x', function (d, i) {
+                    return self.xScale(self.axis.x.domain[i]) + index * (self.xScale.bandwidth() / self.datasetNames.length);
+                  }).attr('width', self.xScale.bandwidth() / self.datasetNames.length - 1).attr('y', function (d) {
+                    return self.yScale(d);
+                  }).attr('height', function (d) {
+                    return self.height - self.yScale(d);
+                  });
+                });
+
+                this._renderAxis();
+                this._renderLegend();
+
+                return _context.abrupt('return', this);
+
+              case 9:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function render() {
+        return _ref2.apply(this, arguments);
       }
 
-      var barsGroup = this.element.selectAll('g.francy-bars');
-
-      if (!barsGroup.node()) {
-        barsGroup = this.element.append('g').attr('class', 'francy-bars');
-      }
-
-      var self = this;
-
-      this.datasetNames.forEach(function (key, index) {
-        var bar = barsGroup.selectAll('.francy-bar-' + index).data(self.datasets[key]);
-
-        bar.exit().transition().duration(750).style('fill-opacity', 1e-6).remove();
-
-        // append the rectangles for the bar chart
-        var barEnter = bar.enter().append('rect').style('fill', function () {
-          return _chart2.default.colors(index * 5);
-        }).attr('class', 'francy-bar-' + index).attr('x', function (d, i) {
-          return self.xScale(self.axis.x.domain[i]) + index * (self.xScale.bandwidth() / self.datasetNames.length);
-        }).attr('width', self.xScale.bandwidth() / self.datasetNames.length - 1).attr('y', function (d) {
-          return self.yScale(d);
-        }).attr('height', function (d) {
-          return self.height - self.yScale(d);
-        }).on('mouseenter', function (d) {
-          d3.select(this).transition().duration(250).style('fill-opacity', 0.5);
-          self.handlePromise(self.tooltip.load(_chart2.default.tooltip(key, d), true).render());
-        }).on('mouseleave', function () {
-          d3.select(this).transition().duration(250).style('fill-opacity', 1);
-          self.tooltip.unrender();
-        });
-
-        barEnter.merge(bar).attr('x', function (d, i) {
-          return self.xScale(self.axis.x.domain[i]) + index * (self.xScale.bandwidth() / self.datasetNames.length);
-        }).attr('width', self.xScale.bandwidth() / self.datasetNames.length - 1).attr('y', function (d) {
-          return self.yScale(d);
-        }).attr('height', function (d) {
-          return self.height - self.yScale(d);
-        });
-      });
-
-      this._renderAxis();
-      this._renderLegend();
-
-      return this;
-    }
+      return render;
+    }()
   }, {
     key: 'unrender',
     value: function unrender() {}
@@ -12579,7 +14637,7 @@ var _chartScatter = __webpack_require__(/*! ./chart-scatter */ "./src/render/cha
 
 var _chartScatter2 = _interopRequireDefault(_chartScatter);
 
-var _dataDecorator = __webpack_require__(/*! ../util/data-decorator */ "./src/util/data-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12620,7 +14678,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-var ChartFactory = (_dec = (0, _dataDecorator.requires)('canvas.chart'), (_class = function (_Renderer) {
+var ChartFactory = (_dec = _factory.Decorators.Data.requires('canvas.chart'), (_class = function (_Renderer) {
   _inherits(ChartFactory, _Renderer);
 
   function ChartFactory(_ref) {
@@ -12638,41 +14696,36 @@ var ChartFactory = (_dec = (0, _dataDecorator.requires)('canvas.chart'), (_class
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var element;
+        var element, chart;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 element = undefined;
+                chart = undefined;
                 _context.t0 = this.data.canvas.chart.type;
-                _context.next = _context.t0 === 'bar' ? 4 : _context.t0 === 'line' ? 8 : _context.t0 === 'scatter' ? 12 : 16;
+                _context.next = _context.t0 === 'bar' ? 5 : _context.t0 === 'line' ? 7 : _context.t0 === 'scatter' ? 9 : 11;
                 break;
 
-              case 4:
-                _context.next = 6;
-                return new _chartBar2.default(this.options).load(this.data).render();
+              case 5:
+                chart = new _chartBar2.default(this.options);
+                return _context.abrupt('break', 11);
 
-              case 6:
+              case 7:
+                chart = new _chartLine2.default(this.options);
+                return _context.abrupt('break', 11);
+
+              case 9:
+                chart = new _chartScatter2.default(this.options);
+                return _context.abrupt('break', 11);
+
+              case 11:
+                _context.next = 13;
+                return this.handlePromise(chart.load(this.data).render());
+
+              case 13:
                 element = _context.sent;
-                return _context.abrupt('break', 16);
 
-              case 8:
-                _context.next = 10;
-                return new _chartLine2.default(this.options).load(this.data).render();
-
-              case 10:
-                element = _context.sent;
-                return _context.abrupt('break', 16);
-
-              case 12:
-                _context.next = 14;
-                return new _chartScatter2.default(this.options).load(this.data).render();
-
-              case 14:
-                element = _context.sent;
-                return _context.abrupt('break', 16);
-
-              case 16:
 
                 if (element) {
                   setTimeout(element.parent.zoomToFit, 10);
@@ -12680,7 +14733,7 @@ var ChartFactory = (_dec = (0, _dataDecorator.requires)('canvas.chart'), (_class
 
                 return _context.abrupt('return', element);
 
-              case 18:
+              case 16:
               case 'end':
                 return _context.stop();
             }
@@ -12728,9 +14781,11 @@ var _chart = __webpack_require__(/*! ./chart */ "./src/render/chart.js");
 
 var _chart2 = _interopRequireDefault(_chart);
 
-var _initializeDecorator = __webpack_require__(/*! ../util/initialize-decorator */ "./src/util/initialize-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -12769,7 +14824,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var LineChart = (_dec = (0, _initializeDecorator.initialize)(), (_class = function (_Chart) {
+var LineChart = (_dec = _factory.Decorators.Initializer.initialize(), (_class = function (_Chart) {
   _inherits(LineChart, _Chart);
 
   function LineChart(_ref) {
@@ -12785,46 +14840,67 @@ var LineChart = (_dec = (0, _initializeDecorator.initialize)(), (_class = functi
 
   _createClass(LineChart, [{
     key: 'render',
-    value: function render() {
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var linesGroup, self;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                linesGroup = this.element.selectAll('g.francy-lines');
 
-      var linesGroup = this.element.selectAll('g.francy-lines');
 
-      if (!linesGroup.node()) {
-        linesGroup = this.element.append('g').attr('class', 'francy-lines');
+                if (!linesGroup.node()) {
+                  linesGroup = this.element.append('g').attr('class', 'francy-lines');
+                }
+
+                self = this;
+
+
+                this.datasetNames.forEach(function (key, index) {
+                  var valueLine = d3.line().x(function (d, i) {
+                    return self.xScale(i);
+                  }).y(function (d) {
+                    return self.yScale(d);
+                  });
+
+                  var line = linesGroup.selectAll('.francy-line-' + index).data([self.datasets[key]]);
+
+                  line.exit().transition().duration(750).style('fill-opacity', 1e-6).remove();
+
+                  // append the rectangles for the bar chart
+                  var lineEnter = line.enter().append('path').style('stroke', function () {
+                    return _chart2.default.colors(index * 5);
+                  }).style('stroke-width', '5px').attr('class', 'francy-line-' + index).attr('d', valueLine).on('mouseenter', function (d) {
+                    d3.select(this).transition().duration(250).style('stroke-opacity', 0.5).style('stroke-width', '10px');
+                    self.handlePromise(self.tooltip.load(_chart2.default.tooltip(key, d), true).render());
+                  }).on('mouseleave', function () {
+                    d3.select(this).transition().duration(250).style('stroke-opacity', 1).style('stroke-width', '5px');
+                    self.tooltip.unrender();
+                  });
+
+                  lineEnter.merge(line);
+                });
+
+                this._renderAxis();
+                this._renderLegend();
+
+                return _context.abrupt('return', this);
+
+              case 7:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function render() {
+        return _ref2.apply(this, arguments);
       }
 
-      var self = this;
-
-      this.datasetNames.forEach(function (key, index) {
-        var valueLine = d3.line().x(function (d, i) {
-          return self.xScale(i);
-        }).y(function (d) {
-          return self.yScale(d);
-        });
-
-        var line = linesGroup.selectAll('.francy-line-' + index).data([self.datasets[key]]);
-
-        line.exit().transition().duration(750).style('fill-opacity', 1e-6).remove();
-
-        // append the rectangles for the bar chart
-        var lineEnter = line.enter().append('path').style('stroke', function () {
-          return _chart2.default.colors(index * 5);
-        }).style('stroke-width', '5px').attr('class', 'francy-line-' + index).attr('d', valueLine).on('mouseenter', function (d) {
-          d3.select(this).transition().duration(250).style('stroke-opacity', 0.5).style('stroke-width', '10px');
-          self.handlePromise(self.tooltip.load(_chart2.default.tooltip(key, d), true).render());
-        }).on('mouseleave', function () {
-          d3.select(this).transition().duration(250).style('stroke-opacity', 1).style('stroke-width', '5px');
-          self.tooltip.unrender();
-        });
-
-        lineEnter.merge(line);
-      });
-
-      this._renderAxis();
-      this._renderLegend();
-
-      return this;
-    }
+      return render;
+    }()
   }, {
     key: 'unrender',
     value: function unrender() {}
@@ -12859,9 +14935,11 @@ var _chart = __webpack_require__(/*! ./chart */ "./src/render/chart.js");
 
 var _chart2 = _interopRequireDefault(_chart);
 
-var _initializeDecorator = __webpack_require__(/*! ../util/initialize-decorator */ "./src/util/initialize-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -12900,7 +14978,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var ScatterChart = (_dec = (0, _initializeDecorator.initialize)(), (_class = function (_Chart) {
+var ScatterChart = (_dec = _factory.Decorators.Initializer.initialize(), (_class = function (_Chart) {
   _inherits(ScatterChart, _Chart);
 
   function ScatterChart(_ref) {
@@ -12916,45 +14994,66 @@ var ScatterChart = (_dec = (0, _initializeDecorator.initialize)(), (_class = fun
 
   _createClass(ScatterChart, [{
     key: 'render',
-    value: function render() {
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var scatterGroup, self;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                scatterGroup = this.element.selectAll('g.francy-scatters');
 
-      var scatterGroup = this.element.selectAll('g.francy-scatters');
 
-      if (!scatterGroup.node()) {
-        scatterGroup = this.element.append('g').attr('class', 'francy-scatters');
+                if (!scatterGroup.node()) {
+                  scatterGroup = this.element.append('g').attr('class', 'francy-scatters');
+                }
+
+                self = this;
+
+
+                this.datasetNames.forEach(function (key, index) {
+                  var scatter = scatterGroup.selectAll('.francy-scatter-' + index).data(self.datasets[key]);
+
+                  scatter.exit().transition().duration(750).style('fill-opacity', 1e-6).remove();
+
+                  // append the rectangles for the bar chart
+                  var scatterEnter = scatter.enter().append('circle').style('fill', function () {
+                    return _chart2.default.colors(index * 5);
+                  }).attr('class', 'francy-scatter-' + index).attr('r', 5).attr('cx', function (d, i) {
+                    return self.xScale(i);
+                  }).attr('cy', function (d) {
+                    return self.yScale(d);
+                  }).on('mouseenter', function (d) {
+                    d3.select(this).transition().duration(250).style('fill-opacity', 0.5).attr('r', 10);
+                    self.handlePromise(self.tooltip.load(_chart2.default.tooltip(key, d), true).render());
+                  }).on('mouseleave', function () {
+                    d3.select(this).transition().duration(250).style('fill-opacity', 1).attr('r', 5);
+                    self.tooltip.unrender();
+                  });
+
+                  scatterEnter.merge(scatter);
+                });
+
+                this._renderAxis();
+
+                this._renderLegend();
+
+                return _context.abrupt('return', this);
+
+              case 7:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function render() {
+        return _ref2.apply(this, arguments);
       }
 
-      var self = this;
-
-      this.datasetNames.forEach(function (key, index) {
-        var scatter = scatterGroup.selectAll('.francy-scatter-' + index).data(self.datasets[key]);
-
-        scatter.exit().transition().duration(750).style('fill-opacity', 1e-6).remove();
-
-        // append the rectangles for the bar chart
-        var scatterEnter = scatter.enter().append('circle').style('fill', function () {
-          return _chart2.default.colors(index * 5);
-        }).attr('class', 'francy-scatter-' + index).attr('r', 5).attr('cx', function (d, i) {
-          return self.xScale(i);
-        }).attr('cy', function (d) {
-          return self.yScale(d);
-        }).on('mouseenter', function (d) {
-          d3.select(this).transition().duration(250).style('fill-opacity', 0.5).attr('r', 10);
-          self.handlePromise(self.tooltip.load(_chart2.default.tooltip(key, d), true).render());
-        }).on('mouseleave', function () {
-          d3.select(this).transition().duration(250).style('fill-opacity', 1).attr('r', 5);
-          self.tooltip.unrender();
-        });
-
-        scatterEnter.merge(scatter);
-      });
-
-      this._renderAxis();
-
-      this._renderLegend();
-
-      return this;
-    }
+      return render;
+    }()
   }, {
     key: 'unrender',
     value: function unrender() {}
@@ -13116,6 +15215,11 @@ var Chart = function (_Renderer) {
     key: 'tooltip',
     value: function tooltip(dataset, value) {
       return { 'A': { 'title': 'Dataset', 'text': dataset }, 'B': { 'title': 'Value', 'text': value } };
+    }
+  }, {
+    key: 'newColors',
+    value: function newColors(length) {
+      return d3.scale.linear().domain([1, length]).interpolate(d3.interpolateHcl).range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
     }
   }, {
     key: 'domainRange',
@@ -13323,7 +15427,7 @@ var _message = __webpack_require__(/*! ./message */ "./src/render/message.js");
 
 var _message2 = _interopRequireDefault(_message);
 
-var _dataDecorator = __webpack_require__(/*! ../util/data-decorator */ "./src/util/data-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13366,7 +15470,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var Frame = (_dec = (0, _dataDecorator.requires)('canvas'), (_class = function (_Composite) {
+var Frame = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = function (_Composite) {
   _inherits(Frame, _Composite);
 
   function Frame(_ref) {
@@ -13479,7 +15583,7 @@ var _graphGeneric = __webpack_require__(/*! ./graph-generic */ "./src/render/gra
 
 var _graphGeneric2 = _interopRequireDefault(_graphGeneric);
 
-var _dataDecorator = __webpack_require__(/*! ../util/data-decorator */ "./src/util/data-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13520,7 +15624,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-var Graph = (_dec = (0, _dataDecorator.requires)('canvas.graph'), (_class = function (_Renderer) {
+var Graph = (_dec = _factory.Decorators.Data.requires('canvas.graph'), (_class = function (_Renderer) {
   _inherits(Graph, _Renderer);
 
   function Graph(_ref) {
@@ -13538,32 +15642,30 @@ var Graph = (_dec = (0, _dataDecorator.requires)('canvas.graph'), (_class = func
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var element;
+        var element, graph;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 element = undefined;
+                graph = element;
                 _context.t0 = this.data.canvas.graph.type;
-                _context.next = _context.t0 === 'tree' ? 4 : 8;
+                _context.next = _context.t0 === 'tree' ? 5 : 7;
                 break;
 
-              case 4:
-                _context.next = 6;
-                return new _graphTree2.default(this.options).load(this.data).render();
+              case 5:
+                graph = new _graphTree2.default(this.options);
+                return _context.abrupt('break', 8);
 
-              case 6:
-                element = _context.sent;
-                return _context.abrupt('break', 11);
+              case 7:
+                graph = new _graphGeneric2.default(this.options);
 
               case 8:
                 _context.next = 10;
-                return new _graphGeneric2.default(this.options).load(this.data).render();
+                return this.handlePromise(graph.load(this.data).render());
 
               case 10:
                 element = _context.sent;
-
-              case 11:
                 return _context.abrupt('return', element);
 
               case 12:
@@ -13614,11 +15716,11 @@ var _graph = __webpack_require__(/*! ./graph */ "./src/render/graph.js");
 
 var _graph2 = _interopRequireDefault(_graph);
 
-var _initializeDecorator = __webpack_require__(/*! ../util/initialize-decorator */ "./src/util/initialize-decorator.js");
-
-var _loaderDecorator = __webpack_require__(/*! ../util/loader-decorator */ "./src/util/loader-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -13657,7 +15759,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var GenericGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = function (_Graph) {
+var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class = function (_Graph) {
   _inherits(GenericGraph, _Graph);
 
   function GenericGraph(_ref) {
@@ -13673,318 +15775,372 @@ var GenericGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = fun
 
   _createClass(GenericGraph, [{
     key: 'render',
-    value: function render() {
-      var self = this,
-          loaderId = _loaderDecorator.showLoader.call(this),
-          simulationActive = this.data.canvas.graph.simulation,
-          canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
-          canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var self, loader, simulationActive, canvasNodes, canvasLinks, linkGroup, links, linksToAdd, link, defs, nodeGroup, nodes, nodesToAdd, node, linkEnter, nodeEnter, nodeOnClick, radius, symbolRadius, layered, simulation, safeTicked, safeEnd, endSimulation, ticked, toggle, linkedByIndex, i, connectedNodes, linkConnectedNodes, labelsOpacityBehavior, dragstarted, dragged, dragended;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                dragended = function dragended(d) {
+                  if (!d3.event.active && simulationActive) {
+                    simulation.alphaTarget(0);
+                  }
+                  d.fx = null;
+                  d.fy = null;
+                };
 
-      var linkGroup = this.element.selectAll('g.francy-links');
+                dragged = function dragged(d) {
+                  d.fx = d3.event.x;
+                  d.fy = d3.event.y;
+                };
 
-      if (!linkGroup.node()) {
-        linkGroup = this.element.append('g').classed('francy-links', true);
-      }
+                dragstarted = function dragstarted(d) {
+                  if (!d3.event.active && simulationActive) {
+                    simulation.alphaTarget(0.01).restart();
+                  }
+                  d.fx = d.x;
+                  d.fy = d.y;
+                };
 
-      var links = linkGroup.selectAll('g.francy-link').data();
-      var linksToAdd = this._filterNewElements(canvasLinks, links);
+                labelsOpacityBehavior = function labelsOpacityBehavior() {
+                  link.on('mouseover', function () {
+                    d3.select(this).selectAll('text').style('opacity', 1).style('opacity', 1);
+                  }).on('mouseleave', function () {
+                    d3.select(this).selectAll('text').style('opacity', 0.1).style('opacity', 0.1);
+                  });
+                };
 
-      var link = linkGroup.selectAll('g.francy-link').data(linksToAdd, function (d) {
-        return d.id;
-      });
+                linkConnectedNodes = function linkConnectedNodes() {
+                  d3.event.preventDefault();
+                  if (toggle === 0) {
+                    //Reduce the opacity of all but the neighbouring nodes
+                    var d = d3.select(this).node().__data__;
+                    node.style('opacity', function (o) {
+                      return d.source.id === o.id || d.target.id === o.id ? 1 : 0.1;
+                    });
+                    link.style('opacity', function (o) {
+                      var opacity = d.index === o.index ? 1 : 0.1;
+                      d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
+                      return opacity;
+                    });
+                    //Reduce the op
+                    toggle = 1;
+                  } else {
+                    //Put them back to opacity=1
+                    node.style('opacity', 1);
+                    link.style('opacity', function () {
+                      d3.select(this).select('text').style('opacity', 0.1);
+                      return 1;
+                    });
+                    labelsOpacityBehavior();
+                    toggle = 0;
+                  }
+                };
 
-      if (this.data.canvas.graph.type === 'directed') {
-        // this means we need arrows, so we append the marker
-        this.parent.append('defs').selectAll('marker').data(linksToAdd).enter().append('marker').classed('francy-arrows', true).attr('id', function (d) {
-          return 'arrow-' + d.id;
-        }).attr('viewBox', '0 -5 10 10').attr('markerUnits', 'strokeWidth').attr('orient', 'auto').append('path').attr('d', 'M0,-5 L10,0 L0,5').style('fill', function (d) {
-          return d.color || undefined;
-        });
-      }
+                connectedNodes = function connectedNodes() {
+                  //This function looks up whether a pair are neighbours
+                  function neighboring(a, b) {
+                    return linkedByIndex[a.index + ',' + b.index];
+                  }
+                  d3.event.preventDefault();
+                  if (toggle === 0) {
+                    //Reduce the opacity of all but the neighbouring nodes
+                    var d = d3.select(this).node().__data__;
+                    node.style('opacity', function (o) {
+                      return neighboring(d, o) || neighboring(o, d) ? 1 : 0.1;
+                    });
+                    link.style('opacity', function (o) {
+                      var opacity = d.index === o.source.index || d.index === o.target.index ? 1 : 0.1;
+                      d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
+                      return opacity;
+                    });
+                    //Reduce the op
+                    toggle = 1;
+                  } else {
+                    //Put them back to opacity=1
+                    node.style('opacity', 1);
+                    link.style('opacity', function () {
+                      d3.select(this).select('text').style('opacity', 0.1);
+                      return 1;
+                    });
+                    labelsOpacityBehavior();
+                    toggle = 0;
+                  }
+                };
 
-      var nodeGroup = this.element.selectAll('g.francy-nodes');
+                ticked = function ticked() {
+                  link.selectAll('path.francy-edge').attr('d', function (d) {
+                    if (d.source.id === d.target.id) {
+                      return 'M' + d.source.x + ',' + d.source.y + ' A' + (d.target.size + 10) + ',' + (d.target.size + 10) + ' -45,1,0 ' + (d.source.x - 1) + ',' + d.source.y;
+                    }
+                    return 'M' + d.source.x + ',' + d.source.y + ' L' + d.target.x + ',' + d.target.y;
+                  });
 
-      if (!nodeGroup.node()) {
-        nodeGroup = this.element.append('g').classed('francy-nodes', true);
-      }
+                  if (self.data.canvas.graph.type === 'directed') {
+                    link.each(function () {
 
-      var nodes = nodeGroup.selectAll('g.francy-node').data();
-      var nodesToAdd = this._filterNewElements(canvasNodes, nodes);
+                      var g = d3.select(this),
+                          data = g.data()[0],
+                          pathEl = g.select('path.francy-edge').node(),
+                          pathLength = pathEl.getTotalLength(),
+                          nodeEl = d3.select('#' + data.target.id + ' > path.francy-symbol').node(),
+                          nodeSize = (Math.floor(nodeEl.getBBox().width) + 4) / 2,
+                          pathPoint = pathEl.getPointAtLength(pathLength - nodeSize - data.weight),
+                          pathPoint2 = pathEl.getPointAtLength(pathLength - nodeSize),
+                          x1 = pathPoint.x,
+                          y1 = pathPoint.y,
+                          x2 = pathPoint2.x,
+                          y2 = pathPoint2.y;
 
-      var node = nodeGroup.selectAll('g.francy-node').data(nodesToAdd, function (d) {
-        return d.id;
-      });
+                      if (data.source.id === data.target.id) {
+                        x2 += (x1 - x2) / (y1 - y2);
+                        y2 += (y1 - y2) / (x1 - x2);
+                      }
 
-      // this means no changes, so we can safely return
-      if (node.exit().data().length === 0 && node.enter().data().length === 0 && link.enter().data().length === 0 && link.exit().data().length === 0) return;
+                      g.select('path.francy-edge-arrow').attr('d', 'M' + x1 + ',' + y1 + ' L' + x2 + ',' + y2);
+                    });
+                  }
 
-      var linkEnter = link.enter().append('g').classed('francy-link', true);
+                  link.selectAll('text.francy-label').attr('x', function (d) {
+                    return _graph2.default.linkXPos(d.target, d.source);
+                  }).attr('y', function (d) {
+                    return _graph2.default.linkYPos(d.target, d.source);
+                  });
 
-      linkEnter.append('path').classed('francy-edge', true).style('stroke-width', function (d) {
-        return Math.sqrt(d.weight);
-      }).style('stroke', function (d) {
-        return d.color || undefined;
-      });
+                  node.attr('transform', function (d) {
+                    return 'translate(' + d.x + ',' + d.y + ')';
+                  });
+                };
 
-      if (this.data.canvas.graph.type === 'directed') {
-        linkEnter.append('path').classed('francy-edge-arrow', true).style('stroke', 'none').style('marker-start', function (d) {
-          return 'url(#arrow-' + d.id + ')';
-        }).style('stroke-width', function (d) {
-          return Math.sqrt(d.weight);
-        });
-      }
+                endSimulation = function endSimulation() {
+                  self.parent.zoomToFit();
+                  loader.hide();
+                };
 
-      linkEnter.append('text').classed('francy-label', true).style('font-size', function (d) {
-        return 7 * Math.sqrt(d.weight);
-      }).style('opacity', 0.1).style('opacity', 0.1).text(function (d) {
-        return d.title;
-      }).attr('text-anchor', 'middle');
+                self = this, loader = _factory.Decorators.Loader.withContext(this).show(), simulationActive = this.data.canvas.graph.simulation, canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [], canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
+                linkGroup = this.element.selectAll('g.francy-links');
 
-      link.exit().remove();
 
-      link = linkGroup.selectAll('g.francy-link');
+                if (!linkGroup.node()) {
+                  linkGroup = this.element.append('g').classed('francy-links', true);
+                }
 
-      // on mouse over show labels opacity 1
-      labelsOpacityBehavior();
+                links = linkGroup.selectAll('g.francy-link').data();
+                linksToAdd = this._filterNewElements(canvasLinks, links);
+                link = linkGroup.selectAll('g.francy-link').data(linksToAdd, function (d) {
+                  return d.id;
+                });
 
-      var nodeEnter = node.enter().append('g').classed('francy-node', true).attr('id', function (d) {
-        return d.id;
-      });
 
-      nodeEnter.append('path').attr('d', d3.symbol().type(function (d) {
-        return _graph2.default.getSymbol(d.type);
-      }).size(function (d) {
-        return d.size * 100;
-      })).style('fill', function (d) {
-        return d.color || _graph2.default.colors(d.layer * 5);
-      }).classed('francy-symbol', true).classed('francy-highlight', function (d) {
-        return d.highlight;
-      }).classed('francy-context', function (d) {
-        return Object.values(d.menus).length && Object.values(d.menus).length > 0;
-      });
+                if (this.data.canvas.graph.type === 'directed') {
+                  // this means we need arrows, so we append the markers
+                  defs = this.parent.select('defs');
 
-      nodeEnter.append('text').classed('francy-label', true).text(function (d) {
-        return d.title;
-      }).style('font-size', function (d) {
-        return 7 * Math.sqrt(d.size);
-      }).attr('x', function () {
-        var _this2 = this;
+                  if (!defs.node()) {
+                    defs = this.parent.append('defs');
+                  }
+                  defs.selectAll('marker').data(linksToAdd).enter().append('marker').classed('francy-arrows', true).attr('id', function (d) {
+                    return 'arrow-' + d.id;
+                  }).attr('viewBox', '0 -5 10 10').attr('markerUnits', 'strokeWidth').attr('orient', 'auto').append('path').attr('d', 'M0,-5 L10,0 L0,5').style('fill', function (d) {
+                    return d.color || undefined;
+                  });
+                }
 
-        // apply mathjax if this is the case
-        var text = d3.select(this);
-        if (text.text().startsWith('$') && text.text().endsWith('$')) {
-          // we need to set the position after re-render the latex
-          self.handlePromise(self.mathjax.settings({ appendTo: { element: text } }).renderSVG(function () {
-            text.attr('x', self.setLabelXPosition(_this2));
-          }));
-        }
-        return self.setLabelXPosition(this);
-      }); /*.attr('y', function() {
-          return self.setLabelYPosition(this);
-          });*/
+                nodeGroup = this.element.selectAll('g.francy-nodes');
 
-      node.exit().remove();
 
-      node = nodeGroup.selectAll('g.francy-node');
+                if (!nodeGroup.node()) {
+                  nodeGroup = this.element.append('g').classed('francy-nodes', true);
+                }
 
-      if (this.data.canvas.graph.drag) {
-        node.call(d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended));
-      }
+                nodes = nodeGroup.selectAll('g.francy-node').data();
+                nodesToAdd = this._filterNewElements(canvasNodes, nodes);
+                node = nodeGroup.selectAll('g.francy-node').data(nodesToAdd, function (d) {
+                  return d.id;
+                });
 
-      if (node && !node.empty()) {
+                // this means no changes, so we can safely return
 
-        this._applyEvents(node);
+                if (!(node.exit().data().length === 0 && node.enter().data().length === 0 && link.enter().data().length === 0 && link.exit().data().length === 0)) {
+                  _context.next = 22;
+                  break;
+                }
 
-        if (this.data.canvas.graph.showNeighbours) {
-          var nodeOnClick = node.on('click');
-          node.on('click', function (d) {
-            // default, highlight connected nodes
-            connectedNodes.call(this);
-            // any callbacks will be handled here
-            nodeOnClick.call(this, d);
-          });
-          link.on('click', function () {
-            // default, highlight connected nodes
-            linkConnectedNodes.call(this);
-          });
-        }
-      }
+                return _context.abrupt('return');
 
-      if (simulationActive) {
-        var radius = 0;
-        node.each(function () {
-          var bound = this.getBBox();
-          // check the widest BBox so that we use it as default radius for colisions
-          if (radius < bound.width) {
-            radius = bound.width;
-          }
-        });
+              case 22:
+                linkEnter = link.enter().append('g').classed('francy-link', true);
 
-        //Canvas Forces
-        var simulation = d3.forceSimulation().nodes(nodesToAdd).force('charge', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length)).force('collide', d3.forceCollide().radius(radius / 2)).force('link', d3.forceLink(canvasLinks).id(function (d) {
-          return d.id;
-        }).distance(function (d) {
-          return d.height || 100;
-        })).force('x', d3.forceX()).force('y', d3.forceY(function (d) {
-          return (d.layer + 1) * 100;
-        })).on('tick', ticked).on('end', end);
-      } else {
-        // well, simulation is off, apply fixed positions
-        ticked();
-        end();
-      }
 
-      function end() {
-        self.parent.zoomToFit();
-        _loaderDecorator.hideLoader.call(self, loaderId);
-      }
+                linkEnter.append('path').classed('francy-edge', true).style('stroke-width', function (d) {
+                  return Math.sqrt(d.weight);
+                }).style('stroke', function (d) {
+                  return d.color || undefined;
+                });
 
-      function ticked() {
-        link.selectAll('path.francy-edge').attr('d', function (d) {
-          if (d.source.id === d.target.id) {
-            return 'M' + d.source.x + ',' + d.source.y + ' A' + (d.target.size + 10) + ',' + (d.target.size + 10) + ' -45,1,0 ' + (d.source.x - 1) + ',' + d.source.y;
-          }
-          return 'M' + d.source.x + ',' + d.source.y + ' L' + d.target.x + ',' + d.target.y;
-        });
+                if (this.data.canvas.graph.type === 'directed') {
+                  linkEnter.append('path').classed('francy-edge-arrow', true).style('stroke', 'none').style('marker-start', function (d) {
+                    return 'url(#arrow-' + d.id + ')';
+                  }).style('stroke-width', function (d) {
+                    return Math.sqrt(d.weight);
+                  });
+                }
 
-        if (self.data.canvas.graph.type === 'directed') {
-          link.each(function () {
+                linkEnter.append('text').classed('francy-label', true).style('font-size', function (d) {
+                  return 7 * Math.sqrt(d.weight);
+                }).style('opacity', 0.1).style('opacity', 0.1).text(function (d) {
+                  return d.title;
+                }).attr('text-anchor', 'middle');
 
-            var g = d3.select(this),
-                data = g.data()[0],
-                pathEl = g.select('path.francy-edge').node(),
-                pathLength = pathEl.getTotalLength(),
-                nodeSize = (Math.floor(d3.select('#' + data.target.id + ' > path.francy-symbol').node().getBBox().width) + 4) / 2,
-                pathPoint = pathEl.getPointAtLength(pathLength - nodeSize - data.weight),
-                pathPoint2 = pathEl.getPointAtLength(pathLength - nodeSize),
-                x1 = pathPoint.x,
-                y1 = pathPoint.y,
-                x2 = pathPoint2.x,
-                y2 = pathPoint2.y;
+                link.exit().remove();
 
-            if (data.source.id === data.target.id) {
-              x2 += (x1 - x2) / (y1 - y2);
-              y2 += (y1 - y2) / (x1 - x2);
+                link = linkGroup.selectAll('g.francy-link');
+
+                // on mouse over show labels opacity 1
+                labelsOpacityBehavior();
+
+                nodeEnter = node.enter().append('g').classed('francy-node', true).attr('id', function (d) {
+                  return d.id;
+                });
+
+
+                nodeEnter.append('path').attr('d', d3.symbol().type(function (d) {
+                  return _graph2.default.getSymbol(d.type);
+                }).size(function (d) {
+                  return d.size * 100;
+                })).style('fill', function (d) {
+                  return d.color || _graph2.default.colors(d.layer * 5);
+                }).classed('francy-symbol', true).classed('francy-highlight', function (d) {
+                  return d.highlight;
+                }).classed('francy-context', function (d) {
+                  return Object.values(d.menus).length && Object.values(d.menus).length > 0;
+                });
+
+                nodeEnter.append('text').classed('francy-label', true).text(function (d) {
+                  return d.title;
+                }).style('font-size', function (d) {
+                  return 7 * Math.sqrt(d.size);
+                }).attr('x', function () {
+                  var _this2 = this;
+
+                  // apply mathjax if this is the case
+                  var text = d3.select(this);
+                  if (text.text().startsWith('$') && text.text().endsWith('$')) {
+                    // we need to set the position after re-render the latex
+                    self.handlePromise(self.mathjax.settings({ appendTo: { element: text }, renderType: 'SVG', postFunction: function postFunction() {
+                        text.attr('x', self.setLabelXPosition(_this2));
+                      } }).render());
+                  }
+                  return self.setLabelXPosition(this);
+                }); /*.attr('y', function() {
+                    return self.setLabelYPosition(this);
+                    });*/
+
+                node.exit().remove();
+
+                node = nodeGroup.selectAll('g.francy-node');
+
+                if (this.data.canvas.graph.drag) {
+                  node.call(d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended));
+                }
+
+                if (node && !node.empty()) {
+
+                  this._applyEvents(node);
+
+                  if (this.data.canvas.graph.showNeighbours) {
+                    nodeOnClick = node.on('click');
+
+                    node.on('click', function (d) {
+                      // default, highlight connected nodes
+                      connectedNodes.call(this);
+                      // any callbacks will be handled here
+                      nodeOnClick.call(this, d);
+                    });
+                    link.on('click', function () {
+                      // default, highlight connected nodes
+                      linkConnectedNodes.call(this);
+                    });
+                  }
+                }
+
+                if (simulationActive) {
+                  radius = 0, symbolRadius = 0, layered = false;
+
+
+                  node.each(function () {
+                    var bound = this.getBBox();
+                    // calculate default radius for colisions
+                    // check the widest group Bounding Box
+                    if (radius < bound.width) {
+                      radius = bound.width;
+                    }
+                    // check the widest path Bounding Box
+                    var node = d3.select(this);
+                    var symbolBound = node.select('path.francy-symbol').node().getBBox();
+                    if (symbolRadius < symbolBound.width) {
+                      symbolRadius = symbolBound.width;
+                    }
+                    // check whether the graph will be layered - hasse
+                    if (node.data()[0].layer != 0) {
+                      layered = true;
+                    }
+                  });
+
+                  //Canvas Forces
+                  simulation = d3.forceSimulation(), safeTicked = _factory.Decorators.Error.wrap(ticked).withContext(self).onErrorThrow(false).onErrorExec(simulation.stop), safeEnd = _factory.Decorators.Error.wrap(endSimulation).withContext(self);
+
+
+                  simulation.nodes(nodesToAdd).force('charge-default', layered ? undefined : d3.forceManyBody().strength(-75)).force('x', d3.forceX()).force('y', layered ? d3.forceY(function (d) {
+                    return (d.layer + 1) * 100;
+                  }).strength(1) : d3.forceY()).force('charge', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length)).force('link', d3.forceLink(canvasLinks).id(function (d) {
+                    return d.id;
+                  }).distance(function (d) {
+                    return d.height || 100;
+                  })).force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2)).on('tick', function () {
+                    return safeTicked.handle();
+                  }).on('end', function () {
+                    return safeEnd.handle();
+                  });
+                } else {
+                  // well, simulation is off, apply fixed positions
+                  ticked();
+                  endSimulation();
+                }
+
+                // HIGHLIGHT
+                //Toggle stores whether the highlighting is on
+                toggle = 0;
+                //Create an array logging what is connected to what
+
+                linkedByIndex = {};
+
+
+                for (i = 0; i < canvasNodes.length; i++) {
+                  linkedByIndex[i + ',' + i] = 1;
+                }
+
+                canvasLinks.forEach(function (d) {
+                  linkedByIndex[d.source.index + ',' + d.target.index] = 1;
+                });
+
+                return _context.abrupt('return', this);
+
+              case 42:
+              case 'end':
+                return _context.stop();
             }
+          }
+        }, _callee, this);
+      }));
 
-            g.select('path.francy-edge-arrow').attr('d', 'M' + x1 + ',' + y1 + ' L' + x2 + ',' + y2);
-          });
-        }
-
-        link.selectAll('text.francy-label').attr('x', function (d) {
-          return _graph2.default.linkXPos(d.target, d.source);
-        }).attr('y', function (d) {
-          return _graph2.default.linkYPos(d.target, d.source);
-        });
-
-        node.attr('transform', function (d) {
-          return 'translate(' + d.x + ',' + d.y + ')';
-        });
+      function render() {
+        return _ref2.apply(this, arguments);
       }
 
-      // HIGHLIGHT
-      //Toggle stores whether the highlighting is on
-      var toggle = 0;
-      //Create an array logging what is connected to what
-      var linkedByIndex = {};
-
-      for (var i = 0; i < canvasNodes.length; i++) {
-        linkedByIndex[i + ',' + i] = 1;
-      }
-
-      canvasLinks.forEach(function (d) {
-        linkedByIndex[d.source.index + ',' + d.target.index] = 1;
-      });
-
-      function connectedNodes() {
-        //This function looks up whether a pair are neighbours
-        function neighboring(a, b) {
-          return linkedByIndex[a.index + ',' + b.index];
-        }
-        d3.event.preventDefault();
-        if (toggle === 0) {
-          //Reduce the opacity of all but the neighbouring nodes
-          var d = d3.select(this).node().__data__;
-          node.style('opacity', function (o) {
-            return neighboring(d, o) || neighboring(o, d) ? 1 : 0.1;
-          });
-          link.style('opacity', function (o) {
-            var opacity = d.index === o.source.index || d.index === o.target.index ? 1 : 0.1;
-            d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
-            return opacity;
-          });
-          //Reduce the op
-          toggle = 1;
-        } else {
-          //Put them back to opacity=1
-          node.style('opacity', 1);
-          link.style('opacity', function () {
-            d3.select(this).select('text').style('opacity', 0.1);
-            return 1;
-          });
-          labelsOpacityBehavior();
-          toggle = 0;
-        }
-      }
-
-      function linkConnectedNodes() {
-        d3.event.preventDefault();
-        if (toggle === 0) {
-          //Reduce the opacity of all but the neighbouring nodes
-          var d = d3.select(this).node().__data__;
-          node.style('opacity', function (o) {
-            return d.source.id === o.id || d.target.id === o.id ? 1 : 0.1;
-          });
-          link.style('opacity', function (o) {
-            var opacity = d.index === o.index ? 1 : 0.1;
-            d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
-            return opacity;
-          });
-          //Reduce the op
-          toggle = 1;
-        } else {
-          //Put them back to opacity=1
-          node.style('opacity', 1);
-          link.style('opacity', function () {
-            d3.select(this).select('text').style('opacity', 0.1);
-            return 1;
-          });
-          labelsOpacityBehavior();
-          toggle = 0;
-        }
-      }
-
-      function labelsOpacityBehavior() {
-        link.on('mouseover', function () {
-          d3.select(this).selectAll('text').style('opacity', 1).style('opacity', 1);
-        }).on('mouseleave', function () {
-          d3.select(this).selectAll('text').style('opacity', 0.1).style('opacity', 0.1);
-        });
-      }
-
-      function dragstarted(d) {
-        if (!d3.event.active && simulationActive) {
-          simulation.alphaTarget(0.01).restart();
-        }
-        d.fx = d.x;
-        d.fy = d.y;
-      }
-
-      function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
-      }
-
-      function dragended(d) {
-        if (!d3.event.active && simulationActive) {
-          simulation.alphaTarget(0);
-        }
-        d.fx = null;
-        d.fy = null;
-      }
-
-      return this;
-    }
+      return render;
+    }()
   }, {
     key: 'unrender',
     value: function unrender() {}
@@ -14035,7 +16191,7 @@ var _graph = __webpack_require__(/*! ./graph */ "./src/render/graph.js");
 
 var _graph2 = _interopRequireDefault(_graph);
 
-var _initializeDecorator = __webpack_require__(/*! ../util/initialize-decorator */ "./src/util/initialize-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14078,7 +16234,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var TreeGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = function (_Graph) {
+var TreeGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class = function (_Graph) {
   _inherits(TreeGraph, _Graph);
 
   function TreeGraph(_ref) {
@@ -14094,231 +16250,238 @@ var TreeGraph = (_dec = (0, _initializeDecorator.initialize)(), (_class = functi
 
   _createClass(TreeGraph, [{
     key: 'render',
-    value: function render() {
-      var update = function () {
-        var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(source) {
-          var _this3 = this;
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var _this2 = this;
 
-          var self, treeData, nodes, links, linkGroup, link, linkEnter, diagonal, nodeGroup, node, nodeEnter, nodeUpdate, nodeOnClick, click;
-          return regeneratorRuntime.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  click = function click(d) {
-                    if (d.children) {
-                      d._children = d.children;
-                      d.children = null;
-                    } else {
-                      d.children = d._children;
-                      d._children = null;
+        var update = function () {
+          var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(source) {
+            var _this4 = this;
+
+            var self, treeData, nodes, links, linkGroup, link, linkEnter, diagonal, nodeGroup, node, nodeEnter, nodeUpdate, nodeOnClick, click;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    click = function click(d) {
+                      if (d.children) {
+                        d._children = d.children;
+                        d.children = null;
+                      } else {
+                        d.children = d._children;
+                        d._children = null;
+                      }
+                      update.call(self, d).catch(function (error) {
+                        return self.logger.warn(error);
+                      }).then(setTimeout(self.parent.zoomToFit, self.transitionDuration));
+                    };
+
+                    diagonal = function diagonal(s, d) {
+                      return 'M ' + s.y + ' ' + s.x + '\n            C ' + (s.y + d.y) / 2 + ' ' + s.x + ',\n              ' + (s.y + d.y) / 2 + ' ' + d.x + ',\n              ' + d.y + ' ' + d.x;
+                    };
+
+                    self = this;
+                    treeData = treemap(root);
+                    nodes = treeData.descendants(), links = treeData.descendants().slice(1);
+
+
+                    nodes.forEach(function (d) {
+                      return d.y = d.depth * 100;
+                    });
+
+                    linkGroup = this.element.selectAll('g.francy-links');
+
+
+                    if (!linkGroup.node()) {
+                      linkGroup = this.element.append('g').attr('class', 'francy-links');
                     }
-                    update.call(self, d).then(setTimeout(self.parent.zoomToFit, self.transitionDuration));
-                  };
 
-                  diagonal = function diagonal(s, d) {
-                    return 'M ' + s.y + ' ' + s.x + '\n            C ' + (s.y + d.y) / 2 + ' ' + s.x + ',\n              ' + (s.y + d.y) / 2 + ' ' + d.x + ',\n              ' + d.y + ' ' + d.x;
-                  };
-
-                  self = this;
-                  treeData = treemap(root);
-                  nodes = treeData.descendants(), links = treeData.descendants().slice(1);
+                    link = linkGroup.selectAll('path.francy-edge').data(links, function (d) {
+                      return d.id || (d.id = ++i);
+                    });
+                    linkEnter = link.enter().append('path').attr('class', 'francy-edge').attr('d', function () {
+                      var o = { x: source.x0, y: source.y0 };
+                      return diagonal(o, o);
+                    });
 
 
-                  nodes.forEach(function (d) {
-                    return d.y = d.depth * 150;
-                  });
+                    linkEnter.merge(link).transition().duration(this.transitionDuration).attr('d', function (d) {
+                      return diagonal(d, d.parent);
+                    });
 
-                  linkGroup = this.element.selectAll('g.francy-links');
+                    link.exit().transition().duration(this.transitionDuration).attr('d', function () {
+                      var o = { x: source.x, y: source.y };
+                      return diagonal(o, o);
+                    }).remove();
 
+                    linkGroup.selectAll('path.francy-edge');
 
-                  if (!linkGroup.node()) {
-                    linkGroup = this.element.append('g').attr('class', 'francy-links');
-                  }
+                    nodes.forEach(function (d) {
+                      d.x0 = d.x;
+                      d.y0 = d.y;
+                    });
 
-                  link = linkGroup.selectAll('path.francy-edge').data(links, function (d) {
-                    return d.id || (d.id = ++i);
-                  });
-                  linkEnter = link.enter().append('path').attr('class', 'francy-edge').attr('d', function () {
-                    var o = { x: source.x0, y: source.y0 };
-                    return diagonal(o, o);
-                  });
-
-
-                  linkEnter.merge(link).transition().duration(this.transitionDuration).attr('d', function (d) {
-                    return diagonal(d, d.parent);
-                  });
-
-                  link.exit().transition().duration(this.transitionDuration).attr('d', function () {
-                    var o = { x: source.x, y: source.y };
-                    return diagonal(o, o);
-                  }).remove();
-
-                  linkGroup.selectAll('path.francy-edge').style('fill', 'none').style('stroke', '#ccc').style('stroke-width', '1px');
-
-                  nodes.forEach(function (d) {
-                    d.x0 = d.x;
-                    d.y0 = d.y;
-                  });
-
-                  nodeGroup = this.element.selectAll('g.francy-nodes');
+                    nodeGroup = this.element.selectAll('g.francy-nodes');
 
 
-                  if (!nodeGroup.node()) {
-                    nodeGroup = this.element.append('g').attr('class', 'francy-nodes');
-                  }
-
-                  node = nodeGroup.selectAll('g.francy-node').data(nodes, function (d) {
-                    return d.id || (d.id = ++i);
-                  });
-                  nodeEnter = node.enter().append('g').attr('class', 'francy-node').attr('transform', function () {
-                    return 'translate(' + source.y0 + ',' + source.x0 + ')';
-                  });
-
-
-                  nodeEnter.append('path').attr('d', d3.symbol().type(function (d) {
-                    return _graph2.default.getSymbol(d.data.type);
-                  }).size(function (d) {
-                    return d.data.size * 100;
-                  })).attr('class', 'francy-symbol');
-
-                  nodeEnter.append('text').attr('class', 'francy-label').text(function (d) {
-                    return d.data.title;
-                  }).style('font-size', function (d) {
-                    return 7 * Math.sqrt(d.weight);
-                  }).style('cursor', function (d) {
-                    return d.children || d._children ? 'pointer' : 'default';
-                  }).attr('x', function () {
-                    var _this2 = this;
-
-                    // apply mathjax if this is the case
-                    var text = d3.select(this);
-                    if (text.text().startsWith('$') && text.text().endsWith('$')) {
-                      // we need to set the position after re-render the latex
-                      self.handlePromise(self.mathjax.settings({ appendTo: { element: text } }).renderSVG(function () {
-                        text.attr('x', self.setLabelXPosition(_this2));
-                      }));
+                    if (!nodeGroup.node()) {
+                      nodeGroup = this.element.append('g').attr('class', 'francy-nodes');
                     }
-                    return self.setLabelXPosition(this);
-                  });
 
-                  nodeUpdate = nodeEnter.merge(node);
+                    node = nodeGroup.selectAll('g.francy-node').data(nodes, function (d) {
+                      return d.id || (d.id = ++i);
+                    });
+                    nodeEnter = node.enter().append('g').attr('class', 'francy-node').attr('transform', function () {
+                      return 'translate(' + source.y0 + ',' + source.x0 + ')';
+                    });
 
 
-                  nodeUpdate.transition().duration(this.transitionDuration).attr('transform', function (d) {
-                    return 'translate(' + d.y + ',' + d.x + ')';
-                  });
+                    nodeEnter.append('path').attr('d', d3.symbol().type(function (d) {
+                      return _graph2.default.getSymbol(d.data.type);
+                    }).size(function (d) {
+                      return d.data.size * 100;
+                    })).attr('class', 'francy-symbol');
 
-                  node.exit().transition().duration(this.transitionDuration).attr('transform', function () {
-                    return 'translate(' + source.y + ',' + source.x + ')';
-                  }).remove();
+                    nodeEnter.append('text').attr('class', 'francy-label').text(function (d) {
+                      return d.data.title;
+                    }).style('font-size', function (d) {
+                      return 7 * Math.sqrt(d.weight);
+                    }).style('cursor', function (d) {
+                      return d.children || d._children ? 'pointer' : 'default';
+                    }).attr('x', function () {
+                      var _this3 = this;
 
-                  nodeGroup.selectAll('path.francy-symbol').style('fill', function (d) {
-                    return d.children || d._children ? 'lightsteelblue' : _graph2.default.colors(d.data.layer * 5);
-                  }).style('cursor', function (d) {
-                    return d.children || d._children ? 'pointer' : 'default';
-                  });
+                      // apply mathjax if this is the case
+                      var text = d3.select(this);
+                      if (text.text().startsWith('$') && text.text().endsWith('$')) {
+                        // we need to set the position after re-render the latex
+                        self.handlePromise(self.mathjax.settings({ appendTo: { element: text }, renderType: 'SVG', postFunction: function postFunction() {
+                            text.attr('x', self.setLabelXPosition(_this3));
+                          } }).render());
+                      }
+                      return self.setLabelXPosition(this);
+                    });
 
-                  node = nodeGroup.selectAll('g.francy-node');
+                    nodeUpdate = nodeEnter.merge(node);
 
-                  if (node.node()) {
-                    this._applyEvents(node);
 
-                    nodeOnClick = node.on('click');
+                    nodeUpdate.transition().duration(this.transitionDuration).attr('transform', function (d) {
+                      return 'translate(' + d.y + ',' + d.x + ')';
+                    });
 
-                    node.on('click', function (d) {
-                      // any callbacks will be handled here
-                      nodeOnClick.call(_this3, d.data);
-                      // default, highlight connected nodes
-                      click.call(_this3, d);
+                    node.exit().transition().duration(this.transitionDuration).attr('transform', function () {
+                      return 'translate(' + source.y + ',' + source.x + ')';
+                    }).remove();
+
+                    nodeGroup.selectAll('path.francy-symbol').style('fill', function (d) {
+                      return d.children || d._children ? '#fff' : _graph2.default.colors(d.data.layer * 5);
+                    }).style('cursor', function (d) {
+                      return d.children || d._children ? 'pointer' : 'default';
+                    });
+
+                    node = nodeGroup.selectAll('g.francy-node');
+
+                    if (node.node()) {
+                      this._applyEvents(node);
+
+                      nodeOnClick = node.on('click');
+
+                      node.on('click', function (d) {
+                        // any callbacks will be handled here
+                        nodeOnClick.call(_this4, d.data);
+                        // default, highlight connected nodes
+                        click.call(_this4, d);
+                      });
+                    }
+
+                    // Toggle children on click.
+
+                  case 26:
+                  case 'end':
+                    return _context.stop();
+                }
+              }
+            }, _callee, this);
+          }));
+
+          return function update(_x) {
+            return _ref3.apply(this, arguments);
+          };
+        }();
+
+        var nodes, i, root, levelWidth, childCount, size, treemap, collapse;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                collapse = function collapse(d) {
+                  if (d.children) {
+                    d._children = d.children;
+                    d._children.forEach(collapse);
+                    d.children = null;
+                  }
+                };
+
+                nodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [], i = 0, root = void 0;
+
+
+                root = d3.stratify().id(function (d) {
+                  return d.id;
+                }).parentId(function (d) {
+                  return d.parent;
+                })(nodes);
+                root.x0 = this.height / 2;
+                root.y0 = 0;
+
+                // compute height based on the depth of the graph
+                levelWidth = [1];
+
+                childCount = function childCount(level, n) {
+
+                  if (n.children && n.children.length > 0) {
+                    if (levelWidth.length <= level + 1) levelWidth.push(0);
+
+                    levelWidth[level + 1] += n.children.length;
+                    n.children.forEach(function (d) {
+                      childCount(level + 1, d);
                     });
                   }
+                };
 
-                  // Toggle children on click.
+                childCount(0, root);
+                size = d3.max(levelWidth) * 100;
+                treemap = d3.tree().size([size, size]).separation(function (a, b) {
+                  return a.parent == b.parent ? a.data.size : a.data.size * 2;
+                });
 
-                case 26:
-                case 'end':
-                  return _context.stop();
-              }
+
+                if (this.data.canvas.graph.collapsed) {
+                  root.children.forEach(collapse);
+                }
+
+                update.call(this, root).catch(function (error) {
+                  return _this2.logger.warn(error);
+                }).then(setTimeout(this.parent.zoomToFit, this.transitionDuration));
+
+                return _context2.abrupt('return', this);
+
+              case 13:
+              case 'end':
+                return _context2.stop();
             }
-          }, _callee, this);
-        }));
+          }
+        }, _callee2, this);
+      }));
 
-        return function update(_x) {
-          return _ref2.apply(this, arguments);
-        };
-      }();
-
-      var i = 0,
-          root = void 0;
-
-      root = d3.hierarchy(this.treeData, function (d) {
-        return d.children;
-      });
-      root.x0 = this.height / 2;
-      root.y0 = 0;
-
-      // compute height based on the depth of the graph
-      var levelWidth = [1];
-      var childCount = function childCount(level, n) {
-
-        if (n.children && n.children.length > 0) {
-          if (levelWidth.length <= level + 1) levelWidth.push(0);
-
-          levelWidth[level + 1] += n.children.length;
-          n.children.forEach(function (d) {
-            childCount(level + 1, d);
-          });
-        }
-      };
-      childCount(0, root);
-      var newHeight = d3.max(levelWidth) * 100;
-
-      var treemap = d3.tree().size([newHeight, this.width]);
-
-      if (this.data.canvas.graph.collapsed) {
-        root.children.forEach(collapse);
+      function render() {
+        return _ref2.apply(this, arguments);
       }
 
-      update.call(this, root).then(setTimeout(this.parent.zoomToFit, this.transitionDuration));
-
-      function collapse(d) {
-        if (d.children) {
-          d._children = d.children;
-          d._children.forEach(collapse);
-          d.children = null;
-        }
-      }
-
-      return this;
-    }
+      return render;
+    }()
   }, {
     key: 'unrender',
     value: function unrender() {}
-
-    /**
-     * Transforms flat data into tree data by analysing the parents of each node
-     * @returns {Object} the data transformed in tree data
-     */
-
-  }, {
-    key: 'treeData',
-    get: function get() {
-      var canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [];
-      var dataMap = canvasNodes.reduce(function (map, node) {
-        map[node.id] = node;
-        return map;
-      }, {});
-      var treeData = [];
-      canvasNodes.forEach(function (node) {
-        var parent = dataMap[node.parent];
-        if (parent) {
-          (parent.children || (parent.children = [])).push(node);
-        } else {
-          treeData.push(node);
-        }
-      });
-      return treeData[0];
-    }
   }]);
 
   return TreeGraph;
@@ -14426,7 +16589,7 @@ var Graph = function (_Renderer) {
           // object to render and not the whole `this.data` object, 
           // we can't check for the property canvas.texTypesetting, 
           // hence this:
-          self.handlePromise(self.mathjax.settings({ appendTo: self.tooltip }).renderHTML());
+          self.handlePromise(self.mathjax.settings({ appendTo: self.tooltip, renderType: 'HTML-CSS' }).render());
         }
       }).on('mouseout', function () {
         // default, hide tooltip
@@ -14457,14 +16620,17 @@ var Graph = function (_Renderer) {
   }], [{
     key: 'linkXPos',
     value: function linkXPos(s, t) {
-      var angle = Math.atan2(t.y - s.y, t.x - s.x);
-      return Math.cos(angle) + (s.x + t.x) / 2;
+      return Math.cos(Graph.angle(s, t)) + (s.x + t.x) / 2;
     }
   }, {
     key: 'linkYPos',
     value: function linkYPos(s, t) {
-      var angle = Math.atan2(t.y - s.y, t.x - s.x);
-      return Math.sin(angle) + (s.y + t.y) / 2;
+      return Math.sin(Graph.angle(s, t)) + (s.y + t.y) / 2;
+    }
+  }, {
+    key: 'angle',
+    value: function angle(s, t) {
+      return Math.atan2(t.y - s.y, t.x - s.x);
     }
   }, {
     key: 'getSymbol',
@@ -14528,15 +16694,17 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _desc, _value, _class;
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _dec, _desc, _value, _class;
 
 var _base = __webpack_require__(/*! ./base */ "./src/render/base.js");
 
 var _base2 = _interopRequireDefault(_base);
 
-var _dataDecorator = __webpack_require__(/*! ../util/data-decorator */ "./src/util/data-decorator.js");
+var _factory = __webpack_require__(/*! ../component/factory */ "./src/component/factory.js");
 
-var _initializeDecorator = __webpack_require__(/*! ../util/initialize-decorator */ "./src/util/initialize-decorator.js");
+var _factory2 = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14577,12 +16745,10 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-/* global MathJax, d3 */
+/* global MathJax */
 
-var initialized = false;
-
-var MathJaxWrapper = (_dec = (0, _initializeDecorator.initialize)(), _dec2 = (0, _dataDecorator.enabled)('canvas.texTypesetting'), _dec3 = (0, _initializeDecorator.initialize)(), _dec4 = (0, _dataDecorator.enabled)('canvas.texTypesetting'), (_class = function (_Base) {
-  _inherits(MathJaxWrapper, _Base);
+var MathJaxWrapper = (_dec = _factory2.Decorators.Data.enabled('canvas.texTypesetting'), (_class = function (_BaseRenderer) {
+  _inherits(MathJaxWrapper, _BaseRenderer);
 
   function MathJaxWrapper(_ref) {
     var _ref$verbose = _ref.verbose,
@@ -14596,160 +16762,57 @@ var MathJaxWrapper = (_dec = (0, _initializeDecorator.initialize)(), _dec2 = (0,
   }
 
   _createClass(MathJaxWrapper, [{
-    key: '_initialize',
-    value: function _initialize() {
-      if (initialized) return;
-      MathJax.Hub.Config({
-        showMathMenu: false,
-        skipStartupTypeset: true,
-        tex2jax: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']],
-          displayMath: [['$$', '$$'], ['\\[', '\\]']],
-          processEscapes: true,
-          processEnvironments: true
-        },
-        MathML: {
-          extensions: ['content-mathml.js']
-        },
-        displayAlign: 'center',
-        'HTML-CSS': {
-          availableFonts: [],
-          imageFont: null,
-          preferredFont: null,
-          font: 'STIX-Web',
-          webFont: 'STIX-Web',
-          styles: { '.MathJax_Display': { 'margin': 0 } },
-          linebreaks: {
-            automatic: true
-          }
-        },
-        'SVG': {
-          availableFonts: [],
-          imageFont: null,
-          preferredFont: null,
-          font: 'STIX-Web',
-          webFont: 'STIX-Web',
-          styles: { '.MathJax_Display': { 'margin': 0 } },
-          linebreaks: {
-            automatic: true
-          }
-        }
-      });
+    key: 'render',
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(!_factory.Components.MathJax.isAvailable || !this.parent || !this.parent.node())) {
+                  _context.next = 2;
+                  break;
+                }
 
-      MathJax.Hub.Register.MessageHook('New Math', function () {
-        var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(id) {
-          var mathJaxElement, svgMathJaxElement, g, width, height;
-          return regeneratorRuntime.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  if (id && id.length > 1) {
-                    mathJaxElement = d3.select('#' + id[1] + '-Frame');
-                    svgMathJaxElement = mathJaxElement.select('svg');
-                    g = d3.select(mathJaxElement.node().parentNode.parentNode);
+                return _context.abrupt('return');
 
-                    if (svgMathJaxElement.node()) {
-                      // set same font-size
-                      svgMathJaxElement.style('font-size', g.select('text.francy-label').style('font-size'));
-                      // re-center component
-                      width = svgMathJaxElement.node().width.baseVal.value;
-                      height = svgMathJaxElement.node().height.baseVal.value;
+              case 2:
+                // check for a post exec function
+                this.data.postFunction = this.data.postFunction || function () {};
+                MathJax.Hub.Queue(['setRenderer', MathJax.Hub, this.options.renderType], ['Typeset', MathJax.Hub, this.parent.node()], [this.options.postFunction]);
 
-                      svgMathJaxElement.attr('x', -width / 2);
-                      svgMathJaxElement.attr('y', -height / 2);
-                      g.append(function () {
-                        return svgMathJaxElement.node();
-                      });
-                    }
-                  }
-
-                case 1:
-                case 'end':
-                  return _context.stop();
-              }
+              case 4:
+              case 'end':
+                return _context.stop();
             }
-          }, _callee, this);
-        }));
+          }
+        }, _callee, this);
+      }));
 
-        return function (_x) {
-          return _ref2.apply(this, arguments);
-        };
-      }());
+      function render() {
+        return _ref2.apply(this, arguments);
+      }
 
-      MathJax.Hub.Configured();
+      return render;
+    }()
+  }, {
+    key: 'settings',
+    value: function settings(_ref3) {
+      var verbose = _ref3.verbose,
+          appendTo = _ref3.appendTo,
+          callbackHandler = _ref3.callbackHandler,
+          renderType = _ref3.renderType,
+          postFunction = _ref3.postFunction;
 
-      initialized = true;
+      _get(MathJaxWrapper.prototype.__proto__ || Object.getPrototypeOf(MathJaxWrapper.prototype), 'settings', this).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+      this.options.renderType = renderType;
+      this.options.postFunction = postFunction;
+      return this;
     }
-  }, {
-    key: 'renderSVG',
-    value: function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(postFunction) {
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (!(!this.parent || !this.parent.node())) {
-                  _context2.next = 2;
-                  break;
-                }
-
-                return _context2.abrupt('return');
-
-              case 2:
-                postFunction = postFunction || function () {};
-                MathJax.Hub.Queue(['setRenderer', MathJax.Hub, 'SVG'], ['Typeset', MathJax.Hub, this.parent.node()], [postFunction]);
-
-              case 4:
-              case 'end':
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function renderSVG(_x2) {
-        return _ref3.apply(this, arguments);
-      }
-
-      return renderSVG;
-    }()
-  }, {
-    key: 'renderHTML',
-    value: function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(postFunction) {
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                if (!(!this.parent || !this.parent.node())) {
-                  _context3.next = 2;
-                  break;
-                }
-
-                return _context3.abrupt('return');
-
-              case 2:
-                postFunction = postFunction || function () {};
-                MathJax.Hub.Queue(['setRenderer', MathJax.Hub, 'HTML-CSS'], ['Typeset', MathJax.Hub, this.parent.node()], [postFunction]);
-
-              case 4:
-              case 'end':
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function renderHTML(_x3) {
-        return _ref4.apply(this, arguments);
-      }
-
-      return renderHTML;
-    }()
   }]);
 
   return MathJaxWrapper;
-}(_base2.default), (_applyDecoratedDescriptor(_class.prototype, 'renderSVG', [_dec, _dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'renderSVG'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'renderHTML', [_dec3, _dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'renderHTML'), _class.prototype)), _class));
+}(_base2.default), (_applyDecoratedDescriptor(_class.prototype, 'render', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'render'), _class.prototype)), _class));
 exports.default = MathJaxWrapper;
 
 /***/ }),
@@ -14777,7 +16840,7 @@ var _menu = __webpack_require__(/*! ./menu */ "./src/render/menu.js");
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _dataDecorator = __webpack_require__(/*! ../util/data-decorator */ "./src/util/data-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14820,7 +16883,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var ContextMenu = (_dec = (0, _dataDecorator.requires)('menus'), (_class = function (_Menu) {
+var ContextMenu = (_dec = _factory.Decorators.Data.requires('menus'), (_class = function (_Menu) {
   _inherits(ContextMenu, _Menu);
 
   function ContextMenu(_ref) {
@@ -14840,7 +16903,7 @@ var ContextMenu = (_dec = (0, _dataDecorator.requires)('menus'), (_class = funct
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var _this2 = this;
 
-        var pos, menu, menusIterator;
+        var position, menu, menusIterator;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -14854,10 +16917,10 @@ var ContextMenu = (_dec = (0, _dataDecorator.requires)('menus'), (_class = funct
                   this.element = this.HTMLParent.append('div').attr('class', 'francy-context-menu-holder');
                 }
 
-                pos = d3.mouse(this.SVGParent.node());
+                position = d3.mouse(this.SVGParent.node());
 
 
-                this.element.style('left', pos[0] + 5 + 'px').style('top', pos[1] + 5 + 'px');
+                this.element.style('left', position[0] + 5 + 'px').style('top', position[1] + 5 + 'px');
 
                 // show the context menu
                 this.element.style('display', 'block');
@@ -15007,7 +17070,7 @@ var MainMenu = function (_Menu) {
                 // Fixed loader
                 loaderId = 'Loader-' + this.data.canvas.id;
 
-                this.element.append('li').attr('class', 'francy-loader').append('div').datum({}).attr('id', loaderId).classed('loader', true);
+                this.element.append('li').attr('class', 'francy-loader').append('a').datum({}).attr('id', loaderId).classed('loader', true);
 
                 // Title
                 if (this.data.canvas.title) {
@@ -15027,7 +17090,7 @@ var MainMenu = function (_Menu) {
                   return SvgToPng.saveSvgAsPng(_this2.SVGParent.node(), 'diagram.png');
                 }).attr('title', 'Save to PNG').html('Save to PNG');
                 content.append('li').append('a').on('click', function () {
-                  return aboutModal.load(_this2.data).render();
+                  return _this2.handlePromise(aboutModal.load(_this2.data).render());
                 }).attr('title', 'About').html('About');
 
                 // Traverse all menus and flatten them!
@@ -15181,7 +17244,7 @@ var _renderer = __webpack_require__(/*! ./renderer */ "./src/render/renderer.js"
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
-var _dataDecorator = __webpack_require__(/*! ../util/data-decorator */ "./src/util/data-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15224,7 +17287,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var Message = (_dec = (0, _dataDecorator.requires)('canvas.messages'), (_class = function (_Renderer) {
+var Message = (_dec = _factory.Decorators.Data.requires('canvas.messages'), (_class = function (_Renderer) {
   _inherits(Message, _Renderer);
 
   function Message(_ref) {
@@ -15291,7 +17354,7 @@ var Message = (_dec = (0, _dataDecorator.requires)('canvas.messages'), (_class =
                 this.element.style('display', 'block');
 
                 // render mathjax
-                this.handlePromise(this.mathjax.settings({ appendTo: this }).renderHTML());
+                this.handlePromise(this.mathjax.settings({ appendTo: this, renderType: 'HTML-CSS' }).render());
 
                 return _context.abrupt('return', this);
 
@@ -15343,11 +17406,11 @@ var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal.js");
 
 var _modal2 = _interopRequireDefault(_modal);
 
-var _component = __webpack_require__(/*! ../util/component */ "./src/util/component.js");
-
-var _initializeDecorator = __webpack_require__(/*! ../util/initialize-decorator */ "./src/util/initialize-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -15386,7 +17449,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var AboutModal = (_dec = (0, _initializeDecorator.initialize)(), (_class = function (_Modal) {
+var AboutModal = (_dec = _factory.Decorators.Initializer.initialize(), (_class = function (_Modal) {
   _inherits(AboutModal, _Modal);
 
   function AboutModal(_ref) {
@@ -15402,46 +17465,69 @@ var AboutModal = (_dec = (0, _initializeDecorator.initialize)(), (_class = funct
 
   _createClass(AboutModal, [{
     key: 'render',
-    value: function render() {
-      var _this2 = this;
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _this2 = this;
 
-      var modalId = 'AboutModalWindow';
+        var modalId, form, header, content, footer;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                modalId = 'AboutModalWindow';
 
-      this.logger.debug('Creating About Modal [' + modalId + ']...');
 
-      this.element = this.holder.append('div').attr('id', modalId).attr('class', 'francy-modal');
+                this.logger.debug('Creating About Modal [' + modalId + ']...');
 
-      var form = this.element.append('form');
+                this.element = this.holder.append('div').attr('id', modalId).attr('class', 'francy-modal');
 
-      var header = form.append('div').attr('class', 'francy-modal-header');
+                form = this.element.append('form');
+                header = form.append('div').attr('class', 'francy-modal-header');
 
-      header.append('span').html('About Francy v' + (this.data.version || 'N/A'));
 
-      var content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
+                header.append('span').html('About Francy v' + (this.data.version || 'N/A'));
 
-      content.append('span').text('Francy is an interactive discrete mathematics framework for GAP.').append('br').append('br');
-      content.append('span').text('Developed by Manuel Martins: ');
-      content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
+                content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
 
-      if (this.options.verbose) {
-        content.append('span').text('Loaded Data:');
-        content.append('pre').attr('class', 'francy').html((0, _component.syntaxHighlight)(JSON.stringify(this.data.canvas, null, 2)));
+
+                content.append('span').text('Francy is an interactive discrete mathematics framework for GAP.').append('br').append('br');
+                content.append('span').text('Developed by Manuel Martins: ');
+                content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
+
+                if (this.options.verbose) {
+                  content.append('span').text('Loaded Data:');
+                  content.append('pre').attr('class', 'francy').html(_factory.Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
+                }
+
+                footer = form.append('div').attr('class', 'francy-modal-footer');
+
+
+                footer.append('button').text('Ok').on('click', function () {
+                  d3.event.preventDefault();
+                  _this2.unrender.call(_this2);
+                });
+
+                // disable keyboard shortcuts when using this modal in Jupyter
+                _factory.Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
+
+                this.logger.debug('Callback About updated [' + modalId + ']...');
+
+                return _context.abrupt('return', this);
+
+              case 16:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function render() {
+        return _ref2.apply(this, arguments);
       }
 
-      var footer = form.append('div').attr('class', 'francy-modal-footer');
-
-      footer.append('button').text('Ok').on('click', function () {
-        d3.event.preventDefault();
-        _this2.unrender.call(_this2);
-      });
-
-      // disable keyboard shortcuts when using this modal in Jupyter
-      (0, _component.RegisterJupyterKeyboardEvents)(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
-
-      this.logger.debug('Callback About updated [' + modalId + ']...');
-
-      return this;
-    }
+      return render;
+    }()
   }]);
 
   return AboutModal;
@@ -15473,11 +17559,11 @@ var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal.js");
 
 var _modal2 = _interopRequireDefault(_modal);
 
-var _component = __webpack_require__(/*! ../util/component */ "./src/util/component.js");
-
-var _initializeDecorator = __webpack_require__(/*! ../util/initialize-decorator */ "./src/util/initialize-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -15516,7 +17602,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var RequiredArgsModal = (_dec = (0, _initializeDecorator.initialize)(), (_class = function (_Modal) {
+var RequiredArgsModal = (_dec = _factory.Decorators.Initializer.initialize(), (_class = function (_Modal) {
   _inherits(RequiredArgsModal, _Modal);
 
   function RequiredArgsModal(_ref) {
@@ -15532,95 +17618,138 @@ var RequiredArgsModal = (_dec = (0, _initializeDecorator.initialize)(), (_class 
 
   _createClass(RequiredArgsModal, [{
     key: 'render',
-    value: function render() {
-      var _this2 = this;
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _this2 = this;
 
-      var self = this;
+        var self, modalId, form, header, headerTitle, content, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, arg, row, input, footer, inputElement;
 
-      var modalId = this.data.callback.id;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = this;
+                modalId = this.data.callback.id;
 
-      this.logger.debug('Creating Callback Modal [' + modalId + ']...');
 
-      this.element = this.holder.append('div').attr('id', modalId).attr('class', 'francy-modal');
+                this.logger.debug('Creating Callback Modal [' + modalId + ']...');
 
-      var form = this.element.append('form');
+                this.element = this.holder.append('div').attr('id', modalId).attr('class', 'francy-modal');
 
-      var header = form.append('div').attr('class', 'francy-modal-header');
+                form = this.element.append('form');
+                header = form.append('div').attr('class', 'francy-modal-header');
+                headerTitle = header.append('span').html('Required arguments&nbsp;');
 
-      var headerTitle = header.append('span').html('Required arguments&nbsp;');
-      if (this.data.title) {
-        headerTitle.append('span').attr('style', 'font-weight: bold;').text('for ' + this.data.title);
+                if (this.data.title) {
+                  headerTitle.append('span').attr('style', 'font-weight: bold;').text('for ' + this.data.title);
+                }
+
+                content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
+                _iteratorNormalCompletion = true;
+                _didIteratorError = false;
+                _iteratorError = undefined;
+                _context.prev = 12;
+
+
+                for (_iterator = Object.values(this.data.callback.requiredArgs)[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                  arg = _step.value;
+                  row = content.append('div').attr('class', 'francy-table-row');
+
+                  row.append('div').attr('class', 'francy-table-cell').append('label').attr('for', arg.id).text(arg.title);
+                  input = row.append('div').attr('class', 'francy-table-cell').append('input').attr('id', arg.id).attr('class', 'francy-arg').attr('required', '').attr('name', arg.id).attr('type', arg.type).attr('value', arg.value).on('change', function () {
+                    self.data.callback.requiredArgs[this.id].value = this.value;
+                  }).on('input', this.onchange).on('keyup', this.onchange).on('paste', this.onchange);
+                  // wait, if it is boolean we create a checkbox
+
+                  if (arg.type === 'boolean') {
+                    // well, a checkbox works this way so we need to initialize 
+                    // the value to false and update the value based on the checked 
+                    // property that triggers the onchange event
+                    arg.value = arg.value || false;
+                    input.attr('type', 'checkbox').attr('required', null).attr('value', arg.value).on('change', function () {
+                      self.data.callback.requiredArgs[this.id].value = this.value = this.checked;
+                    });
+                  }
+                  row.append('span').attr('class', 'validity');
+                }
+
+                _context.next = 20;
+                break;
+
+              case 16:
+                _context.prev = 16;
+                _context.t0 = _context['catch'](12);
+                _didIteratorError = true;
+                _iteratorError = _context.t0;
+
+              case 20:
+                _context.prev = 20;
+                _context.prev = 21;
+
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                  _iterator.return();
+                }
+
+              case 23:
+                _context.prev = 23;
+
+                if (!_didIteratorError) {
+                  _context.next = 26;
+                  break;
+                }
+
+                throw _iteratorError;
+
+              case 26:
+                return _context.finish(23);
+
+              case 27:
+                return _context.finish(20);
+
+              case 28:
+                footer = form.append('div').attr('class', 'francy-modal-footer');
+
+
+                footer.append('button').text('Ok').on('click', function () {
+                  if (form.node().checkValidity()) {
+                    d3.event.preventDefault();
+                    _this2.options.callbackHandler(_this2.data.callback);
+                    _this2.unrender.call(_this2);
+                  }
+                  return false;
+                });
+                footer.append('button').text('Cancel').on('click', function () {
+                  d3.event.preventDefault();
+                  _this2.unrender.call(_this2);
+                });
+
+                // disable keyboard shortcuts when using this modal in Jupyter
+                _factory.Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
+
+                inputElement = content.selectAll('.francy-arg').node();
+
+                if (inputElement) {
+                  inputElement.focus();
+                }
+
+                this.logger.debug('Callback Modal updated [' + modalId + ']...');
+
+                return _context.abrupt('return', this);
+
+              case 36:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[12, 16, 20, 28], [21,, 23, 27]]);
+      }));
+
+      function render() {
+        return _ref2.apply(this, arguments);
       }
 
-      var content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
-
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = Object.values(this.data.callback.requiredArgs)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var arg = _step.value;
-
-          var row = content.append('div').attr('class', 'francy-table-row');
-          row.append('div').attr('class', 'francy-table-cell').append('label').attr('for', arg.id).text(arg.title);
-          var input = row.append('div').attr('class', 'francy-table-cell').append('input').attr('id', arg.id).attr('class', 'francy-arg').attr('required', '').attr('name', arg.id).attr('type', arg.type).attr('value', arg.value).on('change', function () {
-            self.data.callback.requiredArgs[this.id].value = this.value;
-          }).on('input', this.onchange).on('keyup', this.onchange).on('paste', this.onchange);
-          // wait, if it is boolean we create a checkbox
-          if (arg.type === 'boolean') {
-            // well, a checkbox works this way so we need to initialize 
-            // the value to false and update the value based on the checked 
-            // property that triggers the onchange event
-            arg.value = arg.value || false;
-            input.attr('type', 'checkbox').attr('required', null).attr('value', arg.value).on('change', function () {
-              self.data.callback.requiredArgs[this.id].value = this.value = this.checked;
-            });
-          }
-          row.append('span').attr('class', 'validity');
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-
-      var footer = form.append('div').attr('class', 'francy-modal-footer');
-
-      footer.append('button').text('Ok').on('click', function () {
-        if (form.node().checkValidity()) {
-          d3.event.preventDefault();
-          _this2.options.callbackHandler(_this2.data.callback);
-          _this2.unrender.call(_this2);
-        }
-        return false;
-      });
-      footer.append('button').text('Cancel').on('click', function () {
-        d3.event.preventDefault();
-        _this2.unrender.call(_this2);
-      });
-
-      // disable keyboard shortcuts when using this modal in Jupyter
-      (0, _component.RegisterJupyterKeyboardEvents)(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
-
-      var inputElement = content.selectAll('.francy-arg').node();
-      if (inputElement) {
-        inputElement.focus();
-      }
-
-      this.logger.debug('Callback Modal updated [' + modalId + ']...');
-
-      return this;
-    }
+      return render;
+    }()
   }]);
 
   return RequiredArgsModal;
@@ -15737,8 +17866,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /* global d3 */
 
-var Renderer = function (_Base) {
-  _inherits(Renderer, _Base);
+var Renderer = function (_BaseRenderer) {
+  _inherits(Renderer, _BaseRenderer);
 
   function Renderer(_ref) {
     var _ref$verbose = _ref.verbose,
@@ -15761,7 +17890,6 @@ var Renderer = function (_Base) {
     if (_this.unrender === undefined) {
       _this.logger.debug('No [unrender()] method specified...');
     }
-    _this.mathjaxWrapper = new _mathjaxWrapper2.default(_this.options);
     _this.element = undefined;
     _this.transitionDuration = 750; //ms
     return _this;
@@ -15800,7 +17928,7 @@ var Renderer = function (_Base) {
   }, {
     key: 'mathjax',
     get: function get() {
-      return this.mathjaxWrapper.load(this.data);
+      return new _mathjaxWrapper2.default(this.options).load(this.data);
     }
   }]);
 
@@ -15834,7 +17962,7 @@ var _renderer = __webpack_require__(/*! ./renderer */ "./src/render/renderer.js"
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
-var _dataDecorator = __webpack_require__(/*! ../util/data-decorator */ "./src/util/data-decorator.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15877,7 +18005,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var Tooltip = (_dec = (0, _dataDecorator.requires)('messages'), (_class = function (_Renderer) {
+var Tooltip = (_dec = _factory.Decorators.Data.requires('messages'), (_class = function (_Renderer) {
   _inherits(Tooltip, _Renderer);
 
   function Tooltip(_ref) {
@@ -15897,7 +18025,7 @@ var Tooltip = (_dec = (0, _dataDecorator.requires)('messages'), (_class = functi
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var _this2 = this;
 
-        var pos, table;
+        var position, table;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -15919,11 +18047,11 @@ var Tooltip = (_dec = (0, _dataDecorator.requires)('messages'), (_class = functi
                 return _context.abrupt('return');
 
               case 4:
-                pos = d3.mouse(this.SVGParent.node());
+                position = d3.mouse(this.SVGParent.node());
 
                 // TODO this won't be visible all the times, fine until someone complains about :P
 
-                this.element.style('left', pos[0] + 15 + 'px').style('top', pos[1] - 15 + 'px');
+                this.element.style('left', position[0] + 15 + 'px').style('top', position[1] - 15 + 'px');
 
                 table = this.element.append('div').attr('class', 'francy-tooltip').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
 
@@ -15966,161 +18094,6 @@ var Tooltip = (_dec = (0, _dataDecorator.requires)('messages'), (_class = functi
   return Tooltip;
 }(_renderer2.default), (_applyDecoratedDescriptor(_class.prototype, 'render', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'render'), _class.prototype)), _class));
 exports.default = Tooltip;
-
-/***/ }),
-
-/***/ "./src/util/component.js":
-/*!*******************************!*\
-  !*** ./src/util/component.js ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.RegisterJupyterKeyboardEvents = RegisterJupyterKeyboardEvents;
-exports.syntaxHighlight = syntaxHighlight;
-
-var _logger = __webpack_require__(/*! ./logger */ "./src/util/logger.js");
-
-var _logger2 = _interopRequireDefault(_logger);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* global Jupyter */
-
-function RegisterJupyterKeyboardEvents(classes) {
-  // disable keyboard shortcuts in Jupyter for specific css classed elements
-  if (!classes) return;
-  try {
-    classes.map(function (c) {
-      Jupyter.keyboard_manager.register_events(c);
-    });
-  } catch (e) {
-    if (e.name === 'ReferenceError') {
-      new _logger2.default().info('It seems we\'re not running on Jupyter, cannot register events... continuing...', e);
-    }
-  }
-}
-
-// credits here: https://stackoverflow.com/questions/4810841/how-can-i-pretty-print-json-using-javascript#answer-7220510
-function syntaxHighlight(json) {
-  json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function (match) {
-    var cls = 'number';
-    if (/^"/.test(match)) {
-      if (/:$/.test(match)) {
-        cls = 'key';
-      } else {
-        cls = 'string';
-      }
-    } else if (/true|false/.test(match)) {
-      cls = 'boolean';
-    } else if (/null/.test(match)) {
-      cls = 'null';
-    }
-    return '<span class="' + cls + '">' + match + '</span>';
-  });
-}
-
-/***/ }),
-
-/***/ "./src/util/data-decorator.js":
-/*!************************************!*\
-  !*** ./src/util/data-decorator.js ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.requires = requires;
-exports.enabled = enabled;
-
-var _exception = __webpack_require__(/*! ./exception */ "./src/util/exception.js");
-
-function requires(props) {
-  return function decorator(target, name, descriptor) {
-    var oldValue = descriptor.value;
-
-    descriptor.value = function () {
-      if (!hasData(getProperty(this.data, props))) {
-        return Promise.reject(new _exception.Exception('No data here [' + props + '], nothing to render... continuing...'));
-      }
-      return oldValue.apply(this, arguments);
-    };
-
-    return descriptor;
-  };
-}
-
-function enabled(props) {
-  return function decorator(target, name, descriptor) {
-    var oldValue = descriptor.value;
-
-    descriptor.value = function () {
-      if (!getProperty(this.data, props)) {
-        return Promise.reject(new _exception.Exception('Property disabled [' + props + '], skip execution... continuing...'));
-      }
-      return oldValue.apply(this, arguments);
-    };
-
-    return descriptor;
-  };
-}
-
-function getProperty(obj, propertyPath) {
-
-  var tmp = obj;
-
-  if (tmp && propertyPath) {
-    var properties = propertyPath.split('.');
-
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      for (var _iterator = properties[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var property = _step.value;
-
-        if (!tmp.hasOwnProperty(property)) {
-          tmp = undefined;
-          break;
-        } else {
-          tmp = tmp[property];
-        }
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator.return) {
-          _iterator.return();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
-    }
-  }
-
-  return tmp;
-}
-
-function hasData(obj) {
-  return obj && (obj instanceof Array && obj.length || obj instanceof Object && Object.values(obj).length);
-}
 
 /***/ }),
 
@@ -16220,38 +18193,10 @@ var RuntimeException = exports.RuntimeException = function (_extendableBuiltin4)
 
 /***/ }),
 
-/***/ "./src/util/initialize-decorator.js":
-/*!******************************************!*\
-  !*** ./src/util/initialize-decorator.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.initialize = initialize;
-function initialize() {
-  return function (target, key, descriptor) {
-    var oldValue = descriptor.value;
-
-    descriptor.value = function () {
-      this._initialize();
-      return oldValue.apply(this, arguments);
-    };
-    return descriptor;
-  };
-}
-
-/***/ }),
-
-/***/ "./src/util/json-utils.js":
-/*!********************************!*\
-  !*** ./src/util/json-utils.js ***!
-  \********************************/
+/***/ "./src/util/json.js":
+/*!**************************!*\
+  !*** ./src/util/json.js ***!
+  \**************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16313,86 +18258,6 @@ var JsonUtils = function () {
 }();
 
 exports.default = JsonUtils;
-
-/***/ }),
-
-/***/ "./src/util/loader-decorator.js":
-/*!**************************************!*\
-  !*** ./src/util/loader-decorator.js ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.loader = loader;
-exports.showLoader = showLoader;
-exports.hideLoader = hideLoader;
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-/* global d3 */
-
-function loader() {
-  return function (target, key, descriptor) {
-    var oldValue = descriptor.value;
-
-    descriptor.value = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      var loaderId,
-          result,
-          _args = arguments;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              loaderId = showLoader.call(this);
-              _context.next = 3;
-              return oldValue.apply(this, _args);
-
-            case 3:
-              result = _context.sent;
-
-              hideLoader.call(this, loaderId);
-              return _context.abrupt('return', result);
-
-            case 6:
-            case 'end':
-              return _context.stop();
-          }
-        }
-      }, _callee, this);
-    }));
-    return descriptor;
-  };
-}
-
-function showLoader() {
-  var id = generateId();
-  var element = d3.select('div.loader#Loader-' + this.data.canvas.id);
-  element.data()[0][id] = true;
-  element.style('visibility', 'visible');
-  return id;
-}
-
-function hideLoader(loaderId) {
-  var element = d3.select('div.loader#Loader-' + this.data.canvas.id);
-  delete element.data()[0][loaderId];
-  // hide only if no more loaders present
-  if (Object.values(element.data()[0]).length == 0) {
-    element.style('visibility', 'hidden');
-  }
-}
-
-function generateId() {
-  // Math.random should be unique because of its seeding algorithm
-  // Convert it to base 36 (numbers + letters), 
-  // and grab the first 9 characters after the decimal
-  return 'L-' + Math.random().toString(36).substr(2, 9);
-}
 
 /***/ }),
 
@@ -16514,6 +18379,17 @@ exports.default = Logger;
 __webpack_require__(/*! babel-polyfill */"./node_modules/babel-polyfill/lib/index.js");
 module.exports = __webpack_require__(/*! ./src/francy.js */"./src/francy.js");
 
+
+/***/ }),
+
+/***/ 1:
+/*!************************!*\
+  !*** crypto (ignored) ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
 
 /***/ })
 

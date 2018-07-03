@@ -232,6 +232,10 @@ div.output_subarea.jp-OutputWidget-Francy.output_result {
   text-overflow: ellipsis
 }
 
+.francy-loader>a {
+  padding: 10px 10px 0 0!important;
+}
+
 .francy-context-menu {
   background: #f6f6f6;
   color: #333;
@@ -395,14 +399,14 @@ div.output_subarea {
 }
 
 .loader {
-  border: 3px solid #cfcfcf;
+  border: 4px solid #cfcfcf;
   border-radius: 50%;
-  border-top: 3px solid #3498db;
-  width: 15px;
-  height: 15px;
+  border-top: 4px solid #3498db;
+  width: 5px;
+  height: 5px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
-  margin: 12.5px 6px 0 0;
+  margin: 8px 6px 0 0;
   visibility: hidden;
 }
 

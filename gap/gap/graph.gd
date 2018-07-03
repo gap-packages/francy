@@ -367,15 +367,15 @@ InstallMethod(Layer, "shape", [IsShape], o -> o!.layer);
 InstallMethod(SetLayer, "shape, int", [IsShape, IsInt], function(o, i) o!.layer := i; end);
 
 #! @Description
-#! The <C>ParentNode</C> in which the node will be placed.
+#! The <C>ParentShape</C> in which the node will be placed.
 #! This property is also used to apply a color based on a scale
 #! @Returns <C>IsShape</C>
-DeclareAttribute("ParentNode", IsShape);
-InstallMethod(ParentNode, "shape", [IsShape], o -> o!.parent);
+DeclareAttribute("ParentShape", IsShape);
+InstallMethod(ParentShape, "shape", [IsShape], o -> o!.parent);
 #! @Description
-#! Sets the <C>ParentNode</C>.
+#! Sets the <C>ParentShape</C>.
 #! @Arguments IsShape, IsShape
-InstallMethod(SetParentNode, "shape, shape", [IsShape, IsShape], function(o, p) o!.parent := p!.id; end);
+InstallMethod(SetParentShape, "shape, shape", [IsShape, IsShape], function(o, p) o!.parent := p!.id; end);
 
 #! @Description
 #! <C>Simulation</C> is a property that sets the simulation behavior by 

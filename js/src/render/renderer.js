@@ -1,9 +1,9 @@
-import Base from './base';
+import BaseRenderer from './base';
 import MathJaxWrapper from './mathjax-wrapper';
 
 /* global d3 */
 
-export default class Renderer extends Base {
+export default class Renderer extends BaseRenderer {
 
   constructor({ verbose = false, appendTo, callbackHandler, options = {} }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler, options: options });
@@ -16,7 +16,6 @@ export default class Renderer extends Base {
     if (this.unrender === undefined) {
       this.logger.debug('No [unrender()] method specified...');
     }
-    this.mathjaxWrapper = new MathJaxWrapper(this.options);
     this.element = undefined;
     this.transitionDuration = 750; //ms
   }
@@ -46,7 +45,7 @@ export default class Renderer extends Base {
   }
   
   get mathjax() {
-    return this.mathjaxWrapper.load(this.data);
+    return new MathJaxWrapper(this.options).load(this.data);
   }
 
 }

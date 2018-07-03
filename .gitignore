@@ -62,3 +62,5 @@ extensions/**/dist/
 **/.DS_Store
 
 *.tgz
+
+build.sh

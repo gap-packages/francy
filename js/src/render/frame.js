@@ -2,7 +2,7 @@ import Composite from './composite';
 import Canvas from './canvas';
 import MainMenu from './menu-main';
 import Message from './message';
-import { requires } from '../util/data-decorator';
+import { Decorators } from '../decorator/factory';
 
 /* global d3 */
 
@@ -16,7 +16,7 @@ export default class Frame extends Composite {
     this.add(this.menu).add(this.canvas).add(this.messages);
   }
 
-  @requires('canvas')
+  @Decorators.Data.requires('canvas')
   async render() {
     let parent = this.options.appendTo;
 

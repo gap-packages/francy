@@ -1,5 +1,5 @@
 import Menu from './menu';
-import { requires } from '../util/data-decorator';
+import { Decorators } from '../decorator/factory';
 
 /* global d3 */
 
@@ -9,7 +9,7 @@ export default class ContextMenu extends Menu {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @requires('menus')
+  @Decorators.Data.requires('menus')
   async render() {
 
     d3.event.preventDefault();
@@ -21,9 +21,9 @@ export default class ContextMenu extends Menu {
         .attr('class', 'francy-context-menu-holder');
     }
 
-    let pos = d3.mouse(this.SVGParent.node());
+    let position = d3.mouse(this.SVGParent.node());
 
-    this.element.style('left', pos[0] + 5 + 'px').style('top', pos[1] + 5 + 'px');
+    this.element.style('left', position[0] + 5 + 'px').style('top', position[1] + 5 + 'px');
 
     // show the context menu
     this.element.style('display', 'block');

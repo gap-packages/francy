@@ -125,6 +125,10 @@ export default class Chart extends Renderer {
   static get colors() {
     return d3.scaleSequential().domain([0, 100]).interpolator(d3.interpolateRainbow);
   }
+  
+  static newColors(length) {
+    return d3.scale.linear().domain([1,length]).interpolate(d3.interpolateHcl).range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
+  }
 
   static domainRange(max) {
     return Array.from(new Array(max), (_, i) => i).map(x => x);

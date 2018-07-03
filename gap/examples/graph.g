@@ -39,7 +39,7 @@ gap> shape := Shape(ShapeType.SQUARE);
 <IsFrancyObject/IsShape>
 gap> shape1 := Shape(ShapeType.SQUARE);
 <IsFrancyObject/IsShape>
-gap> SetParentNode(shape1, shape);
+gap> SetParentShape(shape1, shape);
 Add(graph, [shape, shape1]);
 
 #! @EndExample

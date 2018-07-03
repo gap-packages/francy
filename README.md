@@ -11,6 +11,14 @@ There is javascript implementation of the graphical representation that works on
 
 See [Graphics Interface using Javascritp and D3.v4](/js)
 
+## Binder 
+
+The binder includes all packages from `bootstrap-pkg-full`, plus:
+
+[Francy-Monoids](https://github.com/gap-packages/FrancyMonoids)
+
+[Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel)
+
 ## Master
 
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/master)
@@ -37,7 +45,7 @@ mcmartins@local:~$ pip install jupyter_francy
 
 The jupyter extension requires that the GAP Kernel and Francy GAP, both, are installed.
 
-See [GAP Kernel](https://github.com/gap-packages/JupyterKernel)
+See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel)
 
 See [Graphics Semantics Package for GAP](/gap)
 

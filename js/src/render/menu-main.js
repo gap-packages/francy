@@ -31,8 +31,7 @@ export default class MainMenu extends Menu {
 
     // Fixed loader
     let loaderId = `Loader-${this.data.canvas.id}`;
-    this.element.append('li').attr('class', 'francy-loader')
-      .append('div').datum({}).attr('id', loaderId).classed('loader', true);
+    this.element.append('li').attr('class', 'francy-loader').append('a').datum({}).attr('id', loaderId).classed('loader', true);
 
     // Title
     if (this.data.canvas.title) {
@@ -45,7 +44,7 @@ export default class MainMenu extends Menu {
     let content = entry.append('ul');
     content.append('li').append('a').on('click', () => this.options.appendTo.canvas.zoomToFit(true)).attr('title', 'Zoom to Fit').html('Zoom to Fit');
     content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(this.SVGParent.node(), 'diagram.png')).attr('title', 'Save to PNG').html('Save to PNG');
-    content.append('li').append('a').on('click', () => aboutModal.load(this.data).render()).attr('title', 'About').html('About');
+    content.append('li').append('a').on('click', () => this.handlePromise(aboutModal.load(this.data).render())).attr('title', 'About').html('About');
 
     // Traverse all menus and flatten them!
     let menusIterator = this.iterator(Object.values(this.data.canvas.menus));

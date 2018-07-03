@@ -1,14 +1,15 @@
 import Logger from '../util/logger';
-import JsonUtils from '../util/json-utils';
+import JsonUtils from '../util/json';
+import { Components } from '../component/factory';
 import { Exception, RuntimeException } from '../util/exception';
-import { showLoader, hideLoader } from '../util/loader-decorator';
+import { Decorators } from '../decorator/factory';
 
 /* global d3 */
 
 /**
  * Base is the base of renderers and contains multiple utility methods.
  */
-export default class Base {
+export default class BaseRenderer {
 
   /**
    * Base constructor
@@ -19,6 +20,9 @@ export default class Base {
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
   constructor({ verbose = false, appendTo = 'body', callbackHandler }) {
+    // initialize components
+    Components.D3;
+    Components.MathJax;
     /**
      * @typedef {Object} Options
      * @property {Boolean} verbose prints extra log information to console.log, default false
@@ -94,19 +98,18 @@ export default class Base {
     if (error instanceof Exception) {
       // well, most of these are just informative
       this.logger.debug(error.message);
-    } else if (error instanceof RuntimeException) {
-      this.logger.error(error.message);
-    } else {
-      throw error;
+      return;
     }
+    this.logger.error(error.message);
+    throw error;
   }
 
-  async handlePromise(promise) {
-    let loaderId = showLoader.call(this);
+  handlePromise(promise) {
+    let loader = Decorators.Loader.withContext(this).show();
     return promise
       .then(data => data)
       .catch(error => this.handleErrors(error))
-      .finally(() => hideLoader.call(this, loaderId));
+      .finally(() => loader.hide());
   }
 
 }

@@ -71,8 +71,8 @@ gap> shape := Shape(ShapeType.SQUARE);
 <IsFrancyObject/IsShape>
 gap> shape1 := Shape(ShapeType.SQUARE);
 <IsFrancyObject/IsShape>
-gap> SetParentNode(shape1, shape);
-gap> ParentNode(shape1) = Id(shape);
+gap> SetParentShape(shape1, shape);
+gap> ParentShape(shape1) = Id(shape);
 true
 gap> SetSize(shape1, 5);
 gap> Size(shape1) = 5;

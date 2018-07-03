@@ -32,7 +32,9 @@ export class OutputWidget extends Widget {
         future.onIOPub = function(msg) {
           if (msg.content && msg.content.data && msg.content.data[MIME_TYPE]) {
             // This will update an existing canvas by its ID!
-            francy.load(msg.content.data[MIME_TYPE]).render();
+            francy.load(msg.content.data[MIME_TYPE]).render()
+              .catch(error => console.error(error))
+              .then(element => console.log('Trigger result', element));
           }
         };
       }
@@ -43,7 +45,9 @@ export class OutputWidget extends Widget {
    * Render 'application/vnd.francy+json' into this widget's node.
    */
   renderModel(model) {
-    francy.load(model.data[this._mimeType]).render().then(element => this.node.appendChild(element));
+    francy.load(model.data[this._mimeType]).render()
+      .catch(error => console.error(error))
+      .then(element => this.node.appendChild(element));
   }
 
 }

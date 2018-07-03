@@ -52,7 +52,7 @@ export default class Graph extends Renderer {
           // object to render and not the whole `this.data` object, 
           // we can't check for the property canvas.texTypesetting, 
           // hence this:
-          self.handlePromise(self.mathjax.settings({appendTo: self.tooltip}).renderHTML());
+          self.handlePromise(self.mathjax.settings({appendTo: self.tooltip, renderType: 'HTML-CSS'}).render());
         } 
       })
       .on('mouseout', function() {
@@ -71,13 +71,15 @@ export default class Graph extends Renderer {
   }
   
   static linkXPos(s, t) {
-    let angle = Math.atan2(t.y - s.y, t.x - s.x);
-    return Math.cos(angle) + (s.x + t.x)/2;
+    return Math.cos(Graph.angle(s, t)) + (s.x + t.x)/2;
   }
     
   static linkYPos(s, t) {
-    let angle = Math.atan2(t.y - s.y, t.x - s.x);
-    return Math.sin(angle) + (s.y + t.y) / 2;
+    return Math.sin(Graph.angle(s, t)) + (s.y + t.y) / 2;
+  }
+  
+  static angle(s, t) {
+    return Math.atan2(t.y - s.y, t.x - s.x);
   }
 
   static get colors() {
