@@ -6,6 +6,8 @@ COPY --chown=1000:1000 . $HOME/francy
 
 USER root
 
+RUN apt-get install python-pip
+
 # lab extension installation
 RUN ls -lart $HOME && cd $HOME/francy/js && npm install && npm run build:all \
   && cd $HOME/francy/extensions/jupyter && npm install && npm run build:all && pip install -e . && jupyter labextension link \
