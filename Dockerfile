@@ -2,7 +2,7 @@ FROM gapsystem/gap-docker-master:francy
 
 MAINTAINER Manuel Martins <manuelmachadomartins@gmail.com>
 
-COPY . $HOME/francy
+COPY --chown=1000:100 . $HOME/francy
 
 # lab extension installation
 RUN cd $HOME/francy/js && npm install && npm run build:all \
