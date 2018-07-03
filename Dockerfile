@@ -6,7 +6,7 @@ COPY --chown=1000:1000 . $HOME/francy
 
 USER root
 
-RUN apt-get install python-pip
+RUN apt-get update && apt-get install python-pip -y
 
 # lab extension installation
 RUN ls -lart $HOME && cd $HOME/francy/js && npm install && npm run build:all \
