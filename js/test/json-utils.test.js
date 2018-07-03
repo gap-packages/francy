@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import JsonUtils from '../src/util/json-utils';
+import JsonUtils from '../src/util/json';
 
 describe("Json utils", () => {
 

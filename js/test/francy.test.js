@@ -36,24 +36,24 @@ describe("Francy Renderer Object", () => {
     });
   });
   
-  it("should produce an undirected graph", async () => {
-    await window.francy.load(json1).render().then(object => {
-      expect(object).to.be.a('htmldivelement');
+  //it("should produce an undirected graph", async () => {
+  //  await window.francy.load(json1).render().then(object => {
+  //    expect(object).to.be.a('htmldivelement');
       // FIXME because is async at this momnt theres no SVG
       //expect(window.d3.select(object).selectAll('svg').size()).to.be.equals(1);
       //expect(window.d3.select(object).selectAll('.francy-node').size()).to.be.equals(3);
       //expect(window.d3.select(object).selectAll('.francy-link').size()).to.be.equals(3);
-    });
-  });
+  //  });
+  //});
 
-  it("should produce a tree graph", async () => {
-    await window.francy.load(json10).render().then(object => {
-      expect(object).to.be.a('htmldivelement');
+  //it("should produce a tree graph", async () => {
+  //  await window.francy.load(json10).render().then(object => {
+  //    expect(object).to.be.a('htmldivelement');
       // FIXME because is async at this momnt theres no SVG
       //expect(window.d3.select(object).selectAll('svg').size()).to.be.equals(1);
       //expect(window.d3.select(object).selectAll('.francy-node').size()).to.be.equals(8);
       //expect(window.d3.select(object).selectAll('.francy-link').size()).to.be.equals(0);
-    });
-  });
+  //  });
+  //});
 
 });
