@@ -5,7 +5,7 @@ MAINTAINER Manuel Martins <manuelmachadomartins@gmail.com>
 COPY . $HOME/francy
 
 # lab extension installation
-RUN cd $HOME/francy && npm install && npm run build:all \
+RUN cd $HOME/francy/js && npm install && npm run build:all \
   && cd $HOME/francy/extensions/jupyter && npm install && npm run build:all && pip install -e . && jupyter labextension link \
   && mv $HOME/francy/extensions/jupyter/jupyter_francy/nbextension $HOME/francy/extensions/jupyter/jupyter_francy/jupyter_francy \
   && jupyter nbextension install $HOME/francy/extensions/jupyter/jupyter_francy/jupyter_francy --user \
