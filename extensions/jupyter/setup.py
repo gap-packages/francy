@@ -52,10 +52,10 @@ version_ns = {}
 with io.open(pjoin(here, name, '_version.py'), encoding='utf8') as f:
     exec(f.read(), {}, version_ns)
 
-cmdclass = create_cmdclass(('jsdeps'))
+cmdclass = create_cmdclass(('jsdeps',))
 cmdclass['jsdeps'] = combine_commands(
     install_npm(here, build_cmd='build:all'),
-    ensure_targets(jstargets),
+    ensure_targets(jstargets)
 )
 
 package_data = {
