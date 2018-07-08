@@ -1,198 +1,85 @@
 {
-  "width": 800,
-  "height": 600,
-  "id": "F91",
+  "version": "0.8.0",
   "mime": "application/vnd.francy+json",
-  "title": "Subgroups Digraph",
-  "zoomToFit": true,
-  "texTypesetting": false,
-  "menus": {},
-  "graph": {
-    "type": "directed",
-    "id": "F92",
-    "simulation": true,
-    "collapsed": true,
-    "drag": true,
-    "showNeighbours": true,
-    "nodes": {
-      "F93": {
-        "type": "circle",
-        "size": 10,
-        "id": "F93",
-        "title": "1",
-        "color": "",
-        "highlight": true,
-        "layer": 0,
-        "parent": "",
-        "menus": {},
-        "messages": {},
-        "callbacks": {},
-        "index": 0
+  "canvas": {
+    "width": 800,
+    "id": "F291",
+    "height": 100,
+    "title": "Example Tree Graph",
+    "zoomToFit": true,
+    "texTypesetting": false,
+    "menus": {},
+    "graph": {
+      "type": "tree",
+      "id": "F292",
+      "simulation": true,
+      "collapsed": false,
+      "drag": false,
+      "showNeighbours": false,
+      "nodes": {
+        "F293": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "id": "F293",
+          "size": 10,
+          "title": "G",
+          "color": "",
+          "highlight": true,
+          "layer": 0,
+          "parent": "F294",
+          "menus": {},
+          "messages": {},
+          "callbacks": {}
+        },
+        "F294": {
+          "x": 0,
+          "y": 0,
+          "type": "square",
+          "id": "F294",
+          "size": 10,
+          "title": "1",
+          "color": "",
+          "highlight": true,
+          "layer": 0,
+          "parent": "",
+          "menus": {},
+          "messages": {},
+          "callbacks": {}
+        },
+        "F295": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "id": "F295",
+          "size": 10,
+          "title": "SG1",
+          "color": "",
+          "highlight": true,
+          "layer": 0,
+          "parent": "F293",
+          "menus": {},
+          "messages": {},
+          "callbacks": {}
+        },
+        "F296": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "id": "F296",
+          "size": 10,
+          "title": "SG2",
+          "color": "",
+          "highlight": true,
+          "layer": 0,
+          "parent": "F293",
+          "menus": {},
+          "messages": {},
+          "callbacks": {}
+        }
       },
-      "F94": {
-        "type": "circle",
-        "size": 10,
-        "id": "F94",
-        "title": "2",
-        "color": "",
-        "highlight": true,
-        "layer": 0,
-        "parent": "",
-        "menus": {},
-        "messages": {},
-        "callbacks": {},
-        "index": 1
-      },
-      "F95": {
-        "type": "circle",
-        "size": 10,
-        "id": "F95",
-        "title": "3",
-        "color": "",
-        "highlight": true,
-        "layer": 0,
-        "parent": "",
-        "menus": {},
-        "messages": {},
-        "callbacks": {},
-        "index": 2
-      },
-      "F96": {
-        "type": "circle",
-        "size": 10,
-        "id": "F96",
-        "title": "4",
-        "color": "",
-        "highlight": true,
-        "layer": 0,
-        "parent": "",
-        "menus": {},
-        "messages": {},
-        "callbacks": {},
-        "index": 3
-      },
-      "F97": {
-        "type": "circle",
-        "size": 10,
-        "id": "F97",
-        "title": "5",
-        "color": "",
-        "highlight": true,
-        "layer": 0,
-        "parent": "",
-        "menus": {},
-        "messages": {},
-        "callbacks": {},
-        "index": 4
-      },
-      "F98": {
-        "type": "circle",
-        "size": 10,
-        "id": "F98",
-        "title": "6",
-        "color": "",
-        "highlight": true,
-        "layer": 0,
-        "parent": "",
-        "menus": {},
-        "messages": {},
-        "callbacks": {},
-        "index": 5
-      }
+      "links": {}
     },
-    "links": {
-      "F99": {
-        "source": "F93",
-        "weight": 1,
-        "color": "",
-        "target": "F93"
-      },
-      "F100": {
-        "source": "F94",
-        "weight": 1,
-        "color": "",
-        "target": "F93"
-      },
-      "F101": {
-        "source": "F94",
-        "weight": 1,
-        "color": "",
-        "target": "F94"
-      },
-      "F102": {
-        "source": "F95",
-        "weight": 1,
-        "color": "",
-        "target": "F93"
-      },
-      "F103": {
-        "source": "F95",
-        "weight": 1,
-        "color": "",
-        "target": "F95"
-      },
-      "F104": {
-        "source": "F96",
-        "weight": 1,
-        "color": "",
-        "target": "F93"
-      },
-      "F105": {
-        "source": "F96",
-        "weight": 1,
-        "color": "",
-        "target": "F96"
-      },
-      "F106": {
-        "source": "F97",
-        "weight": 1,
-        "color": "",
-        "target": "F93"
-      },
-      "F107": {
-        "source": "F97",
-        "weight": 1,
-        "color": "",
-        "target": "F97"
-      },
-      "F108": {
-        "source": "F98",
-        "weight": 1,
-        "color": "",
-        "target": "F93"
-      },
-      "F109": {
-        "source": "F98",
-        "weight": 1,
-        "id": "F109",
-        "color": "",
-        "target": "F94"
-      },
-      "F110": {
-        "source": "F98",
-        "weight": 1,
-        "color": "",
-        "target": "F95"
-      },
-      "F111": {
-        "source": "F98",
-        "weight": 1,
-        "color": "",
-        "target": "F96"
-      },
-      "F112": {
-        "source": "F98",
-        "weight": 1,
-        "color": "",
-        "target": "F97"
-      },
-      "F113": {
-        "source": "F98",
-        "weight": 1,
-        "color": "",
-        "target": "F98"
-      }
-    }
-  },
-  "messages": {}
+    "messages": {}
+  }
 }

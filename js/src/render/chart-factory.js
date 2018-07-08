@@ -30,7 +30,7 @@ export default class ChartFactory extends Renderer {
     element = await this.handlePromise(chart.load(this.data).render());
 
     if (element) {
-      setTimeout(element.parent.zoomToFit, 10);
+      setTimeout(element.parent.zoomToFit, 0);
     }
 
     return element;

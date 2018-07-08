@@ -5,8 +5,6 @@ import * as ignore from 'seedrandom';
 
 /* global VERSION */
 
-let ALL_CANVAS = {};
-
 /**
  * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.load} function,
  * Francy will handle the creation of that json as long it is a valid and understandable json object to Francy.
@@ -40,39 +38,19 @@ export default class Francy extends Renderer {
   @Decorators.Data.requires('canvas')
   async render() {
     if (this.data.version !== VERSION) {
-      this.logger.warn(`Rendering data generated in Francy GAP [${this.data.version}] using Francy JS [${VERSION}], rendering may fail... please update your system...`);
+      this.logger.warn(`Rendering data generated in Francy GAP v${this.data.version} using Francy JS v${VERSION}, rendering may fail... please update your system...`);
     }
     //set seed to produce always the same graphs
     Math.seedrandom('Francy!');
     let frame = await new Frame(this.options).load(this.data).render().then(element => element);
-    ALL_CANVAS[this.data.canvas.id] = frame;
     return frame.element.node();
   }
-
-  /**
-   * Utility method to remove canvas from known canvas
-   */
-  static unrender(id) {
-    delete ALL_CANVAS[id];
-  }
+  
+  unrender(){}
 }
 
-try {
+if (window) {
   exports.Francy = window.Francy = Francy;
-  // handle events on resize
-  let oldResize = window.onresize;
-  window.onresize = () => {
-    // zoom to fit all canvas on resize
-    Object.values(ALL_CANVAS).forEach((frame) => {
-      if (frame.canvas) {
-        frame.canvas.zoomToFit();
-      }
-    });
-    // call old resize function if any!
-    if (typeof oldResize === 'function') {
-      oldResize();
-    }
-  };
-} catch (e) {
+} else {
   exports.Francy = Francy;
 }

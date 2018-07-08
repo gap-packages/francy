@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import JsonUtils from '../src/util/json';
 
-describe("Json utils", () => {
+describe('Json utils', () => {
 
   beforeEach(() => {});
 
-  it("should return an object", () => {
+  it('should return an object', () => {
     expect(JsonUtils).to.be.an('function');
     //expect(JsonUtils.parse(`{"mime": ${JsonUtils.MIME}, "canvas": {}}`)).to.be.an('object');
     expect(JsonUtils.parse({ "mime": JsonUtils.MIME, "canvas": {} })).to.be.an('object');
@@ -15,7 +15,7 @@ describe("Json utils", () => {
     expect(JsonUtils.parse({ "canvas": {} }, true)).to.be.an('object');
   });
 
-  it("should return undefined", () => {
+  it('should return undefined', () => {
     expect(JsonUtils).to.be.an('function');
     expect(JsonUtils.parse(undefined)).to.be.an('undefined');
     expect(JsonUtils.parse(undefined, true)).to.be.an('undefined');

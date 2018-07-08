@@ -1,4 +1,4 @@
-/*! francy-js, v0.6.0, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>. */
+/*! francy-js, v0.8.0, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>. */
 define(function() { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -12866,7 +12866,7 @@ var BaseComponent = function () {
     if (this.initialize === undefined || typeof this.initialize !== 'function') {
       throw new TypeError('Must override [initialize()] method!');
     }
-    this.available = true;
+    this.available = false;
     /**
      * @typedef {Object} Options
      * @property {Boolean} verbose prints extra log information to console.log, default false
@@ -12879,26 +12879,32 @@ var BaseComponent = function () {
      */
     this.log = new _logger2.default(this.options);
     // run initialization
-    var decorator = _factory.Decorators.Error.wrap(this.initialize).withContext(this).onErrorThrow(mandatory).onErrorExec(this._onError);
+    var decorator = _factory.Decorators.Error.wrap(this._initialize).withContext(this).onErrorThrow(mandatory).onErrorExec(this._onError);
     if (delay) {
       setTimeout(function () {
         return decorator.handle();
-      }, 10);
+      }, 0);
     } else {
       decorator.handle();
     }
   }
 
-  /**
-   * Saves the settings in an internal options object.
-   * 
-   * @typedef {Object} Options
-   * @property {Boolean} verbose prints extra log information to console.log, default false
-   * @property {Boolean} mandatory whether the component is mandatory or optional
-   */
-
-
   _createClass(BaseComponent, [{
+    key: '_initialize',
+    value: function _initialize() {
+      this.initialize();
+      this.available = true;
+    }
+
+    /**
+     * Saves the settings in an internal options object.
+     * 
+     * @typedef {Object} Options
+     * @property {Boolean} verbose prints extra log information to console.log, default false
+     * @property {Boolean} mandatory whether the component is mandatory or optional
+     */
+
+  }, {
     key: 'settings',
     value: function settings(_ref) {
       var mandatory = _ref.mandatory;
@@ -13013,13 +13019,77 @@ var _mathjax = __webpack_require__(/*! ./mathjax */ "./src/component/mathjax.js"
 
 var _mathjax2 = _interopRequireDefault(_mathjax);
 
+var _jupyter = __webpack_require__(/*! ./jupyter */ "./src/component/jupyter.js");
+
+var _jupyter2 = _interopRequireDefault(_jupyter);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* singleton */
 var Components = exports.Components = {
   D3: new _d2.default(true, true),
-  MathJax: new _mathjax2.default(false, true)
+  MathJax: new _mathjax2.default(false, true),
+  Jupyter: new _jupyter2.default(false, false)
 };
+
+/***/ }),
+
+/***/ "./src/component/jupyter.js":
+/*!**********************************!*\
+  !*** ./src/component/jupyter.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _base = __webpack_require__(/*! ./base */ "./src/component/base.js");
+
+var _base2 = _interopRequireDefault(_base);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/* global Jupyter */
+
+var JupyterComponent = function (_BaseComponent) {
+  _inherits(JupyterComponent, _BaseComponent);
+
+  function JupyterComponent() {
+    var mandatory = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    _classCallCheck(this, JupyterComponent);
+
+    return _possibleConstructorReturn(this, (JupyterComponent.__proto__ || Object.getPrototypeOf(JupyterComponent)).call(this, mandatory, delay));
+  }
+
+  _createClass(JupyterComponent, [{
+    key: 'initialize',
+    value: function initialize() {
+      if (!Jupyter) {
+        throw new Error('This is not Jupyter is not imported and Francy won\'t work without it... please import D3 v5+ library.');
+      }
+    }
+  }]);
+
+  return JupyterComponent;
+}(_base2.default);
+
+exports.default = JupyterComponent;
 
 /***/ }),
 
@@ -13444,7 +13514,7 @@ var Decorators = exports.Decorators = {
   },
 
   get Jupyter() {
-    new new _jupyter2.default()();
+    return new _jupyter2.default();
   }
 
 };
@@ -13572,6 +13642,8 @@ var _logger = __webpack_require__(/*! ../util/logger */ "./src/util/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
 
+var _factory = __webpack_require__(/*! ../component/factory */ "./src/component/factory.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13589,7 +13661,7 @@ var JupyterDecorator = function () {
     key: 'registerKeyboardEvents',
     value: function registerKeyboardEvents(classes) {
       // disable keyboard shortcuts in Jupyter for specific css classed elements
-      if (!classes) return;
+      if (!classes || !_factory.Components.Jupyter.isAvailable) return;
       try {
         classes.map(function (c) {
           Jupyter.keyboard_manager.register_events(c);
@@ -13661,7 +13733,7 @@ var LoaderDecorator = function () {
   }, {
     key: 'show',
     value: function show() {
-      if (this.element) {
+      if (this.element && this.element.data()[0]) {
         this.element.data()[0][this.id] = true;
         this.element.style('visibility', 'visible');
       }
@@ -13670,7 +13742,7 @@ var LoaderDecorator = function () {
   }, {
     key: 'hide',
     value: function hide() {
-      if (this.element) {
+      if (this.element && this.element.data()[0]) {
         delete this.element.data()[0][this.id];
         // hide only if no more loaders present
         if (Object.values(this.element.data()[0]).length == 0) {
@@ -13772,8 +13844,6 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global VERSION */
 
-var ALL_CANVAS = {};
-
 /**
  * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.load} function,
  * Francy will handle the creation of that json as long it is a valid and understandable json object to Francy.
@@ -13805,7 +13875,7 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
     // all good!
     var _this = _possibleConstructorReturn(this, (Francy.__proto__ || Object.getPrototypeOf(Francy)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
 
-    _this.logger.info('Francy JS v' + "0.6.0" + ' initialized! Enjoy...');
+    _this.logger.info('Francy JS v' + "0.8.0" + ' initialized! Enjoy...');
     return _this;
   }
 
@@ -13825,8 +13895,8 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (this.data.version !== "0.6.0") {
-                  this.logger.warn('Rendering data generated in Francy GAP [' + this.data.version + '] using Francy JS [' + "0.6.0" + '], rendering may fail... please update your system...');
+                if (this.data.version !== "0.8.0") {
+                  this.logger.warn('Rendering data generated in Francy GAP v' + this.data.version + ' using Francy JS v' + "0.8.0" + ', rendering may fail... please update your system...');
                 }
                 //set seed to produce always the same graphs
                 Math.seedrandom('Francy!');
@@ -13837,11 +13907,9 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
 
               case 4:
                 frame = _context.sent;
-
-                ALL_CANVAS[this.data.canvas.id] = frame;
                 return _context.abrupt('return', frame.element.node());
 
-              case 7:
+              case 6:
               case 'end':
                 return _context.stop();
             }
@@ -13855,16 +13923,9 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
 
       return render;
     }()
-
-    /**
-     * Utility method to remove canvas from known canvas
-     */
-
-  }], [{
+  }, {
     key: 'unrender',
-    value: function unrender(id) {
-      delete ALL_CANVAS[id];
-    }
+    value: function unrender() {}
   }]);
 
   return Francy;
@@ -13872,23 +13933,9 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
 exports.default = Francy;
 
 
-try {
+if (window) {
   exports.Francy = window.Francy = Francy;
-  // handle events on resize
-  var oldResize = window.onresize;
-  window.onresize = function () {
-    // zoom to fit all canvas on resize
-    Object.values(ALL_CANVAS).forEach(function (frame) {
-      if (frame.canvas) {
-        frame.canvas.zoomToFit();
-      }
-    });
-    // call old resize function if any!
-    if (typeof oldResize === 'function') {
-      oldResize();
-    }
-  };
-} catch (e) {
+} else {
   exports.Francy = Francy;
 }
 
@@ -13956,6 +14003,7 @@ var BaseRenderer = function () {
     // initialize components
     _factory.Components.D3;
     _factory.Components.MathJax;
+    _factory.Components.Jupyter;
     /**
      * @typedef {Object} Options
      * @property {Boolean} verbose prints extra log information to console.log, default false
@@ -14728,7 +14776,7 @@ var ChartFactory = (_dec = _factory.Decorators.Data.requires('canvas.chart'), (_
 
 
                 if (element) {
-                  setTimeout(element.parent.zoomToFit, 10);
+                  setTimeout(element.parent.zoomToFit, 0);
                 }
 
                 return _context.abrupt('return', element);
@@ -15219,7 +15267,7 @@ var Chart = function (_Renderer) {
   }, {
     key: 'newColors',
     value: function newColors(length) {
-      return d3.scale.linear().domain([1, length]).interpolate(d3.interpolateHcl).range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
+      return d3.scale.linear().domain([1, length]).interpolate(d3.interpolateHcl).range([d3.rgb('#007AFF'), d3.rgb('#FFF500')]);
     }
   }, {
     key: 'domainRange',
@@ -15370,6 +15418,9 @@ var Composite = function (_Renderer) {
                 return _context.finish(18);
 
               case 26:
+                this.ready = true;
+
+              case 27:
               case 'end':
                 return _context.stop();
             }
@@ -15494,7 +15545,9 @@ var Frame = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = funct
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var parent, frameId;
+        var _this2 = this;
+
+        var parent, frameId, oldResize;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -15525,9 +15578,25 @@ var Frame = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = funct
 
                 this.handlePromise(this.renderChildren());
 
+                if (window) {
+                  // handle events on resize
+                  oldResize = window.onresize;
+
+                  window.onresize = function () {
+                    // zoom to fit all canvas on resize
+                    if (_this2.canvas) {
+                      _this2.canvas.zoomToFit();
+                    }
+                    // call old resize function if any!
+                    if (typeof oldResize === 'function') {
+                      oldResize();
+                    }
+                  };
+                }
+
                 return _context.abrupt('return', this);
 
-              case 9:
+              case 10:
               case 'end':
                 return _context.stop();
             }
@@ -16092,9 +16161,9 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                   simulation = d3.forceSimulation(), safeTicked = _factory.Decorators.Error.wrap(ticked).withContext(self).onErrorThrow(false).onErrorExec(simulation.stop), safeEnd = _factory.Decorators.Error.wrap(endSimulation).withContext(self);
 
 
-                  simulation.nodes(nodesToAdd).force('charge-default', layered ? undefined : d3.forceManyBody().strength(-75)).force('x', d3.forceX()).force('y', layered ? d3.forceY(function (d) {
+                  simulation.nodes(nodesToAdd).force('charge-1', layered ? undefined : d3.forceManyBody().strength(-75)).force('x', d3.forceX()).force('y', layered ? d3.forceY(function (d) {
                     return (d.layer + 1) * 100;
-                  }).strength(1) : d3.forceY()).force('charge', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length)).force('link', d3.forceLink(canvasLinks).id(function (d) {
+                  }).strength(1) : d3.forceY()).force('charge-2', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length)).force('link', d3.forceLink(canvasLinks).id(function (d) {
                     return d.id;
                   }).distance(function (d) {
                     return d.height || 100;
@@ -17400,7 +17469,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _desc, _value, _class;
+var _dec, _dec2, _desc, _value, _class;
 
 var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal.js");
 
@@ -17449,7 +17518,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var AboutModal = (_dec = _factory.Decorators.Initializer.initialize(), (_class = function (_Modal) {
+var AboutModal = (_dec = _factory.Decorators.Initializer.initialize(), _dec2 = _factory.Decorators.Data.requires('canvas'), (_class = function (_Modal) {
   _inherits(AboutModal, _Modal);
 
   function AboutModal(_ref) {
@@ -17510,7 +17579,7 @@ var AboutModal = (_dec = _factory.Decorators.Initializer.initialize(), (_class =
                 // disable keyboard shortcuts when using this modal in Jupyter
                 _factory.Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
 
-                this.logger.debug('Callback About updated [' + modalId + ']...');
+                this.logger.debug('Modal About updated [' + modalId + ']...');
 
                 return _context.abrupt('return', this);
 
@@ -17531,7 +17600,7 @@ var AboutModal = (_dec = _factory.Decorators.Initializer.initialize(), (_class =
   }]);
 
   return AboutModal;
-}(_modal2.default), (_applyDecoratedDescriptor(_class.prototype, 'render', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'render'), _class.prototype)), _class));
+}(_modal2.default), (_applyDecoratedDescriptor(_class.prototype, 'render', [_dec, _dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'render'), _class.prototype)), _class));
 exports.default = AboutModal;
 
 /***/ }),

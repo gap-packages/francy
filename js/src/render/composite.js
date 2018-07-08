@@ -22,5 +22,6 @@ export default class Composite extends Renderer {
     for (let renderer of this.renderers) {
       await this.handlePromise(renderer.settings({appendTo: this}).load(this.data).render());
     }
+    this.ready = true;
   }
 }

@@ -1,147 +1,60 @@
 {
+  "version": "0.8.0",
   "mime": "application/vnd.francy+json",
   "canvas": {
-    "width": "800",
-    "height": "400",
-    "id": "A8DCD5BBDED624AE18C514461B4AAEA75",
-    "title": "Multi Chained Menu Gets Flatenned!",
-    "texTypesetting": true,
-    "menus": {
-      "1B09C45784694781CC3D3E68AF1F5CFF": {
-        "id": "1B09C45784694781CC3D3E68AF1F5CFF",
-        "title": "Multi Menu",
-        "callback": {
-          "type": "server",
-          "id": "26572242DF2F43D9AC72DA4D57B7AA81",
-          "trigger": "click",
-          "knownArgs": [],
-          "requiredArgs": {}
+    "width": 800,
+    "id": "F265",
+    "height": 200,
+    "title": "Example BAR Chart",
+    "zoomToFit": true,
+    "texTypesetting": false,
+    "menus": {},
+    "chart": {
+      "type": "bar",
+      "data": {
+        "data1": [
+          "100",
+          "20",
+          "30",
+          "47",
+          "90"
+        ],
+        "data2": [
+          "51",
+          "60",
+          "72",
+          "38",
+          "97"
+        ],
+        "data3": [
+          "50",
+          "60",
+          "70",
+          "80",
+          "90"
+        ]
+      },
+      "id": "F266",
+      "showLegend": true,
+      "axis": {
+        "x": {
+          "domain": [
+            "domain1",
+            "domain2",
+            "domain3",
+            "domain4",
+            "domain5"
+          ],
+          "title": "X Axis",
+          "scale": "band"
         },
-        "menus": {
-          "0B1E608E0B7844971C520DBC7A9E74A1": {
-            "id": "0B1E608E0B7844971C520DBC7A9E74A1",
-            "title": "Add Circle",
-            "callback": {
-              "type": "server",
-              "id": "858A0120C4444F10ECA4C280DCA35730",
-              "trigger": "click",
-              "knownArgs": [],
-              "requiredArgs": {
-                "D24388E504254B3ECC899D9748C5DE87": {
-                  "type": "number",
-                  "id": "D24388E504254B3ECC899D9748C5DE87",
-                  "title": "How many Circles?",
-                  "value": ""
-                }
-              }
-            },
-            "menus": {
-              "AE9D1BE0EA16438874B27FE539D34269": {
-                "id": "AE9D1BE0EA16438874B27FE539D34269",
-                "title": "Add Square",
-                "callback": {
-                  "type": "server",
-                  "id": "4D178A036EF742C2BC6C055D9B907FB9",
-                  "trigger": "click",
-                  "knownArgs": [],
-                  "requiredArgs": {
-                    "6712D58088354743248E80CD0871AE9A": {
-                      "type": "number",
-                      "id": "6712D58088354743248E80CD0871AE9A",
-                      "title": "How many Squares?",
-                      "value": ""
-                    }
-                  }
-                },
-                "menus": {
-                  "972A7D3A2BD2428E84513487EA9965A8": {
-                    "id": "972A7D3A2BD2428E84513487EA9965A8",
-                    "title": "Clear",
-                    "callback": {
-                      "type": "server",
-                      "id": "137DB56349C44C86349415D8DBC577B4",
-                      "trigger": "click",
-                      "knownArgs": [],
-                      "requiredArgs": {}
-                    },
-                    "menus": {}
-                  }
-                }
-              }
-            }
-          }
+        "y": {
+          "domain": [],
+          "title": "Y Axis",
+          "scale": "linear"
         }
       }
     },
-    "graph": {
-      "type": "hasse",
-      "id": "70C0C02B07B84DB34C05ECEED45E49C0",
-      "simulation": true,
-      "nodes": {
-        "85A237CE30554A1FF46170E35B1B80BD": {
-          "x": 0,
-          "y": 0,
-          "type": "diamond",
-          "size": 10,
-          "id": "85A237CE30554A1FF46170E35B1B80BD",
-          "title": "$x^2$",
-          "layer": 0,
-          "menus": {
-            "366688A254054F9AFC43A6EA5008CAD2": {
-              "id": "366688A254054F9AFC43A6EA5008CAD2",
-              "title": "Add Circle",
-              "callback": {
-                "type": "server",
-                "id": "9A4E435F8A234BBD34DD34C838182A5C",
-                "trigger": "click",
-                "knownArgs": [],
-                "requiredArgs": {
-                  "8F794C1FA828467404CA41218DCFC68D": {
-                    "type": "number",
-                    "id": "8F794C1FA828467404CA41218DCFC68D",
-                    "title": "How many Circles?",
-                    "value": ""
-                  }
-                }
-              },
-              "menus": {}
-            },
-            "682E684B60AC4F4CCCEED7EAB57AE7DA": {
-              "id": "682E684B60AC4F4CCCEED7EAB57AE7DA",
-              "title": "Add Square",
-              "callback": {
-                "type": "server",
-                "id": "12AC5E185BB641038431E4B4C3456293",
-                "trigger": "click",
-                "knownArgs": [],
-                "requiredArgs": {
-                  "4509A7188928455C64B962BCBF295BF1": {
-                    "type": "number",
-                    "id": "4509A7188928455C64B962BCBF295BF1",
-                    "title": "How many Squares?",
-                    "value": ""
-                  }
-                }
-              },
-              "menus": {}
-            },
-            "8C1F96C773474A8154A4C46BB113E35E": {
-              "id": "8C1F96C773474A8154A4C46BB113E35E",
-              "title": "Clear",
-              "callback": {
-                "type": "server",
-                "id": "E3F02797F57E4022DCE98F0FCF04CBA8",
-                "trigger": "click",
-                "knownArgs": [],
-                "requiredArgs": {}
-              },
-              "menus": {}
-            }
-          },
-          "highlight": true
-        }
-      },
-      "links": {}
-    }
+    "messages": {}
   }
 }

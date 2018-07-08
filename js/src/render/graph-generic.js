@@ -179,10 +179,10 @@ export default class GenericGraph extends Graph {
         safeEnd = Decorators.Error.wrap(endSimulation).withContext(self);
       
       simulation.nodes(nodesToAdd)
-        .force('charge-default', layered ? undefined : d3.forceManyBody().strength(-75))
+        .force('charge-1', layered ? undefined : d3.forceManyBody().strength(-75))
         .force('x', d3.forceX())
         .force('y', layered ? d3.forceY(d => (d.layer + 1) * 100).strength(1) : d3.forceY())
-        .force('charge', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length))
+        .force('charge-2', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length))
         .force('link', d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100))
         .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2))
         .on('tick', () => safeTicked.handle())

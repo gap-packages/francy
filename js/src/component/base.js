@@ -17,25 +17,30 @@ export default class BaseComponent {
     if (this.initialize === undefined || typeof this.initialize !== 'function') {
       throw new TypeError('Must override [initialize()] method!');
     }
-    this.available = true;
+    this.available = false;
     /**
      * @typedef {Object} Options
      * @property {Boolean} verbose prints extra log information to console.log, default false
      * @property {Boolean} mandatory whether the component is mandatory or optional
      */
     this.options = undefined;
-    this.settings({ mandatory: mandatory });
+    this.settings({ mandatory: mandatory, verbose: false });
     /**
      * @type {Logger} the logger for this class
      */
     this.log = new Logger(this.options);
     // run initialization
-    let decorator = Decorators.Error.wrap(this.initialize).withContext(this).onErrorThrow(mandatory).onErrorExec(this._onError);
+    let decorator = Decorators.Error.wrap(this._initialize).withContext(this).onErrorThrow(mandatory).onErrorExec(this._onError);
     if (delay) {
-      setTimeout(() => decorator.handle(), 10);
+      setTimeout(() => decorator.handle(), 0);
     } else {
       decorator.handle();
     }
+  }
+  
+  _initialize() {
+    this.initialize();
+    this.available = true;
   }
 
   /**
@@ -45,9 +50,10 @@ export default class BaseComponent {
    * @property {Boolean} verbose prints extra log information to console.log, default false
    * @property {Boolean} mandatory whether the component is mandatory or optional
    */
-  settings({ mandatory }) {
+  settings({ mandatory, verbose }) {
     this.options = this.options || {};
     this.options.mandatory = mandatory || this.options.mandatory;
+    this.options.verbose = verbose || this.options.verbose;
     return this;
   }
   
@@ -62,6 +68,10 @@ export default class BaseComponent {
   
   get isAvailable(){
     return this.available;
+  }
+  
+  get logger() {
+    return this.log;
   }
 
 }

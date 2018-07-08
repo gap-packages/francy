@@ -69,5 +69,7 @@ export default class MathJaxComponent extends BaseComponent {
     }
 
     MathJax.Hub.Configured();
+    
+    this.logger.debug('MathJax is available...');
   }
 }

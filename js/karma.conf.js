@@ -9,8 +9,8 @@ module.exports = function(config) {
       'chai'
     ],
     preprocessors: {
-      './src/francy.js': ['webpack'],
-      './test/**.js': ['webpack']
+      './src/**/*.js': ['webpack'],
+      './test/**/*.test.js': ['webpack']
     },
     files: [
       './node_modules/babel-polyfill/dist/polyfill.js',
@@ -49,7 +49,7 @@ module.exports = function(config) {
     reporters: ['mocha'],
     port: 9876,
     colors: true,
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_INFO,
     browsers: ['ChromeHeadless'],
     autoWatch: false,
     singleRun: true,

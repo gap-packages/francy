@@ -10,6 +10,7 @@ export default class AboutModal extends Modal {
   }
 
   @Decorators.Initializer.initialize()
+  @Decorators.Data.requires('canvas')
   async render() {
 
     let modalId = 'AboutModalWindow';
@@ -49,7 +50,7 @@ export default class AboutModal extends Modal {
     // disable keyboard shortcuts when using this modal in Jupyter
     Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
 
-    this.logger.debug(`Callback About updated [${modalId}]...`);
+    this.logger.debug(`Modal About updated [${modalId}]...`);
 
     return this;
   }

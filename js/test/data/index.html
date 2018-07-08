@@ -34,20 +34,10 @@
 
     d3.json('json1.json').then(json => {
       resolvePromise(francy.load(json));
-      setInterval(() => {
-        d3.json('json1.1.json').then(json => {
-          resolvePromise(francy.load(json));
-        });
-      }, 10000);
     });
 
     d3.json('json2.json').then(json => {
       resolvePromise(francy.load(json));
-      setInterval(() => {
-        d3.json('json2.1.json').then(json => {
-          resolvePromise(francy.load(json));
-        });
-      }, 10000);
     });
 
     d3.json('json3.json').then(json => {
@@ -63,40 +53,6 @@
     });
 
     d3.json('json6.json').then(json => {
-      resolvePromise(francy.load(json));
-    });
-
-    d3.json('json7.json').then(json => {
-      resolvePromise(francy.load(json));
-    });
-
-    d3.json('json8.json').then(json => {
-      resolvePromise(francy.load(json));
-    });
-
-    d3.json('json9.json').then(json => {
-      resolvePromise(francy.load(json));
-    });
-
-    d3.json('json10.json').then(json => {
-      resolvePromise(francy.load(json));
-    });
-
-    d3.json('json11.json').then(json => {
-      resolvePromise(francy.load(json));
-      setTimeout(() => {
-        d3.json('json11.1.json').then(json => {
-          resolvePromise(francy.load(json));
-          setInterval(() => {
-            d3.json('json11.2.json').then(json => {
-              resolvePromise(francy.load(json));
-            });
-          }, 10000);
-        });
-      }, 5000);
-    });
-
-    d3.json('json12.json').then(json => {
       resolvePromise(francy.load(json));
     });
   </script>

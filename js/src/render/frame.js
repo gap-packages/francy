@@ -38,6 +38,21 @@ export default class Frame extends Composite {
 
     this.handlePromise(this.renderChildren());
 
+    if (window) {
+      // handle events on resize
+      let oldResize = window.onresize;
+      window.onresize = () => {
+        // zoom to fit all canvas on resize
+        if (this.canvas) {
+          this.canvas.zoomToFit();
+        }
+        // call old resize function if any!
+        if (typeof oldResize === 'function') {
+          oldResize();
+        }
+      };
+    }
+
     return this;
   }
 

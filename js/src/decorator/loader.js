@@ -21,7 +21,7 @@ export default class LoaderDecorator {
   }
   
   show() {
-    if (this.element) {
+    if (this.element && this.element.data()[0]) {
       this.element.data()[0][this.id] = true;
       this.element.style('visibility', 'visible');
     }
@@ -29,7 +29,7 @@ export default class LoaderDecorator {
   }
   
   hide() {
-    if (this.element) {
+    if (this.element && this.element.data()[0]) {
       delete this.element.data()[0][this.id];
       // hide only if no more loaders present
       if (Object.values(this.element.data()[0]).length == 0) {

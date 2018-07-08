@@ -127,7 +127,7 @@ export default class Chart extends Renderer {
   }
   
   static newColors(length) {
-    return d3.scale.linear().domain([1,length]).interpolate(d3.interpolateHcl).range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
+    return d3.scale.linear().domain([1,length]).interpolate(d3.interpolateHcl).range([d3.rgb('#007AFF'), d3.rgb('#FFF500')]);
   }
 
   static domainRange(max) {

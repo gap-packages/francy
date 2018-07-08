@@ -12,5 +12,6 @@ export default class D3Component extends BaseComponent {
     if (!d3) {
       throw new Error('D3 is not imported and Francy won\'t work without it... please import D3 v5+ library.');
     }
+    this.logger.debug('D3 is available...');
   }
 }

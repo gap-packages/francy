@@ -4,28 +4,9 @@ set -ex
 
 CURRENT=`pwd`
 
-################################################################################
-#
-# Install GAP
-#
-echo -e "\nInstalling latest master GAP into $GAPROOT..."
+cd $GAPROOT/pkg
 
-git clone --depth=2 https://github.com/gap-system/gap.git $GAPROOT
-
-cd $GAPROOT
-
-if [ -f autogen.sh ]; then
-  ./autogen.sh
-fi
-
-./configure
-make -j4
-
-make bootstrap-pkg-full WGET="wget -N --no-check-certificate --tries=5 --waitretry=5 --retry-connrefused"
-
-cd pkg
-
-rm -rf uuid-* crypting-*
+rm -rf uuid-* crypting-* JupyterKernel FrancyMonoids
 
 # install latest version of uuid
 git clone https://github.com/gap-packages/uuid
@@ -37,7 +18,7 @@ git clone https://github.com/gap-packages/crypting
 git clone https://github.com/gap-packages/JupyterKernel
 
 # install latest version of francy-monoid
-git clone https://github.com/gap-packages/FrancyMonoids.git
+git clone https://github.com/gap-packages/FrancyMonoids
 
 # build some packages; default is to build 'io' and 'profiling', in order to
 # generate coverage results. If you need to build additional packages (or for

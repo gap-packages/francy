@@ -1,7 +1,7 @@
 import Logger from '../util/logger';
 import JsonUtils from '../util/json';
 import { Components } from '../component/factory';
-import { Exception, RuntimeException } from '../util/exception';
+import { Exception } from '../util/exception';
 import { Decorators } from '../decorator/factory';
 
 /* global d3 */
@@ -23,6 +23,7 @@ export default class BaseRenderer {
     // initialize components
     Components.D3;
     Components.MathJax;
+    Components.Jupyter;
     /**
      * @typedef {Object} Options
      * @property {Boolean} verbose prints extra log information to console.log, default false
@@ -84,7 +85,7 @@ export default class BaseRenderer {
    * Returns the parent element of this class 
    */
   get parent() {
-    return this.options.appendTo.element;
+    return this.options.appendTo.element || this.options.appendTo;
   }
 
   /**

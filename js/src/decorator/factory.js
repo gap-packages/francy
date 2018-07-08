@@ -28,7 +28,7 @@ export var Decorators = {
   },
   
   get Jupyter() {
-    new new JupyterDecorator();
+    return new JupyterDecorator();
   }
   
 };

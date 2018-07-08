@@ -3,24 +3,13 @@
 ## Update version number
 
 After merging a feature branche on develop, update the version number in 
-`js/package.json`, `gap/package.json`, `gap/PackageInfo.g`, `extensions/jupyter_francy/_version.py`, and `extensions/jupyter/package.json`.
+`js/package.json`, `gap/PackageInfo.g`, `extensions/jupyter_francy/_version.py`, and `extensions/jupyter/package.json`.
 
 The versions on the `package.json` can be managed with `npm version`:
 
 ```bash
 mcmartins@local:francy/js$ npm version minor
 v0.6.0
-```
-
-Update the local dependencies for *francy-js* and *francy-gap* on `extensions/jupyter/package.json`.
-This is a local dependency, tarball named <module-name>-<version>.tgz, to the `npm pack` built on each module *francy-js* and *francy-gap*, 
-so it is needed to update the file name with the new version:
-
-```json
-...
-  "francy-js": "../../js/francy-js-0.6.0.tgz",
-  "francy-gap": "../../gap/francy-gap-0.6.0.tgz"
-...
 ```
 
 Make sure all versions are consitent and commit your changes.

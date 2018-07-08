@@ -1,62 +1,47 @@
 {
-  "version": "0.6.0",
+  "version": "0.8.0",
   "mime": "application/vnd.francy+json",
   "canvas": {
     "width": 800,
-    "height": 600,
-    "id": "F224",
-    "title": "Rosales graph",
+    "id": "F146",
+    "height": 100,
+    "title": "Example undirected graph",
     "zoomToFit": true,
     "texTypesetting": false,
     "menus": {},
     "graph": {
       "type": "undirected",
-      "id": "F217",
+      "id": "F147",
       "simulation": true,
       "collapsed": true,
-      "drag": true,
+      "drag": false,
       "showNeighbours": false,
       "nodes": {
-        "F218": {
+        "F148": {
           "x": 0,
           "y": 0,
           "type": "circle",
-          "size": 1,
-          "id": "F218",
-          "title": "5",
-          "layer": 0,
+          "id": "F148",
+          "size": 10,
+          "title": "G",
           "color": "",
           "highlight": true,
+          "layer": 1,
           "parent": "",
           "menus": {},
           "messages": {},
           "callbacks": {}
         },
-        "F219": {
+        "F149": {
           "x": 0,
           "y": 0,
           "type": "circle",
-          "size": 1,
-          "id": "F219",
-          "title": "7",
-          "layer": 0,
+          "id": "F149",
+          "size": 10,
+          "title": "1",
           "color": "",
           "highlight": true,
-          "parent": "",
-          "menus": {},
-          "messages": {},
-          "callbacks": {}
-        },
-        "F220": {
-          "x": 0,
-          "y": 0,
-          "type": "circle",
-          "size": 1,
-          "id": "F220",
-          "title": "9",
-          "layer": 0,
-          "color": "",
-          "highlight": true,
+          "layer": 2,
           "parent": "",
           "menus": {},
           "messages": {},
@@ -64,26 +49,12 @@
         }
       },
       "links": {
-        "F221": {
-          "source": "F218",
+        "F150": {
+          "id": "F150",
+          "source": "F148",
           "weight": 1,
-          "id": "F221",
           "color": "",
-          "target": "F219"
-        },
-        "F222": {
-          "source": "F218",
-          "weight": 1,
-          "id": "F222",
-          "color": "",
-          "target": "F220"
-        },
-        "F223": {
-          "source": "F219",
-          "weight": 1,
-          "id": "F223",
-          "color": "",
-          "target": "F220"
+          "target": "F149"
         }
       }
     },

@@ -34,7 +34,7 @@ export class OutputWidget extends Widget {
             // This will update an existing canvas by its ID!
             francy.load(msg.content.data[MIME_TYPE]).render()
               .catch(error => console.error(error))
-              .then(element => console.log('Trigger result', element));
+              .then(element => console.log('Interactive trigger result: ', element));
           }
         };
       }

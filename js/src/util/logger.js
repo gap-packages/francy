@@ -36,6 +36,7 @@ export default class Logger {
    * @param error the error Object to attach to the message
    */
   error(message, error) {
+    error = error || {};
     this.console.error(Logger._format('ERROR', message), error);
   }
 
