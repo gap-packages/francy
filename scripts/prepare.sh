@@ -4,9 +4,28 @@ set -ex
 
 CURRENT=`pwd`
 
-cd $GAPROOT/pkg
+################################################################################
+#
+# Install GAP
+#
+echo -e "\nInstalling latest master GAP into $GAPROOT..."
 
-rm -rf uuid-* crypting-* JupyterKernel FrancyMonoids
+git clone --depth=2 https://github.com/gap-system/gap.git $GAPROOT
+
+cd $GAPROOT
+
+if [ -f autogen.sh ]; then
+  ./autogen.sh
+fi
+
+./configure
+make -j4
+
+make bootstrap-pkg-full WGET="wget -N --no-check-certificate --tries=5 --waitretry=5 --retry-connrefused"
+
+cd pkg
+
+rm -rf uuid-* crypting-*
 
 # install latest version of uuid
 git clone https://github.com/gap-packages/uuid
