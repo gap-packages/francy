@@ -12873,7 +12873,7 @@ var BaseComponent = function () {
      * @property {Boolean} mandatory whether the component is mandatory or optional
      */
     this.options = undefined;
-    this.settings({ mandatory: mandatory });
+    this.settings({ mandatory: mandatory, verbose: false });
     /**
      * @type {Logger} the logger for this class
      */
@@ -12907,10 +12907,12 @@ var BaseComponent = function () {
   }, {
     key: 'settings',
     value: function settings(_ref) {
-      var mandatory = _ref.mandatory;
+      var mandatory = _ref.mandatory,
+          verbose = _ref.verbose;
 
       this.options = this.options || {};
       this.options.mandatory = mandatory || this.options.mandatory;
+      this.options.verbose = verbose || this.options.verbose;
       return this;
     }
   }, {
@@ -12927,6 +12929,11 @@ var BaseComponent = function () {
     key: 'isAvailable',
     get: function get() {
       return this.available;
+    }
+  }, {
+    key: 'logger',
+    get: function get() {
+      return this.log;
     }
   }]);
 
@@ -12986,6 +12993,7 @@ var D3Component = function (_BaseComponent) {
       if (!d3) {
         throw new Error('D3 is not imported and Francy won\'t work without it... please import D3 v5+ library.');
       }
+      this.logger.debug('D3 is available...');
     }
   }]);
 
@@ -13083,6 +13091,7 @@ var JupyterComponent = function (_BaseComponent) {
       if (!Jupyter) {
         throw new Error('This is not Jupyter is not imported and Francy won\'t work without it... please import D3 v5+ library.');
       }
+      this.logger.debug('Jupyter is available...');
     }
   }]);
 
@@ -13204,6 +13213,8 @@ var MathJaxComponent = function (_BaseComponent) {
       }
 
       MathJax.Hub.Configured();
+
+      this.logger.debug('MathJax is available...');
     }
   }]);
 
@@ -14104,7 +14115,7 @@ var BaseRenderer = function () {
   }, {
     key: 'parent',
     get: function get() {
-      return this.options.appendTo.element;
+      return this.options.appendTo.element || this.options.appendTo;
     }
 
     /**
@@ -15846,7 +15857,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var self, loader, simulationActive, canvasNodes, canvasLinks, linkGroup, links, linksToAdd, link, defs, nodeGroup, nodes, nodesToAdd, node, linkEnter, nodeEnter, nodeOnClick, radius, symbolRadius, layered, simulation, safeTicked, safeEnd, endSimulation, ticked, toggle, linkedByIndex, i, connectedNodes, linkConnectedNodes, labelsOpacityBehavior, dragstarted, dragged, dragended;
+        var self, loader, simulationActive, canvasNodes, canvasLinks, linkGroup, links, linksToAdd, link, defs, nodeGroup, nodes, nodesToAdd, node, linkEnter, nodeEnter, nodeOnClick, radius, symbolRadius, layered, simulation, safeTicked, safeEnd, linkForce, endSimulation, ticked, toggle, linkedByIndex, i, connectedNodes, linkConnectedNodes, labelsOpacityBehavior, dragstarted, dragged, dragended;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -16159,15 +16170,16 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
 
                   //Canvas Forces
                   simulation = d3.forceSimulation(), safeTicked = _factory.Decorators.Error.wrap(ticked).withContext(self).onErrorThrow(false).onErrorExec(simulation.stop), safeEnd = _factory.Decorators.Error.wrap(endSimulation).withContext(self);
-
-
-                  simulation.nodes(nodesToAdd).force('charge-1', layered ? undefined : d3.forceManyBody().strength(-75)).force('x', d3.forceX()).force('y', layered ? d3.forceY(function (d) {
-                    return (d.layer + 1) * 100;
-                  }).strength(1) : d3.forceY()).force('charge-2', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length)).force('link', d3.forceLink(canvasLinks).id(function (d) {
+                  linkForce = d3.forceLink(canvasLinks).id(function (d) {
                     return d.id;
                   }).distance(function (d) {
                     return d.height || 100;
-                  })).force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2)).on('tick', function () {
+                  });
+
+
+                  simulation.nodes(nodesToAdd).force('charge-1', layered ? undefined : d3.forceManyBody().strength(-75)).force('x', d3.forceX()).force('y', layered ? d3.forceY(function (d) {
+                    return d.layer * 100;
+                  }).strength(1) : d3.forceY()).force('charge-2', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length)).force('link', layered ? linkForce.strength(0.15) : linkForce).force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2)).on('tick', function () {
                     return safeTicked.handle();
                   }).on('end', function () {
                     return safeEnd.handle();
@@ -17889,7 +17901,6 @@ var Modal = function (_Renderer) {
       this.overlay.remove();
       this.element.remove();
       this.holder.remove();
-      return false;
     }
   }]);
 
@@ -18402,6 +18413,7 @@ var Logger = function () {
   }, {
     key: 'error',
     value: function error(message, _error) {
+      _error = _error || {};
       this.console.error(Logger._format('ERROR', message), _error);
     }
 

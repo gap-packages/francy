@@ -178,12 +178,14 @@ export default class GenericGraph extends Graph {
         safeTicked = Decorators.Error.wrap(ticked).withContext(self).onErrorThrow(false).onErrorExec(simulation.stop),
         safeEnd = Decorators.Error.wrap(endSimulation).withContext(self);
       
+      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100);
+      
       simulation.nodes(nodesToAdd)
         .force('charge-1', layered ? undefined : d3.forceManyBody().strength(-75))
         .force('x', d3.forceX())
-        .force('y', layered ? d3.forceY(d => (d.layer + 1) * 100).strength(1) : d3.forceY())
+        .force('y', layered ? d3.forceY(d => d.layer * 100).strength(1) : d3.forceY())
         .force('charge-2', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length))
-        .force('link', d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100))
+        .force('link', layered ? linkForce.strength(0.15) : linkForce)
         .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2))
         .on('tick', () => safeTicked.handle())
         .on('end', () => safeEnd.handle());
