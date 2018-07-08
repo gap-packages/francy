@@ -1,5 +1,5 @@
 import Renderer from './renderer';
-import { requires } from '../util/data-decorator';
+import { Decorators } from '../decorator/factory';
 
 /* global d3 */
 
@@ -9,8 +9,8 @@ export default class Message extends Renderer {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @requires('canvas.messages')
-  render() {
+  @Decorators.Data.requires('canvas.messages')
+  async render() {
 
     let messages = Object.keys(this.data.canvas.messages).map((key) => {
       return {
@@ -44,7 +44,7 @@ export default class Message extends Renderer {
     this.element.style('display', 'block');
     
     // render mathjax
-    this.mathjax.settings({appendTo: this}).renderHTML();
+    this.handlePromise(this.mathjax.settings({appendTo: this, renderType: 'HTML-CSS'}).render());
 
     return this;
   }

@@ -1,52 +1,63 @@
 {
+  "version": "0.8.0",
   "mime": "application/vnd.francy+json",
   "canvas": {
-    "width": "800",
-    "id": "BBD6B49E746F45D42483770446A32F42",
-    "title": "Bar Chart",
+    "width": 800,
+    "id": "F151",
+    "height": 100,
+    "title": "Example directed graph",
     "zoomToFit": true,
+    "texTypesetting": false,
     "menus": {},
-    "height": "600",
-    "chart": {
-      "type": "bar",
-      "data": {
-        "data1": [
-          5,
-          6,
-          7,
-          8,
-          90
-        ],
-        "data2": [
-          1,
-          2,
-          3,
-          4,
-          5
-        ],
-        "data3": [
-          1,
-          2,
-          3,
-          9,
-          50
-        ]
-      },
-      "labels": true,
-      "id": "C2232D710B7840D7AC0B65170CB76F5A",
-      "legend": true,
-      "axis": {
-        "x": {
-          "domain": [],
-          "title": "X Axis",
-          "scale": "band"
+    "graph": {
+      "type": "directed",
+      "id": "F152",
+      "simulation": true,
+      "collapsed": true,
+      "drag": false,
+      "showNeighbours": false,
+      "nodes": {
+        "F153": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "id": "F153",
+          "size": 10,
+          "title": "G",
+          "color": "",
+          "highlight": true,
+          "layer": 1,
+          "parent": "",
+          "menus": {},
+          "messages": {},
+          "callbacks": {}
         },
-        "y": {
-          "domain": [],
-          "title": "Y Axis",
-          "scale": "linear"
+        "F154": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "id": "F154",
+          "size": 10,
+          "title": "1",
+          "color": "",
+          "highlight": true,
+          "layer": 2,
+          "parent": "",
+          "menus": {},
+          "messages": {},
+          "callbacks": {}
+        }
+      },
+      "links": {
+        "F155": {
+          "id": "F155",
+          "source": "F153",
+          "weight": 1,
+          "color": "",
+          "target": "F154"
         }
       }
-    }
+    },
+    "messages": {}
   }
 }

@@ -9,6 +9,11 @@
     "sourceType": "module"
   },
   "parser": "babel-eslint",
+  "globals": {
+    "d3": true,
+    "VERSION": true,
+    "MathJax": true
+  },
   "rules": {
     "indent": [
       "error",
@@ -29,6 +34,7 @@
     "no-else-return": 1,
     "semi": [1, "always"],
     "space-unary-ops": 2,
-    "brace-style": ["error", "1tbs"]
+    "brace-style": ["error", "1tbs"],
+    "no-unused-vars": [2, { "vars": "all", "varsIgnorePattern": "ignore" }]
   }
 }

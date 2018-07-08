@@ -1,18 +1,15 @@
 import Frame from './render/frame';
 import Renderer from './render/renderer';
-import { requires } from './util/data-decorator';
+import { Decorators } from './decorator/factory';
+import * as ignore from 'seedrandom';
 
-/* global d3 */
-
-let ALL_CANVAS = {};
+/* global VERSION */
 
 /**
  * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.load} function,
  * Francy will handle the creation of that json as long it is a valid and understandable json object to Francy.
  *  
  * @access public
- * 
- * @version 0.5.x
  * 
  * @example
  * let francy = new Francy({verbose: true, appendTo: '#div-id', callbackHandler: console.log});
@@ -29,9 +26,8 @@ export default class Francy extends Renderer {
    */
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
-    if (!d3) {
-      throw new Error('D3 is not imported and Francy won\'t work without it... please import D3 v4+ library.');
-    }
+    // all good!
+    this.logger.info(`Francy JS v${VERSION} initialized! Enjoy...`);
   }
 
   /**
@@ -39,32 +35,22 @@ export default class Francy extends Renderer {
    * passed through the load method.
    * @returns {Object} the html element created
    */
-  @requires('canvas')
-  render() {
-    let frame = new Frame(this.options).load(this.data).render();
-    ALL_CANVAS[this.data.canvas.id] = frame;
+  @Decorators.Data.requires('canvas')
+  async render() {
+    if (this.data.version !== VERSION) {
+      this.logger.warn(`Rendering data generated in Francy GAP v${this.data.version} using Francy JS v${VERSION}, rendering may fail... please update your system...`);
+    }
+    //set seed to produce always the same graphs
+    Math.seedrandom('Francy!');
+    let frame = await new Frame(this.options).load(this.data).render().then(element => element);
     return frame.element.node();
   }
-
-  static unrender(id) {
-    delete ALL_CANVAS[id];
-  }
+  
+  unrender(){}
 }
 
-try {
+if (window) {
   exports.Francy = window.Francy = Francy;
-  // handle events on resize
-  let oldResize = window.onresize;
-  window.onresize = () => {
-    // zoom to fit all canvas on resize
-    Object.values(ALL_CANVAS).forEach((frame) => {
-      frame.canvas.zoomToFit();
-    });
-    // call old resize function if any!
-    if (typeof oldResize === 'function') {
-      oldResize();
-    }
-  };
-} catch (e) {
+} else {
   exports.Francy = Francy;
 }

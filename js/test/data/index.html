@@ -2,15 +2,15 @@
 
 <head>
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v4">
-  <link rel="stylesheet" type="text/css" href="../../extensions/browser/index.css">
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <script src="../../extensions/browser/francy.bundle.js"></script>
+  <link rel="stylesheet" type="text/css" href="../../dist/style/index.css">
+  <script src="../../node_modules/d3/dist/d3.min.js"></script>
+  <script src="../../dist/browser/francy.bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full,Safe"></script>
-  <title>Francy</title>
+  <title>Francy Test</title>
 </head>
 
 <body>
-  <div id="francy" style="visibility:false;"></div>
+  <div id="francy_draw" style="visibility:hidden;"></div>
   <script>
     /* global d3 Francy */
 
@@ -18,87 +18,42 @@
       console.log(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
     }
 
-    let settings = { verbose: true, appendTo: '#francy', callbackHandler: trigger };
+    function resolvePromise(francy) {
+      francy.render().catch(error => console.log(error)).then(element => {
+        // NOTE: we're using a visible div to append the object so no need to do anything here
+        //document.getElementsByTagName('body')[0].appendChild(element);
+        if (element) {
+          document.getElementsByTagName('body')[0].appendChild(element);
+          console.log('Object rendered...', element);
+        }
+      });
+    }
+
+    let settings = { verbose: true, appendTo: '#francy_draw', callbackHandler: trigger };
     const francy = new Francy(settings);
 
-    d3.json("json1.json", function(error, json) {
-      let element = francy.load(json).render();
-      document.getElementsByTagName('body')[0].appendChild(element);
-      setInterval(function() {
-        d3.json("json1.1.json", function(error, json) {
-          francy.load(json).render();
-        });
-      }, 10000);
+    d3.json('json1.json').then(json => {
+      resolvePromise(francy.load(json));
     });
 
-    d3.json("json2.json", function(error, json) {
-      let element = francy.load(json).render();
-      document.getElementsByTagName('body')[0].appendChild(element);
-      setInterval(function() {
-        d3.json("json2.1.json", function(error, json) {
-          francy.load(json).render();
-        });
-      }, 5000);
+    d3.json('json2.json').then(json => {
+      resolvePromise(francy.load(json));
     });
 
-    d3.json("json3.json", function(error, json) {
-      let element = francy.load(json).render();
-      document.getElementsByTagName('body')[0].appendChild(element);
+    d3.json('json3.json').then(json => {
+      resolvePromise(francy.load(json));
     });
 
-    d3.json("json4.json", function(error, json) {
-      let element = francy.load(json).render();
-      document.getElementsByTagName('body')[0].appendChild(element);
+    d3.json('json4.json').then(json => {
+      resolvePromise(francy.load(json));
     });
 
-    d3.json("json5.json", function(error, json) {
-      let element = francy.load(json).render();
-      document.getElementsByTagName('body')[0].appendChild(element);
+    d3.json('json5.json').then(json => {
+      resolvePromise(francy.load(json));
     });
 
-    d3.json("json6.json", function(error, json) {
-      let element = francy.load(json).render();
-      document.getElementsByTagName('body')[0].appendChild(element);
-    });
-
-    d3.json("json7.json", function(error, json) {
-      let element = francy.load(json).render();
-      document.getElementsByTagName('body')[0].appendChild(element);
-    });
-
-    d3.json("json8.json", function(error, json) {
-      let element = francy.load(json).render();
-      document.getElementsByTagName('body')[0].appendChild(element);
-    });
-
-    d3.json("json9.json", function(error, json) {
-      let element = francy.load(json).render();
-      document.getElementsByTagName('body')[0].appendChild(element);
-    });
-
-    d3.json("json10.json", function(error, json) {
-      let element = francy.load(json).render();
-      document.getElementsByTagName('body')[0].appendChild(element);
-    });
-
-    d3.json("json11.json", function(error, json) {
-      let element = francy.load(json).render();
-      document.getElementsByTagName('body')[0].appendChild(element);
-      setTimeout(function() {
-        d3.json("json11.1.json", function(error, json) {
-          francy.load(json).render();
-          setInterval(function() {
-            d3.json("json11.2.json", function(error, json) {
-              francy.load(json).render();
-            });
-          }, 5000);
-        });
-      }, 5000);
-    });
-
-    d3.json("json12.json", function(error, json) {
-      let element = francy.load(json).render();
-      document.getElementsByTagName('body')[0].appendChild(element);
+    d3.json('json6.json').then(json => {
+      resolvePromise(francy.load(json));
     });
   </script>
 </body>

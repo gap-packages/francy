@@ -2,7 +2,7 @@ import Composite from './composite';
 import Canvas from './canvas';
 import MainMenu from './menu-main';
 import Message from './message';
-import { requires } from '../util/data-decorator';
+import { Decorators } from '../decorator/factory';
 
 /* global d3 */
 
@@ -16,8 +16,8 @@ export default class Frame extends Composite {
     this.add(this.menu).add(this.canvas).add(this.messages);
   }
 
-  @requires('canvas')
-  render() {
+  @Decorators.Data.requires('canvas')
+  async render() {
     let parent = this.options.appendTo;
 
     const frameId = `Frame-${this.data.canvas.id}`;
@@ -36,7 +36,22 @@ export default class Frame extends Composite {
 
     this.logger.debug(`Frame updated [${frameId}]...`);
 
-    this.renderChildren();
+    this.handlePromise(this.renderChildren());
+
+    if (window) {
+      // handle events on resize
+      let oldResize = window.onresize;
+      window.onresize = () => {
+        // zoom to fit all canvas on resize
+        if (this.canvas) {
+          this.canvas.zoomToFit();
+        }
+        // call old resize function if any!
+        if (typeof oldResize === 'function') {
+          oldResize();
+        }
+      };
+    }
 
     return this;
   }

@@ -1,5 +1,5 @@
 import Chart from './chart';
-import { initialize } from '../util/initialize-decorator';
+import { Decorators } from '../decorator/factory';
 
 /* global d3 */
 
@@ -9,8 +9,8 @@ export default class LineChart extends Chart {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @initialize()
-  render() {
+  @Decorators.Initializer.initialize()
+  async render() {
     
     let linesGroup = this.element.selectAll('g.francy-lines');
 
@@ -47,7 +47,7 @@ export default class LineChart extends Chart {
             .duration(250)
             .style('stroke-opacity', 0.5)
             .style('stroke-width', '10px');
-          self.tooltip.load(Chart.tooltip(key, d), true).render();
+          self.handlePromise(self.tooltip.load(Chart.tooltip(key, d), true).render());
         })
         .on('mouseleave', function() {
           d3.select(this).transition()

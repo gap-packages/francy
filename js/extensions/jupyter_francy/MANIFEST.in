@@ -1,2 +1,0 @@
-graft jupyter_francy/nbextension
-include jupyter_francy/labextension/*.tgz

@@ -182,10 +182,12 @@ function(canvas)
   object!.mime    := FrancyMIMEType;
   object!.version := InstalledPackageVersion("francy");
   object!.canvas  := Sanitize(canvas);
-  return rec(
-    json := true, 
-    source := "gap", 
-    data := rec((FrancyMIMEType) := GapToJsonString(object))
+  return Objectify(
+    JupyterRenderableType, 
+    rec(
+      data := rec((FrancyMIMEType) := GapToJsonString(object)),
+      metadata := rec((FrancyMIMEType) := rec())
+    )
   );
 end);
 
@@ -209,17 +211,17 @@ function(canvas)
     "<!DOCTYPE html>\n\
     <html>\n\
       <head>\n\
-        <meta charset=\"utf-8\" content=\"text/html\" property=\"GAP,francy,d3.v4\"></meta>\n\
+        <meta charset=\"utf-8\" content=\"text/html\" property=\"GAP,francy,d3.v5\"></meta>\n\
         <link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/extensions/browser/index.css\"></link>\n\
-        <script src=\"https://d3js.org/d3.v4.js\"></script>\n\
-        <script src=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/extensions/browser/francy.bundle.js\"></script>\n\
+        <script src=\"https://d3js.org/d3.v5.js\"></script>\n\
+        <script src=\"https://cdn.rawgit.com/mcmartins/francy/master/js/extensions/browser/francy.bundle.js\"></script>\n\
         <title>Francy</title>\n\
       </head>\n\
       <body>\n\
         <div id=\"francy\"></div>\n\
         <script>\n\
           var francy = new Francy({verbose: true, appendTo: 'body', callbackHandler: console.log});\n\
-          francy.load(", result.data.(FrancyMIMEType), ").render();\n\
+          francy.load(", result!.data!.(FrancyMIMEType), ").render();\n\
         </script>\n\
       </body>\n\
     </html>");

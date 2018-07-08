@@ -14,6 +14,9 @@ gap> shape1 := Shape(ShapeType.SQUARE);
 gap> SetTitle(shape1, "Title");
 gap> Title(shape1) = "Title";
 true
+gap> SetColor(shape1, "#fff");
+gap> Color(shape1) = "#fff";
+true
 gap> SetLayer(shape1, 1);
 gap> shape2 := Shape(ShapeType.TRIANGLE);
 <IsFrancyObject/IsShape>
@@ -22,6 +25,15 @@ gap> Layer(shape2) = 3;
 true
 gap> link := Link(shape1, shape2);
 <IsFrancyObject/IsLink>
+gap> SetColor(link, "#fff");
+gap> Color(link) = "#fff";
+true
+gap> SetTitle(link, "Title");
+gap> Title(link) = "Title";
+true
+gap> SetWeight(link, 2);
+gap> Weight(link) = 2;
+true
 gap> Add(graph, link);
 gap> Remove(graph, link);
 <IsFrancyObject/IsFrancyGraph>
@@ -59,8 +71,8 @@ gap> shape := Shape(ShapeType.SQUARE);
 <IsFrancyObject/IsShape>
 gap> shape1 := Shape(ShapeType.SQUARE);
 <IsFrancyObject/IsShape>
-gap> SetParentNode(shape1, shape);
-gap> ParentNode(shape1) = Id(shape);
+gap> SetParentShape(shape1, shape);
+gap> ParentShape(shape1) = Id(shape);
 true
 gap> SetSize(shape1, 5);
 gap> Size(shape1) = 5;

@@ -14,10 +14,11 @@ cd js
 
 npm run lint
 npm run coverage
-npm run build:all
+
+cd $CURRENT
 
 # Test Extensions - won't produce any coverage obviously
-cd extensions/jupyter_francy
+cd extensions/jupyter
 
 pyenv local 3.6
 

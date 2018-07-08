@@ -1,16 +1,4 @@
 ################################################
-#! @BeginChunk Example_Create_Graph_1
-#! @BeginExample
-
-graph := Graph(GraphType.HASSE);
-shape := Shape(ShapeType.CIRCLE, "Title");
-SetTitle(shape, "New Title");
-Add(graph, shape);
-
-#! @EndExample
-#! @EndChunk
-
-################################################
 #! @BeginChunk Example_Create_Graph_2
 #! @BeginExample
 
@@ -51,7 +39,7 @@ gap> shape := Shape(ShapeType.SQUARE);
 <IsFrancyObject/IsShape>
 gap> shape1 := Shape(ShapeType.SQUARE);
 <IsFrancyObject/IsShape>
-gap> SetParentNode(shape1, shape);
+gap> SetParentShape(shape1, shape);
 Add(graph, [shape, shape1]);
 
 #! @EndExample

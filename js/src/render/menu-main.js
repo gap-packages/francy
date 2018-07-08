@@ -10,7 +10,7 @@ export default class MainMenu extends Menu {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  render() {
+  async render() {
     let aboutModal = new AboutModal(this.options);
 
     // Otherwise clashes with the canvas itself!
@@ -29,16 +29,22 @@ export default class MainMenu extends Menu {
 
     this.element = this.element.append('ul').attr('class', 'francy-main-menu');
 
+    // Fixed loader
+    let loaderId = `Loader-${this.data.canvas.id}`;
+    this.element.append('li').attr('class', 'francy-loader').append('a').datum({}).attr('id', loaderId).classed('loader', true);
+
+    // Title
     if (this.data.canvas.title) {
       this.element.append('li').attr('class', 'francy-title').append('a').html(this.data.canvas.title);
     }
 
+    // Default menu
     let entry = this.element.append('li');
     entry.append('a').html('Francy');
     let content = entry.append('ul');
     content.append('li').append('a').on('click', () => this.options.appendTo.canvas.zoomToFit(true)).attr('title', 'Zoom to Fit').html('Zoom to Fit');
     content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(this.SVGParent.node(), 'diagram.png')).attr('title', 'Save to PNG').html('Save to PNG');
-    content.append('li').append('a').on('click', () => aboutModal.load(this.data).render()).attr('title', 'About').html('About');
+    content.append('li').append('a').on('click', () => this.handlePromise(aboutModal.load(this.data).render())).attr('title', 'About').html('About');
 
     // Traverse all menus and flatten them!
     let menusIterator = this.iterator(Object.values(this.data.canvas.menus));

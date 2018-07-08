@@ -1,5 +1,5 @@
 import Graph from './graph';
-import { initialize } from '../util/initialize-decorator';
+import { Decorators } from '../decorator/factory';
 
 /* global d3 */
 
@@ -9,13 +9,14 @@ export default class TreeGraph extends Graph {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @initialize()
-  render() {
+  @Decorators.Initializer.initialize()
+  async render() {
 
-    let i = 0,
+    let nodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
+      i = 0,
       root;
 
-    root = d3.hierarchy(this.treeData, d => d.children);
+    root = d3.stratify().id(d => d.id).parentId(d => d.parent)(nodes);
     root.x0 = this.height / 2;
     root.y0 = 0;
 
@@ -33,15 +34,18 @@ export default class TreeGraph extends Graph {
       }
     };
     childCount(0, root);
-    let newHeight = d3.max(levelWidth) * 100;
+    let size = d3.max(levelWidth) * 100;
 
-    let treemap = d3.tree().size([newHeight, this.width]);
+    let treemap = d3.tree().size([size, size])
+      .separation((a, b) => a.parent == b.parent ? a.data.size : a.data.size * 2);
 
     if (this.data.canvas.graph.collapsed) {
       root.children.forEach(collapse);
     }
 
-    update.call(this, root);
+    update.call(this, root)
+      .catch(error => this.logger.warn(error))
+      .then(setTimeout(this.parent.zoomToFit, this.transitionDuration));
 
     function collapse(d) {
       if (d.children) {
@@ -51,13 +55,15 @@ export default class TreeGraph extends Graph {
       }
     }
 
-    function update(source) {
+    async function update(source) {
+      let self = this;
+      
       let treeData = treemap(root);
 
       let nodes = treeData.descendants(),
         links = treeData.descendants().slice(1);
 
-      nodes.forEach(d => d.y = d.depth * 150);
+      nodes.forEach(d => d.y = d.depth * 100);
 
       let linkGroup = this.element.selectAll('g.francy-links');
 
@@ -84,10 +90,7 @@ export default class TreeGraph extends Graph {
           return diagonal(o, o);
         }).remove();
 
-      linkGroup.selectAll('path.francy-edge')
-        .style('fill', 'none')
-        .style('stroke', '#ccc')
-        .style('stroke-width', '1px');
+      linkGroup.selectAll('path.francy-edge');
 
       nodes.forEach((d) => {
         d.x0 = d.x;
@@ -121,11 +124,19 @@ export default class TreeGraph extends Graph {
       nodeEnter.append('text')
         .attr('class', 'francy-label')
         .text(d => d.data.title)
-        .attr('x',  function() {
-          let bound = this.getBBox();
-          return -(bound.width / 2);
-        })
-        .style('cursor', d => d.children || d._children ? 'pointer' : 'default');
+        .style('font-size', d => 7 * Math.sqrt(d.weight))
+        .style('cursor', d => d.children || d._children ? 'pointer' : 'default')
+        .attr('x', function() {
+          // apply mathjax if this is the case
+          let text = d3.select(this);
+          if (text.text().startsWith('$') && text.text().endsWith('$')) {
+            // we need to set the position after re-render the latex
+            self.handlePromise(self.mathjax.settings({appendTo: {element: text}, renderType: 'SVG', postFunction: () => {
+              text.attr('x', self.setLabelXPosition(this));
+            }}).render());
+          }
+          return self.setLabelXPosition(this);
+        });
 
       let nodeUpdate = nodeEnter.merge(node);
 
@@ -138,7 +149,7 @@ export default class TreeGraph extends Graph {
         .remove();
 
       nodeGroup.selectAll('path.francy-symbol')
-        .style('fill', d => d.children || d._children ? 'lightsteelblue' : Graph.colors(d.data.layer * 5))
+        .style('fill', d => d.children || d._children ? '#fff' : Graph.colors(d.data.layer * 5))
         .style('cursor', d => d.children || d._children ? 'pointer' : 'default');
 
       node = nodeGroup.selectAll('g.francy-node');
@@ -148,7 +159,7 @@ export default class TreeGraph extends Graph {
 
         let nodeOnClick = node.on('click');
         node.on('click', (d) => {
-        // any callbacks will be handled here
+          // any callbacks will be handled here
           nodeOnClick.call(this, d.data);
           // default, highlight connected nodes
           click.call(this, d);
@@ -156,8 +167,6 @@ export default class TreeGraph extends Graph {
       }
 
       // Toggle children on click.
-      let self = this;
-
       function click(d) {
         if (d.children) {
           d._children = d.children;
@@ -166,40 +175,14 @@ export default class TreeGraph extends Graph {
           d.children = d._children;
           d._children = null;
         }
-        update.call(self, d);
+        update.call(self, d)
+          .catch(error => self.logger.warn(error))
+          .then(setTimeout(self.parent.zoomToFit, self.transitionDuration));
       }
-
-      setTimeout(() => {
-        this.parent.zoomToFit();
-      }, this.transitionDuration);
     }
 
     return this;
-
   }
 
   unrender() {}
-
-  /**
-   * Transforms flat data into tree data by analysing the parents of each node
-   * @returns {Object} the data transformed in tree data
-   */
-  get treeData() {
-    let canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [];
-    let dataMap = canvasNodes.reduce(function (map, node) {
-      map[node.id] = node;
-      return map;
-    }, {});
-    let treeData = [];
-    canvasNodes.forEach(function(node) {
-      let parent = dataMap[node.parent];
-      if (parent) {
-        (parent.children || (parent.children = [])).push(node);
-      } else {
-        treeData.push(node);
-      }
-    });
-    return treeData[0];
-  }
-
 }

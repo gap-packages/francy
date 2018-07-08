@@ -1,6 +1,5 @@
 import Modal from './modal';
-import { RegisterJupyterKeyboardEvents } from '../util/component';
-import { initialize } from '../util/initialize-decorator';
+import { Decorators } from '../decorator/factory';
 
 /* global d3 */
 
@@ -10,8 +9,8 @@ export default class RequiredArgsModal extends Modal {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @initialize()
-  render() {
+  @Decorators.Initializer.initialize()
+  async render() {
     let self = this;
 
     let modalId = this.data.callback.id;
@@ -78,7 +77,7 @@ export default class RequiredArgsModal extends Modal {
     });
 
     // disable keyboard shortcuts when using this modal in Jupyter
-    RegisterJupyterKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
+    Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
 
     let inputElement = content.selectAll('.francy-arg').node();
     if (inputElement) {

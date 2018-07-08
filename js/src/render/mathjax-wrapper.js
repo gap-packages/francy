@@ -1,100 +1,34 @@
-import Base from './base';
-import { enabled } from '../util/data-decorator';
-import { initialize } from '../util/initialize-decorator';
+import BaseRenderer from './base';
+import { Components } from '../component/factory';
+import { Decorators } from '../decorator/factory';
 
-/* global MathJax, d3 */
+/* global MathJax */
 
-let initialized = false;
-
-export default class MathJaxWrapper extends Base {
+export default class MathJaxWrapper extends BaseRenderer {
 
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
-  
-  _initialize() {
-    if (initialized) return;
-    MathJax.Hub.Config({
-      showMathMenu: false,
-      skipStartupTypeset: true,
-      tex2jax: {
-        inlineMath: [ ['$','$'], ['\\(','\\)'] ],
-        displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
-        processEscapes: true,
-        processEnvironments: true
-      },
-      MathML: {
-        extensions: ['content-mathml.js']
-      },
-      displayAlign: 'center',
-      'HTML-CSS': {
-        availableFonts: [],
-        imageFont: null,
-        preferredFont: null,
-        font: 'STIX-Web', 
-        webFont: 'STIX-Web',
-        styles: {'.MathJax_Display': {'margin': 0}},
-        linebreaks: { 
-          automatic: true 
-        }
-      },
-      'SVG': {
-        availableFonts: [],
-        imageFont: null,
-        preferredFont: null,
-        font: 'STIX-Web', 
-        webFont: 'STIX-Web',
-        styles: {'.MathJax_Display': {'margin': 0}},
-        linebreaks: { 
-          automatic: true 
-        }
-      }
-    });
 
-    MathJax.Hub.Register.MessageHook('New Math', function(id) {
-      if (id && id.length > 1) {
-        var mathJaxElement = d3.select(`#${id[1]}-Frame`);
-        var svgMathJaxElement = mathJaxElement.select('svg');
-        if (svgMathJaxElement.node()) {
-          setTimeout(() => {
-            setTimeout(() => {
-              let width = svgMathJaxElement.node().width.baseVal.value;
-              svgMathJaxElement.attr('x', -width / 2);
-              svgMathJaxElement.attr('y', -15);
-            }, 50);
-            d3.select(mathJaxElement.node().parentNode.parentNode).append(function() {
-              return svgMathJaxElement.node();
-            });
-          }, 50);
-        }
-      }
-    });
-
-    MathJax.Hub.Configured();
-
-    initialized = true;
-  }
-
-  @initialize()
-  @enabled('canvas.texTypesetting')
-  renderSVG() {
+  @Decorators.Data.enabled('canvas.texTypesetting')
+  async render() {
     // if no element here just return...
-    if (!this.parent || !this.parent.node()) return;
+    if (!Components.MathJax.isAvailable || 
+      !this.parent || !this.parent.node()) return;
+    // check for a post exec function
+    this.data.postFunction = this.data.postFunction || function() {};
     MathJax.Hub.Queue(
-      ['setRenderer', MathJax.Hub, 'SVG'],
-      ['Typeset', MathJax.Hub, this.parent.node()]
-    );
-  }
-  
-  @initialize()
-  @enabled('canvas.texTypesetting')
-  renderHTML() {
-    // if no element here just return...
-    if (!this.parent || !this.parent.node()) return;
-    MathJax.Hub.Queue(
-      ['setRenderer', MathJax.Hub, 'HTML-CSS'],
+      ['setRenderer', MathJax.Hub, this.options.renderType],
       ['Typeset', MathJax.Hub, this.parent.node()],
+      [this.options.postFunction]
     );
+  }
+
+  settings({ verbose, appendTo, callbackHandler, renderType, postFunction }) {
+    super.settings({ verbose, appendTo, callbackHandler });
+    this.options.renderType = renderType;
+    this.options.postFunction = postFunction;
+    return this;
   }
 
 }

@@ -1,36 +1,20 @@
-FROM sebasguts/gapbinder:20180132
+FROM gapsystem/gap-docker-master:francy
 
 MAINTAINER Manuel Martins <manuelmachadomartins@gmail.com>
 
-COPY . /home/gap/francy
+COPY --chown=1000:1000 . $HOME/francy
 
 USER root
 
-ENV NB_USER gap
-ENV NB_UID 1000
-ENV HOME /home/${NB_USER}
+RUN apt-get update && apt-get install python3-pip -y
 
-# update dependencies
-RUN mv /home/gap/francy/gap /home/gap/inst/gap/pkg/francy
-RUN apt-get update && apt-get install -y nodejs npm python3.6 python3-pip
+RUN cd $HOME/inst/gap-master/pkg && git clone https://github.com/gap-packages/FrancyMonoids
 
 # lab extension installation
-RUN cd /home/gap/francy/js \
-  && npm install && npm run build:all \
-  && cd extensions/jupyter_francy \
-  && npm install && npm run build:all \
-  && pip3 install -e . && jupyter labextension link
-
-# notebook extension installation - this is an hack!
-RUN mv /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/nbextension /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy
-RUN jupyter nbextension install /home/gap/francy/js/extensions/jupyter_francy/jupyter_francy/jupyter_francy --system
-RUN jupyter nbextension enable jupyter_francy/extension --system
-
-# NOTE: THIS IS FOR DEVELOPMENT ONLY!
-# IF YOU ARE LOOKING HOW TO MAKE JUPYTER_FRANCY WORK, YOU JUST NEED TO: pip install jupyter_francy
-
-RUN chown -R gap /home/gap
-
-RUN cd /home/gap/francy/notebooks
+RUN cd $HOME/francy/js && npm install && npm run build:all \
+  && cd $HOME/francy/extensions/jupyter && npm install && npm run build:all && pip3 install -e . && jupyter labextension link \
+  && mv $HOME/francy/extensions/jupyter/jupyter_francy/nbextension $HOME/francy/extensions/jupyter/jupyter_francy/jupyter_francy \
+  && jupyter nbextension install $HOME/francy/extensions/jupyter/jupyter_francy/jupyter_francy --user \
+  && jupyter nbextension enable jupyter_francy/extension --user
 
 USER gap

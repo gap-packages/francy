@@ -3,6 +3,8 @@
     "env"
   ],
   "plugins": [
-    "transform-decorators-legacy"
+    "transform-decorators-legacy", ["babel-plugin-transform-builtin-extend", {
+      globals: ["Error"]
+    }]
   ]
 }

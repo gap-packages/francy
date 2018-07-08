@@ -1,7 +1,7 @@
 gap> canvas := Canvas("Example Canvas / Shape with Messages");
 <IsFrancyObject/IsCanvas>
 gap> 
-gap> graph := Graph(GraphType.HASSE); # will go throughout graphs later
+gap> graph := Graph(GraphType.UNDIRECTED); # will go throughout graphs later
 <IsFrancyObject/IsFrancyGraph>
 gap> shape := Shape(ShapeType.CIRCLE); # will go throughout shapes later
 <IsFrancyObject/IsShape>

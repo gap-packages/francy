@@ -34,9 +34,7 @@ CURRENT=`pwd`
 
 # Release Jupyter Extension to PyPi
 
-ls -lrt
-
-cd js/extensions/jupyter_francy
+cd extensions/jupyter
 
 pyenv local 3.6
 

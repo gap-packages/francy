@@ -26,7 +26,7 @@ export default class Graph extends Renderer {
       .on('contextmenu', function(d) {
         let data = d.data || d;
         // default, build context menu
-        self.contextMenu.load(data, true).render();
+        self.handlePromise(self.contextMenu.load(data, true).render());
         // any callbacks will be handled here
         executeCallback.call(this, data, 'contextmenu');
       })
@@ -46,13 +46,13 @@ export default class Graph extends Renderer {
         let data = d.data || d;
         if (data.messages) {
           // default, show tooltip
-          self.tooltip.load({messages: data.messages}, true).render();
-          // ok, this is almost a hack, because this should be rendered on
+          self.handlePromise(self.tooltip.load({messages: data.messages}, true).render());
+          // ok, this is almost an hack, because this should be rendered on
           // the tooltip itself.. but because a tooltip gets only the messages 
-          // object to render and not the whole this.data object, 
+          // object to render and not the whole `this.data` object, 
           // we can't check for the property canvas.texTypesetting, 
           // hence this:
-          self.mathjax.settings({appendTo: self.tooltip}).renderHTML();
+          self.handlePromise(self.mathjax.settings({appendTo: self.tooltip, renderType: 'HTML-CSS'}).render());
         } 
       })
       .on('mouseout', function() {
@@ -71,13 +71,15 @@ export default class Graph extends Renderer {
   }
   
   static linkXPos(s, t) {
-    let angle = Math.atan2(t.y - s.y, t.x - s.x);
-    return Math.cos(angle) + (s.x + t.x)/2;
+    return Math.cos(Graph.angle(s, t)) + (s.x + t.x)/2;
   }
     
   static linkYPos(s, t) {
-    let angle = Math.atan2(t.y - s.y, t.x - s.x);
-    return Math.sin(angle) + (s.y + t.y) / 2;
+    return Math.sin(Graph.angle(s, t)) + (s.y + t.y) / 2;
+  }
+  
+  static angle(s, t) {
+    return Math.atan2(t.y - s.y, t.x - s.x);
   }
 
   static get colors() {
@@ -112,6 +114,16 @@ export default class Graph extends Renderer {
     }
 
     return element;
+  }
+  
+  setLabelXPosition(element) {
+    let bound = element.getBBox();
+    return -Math.ceil(bound.width / 2);
+  }
+  
+  setLabelYPosition(element) {
+    let bound = element.getBBox();
+    return Math.floor(bound.height / 2);
   }
 
 }

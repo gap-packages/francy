@@ -1,6 +1,11 @@
 const path = require('path');
 const del = require('del');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
+const fPackage = require('./package.json');
+const defaultPlugins = [
+  new webpack.DefinePlugin({VERSION: JSON.stringify(fPackage.version)}), 
+  new webpack.BannerPlugin(`${fPackage.name}, v${fPackage.version}, ${fPackage.description}, ${fPackage.author}.`)
+];
 
 module.exports = (env = {}) => {
 
@@ -11,43 +16,39 @@ module.exports = (env = {}) => {
   
   if (clean) {
     console.log('Removing files from output directories...');
-    del.sync(['./extensions/jupyter_francy/src/francy.bundle.*', 
-    './extensions/jupyter_francy/src/d3.*',
-    './extensions/browser/francy.bundle.*']);
+    del.sync(['./dist/*']);
   }
-  
-  let plugins = [];
+
   let fileName = 'francy.bundle.js';
-  let sourceMap = 'inline-source-map';
+  let sourceMap = 'source-map';
   
   if (isProduction) {
-    // FIXME this stopped working !?
-    plugins.push(new UglifyJsPlugin({exclude: /.*test.js/}));
     fileName = 'francy.bundle.min.js';
-    sourceMap = 'hidden-source-map';
+    sourceMap = undefined;
   }
 
   let amd = {
-    entry: './src/francy.js',
+    mode: isProduction ? 'production' : 'development',
+    entry: ['babel-polyfill', './src/francy.js'],
     output: {
+      libraryTarget: 'amd',
       filename: fileName,
-      path: path.join(__dirname, './extensions/jupyter_francy/src'),
-      libraryTarget: 'amd'
+      path: path.join(__dirname, './dist/amd'),
     },
     devtool: sourceMap,
     module: {
-      loaders: [{
-        loader: 'babel-loader'
+      rules: [{
+        loader: 'babel-loader',
       }]
     },
-    plugins: plugins
+    plugins: defaultPlugins
   };
   
   let browser = JSON.parse(JSON.stringify(amd));
   browser.target = 'web';
   browser.output.libraryTarget = 'umd';
-  browser.output.path = path.join(__dirname, './extensions/browser');
-  browser.plugins = [];
+  browser.output.path = path.join(__dirname, './dist/browser');
+  browser.plugins = defaultPlugins;
   
   return [ amd, browser ];
 };

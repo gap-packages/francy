@@ -135,9 +135,6 @@ BindGlobal("GraphTypeObjectType", NewType(GraphFamily, IsFrancyGraphType and IsF
 #! <P/>
 #! Examples:
 #! <P/>
-#! Create a simple <C>Graph</C> of type <C>GraphType.HASSE</C>:
-#! @InsertChunk Example_Create_Graph_1
-#! <P/>
 #! Create a simple <C>Graph</C> of type <C>GraphType.DIRECTED</C> and simple <C>Shapes</C> connected with <C>Links</C>:
 #! @InsertChunk Example_Create_Graph_2
 #! <P/>
@@ -245,7 +242,6 @@ DeclareOperation("Links", [IsList, IsList, IsLinkDefaults]);
 BindGlobal("GraphType", rec(
   UNDIRECTED := Objectify(GraphTypeObjectType, rec(value := "undirected")),
   DIRECTED   := Objectify(GraphTypeObjectType, rec(value := "directed")),
-  HASSE      := Objectify(GraphTypeObjectType, rec(value := "hasse")),
   TREE       := Objectify(GraphTypeObjectType, rec(value := "tree"))
 ));
 
@@ -360,7 +356,7 @@ InstallMethod(Highlight, "shape", [IsShape], o -> o!.highlight);
 InstallMethod(SetHighlight, "shape, boolean", [IsShape, IsBool], function(o, b) o!.highlight := b; end);
 
 #! @Description
-#! The <C>Layer</C> in which the node will be placed when HASSE diagram is selected.
+#! The <C>Layer</C> in which the node will be placed.
 #! This property is also used to apply a color based on a scale
 #! @Returns <C>IsInt</C>
 DeclareAttribute("Layer", IsShape);
@@ -371,15 +367,15 @@ InstallMethod(Layer, "shape", [IsShape], o -> o!.layer);
 InstallMethod(SetLayer, "shape, int", [IsShape, IsInt], function(o, i) o!.layer := i; end);
 
 #! @Description
-#! The <C>ParentNode</C> in which the node will be placed when HASSE diagram is selected.
+#! The <C>ParentShape</C> in which the node will be placed.
 #! This property is also used to apply a color based on a scale
 #! @Returns <C>IsShape</C>
-DeclareAttribute("ParentNode", IsShape);
-InstallMethod(ParentNode, "shape", [IsShape], o -> o!.parent);
+DeclareAttribute("ParentShape", IsShape);
+InstallMethod(ParentShape, "shape", [IsShape], o -> o!.parent);
 #! @Description
-#! Sets the <C>ParentNode</C>.
+#! Sets the <C>ParentShape</C>.
 #! @Arguments IsShape, IsShape
-InstallMethod(SetParentNode, "shape, shape", [IsShape, IsShape], function(o, p) o!.parent := p!.id; end);
+InstallMethod(SetParentShape, "shape, shape", [IsShape, IsShape], function(o, p) o!.parent := p!.id; end);
 
 #! @Description
 #! <C>Simulation</C> is a property that sets the simulation behavior by 
@@ -422,7 +418,7 @@ InstallMethod(ShowNeighbours, "graph", [IsFrancyGraph], o -> o!.showNeighbours);
 #! @Description
 #! Sets the <C>ShowNeighbours</C> behavior.
 #! @Arguments IsCanvas, IsBool
-InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) if o!.type = "tree" then Error("Only supported by GraphType TREE!"); fi; o!.showNeighbours := b; end);
+InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) if o!.type = "tree" then Error("Only supported by GraphType.TREE!"); fi; o!.showNeighbours := b; end);
 
 #! @Description
 #! The <C>Weight</C> of the current link.

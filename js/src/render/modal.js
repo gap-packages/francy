@@ -20,7 +20,6 @@ export default class Modal extends Renderer {
     this.overlay.remove();
     this.element.remove();
     this.holder.remove();
-    return false;
   }
 
 }

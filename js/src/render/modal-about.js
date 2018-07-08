@@ -1,6 +1,5 @@
 import Modal from './modal';
-import { RegisterJupyterKeyboardEvents, syntaxHighlight } from '../util/component';
-import { initialize } from '../util/initialize-decorator';
+import { Decorators } from '../decorator/factory';
 
 /* global d3 */
 
@@ -10,8 +9,9 @@ export default class AboutModal extends Modal {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @initialize()
-  render() {
+  @Decorators.Initializer.initialize()
+  @Decorators.Data.requires('canvas')
+  async render() {
 
     let modalId = 'AboutModalWindow';
 
@@ -31,9 +31,14 @@ export default class AboutModal extends Modal {
       .append('div').attr('class', 'francy-table')
       .append('div').attr('class', 'francy-table-body');
 
-    content.append('span').text('Loaded Object:');
-    content.append('pre').attr('class', 'francy').html(syntaxHighlight(JSON.stringify(this.data.canvas, null, 2)));
+    content.append('span').text('Francy is an interactive discrete mathematics framework for GAP.').append('br').append('br');
+    content.append('span').text('Developed by Manuel Martins: ');
     content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
+    
+    if (this.options.verbose) {
+      content.append('span').text('Loaded Data:');
+      content.append('pre').attr('class', 'francy').html(Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
+    }
 
     let footer = form.append('div').attr('class', 'francy-modal-footer');
 
@@ -43,9 +48,9 @@ export default class AboutModal extends Modal {
     });
 
     // disable keyboard shortcuts when using this modal in Jupyter
-    RegisterJupyterKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
+    Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
 
-    this.logger.debug(`Callback About updated [${modalId}]...`);
+    this.logger.debug(`Modal About updated [${modalId}]...`);
 
     return this;
   }

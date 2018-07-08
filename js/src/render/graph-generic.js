@@ -1,5 +1,5 @@
 import Graph from './graph';
-import { initialize } from '../util/initialize-decorator';
+import { Decorators } from '../decorator/factory';
 
 /* global d3 */
 
@@ -9,14 +9,12 @@ export default class GenericGraph extends Graph {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
-  @initialize()
-  render() {
-    var self = this;
-    
-    let simulationActive = this.data.canvas.graph.simulation;
-    let radius = 0;
-
-    let canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
+  @Decorators.Initializer.initialize()
+  async render() {
+    let self = this,
+      loader = Decorators.Loader.withContext(this).show(),
+      simulationActive = this.data.canvas.graph.simulation,
+      canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
       canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
 
     let linkGroup = this.element.selectAll('g.francy-links');
@@ -30,6 +28,25 @@ export default class GenericGraph extends Graph {
 
     let link = linkGroup.selectAll('g.francy-link').data(linksToAdd, d => d.id);
 
+    if (this.data.canvas.graph.type === 'directed') {
+      // this means we need arrows, so we append the markers
+      let defs = this.parent.select('defs');
+      if (!defs.node()) {
+        defs = this.parent.append('defs');
+      }
+      defs.selectAll('marker')
+        .data(linksToAdd)
+        .enter().append('marker')
+        .classed('francy-arrows', true)
+        .attr('id', d => `arrow-${d.id}`)
+        .attr('viewBox', '0 -5 10 10')
+        .attr('markerUnits', 'strokeWidth')
+        .attr('orient', 'auto')
+        .append('path')
+        .attr('d', 'M0,-5 L10,0 L0,5')
+        .style('fill', d => d.color || undefined);
+    }
+
     let nodeGroup = this.element.selectAll('g.francy-nodes');
 
     if (!nodeGroup.node()) {
@@ -42,62 +59,40 @@ export default class GenericGraph extends Graph {
     let node = nodeGroup.selectAll('g.francy-node').data(nodesToAdd, d => d.id);
 
     // this means no changes, so we can safely return
-    if (node.exit().data().length === 0 &&
-      node.enter().data().length === 0 &&
-      link.enter().data().length === 0 &&
-      link.exit().data().length === 0) return;
+    if (node.exit().data().length === 0 && node.enter().data().length === 0 &&
+      link.enter().data().length === 0 && link.exit().data().length === 0) return;
 
     let linkEnter = link.enter().append('g')
       .classed('francy-link', true);
 
-    linkEnter.append('line')
+    linkEnter.append('path')
       .classed('francy-edge', true)
-      .style('stroke-width', d => {
-        if (d.weight >= 3) {
-          d.weight = 3; d.pos = 15;
-        } else if (d.weight <= 1) {
-          d.weight = 1; d.pos = 28;
-        } else {
-          d.pos = 18;
-        }
-        return d.weight;
-      })
+      .style('stroke-width', d => Math.sqrt(d.weight))
       .style('stroke', d => d.color || undefined);
+
+    if (this.data.canvas.graph.type === 'directed') {
+      linkEnter.append('path').classed('francy-edge-arrow', true)
+        .style('stroke', 'none')
+        .style('marker-start', d => `url(#arrow-${d.id})`)
+        .style('stroke-width', d => Math.sqrt(d.weight));
+    }
 
     linkEnter.append('text')
       .classed('francy-label', true)
-      .classed('francy-size10', true)
+      .style('font-size', d => 7 * Math.sqrt(d.weight))
+      .style('opacity', 0.1)
+      .style('opacity', 0.1)
       .text(d => d.title)
       .attr('text-anchor', 'middle');
 
     link.exit().remove();
 
     link = linkGroup.selectAll('g.francy-link');
+    
+    // on mouse over show labels opacity 1
+    labelsOpacityBehavior();
 
-    if (this.data.canvas.graph.type === 'directed') {
-      // this means we need arrows, so we append the marker
-      self.parent.append('defs').selectAll('marker')
-        .data(linksToAdd)
-        .enter().append('marker')
-        .classed('francy-arrows', true)
-        .attr('id', d => `arrow-${d.id}`)
-        .attr('viewBox', '0 0 12 12')
-        .attr('refX', d  => d.pos)
-        .attr('refY', 6)
-        .attr('markerHeight', 12)
-        .attr('markerWidth', 12)
-        .attr('markerUnits', 'strokeWidth')
-        .attr('orient', 'auto')
-        .append('path')
-        .attr('d', 'M2,2 L10,6 L2,10 L6,6 L2,2')
-        .style('fill', d => d.color || undefined);
-      // update the style of the link
-      link.selectAll('line.francy-edge').style('marker-end', d => `url(#arrow-${d.id})`);
-    }
-
-    let nodeEnter = node.enter().append('g')
-      .classed('francy-node', true)
-      .attr('id', d => d.id);
+    let nodeEnter = node.enter().append('g').classed('francy-node', true).attr('id', d => d.id);
 
     nodeEnter.append('path')
       .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
@@ -109,19 +104,20 @@ export default class GenericGraph extends Graph {
     nodeEnter.append('text')
       .classed('francy-label', true)
       .text(d => d.title)
+      .style('font-size', d => 7 * Math.sqrt(d.size))
       .attr('x', function() {
         // apply mathjax if this is the case
         let text = d3.select(this);
         if (text.text().startsWith('$') && text.text().endsWith('$')) {
-          self.mathjax.settings({appendTo: {element: text}}).renderSVG();
+          // we need to set the position after re-render the latex
+          self.handlePromise(self.mathjax.settings({appendTo: {element: text}, renderType: 'SVG', postFunction: () => {
+            text.attr('x', self.setLabelXPosition(this));
+          }}).render());
         }
-        let bound = this.getBBox();
-        // check the widest label so that we use it as default radius for colisions
-        if (radius < bound.width) {
-          radius = bound.width;
-        }
-        return -(bound.width / 2);
-      });
+        return self.setLabelXPosition(this);
+      });/*.attr('y', function() {
+        return self.setLabelYPosition(this);
+      });*/
 
     node.exit().remove();
 
@@ -146,61 +142,98 @@ export default class GenericGraph extends Graph {
           // any callbacks will be handled here
           nodeOnClick.call(this, d);
         });
+        link.on('click', function() {
+          // default, highlight connected nodes
+          linkConnectedNodes.call(this);
+        });
       }
     }
 
     if (simulationActive) {
+      let radius = 0, 
+        symbolRadius = 0, 
+        layered = false;
+
+      node.each(function() {
+        let bound = this.getBBox();
+        // calculate default radius for colisions
+        // check the widest group Bounding Box
+        if (radius < bound.width) {
+          radius = bound.width;
+        }
+        // check the widest path Bounding Box
+        let node = d3.select(this);
+        let symbolBound = node.select('path.francy-symbol').node().getBBox();
+        if (symbolRadius < symbolBound.width) {
+          symbolRadius = symbolBound.width;
+        }
+        // check whether the graph will be layered - hasse
+        if (node.data()[0].layer != 0) {
+          layered = true;
+        }
+      });
+
       //Canvas Forces
-      //let centerForce = d3.forceCenter().x(this.width / 2).y(this.height / 2);
-      let manyForce = d3.forceManyBody().strength(-nodesToAdd.length * 75);
-      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(75);
-      let collideForce = d3.forceCollide().strength(0.25).radius(radius/2).iterations(3);
+      var simulation = d3.forceSimulation(),
+        safeTicked = Decorators.Error.wrap(ticked).withContext(self).onErrorThrow(false).onErrorExec(simulation.stop),
+        safeEnd = Decorators.Error.wrap(endSimulation).withContext(self);
+      
+      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100);
+      
+      simulation.nodes(nodesToAdd)
+        .force('charge-1', layered ? undefined : d3.forceManyBody().strength(-75))
+        .force('x', d3.forceX())
+        .force('y', layered ? d3.forceY(d => d.layer * 100).strength(1) : d3.forceY())
+        .force('charge-2', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length))
+        .force('link', layered ? linkForce.strength(0.15) : linkForce)
+        .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2))
+        .on('tick', () => safeTicked.handle())
+        .on('end', () => safeEnd.handle());
 
-      //Generic gravity for the X position
-      let forceX = d3.forceX(this.width).strength(0.05);
-      //Generic gravity for the Y position - undirected/directed graphs fall here
-      let forceY = d3.forceY(this.height).strength(0.25);
-
-      if (this.data.canvas.graph.type === 'hasse') {
-        //Generic gravity for the X position
-        forceX = d3.forceX(this.width).strength(0.1);
-        //Strong y positioning based on layer to simulate the hasse diagram
-        forceY = d3.forceY(d => d.layer * 75).strength(1);
-      }
-
-      var simulation = d3.forceSimulation().nodes(nodesToAdd)
-        .force('charge', manyForce)
-        .force('link', linkForce)
-        //.force('center', centerForce)
-        .force('x', forceX)
-        .force('y', forceY)
-        .force('collide', collideForce)
-        .on('tick', ticked)
-        .on('end', self.parent.zoomToFit);
-
-      //force simulation restart
-      simulation.restart();
     } else {
-      // well, simulation is off, apply fixed positions and zoom to fit now
+      // well, simulation is off, apply fixed positions
       ticked();
+      endSimulation();
+    }
+
+    function endSimulation() {
       self.parent.zoomToFit();
+      loader.hide();
     }
 
     function ticked() {
-      link.selectAll('line.francy-edge')
-        .attr('x1', d => d.source.x)
-        .attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x)
-        .attr('y2', d => d.target.y);
+      link.selectAll('path.francy-edge')
+        .attr('d', function(d) {
+          if (d.source.id === d.target.id) {
+            return `M${d.source.x},${d.source.y} A${d.target.size + 10},${d.target.size + 10} -45,1,0 ${d.source.x - 1},${d.source.y}`;
+          }
+          return `M${d.source.x},${d.source.y} L${d.target.x},${d.target.y}`;
+        });
+
+      if (self.data.canvas.graph.type === 'directed') {
+        link.each(function() {
+        
+          let g = d3.select(this), data = g.data()[0],
+            pathEl = g.select('path.francy-edge').node(),
+            pathLength = pathEl.getTotalLength(),
+            nodeEl = d3.select(`#${data.target.id} > path.francy-symbol`).node(),
+            nodeSize = (Math.floor(nodeEl.getBBox().width) + 4) / 2,
+            pathPoint = pathEl.getPointAtLength(pathLength - nodeSize - data.weight),
+            pathPoint2 = pathEl.getPointAtLength(pathLength - nodeSize),
+            x1 = pathPoint.x, y1 = pathPoint.y, x2 = pathPoint2.x, y2 = pathPoint2.y;
+         
+          if (data.source.id === data.target.id) {
+            x2 += (x1 - x2) / (y1 - y2);
+            y2 += (y1 - y2) / (x1 - x2);
+          }
+
+          g.select('path.francy-edge-arrow').attr('d', `M${x1},${y1} L${x2},${y2}`);
+        });
+      }
 
       link.selectAll('text.francy-label')
-        .attr('x', function(d) { 
-          return Graph.linkXPos(d.target, d.source); 
-          
-        })
-        .attr('y', function(d) { 
-          return Graph.linkYPos(d.target, d.source); 
-        });
+        .attr('x', d => Graph.linkXPos(d.target, d.source))
+        .attr('y', d => Graph.linkYPos(d.target, d.source));
 
       node.attr('transform', d => `translate(${d.x},${d.y})`);
     }
@@ -229,15 +262,60 @@ export default class GenericGraph extends Graph {
         //Reduce the opacity of all but the neighbouring nodes
         let d = d3.select(this).node().__data__;
         node.style('opacity', o => neighboring(d, o) || neighboring(o, d) ? 1 : 0.1);
-        link.style('opacity', o => d.index === o.source.index || d.index === o.target.index ? 1 : 0.1);
+        link.style('opacity', function(o) {
+          let opacity = d.index === o.source.index || d.index === o.target.index ? 1 : 0.1;
+          d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
+          return opacity;
+        });
         //Reduce the op
         toggle = 1;
       } else {
         //Put them back to opacity=1
         node.style('opacity', 1);
-        link.style('opacity', 1);
+        link.style('opacity', function() {
+          d3.select(this).select('text').style('opacity', 0.1);
+          return 1;
+        });
+        labelsOpacityBehavior();
         toggle = 0;
       }
+    }
+
+    function linkConnectedNodes() {
+      d3.event.preventDefault();
+      if (toggle === 0) {
+        //Reduce the opacity of all but the neighbouring nodes
+        let d = d3.select(this).node().__data__;
+        node.style('opacity', o => d.source.id === o.id || d.target.id === o.id ? 1 : 0.1);
+        link.style('opacity', function(o) {
+          let opacity = d.index === o.index ? 1 : 0.1;
+          d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
+          return opacity;
+        });
+        //Reduce the op
+        toggle = 1;
+      } else {
+        //Put them back to opacity=1
+        node.style('opacity', 1);
+        link.style('opacity', function() {
+          d3.select(this).select('text').style('opacity', 0.1);
+          return 1;
+        });
+        labelsOpacityBehavior();
+        toggle = 0;
+      }
+    }
+    
+    function labelsOpacityBehavior() {
+      link.on('mouseover', function(){
+        d3.select(this).selectAll('text')
+          .style('opacity', 1)
+          .style('opacity', 1);
+      }).on('mouseleave', function(){
+        d3.select(this).selectAll('text')
+          .style('opacity', 0.1)
+          .style('opacity', 0.1);
+      });
     }
 
     function dragstarted(d) {

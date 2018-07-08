@@ -1,7 +1,7 @@
 import Composite from './composite';
 import GraphFactory from './graph-factory';
 import ChartFactory from './chart-factory';
-import { requires } from '../util/data-decorator';
+import { Decorators } from '../decorator/factory';
 
 /* global d3 */
 
@@ -14,8 +14,8 @@ export default class Canvas extends Composite {
     this.add(this.graphFactory).add(this.chartFactory);
   }
 
-  @requires('canvas')
-  render() {
+  @Decorators.Data.requires('canvas')
+  async render() {
     let content;
     let zoom = d3.zoom();
     let self = this;
@@ -95,11 +95,7 @@ export default class Canvas extends Composite {
 
     this.logger.debug(`Canvas updated [${canvasId}]...`);
 
-    this.renderChildren();
-
-    setTimeout(() => {
-      zoomToFit();
-    }, this.transitionDuration);
+    this.handlePromise(this.renderChildren());
 
     return this;
   }

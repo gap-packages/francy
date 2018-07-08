@@ -5,7 +5,7 @@ export default class Composite extends Renderer {
   constructor({ verbose = false, appendTo, callbackHandler }) {
     super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
     if (new.target === Composite) {
-      throw new TypeError('Cannot construct [Composite] instances directly!');
+      throw new TypeError('Cannot instantiate [Composite] classes directly!');
     }
     this.renderers = [];
   }
@@ -17,10 +17,11 @@ export default class Composite extends Renderer {
     return this;
   }
 
-  renderChildren() {
+  async renderChildren() {
     // render other components
     for (let renderer of this.renderers) {
-      renderer.settings({appendTo: this}).load(this.data).render();
+      await this.handlePromise(renderer.settings({appendTo: this}).load(this.data).render());
     }
+    this.ready = true;
   }
 }
