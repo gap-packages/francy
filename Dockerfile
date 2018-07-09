@@ -8,7 +8,7 @@ USER root
 
 RUN apt-get update && apt-get install python3-pip -y
 
-RUN cd $HOME/inst/gap-master/pkg && git clone https://github.com/gap-packages/FrancyMonoids
+RUN mv $HOME/francy/gap $HOME/inst/gap-master/pkg/francy && cd $HOME/inst/gap-master/pkg && git clone https://github.com/gap-packages/FrancyMonoids
 
 # lab extension installation
 RUN cd $HOME/francy/js && npm install && npm run build:all \
