@@ -43,7 +43,7 @@ In order to use this module in Jupyter, install it as follows, both jupyter lab 
 mcmartins@local:~$ pip install jupyter_francy
 ```
 
-The jupyter extension requires that the GAP Kernel and Francy GAP, both, are installed.
+The jupyter extension requires the GAP Kernel and Francy GAP packages installed.
 
 See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel)
 

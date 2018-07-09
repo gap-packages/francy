@@ -2,11 +2,9 @@ import { MIME_TYPE, CLASS_NAME, APPEND_ID } from './utils';
 import { Widget } from '@phosphor/widgets';
 //import { OutputArea } from '@jupyterlab/outputarea';
 import 'francy-js/style/index.css';
-import * as d3 from 'francy-js/lib/d3.min';
 import * as FrancyBundle from 'francy-js/amd/francy.bundle.min';
 
-window.d3 = d3;
-const francy = new FrancyBundle.Francy({ verbose: false, appendTo: `#${APPEND_ID}`, callbackHandler: console.log });
+let francy = new FrancyBundle.Francy({ verbose: false, appendTo: `#${APPEND_ID}`, callbackHandler: console.log });
 
 /**
  * A widget for rendering 'application/vnd.francy+json'

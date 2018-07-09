@@ -1,15 +1,8 @@
 var path = require('path');
-const del = require('del');
 module.exports = (env = {}) => {
 
   const isProduction = env.production === true;
-  const clean = env.clean === true;
-  
-  if (clean) {
-    console.log('Removing files from output directories...');
-    del.sync(['./dist/*']);
-  }
-  
+
   /**
    * Custom webpack loaders are generally the same for all webpack bundles, hence
    * stored in a separate local variable.

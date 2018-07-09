@@ -2,9 +2,11 @@
 
 FRANCY is a Framework for Interactive Discrete Mathematics package for GAP.
 
-TODO
+UPDATE ME
 
 # Usage
+
+UPDATE ME
 
 ```bash
  ┌───────┐   GAP 4.8.8, 20-Aug-2017, build of 2017-10-26 20:55:01 (UTC)
@@ -18,7 +20,7 @@ by Christopher Jefferson (http://caj.host.cs.st-andrews.ac.uk/).
 Homepage: http://gap-packages.github.io/json/
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-Loading  Francy 0.2.0 (FRANCY - A Framework for Interactive Discrete Mathematics)
+Loading  Francy 0.8.0 (FRANCY - A Framework for Interactive Discrete Mathematics)
 by Manuel Martins (http://github.com/mcmartins).
 Homepage: https://github.com/mcmartins/francy
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────

@@ -5,12 +5,9 @@ import 'francy-js/style/index.css';
 
 let francy = undefined;
 
-export function init(Jupyter, d3, FrancyBundle) {
+export function init(Jupyter, FrancyBundle) {
 
   console.log('Starting loading Module Francy Javascript...');
-
-  // attach d3 to window
-  window.d3 = d3;
 
   // start Francy
   francy = new FrancyBundle.Francy({
@@ -34,6 +31,7 @@ export function init(Jupyter, d3, FrancyBundle) {
 
   console.log('Finished loading Module Francy Javascript.');
 }
+
 /**
  * Render data to the DOM node
  */

@@ -1,5 +1,7 @@
 import * as d3 from 'francy-js/lib/d3.min.js';
 
+window.d3 = d3; // we need this to be present
+
 export const MIME_TYPE = 'application/vnd.francy+json';
 export const CLASS_NAME = 'jp-OutputWidget-Francy';
 export const APPEND_ID = 'francy-drawing-div';

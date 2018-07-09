@@ -41,7 +41,9 @@
   "jupyterlab": {
     "mimeExtension": "lib/lab_extension"
   },
-  "dependencies": {},
+  "dependencies": {
+    "francy-js": "file:./../../js/dist"
+  },
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
@@ -58,7 +60,9 @@
     "style-loader": "0.21.0",
     "url-loader": "1.0.1",
     "webpack": "4.10.1",
-    "webpack-cli": "2.1.4",
-    "francy-js": "file:./../../js/dist"
-  }
+    "webpack-cli": "2.1.4"
+  },
+  "bundledDependencies": [
+    "francy-js"
+  ]
 }

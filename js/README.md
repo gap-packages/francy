@@ -14,16 +14,16 @@ Francy depends on [d3.v4](https://d3js.org/) to produce graphics.
 <html>
 <header>
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v4">
-  <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/mcmartins/francy/develop/js/extensions/browser/index.css">
-  <script src="https://d3js.org/d3.v4.js"></script>
-  <script src="https://cdn.rawgit.com/mcmartins/francy/develop/js/extensions/browser/francy.bundle.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/mcmartins/francy/master/js/dist/style/index.css">
+  <script src="https://d3js.org/d3.v5.js"></script>
+  <script src="https://cdn.rawgit.com/mcmartins/francy/master/js/dist/browser/francy.bundle.js"></script>
 </header>
 <body>
 <script>
 
   var francy = new Francy({verbose: true, appendTo: '#francy', callbackHandler: console.log});
   d3.json("json.json", function (error, json) {
-    francy.load(json).render();
+    francy.load(json).render().catch(error => Console.log(error)).then(element => console.log('do whatever with the element:', element));
   });
 
 </script>
