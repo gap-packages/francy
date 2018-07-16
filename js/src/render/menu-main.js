@@ -1,5 +1,6 @@
 import Menu from './menu';
 import AboutModal from './modal-about';
+import { Configuration } from '../util/configuration';
 import * as SvgToPng from '../../node_modules/save-svg-as-png/saveSvgAsPng';
 
 /* global d3 window */
@@ -12,6 +13,7 @@ export default class MainMenu extends Menu {
 
   async render() {
     let aboutModal = new AboutModal(this.options);
+    let self = this;
 
     // Otherwise clashes with the canvas itself!
     const menuId = `MainMenu-${this.data.canvas.id}`;
@@ -45,6 +47,51 @@ export default class MainMenu extends Menu {
     content.append('li').append('a').on('click', () => this.options.appendTo.canvas.zoomToFit(true)).attr('title', 'Zoom to Fit').html('Zoom to Fit');
     content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(this.SVGParent.node(), 'diagram.png')).attr('title', 'Save to PNG').html('Save to PNG');
     content.append('li').append('a').on('click', () => this.handlePromise(aboutModal.load(this.data).render())).attr('title', 'About').html('About');
+    
+    if (this.data.canvas.graph) {
+      let entry2 = this.element.append('li');
+      entry2.append('a').html('Graph Options');
+      let content2 = content = entry2.append('ul');
+      content2.append('li').append('a')
+        .attr('title', 'Neighbours').html(`${Configuration.object.showNeighbours ? 'Disable' : 'Enable'} Show Neighbours`)
+        .on('click', function() {
+          Configuration.object.showNeighbours = !Configuration.object.showNeighbours;
+        })
+        .each(function() {
+          Configuration.subscribe('showNeighbours', value => {
+            d3.select(this).html(`${value ? 'Disable' : 'Enable'} Show Neighbours`);
+          });
+        });
+      content2.append('li').append('a')
+        .attr('title', 'Drag').html(`${Configuration.object.dragNodes ? 'Disable' : 'Enable'} Drag Nodes`)
+        .on('click', function() {
+          Configuration.object.dragNodes = !Configuration.object.dragNodes;
+        })
+        .each(function() {
+          Configuration.subscribe('dragNodes', value => {
+            d3.select(this).html(`${value ? 'Disable' : 'Enable'} Drag Nodes`);
+          });
+        });
+      content2.append('li').append('a')
+        .attr('title', 'Selection').html('Clear Selected Nodes')
+        .on('click', function() {
+          setTimeout(() => {
+            d3.select(`svg#Canvas-${self.data.canvas.id}`).selectAll('.francy-node.francy-selected').each(function(){
+              delete d3.select(this).data()[0].selected;
+            }).classed('francy-selected', d => d.selected);
+          }, 0);
+        });
+      /*content2.append('li').append('a')
+      .attr('title', 'Simulation').html(`${Configuration.object.simulation ? 'Disable' : 'Enable'} Simulation`)
+      .on('click', function() {
+        Configuration.object.simulation = !Configuration.object.simulation;
+      })
+      .each(function() {
+        Configuration.subscribe('simulation', value => {
+          d3.select(this).html(`${value ? 'Disable' : 'Enable'} Simulation`);
+        });
+      });*/
+    }
 
     // Traverse all menus and flatten them!
     let menusIterator = this.iterator(Object.values(this.data.canvas.menus));

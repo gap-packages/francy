@@ -64,3 +64,5 @@ extensions/**/dist/
 *.tgz
 
 build.sh
+
+*.ipynb_checkpoints

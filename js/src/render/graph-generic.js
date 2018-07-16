@@ -1,4 +1,5 @@
 import Graph from './graph';
+import { Configuration } from '../util/configuration';
 import { Decorators } from '../decorator/factory';
 
 /* global d3 */
@@ -13,7 +14,7 @@ export default class GenericGraph extends Graph {
   async render() {
     let self = this,
       loader = Decorators.Loader.withContext(this).show(),
-      simulationActive = this.data.canvas.graph.simulation,
+      simulationActive = Configuration.object.simulation,
       canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
       canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
 
@@ -60,7 +61,10 @@ export default class GenericGraph extends Graph {
 
     // this means no changes, so we can safely return
     if (node.exit().data().length === 0 && node.enter().data().length === 0 &&
-      link.enter().data().length === 0 && link.exit().data().length === 0) return;
+      link.enter().data().length === 0 && link.exit().data().length === 0) {
+      loader.hide();
+      return;
+    }
 
     let linkEnter = link.enter().append('g')
       .classed('francy-link', true);
@@ -92,13 +96,15 @@ export default class GenericGraph extends Graph {
     // on mouse over show labels opacity 1
     labelsOpacityBehavior();
 
-    let nodeEnter = node.enter().append('g').classed('francy-node', true).attr('id', d => d.id);
+    let nodeEnter = node.enter().append('g').attr('id', d => d.id)
+      .classed('francy-node', true)
+      .classed('francy-highlight', true);
 
     nodeEnter.append('path')
       .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
       .style('fill', d => d.color || Graph.colors(d.layer * 5))
       .classed('francy-symbol', true)
-      .classed('francy-highlight', d => d.highlight)
+      .classed('francy-selected', d => d.selected)
       .classed('francy-context', d => Object.values(d.menus).length && Object.values(d.menus).length > 0);
 
     nodeEnter.append('text')
@@ -123,7 +129,7 @@ export default class GenericGraph extends Graph {
 
     node = nodeGroup.selectAll('g.francy-node');
 
-    if (this.data.canvas.graph.drag) {
+    if (Configuration.object.dragNodes) {
       node.call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
@@ -134,19 +140,18 @@ export default class GenericGraph extends Graph {
 
       this._applyEvents(node);
 
-      if (this.data.canvas.graph.showNeighbours) {
-        let nodeOnClick = node.on('click');
-        node.on('click', function(d) {
-          // default, highlight connected nodes
-          connectedNodes.call(this);
-          // any callbacks will be handled here
-          nodeOnClick.call(this, d);
-        });
-        link.on('click', function() {
-          // default, highlight connected nodes
-          linkConnectedNodes.call(this);
-        });
-      }
+      let nodeOnClick = node.on('click');
+      node.on('click', function(d) {
+        // default, highlight connected nodes
+        connectedNodes.call(this);
+        // any callbacks will be handled here
+        nodeOnClick.call(this, d);
+      });
+      link.on('click', function() {
+        // default, highlight connected nodes
+        linkConnectedNodes.call(this);
+        d3.event.preventDefault();
+      });
     }
 
     if (simulationActive) {
@@ -185,8 +190,8 @@ export default class GenericGraph extends Graph {
         .force('x', d3.forceX())
         .force('y', layered ? d3.forceY(d => d.layer * 100).strength(1) : d3.forceY())
         .force('charge-2', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length))
-        .force('link', layered ? linkForce.strength(0.15) : linkForce)
-        .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2))
+        .force('link', layered ? linkForce.strength(0.01) : linkForce)
+        .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.25) / 2))
         .on('tick', () => safeTicked.handle())
         .on('end', () => safeEnd.handle());
 
@@ -253,11 +258,11 @@ export default class GenericGraph extends Graph {
     });
 
     function connectedNodes() {
+      if (!Configuration.object.showNeighbours) return;
       //This function looks up whether a pair are neighbours
       function neighboring(a, b) {
         return linkedByIndex[`${a.index},${b.index}`];
       }
-      d3.event.preventDefault();
       if (toggle === 0) {
         //Reduce the opacity of all but the neighbouring nodes
         let d = d3.select(this).node().__data__;
@@ -267,6 +272,9 @@ export default class GenericGraph extends Graph {
           d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
           return opacity;
         });
+        setTimeout(function(){
+          d3.select('body').on('click', () => toggle === 1 ? connectedNodes.call(this) : undefined);
+        }, 0);
         //Reduce the op
         toggle = 1;
       } else {
@@ -277,12 +285,14 @@ export default class GenericGraph extends Graph {
           return 1;
         });
         labelsOpacityBehavior();
+        d3.select('body').on('click', undefined);
         toggle = 0;
       }
+      d3.event.preventDefault();
     }
 
     function linkConnectedNodes() {
-      d3.event.preventDefault();
+      if (!Configuration.object.showNeighbours) return;
       if (toggle === 0) {
         //Reduce the opacity of all but the neighbouring nodes
         let d = d3.select(this).node().__data__;
@@ -292,6 +302,9 @@ export default class GenericGraph extends Graph {
           d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
           return opacity;
         });
+        setTimeout(function(){
+          d3.select('body').on('click', () =>  toggle === 1 ? linkConnectedNodes.call(this) : undefined);
+        }, 0);
         //Reduce the op
         toggle = 1;
       } else {
@@ -302,8 +315,10 @@ export default class GenericGraph extends Graph {
           return 1;
         });
         labelsOpacityBehavior();
+        d3.select('body').on('click', undefined);
         toggle = 0;
       }
+      d3.event.preventDefault();
     }
     
     function labelsOpacityBehavior() {
@@ -320,6 +335,7 @@ export default class GenericGraph extends Graph {
 
     function dragstarted(d) {
       if (!d3.event.active && simulationActive) {
+        simulation.on('end', undefined);
         simulation.alphaTarget(0.01).restart();
       }
       d.fx = d.x;
@@ -348,9 +364,11 @@ export default class GenericGraph extends Graph {
   _filterNewElements(canvasObjects, d3Element) {
     let newElements = [];
     canvasObjects.forEach(o => {
-      let link = d3Element.find(d => d.id === o.id);
-      if (link) {
-        newElements.push(link);
+      let data = d3Element.find(d => d.id === o.id);
+      if (data) {
+        let tmp = Object.assign({}, o);
+        delete tmp.source; delete tmp.target; delete tmp.x; delete tmp.y; // ignore these
+        newElements.push(Object.assign(data, tmp));
       } else {
         newElements.push(o);
       }

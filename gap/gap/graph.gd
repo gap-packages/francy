@@ -272,11 +272,10 @@ BindGlobal("ShapeType", rec(
 #! The default configuration for a shape.
 #! @Returns <C>rec</C> of <C>ShapeDefaults</C>
 BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and IsShapeDefaultsRep), rec(
-  color     := "",
-  highlight := true,
-  size      := 10,
-  x         := 0,
-  y         := 0 
+  color := "",
+  size  := 10,
+  x     := 0,
+  y     := 0 
 )));
 
 #! @Description
@@ -346,16 +345,6 @@ InstallMethod(Size, "shape", [IsShape], o -> o!.size);
 InstallMethod(SetSize, "shape, int", [IsShape, IsPosInt], function(o, i) o!.size := i; end);
 
 #! @Description
-#! <C>Highlight</C> is a property that sets the highlight behavior on mouse over in the client implementation.
-#! @Returns <C>IsBool</C> True if enabled otherwise False
-DeclareAttribute("Highlight", IsShape);
-InstallMethod(Highlight, "shape", [IsShape], o -> o!.highlight);
-#! @Description
-#! Sets the <C>Highlight</C> behavior on mouse over in the client implementation.
-#! @Arguments IsCanvas, IsBool
-InstallMethod(SetHighlight, "shape, boolean", [IsShape, IsBool], function(o, b) o!.highlight := b; end);
-
-#! @Description
 #! The <C>Layer</C> in which the node will be placed.
 #! This property is also used to apply a color based on a scale
 #! @Returns <C>IsInt</C>
@@ -400,25 +389,35 @@ InstallMethod(Collapsed, "graph", [IsFrancyGraph], o -> o!.collapsed);
 InstallMethod(SetCollapsed, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.collapsed := b; end);
 
 #! @Description
+#! <C>Collapsed</C> is a property that sets to collapsed the graphic structure by default
+#! @Returns <C>IsBool</C> True if enabled otherwise False
+DeclareAttribute("Selected", IsShape);
+InstallMethod(Selected, "shape", [IsShape], o -> o!.selected);
+#! @Description
+#! Sets the <C>Collapsed</C> behavior.
+#! @Arguments IsCanvas, IsBool
+InstallMethod(SetSelected, "shape, boolean", [IsShape, IsBool], function(o, b) o!.selected := b; end);
+
+#! @Description
 #! <C>Drag</C> is a property that sets the drag behavior on mouse drag, in the client implementation.
 #! @Returns <C>IsBool</C> True if enabled otherwise False
-DeclareAttribute("Drag", IsFrancyGraph);
-InstallMethod(Drag, "graph", [IsFrancyGraph], o -> o!.drag);
+#DeclareAttribute("Drag", IsFrancyGraph);
+#InstallMethod(Drag, "graph", [IsFrancyGraph], o -> o!.drag);
 #! @Description
 #! Sets the <C>Drag</C> behavior.
 #! @Arguments IsCanvas, IsBool
-InstallMethod(SetDrag, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.drag := b; end);
+#InstallMethod(SetDrag, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.drag := b; end);
 
 #! @Description
 #! <C>ShowNeighbours</C> is a property that sets the behavior of showing 
 #! connected nodes on click, in the client implementation.
 #! @Returns <C>IsBool</C> True if enabled otherwise False
-DeclareAttribute("ShowNeighbours", IsFrancyGraph);
-InstallMethod(ShowNeighbours, "graph", [IsFrancyGraph], o -> o!.showNeighbours);
+#DeclareAttribute("ShowNeighbours", IsFrancyGraph);
+#InstallMethod(ShowNeighbours, "graph", [IsFrancyGraph], o -> o!.showNeighbours);
 #! @Description
 #! Sets the <C>ShowNeighbours</C> behavior.
 #! @Arguments IsCanvas, IsBool
-InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) if o!.type = "tree" then Error("Only supported by GraphType.TREE!"); fi; o!.showNeighbours := b; end);
+#InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) if o!.type = "tree" then Error("Only supported by GraphType.TREE!"); fi; o!.showNeighbours := b; end);
 
 #! @Description
 #! The <C>Weight</C> of the current link.

@@ -18,11 +18,13 @@ InstallMethod(FrancyMessage,
    IsString],
   0,
 function(messageType, title, value)
+local id;
+id := GenerateID();
   return Objectify(FrancyMessageObjectType, rec(
-    id    := GenerateID(),
+    id    := id,
     type  := messageType!.value,
     title := title,
-    text := value
+    text  := value
   ));
 end);
 

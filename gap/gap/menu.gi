@@ -78,7 +78,7 @@ function(menu, object)
 end);
 
 InstallOtherMethod(Remove,
-  "a canvas, a list of francy objects",
+  "a menu, a list of francy objects",
   true,
   [IsMenu,
    IsList],

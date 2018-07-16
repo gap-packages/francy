@@ -171,9 +171,10 @@ BindGlobal("FrancyCallbacks", rec());
 #! @Description
 #! This <C>rec</C> holds all the <C>ArgType</C> supported by Francy.
 #! The available <C>ArgType</C> specify the type of argument a <C>Callback</C> is expecting.
-#! @Returns <C>rec</C> of <C>ArgType</C>: <C>ArgType.INTEGER</C>,<C>ArgType.BOOLEAN</C>,<C>ArgType.STRING</C>,<C>ArgType.NUMBER</C>
+#! @Returns <C>rec</C> of <C>ArgType</C>: <C>ArgType.SELECT</C>,<C>ArgType.INTEGER</C>,<C>ArgType.BOOLEAN</C>,<C>ArgType.STRING</C>,<C>ArgType.NUMBER</C>
 BindGlobal("ArgType", rec(
   BOOLEAN := Objectify(ArgTypeObjectType, rec(value := "boolean")),
+  SELECT  := Objectify(ArgTypeObjectType, rec(value := "select")),
   STRING  := Objectify(ArgTypeObjectType, rec(value := "text")),
   NUMBER  := Objectify(ArgTypeObjectType, rec(value := "number"))
 ));
@@ -219,3 +220,16 @@ InstallMethod(Value, "requiredArg", [IsRequiredArg], o -> o!.value);
 #! Sets the value of the required arg.
 #! @Arguments IsRequiredArg, IsString
 InstallMethod(SetValue, "requiredArg, string", [IsRequiredArg, IsString], function(o, s) o!.value := s; end);
+
+#! @Description
+#! A value on a required arg is the actual input to be passed to gap.
+#! These values are stored as <C>String</C> for convenience, 
+#! even if the <C>ArgType</C> specified for the <C>RequiredArg</C> is another.
+#! Explicit conversion is required within the <C>Callback</C>function.
+#! @Returns <C>IsString</C> with the value of the object
+DeclareAttribute("ConfirmMessage", IsCallback);
+InstallMethod(ConfirmMessage, "callback", [IsCallback], o -> o!.confirm);
+#! @Description
+#! Sets the value of the required arg.
+#! @Arguments IsRequiredArg, IsString
+InstallMethod(SetConfirmMessage, "callback, string", [IsCallback, IsString], function(o, s) o!.confirm := s; end);

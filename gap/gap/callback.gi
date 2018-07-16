@@ -113,7 +113,7 @@ function(callback, arg)
 end);
 
 InstallOtherMethod(Add,
-  "a canvas, a list of francy objects",
+  "a callback, a list of francy objects",
   true,
   [IsCallback,
    IsList],
@@ -142,7 +142,7 @@ function(callback, arg)
 end);
 
 InstallOtherMethod(Remove,
-  "a canvas, a list of francy objects",
+  "a callback, a list of francy objects",
   true,
   [IsCallback,
    IsList],

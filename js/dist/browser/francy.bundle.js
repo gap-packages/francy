@@ -13818,6 +13818,8 @@ var _renderer2 = _interopRequireDefault(_renderer);
 
 var _factory = __webpack_require__(/*! ./decorator/factory */ "./src/decorator/factory.js");
 
+var _configuration = __webpack_require__(/*! ./util/configuration */ "./src/util/configuration.js");
+
 var _seedrandom = __webpack_require__(/*! seedrandom */ "./node_modules/seedrandom/index.js");
 
 var ignore = _interopRequireWildcard(_seedrandom);
@@ -13919,8 +13921,10 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
                 if (this.data.version !== "0.8.0") {
                   this.logger.warn('Rendering data generated in Francy GAP v' + this.data.version + ' using Francy JS v' + "0.8.0" + ', rendering may fail... please update your system...');
                 }
-                //set seed to produce always the same graphs
-                Math.seedrandom('Francy!');
+                if (_configuration.Configuration.object.fixedRandomSeed) {
+                  //set seed to produce always the same graphs
+                  Math.seedrandom('Francy!');
+                }
                 _context.next = 4;
                 return new _frame2.default(this.options).load(this.data).render().then(function (element) {
                   return element;
@@ -14173,6 +14177,10 @@ var _modalRequired = __webpack_require__(/*! ./modal-required */ "./src/render/m
 
 var _modalRequired2 = _interopRequireDefault(_modalRequired);
 
+var _modalConfirm = __webpack_require__(/*! ./modal-confirm */ "./src/render/modal-confirm.js");
+
+var _modalConfirm2 = _interopRequireDefault(_modalConfirm);
+
 var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -14234,41 +14242,82 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
   _createClass(CallbackHandler, [{
     key: 'execute',
     value: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _this2 = this;
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var showRequiredModal = function () {
+          var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            var modal;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    options.callbackHandler = function (cb) {
+                      return self._execute.call(self, cb);
+                    };
+                    modal = new _modalRequired2.default(options);
+                    _context.next = 4;
+                    return self.handlePromise(modal.load(self.data, true).render());
 
-        var options, modal;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+                  case 4:
+                    return _context.abrupt('return', _context.sent);
+
+                  case 5:
+                  case 'end':
+                    return _context.stop();
+                }
+              }
+            }, _callee, this);
+          }));
+
+          return function showRequiredModal() {
+            return _ref3.apply(this, arguments);
+          };
+        }();
+
+        var self, options, confirmModal;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                if (!Object.keys(this.data.callback.requiredArgs).length) {
-                  _context.next = 7;
+                self = this;
+                options = this.options;
+
+                if (!this.data.callback.confirm) {
+                  _context2.next = 8;
                   break;
                 }
 
-                options = this.options;
-
-                options.callbackHandler = function (callbackObj) {
-                  return _this2._execute.call(_this2, callbackObj);
-                };
-                modal = new _modalRequired2.default(options);
-                _context.next = 6;
-                return this.handlePromise(modal.load(this.data, true).render());
-
-              case 6:
-                return _context.abrupt('return', _context.sent);
+                if (Object.keys(this.data.callback.requiredArgs).length) {
+                  options.callbackHandler = showRequiredModal;
+                }
+                confirmModal = new _modalConfirm2.default(options);
+                _context2.next = 7;
+                return this.handlePromise(confirmModal.load(this.data, true).render());
 
               case 7:
-                _context.next = 9;
+                return _context2.abrupt('return', _context2.sent);
+
+              case 8:
+                if (!Object.keys(this.data.callback.requiredArgs).length) {
+                  _context2.next = 12;
+                  break;
+                }
+
+                _context2.next = 11;
+                return this.handlePromise(showRequiredModal());
+
+              case 11:
+                return _context2.abrupt('return', _context2.sent);
+
+              case 12:
+                _context2.next = 14;
                 return this._execute(this.data.callback);
 
-              case 9:
+              case 14:
               case 'end':
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function execute() {
@@ -14278,8 +14327,13 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
       return execute;
     }()
   }, {
+    key: '_requiredArgsRender',
+    value: function _requiredArgsRender() {}
+  }, {
     key: '_execute',
     value: function _execute(calbackObj) {
+      // oh well, Trigger(<json>); is the entrypoint back to GAP 
+      // while we don't support comms on the kernel
       this.callback('Trigger(' + JSON.stringify(JSON.stringify(calbackObj)) + ');');
     }
   }]);
@@ -15806,6 +15860,8 @@ var _graph = __webpack_require__(/*! ./graph */ "./src/render/graph.js");
 
 var _graph2 = _interopRequireDefault(_graph);
 
+var _configuration = __webpack_require__(/*! ../util/configuration */ "./src/util/configuration.js");
+
 var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -15887,6 +15943,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
 
                 dragstarted = function dragstarted(d) {
                   if (!d3.event.active && simulationActive) {
+                    simulation.on('end', undefined);
                     simulation.alphaTarget(0.01).restart();
                   }
                   d.fx = d.x;
@@ -15902,7 +15959,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                 };
 
                 linkConnectedNodes = function linkConnectedNodes() {
-                  d3.event.preventDefault();
+                  if (!_configuration.Configuration.object.showNeighbours) return;
                   if (toggle === 0) {
                     //Reduce the opacity of all but the neighbouring nodes
                     var d = d3.select(this).node().__data__;
@@ -15914,6 +15971,13 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                       d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
                       return opacity;
                     });
+                    setTimeout(function () {
+                      var _this4 = this;
+
+                      d3.select('body').on('click', function () {
+                        return toggle === 1 ? linkConnectedNodes.call(_this4) : undefined;
+                      });
+                    }, 0);
                     //Reduce the op
                     toggle = 1;
                   } else {
@@ -15924,16 +15988,18 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                       return 1;
                     });
                     labelsOpacityBehavior();
+                    d3.select('body').on('click', undefined);
                     toggle = 0;
                   }
+                  d3.event.preventDefault();
                 };
 
                 connectedNodes = function connectedNodes() {
+                  if (!_configuration.Configuration.object.showNeighbours) return;
                   //This function looks up whether a pair are neighbours
                   function neighboring(a, b) {
                     return linkedByIndex[a.index + ',' + b.index];
                   }
-                  d3.event.preventDefault();
                   if (toggle === 0) {
                     //Reduce the opacity of all but the neighbouring nodes
                     var d = d3.select(this).node().__data__;
@@ -15945,6 +16011,13 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                       d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
                       return opacity;
                     });
+                    setTimeout(function () {
+                      var _this3 = this;
+
+                      d3.select('body').on('click', function () {
+                        return toggle === 1 ? connectedNodes.call(_this3) : undefined;
+                      });
+                    }, 0);
                     //Reduce the op
                     toggle = 1;
                   } else {
@@ -15955,8 +16028,10 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                       return 1;
                     });
                     labelsOpacityBehavior();
+                    d3.select('body').on('click', undefined);
                     toggle = 0;
                   }
+                  d3.event.preventDefault();
                 };
 
                 ticked = function ticked() {
@@ -16008,7 +16083,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                   loader.hide();
                 };
 
-                self = this, loader = _factory.Decorators.Loader.withContext(this).show(), simulationActive = this.data.canvas.graph.simulation, canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [], canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
+                self = this, loader = _factory.Decorators.Loader.withContext(this).show(), simulationActive = _configuration.Configuration.object.simulation, canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [], canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
                 linkGroup = this.element.selectAll('g.francy-links');
 
 
@@ -16053,13 +16128,14 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                 // this means no changes, so we can safely return
 
                 if (!(node.exit().data().length === 0 && node.enter().data().length === 0 && link.enter().data().length === 0 && link.exit().data().length === 0)) {
-                  _context.next = 22;
+                  _context.next = 23;
                   break;
                 }
 
+                loader.hide();
                 return _context.abrupt('return');
 
-              case 22:
+              case 23:
                 linkEnter = link.enter().append('g').classed('francy-link', true);
 
 
@@ -16090,9 +16166,9 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                 // on mouse over show labels opacity 1
                 labelsOpacityBehavior();
 
-                nodeEnter = node.enter().append('g').classed('francy-node', true).attr('id', function (d) {
+                nodeEnter = node.enter().append('g').attr('id', function (d) {
                   return d.id;
-                });
+                }).classed('francy-node', true).classed('francy-highlight', true);
 
 
                 nodeEnter.append('path').attr('d', d3.symbol().type(function (d) {
@@ -16101,8 +16177,8 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                   return d.size * 100;
                 })).style('fill', function (d) {
                   return d.color || _graph2.default.colors(d.layer * 5);
-                }).classed('francy-symbol', true).classed('francy-highlight', function (d) {
-                  return d.highlight;
+                }).classed('francy-symbol', true).classed('francy-selected', function (d) {
+                  return d.selected;
                 }).classed('francy-context', function (d) {
                   return Object.values(d.menus).length && Object.values(d.menus).length > 0;
                 });
@@ -16131,7 +16207,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
 
                 node = nodeGroup.selectAll('g.francy-node');
 
-                if (this.data.canvas.graph.drag) {
+                if (_configuration.Configuration.object.dragNodes) {
                   node.call(d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended));
                 }
 
@@ -16139,20 +16215,19 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
 
                   this._applyEvents(node);
 
-                  if (this.data.canvas.graph.showNeighbours) {
-                    nodeOnClick = node.on('click');
+                  nodeOnClick = node.on('click');
 
-                    node.on('click', function (d) {
-                      // default, highlight connected nodes
-                      connectedNodes.call(this);
-                      // any callbacks will be handled here
-                      nodeOnClick.call(this, d);
-                    });
-                    link.on('click', function () {
-                      // default, highlight connected nodes
-                      linkConnectedNodes.call(this);
-                    });
-                  }
+                  node.on('click', function (d) {
+                    // default, highlight connected nodes
+                    connectedNodes.call(this);
+                    // any callbacks will be handled here
+                    nodeOnClick.call(this, d);
+                  });
+                  link.on('click', function () {
+                    // default, highlight connected nodes
+                    linkConnectedNodes.call(this);
+                    d3.event.preventDefault();
+                  });
                 }
 
                 if (simulationActive) {
@@ -16189,7 +16264,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
 
                   simulation.nodes(nodesToAdd).force('charge-1', layered ? undefined : d3.forceManyBody().strength(-75)).force('x', d3.forceX()).force('y', layered ? d3.forceY(function (d) {
                     return d.layer * 100;
-                  }).strength(1) : d3.forceY()).force('charge-2', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length)).force('link', layered ? linkForce.strength(0.15) : linkForce).force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2)).on('tick', function () {
+                  }).strength(1) : d3.forceY()).force('charge-2', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length)).force('link', layered ? linkForce.strength(0.01) : linkForce).force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.25) / 2)).on('tick', function () {
                     return safeTicked.handle();
                   }).on('end', function () {
                     return safeEnd.handle();
@@ -16218,7 +16293,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
 
                 return _context.abrupt('return', this);
 
-              case 42:
+              case 43:
               case 'end':
                 return _context.stop();
             }
@@ -16240,11 +16315,13 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
     value: function _filterNewElements(canvasObjects, d3Element) {
       var newElements = [];
       canvasObjects.forEach(function (o) {
-        var link = d3Element.find(function (d) {
+        var data = d3Element.find(function (d) {
           return d.id === o.id;
         });
-        if (link) {
-          newElements.push(link);
+        if (data) {
+          var tmp = Object.assign({}, o);
+          delete tmp.source;delete tmp.target;delete tmp.x;delete tmp.y; // ignore these
+          newElements.push(Object.assign(data, tmp));
         } else {
           newElements.push(o);
         }
@@ -16347,8 +16424,6 @@ var TreeGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class = 
 
         var update = function () {
           var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(source) {
-            var _this4 = this;
-
             var self, treeData, nodes, links, linkGroup, link, linkEnter, diagonal, nodeGroup, node, nodeEnter, nodeUpdate, nodeOnClick, click;
             return regeneratorRuntime.wrap(function _callee$(_context) {
               while (1) {
@@ -16387,25 +16462,27 @@ var TreeGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class = 
                       linkGroup = this.element.append('g').attr('class', 'francy-links');
                     }
 
-                    link = linkGroup.selectAll('path.francy-edge').data(links, function (d) {
+                    link = linkGroup.selectAll('g.francy-link').data(links, function (d) {
                       return d.id || (d.id = ++i);
                     });
-                    linkEnter = link.enter().append('path').attr('class', 'francy-edge').attr('d', function () {
+                    linkEnter = link.enter().append('g').classed('francy-link', true);
+
+
+                    linkEnter.append('path').attr('class', 'francy-edge').attr('d', function () {
                       var o = { x: source.x0, y: source.y0 };
                       return diagonal(o, o);
                     });
 
-
-                    linkEnter.merge(link).transition().duration(this.transitionDuration).attr('d', function (d) {
+                    linkEnter.merge(link).selectAll('path.francy-edge').transition().duration(this.transitionDuration).attr('d', function (d) {
                       return diagonal(d, d.parent);
                     });
 
-                    link.exit().transition().duration(this.transitionDuration).attr('d', function () {
+                    link.exit().selectAll('path.francy-edge').transition().duration(this.transitionDuration).attr('d', function () {
                       var o = { x: source.x, y: source.y };
                       return diagonal(o, o);
                     }).remove();
 
-                    linkGroup.selectAll('path.francy-edge');
+                    link.exit().transition().duration(this.transitionDuration).remove();
 
                     nodes.forEach(function (d) {
                       d.x0 = d.x;
@@ -16422,7 +16499,9 @@ var TreeGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class = 
                     node = nodeGroup.selectAll('g.francy-node').data(nodes, function (d) {
                       return d.id || (d.id = ++i);
                     });
-                    nodeEnter = node.enter().append('g').attr('class', 'francy-node').attr('transform', function () {
+                    nodeEnter = node.enter().append('g').attr('id', function (d) {
+                      return d.id;
+                    }).attr('class', 'francy-node').attr('transform', function () {
                       return 'translate(' + source.y0 + ',' + source.x0 + ')';
                     });
 
@@ -16479,15 +16558,15 @@ var TreeGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class = 
 
                       node.on('click', function (d) {
                         // any callbacks will be handled here
-                        nodeOnClick.call(_this4, d.data);
+                        nodeOnClick.call(this, d.data);
                         // default, highlight connected nodes
-                        click.call(_this4, d);
+                        click.call(this, d);
                       });
                     }
 
                     // Toggle children on click.
 
-                  case 26:
+                  case 27:
                   case 'end':
                     return _context.stop();
                 }
@@ -16640,6 +16719,32 @@ var Graph = function (_Renderer) {
     _this.tooltip = new _tooltip2.default(_this.options);
     _this.contextMenu = new _menuContext2.default(_this.options);
     _this.callback = new _callback2.default(_this.options);
+    var self = _this;
+    _this.nodeSelection = {
+      clear: function clear() {
+        this._getAll().each(function () {
+          var node = d3.select(this);
+          delete node.data()[0].selected;
+          node.classed('francy-selected', function (d) {
+            return d.selected;
+          });
+        }).classed('francy-selected', function (d) {
+          return d.selected;
+        });
+      },
+      getAll: function getAll() {
+        var selected = [];
+        this._getAll().each(function () {
+          selected.push(d3.select(this).data()[0].id);
+        });
+        return selected;
+      },
+      _getAll: function _getAll() {
+        return d3.select('svg#Canvas-' + self.data.canvas.id).selectAll('.francy-node.francy-selected').filter(function (d) {
+          return d.selected;
+        });
+      }
+    };
     return _this;
   }
 
@@ -16662,8 +16767,13 @@ var Graph = function (_Renderer) {
         executeCallback.call(this, data, 'contextmenu');
       }).on('click', function (d) {
         var data = d.data || d;
-        // TODO make some sense of selection on nodes
-        d.selected = !d.selected;
+        if (!d3.event.ctrlKey) {
+          self.nodeSelection.clear();
+        }
+        data.selected = !data.selected;
+        d3.select(this).classed('francy-selected', function (d) {
+          return d.selected;
+        });
         // any callbacks will be handled here
         executeCallback.call(this, data, 'click');
       }).on('dblclick', function (d) {
@@ -16691,7 +16801,7 @@ var Graph = function (_Renderer) {
         if (data.callbacks) {
           Object.values(data.callbacks).forEach(function (cb) {
             // execute only the ones that match the event!
-            cb.trigger === event && self.callback.load({ callback: cb }, true).execute();
+            cb.trigger === event && self.handlePromise(self.callback.load({ callback: cb, selectedNodes: Object.values(self.nodeSelection.getAll()) }, true).execute());
           });
         }
       }
@@ -17095,6 +17205,8 @@ var _modalAbout = __webpack_require__(/*! ./modal-about */ "./src/render/modal-a
 
 var _modalAbout2 = _interopRequireDefault(_modalAbout);
 
+var _configuration = __webpack_require__(/*! ../util/configuration */ "./src/util/configuration.js");
+
 var _saveSvgAsPng = __webpack_require__(/*! ../../node_modules/save-svg-as-png/saveSvgAsPng */ "./node_modules/save-svg-as-png/saveSvgAsPng.js");
 
 var SvgToPng = _interopRequireWildcard(_saveSvgAsPng);
@@ -17133,12 +17245,13 @@ var MainMenu = function (_Menu) {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var _this2 = this;
 
-        var aboutModal, menuId, loaderId, entry, content, menusIterator;
+        var aboutModal, self, menuId, loaderId, entry, content, entry2, content2, menusIterator;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 aboutModal = new _modalAbout2.default(this.options);
+                self = this;
 
                 // Otherwise clashes with the canvas itself!
 
@@ -17184,6 +17297,51 @@ var MainMenu = function (_Menu) {
                   return _this2.handlePromise(aboutModal.load(_this2.data).render());
                 }).attr('title', 'About').html('About');
 
+                if (this.data.canvas.graph) {
+                  entry2 = this.element.append('li');
+
+                  entry2.append('a').html('Graph Options');
+                  content2 = content = entry2.append('ul');
+
+                  content2.append('li').append('a').attr('title', 'Neighbours').html((_configuration.Configuration.object.showNeighbours ? 'Disable' : 'Enable') + ' Show Neighbours').on('click', function () {
+                    _configuration.Configuration.object.showNeighbours = !_configuration.Configuration.object.showNeighbours;
+                  }).each(function () {
+                    var _this3 = this;
+
+                    _configuration.Configuration.subscribe('showNeighbours', function (value) {
+                      d3.select(_this3).html((value ? 'Disable' : 'Enable') + ' Show Neighbours');
+                    });
+                  });
+                  content2.append('li').append('a').attr('title', 'Drag').html((_configuration.Configuration.object.dragNodes ? 'Disable' : 'Enable') + ' Drag Nodes').on('click', function () {
+                    _configuration.Configuration.object.dragNodes = !_configuration.Configuration.object.dragNodes;
+                  }).each(function () {
+                    var _this4 = this;
+
+                    _configuration.Configuration.subscribe('dragNodes', function (value) {
+                      d3.select(_this4).html((value ? 'Disable' : 'Enable') + ' Drag Nodes');
+                    });
+                  });
+                  content2.append('li').append('a').attr('title', 'Selection').html('Clear Selected Nodes').on('click', function () {
+                    setTimeout(function () {
+                      d3.select('svg#Canvas-' + self.data.canvas.id).selectAll('.francy-node.francy-selected').each(function () {
+                        delete d3.select(this).data()[0].selected;
+                      }).classed('francy-selected', function (d) {
+                        return d.selected;
+                      });
+                    }, 0);
+                  });
+                  /*content2.append('li').append('a')
+                  .attr('title', 'Simulation').html(`${Configuration.object.simulation ? 'Disable' : 'Enable'} Simulation`)
+                  .on('click', function() {
+                    Configuration.object.simulation = !Configuration.object.simulation;
+                  })
+                  .each(function() {
+                    Configuration.subscribe('simulation', value => {
+                      d3.select(this).html(`${value ? 'Disable' : 'Enable'} Simulation`);
+                    });
+                  });*/
+                }
+
                 // Traverse all menus and flatten them!
                 menusIterator = this.iterator(Object.values(this.data.canvas.menus));
 
@@ -17193,7 +17351,7 @@ var MainMenu = function (_Menu) {
 
                 return _context.abrupt('return', this);
 
-              case 19:
+              case 21:
               case 'end':
                 return _context.stop();
             }
@@ -17627,6 +17785,159 @@ exports.default = AboutModal;
 
 /***/ }),
 
+/***/ "./src/render/modal-confirm.js":
+/*!*************************************!*\
+  !*** ./src/render/modal-confirm.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _desc, _value, _class;
+
+var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal.js");
+
+var _modal2 = _interopRequireDefault(_modal);
+
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
+
+/* global d3 */
+
+var ConfirmModal = (_dec = _factory.Decorators.Initializer.initialize(), (_class = function (_Modal) {
+  _inherits(ConfirmModal, _Modal);
+
+  function ConfirmModal(_ref) {
+    var _ref$verbose = _ref.verbose,
+        verbose = _ref$verbose === undefined ? false : _ref$verbose,
+        appendTo = _ref.appendTo,
+        callbackHandler = _ref.callbackHandler;
+
+    _classCallCheck(this, ConfirmModal);
+
+    return _possibleConstructorReturn(this, (ConfirmModal.__proto__ || Object.getPrototypeOf(ConfirmModal)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+  }
+
+  _createClass(ConfirmModal, [{
+    key: 'render',
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _this2 = this;
+
+        var modalId, form, header, content, row, footer;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                modalId = this.data.callback.id;
+
+
+                this.logger.debug('Creating Confirm Modal [' + modalId + ']...');
+
+                this.element = this.holder.append('div').attr('id', modalId).attr('class', 'francy-modal');
+
+                form = this.element.append('form');
+                header = form.append('div').attr('class', 'francy-modal-header');
+
+                header.append('span').attr('style', 'font-weight: bold;').html('Confirm');
+
+                content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
+                row = content.append('div').attr('class', 'francy-table-row');
+
+                row.append('div').attr('class', 'francy-table-cell').append('label');
+                row.append('div').attr('class', 'francy-table-cell').append('span').attr('id', 'Confirm-' + this.data.callback.id).text(this.data.callback.confirm);
+
+                footer = form.append('div').attr('class', 'francy-modal-footer');
+
+                footer.append('button').text('Ok').on('click', function () {
+                  if (form.node().checkValidity()) {
+                    d3.event.preventDefault();
+                    _this2.options.callbackHandler(_this2.data.callback);
+                    _this2.unrender.call(_this2);
+                  }
+                  return false;
+                });
+                footer.append('button').text('Cancel').on('click', function () {
+                  d3.event.preventDefault();
+                  _this2.unrender.call(_this2);
+                });
+
+                // disable keyboard shortcuts when using this modal in Jupyter
+                _factory.Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-overlay', '.francy-modal']);
+
+                this.logger.debug('Confirm Modal updated [' + modalId + ']...');
+
+                return _context.abrupt('return', this);
+
+              case 16:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function render() {
+        return _ref2.apply(this, arguments);
+      }
+
+      return render;
+    }()
+  }]);
+
+  return ConfirmModal;
+}(_modal2.default), (_applyDecoratedDescriptor(_class.prototype, 'render', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'render'), _class.prototype)), _class));
+exports.default = ConfirmModal;
+
+/***/ }),
+
 /***/ "./src/render/modal-required.js":
 /*!**************************************!*\
   !*** ./src/render/modal-required.js ***!
@@ -17747,19 +18058,28 @@ var RequiredArgsModal = (_dec = _factory.Decorators.Initializer.initialize(), (_
                   row = content.append('div').attr('class', 'francy-table-row');
 
                   row.append('div').attr('class', 'francy-table-cell').append('label').attr('for', arg.id).text(arg.title);
-                  input = row.append('div').attr('class', 'francy-table-cell').append('input').attr('id', arg.id).attr('class', 'francy-arg').attr('required', '').attr('name', arg.id).attr('type', arg.type).attr('value', arg.value).on('change', function () {
-                    self.data.callback.requiredArgs[this.id].value = this.value;
-                  }).on('input', this.onchange).on('keyup', this.onchange).on('paste', this.onchange);
-                  // wait, if it is boolean we create a checkbox
+                  if (arg.type === 'select') {
+                    // TODO need to use https://www.w3schools.com/html/tryit.asp?filename=tryhtml_elem_select_multiple
+                    row.append('div').attr('class', 'francy-table-cell').append('select').attr('class', 'francy-arg').attr('id', arg.id).attr('required', '').attr('name', arg.id).attr('disabled', '').attr('multiple', '').data(this.data.selectedNodes).append('option').attr('value', function (d) {
+                      return d;
+                    }).html(function (d) {
+                      return d;
+                    }).on('change', undefined);
+                  } else {
+                    input = row.append('div').attr('class', 'francy-table-cell').append('input').attr('class', 'francy-arg').attr('id', arg.id).attr('required', '').attr('name', arg.id).attr('type', arg.type).attr('value', arg.value).on('change', function () {
+                      self.data.callback.requiredArgs[this.id].value = this.value;
+                    }).on('input', this.onchange).on('keyup', this.onchange).on('paste', this.onchange);
+                    // wait, if it is boolean we create a checkbox
 
-                  if (arg.type === 'boolean') {
-                    // well, a checkbox works this way so we need to initialize 
-                    // the value to false and update the value based on the checked 
-                    // property that triggers the onchange event
-                    arg.value = arg.value || false;
-                    input.attr('type', 'checkbox').attr('required', null).attr('value', arg.value).on('change', function () {
-                      self.data.callback.requiredArgs[this.id].value = this.value = this.checked;
-                    });
+                    if (arg.type === 'boolean') {
+                      // well, a checkbox works this way so we need to initialize 
+                      // the value to false and update the value based on the checked 
+                      // property that triggers the onchange event
+                      arg.value = arg.value || false;
+                      input.attr('type', 'checkbox').attr('required', null).attr('value', arg.value).on('change', function () {
+                        self.data.callback.requiredArgs[this.id].value = this.value = this.checked;
+                      });
+                    }
                   }
                   row.append('span').attr('class', 'validity');
                 }
@@ -18184,6 +18504,199 @@ var Tooltip = (_dec = _factory.Decorators.Data.requires('messages'), (_class = f
   return Tooltip;
 }(_renderer2.default), (_applyDecoratedDescriptor(_class.prototype, 'render', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'render'), _class.prototype)), _class));
 exports.default = Tooltip;
+
+/***/ }),
+
+/***/ "./src/util/configuration.js":
+/*!***********************************!*\
+  !*** ./src/util/configuration.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Configuration = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _logger = __webpack_require__(/*! ../util/logger */ "./src/util/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ConfigurationHandler = function () {
+  /**
+   * Creates a instance of ModelTracker.
+   * @param {object} object - the object object to keep track of changes.
+   * @param verbose
+   * @param throttle
+   */
+  function ConfigurationHandler(object) {
+    var _this = this;
+
+    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+        _ref$throttle = _ref.throttle,
+        throttle = _ref$throttle === undefined ? 1000 : _ref$throttle;
+
+    _classCallCheck(this, ConfigurationHandler);
+
+    /**
+     * This is property is used to flag when the object changes.
+     * @type {boolean}
+     * @private
+     */
+    this._dirty = false;
+    /**
+     * This holds the actual configuration object
+     * @type {object}
+     * @private
+     */
+    var objectStored = window.localStorage.getItem('francy.settings');
+    if (!objectStored) {
+      this._dirty = true;
+    } else {
+      object = JSON.parse(objectStored);
+    }
+    /**
+     * @type {Logger} the logger for this class
+     */
+    this.logger = new _logger2.default({ verbose: object.verbose });
+    /**
+     * This is property holds a list of change subscribers.
+     * @type {function}
+     * @private
+     */
+    this._subscribers = [];
+    /**
+     * This is property holds a proxy that handles a dirty flag when object changes.
+     * @type {Proxy}
+     * @private
+     */
+    this._proxy = new Proxy(object, this);
+    /**
+     * Sync listeners every second, if data is dirty
+     * @type {setInterval}
+     * @private
+     */
+    setInterval(function () {
+      if (_this._dirty) {
+        _this._dirty = false;
+        return _this._sync();
+      }
+    }, throttle);
+  }
+
+  /**
+   * This method is used by the proxy to set a property when a change occurs, plus it sets the current object to dirty.
+   * @param {object} receiver - the object being tracked
+   * @param {object} property - the property changed
+   * @param {object} value - the new value
+   */
+
+
+  _createClass(ConfigurationHandler, [{
+    key: 'set',
+    value: function set(object, property, value) {
+      var _this2 = this;
+
+      if (!(value[property] instanceof Object) && object[property] !== value) {
+        this.logger.debug('Object [' + JSON.stringify(this.object) + '] property [' + property + '] changed from [' + object[property] + '] to [' + value + '].');
+        object[property] = value;
+        this._subscribers.forEach(function (item) {
+          return item.prop === property ? item.fn.call(_this2, _this2.object) : undefined;
+        });
+        this._dirty = true;
+      }
+      return true;
+    }
+
+    /**
+     * This method is used by the proxy to get the object being tracked
+     * @param {object} target - the object being tracked
+     * @param {object} key the the object property
+     * @returns {object} returns the object being tracked
+     */
+
+  }, {
+    key: 'get',
+    value: function get(target, property) {
+      if (_typeof(target[property]) === 'object' && target[property] !== null) {
+        return new Proxy(target[property], this);
+      }
+      return property in target ? target[property] : target;
+    }
+
+    /**
+     * Returns the object being tracked
+     * @returns {object} the object properties
+     */
+
+  }, {
+    key: 'subscribe',
+
+
+    /**
+     * This method is used register a function that is invoked to sync the object
+     * @param {function} fn - the function to execute - must handle one arg, the object, of type {object}
+     */
+    value: function subscribe(property, fn) {
+      this._subscribers.push({ prop: property, fn: fn });
+    }
+
+    /**
+     * This method is used unregister a function registered previously
+     * @param {function} fn - the function to execute - must handle one arg, the object, of type {object}
+     */
+
+  }, {
+    key: 'unsubscribe',
+    value: function unsubscribe(property, fn) {
+      this._subscribers = this._subscribers.filter(function (item) {
+        return item.prop !== property && item.fn !== fn ? item : undefined;
+      });
+    }
+
+    /**
+     * This method is used to explicitly sync the module with all the subscribers
+     */
+
+  }, {
+    key: '_sync',
+    value: function _sync() {
+      window.localStorage.setItem('francy.settings', JSON.stringify(this.object));
+    }
+  }, {
+    key: 'object',
+    get: function get() {
+      return this._proxy;
+    }
+  }]);
+
+  return ConfigurationHandler;
+}();
+
+/* singleton */
+
+
+var Configuration = exports.Configuration = new ConfigurationHandler({
+  showNeighbours: true,
+  dragNodes: true,
+  simulation: true,
+  fixedRandomSeed: true,
+  verbose: false
+}, {
+  throttle: 5000
+});
 
 /***/ }),
 

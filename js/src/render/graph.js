@@ -12,6 +12,24 @@ export default class Graph extends Renderer {
     this.tooltip = new Tooltip(this.options);
     this.contextMenu = new ContextMenu(this.options);
     this.callback = new Callback(this.options);
+    let self = this;
+    this.nodeSelection = {
+      clear: function() {
+        this._getAll().each(function(){
+          let node = d3.select(this);
+          delete node.data()[0].selected;
+          node.classed('francy-selected', d => d.selected);
+        }).classed('francy-selected', d => d.selected);
+      },
+      getAll: function() {
+        var selected = [];
+        this._getAll().each(function(){
+          selected.push(d3.select(this).data()[0].id);
+        });
+        return selected;
+      },
+      _getAll: () => d3.select(`svg#Canvas-${self.data.canvas.id}`).selectAll('.francy-node.francy-selected').filter(d => d.selected)
+    };
   }
   
   _initialize() {
@@ -32,8 +50,11 @@ export default class Graph extends Renderer {
       })
       .on('click', function(d) {
         let data = d.data || d;
-        // TODO make some sense of selection on nodes
-        d.selected = !d.selected;
+        if (!d3.event.ctrlKey) {
+          self.nodeSelection.clear();
+        }
+        data.selected = !data.selected;
+        d3.select(this).classed('francy-selected', d => d.selected);
         // any callbacks will be handled here
         executeCallback.call(this, data, 'click');
       })
@@ -62,9 +83,9 @@ export default class Graph extends Renderer {
 
     function executeCallback(data, event) {
       if (data.callbacks) {
-        Object.values(data.callbacks).forEach((cb) => {
+        Object.values(data.callbacks).forEach(cb => {
           // execute only the ones that match the event!
-          cb.trigger === event && self.callback.load({ callback: cb }, true).execute();
+          cb.trigger === event && self.handlePromise(self.callback.load({ callback: cb, selectedNodes: Object.values(self.nodeSelection.getAll()) }, true).execute());
         });
       }
     }

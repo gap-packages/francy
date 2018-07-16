@@ -71,26 +71,31 @@ export default class TreeGraph extends Graph {
         linkGroup = this.element.append('g').attr('class', 'francy-links');
       }
 
-      let link = linkGroup.selectAll('path.francy-edge')
+      let link = linkGroup.selectAll('g.francy-link')
         .data(links, d => d.id || (d.id = ++i));
 
-      let linkEnter = link.enter()
-        .append('path').attr('class', 'francy-edge')
+      let linkEnter = link.enter().append('g')
+        .classed('francy-link', true);
+        
+      linkEnter.append('path')
+        .attr('class', 'francy-edge')
         .attr('d', () => {
           let o = {x: source.x0, y: source.y0};
           return diagonal(o, o);
         });
 
-      linkEnter.merge(link)
-        .transition().duration(this.transitionDuration).attr('d', d => diagonal(d, d.parent));
+      linkEnter.merge(link).selectAll('path.francy-edge')
+        .transition().duration(this.transitionDuration)
+        .attr('d', d => diagonal(d, d.parent));
 
-      link.exit().transition().duration(this.transitionDuration)
+      link.exit().selectAll('path.francy-edge')
+        .transition().duration(this.transitionDuration)
         .attr('d', () => {
           let o = {x: source.x, y: source.y};
           return diagonal(o, o);
         }).remove();
-
-      linkGroup.selectAll('path.francy-edge');
+      
+      link.exit().transition().duration(this.transitionDuration).remove();
 
       nodes.forEach((d) => {
         d.x0 = d.x;
@@ -114,6 +119,7 @@ export default class TreeGraph extends Graph {
         .data(nodes, d => d.id || (d.id = ++i));
 
       let nodeEnter = node.enter().append('g')
+        .attr('id', d => d.id)
         .attr('class', 'francy-node')
         .attr('transform', () => `translate(${source.y0},${source.x0})`);
 
@@ -158,7 +164,7 @@ export default class TreeGraph extends Graph {
         this._applyEvents(node);
 
         let nodeOnClick = node.on('click');
-        node.on('click', (d) => {
+        node.on('click', function(d) {
           // any callbacks will be handled here
           nodeOnClick.call(this, d.data);
           // default, highlight connected nodes

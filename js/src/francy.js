@@ -1,6 +1,7 @@
 import Frame from './render/frame';
 import Renderer from './render/renderer';
 import { Decorators } from './decorator/factory';
+import { Configuration } from './util/configuration';
 import * as ignore from 'seedrandom';
 
 /* global VERSION */
@@ -40,8 +41,10 @@ export default class Francy extends Renderer {
     if (this.data.version !== VERSION) {
       this.logger.warn(`Rendering data generated in Francy GAP v${this.data.version} using Francy JS v${VERSION}, rendering may fail... please update your system...`);
     }
-    //set seed to produce always the same graphs
-    Math.seedrandom('Francy!');
+    if (Configuration.object.fixedRandomSeed){
+      //set seed to produce always the same graphs
+      Math.seedrandom('Francy!');
+    }
     let frame = await new Frame(this.options).load(this.data).render().then(element => element);
     return frame.element.node();
   }
