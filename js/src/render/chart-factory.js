@@ -6,8 +6,8 @@ import { Decorators } from '../decorator/factory';
 
 export default class ChartFactory extends Renderer {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   @Decorators.Data.requires('canvas.chart')
@@ -30,7 +30,7 @@ export default class ChartFactory extends Renderer {
     element = await this.handlePromise(chart.load(this.data).render());
 
     if (element) {
-      setTimeout(element.parent.zoomToFit, 0);
+      setTimeout(element.parent.zoomToFit, this.transitionDuration);
     }
 
     return element;

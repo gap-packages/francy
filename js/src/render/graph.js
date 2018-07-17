@@ -7,8 +7,8 @@ import Callback from './callback';
 
 export default class Graph extends Renderer {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
     this.tooltip = new Tooltip(this.options);
     this.contextMenu = new ContextMenu(this.options);
     this.callback = new Callback(this.options);

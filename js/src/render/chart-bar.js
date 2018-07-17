@@ -5,8 +5,8 @@ import { Decorators } from '../decorator/factory';
 
 export default class BarChart extends Chart {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   @Decorators.Initializer.initialize()

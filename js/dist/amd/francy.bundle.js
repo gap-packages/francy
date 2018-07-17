@@ -12873,11 +12873,11 @@ var BaseComponent = function () {
      * @property {Boolean} mandatory whether the component is mandatory or optional
      */
     this.options = undefined;
-    this.settings({ mandatory: mandatory, verbose: false });
+    this.settings({ mandatory: mandatory });
     /**
      * @type {Logger} the logger for this class
      */
-    this.log = new _logger2.default(this.options);
+    this.log = new _logger2.default();
     // run initialization
     var decorator = _factory.Decorators.Error.wrap(this._initialize).withContext(this).onErrorThrow(mandatory).onErrorExec(this._onError);
     if (delay) {
@@ -12900,19 +12900,16 @@ var BaseComponent = function () {
      * Saves the settings in an internal options object.
      * 
      * @typedef {Object} Options
-     * @property {Boolean} verbose prints extra log information to console.log, default false
      * @property {Boolean} mandatory whether the component is mandatory or optional
      */
 
   }, {
     key: 'settings',
     value: function settings(_ref) {
-      var mandatory = _ref.mandatory,
-          verbose = _ref.verbose;
+      var mandatory = _ref.mandatory;
 
       this.options = this.options || {};
       this.options.mandatory = mandatory || this.options.mandatory;
-      this.options.verbose = verbose || this.options.verbose;
       return this;
     }
   }, {
@@ -13502,6 +13499,7 @@ var _data2 = _interopRequireDefault(_data);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* singleton */
 var Decorators = exports.Decorators = {
 
   get Data() {
@@ -13653,8 +13651,6 @@ var _logger = __webpack_require__(/*! ../util/logger */ "./src/util/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
 
-var _factory = __webpack_require__(/*! ../component/factory */ "./src/component/factory.js");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13672,7 +13668,7 @@ var JupyterDecorator = function () {
     key: 'registerKeyboardEvents',
     value: function registerKeyboardEvents(classes) {
       // disable keyboard shortcuts in Jupyter for specific css classed elements
-      if (!classes || !_factory.Components.Jupyter.isAvailable) return;
+      if (!classes) return;
       try {
         classes.map(function (c) {
           Jupyter.keyboard_manager.register_events(c);
@@ -13873,20 +13869,17 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
   /**
    * Creates an instance of Francy with the following options:
    * @typedef {Object} Options
-   * @property {Boolean} verbose prints extra log information to console.log, default false
    * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
   function Francy(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, Francy);
 
     // all good!
-    var _this = _possibleConstructorReturn(this, (Francy.__proto__ || Object.getPrototypeOf(Francy)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    var _this = _possibleConstructorReturn(this, (Francy.__proto__ || Object.getPrototypeOf(Francy)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
 
     _this.logger.info('Francy JS v' + "0.8.0" + ' initialized! Enjoy...');
     return _this;
@@ -13909,7 +13902,7 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
             switch (_context.prev = _context.next) {
               case 0:
                 if (this.data.version !== "0.8.0") {
-                  this.logger.warn('Rendering data generated in Francy GAP v' + this.data.version + ' using Francy JS v' + "0.8.0" + ', rendering may fail... please update your system...');
+                  this.logger.warn('Rendering may fail, data generated in Francy GAP v' + this.data.version + ' using Francy JS v' + "0.8.0" + '... please update your system...');
                 }
                 if (_configuration.Configuration.object.fixedRandomSeed) {
                   //set seed to produce always the same graphs
@@ -13981,11 +13974,9 @@ var _json = __webpack_require__(/*! ../util/json */ "./src/util/json.js");
 
 var _json2 = _interopRequireDefault(_json);
 
-var _factory = __webpack_require__(/*! ../component/factory */ "./src/component/factory.js");
-
 var _exception = __webpack_require__(/*! ../util/exception */ "./src/util/exception.js");
 
-var _factory2 = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14002,31 +13993,23 @@ var BaseRenderer = function () {
    * Base constructor
    * 
    * @typedef {Object} Options
-   * @property {Boolean} verbose prints extra log information to console.log, default false
    * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
   function BaseRenderer(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        _ref$appendTo = _ref.appendTo,
+    var _ref$appendTo = _ref.appendTo,
         appendTo = _ref$appendTo === undefined ? 'body' : _ref$appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, BaseRenderer);
 
-    // initialize components
-    _factory.Components.D3;
-    _factory.Components.MathJax;
-    _factory.Components.Jupyter;
     /**
      * @typedef {Object} Options
-     * @property {Boolean} verbose prints extra log information to console.log, default false
      * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
      * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
      */
     this.options = undefined;
-    this.settings({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+    this.settings({ appendTo: appendTo, callbackHandler: callbackHandler });
     /**
      * @type {Object} the internal data model object
      */
@@ -14034,14 +14017,13 @@ var BaseRenderer = function () {
     /**
      * @type {Logger} the logger for this class
      */
-    this.log = new _logger2.default(this.options);
+    this.log = new _logger2.default();
   }
 
   /**
    * Saves the settings in an internal options object.
    * 
    * @typedef {Object} Options
-   * @property {Boolean} verbose prints extra log information to console.log, default false
    * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
@@ -14050,8 +14032,7 @@ var BaseRenderer = function () {
   _createClass(BaseRenderer, [{
     key: 'settings',
     value: function settings(_ref2) {
-      var verbose = _ref2.verbose,
-          appendTo = _ref2.appendTo,
+      var appendTo = _ref2.appendTo,
           callbackHandler = _ref2.callbackHandler;
 
       this.options = this.options || {};
@@ -14062,9 +14043,8 @@ var BaseRenderer = function () {
         throw new Error('Missing an element or id to append the graphics to!');
       }
       if (typeof appendTo === 'string') {
-        appendTo = d3.select(appendTo);
+        appendTo = { element: d3.select(appendTo) };
       }
-      this.options.verbose = verbose || this.options.verbose;
       this.options.appendTo = appendTo || this.options.appendTo;
       this.options.callbackHandler = callbackHandler || this.options.callbackHandler;
       return this;
@@ -14093,6 +14073,12 @@ var BaseRenderer = function () {
 
   }, {
     key: 'handleErrors',
+
+
+    /**
+     * Generic error handler.
+     * Will log the error and rethrow if error is unknown.
+     */
     value: function handleErrors(error) {
       if (error instanceof _exception.Exception) {
         // well, most of these are just informative
@@ -14102,12 +14088,18 @@ var BaseRenderer = function () {
       this.logger.error(error.message);
       throw error;
     }
+
+    /**
+     * Generic Promise handler.
+     * This will show the Loader/Spinner on the application while processing.
+     */
+
   }, {
     key: 'handlePromise',
     value: function handlePromise(promise) {
       var _this = this;
 
-      var loader = _factory2.Decorators.Loader.withContext(this).show();
+      var loader = _factory.Decorators.Loader.withContext(this).show();
       return promise.then(function (data) {
         return data;
       }).catch(function (error) {
@@ -14119,7 +14111,7 @@ var BaseRenderer = function () {
   }, {
     key: 'parent',
     get: function get() {
-      return this.options.appendTo.element || this.options.appendTo;
+      return this.options.appendTo.element;
     }
 
     /**
@@ -14212,18 +14204,30 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
+/**
+ * CallbackHandler is responsible for handling Callbacks and display Modal windows accodingly.
+ * Callbacks can have arguments, for which a Modal window will appear to request such input.
+ * Callbacks can also show a confirmation message before arguments input / execution.
+ * If a Callback does not require an argument and no confirmation message, 
+ * then the Callback is executed immediatly.
+ */
 var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_class = function (_BaseRenderer) {
   _inherits(CallbackHandler, _BaseRenderer);
 
+  /**
+   * CallbackHandler constructor
+   * 
+   * @typedef {Object} Options
+   * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
+   * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
+   */
   function CallbackHandler(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, CallbackHandler);
 
-    var _this = _possibleConstructorReturn(this, (CallbackHandler.__proto__ || Object.getPrototypeOf(CallbackHandler)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    var _this = _possibleConstructorReturn(this, (CallbackHandler.__proto__ || Object.getPrototypeOf(CallbackHandler)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
 
     _this.callback = callbackHandler;
     return _this;
@@ -14317,9 +14321,6 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
       return execute;
     }()
   }, {
-    key: '_requiredArgsRender',
-    value: function _requiredArgsRender() {}
-  }, {
     key: '_execute',
     value: function _execute(calbackObj) {
       // oh well, Trigger(<json>); is the entrypoint back to GAP 
@@ -14412,14 +14413,12 @@ var Canvas = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
   _inherits(Canvas, _Composite);
 
   function Canvas(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, Canvas);
 
-    var _this = _possibleConstructorReturn(this, (Canvas.__proto__ || Object.getPrototypeOf(Canvas)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    var _this = _possibleConstructorReturn(this, (Canvas.__proto__ || Object.getPrototypeOf(Canvas)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
 
     _this.graphFactory = new _graphFactory2.default(_this.options);
     _this.chartFactory = new _chartFactory2.default(_this.options);
@@ -14617,14 +14616,12 @@ var BarChart = (_dec = _factory.Decorators.Initializer.initialize(), (_class = f
   _inherits(BarChart, _Chart);
 
   function BarChart(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, BarChart);
 
-    return _possibleConstructorReturn(this, (BarChart.__proto__ || Object.getPrototypeOf(BarChart)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (BarChart.__proto__ || Object.getPrototypeOf(BarChart)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(BarChart, [{
@@ -14795,14 +14792,12 @@ var ChartFactory = (_dec = _factory.Decorators.Data.requires('canvas.chart'), (_
   _inherits(ChartFactory, _Renderer);
 
   function ChartFactory(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, ChartFactory);
 
-    return _possibleConstructorReturn(this, (ChartFactory.__proto__ || Object.getPrototypeOf(ChartFactory)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (ChartFactory.__proto__ || Object.getPrototypeOf(ChartFactory)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(ChartFactory, [{
@@ -14841,7 +14836,7 @@ var ChartFactory = (_dec = _factory.Decorators.Data.requires('canvas.chart'), (_
 
 
                 if (element) {
-                  setTimeout(element.parent.zoomToFit, 0);
+                  setTimeout(element.parent.zoomToFit, this.transitionDuration);
                 }
 
                 return _context.abrupt('return', element);
@@ -14941,14 +14936,12 @@ var LineChart = (_dec = _factory.Decorators.Initializer.initialize(), (_class = 
   _inherits(LineChart, _Chart);
 
   function LineChart(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, LineChart);
 
-    return _possibleConstructorReturn(this, (LineChart.__proto__ || Object.getPrototypeOf(LineChart)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (LineChart.__proto__ || Object.getPrototypeOf(LineChart)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(LineChart, [{
@@ -15095,14 +15088,12 @@ var ScatterChart = (_dec = _factory.Decorators.Initializer.initialize(), (_class
   _inherits(ScatterChart, _Chart);
 
   function ScatterChart(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, ScatterChart);
 
-    return _possibleConstructorReturn(this, (ScatterChart.__proto__ || Object.getPrototypeOf(ScatterChart)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (ScatterChart.__proto__ || Object.getPrototypeOf(ScatterChart)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(ScatterChart, [{
@@ -15217,14 +15208,12 @@ var Chart = function (_Renderer) {
   _inherits(Chart, _Renderer);
 
   function Chart(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, Chart);
 
-    var _this = _possibleConstructorReturn(this, (Chart.__proto__ || Object.getPrototypeOf(Chart)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    var _this = _possibleConstructorReturn(this, (Chart.__proto__ || Object.getPrototypeOf(Chart)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
 
     _this.axis = undefined;
     _this.yScale = undefined;
@@ -15392,14 +15381,12 @@ var Composite = function (_Renderer) {
   _inherits(Composite, _Renderer);
 
   function Composite(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, Composite);
 
-    var _this = _possibleConstructorReturn(this, (Composite.__proto__ || Object.getPrototypeOf(Composite)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    var _this = _possibleConstructorReturn(this, (Composite.__proto__ || Object.getPrototypeOf(Composite)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
 
     if (new.target === Composite) {
       throw new TypeError('Cannot instantiate [Composite] classes directly!');
@@ -15590,14 +15577,12 @@ var Frame = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = funct
   _inherits(Frame, _Composite);
 
   function Frame(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, Frame);
 
-    var _this = _possibleConstructorReturn(this, (Frame.__proto__ || Object.getPrototypeOf(Frame)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    var _this = _possibleConstructorReturn(this, (Frame.__proto__ || Object.getPrototypeOf(Frame)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
 
     _this.canvas = new _canvas2.default(_this.options);
     _this.menu = new _menuMain2.default(_this.options);
@@ -15612,12 +15597,11 @@ var Frame = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = funct
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var _this2 = this;
 
-        var parent, frameId, oldResize;
+        var frameId, oldResize;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                parent = this.options.appendTo;
                 frameId = 'Frame-' + this.data.canvas.id;
 
                 this.element = d3.select('div#' + frameId);
@@ -15625,19 +15609,19 @@ var Frame = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = funct
                 if (!this.element.node()) {
                   // create a svg element detached from the DOM!
                   this.logger.debug('Creating Frame [' + frameId + ']...');
-                  this.element = parent.append('div').attr('class', 'francy').attr('id', frameId);
+                  this.element = this.parent.append('div').attr('class', 'francy').attr('id', frameId);
                 }
 
                 // cannot continue if canvas is not present
 
                 if (this.element.node()) {
-                  _context.next = 6;
+                  _context.next = 5;
                   break;
                 }
 
                 throw new Error('Oops, could not create frame with id [' + frameId + ']... Cannot proceed.');
 
-              case 6:
+              case 5:
 
                 this.logger.debug('Frame updated [' + frameId + ']...');
 
@@ -15661,7 +15645,7 @@ var Frame = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = funct
 
                 return _context.abrupt('return', this);
 
-              case 10:
+              case 9:
               case 'end':
                 return _context.stop();
             }
@@ -15762,14 +15746,12 @@ var Graph = (_dec = _factory.Decorators.Data.requires('canvas.graph'), (_class =
   _inherits(Graph, _Renderer);
 
   function Graph(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, Graph);
 
-    return _possibleConstructorReturn(this, (Graph.__proto__ || Object.getPrototypeOf(Graph)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (Graph.__proto__ || Object.getPrototypeOf(Graph)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(Graph, [{
@@ -15800,9 +15782,15 @@ var Graph = (_dec = _factory.Decorators.Data.requires('canvas.graph'), (_class =
 
               case 10:
                 element = _context.sent;
+
+
+                if (element) {
+                  setTimeout(element.parent.zoomToFit, this.transitionDuration);
+                }
+
                 return _context.abrupt('return', element);
 
-              case 12:
+              case 13:
               case 'end':
                 return _context.stop();
             }
@@ -15899,21 +15887,19 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
   _inherits(GenericGraph, _Graph);
 
   function GenericGraph(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, GenericGraph);
 
-    return _possibleConstructorReturn(this, (GenericGraph.__proto__ || Object.getPrototypeOf(GenericGraph)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (GenericGraph.__proto__ || Object.getPrototypeOf(GenericGraph)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(GenericGraph, [{
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var self, loader, simulationActive, canvasNodes, canvasLinks, linkGroup, links, linksToAdd, link, defs, nodeGroup, nodes, nodesToAdd, node, linkEnter, nodeEnter, nodeOnClick, radius, symbolRadius, layered, simulation, safeTicked, safeEnd, linkForce, endSimulation, ticked, toggle, linkedByIndex, i, connectedNodes, linkConnectedNodes, labelsOpacityBehavior, dragstarted, dragged, dragended;
+        var self, loader, simulationActive, canvasNodes, canvasLinks, linkGroup, links, linksToAdd, link, defs, nodeGroup, nodes, nodesToAdd, node, linkEnter, nodeEnter, enableDrag, nodeOnClick, radius, symbolRadius, layered, simulation, safeTicked, safeEnd, linkForce, chargeStrength, endSimulation, ticked, toggle, linkedByIndex, i, connectedNodes, linkConnectedNodes, labelsOpacityBehavior, dragstarted, dragged, dragended;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -16073,7 +16059,11 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                   loader.hide();
                 };
 
-                self = this, loader = _factory.Decorators.Loader.withContext(this).show(), simulationActive = _configuration.Configuration.object.simulation, canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [], canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
+                enableDrag = function enableDrag(enable) {
+                  node.call(d3.drag().on('start', enable ? dragstarted : undefined).on('drag', enable ? dragged : undefined).on('end', enable ? dragended : undefined));
+                };
+
+                self = this, loader = _factory.Decorators.Loader.withContext(this).show(), simulationActive = this.data.canvas.graph.simulation || _configuration.Configuration.object.simulation, canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [], canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
                 linkGroup = this.element.selectAll('g.francy-links');
 
 
@@ -16118,14 +16108,14 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                 // this means no changes, so we can safely return
 
                 if (!(node.exit().data().length === 0 && node.enter().data().length === 0 && link.enter().data().length === 0 && link.exit().data().length === 0)) {
-                  _context.next = 23;
+                  _context.next = 24;
                   break;
                 }
 
                 loader.hide();
                 return _context.abrupt('return');
 
-              case 23:
+              case 24:
                 linkEnter = link.enter().append('g').classed('francy-link', true);
 
 
@@ -16186,19 +16176,23 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                     // we need to set the position after re-render the latex
                     self.handlePromise(self.mathjax.settings({ appendTo: { element: text }, renderType: 'SVG', postFunction: function postFunction() {
                         text.attr('x', self.setLabelXPosition(_this2));
+                        simulation.restart();
                       } }).render());
                   }
                   return self.setLabelXPosition(this);
-                }); /*.attr('y', function() {
-                    return self.setLabelYPosition(this);
-                    });*/
+                });
 
                 node.exit().remove();
 
                 node = nodeGroup.selectAll('g.francy-node');
 
                 if (_configuration.Configuration.object.dragNodes) {
-                  node.call(d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended));
+                  // enable drag behavior
+                  enableDrag(true);
+                  // subscribe to update drag behavior on configuration change
+                  _configuration.Configuration.subscribe('dragNodes', function (value) {
+                    enableDrag(value);
+                  });
                 }
 
                 if (node && !node.empty()) {
@@ -16250,11 +16244,13 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                   }).distance(function (d) {
                     return d.height || 100;
                   });
+                  chargeStrength = -5 * Math.log(nodesToAdd.length) * Math.log(linksToAdd.length);
 
+                  chargeStrength = chargeStrength < -400 ? chargeStrength : -400;
 
-                  simulation.nodes(nodesToAdd).force('charge-1', layered ? undefined : d3.forceManyBody().strength(-75)).force('x', d3.forceX()).force('y', layered ? d3.forceY(function (d) {
+                  simulation.nodes(nodesToAdd).force('charge-1', layered ? undefined : d3.forceManyBody().strength(chargeStrength * 0.15)).force('x', d3.forceX()).force('y', layered ? d3.forceY(function (d) {
                     return d.layer * 100;
-                  }).strength(1) : d3.forceY()).force('charge-2', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length)).force('link', layered ? linkForce.strength(0.01) : linkForce).force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.25) / 2)).on('tick', function () {
+                  }).strength(1) : d3.forceY()).force('charge-2', d3.forceManyBody().strength(chargeStrength)).force('link', layered ? linkForce.strength(1 / (linksToAdd.length + 1)) : linkForce).force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2)).on('tick', function () {
                     return safeTicked.handle();
                   }).on('end', function () {
                     return safeEnd.handle();
@@ -16283,7 +16279,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
 
                 return _context.abrupt('return', this);
 
-              case 43:
+              case 44:
               case 'end':
                 return _context.stop();
             }
@@ -16297,9 +16293,6 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
 
       return render;
     }()
-  }, {
-    key: 'unrender',
-    value: function unrender() {}
   }, {
     key: '_filterNewElements',
     value: function _filterNewElements(canvasObjects, d3Element) {
@@ -16318,6 +16311,9 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
       });
       return newElements;
     }
+  }, {
+    key: 'unrender',
+    value: function unrender() {}
   }]);
 
   return GenericGraph;
@@ -16396,14 +16392,12 @@ var TreeGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class = 
   _inherits(TreeGraph, _Graph);
 
   function TreeGraph(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, TreeGraph);
 
-    return _possibleConstructorReturn(this, (TreeGraph.__proto__ || Object.getPrototypeOf(TreeGraph)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (TreeGraph.__proto__ || Object.getPrototypeOf(TreeGraph)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(TreeGraph, [{
@@ -16697,14 +16691,12 @@ var Graph = function (_Renderer) {
   _inherits(Graph, _Renderer);
 
   function Graph(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, Graph);
 
-    var _this = _possibleConstructorReturn(this, (Graph.__proto__ || Object.getPrototypeOf(Graph)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    var _this = _possibleConstructorReturn(this, (Graph.__proto__ || Object.getPrototypeOf(Graph)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
 
     _this.tooltip = new _tooltip2.default(_this.options);
     _this.contextMenu = new _menuContext2.default(_this.options);
@@ -16942,14 +16934,12 @@ var MathJaxWrapper = (_dec = _factory2.Decorators.Data.enabled('canvas.texTypese
   _inherits(MathJaxWrapper, _BaseRenderer);
 
   function MathJaxWrapper(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, MathJaxWrapper);
 
-    return _possibleConstructorReturn(this, (MathJaxWrapper.__proto__ || Object.getPrototypeOf(MathJaxWrapper)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (MathJaxWrapper.__proto__ || Object.getPrototypeOf(MathJaxWrapper)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(MathJaxWrapper, [{
@@ -17078,14 +17068,12 @@ var ContextMenu = (_dec = _factory.Decorators.Data.requires('menus'), (_class = 
   _inherits(ContextMenu, _Menu);
 
   function ContextMenu(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, ContextMenu);
 
-    return _possibleConstructorReturn(this, (ContextMenu.__proto__ || Object.getPrototypeOf(ContextMenu)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (ContextMenu.__proto__ || Object.getPrototypeOf(ContextMenu)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(ContextMenu, [{
@@ -17219,14 +17207,12 @@ var MainMenu = function (_Menu) {
   _inherits(MainMenu, _Menu);
 
   function MainMenu(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, MainMenu);
 
-    return _possibleConstructorReturn(this, (MainMenu.__proto__ || Object.getPrototypeOf(MainMenu)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (MainMenu.__proto__ || Object.getPrototypeOf(MainMenu)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(MainMenu, [{
@@ -17404,14 +17390,12 @@ var Menu = function (_Renderer) {
   _inherits(Menu, _Renderer);
 
   function Menu(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, Menu);
 
-    return _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(Menu, [{
@@ -17530,14 +17514,12 @@ var Message = (_dec = _factory.Decorators.Data.requires('canvas.messages'), (_cl
   _inherits(Message, _Renderer);
 
   function Message(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, Message);
 
-    return _possibleConstructorReturn(this, (Message.__proto__ || Object.getPrototypeOf(Message)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (Message.__proto__ || Object.getPrototypeOf(Message)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(Message, [{
@@ -17645,7 +17627,9 @@ var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal.js");
 
 var _modal2 = _interopRequireDefault(_modal);
 
-var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../component/factory */ "./src/component/factory.js");
+
+var _factory2 = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17688,18 +17672,16 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var AboutModal = (_dec = _factory.Decorators.Initializer.initialize(), _dec2 = _factory.Decorators.Data.requires('canvas'), (_class = function (_Modal) {
+var AboutModal = (_dec = _factory2.Decorators.Initializer.initialize(), _dec2 = _factory2.Decorators.Data.requires('canvas'), (_class = function (_Modal) {
   _inherits(AboutModal, _Modal);
 
   function AboutModal(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, AboutModal);
 
-    return _possibleConstructorReturn(this, (AboutModal.__proto__ || Object.getPrototypeOf(AboutModal)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (AboutModal.__proto__ || Object.getPrototypeOf(AboutModal)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(AboutModal, [{
@@ -17735,7 +17717,7 @@ var AboutModal = (_dec = _factory.Decorators.Initializer.initialize(), _dec2 = _
 
                 if (this.options.verbose) {
                   content.append('span').text('Loaded Data:');
-                  content.append('pre').attr('class', 'francy').html(_factory.Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
+                  content.append('pre').attr('class', 'francy').html(_factory2.Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
                 }
 
                 footer = form.append('div').attr('class', 'francy-modal-footer');
@@ -17747,7 +17729,9 @@ var AboutModal = (_dec = _factory.Decorators.Initializer.initialize(), _dec2 = _
                 });
 
                 // disable keyboard shortcuts when using this modal in Jupyter
-                _factory.Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
+                if (_factory.Components.Jupyter.isAvailable) {
+                  _factory2.Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
+                }
 
                 this.logger.debug('Modal About updated [' + modalId + ']...');
 
@@ -17798,7 +17782,9 @@ var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal.js");
 
 var _modal2 = _interopRequireDefault(_modal);
 
-var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../component/factory */ "./src/component/factory.js");
+
+var _factory2 = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17841,18 +17827,16 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var ConfirmModal = (_dec = _factory.Decorators.Initializer.initialize(), (_class = function (_Modal) {
+var ConfirmModal = (_dec = _factory2.Decorators.Initializer.initialize(), (_class = function (_Modal) {
   _inherits(ConfirmModal, _Modal);
 
   function ConfirmModal(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, ConfirmModal);
 
-    return _possibleConstructorReturn(this, (ConfirmModal.__proto__ || Object.getPrototypeOf(ConfirmModal)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (ConfirmModal.__proto__ || Object.getPrototypeOf(ConfirmModal)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(ConfirmModal, [{
@@ -17900,7 +17884,9 @@ var ConfirmModal = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                 });
 
                 // disable keyboard shortcuts when using this modal in Jupyter
-                _factory.Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-overlay', '.francy-modal']);
+                if (_factory.Components.Jupyter.isAvailable) {
+                  _factory2.Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-overlay', '.francy-modal']);
+                }
 
                 this.logger.debug('Confirm Modal updated [' + modalId + ']...');
 
@@ -17951,7 +17937,9 @@ var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal.js");
 
 var _modal2 = _interopRequireDefault(_modal);
 
-var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../component/factory */ "./src/component/factory.js");
+
+var _factory2 = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17994,18 +17982,16 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var RequiredArgsModal = (_dec = _factory.Decorators.Initializer.initialize(), (_class = function (_Modal) {
+var RequiredArgsModal = (_dec = _factory2.Decorators.Initializer.initialize(), (_class = function (_Modal) {
   _inherits(RequiredArgsModal, _Modal);
 
   function RequiredArgsModal(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, RequiredArgsModal);
 
-    return _possibleConstructorReturn(this, (RequiredArgsModal.__proto__ || Object.getPrototypeOf(RequiredArgsModal)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (RequiredArgsModal.__proto__ || Object.getPrototypeOf(RequiredArgsModal)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(RequiredArgsModal, [{
@@ -18125,7 +18111,9 @@ var RequiredArgsModal = (_dec = _factory.Decorators.Initializer.initialize(), (_
                 });
 
                 // disable keyboard shortcuts when using this modal in Jupyter
-                _factory.Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
+                if (_factory.Components.Jupyter.isAvailable) {
+                  _factory2.Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
+                }
 
                 inputElement = content.selectAll('.francy-arg').node();
 
@@ -18194,14 +18182,12 @@ var Modal = function (_Renderer) {
   _inherits(Modal, _Renderer);
 
   function Modal(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, Modal);
 
-    var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
 
     _this.overlay = undefined;
     _this.holder = undefined;
@@ -18270,16 +18256,12 @@ var Renderer = function (_BaseRenderer) {
   _inherits(Renderer, _BaseRenderer);
 
   function Renderer(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
-        callbackHandler = _ref.callbackHandler,
-        _ref$options = _ref.options,
-        options = _ref$options === undefined ? {} : _ref$options;
+    var appendTo = _ref.appendTo,
+        callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, Renderer);
 
-    var _this = _possibleConstructorReturn(this, (Renderer.__proto__ || Object.getPrototypeOf(Renderer)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler, options: options }));
+    var _this = _possibleConstructorReturn(this, (Renderer.__proto__ || Object.getPrototypeOf(Renderer)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
 
     if (new.target === Renderer) {
       throw new TypeError('Cannot instantiate [Renderer] classes directly!');
@@ -18409,14 +18391,12 @@ var Tooltip = (_dec = _factory.Decorators.Data.requires('messages'), (_class = f
   _inherits(Tooltip, _Renderer);
 
   function Tooltip(_ref) {
-    var _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose,
-        appendTo = _ref.appendTo,
+    var appendTo = _ref.appendTo,
         callbackHandler = _ref.callbackHandler;
 
     _classCallCheck(this, Tooltip);
 
-    return _possibleConstructorReturn(this, (Tooltip.__proto__ || Object.getPrototypeOf(Tooltip)).call(this, { verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler }));
+    return _possibleConstructorReturn(this, (Tooltip.__proto__ || Object.getPrototypeOf(Tooltip)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
   }
 
   _createClass(Tooltip, [{
@@ -18510,17 +18490,10 @@ exports.default = Tooltip;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Configuration = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _logger = __webpack_require__(/*! ../util/logger */ "./src/util/logger.js");
-
-var _logger2 = _interopRequireDefault(_logger);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -18551,16 +18524,12 @@ var ConfigurationHandler = function () {
      * @type {object}
      * @private
      */
-    var objectStored = window.localStorage.getItem('francy.settings');
-    if (!objectStored) {
-      this._dirty = true;
+    var objectStored = window.sessionStorage.getItem('francy.settings');
+    if (!objectStored || (typeof objectStored === 'undefined' ? 'undefined' : _typeof(objectStored)) !== 'object') {
+      this._sync();
     } else {
       object = JSON.parse(objectStored);
     }
-    /**
-     * @type {Logger} the logger for this class
-     */
-    this.logger = new _logger2.default({ verbose: object.verbose });
     /**
      * This is property holds a list of change subscribers.
      * @type {function}
@@ -18600,7 +18569,6 @@ var ConfigurationHandler = function () {
       var _this2 = this;
 
       if (!(value[property] instanceof Object) && object[property] !== value) {
-        this.logger.debug('Object [' + JSON.stringify(this.object) + '] property [' + property + '] changed from [' + object[property] + '] to [' + value + '].');
         object[property] = value;
         this._subscribers.forEach(function (item) {
           return item.prop === property ? item.fn.call(_this2, _this2.object) : undefined;
@@ -18663,7 +18631,7 @@ var ConfigurationHandler = function () {
   }, {
     key: '_sync',
     value: function _sync() {
-      window.localStorage.setItem('francy.settings', JSON.stringify(this.object));
+      window.sessionStorage.setItem('francy.settings', JSON.stringify(this.object));
     }
   }, {
     key: 'object',
@@ -18685,7 +18653,7 @@ var Configuration = exports.Configuration = new ConfigurationHandler({
   fixedRandomSeed: true,
   verbose: false
 }, {
-  throttle: 5000
+  throttle: 30000
 });
 
 /***/ }),
@@ -18867,8 +18835,11 @@ exports.default = JsonUtils;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _configuration = __webpack_require__(/*! ./configuration */ "./src/util/configuration.js");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -18882,13 +18853,8 @@ var Logger = function () {
    * @param verbose prints extra log information to console.log, defaults to false
    */
   function Logger() {
-    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-        _ref$verbose = _ref.verbose,
-        verbose = _ref$verbose === undefined ? false : _ref$verbose;
-
     _classCallCheck(this, Logger);
 
-    this.verbose = verbose;
     this.console = console;
   }
 
@@ -18901,7 +18867,7 @@ var Logger = function () {
   _createClass(Logger, [{
     key: 'debug',
     value: function debug(message) {
-      if (this.verbose) {
+      if (_configuration.Configuration.object.verbose) {
         this.console.debug(Logger._format('DEBUG', message));
       }
     }

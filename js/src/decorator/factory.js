@@ -5,7 +5,8 @@ import HighlightDecorator from './highlight';
 import JupyterDecorator from './jupyter';
 import DataDecorator from './data';
 
-export var Decorators = {
+/* singleton */
+export const Decorators = {
 
   get Data() {
     return new DataDecorator();

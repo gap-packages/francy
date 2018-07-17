@@ -6,8 +6,8 @@ import { Decorators } from '../decorator/factory';
 
 export default class MathJaxWrapper extends BaseRenderer {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   @Decorators.Data.enabled('canvas.texTypesetting')

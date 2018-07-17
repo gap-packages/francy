@@ -21,12 +21,11 @@ export default class Francy extends Renderer {
   /**
    * Creates an instance of Francy with the following options:
    * @typedef {Object} Options
-   * @property {Boolean} verbose prints extra log information to console.log, default false
    * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
     // all good!
     this.logger.info(`Francy JS v${VERSION} initialized! Enjoy...`);
   }
@@ -39,7 +38,7 @@ export default class Francy extends Renderer {
   @Decorators.Data.requires('canvas')
   async render() {
     if (this.data.version !== VERSION) {
-      this.logger.warn(`Rendering data generated in Francy GAP v${this.data.version} using Francy JS v${VERSION}, rendering may fail... please update your system...`);
+      this.logger.warn(`Rendering may fail, data generated in Francy GAP v${this.data.version} using Francy JS v${VERSION}... please update your system...`);
     }
     if (Configuration.object.fixedRandomSeed){
       //set seed to produce always the same graphs

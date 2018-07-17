@@ -3,8 +3,8 @@ import Callback from './callback';
 
 export default class Menu extends Renderer {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   traverse(appendTo, menusIterator) {

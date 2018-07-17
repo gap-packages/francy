@@ -4,8 +4,8 @@ import Renderer from './renderer';
 
 export default class Modal extends Renderer {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
     this.overlay = undefined;
     this.holder = undefined;
   }

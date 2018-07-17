@@ -7,8 +7,8 @@ import { Decorators } from '../decorator/factory';
 
 export default class Canvas extends Composite {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
     this.graphFactory = new GraphFactory(this.options);
     this.chartFactory = new ChartFactory(this.options);
     this.add(this.graphFactory).add(this.chartFactory);

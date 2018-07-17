@@ -3,10 +3,24 @@ import RequiredArgsModal from './modal-required';
 import ConfirmModal from './modal-confirm';
 import { Decorators } from '../decorator/factory';
 
+/**
+ * CallbackHandler is responsible for handling Callbacks and display Modal windows accodingly.
+ * Callbacks can have arguments, for which a Modal window will appear to request such input.
+ * Callbacks can also show a confirmation message before arguments input / execution.
+ * If a Callback does not require an argument and no confirmation message, 
+ * then the Callback is executed immediatly.
+ */
 export default class CallbackHandler extends BaseRenderer {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  /**
+   * CallbackHandler constructor
+   * 
+   * @typedef {Object} Options
+   * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
+   * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
+   */
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
     this.callback = callbackHandler;
   }
 
@@ -31,10 +45,6 @@ export default class CallbackHandler extends BaseRenderer {
     }
     // Trigger is the expected command on GAP for this event!
     await this._execute(this.data.callback);
-  }
-  
-  _requiredArgsRender() {
-    
   }
 
   _execute(calbackObj) {

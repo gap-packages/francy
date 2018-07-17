@@ -5,8 +5,8 @@ import { Decorators } from '../decorator/factory';
 
 export default class Graph extends Renderer {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   @Decorators.Data.requires('canvas.graph')
@@ -21,8 +21,12 @@ export default class Graph extends Renderer {
     default:
       graph = new GenericGraph(this.options);
     }
-    
+
     element = await this.handlePromise(graph.load(this.data).render());
+
+    if (element) {
+      setTimeout(element.parent.zoomToFit, this.transitionDuration);
+    }
 
     return element;
   }

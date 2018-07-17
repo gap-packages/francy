@@ -4,7 +4,7 @@ import { Widget } from '@phosphor/widgets';
 import 'francy-js/style/index.css';
 import * as FrancyBundle from 'francy-js/amd/francy.bundle.min';
 
-let francy = new FrancyBundle.Francy({ verbose: false, appendTo: `#${APPEND_ID}`, callbackHandler: console.log });
+let francy = new FrancyBundle.Francy({ appendTo: `#${APPEND_ID}`, callbackHandler: console.log });
 
 /**
  * A widget for rendering 'application/vnd.francy+json'

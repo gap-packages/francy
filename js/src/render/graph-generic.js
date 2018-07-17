@@ -6,15 +6,15 @@ import { Decorators } from '../decorator/factory';
 
 export default class GenericGraph extends Graph {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   @Decorators.Initializer.initialize()
   async render() {
     let self = this,
       loader = Decorators.Loader.withContext(this).show(),
-      simulationActive = Configuration.object.simulation,
+      simulationActive = this.data.canvas.graph.simulation || Configuration.object.simulation,
       canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
       canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
 
@@ -118,22 +118,30 @@ export default class GenericGraph extends Graph {
           // we need to set the position after re-render the latex
           self.handlePromise(self.mathjax.settings({appendTo: {element: text}, renderType: 'SVG', postFunction: () => {
             text.attr('x', self.setLabelXPosition(this));
+            simulation.restart();
           }}).render());
         }
         return self.setLabelXPosition(this);
-      });/*.attr('y', function() {
-        return self.setLabelYPosition(this);
-      });*/
+      });
 
     node.exit().remove();
 
     node = nodeGroup.selectAll('g.francy-node');
 
     if (Configuration.object.dragNodes) {
+      // enable drag behavior
+      enableDrag(true);
+      // subscribe to update drag behavior on configuration change
+      Configuration.subscribe('dragNodes', function(value){
+        enableDrag(value);
+      });
+    }
+
+    function enableDrag(enable) {
       node.call(d3.drag()
-        .on('start', dragstarted)
-        .on('drag', dragged)
-        .on('end', dragended));
+        .on('start', enable ? dragstarted : undefined)
+        .on('drag', enable ? dragged : undefined)
+        .on('end', enable ? dragended : undefined));
     }
 
     if (node && !node.empty()) {
@@ -182,16 +190,18 @@ export default class GenericGraph extends Graph {
       var simulation = d3.forceSimulation(),
         safeTicked = Decorators.Error.wrap(ticked).withContext(self).onErrorThrow(false).onErrorExec(simulation.stop),
         safeEnd = Decorators.Error.wrap(endSimulation).withContext(self);
-      
+
       let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100);
-      
+      let chargeStrength = -5 * Math.log(nodesToAdd.length) * Math.log(linksToAdd.length);
+      chargeStrength = chargeStrength < -400 ? chargeStrength : -400;
+
       simulation.nodes(nodesToAdd)
-        .force('charge-1', layered ? undefined : d3.forceManyBody().strength(-75))
+        .force('charge-1', layered ? undefined : d3.forceManyBody().strength(chargeStrength * 0.15))
         .force('x', d3.forceX())
         .force('y', layered ? d3.forceY(d => d.layer * 100).strength(1) : d3.forceY())
-        .force('charge-2', d3.forceManyBody().strength(-nodesToAdd.length * linksToAdd.length))
-        .force('link', layered ? linkForce.strength(0.01) : linkForce)
-        .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.25) / 2))
+        .force('charge-2', d3.forceManyBody().strength(chargeStrength))
+        .force('link', layered ? linkForce.strength(1 / (linksToAdd.length + 1)) : linkForce)
+        .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2))
         .on('tick', () => safeTicked.handle())
         .on('end', () => safeEnd.handle());
 
@@ -359,8 +369,6 @@ export default class GenericGraph extends Graph {
 
   }
 
-  unrender() {}
-  
   _filterNewElements(canvasObjects, d3Element) {
     let newElements = [];
     canvasObjects.forEach(o => {
@@ -375,5 +383,7 @@ export default class GenericGraph extends Graph {
     });
     return newElements;
   }
+
+  unrender() {}
 
 }

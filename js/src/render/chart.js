@@ -5,8 +5,8 @@ import Tooltip from './tooltip';
 
 export default class Chart extends Renderer {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
     this.axis = undefined;
     this.yScale = undefined;
     this.xScale = undefined;

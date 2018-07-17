@@ -8,8 +8,8 @@ import { Decorators } from '../decorator/factory';
 
 export default class Frame extends Composite {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
     this.canvas = new Canvas(this.options);
     this.menu = new MainMenu(this.options);
     this.messages = new Message(this.options);
@@ -18,15 +18,13 @@ export default class Frame extends Composite {
 
   @Decorators.Data.requires('canvas')
   async render() {
-    let parent = this.options.appendTo;
-
     const frameId = `Frame-${this.data.canvas.id}`;
     this.element = d3.select(`div#${frameId}`);
     // check if the canvas is already present
     if (!this.element.node()) {
       // create a svg element detached from the DOM!
       this.logger.debug(`Creating Frame [${frameId}]...`);
-      this.element = parent.append('div').attr('class', 'francy').attr('id', frameId);
+      this.element = this.parent.append('div').attr('class', 'francy').attr('id', frameId);
     }
 
     // cannot continue if canvas is not present

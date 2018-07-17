@@ -24,11 +24,11 @@ export default class BaseComponent {
      * @property {Boolean} mandatory whether the component is mandatory or optional
      */
     this.options = undefined;
-    this.settings({ mandatory: mandatory, verbose: false });
+    this.settings({ mandatory: mandatory });
     /**
      * @type {Logger} the logger for this class
      */
-    this.log = new Logger(this.options);
+    this.log = new Logger();
     // run initialization
     let decorator = Decorators.Error.wrap(this._initialize).withContext(this).onErrorThrow(mandatory).onErrorExec(this._onError);
     if (delay) {
@@ -47,13 +47,11 @@ export default class BaseComponent {
    * Saves the settings in an internal options object.
    * 
    * @typedef {Object} Options
-   * @property {Boolean} verbose prints extra log information to console.log, default false
    * @property {Boolean} mandatory whether the component is mandatory or optional
    */
-  settings({ mandatory, verbose }) {
+  settings({ mandatory }) {
     this.options = this.options || {};
     this.options.mandatory = mandatory || this.options.mandatory;
-    this.options.verbose = verbose || this.options.verbose;
     return this;
   }
   

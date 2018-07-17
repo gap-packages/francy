@@ -11,7 +11,6 @@ export function init(Jupyter, FrancyBundle) {
 
   // start Francy
   francy = new FrancyBundle.Francy({
-    verbose: false,
     appendTo: `#${APPEND_ID}`,
     callbackHandler: function(command) {
       Jupyter.notebook.kernel.execute(command, {

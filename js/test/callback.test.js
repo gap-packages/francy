@@ -4,7 +4,7 @@ import Callback from '../src/render/callback';
 
 describe('Callbacks', () => {
 
-  var options = { verbose: false, appendTo: 'body', callbackHandler: console.log };
+  var options = { appendTo: 'body', callbackHandler: console.log };
   window.d3 = global.d3 = d3;
   
   window.callback = new Callback(options);

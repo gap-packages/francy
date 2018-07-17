@@ -4,7 +4,7 @@ import Tooltip  from '../src/render/tooltip';
 
 describe('Tooltips', () => {
   
-  var options = { verbose: true, appendTo: 'body', callbackHandler: console.log };
+  var options = { appendTo: 'body', callbackHandler: console.log };
   window.d3 = global.d3 = d3;
   window.tooltip = new Tooltip(options);
 

@@ -1,5 +1,4 @@
 import Logger from '../util/logger';
-import { Components } from '../component/factory';
 
 /* global Jupyter */
 
@@ -11,7 +10,7 @@ export default class JupyterDecorator {
   
   registerKeyboardEvents(classes) {
     // disable keyboard shortcuts in Jupyter for specific css classed elements
-    if (!classes || !Components.Jupyter.isAvailable) return;
+    if (!classes) return;
     try {
       classes.map((c) => {
         Jupyter.keyboard_manager.register_events(c);

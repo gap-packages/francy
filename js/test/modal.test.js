@@ -6,7 +6,7 @@ import AboutModal from '../src/render/modal-about';
 
 describe('Modal Windows', () => {
   
-  var options = { verbose: false, appendTo: 'body', callbackHandler: console.log };
+  var options = { appendTo: 'body', callbackHandler: console.log };
   window.d3 = global.d3 = d3;
   window.about = new AboutModal(options);
   window.required = new RequiredArgsModal(options);

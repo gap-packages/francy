@@ -2,8 +2,8 @@ import Renderer from './renderer';
 
 export default class Composite extends Renderer {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
     if (new.target === Composite) {
       throw new TypeError('Cannot instantiate [Composite] classes directly!');
     }

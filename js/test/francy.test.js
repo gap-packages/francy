@@ -22,7 +22,7 @@ describe('Francy Renderer Object', function() {
       }
   };
 
-  window.francy = new Francy({ verbose: false, callbackHandler: console.log, appendTo: 'body' });
+  window.francy = new Francy({ callbackHandler: console.log, appendTo: 'body' });
 
   beforeEach(() => {
     d3.select('body').selectAll('div').remove();

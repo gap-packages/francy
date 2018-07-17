@@ -7,8 +7,8 @@ import * as SvgToPng from '../../node_modules/save-svg-as-png/saveSvgAsPng';
 
 export default class MainMenu extends Menu {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   async render() {

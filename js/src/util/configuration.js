@@ -1,5 +1,3 @@
-import Logger from '../util/logger';
-
 class ConfigurationHandler {
   /**
    * Creates a instance of ModelTracker.
@@ -19,16 +17,12 @@ class ConfigurationHandler {
      * @type {object}
      * @private
      */
-    let objectStored = window.localStorage.getItem('francy.settings');
-    if (!objectStored) {
-      this._dirty = true;
+    let objectStored = window.sessionStorage.getItem('francy.settings');
+    if (!objectStored || typeof objectStored !== 'object') {
+      this._sync();
     } else {
       object = JSON.parse(objectStored);
     }
-    /**
-     * @type {Logger} the logger for this class
-     */
-    this.logger = new Logger({verbose: object.verbose});
     /**
      * This is property holds a list of change subscribers.
      * @type {function}
@@ -62,7 +56,6 @@ class ConfigurationHandler {
    */
   set(object, property, value) {
     if (!(value[property] instanceof Object) && object[property] !== value) {
-      this.logger.debug(`Object [${JSON.stringify(this.object)}] property [${property}] changed from [${object[property]}] to [${value}].`);
       object[property] = value;
       this._subscribers.forEach(item => item.prop === property ? item.fn.call(this, this.object) : undefined);
       this._dirty = true;
@@ -111,7 +104,7 @@ class ConfigurationHandler {
    * This method is used to explicitly sync the module with all the subscribers
    */
   _sync() {
-    window.localStorage.setItem('francy.settings', JSON.stringify(this.object));
+    window.sessionStorage.setItem('francy.settings', JSON.stringify(this.object));
   }
 }
 
@@ -123,5 +116,5 @@ export const Configuration = new ConfigurationHandler({
   fixedRandomSeed: true,
   verbose: false
 }, {
-  throttle: 5000 
+  throttle: 30000 
 });

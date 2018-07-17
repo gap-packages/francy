@@ -5,8 +5,8 @@ import MathJaxWrapper from './mathjax-wrapper';
 
 export default class Renderer extends BaseRenderer {
 
-  constructor({ verbose = false, appendTo, callbackHandler, options = {} }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler, options: options });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
     if (new.target === Renderer) {
       throw new TypeError('Cannot instantiate [Renderer] classes directly!');
     }

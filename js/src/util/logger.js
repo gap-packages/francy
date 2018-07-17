@@ -1,3 +1,5 @@
+import { Configuration } from './configuration';
+
 /**
  * This class provides a logger for the Francy application.
  */
@@ -7,8 +9,7 @@ export default class Logger {
    * Logger constructor
    * @param verbose prints extra log information to console.log, defaults to false
    */
-  constructor({ verbose = false } = {}) {
-    this.verbose = verbose;
+  constructor() {
     this.console = console;
   }
 
@@ -17,7 +18,7 @@ export default class Logger {
    * @param message the message to print
    */
   debug(message) {
-    if (this.verbose) {
+    if (Configuration.object.verbose) {
       this.console.debug(Logger._format('DEBUG', message));
     }
   }

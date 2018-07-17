@@ -5,8 +5,8 @@ import { Decorators } from '../decorator/factory';
 
 export default class TreeGraph extends Graph {
 
-  constructor({ verbose = false, appendTo, callbackHandler }) {
-    super({ verbose: verbose, appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   @Decorators.Initializer.initialize()
