@@ -22,3 +22,6 @@ exclude_patterns:
   - "**/lib/"
   - "**/notebooks/"
   - "**/gap/"
+  - "**/*.py"
+  - "**/webpack.config.js"
+  - "**/karma.conf.js"

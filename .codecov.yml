@@ -20,3 +20,4 @@ ignore:
   - "tst/**/*"  # ignore test harness code
   - "test/*"     # ignore test harness code
   - "test/**/*"  # ignore test harness code
+  - "**/*.js"
