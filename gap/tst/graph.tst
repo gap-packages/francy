@@ -3,12 +3,6 @@ gap> graph := Graph(GraphType.DIRECTED);
 gap> SetSimulation(graph, false);
 gap> Simulation(graph) = false;
 true
-gap> SetDrag(graph, false);
-gap> Drag(graph) = false;
-true
-gap> SetShowNeighbours(graph, false);
-gap> ShowNeighbours(graph) = false;
-true
 gap> shape1 := Shape(ShapeType.SQUARE);
 <IsFrancyObject/IsShape>
 gap> SetTitle(shape1, "Title");
@@ -76,9 +70,6 @@ gap> ParentShape(shape1) = Id(shape);
 true
 gap> SetSize(shape1, 5);
 gap> Size(shape1) = 5;
-true
-gap> SetHighlight(shape1, false);
-gap> Highlight(shape1) = false;
 true
 gap> SetCollapsed(graph, false);
 gap> Collapsed(graph) = false;
