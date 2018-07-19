@@ -53,18 +53,24 @@ gap>
 gap> callback := NoopCallback();
 <IsFrancyObject/IsCallback>
 gap> 
-gap> MyFunction := function(str) return Concatenation("Hello", " ", str); end;
-function( str ) ... end
+gap> MyFunction := function(s, i, a, b) return Concatenation("string ", s, " number ", String(i), " selected ", String(a), " boolean ", String(b) ); end;
+function( s, i, a, b ) ... end
 gap> callback := Callback(MyFunction);
 <IsFrancyObject/IsCallback>
 gap> arg1 := RequiredArg(ArgType.STRING, "Your Name");
 <IsFrancyObject/IsCallback>
-gap> arg2 := RequiredArg(ArgType.STRING, "Your Age");
+gap> arg2 := RequiredArg(ArgType.NUMBER, "Your Age");
 <IsFrancyObject/IsCallback>
-gap> Add(callback, [arg1, arg2]);
+gap> arg3 := RequiredArg(ArgType.SELECT, "Nodes Selected");
+<IsFrancyObject/IsCallback>
+gap> arg4 := RequiredArg(ArgType.BOOLEAN, "Activate");
+<IsFrancyObject/IsCallback>
+gap> Add(callback, [arg1, arg2, arg3, arg4]);
 gap> Remove(callback, arg1);
 <IsFrancyObject/IsCallback>
 gap> Add(callback, arg1);
 gap> Remove(callback, [arg2]);
 <IsFrancyObject/IsCallback>
-gap> 
+gap> SetConfirmMessage(callback, "confirmation message");
+gap> ConfirmMessage(callback) = "confirmation message";
+true

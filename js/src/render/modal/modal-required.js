@@ -1,6 +1,6 @@
 import Modal from './modal';
-import { Components } from '../component/factory';
-import { Decorators } from '../decorator/factory';
+import { Components } from '../../component/factory';
+import { Decorators } from '../../decorator/factory';
 
 /* global d3 */
 
@@ -12,8 +12,6 @@ export default class RequiredArgsModal extends Modal {
 
   @Decorators.Initializer.initialize()
   async render() {
-    let self = this;
-
     let modalId = this.data.callback.id;
 
     this.logger.debug(`Creating Callback Modal [${modalId}]...`);
@@ -24,21 +22,39 @@ export default class RequiredArgsModal extends Modal {
 
     let form = this.element.append('form');
 
-    let header = form.append('div').attr('class', 'francy-modal-header');
+    this._buildHeader(form, 'Required arguments&nbsp;');
 
-    let headerTitle = header.append('span').html('Required arguments&nbsp;');
-    if (this.data.title) {
-      headerTitle.append('span').attr('style', 'font-weight: bold;').text(`for ${this.data.title}`);
+    this._buildContent(form);
+
+    this._buildFooter(form);
+
+    // disable keyboard shortcuts when using this modal in Jupyter
+    if (Components.Jupyter.isAvailable) {
+      Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
     }
 
-    let content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
+    let inputElement = form.selectAll('.francy-arg').node();
+    if (inputElement) {
+      inputElement.focus();
+    }
+
+    this.logger.debug(`Callback Modal updated [${modalId}]...`);
+
+    return this;
+  }
+
+  _buildContent(form) {
+    let self = this;
+    
+    let content = form.append('div').attr('class', 'francy-modal-content')
+      .append('div').attr('class', 'francy-table')
+      .append('div').attr('class', 'francy-table-body');
 
     for (let arg of Object.values(this.data.callback.requiredArgs)) {
       let row = content.append('div').attr('class', 'francy-table-row');
       row.append('div').attr('class', 'francy-table-cell').append('label')
         .attr('for', arg.id).text(arg.title);
       if (arg.type === 'select') {
-        // TODO need to use https://www.w3schools.com/html/tryit.asp?filename=tryhtml_elem_select_multiple
         row.append('div').attr('class', 'francy-table-cell').append('select')
           .attr('class', 'francy-arg')
           .attr('id', arg.id)
@@ -48,8 +64,8 @@ export default class RequiredArgsModal extends Modal {
           .attr('multiple', '')
           .data(this.data.selectedNodes).append('option')
           .attr('value', d => d)
-          .html(d => d)
-          .on('change', undefined);
+          .html(d => d);
+        self.data.callback.requiredArgs[arg.id].value = this.data.selectedNodes;
       } else {
         let input = row.append('div').attr('class', 'francy-table-cell').append('input')
           .attr('class', 'francy-arg')
@@ -80,34 +96,6 @@ export default class RequiredArgsModal extends Modal {
       }
       row.append('span').attr('class', 'validity');
     }
-
-    let footer = form.append('div').attr('class', 'francy-modal-footer');
-
-    footer.append('button').text('Ok').on('click', () => {
-      if (form.node().checkValidity()) {
-        d3.event.preventDefault();
-        this.options.callbackHandler(this.data.callback);
-        this.unrender.call(this);
-      }
-      return false;
-    });
-    footer.append('button').text('Cancel').on('click', () => { 
-      d3.event.preventDefault(); 
-      this.unrender.call(this); 
-    });
-
-    // disable keyboard shortcuts when using this modal in Jupyter
-    if (Components.Jupyter.isAvailable) {
-      Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
-    }
-
-    let inputElement = content.selectAll('.francy-arg').node();
-    if (inputElement) {
-      inputElement.focus();
-    }
-
-    this.logger.debug(`Callback Modal updated [${modalId}]...`);
-
-    return this;
   }
+
 }

@@ -1,6 +1,6 @@
 import Composite from './composite';
-import GraphFactory from './graph-factory';
-import ChartFactory from './chart-factory';
+import GraphFactory from './graph/graph-factory';
+import ChartFactory from './chart/chart-factory';
 import { Decorators } from '../decorator/factory';
 
 /* global d3 */

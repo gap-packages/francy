@@ -1,6 +1,6 @@
 import Composite from './composite';
 import Canvas from './canvas';
-import MainMenu from './menu-main';
+import MainMenu from './menu/menu-main';
 import Message from './message';
 import { Decorators } from '../decorator/factory';
 

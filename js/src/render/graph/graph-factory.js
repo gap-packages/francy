@@ -1,7 +1,7 @@
-import Renderer from './renderer';
+import Renderer from '../renderer';
 import TreeGraph from './graph-tree';
 import GenericGraph from './graph-generic';
-import { Decorators } from '../decorator/factory';
+import { Decorators } from '../../decorator/factory';
 
 export default class Graph extends Renderer {
 

@@ -1,7 +1,7 @@
-import Renderer from './renderer';
-import ContextMenu from './menu-context';
-import Tooltip from './tooltip';
-import Callback from './callback';
+import Renderer from '../renderer';
+import ContextMenu from '../menu/menu-context';
+import Tooltip from '../tooltip';
+import Callback from '../callback';
 
 /* global d3 */
 

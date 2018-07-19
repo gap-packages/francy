@@ -1,5 +1,5 @@
-import Renderer from './renderer';
-import Tooltip from './tooltip';
+import Renderer from '../renderer';
+import Tooltip from '../tooltip';
 
 /* global d3 */
 

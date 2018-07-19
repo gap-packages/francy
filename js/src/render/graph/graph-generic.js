@@ -1,6 +1,6 @@
 import Graph from './graph';
-import { Configuration } from '../util/configuration';
-import { Decorators } from '../decorator/factory';
+import { Configuration } from '../../util/configuration';
+import { Decorators } from '../../decorator/factory';
 
 /* global d3 */
 

@@ -1,5 +1,5 @@
-import Renderer from './renderer';
-import Callback from './callback';
+import Renderer from '../renderer';
+import Callback from '../callback';
 
 export default class Menu extends Renderer {
 
@@ -13,7 +13,7 @@ export default class Menu extends Renderer {
       let entry = appendTo.append('li');
       let action = entry.selectAll('a').data([menuItem]).enter().append('a').attr('title', menuItem.title).html(menuItem.title);
       if (menuItem.callback && Object.values(menuItem.callback).length) {
-        action.on('click', (d) => new Callback(this.options).load(d, true).execute());
+        action.on('click', d => new Callback(this.options).load(d, true).execute());
       }
       if (menuItem.menus && Object.values(menuItem.menus).length > 0) {
         let content = entry.append('ul');

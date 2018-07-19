@@ -168,7 +168,8 @@
   margin-top: -102px;
   padding: 10px;
   display: block;
-  min-width: 250px
+  min-width: 250px;
+  max-width: 400px
 }
 
 .francy-modal-header {
@@ -186,8 +187,10 @@
   margin: 15px 5px
 }
 
-.francy-modal-content input {
-  margin: 5px
+.francy-modal-content input,
+.francy-modal-content select {
+  margin: 1px;
+  width: 100%
 }
 
 .francy-modal-footer button {

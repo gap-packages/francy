@@ -1,5 +1,5 @@
 import Chart from './chart';
-import { Decorators } from '../decorator/factory';
+import { Decorators } from '../../decorator/factory';
 
 /* global d3 */
 

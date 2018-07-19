@@ -2,9 +2,10 @@ const path = require('path');
 const del = require('del');
 const webpack = require('webpack');
 const fPackage = require('./package.json');
+const description = `'${fPackage.name}, v${fPackage.version}, ${fPackage.description}, ${fPackage.author}.'`;
 const defaultPlugins = [
-  new webpack.DefinePlugin({VERSION: JSON.stringify(fPackage.version)}), 
-  new webpack.BannerPlugin(`${fPackage.name}, v${fPackage.version}, ${fPackage.description}, ${fPackage.author}.`)
+  new webpack.DefinePlugin({VERSION: JSON.stringify(fPackage.version), FRANCY_DESC: description}), 
+  new webpack.BannerPlugin(description)
 ];
 
 module.exports = (env = {}) => {

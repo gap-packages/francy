@@ -1,8 +1,8 @@
 import * as d3 from 'd3';
 import { expect } from 'chai';
 import json1 from './data/json1.json';
-import RequiredArgsModal from '../src/render/modal-required';
-import AboutModal from '../src/render/modal-about';
+import RequiredArgsModal from '../src/render/modal/modal-required';
+import AboutModal from '../src/render/modal/modal-about';
 
 describe('Modal Windows', () => {
   

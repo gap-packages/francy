@@ -1,8 +1,9 @@
 import Modal from './modal';
-import { Components } from '../component/factory';
-import { Decorators } from '../decorator/factory';
+import { Configuration } from '../../util/configuration';
+import { Components } from '../../component/factory';
+import { Decorators } from '../../decorator/factory';
 
-/* global d3 */
+/* global d3 VERSION FRANCY_DESC*/
 
 export default class AboutModal extends Modal {
 
@@ -23,20 +24,19 @@ export default class AboutModal extends Modal {
       .attr('class', 'francy-modal');
 
     let form = this.element.append('form');
-
-    let header = form.append('div').attr('class', 'francy-modal-header');
-
-    header.append('span').html(`About Francy v${this.data.version || 'N/A'}`);
+    
+    this._buildHeader(form, `About Francy v${VERSION}`);
 
     let content = form.append('div').attr('class', 'francy-modal-content')
       .append('div').attr('class', 'francy-table')
-      .append('div').attr('class', 'francy-table-body');
+      .append('div').attr('class', 'francy-table-body').style('text-align', 'center');
 
-    content.append('span').text('Francy is an interactive discrete mathematics framework for GAP.').append('br').append('br');
-    content.append('span').text('Developed by Manuel Martins: ');
+    content.append('span').text(FRANCY_DESC);
+    content.append('br');
+    content.append('br');
     content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
     
-    if (this.options.verbose) {
+    if (Configuration.object.verbose) {
       content.append('span').text('Loaded Data:');
       content.append('pre').attr('class', 'francy').html(Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
     }

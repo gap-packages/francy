@@ -1,4 +1,4 @@
-/*! francy-js, v0.8.0, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>. */
+/*! 'francy-js, v0.8.0, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.' */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -14165,11 +14165,11 @@ var _base = __webpack_require__(/*! ./base */ "./src/render/base.js");
 
 var _base2 = _interopRequireDefault(_base);
 
-var _modalRequired = __webpack_require__(/*! ./modal-required */ "./src/render/modal-required.js");
+var _modalRequired = __webpack_require__(/*! ./modal/modal-required */ "./src/render/modal/modal-required.js");
 
 var _modalRequired2 = _interopRequireDefault(_modalRequired);
 
-var _modalConfirm = __webpack_require__(/*! ./modal-confirm */ "./src/render/modal-confirm.js");
+var _modalConfirm = __webpack_require__(/*! ./modal/modal-confirm */ "./src/render/modal/modal-confirm.js");
 
 var _modalConfirm2 = _interopRequireDefault(_modalConfirm);
 
@@ -14246,82 +14246,57 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
   _createClass(CallbackHandler, [{
     key: 'execute',
     value: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var showRequiredModal = function () {
-          var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var modal;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    options.callbackHandler = function (cb) {
-                      return self._execute.call(self, cb);
-                    };
-                    modal = new _modalRequired2.default(options);
-                    _context.next = 4;
-                    return self.handlePromise(modal.load(self.data, true).render());
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _this2 = this;
 
-                  case 4:
-                    return _context.abrupt('return', _context.sent);
-
-                  case 5:
-                  case 'end':
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-
-          return function showRequiredModal() {
-            return _ref3.apply(this, arguments);
-          };
-        }();
-
-        var self, options, confirmModal;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        var options;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context.prev = _context.next) {
               case 0:
-                self = this;
                 options = this.options;
 
                 if (!this.data.callback.confirm) {
-                  _context2.next = 8;
+                  _context.next = 8;
                   break;
                 }
 
                 if (Object.keys(this.data.callback.requiredArgs).length) {
-                  options.callbackHandler = showRequiredModal;
+                  options.callbackHandler = function () {
+                    return _this2._showRequiredModal.call(_this2);
+                  };
                 }
-                confirmModal = new _modalConfirm2.default(options);
-                _context2.next = 7;
-                return this.handlePromise(confirmModal.load(this.data, true).render());
+                _context.next = 5;
+                return this.handlePromise(this._showConfirmModal());
 
-              case 7:
-                return _context2.abrupt('return', _context2.sent);
+              case 5:
+                return _context.abrupt('return', _context.sent);
 
               case 8:
                 if (!Object.keys(this.data.callback.requiredArgs).length) {
-                  _context2.next = 12;
+                  _context.next = 12;
                   break;
                 }
 
-                _context2.next = 11;
-                return this.handlePromise(showRequiredModal());
+                _context.next = 11;
+                return this.handlePromise(this._showRequiredModal.call(this));
 
               case 11:
-                return _context2.abrupt('return', _context2.sent);
+                return _context.abrupt('return', _context.sent);
 
               case 12:
-                _context2.next = 14;
+                _context.next = 14;
                 return this._execute(this.data.callback);
 
               case 14:
+                return _context.abrupt('return', _context.sent);
+
+              case 15:
               case 'end':
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee, this);
       }));
 
       function execute() {
@@ -14331,11 +14306,87 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
       return execute;
     }()
   }, {
+    key: '_showConfirmModal',
+    value: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var _this3 = this;
+
+        var options, modal;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                options = this.options;
+
+                if (Object.keys(this.data.callback.requiredArgs).length) {
+                  options.callbackHandler = function () {
+                    return _this3._showRequiredModal.call(_this3);
+                  };
+                }
+                modal = new _modalConfirm2.default(options);
+                _context2.next = 5;
+                return this.handlePromise(modal.load(this.data, true).render());
+
+              case 5:
+                return _context2.abrupt('return', _context2.sent);
+
+              case 6:
+              case 'end':
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function _showConfirmModal() {
+        return _ref3.apply(this, arguments);
+      }
+
+      return _showConfirmModal;
+    }()
+  }, {
+    key: '_showRequiredModal',
+    value: function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+        var _this4 = this;
+
+        var options, modal;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                options = this.options;
+
+                options.callbackHandler = function (o) {
+                  return _this4._execute.call(_this4, o);
+                };
+                modal = new _modalRequired2.default(options);
+                _context3.next = 5;
+                return this.handlePromise(modal.load(this.data, true).render());
+
+              case 5:
+                return _context3.abrupt('return', _context3.sent);
+
+              case 6:
+              case 'end':
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function _showRequiredModal() {
+        return _ref4.apply(this, arguments);
+      }
+
+      return _showRequiredModal;
+    }()
+  }, {
     key: '_execute',
-    value: function _execute(calbackObj) {
+    value: function _execute(object) {
       // oh well, Trigger(<json>); is the entrypoint back to GAP 
-      // while we don't support comms on the kernel
-      this.callback('Trigger(' + JSON.stringify(JSON.stringify(calbackObj)) + ');');
+      // while we don't support comms on the kernel:
+      return this.callback('Trigger(' + JSON.stringify(JSON.stringify(object)) + ');');
     }
   }]);
 
@@ -14368,11 +14419,11 @@ var _composite = __webpack_require__(/*! ./composite */ "./src/render/composite.
 
 var _composite2 = _interopRequireDefault(_composite);
 
-var _graphFactory = __webpack_require__(/*! ./graph-factory */ "./src/render/graph-factory.js");
+var _graphFactory = __webpack_require__(/*! ./graph/graph-factory */ "./src/render/graph/graph-factory.js");
 
 var _graphFactory2 = _interopRequireDefault(_graphFactory);
 
-var _chartFactory = __webpack_require__(/*! ./chart-factory */ "./src/render/chart-factory.js");
+var _chartFactory = __webpack_require__(/*! ./chart/chart-factory */ "./src/render/chart/chart-factory.js");
 
 var _chartFactory2 = _interopRequireDefault(_chartFactory);
 
@@ -14556,10 +14607,10 @@ exports.default = Canvas;
 
 /***/ }),
 
-/***/ "./src/render/chart-bar.js":
-/*!*********************************!*\
-  !*** ./src/render/chart-bar.js ***!
-  \*********************************/
+/***/ "./src/render/chart/chart-bar.js":
+/*!***************************************!*\
+  !*** ./src/render/chart/chart-bar.js ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14575,11 +14626,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _desc, _value, _class;
 
-var _chart = __webpack_require__(/*! ./chart */ "./src/render/chart.js");
+var _chart = __webpack_require__(/*! ./chart */ "./src/render/chart/chart.js");
 
 var _chart2 = _interopRequireDefault(_chart);
 
-var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14722,10 +14773,10 @@ exports.default = BarChart;
 
 /***/ }),
 
-/***/ "./src/render/chart-factory.js":
-/*!*************************************!*\
-  !*** ./src/render/chart-factory.js ***!
-  \*************************************/
+/***/ "./src/render/chart/chart-factory.js":
+/*!*******************************************!*\
+  !*** ./src/render/chart/chart-factory.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14741,23 +14792,23 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _desc, _value, _class;
 
-var _renderer = __webpack_require__(/*! ./renderer */ "./src/render/renderer.js");
+var _renderer = __webpack_require__(/*! ../renderer */ "./src/render/renderer.js");
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
-var _chartBar = __webpack_require__(/*! ./chart-bar */ "./src/render/chart-bar.js");
+var _chartBar = __webpack_require__(/*! ./chart-bar */ "./src/render/chart/chart-bar.js");
 
 var _chartBar2 = _interopRequireDefault(_chartBar);
 
-var _chartLine = __webpack_require__(/*! ./chart-line */ "./src/render/chart-line.js");
+var _chartLine = __webpack_require__(/*! ./chart-line */ "./src/render/chart/chart-line.js");
 
 var _chartLine2 = _interopRequireDefault(_chartLine);
 
-var _chartScatter = __webpack_require__(/*! ./chart-scatter */ "./src/render/chart-scatter.js");
+var _chartScatter = __webpack_require__(/*! ./chart-scatter */ "./src/render/chart/chart-scatter.js");
 
 var _chartScatter2 = _interopRequireDefault(_chartScatter);
 
-var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14876,10 +14927,10 @@ exports.default = ChartFactory;
 
 /***/ }),
 
-/***/ "./src/render/chart-line.js":
-/*!**********************************!*\
-  !*** ./src/render/chart-line.js ***!
-  \**********************************/
+/***/ "./src/render/chart/chart-line.js":
+/*!****************************************!*\
+  !*** ./src/render/chart/chart-line.js ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14895,11 +14946,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _desc, _value, _class;
 
-var _chart = __webpack_require__(/*! ./chart */ "./src/render/chart.js");
+var _chart = __webpack_require__(/*! ./chart */ "./src/render/chart/chart.js");
 
 var _chart2 = _interopRequireDefault(_chart);
 
-var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15028,10 +15079,10 @@ exports.default = LineChart;
 
 /***/ }),
 
-/***/ "./src/render/chart-scatter.js":
-/*!*************************************!*\
-  !*** ./src/render/chart-scatter.js ***!
-  \*************************************/
+/***/ "./src/render/chart/chart-scatter.js":
+/*!*******************************************!*\
+  !*** ./src/render/chart/chart-scatter.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15047,11 +15098,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _desc, _value, _class;
 
-var _chart = __webpack_require__(/*! ./chart */ "./src/render/chart.js");
+var _chart = __webpack_require__(/*! ./chart */ "./src/render/chart/chart.js");
 
 var _chart2 = _interopRequireDefault(_chart);
 
-var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15179,10 +15230,10 @@ exports.default = ScatterChart;
 
 /***/ }),
 
-/***/ "./src/render/chart.js":
-/*!*****************************!*\
-  !*** ./src/render/chart.js ***!
-  \*****************************/
+/***/ "./src/render/chart/chart.js":
+/*!***********************************!*\
+  !*** ./src/render/chart/chart.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15196,11 +15247,11 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _renderer = __webpack_require__(/*! ./renderer */ "./src/render/renderer.js");
+var _renderer = __webpack_require__(/*! ../renderer */ "./src/render/renderer.js");
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
-var _tooltip = __webpack_require__(/*! ./tooltip */ "./src/render/tooltip.js");
+var _tooltip = __webpack_require__(/*! ../tooltip */ "./src/render/tooltip.js");
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
@@ -15532,7 +15583,7 @@ var _canvas = __webpack_require__(/*! ./canvas */ "./src/render/canvas.js");
 
 var _canvas2 = _interopRequireDefault(_canvas);
 
-var _menuMain = __webpack_require__(/*! ./menu-main */ "./src/render/menu-main.js");
+var _menuMain = __webpack_require__(/*! ./menu/menu-main */ "./src/render/menu/menu-main.js");
 
 var _menuMain2 = _interopRequireDefault(_menuMain);
 
@@ -15680,10 +15731,10 @@ exports.default = Frame;
 
 /***/ }),
 
-/***/ "./src/render/graph-factory.js":
-/*!*************************************!*\
-  !*** ./src/render/graph-factory.js ***!
-  \*************************************/
+/***/ "./src/render/graph/graph-factory.js":
+/*!*******************************************!*\
+  !*** ./src/render/graph/graph-factory.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15699,19 +15750,19 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _desc, _value, _class;
 
-var _renderer = __webpack_require__(/*! ./renderer */ "./src/render/renderer.js");
+var _renderer = __webpack_require__(/*! ../renderer */ "./src/render/renderer.js");
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
-var _graphTree = __webpack_require__(/*! ./graph-tree */ "./src/render/graph-tree.js");
+var _graphTree = __webpack_require__(/*! ./graph-tree */ "./src/render/graph/graph-tree.js");
 
 var _graphTree2 = _interopRequireDefault(_graphTree);
 
-var _graphGeneric = __webpack_require__(/*! ./graph-generic */ "./src/render/graph-generic.js");
+var _graphGeneric = __webpack_require__(/*! ./graph-generic */ "./src/render/graph/graph-generic.js");
 
 var _graphGeneric2 = _interopRequireDefault(_graphGeneric);
 
-var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15825,10 +15876,10 @@ exports.default = Graph;
 
 /***/ }),
 
-/***/ "./src/render/graph-generic.js":
-/*!*************************************!*\
-  !*** ./src/render/graph-generic.js ***!
-  \*************************************/
+/***/ "./src/render/graph/graph-generic.js":
+/*!*******************************************!*\
+  !*** ./src/render/graph/graph-generic.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15844,13 +15895,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _desc, _value, _class;
 
-var _graph = __webpack_require__(/*! ./graph */ "./src/render/graph.js");
+var _graph = __webpack_require__(/*! ./graph */ "./src/render/graph/graph.js");
 
 var _graph2 = _interopRequireDefault(_graph);
 
-var _configuration = __webpack_require__(/*! ../util/configuration */ "./src/util/configuration.js");
+var _configuration = __webpack_require__(/*! ../../util/configuration */ "./src/util/configuration.js");
 
-var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16332,10 +16383,10 @@ exports.default = GenericGraph;
 
 /***/ }),
 
-/***/ "./src/render/graph-tree.js":
-/*!**********************************!*\
-  !*** ./src/render/graph-tree.js ***!
-  \**********************************/
+/***/ "./src/render/graph/graph-tree.js":
+/*!****************************************!*\
+  !*** ./src/render/graph/graph-tree.js ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16351,11 +16402,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _desc, _value, _class;
 
-var _graph = __webpack_require__(/*! ./graph */ "./src/render/graph.js");
+var _graph = __webpack_require__(/*! ./graph */ "./src/render/graph/graph.js");
 
 var _graph2 = _interopRequireDefault(_graph);
 
-var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16654,10 +16705,10 @@ exports.default = TreeGraph;
 
 /***/ }),
 
-/***/ "./src/render/graph.js":
-/*!*****************************!*\
-  !*** ./src/render/graph.js ***!
-  \*****************************/
+/***/ "./src/render/graph/graph.js":
+/*!***********************************!*\
+  !*** ./src/render/graph/graph.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16671,19 +16722,19 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _renderer = __webpack_require__(/*! ./renderer */ "./src/render/renderer.js");
+var _renderer = __webpack_require__(/*! ../renderer */ "./src/render/renderer.js");
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
-var _menuContext = __webpack_require__(/*! ./menu-context */ "./src/render/menu-context.js");
+var _menuContext = __webpack_require__(/*! ../menu/menu-context */ "./src/render/menu/menu-context.js");
 
 var _menuContext2 = _interopRequireDefault(_menuContext);
 
-var _tooltip = __webpack_require__(/*! ./tooltip */ "./src/render/tooltip.js");
+var _tooltip = __webpack_require__(/*! ../tooltip */ "./src/render/tooltip.js");
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
-var _callback = __webpack_require__(/*! ./callback */ "./src/render/callback.js");
+var _callback = __webpack_require__(/*! ../callback */ "./src/render/callback.js");
 
 var _callback2 = _interopRequireDefault(_callback);
 
@@ -17008,10 +17059,10 @@ exports.default = MathJaxWrapper;
 
 /***/ }),
 
-/***/ "./src/render/menu-context.js":
-/*!************************************!*\
-  !*** ./src/render/menu-context.js ***!
-  \************************************/
+/***/ "./src/render/menu/menu-context.js":
+/*!*****************************************!*\
+  !*** ./src/render/menu/menu-context.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17027,11 +17078,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _desc, _value, _class;
 
-var _menu = __webpack_require__(/*! ./menu */ "./src/render/menu.js");
+var _menu = __webpack_require__(/*! ./menu */ "./src/render/menu/menu.js");
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _factory = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17168,10 +17219,10 @@ exports.default = ContextMenu;
 
 /***/ }),
 
-/***/ "./src/render/menu-main.js":
-/*!*********************************!*\
-  !*** ./src/render/menu-main.js ***!
-  \*********************************/
+/***/ "./src/render/menu/menu-main.js":
+/*!**************************************!*\
+  !*** ./src/render/menu/menu-main.js ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17185,17 +17236,17 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _menu = __webpack_require__(/*! ./menu */ "./src/render/menu.js");
+var _menu = __webpack_require__(/*! ./menu */ "./src/render/menu/menu.js");
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _modalAbout = __webpack_require__(/*! ./modal-about */ "./src/render/modal-about.js");
+var _modalAbout = __webpack_require__(/*! ../modal/modal-about */ "./src/render/modal/modal-about.js");
 
 var _modalAbout2 = _interopRequireDefault(_modalAbout);
 
-var _configuration = __webpack_require__(/*! ../util/configuration */ "./src/util/configuration.js");
+var _configuration = __webpack_require__(/*! ../../util/configuration */ "./src/util/configuration.js");
 
-var _saveSvgAsPng = __webpack_require__(/*! ../../node_modules/save-svg-as-png/saveSvgAsPng */ "./node_modules/save-svg-as-png/saveSvgAsPng.js");
+var _saveSvgAsPng = __webpack_require__(/*! ../../../node_modules/save-svg-as-png/saveSvgAsPng */ "./node_modules/save-svg-as-png/saveSvgAsPng.js");
 
 var SvgToPng = _interopRequireWildcard(_saveSvgAsPng);
 
@@ -17316,16 +17367,6 @@ var MainMenu = function (_Menu) {
                       });
                     }, 0);
                   });
-                  /*content2.append('li').append('a')
-                  .attr('title', 'Simulation').html(`${Configuration.object.simulation ? 'Disable' : 'Enable'} Simulation`)
-                  .on('click', function() {
-                    Configuration.object.simulation = !Configuration.object.simulation;
-                  })
-                  .each(function() {
-                    Configuration.subscribe('simulation', value => {
-                      d3.select(this).html(`${value ? 'Disable' : 'Enable'} Simulation`);
-                    });
-                  });*/
                 }
 
                 // Traverse all menus and flatten them!
@@ -17363,10 +17404,10 @@ exports.default = MainMenu;
 
 /***/ }),
 
-/***/ "./src/render/menu.js":
-/*!****************************!*\
-  !*** ./src/render/menu.js ***!
-  \****************************/
+/***/ "./src/render/menu/menu.js":
+/*!*********************************!*\
+  !*** ./src/render/menu/menu.js ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17380,11 +17421,11 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _renderer = __webpack_require__(/*! ./renderer */ "./src/render/renderer.js");
+var _renderer = __webpack_require__(/*! ../renderer */ "./src/render/renderer.js");
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
-var _callback = __webpack_require__(/*! ./callback */ "./src/render/callback.js");
+var _callback = __webpack_require__(/*! ../callback */ "./src/render/callback.js");
 
 var _callback2 = _interopRequireDefault(_callback);
 
@@ -17614,10 +17655,10 @@ exports.default = Message;
 
 /***/ }),
 
-/***/ "./src/render/modal-about.js":
-/*!***********************************!*\
-  !*** ./src/render/modal-about.js ***!
-  \***********************************/
+/***/ "./src/render/modal/modal-about.js":
+/*!*****************************************!*\
+  !*** ./src/render/modal/modal-about.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17633,13 +17674,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _dec2, _desc, _value, _class;
 
-var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal.js");
+var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal/modal.js");
 
 var _modal2 = _interopRequireDefault(_modal);
 
-var _factory = __webpack_require__(/*! ../component/factory */ "./src/component/factory.js");
+var _configuration = __webpack_require__(/*! ../../util/configuration */ "./src/util/configuration.js");
 
-var _factory2 = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory = __webpack_require__(/*! ../../component/factory */ "./src/component/factory.js");
+
+var _factory2 = __webpack_require__(/*! ../../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17680,7 +17723,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-/* global d3 */
+/* global d3 VERSION FRANCY_DESC*/
 
 var AboutModal = (_dec = _factory2.Decorators.Initializer.initialize(), _dec2 = _factory2.Decorators.Data.requires('canvas'), (_class = function (_Modal) {
   _inherits(AboutModal, _Modal);
@@ -17700,7 +17743,7 @@ var AboutModal = (_dec = _factory2.Decorators.Initializer.initialize(), _dec2 = 
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var _this2 = this;
 
-        var modalId, form, header, content, footer;
+        var modalId, form, content, footer;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -17713,19 +17756,19 @@ var AboutModal = (_dec = _factory2.Decorators.Initializer.initialize(), _dec2 = 
                 this.element = this.holder.append('div').attr('id', modalId).attr('class', 'francy-modal');
 
                 form = this.element.append('form');
-                header = form.append('div').attr('class', 'francy-modal-header');
 
 
-                header.append('span').html('About Francy v' + (this.data.version || 'N/A'));
+                this._buildHeader(form, 'About Francy v' + "0.8.0");
 
-                content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
+                content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body').style('text-align', 'center');
 
 
-                content.append('span').text('Francy is an interactive discrete mathematics framework for GAP.').append('br').append('br');
-                content.append('span').text('Developed by Manuel Martins: ');
+                content.append('span').text('francy-js, v0.8.0, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.');
+                content.append('br');
+                content.append('br');
                 content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
 
-                if (this.options.verbose) {
+                if (_configuration.Configuration.object.verbose) {
                   content.append('span').text('Loaded Data:');
                   content.append('pre').attr('class', 'francy').html(_factory2.Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
                 }
@@ -17769,10 +17812,10 @@ exports.default = AboutModal;
 
 /***/ }),
 
-/***/ "./src/render/modal-confirm.js":
-/*!*************************************!*\
-  !*** ./src/render/modal-confirm.js ***!
-  \*************************************/
+/***/ "./src/render/modal/modal-confirm.js":
+/*!*******************************************!*\
+  !*** ./src/render/modal/modal-confirm.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17788,13 +17831,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _desc, _value, _class;
 
-var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal.js");
+var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal/modal.js");
 
 var _modal2 = _interopRequireDefault(_modal);
 
-var _factory = __webpack_require__(/*! ../component/factory */ "./src/component/factory.js");
+var _factory = __webpack_require__(/*! ../../component/factory */ "./src/component/factory.js");
 
-var _factory2 = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory2 = __webpack_require__(/*! ../../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17853,9 +17896,7 @@ var ConfirmModal = (_dec = _factory2.Decorators.Initializer.initialize(), (_clas
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _this2 = this;
-
-        var modalId, form, header, content, row, footer;
+        var modalId, form, content, row;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -17868,9 +17909,9 @@ var ConfirmModal = (_dec = _factory2.Decorators.Initializer.initialize(), (_clas
                 this.element = this.holder.append('div').attr('id', modalId).attr('class', 'francy-modal');
 
                 form = this.element.append('form');
-                header = form.append('div').attr('class', 'francy-modal-header');
 
-                header.append('span').attr('style', 'font-weight: bold;').html('Confirm');
+
+                this._buildHeader(form, 'Confirm');
 
                 content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
                 row = content.append('div').attr('class', 'francy-table-row');
@@ -17878,20 +17919,7 @@ var ConfirmModal = (_dec = _factory2.Decorators.Initializer.initialize(), (_clas
                 row.append('div').attr('class', 'francy-table-cell').append('label');
                 row.append('div').attr('class', 'francy-table-cell').append('span').attr('id', 'Confirm-' + this.data.callback.id).text(this.data.callback.confirm);
 
-                footer = form.append('div').attr('class', 'francy-modal-footer');
-
-                footer.append('button').text('Ok').on('click', function () {
-                  if (form.node().checkValidity()) {
-                    d3.event.preventDefault();
-                    _this2.options.callbackHandler(_this2.data.callback);
-                    _this2.unrender.call(_this2);
-                  }
-                  return false;
-                });
-                footer.append('button').text('Cancel').on('click', function () {
-                  d3.event.preventDefault();
-                  _this2.unrender.call(_this2);
-                });
+                this._buildFooter(form);
 
                 // disable keyboard shortcuts when using this modal in Jupyter
                 if (_factory.Components.Jupyter.isAvailable) {
@@ -17902,7 +17930,7 @@ var ConfirmModal = (_dec = _factory2.Decorators.Initializer.initialize(), (_clas
 
                 return _context.abrupt('return', this);
 
-              case 16:
+              case 13:
               case 'end':
                 return _context.stop();
             }
@@ -17924,10 +17952,10 @@ exports.default = ConfirmModal;
 
 /***/ }),
 
-/***/ "./src/render/modal-required.js":
-/*!**************************************!*\
-  !*** ./src/render/modal-required.js ***!
-  \**************************************/
+/***/ "./src/render/modal/modal-required.js":
+/*!********************************************!*\
+  !*** ./src/render/modal/modal-required.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17943,13 +17971,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _desc, _value, _class;
 
-var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal.js");
+var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal/modal.js");
 
 var _modal2 = _interopRequireDefault(_modal);
 
-var _factory = __webpack_require__(/*! ../component/factory */ "./src/component/factory.js");
+var _factory = __webpack_require__(/*! ../../component/factory */ "./src/component/factory.js");
 
-var _factory2 = __webpack_require__(/*! ../decorator/factory */ "./src/decorator/factory.js");
+var _factory2 = __webpack_require__(/*! ../../decorator/factory */ "./src/decorator/factory.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18008,15 +18036,11 @@ var RequiredArgsModal = (_dec = _factory2.Decorators.Initializer.initialize(), (
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _this2 = this;
-
-        var self, modalId, form, header, headerTitle, content, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, arg, row, input, footer, inputElement;
-
+        var modalId, form, inputElement;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                self = this;
                 modalId = this.data.callback.id;
 
 
@@ -18025,107 +18049,20 @@ var RequiredArgsModal = (_dec = _factory2.Decorators.Initializer.initialize(), (
                 this.element = this.holder.append('div').attr('id', modalId).attr('class', 'francy-modal');
 
                 form = this.element.append('form');
-                header = form.append('div').attr('class', 'francy-modal-header');
-                headerTitle = header.append('span').html('Required arguments&nbsp;');
-
-                if (this.data.title) {
-                  headerTitle.append('span').attr('style', 'font-weight: bold;').text('for ' + this.data.title);
-                }
-
-                content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
-                _iteratorNormalCompletion = true;
-                _didIteratorError = false;
-                _iteratorError = undefined;
-                _context.prev = 12;
 
 
-                for (_iterator = Object.values(this.data.callback.requiredArgs)[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                  arg = _step.value;
-                  row = content.append('div').attr('class', 'francy-table-row');
+                this._buildHeader(form, 'Required arguments&nbsp;');
 
-                  row.append('div').attr('class', 'francy-table-cell').append('label').attr('for', arg.id).text(arg.title);
-                  if (arg.type === 'select') {
-                    // TODO need to use https://www.w3schools.com/html/tryit.asp?filename=tryhtml_elem_select_multiple
-                    row.append('div').attr('class', 'francy-table-cell').append('select').attr('class', 'francy-arg').attr('id', arg.id).attr('required', '').attr('name', arg.id).attr('disabled', '').attr('multiple', '').data(this.data.selectedNodes).append('option').attr('value', function (d) {
-                      return d;
-                    }).html(function (d) {
-                      return d;
-                    }).on('change', undefined);
-                  } else {
-                    input = row.append('div').attr('class', 'francy-table-cell').append('input').attr('class', 'francy-arg').attr('id', arg.id).attr('required', '').attr('name', arg.id).attr('type', arg.type).attr('value', arg.value).on('change', function () {
-                      self.data.callback.requiredArgs[this.id].value = this.value;
-                    }).on('input', this.onchange).on('keyup', this.onchange).on('paste', this.onchange);
-                    // wait, if it is boolean we create a checkbox
+                this._buildContent(form);
 
-                    if (arg.type === 'boolean') {
-                      // well, a checkbox works this way so we need to initialize 
-                      // the value to false and update the value based on the checked 
-                      // property that triggers the onchange event
-                      arg.value = arg.value || false;
-                      input.attr('type', 'checkbox').attr('required', null).attr('value', arg.value).on('change', function () {
-                        self.data.callback.requiredArgs[this.id].value = this.value = this.checked;
-                      });
-                    }
-                  }
-                  row.append('span').attr('class', 'validity');
-                }
-
-                _context.next = 20;
-                break;
-
-              case 16:
-                _context.prev = 16;
-                _context.t0 = _context['catch'](12);
-                _didIteratorError = true;
-                _iteratorError = _context.t0;
-
-              case 20:
-                _context.prev = 20;
-                _context.prev = 21;
-
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                  _iterator.return();
-                }
-
-              case 23:
-                _context.prev = 23;
-
-                if (!_didIteratorError) {
-                  _context.next = 26;
-                  break;
-                }
-
-                throw _iteratorError;
-
-              case 26:
-                return _context.finish(23);
-
-              case 27:
-                return _context.finish(20);
-
-              case 28:
-                footer = form.append('div').attr('class', 'francy-modal-footer');
-
-
-                footer.append('button').text('Ok').on('click', function () {
-                  if (form.node().checkValidity()) {
-                    d3.event.preventDefault();
-                    _this2.options.callbackHandler(_this2.data.callback);
-                    _this2.unrender.call(_this2);
-                  }
-                  return false;
-                });
-                footer.append('button').text('Cancel').on('click', function () {
-                  d3.event.preventDefault();
-                  _this2.unrender.call(_this2);
-                });
+                this._buildFooter(form);
 
                 // disable keyboard shortcuts when using this modal in Jupyter
                 if (_factory.Components.Jupyter.isAvailable) {
                   _factory2.Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
                 }
 
-                inputElement = content.selectAll('.francy-arg').node();
+                inputElement = form.selectAll('.francy-arg').node();
 
                 if (inputElement) {
                   inputElement.focus();
@@ -18135,12 +18072,12 @@ var RequiredArgsModal = (_dec = _factory2.Decorators.Initializer.initialize(), (
 
                 return _context.abrupt('return', this);
 
-              case 36:
+              case 12:
               case 'end':
                 return _context.stop();
             }
           }
-        }, _callee, this, [[12, 16, 20, 28], [21,, 23, 27]]);
+        }, _callee, this);
       }));
 
       function render() {
@@ -18149,6 +18086,62 @@ var RequiredArgsModal = (_dec = _factory2.Decorators.Initializer.initialize(), (
 
       return render;
     }()
+  }, {
+    key: '_buildContent',
+    value: function _buildContent(form) {
+      var self = this;
+
+      var content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body');
+
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = Object.values(this.data.callback.requiredArgs)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var arg = _step.value;
+
+          var row = content.append('div').attr('class', 'francy-table-row');
+          row.append('div').attr('class', 'francy-table-cell').append('label').attr('for', arg.id).text(arg.title);
+          if (arg.type === 'select') {
+            row.append('div').attr('class', 'francy-table-cell').append('select').attr('class', 'francy-arg').attr('id', arg.id).attr('required', '').attr('name', arg.id).attr('disabled', '').attr('multiple', '').data(this.data.selectedNodes).append('option').attr('value', function (d) {
+              return d;
+            }).html(function (d) {
+              return d;
+            });
+            self.data.callback.requiredArgs[arg.id].value = this.data.selectedNodes;
+          } else {
+            var input = row.append('div').attr('class', 'francy-table-cell').append('input').attr('class', 'francy-arg').attr('id', arg.id).attr('required', '').attr('name', arg.id).attr('type', arg.type).attr('value', arg.value).on('change', function () {
+              self.data.callback.requiredArgs[this.id].value = this.value;
+            }).on('input', this.onchange).on('keyup', this.onchange).on('paste', this.onchange);
+            // wait, if it is boolean we create a checkbox
+            if (arg.type === 'boolean') {
+              // well, a checkbox works this way so we need to initialize 
+              // the value to false and update the value based on the checked 
+              // property that triggers the onchange event
+              arg.value = arg.value || false;
+              input.attr('type', 'checkbox').attr('required', null).attr('value', arg.value).on('change', function () {
+                self.data.callback.requiredArgs[this.id].value = this.value = this.checked;
+              });
+            }
+          }
+          row.append('span').attr('class', 'validity');
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    }
   }]);
 
   return RequiredArgsModal;
@@ -18157,10 +18150,10 @@ exports.default = RequiredArgsModal;
 
 /***/ }),
 
-/***/ "./src/render/modal.js":
-/*!*****************************!*\
-  !*** ./src/render/modal.js ***!
-  \*****************************/
+/***/ "./src/render/modal/modal.js":
+/*!***********************************!*\
+  !*** ./src/render/modal/modal.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18174,7 +18167,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _renderer = __webpack_require__(/*! ./renderer */ "./src/render/renderer.js");
+var _renderer = __webpack_require__(/*! ../renderer */ "./src/render/renderer.js");
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
@@ -18217,6 +18210,36 @@ var Modal = function (_Renderer) {
       this.overlay.remove();
       this.element.remove();
       this.holder.remove();
+    }
+  }, {
+    key: '_buildHeader',
+    value: function _buildHeader(form, title) {
+      var header = form.append('div').attr('class', 'francy-modal-header');
+
+      var headerTitle = header.append('span').html(title);
+      if (this.data.title) {
+        headerTitle.append('span').attr('style', 'font-weight: bold;').text('for ' + this.data.title);
+      }
+    }
+  }, {
+    key: '_buildFooter',
+    value: function _buildFooter(form) {
+      var _this2 = this;
+
+      var footer = form.append('div').attr('class', 'francy-modal-footer');
+
+      footer.append('button').text('Ok').on('click', function () {
+        if (form.node().checkValidity()) {
+          d3.event.preventDefault();
+          _this2.options.callbackHandler(_this2.data.callback);
+          _this2.unrender.call(_this2);
+        }
+        return false;
+      });
+      footer.append('button').text('Cancel').on('click', function () {
+        d3.event.preventDefault();
+        _this2.unrender.call(_this2);
+      });
     }
   }]);
 
@@ -18580,8 +18603,8 @@ var ConfigurationHandler = function () {
 
       if (!(value[property] instanceof Object) && object[property] !== value) {
         object[property] = value;
-        this._subscribers.forEach(function (item) {
-          return item.prop === property ? item.fn.call(_this2, _this2.object) : undefined;
+        this._subscribers.forEach(function (sub) {
+          return sub.prop === property ? sub.fn.call(_this2, value) : undefined;
         });
         this._dirty = true;
       }
@@ -18629,8 +18652,8 @@ var ConfigurationHandler = function () {
   }, {
     key: 'unsubscribe',
     value: function unsubscribe(property, fn) {
-      this._subscribers = this._subscribers.filter(function (item) {
-        return item.prop !== property && item.fn !== fn ? item : undefined;
+      this._subscribers = this._subscribers.filter(function (sub) {
+        return sub.prop !== property && sub.fn !== fn;
       });
     }
 

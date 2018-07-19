@@ -57,7 +57,7 @@ class ConfigurationHandler {
   set(object, property, value) {
     if (!(value[property] instanceof Object) && object[property] !== value) {
       object[property] = value;
-      this._subscribers.forEach(item => item.prop === property ? item.fn.call(this, this.object) : undefined);
+      this._subscribers.forEach(sub => sub.prop === property ? sub.fn.call(this, value) : undefined);
       this._dirty = true;
     }
     return true;
@@ -97,7 +97,7 @@ class ConfigurationHandler {
    * @param {function} fn - the function to execute - must handle one arg, the object, of type {object}
    */
   unsubscribe(property, fn) {
-    this._subscribers = this._subscribers.filter(item => item.prop !== property && item.fn !== fn ? item : undefined);
+    this._subscribers = this._subscribers.filter(sub => sub.prop !== property && sub.fn !== fn);
   }
 
   /**

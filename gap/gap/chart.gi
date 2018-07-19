@@ -47,7 +47,7 @@ function(chartType)
   axis := rec();
   # default is linear
   axis.x := XAxis(AxisScaleType.LINEAR, "", []);
-  axis.y := XAxis(AxisScaleType.LINEAR, "", []);
+  axis.y := YAxis(AxisScaleType.LINEAR, "", []);
   if chartType!.value = ChartType.BAR!.value then
     axis.x := XAxis(AxisScaleType.BAND, "", []);
   fi;
@@ -58,28 +58,6 @@ end);
 ##
 #M  Add( <chart>, <francy object> ) . . . . . add objects to canvas
 ##
-InstallOtherMethod(Add,
-  "a chart, a x axis",
-  true,
-  [IsChart,
-   IsXAxis],
-  0,
-function(chart, object)
-  chart!.axis!.x := object;
-  return chart;
-end);
-
-InstallOtherMethod(Add,
-  "a chart, a y axis",
-  true,
-  [IsChart,
-   IsYAxis],
-  0,
-function(chart, object)
-  chart!.axis!.y := object;
-  return chart;
-end);
-
 InstallOtherMethod(Add,
   "a Chart, a dataset",
   true,
@@ -109,28 +87,6 @@ end);
 ##
 #M  Remove( <chart>, <francy object> ) . . . . . remove object from canvas
 ##
-InstallOtherMethod(Remove,
-  "a chart, a x axis",
-  true,
-  [IsChart,
-   IsXAxis],
-  0,
-function(chart, object)
-  Unbind(chart!.axis!.x);
-  return chart;
-end);
-
-InstallOtherMethod(Remove,
-  "a chart, a y axis",
-  true,
-  [IsChart,
-   IsYAxis],
-  0,
-function(chart, object)
-  Unbind(chart!.axis!.y);
-  return chart;
-end);
-
 InstallOtherMethod(Remove,
   "a chart, a dataset",
   true,

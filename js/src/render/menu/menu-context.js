@@ -1,5 +1,5 @@
 import Menu from './menu';
-import { Decorators } from '../decorator/factory';
+import { Decorators } from '../../decorator/factory';
 
 /* global d3 */
 

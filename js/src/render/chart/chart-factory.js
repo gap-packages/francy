@@ -1,8 +1,8 @@
-import Renderer from './renderer';
+import Renderer from '../renderer';
 import BarChart from './chart-bar';
 import LineChart from './chart-line';
 import ScatterChart from './chart-scatter';
-import { Decorators } from '../decorator/factory';
+import { Decorators } from '../../decorator/factory';
 
 export default class ChartFactory extends Renderer {
 

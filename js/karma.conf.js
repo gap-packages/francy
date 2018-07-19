@@ -30,7 +30,11 @@ module.exports = function(config) {
     webpack: {
       mode: 'development',
       target: 'web',
-      plugins: [new webpack.DefinePlugin({VERSION: JSON.stringify(fPackage.version)})],
+      plugins: [
+        new webpack.DefinePlugin({
+          VERSION: JSON.stringify(fPackage.version), 
+          FRANCY_DESC: JSON.stringify(fPackage.description)})
+          ],
       module: {
         rules: [{
           loader: 'babel-loader',
