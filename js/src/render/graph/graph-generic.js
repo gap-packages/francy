@@ -94,7 +94,7 @@ export default class GenericGraph extends Graph {
     link = linkGroup.selectAll('g.francy-link');
     
     // on mouse over show labels opacity 1
-    labelsOpacityBehavior();
+    this.graphOperations.labelsOpacityBehavior(link);
 
     let nodeEnter = node.enter().append('g').attr('id', d => d.id)
       .classed('francy-node', true)
@@ -127,40 +127,6 @@ export default class GenericGraph extends Graph {
     node.exit().remove();
 
     node = nodeGroup.selectAll('g.francy-node');
-
-    if (Configuration.object.dragNodes) {
-      // enable drag behavior
-      enableDrag(true);
-      // subscribe to update drag behavior on configuration change
-      Configuration.subscribe('dragNodes', function(value){
-        enableDrag(value);
-      });
-    }
-
-    function enableDrag(enable) {
-      node.call(d3.drag()
-        .on('start', enable ? dragstarted : undefined)
-        .on('drag', enable ? dragged : undefined)
-        .on('end', enable ? dragended : undefined));
-    }
-
-    if (node && !node.empty()) {
-
-      this._applyEvents(node);
-
-      let nodeOnClick = node.on('click');
-      node.on('click', function(d) {
-        // default, highlight connected nodes
-        connectedNodes.call(this);
-        // any callbacks will be handled here
-        nodeOnClick.call(this, d);
-      });
-      link.on('click', function() {
-        // default, highlight connected nodes
-        linkConnectedNodes.call(this);
-        d3.event.preventDefault();
-      });
-    }
 
     if (simulationActive) {
       let radius = 0, 
@@ -253,116 +219,26 @@ export default class GenericGraph extends Graph {
       node.attr('transform', d => `translate(${d.x},${d.y})`);
     }
 
-    // HIGHLIGHT
-    //Toggle stores whether the highlighting is on
-    let toggle = 0;
-    //Create an array logging what is connected to what
-    let linkedByIndex = {};
-
-    for (let i = 0; i < canvasNodes.length; i++) {
-      linkedByIndex[`${i},${i}`] = 1;
+    if (Configuration.object.dragNodes) {
+      this.graphOperations.dragBehavior(node, simulation, simulationActive).call(this, true);
     }
 
-    canvasLinks.forEach(function(d) {
-      linkedByIndex[`${d.source.index},${d.target.index}`] = 1;
-    });
+    if (node && !node.empty()) {
 
-    function connectedNodes() {
-      if (!Configuration.object.showNeighbours) return;
-      //This function looks up whether a pair are neighbours
-      function neighboring(a, b) {
-        return linkedByIndex[`${a.index},${b.index}`];
-      }
-      if (toggle === 0) {
-        //Reduce the opacity of all but the neighbouring nodes
-        let d = d3.select(this).node().__data__;
-        node.style('opacity', o => neighboring(d, o) || neighboring(o, d) ? 1 : 0.1);
-        link.style('opacity', function(o) {
-          let opacity = d.index === o.source.index || d.index === o.target.index ? 1 : 0.1;
-          d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
-          return opacity;
-        });
-        setTimeout(function(){
-          d3.select('body').on('click', () => toggle === 1 ? connectedNodes.call(this) : undefined);
-        }, 0);
-        //Reduce the op
-        toggle = 1;
-      } else {
-        //Put them back to opacity=1
-        node.style('opacity', 1);
-        link.style('opacity', function() {
-          d3.select(this).select('text').style('opacity', 0.1);
-          return 1;
-        });
-        labelsOpacityBehavior();
-        d3.select('body').on('click', undefined);
-        toggle = 0;
-      }
-      d3.event.preventDefault();
-    }
+      this._applyEvents(node);
 
-    function linkConnectedNodes() {
-      if (!Configuration.object.showNeighbours) return;
-      if (toggle === 0) {
-        //Reduce the opacity of all but the neighbouring nodes
-        let d = d3.select(this).node().__data__;
-        node.style('opacity', o => d.source.id === o.id || d.target.id === o.id ? 1 : 0.1);
-        link.style('opacity', function(o) {
-          let opacity = d.index === o.index ? 1 : 0.1;
-          d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
-          return opacity;
-        });
-        setTimeout(function(){
-          d3.select('body').on('click', () =>  toggle === 1 ? linkConnectedNodes.call(this) : undefined);
-        }, 0);
-        //Reduce the op
-        toggle = 1;
-      } else {
-        //Put them back to opacity=1
-        node.style('opacity', 1);
-        link.style('opacity', function() {
-          d3.select(this).select('text').style('opacity', 0.1);
-          return 1;
-        });
-        labelsOpacityBehavior();
-        d3.select('body').on('click', undefined);
-        toggle = 0;
-      }
-      d3.event.preventDefault();
-    }
-    
-    function labelsOpacityBehavior() {
-      link.on('mouseover', function(){
-        d3.select(this).selectAll('text')
-          .style('opacity', 1)
-          .style('opacity', 1);
-      }).on('mouseleave', function(){
-        d3.select(this).selectAll('text')
-          .style('opacity', 0.1)
-          .style('opacity', 0.1);
+      let connectedNodes = self.graphOperations.connectedNodes(node, canvasNodes, link, canvasLinks);
+      let nodeOnClick = node.on('click');
+      node.on('click', function(d) {
+        // default, highlight connected nodes
+        connectedNodes.call(this);
+        // any callbacks will be handled here
+        nodeOnClick && nodeOnClick.call(this, d);
       });
-    }
-
-    function dragstarted(d) {
-      if (!d3.event.active && simulationActive) {
-        simulation.on('end', undefined);
-        simulation.alphaTarget(0.01).restart();
-      }
-      d.fx = d.x;
-      d.fy = d.y;
-    }
-
-    function dragged(d) {
-      d.fx = d3.event.x;
-      d.fy = d3.event.y;
-    }
-
-    function dragended(d) {
-      if (!d3.event.active && simulationActive) {
-        simulation.alphaTarget(0);
-      }
-      d.fx = null;
-      d.fy = null;
+      link.on('click', function() {
+        // default, highlight connected nodes
+        connectedNodes.call(this);
+      });
     }
 
     return this;

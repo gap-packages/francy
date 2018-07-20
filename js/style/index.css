@@ -337,7 +337,8 @@ div.output_subarea.jp-OutputWidget-Francy.output_result {
 }
 
 @media only screen and (max-width: 700px) {
-  .francy-main-menu .francy-title {
+  .francy-main-menu .francy-title,
+  .francy-main-menu .francy-loader {
     display: none
   }
 }
@@ -347,8 +348,8 @@ div.output_subarea.jp-OutputWidget-Francy.output_result {
   width: fit-content;
   max-width: 35%;
   min-width: 25%;
-  top: 60px;
-  left: 15px;
+  top: 55px;
+  left: 10px;
 }
 
 .francy-alert>span:not(:first-child) {

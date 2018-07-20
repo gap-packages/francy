@@ -15649,6 +15649,7 @@ var Frame = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = funct
     _this.menu = new _menuMain2.default(_this.options);
     _this.messages = new _message2.default(_this.options);
     _this.add(_this.menu).add(_this.canvas).add(_this.messages);
+    _this.resizeTimeout = undefined;
     return _this;
   }
 
@@ -15656,9 +15657,7 @@ var Frame = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = funct
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _this2 = this;
-
-        var frameId, oldResize;
+        var frameId;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -15688,25 +15687,9 @@ var Frame = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = funct
 
                 this.handlePromise(this.renderChildren());
 
-                if (window) {
-                  // handle events on resize
-                  oldResize = window.onresize;
-
-                  window.onresize = function () {
-                    // zoom to fit all canvas on resize
-                    if (_this2.canvas) {
-                      _this2.canvas.zoomToFit();
-                    }
-                    // call old resize function if any!
-                    if (typeof oldResize === 'function') {
-                      oldResize();
-                    }
-                  };
-                }
-
                 return _context.abrupt('return', this);
 
-              case 9:
+              case 8:
               case 'end':
                 return _context.stop();
             }
@@ -15960,117 +15943,11 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var self, loader, simulationActive, canvasNodes, canvasLinks, linkGroup, links, linksToAdd, link, defs, nodeGroup, nodes, nodesToAdd, node, linkEnter, nodeEnter, enableDrag, nodeOnClick, radius, symbolRadius, layered, simulation, safeTicked, safeEnd, linkForce, chargeStrength, endSimulation, ticked, toggle, linkedByIndex, i, connectedNodes, linkConnectedNodes, labelsOpacityBehavior, dragstarted, dragged, dragended;
+        var self, loader, simulationActive, canvasNodes, canvasLinks, linkGroup, links, linksToAdd, link, defs, nodeGroup, nodes, nodesToAdd, node, linkEnter, nodeEnter, radius, symbolRadius, layered, simulation, safeTicked, safeEnd, linkForce, chargeStrength, endSimulation, ticked, connectedNodes, nodeOnClick;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dragended = function dragended(d) {
-                  if (!d3.event.active && simulationActive) {
-                    simulation.alphaTarget(0);
-                  }
-                  d.fx = null;
-                  d.fy = null;
-                };
-
-                dragged = function dragged(d) {
-                  d.fx = d3.event.x;
-                  d.fy = d3.event.y;
-                };
-
-                dragstarted = function dragstarted(d) {
-                  if (!d3.event.active && simulationActive) {
-                    simulation.on('end', undefined);
-                    simulation.alphaTarget(0.01).restart();
-                  }
-                  d.fx = d.x;
-                  d.fy = d.y;
-                };
-
-                labelsOpacityBehavior = function labelsOpacityBehavior() {
-                  link.on('mouseover', function () {
-                    d3.select(this).selectAll('text').style('opacity', 1).style('opacity', 1);
-                  }).on('mouseleave', function () {
-                    d3.select(this).selectAll('text').style('opacity', 0.1).style('opacity', 0.1);
-                  });
-                };
-
-                linkConnectedNodes = function linkConnectedNodes() {
-                  if (!_configuration.Configuration.object.showNeighbours) return;
-                  if (toggle === 0) {
-                    //Reduce the opacity of all but the neighbouring nodes
-                    var d = d3.select(this).node().__data__;
-                    node.style('opacity', function (o) {
-                      return d.source.id === o.id || d.target.id === o.id ? 1 : 0.1;
-                    });
-                    link.style('opacity', function (o) {
-                      var opacity = d.index === o.index ? 1 : 0.1;
-                      d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
-                      return opacity;
-                    });
-                    setTimeout(function () {
-                      var _this4 = this;
-
-                      d3.select('body').on('click', function () {
-                        return toggle === 1 ? linkConnectedNodes.call(_this4) : undefined;
-                      });
-                    }, 0);
-                    //Reduce the op
-                    toggle = 1;
-                  } else {
-                    //Put them back to opacity=1
-                    node.style('opacity', 1);
-                    link.style('opacity', function () {
-                      d3.select(this).select('text').style('opacity', 0.1);
-                      return 1;
-                    });
-                    labelsOpacityBehavior();
-                    d3.select('body').on('click', undefined);
-                    toggle = 0;
-                  }
-                  d3.event.preventDefault();
-                };
-
-                connectedNodes = function connectedNodes() {
-                  if (!_configuration.Configuration.object.showNeighbours) return;
-                  //This function looks up whether a pair are neighbours
-                  function neighboring(a, b) {
-                    return linkedByIndex[a.index + ',' + b.index];
-                  }
-                  if (toggle === 0) {
-                    //Reduce the opacity of all but the neighbouring nodes
-                    var d = d3.select(this).node().__data__;
-                    node.style('opacity', function (o) {
-                      return neighboring(d, o) || neighboring(o, d) ? 1 : 0.1;
-                    });
-                    link.style('opacity', function (o) {
-                      var opacity = d.index === o.source.index || d.index === o.target.index ? 1 : 0.1;
-                      d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
-                      return opacity;
-                    });
-                    setTimeout(function () {
-                      var _this3 = this;
-
-                      d3.select('body').on('click', function () {
-                        return toggle === 1 ? connectedNodes.call(_this3) : undefined;
-                      });
-                    }, 0);
-                    //Reduce the op
-                    toggle = 1;
-                  } else {
-                    //Put them back to opacity=1
-                    node.style('opacity', 1);
-                    link.style('opacity', function () {
-                      d3.select(this).select('text').style('opacity', 0.1);
-                      return 1;
-                    });
-                    labelsOpacityBehavior();
-                    d3.select('body').on('click', undefined);
-                    toggle = 0;
-                  }
-                  d3.event.preventDefault();
-                };
-
                 ticked = function ticked() {
                   link.selectAll('path.francy-edge').attr('d', function (d) {
                     if (d.source.id === d.target.id) {
@@ -16120,10 +15997,6 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                   loader.hide();
                 };
 
-                enableDrag = function enableDrag(enable) {
-                  node.call(d3.drag().on('start', enable ? dragstarted : undefined).on('drag', enable ? dragged : undefined).on('end', enable ? dragended : undefined));
-                };
-
                 self = this, loader = _factory.Decorators.Loader.withContext(this).show(), simulationActive = this.data.canvas.graph.simulation || _configuration.Configuration.object.simulation, canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [], canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
                 linkGroup = this.element.selectAll('g.francy-links');
 
@@ -16169,14 +16042,14 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                 // this means no changes, so we can safely return
 
                 if (!(node.exit().data().length === 0 && node.enter().data().length === 0 && link.enter().data().length === 0 && link.exit().data().length === 0)) {
-                  _context.next = 24;
+                  _context.next = 17;
                   break;
                 }
 
                 loader.hide();
                 return _context.abrupt('return');
 
-              case 24:
+              case 17:
                 linkEnter = link.enter().append('g').classed('francy-link', true);
 
 
@@ -16205,7 +16078,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                 link = linkGroup.selectAll('g.francy-link');
 
                 // on mouse over show labels opacity 1
-                labelsOpacityBehavior();
+                this.graphOperations.labelsOpacityBehavior(link);
 
                 nodeEnter = node.enter().append('g').attr('id', function (d) {
                   return d.id;
@@ -16246,34 +16119,6 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                 node.exit().remove();
 
                 node = nodeGroup.selectAll('g.francy-node');
-
-                if (_configuration.Configuration.object.dragNodes) {
-                  // enable drag behavior
-                  enableDrag(true);
-                  // subscribe to update drag behavior on configuration change
-                  _configuration.Configuration.subscribe('dragNodes', function (value) {
-                    enableDrag(value);
-                  });
-                }
-
-                if (node && !node.empty()) {
-
-                  this._applyEvents(node);
-
-                  nodeOnClick = node.on('click');
-
-                  node.on('click', function (d) {
-                    // default, highlight connected nodes
-                    connectedNodes.call(this);
-                    // any callbacks will be handled here
-                    nodeOnClick.call(this, d);
-                  });
-                  link.on('click', function () {
-                    // default, highlight connected nodes
-                    linkConnectedNodes.call(this);
-                    d3.event.preventDefault();
-                  });
-                }
 
                 if (simulationActive) {
                   radius = 0, symbolRadius = 0, layered = false;
@@ -16322,25 +16167,32 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                   endSimulation();
                 }
 
-                // HIGHLIGHT
-                //Toggle stores whether the highlighting is on
-                toggle = 0;
-                //Create an array logging what is connected to what
-
-                linkedByIndex = {};
-
-
-                for (i = 0; i < canvasNodes.length; i++) {
-                  linkedByIndex[i + ',' + i] = 1;
+                if (_configuration.Configuration.object.dragNodes) {
+                  this.graphOperations.dragBehavior(node, simulation, simulationActive).call(this, true);
                 }
 
-                canvasLinks.forEach(function (d) {
-                  linkedByIndex[d.source.index + ',' + d.target.index] = 1;
-                });
+                if (node && !node.empty()) {
+
+                  this._applyEvents(node);
+
+                  connectedNodes = self.graphOperations.connectedNodes(node, canvasNodes, link, canvasLinks);
+                  nodeOnClick = node.on('click');
+
+                  node.on('click', function (d) {
+                    // default, highlight connected nodes
+                    connectedNodes.call(this);
+                    // any callbacks will be handled here
+                    nodeOnClick && nodeOnClick.call(this, d);
+                  });
+                  link.on('click', function () {
+                    // default, highlight connected nodes
+                    connectedNodes.call(this);
+                  });
+                }
 
                 return _context.abrupt('return', this);
 
-              case 44:
+              case 33:
               case 'end':
                 return _context.stop();
             }
@@ -16380,6 +16232,219 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
   return GenericGraph;
 }(_graph2.default), (_applyDecoratedDescriptor(_class.prototype, 'render', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'render'), _class.prototype)), _class));
 exports.default = GenericGraph;
+
+/***/ }),
+
+/***/ "./src/render/graph/graph-operations.js":
+/*!**********************************************!*\
+  !*** ./src/render/graph/graph-operations.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _base = __webpack_require__(/*! ../base */ "./src/render/base.js");
+
+var _base2 = _interopRequireDefault(_base);
+
+var _configuration = __webpack_require__(/*! ../../util/configuration */ "./src/util/configuration.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/* global d3 */
+
+var GraphOperations = function (_Base) {
+  _inherits(GraphOperations, _Base);
+
+  function GraphOperations(_ref) {
+    var appendTo = _ref.appendTo,
+        callbackHandler = _ref.callbackHandler;
+
+    _classCallCheck(this, GraphOperations);
+
+    var _this = _possibleConstructorReturn(this, (GraphOperations.__proto__ || Object.getPrototypeOf(GraphOperations)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
+
+    _this.load(_this.options.appendTo.data); // this will be most likely the Frame!
+    var self = _this;
+    _this.nodeOperations = {
+      clear: function clear() {
+        this._getAll().each(function () {
+          var node = d3.select(this);
+          delete node.data()[0].selected;
+          node.classed('francy-selected', function (d) {
+            return d.selected;
+          });
+        }).classed('francy-selected', function (d) {
+          return d.selected;
+        });
+      },
+      getAll: function getAll() {
+        var selected = [];
+        this._getAll().each(function () {
+          selected.push(d3.select(this).data()[0].id);
+        });
+        return selected;
+      },
+      _getAll: function _getAll() {
+        return d3.select('svg#Canvas-' + self.data.canvas.id).selectAll('.francy-node.francy-selected').filter(function (d) {
+          return d.selected;
+        });
+      },
+      select: function select(data) {
+        if (!d3.event.ctrlKey) {
+          _this.clear();
+        }
+        data.selected = !data.selected;
+        d3.select(_this).classed('francy-selected', function (d) {
+          return d.selected;
+        });
+      }
+    };
+    return _this;
+  }
+
+  _createClass(GraphOperations, [{
+    key: 'dragBehavior',
+    value: function dragBehavior(node, simulation, active) {
+      var _this2 = this;
+
+      function enableDrag(enable) {
+        node.call(d3.drag().on('start', enable ? dragstarted : undefined).on('drag', enable ? dragged : undefined).on('end', enable ? dragended : undefined));
+      }
+
+      function dragstarted(d) {
+        if (!d3.event.active && active) {
+          simulation.on('end', undefined);
+          simulation.alphaTarget(0.01).restart();
+        }
+        d.fx = d.x;
+        d.fy = d.y;
+      }
+
+      function dragged(d) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+      }
+
+      function dragended(d) {
+        if (!d3.event.active && active) {
+          simulation.alphaTarget(0);
+        }
+        d.fx = null;
+        d.fy = null;
+      }
+
+      // subscribe to update drag behavior on configuration change
+      _configuration.Configuration.subscribe('dragNodes', function (value) {
+        return enableDrag.call(_this2, value);
+      });
+
+      // enable drag behavior
+      return enableDrag;
+    }
+  }, {
+    key: 'connectedNodes',
+    value: function connectedNodes(node, canvasNodes, link, canvasLinks) {
+      var self = this;
+      //Toggle stores whether the highlighting is on
+      var toggle = 0;
+
+      //Create an array logging what is connected to what
+      var linkedByIndex = {};
+
+      for (var i = 0; i < canvasNodes.length; i++) {
+        linkedByIndex[i + ',' + i] = 1;
+      }
+
+      canvasLinks.forEach(function (d) {
+        linkedByIndex[d.source.index + ',' + d.target.index] = 1;
+      });
+
+      function connected() {
+        var _this3 = this;
+
+        if (!_configuration.Configuration.object.showNeighbours) return;
+        if (toggle === 0) {
+          //Reduce the opacity of all but the neighbouring nodes
+          var el = d3.select(this);
+          var d = el.node().__data__;
+          if (el.attr('class').includes('francy-node')) {
+            node.style('opacity', function (o) {
+              return linkedByIndex[d.index + ',' + o.index] || linkedByIndex[o.index + ',' + d.index] ? 1 : 0.1;
+            });
+            link.style('opacity', function (o) {
+              var opacity = d.index === o.source.index || d.index === o.target.index ? 1 : 0.1;
+              d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
+              return opacity;
+            });
+          } else if (el.attr('class').includes('francy-link')) {
+            node.style('opacity', function (o) {
+              return d.source.id === o.id || d.target.id === o.id ? 1 : 0.1;
+            });
+            link.style('opacity', function (o) {
+              var opacity = d.index === o.index ? 1 : 0.1;
+              d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
+              return opacity;
+            });
+          }
+          setTimeout(function () {
+            d3.select('body').on('click', function () {
+              return toggle === 1 ? connected.call(_this3) : undefined;
+            });
+          }, 0);
+          //Reduce the op
+          toggle = 1;
+        } else {
+          //Put them back to opacity 1
+          node.style('opacity', 1);
+          link.style('opacity', function () {
+            d3.select(this).select('text').style('opacity', 0.1);
+            return 1;
+          });
+          self.labelsOpacityBehavior(link);
+          d3.select('body').on('click', undefined);
+          toggle = 0;
+        }
+        d3.event.preventDefault();
+      }
+
+      return connected;
+    }
+  }, {
+    key: 'labelsOpacityBehavior',
+    value: function labelsOpacityBehavior(link) {
+      link.on('mouseover', function () {
+        d3.select(this).selectAll('text').style('opacity', 1).style('opacity', 1);
+      }).on('mouseleave', function () {
+        d3.select(this).selectAll('text').style('opacity', 0.1).style('opacity', 0.1);
+      });
+    }
+  }, {
+    key: 'nodeSelection',
+    get: function get() {
+      return this.nodeOperations;
+    }
+  }]);
+
+  return GraphOperations;
+}(_base2.default);
+
+exports.default = GraphOperations;
 
 /***/ }),
 
@@ -16726,6 +16791,10 @@ var _renderer = __webpack_require__(/*! ../renderer */ "./src/render/renderer.js
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
+var _graphOperations = __webpack_require__(/*! ./graph-operations */ "./src/render/graph/graph-operations.js");
+
+var _graphOperations2 = _interopRequireDefault(_graphOperations);
+
 var _menuContext = __webpack_require__(/*! ../menu/menu-context */ "./src/render/menu/menu-context.js");
 
 var _menuContext2 = _interopRequireDefault(_menuContext);
@@ -16762,32 +16831,7 @@ var Graph = function (_Renderer) {
     _this.tooltip = new _tooltip2.default(_this.options);
     _this.contextMenu = new _menuContext2.default(_this.options);
     _this.callback = new _callback2.default(_this.options);
-    var self = _this;
-    _this.nodeSelection = {
-      clear: function clear() {
-        this._getAll().each(function () {
-          var node = d3.select(this);
-          delete node.data()[0].selected;
-          node.classed('francy-selected', function (d) {
-            return d.selected;
-          });
-        }).classed('francy-selected', function (d) {
-          return d.selected;
-        });
-      },
-      getAll: function getAll() {
-        var selected = [];
-        this._getAll().each(function () {
-          selected.push(d3.select(this).data()[0].id);
-        });
-        return selected;
-      },
-      _getAll: function _getAll() {
-        return d3.select('svg#Canvas-' + self.data.canvas.id).selectAll('.francy-node.francy-selected').filter(function (d) {
-          return d.selected;
-        });
-      }
-    };
+    _this.graphOperations = new _graphOperations2.default(_this.options);
     return _this;
   }
 
@@ -16804,25 +16848,20 @@ var Graph = function (_Renderer) {
       var self = this;
       element.on('contextmenu', function (d) {
         var data = d.data || d;
+        self._selectNode.call(this, self, data);
         // default, build context menu
         self.handlePromise(self.contextMenu.load(data, true).render());
         // any callbacks will be handled here
-        executeCallback.call(this, data, 'contextmenu');
+        self._executeCallback.call(this, self, data, 'contextmenu');
       }).on('click', function (d) {
         var data = d.data || d;
-        if (!d3.event.ctrlKey) {
-          self.nodeSelection.clear();
-        }
-        data.selected = !data.selected;
-        d3.select(this).classed('francy-selected', function (d) {
-          return d.selected;
-        });
+        self._selectNode.call(this, self, data);
         // any callbacks will be handled here
-        executeCallback.call(this, data, 'click');
+        self._executeCallback.call(this, self, data, 'click');
       }).on('dblclick', function (d) {
         var data = d.data || d;
         // any callbacks will be handled here
-        executeCallback.call(this, data, 'dblclick');
+        self._executeCallback.call(this, self, data, 'dblclick');
       }).on('mouseover', function (d) {
         var data = d.data || d;
         if (data.messages) {
@@ -16839,14 +16878,26 @@ var Graph = function (_Renderer) {
         // default, hide tooltip
         self.tooltip.unrender();
       });
-
-      function executeCallback(data, event) {
-        if (data.callbacks) {
-          Object.values(data.callbacks).forEach(function (cb) {
-            // execute only the ones that match the event!
-            cb.trigger === event && self.handlePromise(self.callback.load({ callback: cb, selectedNodes: Object.values(self.nodeSelection.getAll()) }, true).execute());
-          });
-        }
+    }
+  }, {
+    key: '_selectNode',
+    value: function _selectNode(self, data) {
+      if (!d3.event.ctrlKey) {
+        self.graphOperations.nodeSelection.clear();
+      }
+      data.selected = !data.selected;
+      d3.select(this).classed('francy-selected', function (d) {
+        return d.selected;
+      });
+    }
+  }, {
+    key: '_executeCallback',
+    value: function _executeCallback(self, data, event) {
+      if (data.callbacks) {
+        Object.values(data.callbacks).forEach(function (cb) {
+          // execute only the ones that match the event!
+          cb.trigger === event && self.handlePromise(self.callback.load({ callback: cb }, true).execute());
+        });
       }
     }
   }, {
@@ -17240,6 +17291,10 @@ var _menu = __webpack_require__(/*! ./menu */ "./src/render/menu/menu.js");
 
 var _menu2 = _interopRequireDefault(_menu);
 
+var _graphOperations = __webpack_require__(/*! ../graph/graph-operations */ "./src/render/graph/graph-operations.js");
+
+var _graphOperations2 = _interopRequireDefault(_graphOperations);
+
 var _modalAbout = __webpack_require__(/*! ../modal/modal-about */ "./src/render/modal/modal-about.js");
 
 var _modalAbout2 = _interopRequireDefault(_modalAbout);
@@ -17280,18 +17335,12 @@ var MainMenu = function (_Menu) {
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _this2 = this;
-
-        var aboutModal, self, menuId, loaderId, entry, content, entry2, content2, menusIterator;
+        var menuId, loaderId, menusIterator;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                aboutModal = new _modalAbout2.default(this.options);
-                self = this;
-
                 // Otherwise clashes with the canvas itself!
-
                 menuId = 'MainMenu-' + this.data.canvas.id;
 
                 this.element = d3.select('#' + menuId);
@@ -17318,55 +17367,10 @@ var MainMenu = function (_Menu) {
                   this.element.append('li').attr('class', 'francy-title').append('a').html(this.data.canvas.title);
                 }
 
-                // Default menu
-                entry = this.element.append('li');
-
-                entry.append('a').html('Francy');
-                content = entry.append('ul');
-
-                content.append('li').append('a').on('click', function () {
-                  return _this2.options.appendTo.canvas.zoomToFit(true);
-                }).attr('title', 'Zoom to Fit').html('Zoom to Fit');
-                content.append('li').append('a').on('click', function () {
-                  return SvgToPng.saveSvgAsPng(_this2.SVGParent.node(), 'diagram.png');
-                }).attr('title', 'Save to PNG').html('Save to PNG');
-                content.append('li').append('a').on('click', function () {
-                  return _this2.handlePromise(aboutModal.load(_this2.data).render());
-                }).attr('title', 'About').html('About');
+                this._buildDefaultMenu();
 
                 if (this.data.canvas.graph) {
-                  entry2 = this.element.append('li');
-
-                  entry2.append('a').html('Graph Options');
-                  content2 = content = entry2.append('ul');
-
-                  content2.append('li').append('a').attr('title', 'Neighbours').html((_configuration.Configuration.object.showNeighbours ? 'Disable' : 'Enable') + ' Show Neighbours').on('click', function () {
-                    _configuration.Configuration.object.showNeighbours = !_configuration.Configuration.object.showNeighbours;
-                  }).each(function () {
-                    var _this3 = this;
-
-                    _configuration.Configuration.subscribe('showNeighbours', function (value) {
-                      d3.select(_this3).html((value ? 'Disable' : 'Enable') + ' Show Neighbours');
-                    });
-                  });
-                  content2.append('li').append('a').attr('title', 'Drag').html((_configuration.Configuration.object.dragNodes ? 'Disable' : 'Enable') + ' Drag Nodes').on('click', function () {
-                    _configuration.Configuration.object.dragNodes = !_configuration.Configuration.object.dragNodes;
-                  }).each(function () {
-                    var _this4 = this;
-
-                    _configuration.Configuration.subscribe('dragNodes', function (value) {
-                      d3.select(_this4).html((value ? 'Disable' : 'Enable') + ' Drag Nodes');
-                    });
-                  });
-                  content2.append('li').append('a').attr('title', 'Selection').html('Clear Selected Nodes').on('click', function () {
-                    setTimeout(function () {
-                      d3.select('svg#Canvas-' + self.data.canvas.id).selectAll('.francy-node.francy-selected').each(function () {
-                        delete d3.select(this).data()[0].selected;
-                      }).classed('francy-selected', function (d) {
-                        return d.selected;
-                      });
-                    }, 0);
-                  });
+                  this._buildGraphMenu();
                 }
 
                 // Traverse all menus and flatten them!
@@ -17378,7 +17382,7 @@ var MainMenu = function (_Menu) {
 
                 return _context.abrupt('return', this);
 
-              case 21:
+              case 14:
               case 'end':
                 return _context.stop();
             }
@@ -17392,6 +17396,54 @@ var MainMenu = function (_Menu) {
 
       return render;
     }()
+  }, {
+    key: '_buildDefaultMenu',
+    value: function _buildDefaultMenu() {
+      var _this2 = this;
+
+      var aboutModal = new _modalAbout2.default(this.options);
+      var entry = this.element.append('li');
+      entry.append('a').html('Francy');
+      var content = entry.append('ul');
+      content.append('li').append('a').on('click', function () {
+        return _this2.options.appendTo.canvas.zoomToFit(true);
+      }).attr('title', 'Zoom to Fit').html('Zoom to Fit');
+      content.append('li').append('a').on('click', function () {
+        return SvgToPng.saveSvgAsPng(_this2.SVGParent.node(), 'diagram.png');
+      }).attr('title', 'Save to PNG').html('Save to PNG');
+      content.append('li').append('a').on('click', function () {
+        return _this2.handlePromise(aboutModal.load(_this2.data).render());
+      }).attr('title', 'About').html('About');
+    }
+  }, {
+    key: '_buildGraphMenu',
+    value: function _buildGraphMenu() {
+      var entry2 = this.element.append('li');
+      entry2.append('a').html('Graph Options');
+      var content2 = entry2.append('ul');
+      content2.append('li').append('a').attr('title', 'Neighbours').html((_configuration.Configuration.object.showNeighbours ? 'Disable' : 'Enable') + ' Show Neighbours').on('click', function () {
+        _configuration.Configuration.object.showNeighbours = !_configuration.Configuration.object.showNeighbours;
+      }).each(function () {
+        var _this3 = this;
+
+        _configuration.Configuration.subscribe('showNeighbours', function (value) {
+          d3.select(_this3).html((value ? 'Disable' : 'Enable') + ' Show Neighbours');
+        });
+      });
+      content2.append('li').append('a').attr('title', 'Drag').html((_configuration.Configuration.object.dragNodes ? 'Disable' : 'Enable') + ' Drag Nodes').on('click', function () {
+        _configuration.Configuration.object.dragNodes = !_configuration.Configuration.object.dragNodes;
+      }).each(function () {
+        var _this4 = this;
+
+        _configuration.Configuration.subscribe('dragNodes', function (value) {
+          d3.select(_this4).html((value ? 'Disable' : 'Enable') + ' Drag Nodes');
+        });
+      });
+      var operations = new _graphOperations2.default(this.options);
+      content2.append('li').append('a').attr('title', 'Selection').html('Clear Selected Nodes').on('click', function () {
+        return operations.nodeSelection.clear();
+      });
+    }
   }, {
     key: 'unrender',
     value: function unrender() {}
@@ -17975,6 +18027,10 @@ var _modal = __webpack_require__(/*! ./modal */ "./src/render/modal/modal.js");
 
 var _modal2 = _interopRequireDefault(_modal);
 
+var _graphOperations = __webpack_require__(/*! ../graph/graph-operations */ "./src/render/graph/graph-operations.js");
+
+var _graphOperations2 = _interopRequireDefault(_graphOperations);
+
 var _factory = __webpack_require__(/*! ../../component/factory */ "./src/component/factory.js");
 
 var _factory2 = __webpack_require__(/*! ../../decorator/factory */ "./src/decorator/factory.js");
@@ -18017,8 +18073,6 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
   return desc;
 }
-
-/* global d3 */
 
 var RequiredArgsModal = (_dec = _factory2.Decorators.Initializer.initialize(), (_class = function (_Modal) {
   _inherits(RequiredArgsModal, _Modal);
@@ -18104,12 +18158,14 @@ var RequiredArgsModal = (_dec = _factory2.Decorators.Initializer.initialize(), (
           var row = content.append('div').attr('class', 'francy-table-row');
           row.append('div').attr('class', 'francy-table-cell').append('label').attr('for', arg.id).text(arg.title);
           if (arg.type === 'select') {
-            row.append('div').attr('class', 'francy-table-cell').append('select').attr('class', 'francy-arg').attr('id', arg.id).attr('required', '').attr('name', arg.id).attr('disabled', '').attr('multiple', '').data(this.data.selectedNodes).append('option').attr('value', function (d) {
+            var operations = new _graphOperations2.default(this.options);
+            var selectedNodes = Object.values(operations.nodeSelection.getAll());
+            row.append('div').attr('class', 'francy-table-cell').append('select').attr('class', 'francy-arg').attr('id', arg.id).attr('required', '').attr('name', arg.id).attr('disabled', '').attr('multiple', '').data(selectedNodes).append('option').attr('value', function (d) {
               return d;
             }).html(function (d) {
               return d;
             });
-            self.data.callback.requiredArgs[arg.id].value = this.data.selectedNodes;
+            self.data.callback.requiredArgs[arg.id].value = selectedNodes;
           } else {
             var input = row.append('div').attr('class', 'francy-table-cell').append('input').attr('class', 'francy-arg').attr('id', arg.id).attr('required', '').attr('name', arg.id).attr('type', arg.type).attr('value', arg.value).on('change', function () {
               self.data.callback.requiredArgs[this.id].value = this.value;

@@ -1,8 +1,7 @@
 import Modal from './modal';
+import GraphOperations from '../graph/graph-operations';
 import { Components } from '../../component/factory';
 import { Decorators } from '../../decorator/factory';
-
-/* global d3 */
 
 export default class RequiredArgsModal extends Modal {
 
@@ -55,6 +54,8 @@ export default class RequiredArgsModal extends Modal {
       row.append('div').attr('class', 'francy-table-cell').append('label')
         .attr('for', arg.id).text(arg.title);
       if (arg.type === 'select') {
+        let operations = new GraphOperations(this.options);
+        let selectedNodes = Object.values(operations.nodeSelection.getAll());
         row.append('div').attr('class', 'francy-table-cell').append('select')
           .attr('class', 'francy-arg')
           .attr('id', arg.id)
@@ -62,10 +63,10 @@ export default class RequiredArgsModal extends Modal {
           .attr('name', arg.id)
           .attr('disabled', '')
           .attr('multiple', '')
-          .data(this.data.selectedNodes).append('option')
+          .data(selectedNodes).append('option')
           .attr('value', d => d)
           .html(d => d);
-        self.data.callback.requiredArgs[arg.id].value = this.data.selectedNodes;
+        self.data.callback.requiredArgs[arg.id].value = selectedNodes;
       } else {
         let input = row.append('div').attr('class', 'francy-table-cell').append('input')
           .attr('class', 'francy-arg')

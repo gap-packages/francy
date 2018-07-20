@@ -14,6 +14,7 @@ export default class Frame extends Composite {
     this.menu = new MainMenu(this.options);
     this.messages = new Message(this.options);
     this.add(this.menu).add(this.canvas).add(this.messages);
+    this.resizeTimeout = undefined;
   }
 
   @Decorators.Data.requires('canvas')
@@ -35,21 +36,6 @@ export default class Frame extends Composite {
     this.logger.debug(`Frame updated [${frameId}]...`);
 
     this.handlePromise(this.renderChildren());
-
-    if (window) {
-      // handle events on resize
-      let oldResize = window.onresize;
-      window.onresize = () => {
-        // zoom to fit all canvas on resize
-        if (this.canvas) {
-          this.canvas.zoomToFit();
-        }
-        // call old resize function if any!
-        if (typeof oldResize === 'function') {
-          oldResize();
-        }
-      };
-    }
 
     return this;
   }

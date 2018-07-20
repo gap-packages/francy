@@ -29,6 +29,11 @@ gap> SetWeight(link, 2);
 gap> Weight(link) = 2;
 true
 gap> Add(graph, link);
+gap> GetLink(graph, Id(link));
+<IsFrancyObject/IsLink>
+gap> GetLink(graph, "I'm not there!");
+gap> GetLinks(graph);
+rec( F24 := <IsFrancyObject/IsLink> )
 gap> Remove(graph, link);
 <IsFrancyObject/IsFrancyGraph>
 gap> Add(graph, [link]);
@@ -38,6 +43,8 @@ gap> Add(graph, [shape1, shape2]);
 gap> Length(RecNames(graph!.nodes)) = 2;
 true
 gap> UnsetNodes(graph);
+<IsFrancyObject/IsFrancyGraph>
+gap> UnsetLinks(graph);
 <IsFrancyObject/IsFrancyGraph>
 gap> Length(RecNames(graph!.nodes)) = 0;
 true

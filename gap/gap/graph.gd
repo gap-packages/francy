@@ -150,6 +150,10 @@ DeclareOperation("Graph", [IsFrancyGraphType, IsFrancyGraphDefaults]);
 DeclareOperation("UnsetNodes", [IsFrancyGraph]);
 
 #! @Description
+#! Removes all nodes from gaph
+DeclareOperation("UnsetLinks", [IsFrancyGraph]);
+
+#! @Description
 #! Add <C>IsLink</C> to a specific <C>Graph</C>.
 #! @Arguments IsFrancyGraph, [IsLink, List(IsLink)]
 #! @Returns <C>Graph</C>
@@ -180,6 +184,17 @@ DeclareOperation("UnsetNodes", [IsFrancyGraph]);
 #! @Arguments IsShapeType[, IsString(title), IsShapeDefaults]
 #! @Returns <C>Shape</C>
 DeclareOperation("Shape", [IsShapeType, IsString, IsShapeDefaults]);
+
+#! @Description
+#! Gets a <C>Shape</C> node from a graph by ID.
+#! @Arguments IsFrancyGraph, IsString
+#! @Returns <C>Shape</C>
+DeclareOperation("GetShape", [IsFrancyGraph, IsString]);
+#! @Description
+#! Gets a <C>Shape</C> node from a graph by ID.
+#! @Arguments IsFrancyGraph, IsString
+#! @Returns <C>List(Shape)</C>
+DeclareOperation("GetShapes", [IsFrancyGraph]);
 
 #! @Description
 #! Add <C>Menu</C> to a specific <C>Shape</C>.
@@ -230,6 +245,18 @@ DeclareOperation("Link", [IsShape, IsShape, IsLinkDefaults]);
 #! @Arguments List(IsShape), List(IsShape)
 #! @Returns <C>List(Link)</C>
 DeclareOperation("Links", [IsList, IsList, IsLinkDefaults]);
+
+#! @Description
+#! Gets a <C>Link</C> from a graph by ID.
+#! @Arguments IsFrancyGraph, IsString
+#! @Returns <C>Link</C>
+DeclareOperation("GetLink", [IsFrancyGraph, IsString]);
+
+#! @Description
+#! Gets a <C>Link</C> from a graph.
+#! @Arguments IsFrancyGraph, IsString
+#! @Returns <C>List(Link)</C>
+DeclareOperation("GetLinks", [IsFrancyGraph]);
 
 #############################################################################
 ##

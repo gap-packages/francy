@@ -47,6 +47,78 @@ function(graph)
   return graph;
 end);
 
+#############################################################################
+##
+#M  UnsetNodes( <graph> ) . . . . . removes all nodes from graph
+##
+InstallMethod(UnsetLinks,
+  "a graph",
+  true,
+  [IsFrancyGraph],
+  0,
+function(graph)
+  graph!.links := rec();
+  return graph;
+end);
+
+#############################################################################
+##
+#M  GetShape( <graph>, <string> ) . . . . . gets a node from graph
+##
+InstallMethod(GetShape,
+  "a graph, an id",
+  true,
+  [IsFrancyGraph,
+   IsString],
+  0, 
+function(g, s) 
+  local shapes;
+  shapes := GetShapes(g);
+  if IsBound(shapes.(s)) then
+    return shapes.(s);
+  fi;
+  return;
+end);
+
+#############################################################################
+##
+#M  GetShapes( <graph> ) . . . . . gets all nodes from graph
+##
+InstallMethod(GetShapes,
+  "a graph",
+  true,
+  [IsFrancyGraph],
+  0, g -> g!.nodes);
+
+#############################################################################
+##
+#M  GetLink( <graph>, <string> ) . . . . . gets a link from graph
+##
+InstallMethod(GetLink,
+  "a graph, an id",
+  true,
+  [IsFrancyGraph,
+   IsString],
+  0, 
+function(g, s) 
+  local links;
+  links := GetLinks(g);
+  if IsBound(links.(s)) then
+    return links.(s);
+  fi;
+  return;
+end);
+
+
+#############################################################################
+##
+#M  GetLinks( <graph> ) . . . . . gets all links from graph
+##
+InstallMethod(GetLinks,
+  "a graph",
+  true,
+  [IsFrancyGraph],
+  0, g -> g!.links);
 
 #############################################################################
 ##

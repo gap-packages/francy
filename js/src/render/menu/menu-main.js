@@ -1,4 +1,5 @@
 import Menu from './menu';
+import GraphOperations from '../graph/graph-operations';
 import AboutModal from '../modal/modal-about';
 import { Configuration } from '../../util/configuration';
 import * as SvgToPng from '../../../node_modules/save-svg-as-png/saveSvgAsPng';
@@ -86,15 +87,10 @@ export default class MainMenu extends Menu {
           d3.select(this).html(`${value ? 'Disable' : 'Enable'} Drag Nodes`);
         });
       });
+    let operations = new GraphOperations(this.options);
     content2.append('li').append('a')
       .attr('title', 'Selection').html('Clear Selected Nodes')
-      .on('click', function() {
-        setTimeout(() => {
-          d3.select(`svg#Canvas-${this.data.canvas.id}`).selectAll('.francy-node.francy-selected').each(function(){
-            delete d3.select(this).data()[0].selected;
-          }).classed('francy-selected', d => d.selected);
-        }, 0);
-      });
+      .on('click', () => operations.nodeSelection.clear());
   }
 
   unrender() {}

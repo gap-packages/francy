@@ -1,4 +1,5 @@
 import Renderer from '../renderer';
+import GraphOperations from './graph-operations';
 import ContextMenu from '../menu/menu-context';
 import Tooltip from '../tooltip';
 import Callback from '../callback';
@@ -12,24 +13,7 @@ export default class Graph extends Renderer {
     this.tooltip = new Tooltip(this.options);
     this.contextMenu = new ContextMenu(this.options);
     this.callback = new Callback(this.options);
-    let self = this;
-    this.nodeSelection = {
-      clear: function() {
-        this._getAll().each(function(){
-          let node = d3.select(this);
-          delete node.data()[0].selected;
-          node.classed('francy-selected', d => d.selected);
-        }).classed('francy-selected', d => d.selected);
-      },
-      getAll: function() {
-        var selected = [];
-        this._getAll().each(function(){
-          selected.push(d3.select(this).data()[0].id);
-        });
-        return selected;
-      },
-      _getAll: () => d3.select(`svg#Canvas-${self.data.canvas.id}`).selectAll('.francy-node.francy-selected').filter(d => d.selected)
-    };
+    this.graphOperations = new GraphOperations(this.options);
   }
   
   _initialize() {
@@ -43,25 +27,22 @@ export default class Graph extends Renderer {
     element
       .on('contextmenu', function(d) {
         let data = d.data || d;
+        self._selectNode.call(this, self, data);
         // default, build context menu
         self.handlePromise(self.contextMenu.load(data, true).render());
         // any callbacks will be handled here
-        executeCallback.call(this, data, 'contextmenu');
+        self._executeCallback.call(this, self, data, 'contextmenu');
       })
       .on('click', function(d) {
         let data = d.data || d;
-        if (!d3.event.ctrlKey) {
-          self.nodeSelection.clear();
-        }
-        data.selected = !data.selected;
-        d3.select(this).classed('francy-selected', d => d.selected);
+        self._selectNode.call(this, self, data);
         // any callbacks will be handled here
-        executeCallback.call(this, data, 'click');
+        self._executeCallback.call(this, self, data, 'click');
       })
       .on('dblclick', function(d) {
         let data = d.data || d;
         // any callbacks will be handled here
-        executeCallback.call(this, data, 'dblclick');
+        self._executeCallback.call(this, self, data, 'dblclick');
       })
       .on('mouseover', function(d) {
         let data = d.data || d;
@@ -80,14 +61,22 @@ export default class Graph extends Renderer {
         // default, hide tooltip
         self.tooltip.unrender();
       });
-
-    function executeCallback(data, event) {
-      if (data.callbacks) {
-        Object.values(data.callbacks).forEach(cb => {
-          // execute only the ones that match the event!
-          cb.trigger === event && self.handlePromise(self.callback.load({ callback: cb, selectedNodes: Object.values(self.nodeSelection.getAll()) }, true).execute());
-        });
-      }
+  }
+  
+  _selectNode(self, data) {
+    if (!d3.event.ctrlKey) {
+      self.graphOperations.nodeSelection.clear();
+    }
+    data.selected = !data.selected;
+    d3.select(this).classed('francy-selected', d => d.selected);
+  }
+  
+  _executeCallback(self, data, event) {
+    if (data.callbacks) {
+      Object.values(data.callbacks).forEach(cb => {
+        // execute only the ones that match the event!
+        cb.trigger === event && self.handlePromise(self.callback.load({ callback: cb }, true).execute());
+      });
     }
   }
   
