@@ -2,8 +2,6 @@ import Modal from './modal';
 import { Components } from '../../component/factory';
 import { Decorators } from '../../decorator/factory';
 
-/* global d3 */
-
 export default class ConfirmModal extends Modal {
 
   constructor({ appendTo, callbackHandler }) {

@@ -27,7 +27,7 @@ export default class Modal extends Renderer {
 
     let headerTitle = header.append('span').html(title);
     if (this.data.title) {
-      headerTitle.append('span').attr('style', 'font-weight: bold;').text(`for ${this.data.title}`);
+      headerTitle.append('span').attr('style', 'font-weight: bold;').text(`${this.data.title}`);
     }
   }
   

@@ -17930,8 +17930,6 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-/* global d3 */
-
 var ConfirmModal = (_dec = _factory2.Decorators.Initializer.initialize(), (_class = function (_Modal) {
   _inherits(ConfirmModal, _Modal);
 
@@ -18274,7 +18272,7 @@ var Modal = function (_Renderer) {
 
       var headerTitle = header.append('span').html(title);
       if (this.data.title) {
-        headerTitle.append('span').attr('style', 'font-weight: bold;').text('for ' + this.data.title);
+        headerTitle.append('span').attr('style', 'font-weight: bold;').text('' + this.data.title);
       }
     }
   }, {

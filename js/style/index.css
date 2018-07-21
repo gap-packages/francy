@@ -281,6 +281,10 @@ div.output_subarea.jp-OutputWidget-Francy.output_result {
   display: table-row
 }
 
+.francy-table-row:first-child {
+  text-align: right;
+}
+
 .francy-table-heading {
   background-color: #eee;
   display: table-header-group
@@ -346,8 +350,8 @@ div.output_subarea.jp-OutputWidget-Francy.output_result {
 .francy-message-holder {
   position: absolute;
   width: fit-content;
-  max-width: 35%;
-  min-width: 25%;
+  max-width: 40%;
+  min-width: 30%;
   top: 55px;
   left: 10px;
 }
@@ -357,7 +361,7 @@ div.output_subarea.jp-OutputWidget-Francy.output_result {
 }
 
 .francy-alert {
-  padding: .75rem 1.25rem;
+  padding: .75rem 1rem;
   margin: .2rem 0 0 .2rem;
   border: 1px solid transparent;
   border-radius: .25rem;

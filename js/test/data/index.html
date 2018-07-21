@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v4">
+  <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v5">
   <link rel="stylesheet" type="text/css" href="../../dist/style/index.css">
   <script src="../../node_modules/d3/dist/d3.min.js"></script>
   <script src="../../dist/browser/francy.bundle.js"></script>
@@ -29,7 +29,7 @@
       });
     }
 
-    let settings = { verbose: true, appendTo: '#francy_draw', callbackHandler: trigger };
+    let settings = { appendTo: '#francy_draw', callbackHandler: trigger };
     const francy = new Francy(settings);
 
     d3.json('json1.json').then(json => {
