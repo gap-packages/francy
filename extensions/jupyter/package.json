@@ -1,6 +1,6 @@
 {
   "name": "jupyter_francy",
-  "version": "0.8.0",
+  "version": "0.8.2",
   "description": "A package for rendering application/vnd.francy+json in Jupyter",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "main": "lib/index.js",
@@ -60,7 +60,7 @@
     "style-loader": "0.21.0",
     "url-loader": "1.0.1",
     "webpack": "4.16.1",
-    "webpack-cli": "3.0.8"
+    "webpack-cli": "3.1.0"
   },
   "bundledDependencies": [
     "francy-js"

@@ -9,13 +9,15 @@ See [Graphics Semantics Package for GAP](/gap)
 
 There is javascript implementation of the graphical representation that works on Jupyter, embeded in a Web page or as a Desktop Application (e.g. using electron).
 
-See [Graphics Interface using Javascritp and D3.v4](/js)
+See [Graphics Interface using Javascritp and D3.v5](/js)
 
 ## Binder 
 
 The binder includes all packages from `bootstrap-pkg-full`, plus:
 
-[Francy-Monoids](https://github.com/gap-packages/FrancyMonoids)
+[Francy Monoids](https://github.com/gap-packages/FrancyMonoids)
+
+[Francy Subgroup Lattice](https://github.com/mcmartins/subgroup-lattice)
 
 [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel)
 
@@ -41,6 +43,8 @@ In order to use this module in Jupyter, install it as follows, both jupyter lab 
 
 ```bash
 mcmartins@local:~$ pip install jupyter_francy
+mcmartins@local:~$ jupyter lab build # for JupyterLab
+mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Notebook
 ```
 
 The jupyter extension requires the GAP Kernel and Francy GAP packages installed.

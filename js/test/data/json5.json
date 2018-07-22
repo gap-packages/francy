@@ -1,5 +1,5 @@
 {
-  "version": "0.8.0",
+  "version": "0.8.2",
   "mime": "application/vnd.francy+json",
   "canvas": {
     "width": 800,
