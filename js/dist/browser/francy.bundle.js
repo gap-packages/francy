@@ -1,4 +1,4 @@
-/*! 'francy-js, v0.8.0, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.' */
+/*! 'francy-js, v0.8.2, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.' */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -13891,7 +13891,7 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
     // all good!
     var _this = _possibleConstructorReturn(this, (Francy.__proto__ || Object.getPrototypeOf(Francy)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
 
-    _this.logger.info('Francy JS v' + "0.8.0" + ' initialized! Enjoy...');
+    _this.logger.info('Francy JS v' + "0.8.2" + ' initialized! Enjoy...');
     return _this;
   }
 
@@ -13911,8 +13911,8 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (this.data.version !== "0.8.0") {
-                  this.logger.warn('Rendering may fail, data generated in Francy GAP v' + this.data.version + ' using Francy JS v' + "0.8.0" + '... please update your system...');
+                if (this.data.version !== "0.8.2") {
+                  this.logger.warn('Rendering may fail, data generated in Francy GAP v' + this.data.version + ' using Francy JS v' + "0.8.2" + '... please update your system...');
                 }
                 if (_configuration.Configuration.object.fixedRandomSeed) {
                   //set seed to produce always the same graphs
@@ -17810,12 +17810,12 @@ var AboutModal = (_dec = _factory2.Decorators.Initializer.initialize(), _dec2 = 
                 form = this.element.append('form');
 
 
-                this._buildHeader(form, 'About Francy v' + "0.8.0");
+                this._buildHeader(form, 'About Francy v' + "0.8.2");
 
                 content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body').style('text-align', 'center');
 
 
-                content.append('span').text('francy-js, v0.8.0, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.');
+                content.append('span').text('francy-js, v0.8.2, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.');
                 content.append('br');
                 content.append('br');
                 content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');

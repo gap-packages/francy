@@ -4,7 +4,7 @@ This Javascript module produces graphics based on the semantic model produced by
 This implementation follows a nondeterministic approach, so different behavior on rendering 
 of Mathematical Structures can be observed, e.g. when drawing Graphs.
 
-Francy depends on [d3.v4](https://d3js.org/) to produce graphics.
+Francy depends on [d3.v5](https://d3js.org/) to produce graphics.
 
 ## Usage
 
@@ -21,7 +21,7 @@ Francy depends on [d3.v4](https://d3js.org/) to produce graphics.
 <body>
 <script>
 
-  var francy = new Francy({verbose: true, appendTo: '#francy', callbackHandler: console.log});
+  var francy = new Francy({ appendTo: '#francy', callbackHandler: console.log });
   d3.json("json.json", function (error, json) {
     francy.load(json).render().catch(error => Console.log(error)).then(element => console.log('do whatever with the element:', element));
   });
@@ -38,4 +38,6 @@ In order to use this module in Jupyter, it can be installed as a notebook extens
 
 ```bash
 mcmartins@local:~$ pip install jupyter_francy
+mcmartins@local:~$ jupyter lab build # for JupyterLab
+mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Notebook
 ```
