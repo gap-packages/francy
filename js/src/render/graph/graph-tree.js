@@ -130,7 +130,7 @@ export default class TreeGraph extends Graph {
       nodeEnter.append('text')
         .attr('class', 'francy-label')
         .text(d => d.data.title)
-        .style('font-size', d => 7 * Math.sqrt(d.weight))
+        .style('font-size', d => 7 * Math.sqrt(d.weight || 1))
         .style('cursor', d => d.children || d._children ? 'pointer' : 'default')
         .attr('x', function() {
           // apply mathjax if this is the case

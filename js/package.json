@@ -1,6 +1,6 @@
 {
   "name": "francy-js",
-  "version": "0.8.2",
+  "version": "0.8.4",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
@@ -45,7 +45,7 @@
     "esdoc-standard-plugin": "1.0.0",
     "eslint": "5.2.0",
     "isparta": "4.1.0",
-    "karma": "2.0.4",
+    "karma": "2.0.5",
     "karma-chai": "0.1.0",
     "karma-chrome-launcher": "2.2.0",
     "karma-mocha": "1.3.0",
@@ -56,7 +56,7 @@
     "phantomjs-prebuilt": "2.1.16",
     "save-svg-as-png": "1.4.2",
     "seedrandom": "2.4.3",
-    "webpack": "4.16.1",
+    "webpack": "4.16.2",
     "webpack-cli": "3.1.0"
   },
   "files": [

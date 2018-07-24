@@ -71,19 +71,20 @@ export default class GenericGraph extends Graph {
 
     linkEnter.append('path')
       .classed('francy-edge', true)
-      .style('stroke-width', d => Math.sqrt(d.weight))
+      .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 1))
       .style('stroke', d => d.color || undefined);
 
     if (this.data.canvas.graph.type === 'directed') {
-      linkEnter.append('path').classed('francy-edge-arrow', true)
+      linkEnter.append('path')
+        .classed('francy-edge-arrow', true)
         .style('stroke', 'none')
         .style('marker-start', d => `url(#arrow-${d.id})`)
-        .style('stroke-width', d => Math.sqrt(d.weight));
+        .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 1));
     }
 
     linkEnter.append('text')
       .classed('francy-label', true)
-      .style('font-size', d => 7 * Math.sqrt(d.weight))
+      .style('font-size', d => d.invisible ? 0 : 7 * Math.sqrt(d.weight || 1))
       .style('opacity', 0.1)
       .style('opacity', 0.1)
       .text(d => d.title)
@@ -98,13 +99,13 @@ export default class GenericGraph extends Graph {
 
     let nodeEnter = node.enter().append('g').attr('id', d => d.id)
       .classed('francy-node', true)
-      .classed('francy-highlight', true);
+      .classed('francy-highlight', true)
+      .classed('francy-selected', d => d.selected);
 
     nodeEnter.append('path')
       .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
       .style('fill', d => d.color || Graph.colors(d.layer * 5))
       .classed('francy-symbol', true)
-      .classed('francy-selected', d => d.selected)
       .classed('francy-context', d => Object.values(d.menus).length && Object.values(d.menus).length > 0);
 
     nodeEnter.append('text')
@@ -157,7 +158,7 @@ export default class GenericGraph extends Graph {
         safeTicked = Decorators.Error.wrap(ticked).withContext(self).onErrorThrow(false).onErrorExec(simulation.stop),
         safeEnd = Decorators.Error.wrap(endSimulation).withContext(self);
 
-      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.height || 100);
+      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.length || 100);
       let chargeStrength = -5 * Math.log(nodesToAdd.length) * Math.log(linksToAdd.length);
       chargeStrength = chargeStrength < -400 ? chargeStrength : -400;
 
@@ -166,7 +167,7 @@ export default class GenericGraph extends Graph {
         .force('x', d3.forceX())
         .force('y', layered ? d3.forceY(d => d.layer * 100).strength(1) : d3.forceY())
         .force('charge-2', d3.forceManyBody().strength(chargeStrength))
-        .force('link', layered ? linkForce.strength(1 / (linksToAdd.length + 1)) : linkForce)
+        .force('link', layered ? linkForce.strength(d => d.weight ? Math.sqrt(d.weight) : 1 / (linksToAdd.length + 1)) : linkForce)
         .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2))
         .on('tick', () => safeTicked.handle())
         .on('end', () => safeEnd.handle());
@@ -199,7 +200,7 @@ export default class GenericGraph extends Graph {
             pathLength = pathEl.getTotalLength(),
             nodeEl = d3.select(`#${data.target.id} > path.francy-symbol`).node(),
             nodeSize = (Math.floor(nodeEl.getBBox().width) + 4) / 2,
-            pathPoint = pathEl.getPointAtLength(pathLength - nodeSize - data.weight),
+            pathPoint = pathEl.getPointAtLength(pathLength - nodeSize - data.weight || 1),
             pathPoint2 = pathEl.getPointAtLength(pathLength - nodeSize),
             x1 = pathPoint.x, y1 = pathPoint.y, x2 = pathPoint2.x, y2 = pathPoint2.y;
          

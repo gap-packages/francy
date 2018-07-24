@@ -8,7 +8,6 @@
 #!
 #! Please see Francy-JS for client implementation.
 
-
 #############################################################################
 ##
 #! @Section Categories
@@ -306,11 +305,13 @@ BindGlobal("ShapeDefaults", Objectify(NewType(ShapeFamily, IsShapeDefaults and I
 )));
 
 #! @Description
-#! The default configuration for a shape.
-#! @Returns <C>rec</C> of <C>ShapeDefaults</C>
+#! The default configuration for a link.
+#! @Returns <C>rec</C> of <C>LinkDefaults</C>
 BindGlobal("LinkDefaults", Objectify(NewType(LinkFamily, IsLinkDefaults and IsLinkDefaultsRep), rec(
-  color  := "",
-  weight := 1
+  color     := "",
+  weight    := 0,
+  length    := 0,
+  invisible := false
 )));
 
 
@@ -455,6 +456,26 @@ InstallMethod(Weight, "link", [IsLink], o -> o!.weight);
 #! Sets the <C>Weight</C> value.
 #! @Arguments IsLink, IsInt
 InstallMethod(SetWeight, "link, int", [IsLink, IsInt], function(o, i) o!.weight := i; end);
+
+#! @Description
+#! The <C>Length</C> of the current link.
+#! @Returns <C>IsInt</C>
+DeclareAttribute("Length", IsLink);
+InstallMethod(Length, "link", [IsLink], o -> o!.length);
+#! @Description
+#! Sets the <C>Length</C> value.
+#! @Arguments IsLink, IsInt
+InstallMethod(SetLength, "link, int", [IsLink, IsInt], function(o, i) o!.length := i; end);
+
+#! @Description
+#! The <C>Invisible</C> of the current link.
+#! @Returns <C>IsBoolean</C>
+DeclareAttribute("Invisible", IsLink);
+InstallMethod(Invisible, "link", [IsLink], o -> o!.invisible);
+#! @Description
+#! Sets the <C>Invisible</C> value.
+#! @Arguments IsLink, IsBool
+InstallMethod(SetInvisible, "link, int", [IsLink, IsBool], function(o, b) o!.invisible := b; end);
 
 #! @Description
 #! The <C>Color</C> of the current link.

@@ -28,6 +28,12 @@ true
 gap> SetWeight(link, 2);
 gap> Weight(link) = 2;
 true
+gap> SetLength(link, 2);
+gap> Length(link) = 2;
+true
+gap> SetInvisible(link, true);
+gap> Invisible(link) = true;
+true
 gap> Add(graph, link);
 gap> GetLink(graph, Id(link));
 <IsFrancyObject/IsLink>
