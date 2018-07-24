@@ -167,7 +167,8 @@ export default class GenericGraph extends Graph {
         .force('x', d3.forceX())
         .force('y', layered ? d3.forceY(d => d.layer * 100).strength(1) : d3.forceY())
         .force('charge-2', d3.forceManyBody().strength(chargeStrength))
-        .force('link', layered ? linkForce.strength(d => d.weight ? Math.sqrt(d.weight) : 1 / (linksToAdd.length + 1)) : linkForce)
+        //.force('link', layered ? linkForce.strength(d => d.weight ? Math.sqrt(d.weight) : 1 / (linksToAdd.length + 1)) : linkForce)
+        .force('link', layered ? linkForce.strength(1 / (linksToAdd.length + 1)) : linkForce)
         .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2))
         .on('tick', () => safeTicked.handle())
         .on('end', () => safeEnd.handle());
