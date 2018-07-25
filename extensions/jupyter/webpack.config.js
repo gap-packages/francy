@@ -101,7 +101,7 @@ module.exports = (env = {}) => {
      * It must be an amd module
      */
     Object.assign({}, base, {
-      entry: path.join(__dirname, 'node_modules', 'francy-js', 'amd', 'francy.bundle.js'),
+      entry: path.join(__dirname, 'node_modules', 'francy-js', 'amd', 'francy.bundle.min.js'),
       output: Object.assign({}, base.output, {
         filename: 'francy.js',
         path: path.join(

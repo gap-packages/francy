@@ -104,7 +104,7 @@ export default class GenericGraph extends Graph {
 
     nodeEnter.append('path')
       .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
-      .style('fill', d => d.color || Graph.colors(d.layer * 5))
+      .style('fill', d => d.color || d.conjugate ? Graph.colors(d.conjugate * 5) : Graph.colors(d.layer * 5))
       .classed('francy-symbol', true)
       .classed('francy-context', d => Object.values(d.menus).length && Object.values(d.menus).length > 0);
 
@@ -132,7 +132,8 @@ export default class GenericGraph extends Graph {
     if (simulationActive) {
       let radius = 0, 
         symbolRadius = 0, 
-        layered = false;
+        ylayered = false,
+        xlayered = false;
 
       node.each(function() {
         let bound = this.getBBox();
@@ -147,9 +148,13 @@ export default class GenericGraph extends Graph {
         if (symbolRadius < symbolBound.width) {
           symbolRadius = symbolBound.width;
         }
-        // check whether the graph will be layered - hasse
+        // check whether the graph will be layered on y - hasse
         if (node.data()[0].layer != 0) {
-          layered = true;
+          ylayered = true;
+        }
+        // check whether the graph will be layered on x
+        if (node.data()[0].conjugate != 0) {
+          xlayered = true;
         }
       });
 
@@ -163,12 +168,12 @@ export default class GenericGraph extends Graph {
       chargeStrength = chargeStrength < -400 ? chargeStrength : -400;
 
       simulation.nodes(nodesToAdd)
-        .force('charge-1', layered ? undefined : d3.forceManyBody().strength(chargeStrength * 0.15))
-        .force('x', d3.forceX())
-        .force('y', layered ? d3.forceY(d => d.layer * 100).strength(1) : d3.forceY())
+        .force('charge-1', ylayered ? undefined : d3.forceManyBody().strength(chargeStrength * 0.15))
+        .force('x', xlayered ? d3.forceX(d => d.conjugate ? +d.conjugate % 2 === 0 ? 0 : self.data.canvas.width : self.data.canvas.width / 2) : d3.forceX())
+        .force('y', ylayered ? d3.forceY(d => +d.layer * 100).strength(1) : d3.forceY())
         .force('charge-2', d3.forceManyBody().strength(chargeStrength))
-        //.force('link', layered ? linkForce.strength(d => d.weight ? Math.sqrt(d.weight) % 1 : 1 / (linksToAdd.length + 1)) : linkForce)
-        .force('link', layered ? linkForce.strength(1 / (linksToAdd.length + 1)) : linkForce)
+        //.force('link', ylayered ? linkForce.strength(d => d.weight ? Math.sqrt(d.weight) % 1 : 1 / (linksToAdd.length + 1)) : linkForce)
+        .force('link', ylayered ? linkForce.strength(1 / (linksToAdd.length + 1)) : linkForce)
         .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2))
         .on('tick', () => safeTicked.handle())
         .on('end', () => safeEnd.handle());

@@ -1,4 +1,4 @@
-/*! 'francy-js, v0.8.8, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.' */
+/*! 'francy-js, v0.8.10, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.' */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -13891,7 +13891,7 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
     // all good!
     var _this = _possibleConstructorReturn(this, (Francy.__proto__ || Object.getPrototypeOf(Francy)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
 
-    _this.logger.info('Francy JS v' + "0.8.8" + ' initialized! Enjoy...');
+    _this.logger.info('Francy JS v' + "0.8.10" + ' initialized! Enjoy...');
     return _this;
   }
 
@@ -13911,8 +13911,8 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (this.data.version !== "0.8.8") {
-                  this.logger.warn('Rendering may fail, data generated in Francy GAP v' + this.data.version + ' using Francy JS v' + "0.8.8" + '... please update your system...');
+                if (this.data.version !== "0.8.10") {
+                  this.logger.warn('Rendering may fail, data generated in Francy GAP v' + this.data.version + ' using Francy JS v' + "0.8.10" + '... please update your system...');
                 }
                 if (_configuration.Configuration.object.fixedRandomSeed) {
                   //set seed to produce always the same graphs
@@ -15943,7 +15943,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var self, loader, simulationActive, canvasNodes, canvasLinks, linkGroup, links, linksToAdd, link, defs, nodeGroup, nodes, nodesToAdd, node, linkEnter, nodeEnter, radius, symbolRadius, layered, simulation, safeTicked, safeEnd, linkForce, chargeStrength, endSimulation, edges, labels, ticked, connectedNodes, nodeOnClick;
+        var self, loader, simulationActive, canvasNodes, canvasLinks, linkGroup, links, linksToAdd, link, defs, nodeGroup, nodes, nodesToAdd, node, linkEnter, nodeEnter, radius, symbolRadius, ylayered, xlayered, simulation, safeTicked, safeEnd, linkForce, chargeStrength, endSimulation, edges, labels, ticked, connectedNodes, nodeOnClick;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -15965,7 +15965,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                           pathLength = pathEl.getTotalLength(),
                           nodeEl = d3.select('#' + data.target.id + ' > path.francy-symbol').node(),
                           nodeSize = (Math.floor(nodeEl.getBBox().width) + 4) / 2,
-                          pathPoint = pathEl.getPointAtLength(pathLength - nodeSize - data.weight || 1),
+                          pathPoint = pathEl.getPointAtLength(pathLength - nodeSize - (data.weight || 1)),
                           pathPoint2 = pathEl.getPointAtLength(pathLength - nodeSize),
                           x1 = pathPoint.x,
                           y1 = pathPoint.y,
@@ -16096,7 +16096,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                 }).size(function (d) {
                   return d.size * 100;
                 })).style('fill', function (d) {
-                  return d.color || _graph2.default.colors(d.layer * 5);
+                  return d.color || d.conjugate ? _graph2.default.colors(d.conjugate * 5) : _graph2.default.colors(d.layer * 5);
                 }).classed('francy-symbol', true).classed('francy-context', function (d) {
                   return Object.values(d.menus).length && Object.values(d.menus).length > 0;
                 });
@@ -16127,7 +16127,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                 node = nodeGroup.selectAll('g.francy-node');
 
                 if (simulationActive) {
-                  radius = 0, symbolRadius = 0, layered = false;
+                  radius = 0, symbolRadius = 0, ylayered = false, xlayered = false;
 
 
                   node.each(function () {
@@ -16143,9 +16143,13 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                     if (symbolRadius < symbolBound.width) {
                       symbolRadius = symbolBound.width;
                     }
-                    // check whether the graph will be layered - hasse
+                    // check whether the graph will be layered on y - hasse
                     if (node.data()[0].layer != 0) {
-                      layered = true;
+                      ylayered = true;
+                    }
+                    // check whether the graph will be layered on x
+                    if (node.data()[0].conjugate != 0) {
+                      xlayered = true;
                     }
                   });
 
@@ -16160,11 +16164,13 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
 
                   chargeStrength = chargeStrength < -400 ? chargeStrength : -400;
 
-                  simulation.nodes(nodesToAdd).force('charge-1', layered ? undefined : d3.forceManyBody().strength(chargeStrength * 0.15)).force('x', d3.forceX()).force('y', layered ? d3.forceY(function (d) {
-                    return d.layer * 100;
+                  simulation.nodes(nodesToAdd).force('charge-1', ylayered ? undefined : d3.forceManyBody().strength(chargeStrength * 0.15)).force('x', xlayered ? d3.forceX(function (d) {
+                    return d.conjugate ? +d.conjugate % 2 === 0 ? 0 : self.data.canvas.width : self.data.canvas.width / 2;
+                  }) : d3.forceX()).force('y', ylayered ? d3.forceY(function (d) {
+                    return +d.layer * 100;
                   }).strength(1) : d3.forceY()).force('charge-2', d3.forceManyBody().strength(chargeStrength))
-                  //.force('link', layered ? linkForce.strength(d => d.weight ? Math.sqrt(d.weight) : 1 / (linksToAdd.length + 1)) : linkForce)
-                  .force('link', layered ? linkForce.strength(1 / (linksToAdd.length + 1)) : linkForce).force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2)).on('tick', function () {
+                  //.force('link', ylayered ? linkForce.strength(d => d.weight ? Math.sqrt(d.weight) % 1 : 1 / (linksToAdd.length + 1)) : linkForce)
+                  .force('link', ylayered ? linkForce.strength(1 / (linksToAdd.length + 1)) : linkForce).force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2)).on('tick', function () {
                     return safeTicked.handle();
                   }).on('end', function () {
                     return safeEnd.handle();
@@ -17828,12 +17834,12 @@ var AboutModal = (_dec = _factory2.Decorators.Initializer.initialize(), _dec2 = 
                 form = this.element.append('form');
 
 
-                this._buildHeader(form, 'About Francy v' + "0.8.8");
+                this._buildHeader(form, 'About Francy v' + "0.8.10");
 
                 content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body').style('text-align', 'center');
 
 
-                content.append('span').text('francy-js, v0.8.8, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.');
+                content.append('span').text('francy-js, v0.8.10, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.');
                 content.append('br');
                 content.append('br');
                 content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');

@@ -1,6 +1,6 @@
 {
   "name": "francy-js",
-  "version": "0.8.8",
+  "version": "0.8.10",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {

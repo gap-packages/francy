@@ -17,6 +17,9 @@ gap> shape2 := Shape(ShapeType.TRIANGLE);
 gap> SetLayer(shape2, 3);
 gap> Layer(shape2) = 3;
 true
+gap> SetConjugateId(shape2, 1);
+gap> ConjugateId(shape2) = 1;
+true
 gap> link := Link(shape1, shape2);
 <IsFrancyObject/IsLink>
 gap> SetColor(link, "#fff");

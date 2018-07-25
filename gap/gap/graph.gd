@@ -427,6 +427,16 @@ InstallMethod(Selected, "shape", [IsShape], o -> o!.selected);
 InstallMethod(SetSelected, "shape, boolean", [IsShape, IsBool], function(o, b) o!.selected := b; end);
 
 #! @Description
+#! <C>Collapsed</C> is a property that sets to collapsed the graphic structure by default
+#! @Returns <C>IsBool</C> True if enabled otherwise False
+DeclareAttribute("ConjugateId", IsShape);
+InstallMethod(ConjugateId, "shape", [IsShape], o -> o!.conjugate);
+#! @Description
+#! Sets the <C>Collapsed</C> behavior.
+#! @Arguments IsCanvas, IsBool
+InstallMethod(SetConjugateId, "shape, int", [IsShape, IsInt], function(o, i) o!.conjugate := i; end);
+
+#! @Description
 #! <C>Drag</C> is a property that sets the drag behavior on mouse drag, in the client implementation.
 #! @Returns <C>IsBool</C> True if enabled otherwise False
 #DeclareAttribute("Drag", IsFrancyGraph);

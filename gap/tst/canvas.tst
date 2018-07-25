@@ -32,7 +32,7 @@ om/mcmartins/francy/master/js/extensions/browser/francy.bundle.js\"></script>\
 \n        <title>Francy</title>\n      </head>\n      <body>\n        <div id=\
 \"francy\"></div>\n        <script>\n          var francy = new Francy({verbos\
 e: true, appendTo: 'body', callbackHandler: console.log});\n          francy.l\
-oad({\"version\" : \"0.8.8\",\"mime\" : \"application\\/vnd.francy+json\",\"ca\
+oad({\"version\" : \"0.8.10\",\"mime\" : \"application\\/vnd.francy+json\",\"ca\
 nvas\" : {\"width\" : 400,\"id\" : \"F16\",\"height\" : 400,\"title\" : \"Quat\
 ernion Group Subgroup Lattice\",\"zoomToFit\" : false,\"texTypesetting\" : tru\
 e,\"menus\" : {},\"graph\" : {},\"chart\" : {},\"messages\" : {}}}).render();\
