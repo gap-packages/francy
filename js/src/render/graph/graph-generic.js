@@ -194,7 +194,7 @@ export default class GenericGraph extends Graph {
     let labels = link.selectAll('text.francy-label');
 
     function ticked() {
-     edges
+      edges
         .attr('d', function(d) {
           if (d.source.id === d.target.id) {
             return `M${d.source.x},${d.source.y} A${d.target.size + 10},${d.target.size + 10} -45,1,0 ${d.source.x - 1},${d.source.y}`;
