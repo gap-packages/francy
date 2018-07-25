@@ -82,7 +82,7 @@ export default class GenericGraph extends Graph {
         .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 1));
     }
 
-    linkEnter.append('text')
+    linkEnter.filter(d => d.title).append('text')
       .classed('francy-label', true)
       .style('font-size', d => d.invisible ? 0 : 7 * Math.sqrt(d.weight || 1))
       .style('opacity', 0.1)
@@ -108,7 +108,7 @@ export default class GenericGraph extends Graph {
       .classed('francy-symbol', true)
       .classed('francy-context', d => Object.values(d.menus).length && Object.values(d.menus).length > 0);
 
-    nodeEnter.append('text')
+    nodeEnter.filter(d => d.title).append('text')
       .classed('francy-label', true)
       .text(d => d.title)
       .style('font-size', d => 7 * Math.sqrt(d.size))
@@ -173,19 +173,28 @@ export default class GenericGraph extends Graph {
         .on('tick', () => safeTicked.handle())
         .on('end', () => safeEnd.handle());
 
+      if (nodesToAdd.length >= 1000 || linksToAdd.length >= 1000) {
+        self.parent.attr('visibility', 'hidden');
+        simulation.alphaMin(0.05).on('tick', undefined);
+      }
+
     } else {
-      // well, simulation is off, apply fixed positions
-      ticked();
+      // well, simulation is off
       endSimulation();
     }
 
     function endSimulation() {
-      self.parent.zoomToFit();
+      self.parent.attr('visibility', 'visible');
+      safeTicked.handle();
       loader.hide();
+      self.parent.zoomToFit();
     }
 
+    let edges =  link.selectAll('path.francy-edge');
+    let labels = link.selectAll('text.francy-label');
+
     function ticked() {
-      link.selectAll('path.francy-edge')
+     edges
         .attr('d', function(d) {
           if (d.source.id === d.target.id) {
             return `M${d.source.x},${d.source.y} A${d.target.size + 10},${d.target.size + 10} -45,1,0 ${d.source.x - 1},${d.source.y}`;
@@ -214,7 +223,7 @@ export default class GenericGraph extends Graph {
         });
       }
 
-      link.selectAll('text.francy-label')
+      labels
         .attr('x', d => Graph.linkXPos(d.target, d.source))
         .attr('y', d => Graph.linkYPos(d.target, d.source));
 

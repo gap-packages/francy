@@ -127,7 +127,7 @@ export default class TreeGraph extends Graph {
         .attr('d', d3.symbol().type(d => Graph.getSymbol(d.data.type)).size(d => d.data.size * 100))
         .attr('class', 'francy-symbol');
 
-      nodeEnter.append('text')
+      nodeEnter.filter(d => d.data.title).append('text')
         .attr('class', 'francy-label')
         .text(d => d.data.title)
         .style('font-size', d => 7 * Math.sqrt(d.weight || 1))

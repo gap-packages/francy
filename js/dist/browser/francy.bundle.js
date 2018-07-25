@@ -1,4 +1,4 @@
-/*! 'francy-js, v0.8.6, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.' */
+/*! 'francy-js, v0.8.8, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.' */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -13891,7 +13891,7 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
     // all good!
     var _this = _possibleConstructorReturn(this, (Francy.__proto__ || Object.getPrototypeOf(Francy)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
 
-    _this.logger.info('Francy JS v' + "0.8.6" + ' initialized! Enjoy...');
+    _this.logger.info('Francy JS v' + "0.8.8" + ' initialized! Enjoy...');
     return _this;
   }
 
@@ -13911,8 +13911,8 @@ var Francy = (_dec = _factory.Decorators.Data.requires('canvas'), (_class = func
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (this.data.version !== "0.8.6") {
-                  this.logger.warn('Rendering may fail, data generated in Francy GAP v' + this.data.version + ' using Francy JS v' + "0.8.6" + '... please update your system...');
+                if (this.data.version !== "0.8.8") {
+                  this.logger.warn('Rendering may fail, data generated in Francy GAP v' + this.data.version + ' using Francy JS v' + "0.8.8" + '... please update your system...');
                 }
                 if (_configuration.Configuration.object.fixedRandomSeed) {
                   //set seed to produce always the same graphs
@@ -15943,13 +15943,13 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var self, loader, simulationActive, canvasNodes, canvasLinks, linkGroup, links, linksToAdd, link, defs, nodeGroup, nodes, nodesToAdd, node, linkEnter, nodeEnter, radius, symbolRadius, layered, simulation, safeTicked, safeEnd, linkForce, chargeStrength, endSimulation, ticked, connectedNodes, nodeOnClick;
+        var self, loader, simulationActive, canvasNodes, canvasLinks, linkGroup, links, linksToAdd, link, defs, nodeGroup, nodes, nodesToAdd, node, linkEnter, nodeEnter, radius, symbolRadius, layered, simulation, safeTicked, safeEnd, linkForce, chargeStrength, endSimulation, edges, labels, ticked, connectedNodes, nodeOnClick;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 ticked = function ticked() {
-                  link.selectAll('path.francy-edge').attr('d', function (d) {
+                  edges.attr('d', function (d) {
                     if (d.source.id === d.target.id) {
                       return 'M' + d.source.x + ',' + d.source.y + ' A' + (d.target.size + 10) + ',' + (d.target.size + 10) + ' -45,1,0 ' + (d.source.x - 1) + ',' + d.source.y;
                     }
@@ -15981,7 +15981,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                     });
                   }
 
-                  link.selectAll('text.francy-label').attr('x', function (d) {
+                  labels.attr('x', function (d) {
                     return _graph2.default.linkXPos(d.target, d.source);
                   }).attr('y', function (d) {
                     return _graph2.default.linkYPos(d.target, d.source);
@@ -15993,8 +15993,10 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                 };
 
                 endSimulation = function endSimulation() {
-                  self.parent.zoomToFit();
+                  self.parent.attr('visibility', 'visible');
+                  safeTicked.handle();
                   loader.hide();
+                  self.parent.zoomToFit();
                 };
 
                 self = this, loader = _factory.Decorators.Loader.withContext(this).show(), simulationActive = this.data.canvas.graph.simulation || _configuration.Configuration.object.simulation, canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [], canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
@@ -16067,7 +16069,9 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                   });
                 }
 
-                linkEnter.append('text').classed('francy-label', true).style('font-size', function (d) {
+                linkEnter.filter(function (d) {
+                  return d.title;
+                }).append('text').classed('francy-label', true).style('font-size', function (d) {
                   return d.invisible ? 0 : 7 * Math.sqrt(d.weight || 1);
                 }).style('opacity', 0.1).style('opacity', 0.1).text(function (d) {
                   return d.title;
@@ -16097,7 +16101,9 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                   return Object.values(d.menus).length && Object.values(d.menus).length > 0;
                 });
 
-                nodeEnter.append('text').classed('francy-label', true).text(function (d) {
+                nodeEnter.filter(function (d) {
+                  return d.title;
+                }).append('text').classed('francy-label', true).text(function (d) {
                   return d.title;
                 }).style('font-size', function (d) {
                   return 7 * Math.sqrt(d.size);
@@ -16163,11 +16169,19 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
                   }).on('end', function () {
                     return safeEnd.handle();
                   });
+
+                  if (nodesToAdd.length >= 1000 || linksToAdd.length >= 1000) {
+                    self.parent.attr('visibility', 'hidden');
+                    simulation.alphaMin(0.05).on('tick', undefined);
+                  }
                 } else {
-                  // well, simulation is off, apply fixed positions
-                  ticked();
+                  // well, simulation is off
                   endSimulation();
                 }
+
+                edges = link.selectAll('path.francy-edge');
+                labels = link.selectAll('text.francy-label');
+
 
                 if (_configuration.Configuration.object.dragNodes) {
                   this.graphOperations.dragBehavior(node, simulation, simulationActive).call(this, true);
@@ -16194,7 +16208,7 @@ var GenericGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class
 
                 return _context.abrupt('return', this);
 
-              case 33:
+              case 35:
               case 'end':
                 return _context.stop();
             }
@@ -16624,7 +16638,9 @@ var TreeGraph = (_dec = _factory.Decorators.Initializer.initialize(), (_class = 
                       return d.data.size * 100;
                     })).attr('class', 'francy-symbol');
 
-                    nodeEnter.append('text').attr('class', 'francy-label').text(function (d) {
+                    nodeEnter.filter(function (d) {
+                      return d.data.title;
+                    }).append('text').attr('class', 'francy-label').text(function (d) {
                       return d.data.title;
                     }).style('font-size', function (d) {
                       return 7 * Math.sqrt(d.weight || 1);
@@ -17812,12 +17828,12 @@ var AboutModal = (_dec = _factory2.Decorators.Initializer.initialize(), _dec2 = 
                 form = this.element.append('form');
 
 
-                this._buildHeader(form, 'About Francy v' + "0.8.6");
+                this._buildHeader(form, 'About Francy v' + "0.8.8");
 
                 content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body').style('text-align', 'center');
 
 
-                content.append('span').text('francy-js, v0.8.6, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.');
+                content.append('span').text('francy-js, v0.8.8, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.');
                 content.append('br');
                 content.append('br');
                 content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
