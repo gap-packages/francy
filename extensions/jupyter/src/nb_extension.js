@@ -25,11 +25,11 @@ export function load_ipython_extension() {
     [
       'base/js/namespace',
       'nbextensions/jupyter_francy/index',
-      'nbextensions/jupyter_francy/francy'
+      'nbextensions/jupyter_francy/francy' // this needs to be loaded!
     ],
-    (Jupyter, Extension, FrancyBundle) => {
+    (Jupyter, Extension) => {
       const { notebook } = Jupyter;
-      Extension.init(Jupyter, FrancyBundle);
+      Extension.init(Jupyter);
       Extension.register_renderer(notebook);
       Extension.render_cells(notebook);
     }

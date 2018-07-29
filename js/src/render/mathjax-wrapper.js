@@ -24,8 +24,8 @@ export default class MathJaxWrapper extends BaseRenderer {
     );
   }
 
-  settings({ verbose, appendTo, callbackHandler, renderType, postFunction }) {
-    super.settings({ verbose, appendTo, callbackHandler });
+  settings({ appendTo, callbackHandler, renderType, postFunction }) {
+    super.settings({ appendTo, callbackHandler });
     this.options.renderType = renderType;
     this.options.postFunction = postFunction;
     return this;

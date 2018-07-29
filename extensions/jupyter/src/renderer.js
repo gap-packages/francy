@@ -1,16 +1,14 @@
 import { MIME_TYPE, CLASS_NAME, APPEND_ID } from './utils';
 import 'francy-js/style/index.css';
 
-/* global d3 */
+/* global Francy */
 
-let francy = undefined;
+export function init(Jupyter) {
 
-export function init(Jupyter, FrancyBundle) {
-
-  console.log('Starting loading Module Francy Javascript...');
+  console.log('Starting configuring module Francy Javascript...');
 
   // start Francy
-  francy = new FrancyBundle.Francy({
+  Francy.settings({
     appendTo: `#${APPEND_ID}`,
     callbackHandler: function(command) {
       Jupyter.notebook.kernel.execute(command, {
@@ -18,7 +16,7 @@ export function init(Jupyter, FrancyBundle) {
           output: function(msg) {
             if (msg.content && msg.content.data && msg.content.data[MIME_TYPE]) {
               // This will update an existing canvas by its ID!
-              francy.load(msg.content.data[MIME_TYPE]).render()
+              Francy.load(msg.content.data[MIME_TYPE]).render()
                 .catch(error => console.error(error))
                 .then(element => console.log('Trigger result', element));
             }
@@ -28,14 +26,14 @@ export function init(Jupyter, FrancyBundle) {
     }
   });
 
-  console.log('Finished loading Module Francy Javascript.');
+  console.log('Finished configuring module Francy Javascript.');
 }
 
 /**
  * Render data to the DOM node
  */
 function render(props, node) {
-  francy.load(props.data).render()
+  Francy.load(props.data).render()
     .catch(error => console.error(error))
     .then(element => node.append(element));
 }
@@ -46,13 +44,7 @@ function render(props, node) {
 function handleClearOutput(event, { cell: { output_area } }) {
   /* Get rendered DOM node */
   const toinsert = output_area.element.find(CLASS_NAME.split(' ')[0]);
-  if (toinsert[0]) {
-    // The svg might be gone to another cell (!?)
-    // well, when Draw is invoked for a canvas inside another cell it moves the svg to another output cell!
-    let svg = d3.select(toinsert[0]).select('svg');
-    let id = svg ? svg.attr('id') : undefined;
-    francy.unrender(id);
-  }
+  // nothing to do
 }
 
 /**

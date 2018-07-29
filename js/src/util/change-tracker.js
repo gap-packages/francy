@@ -1,9 +1,11 @@
+import Observable from './observable';
+
 /**
  * This class holds default methods to handle changes on a model object.
  * It works by the means of a Proxy to track changes and ensures subscribers
  * are notified of these changes on a time basis (1 second default).
  */
-export default class Tracker {
+export default class Tracker extends Observable {
   /**
    * Creates a instance of ModelTracker.
    * @param {object} object - the object object to keep track of changes.
@@ -11,13 +13,8 @@ export default class Tracker {
    * @param throttle
    */
   constructor(object, { verbose = false, throttle = 1000 } = {}) {
+    super();
     this.verbose = verbose;
-    /**
-     * This is property holds a list of change subscribers.
-     * @type {function}
-     * @private
-     */
-    this._subscribers = [];
     /**
      * This is property holds a proxy that handles a dirty flag when object changes.
      * @type {Proxy}
@@ -80,13 +77,13 @@ export default class Tracker {
   get object() {
     return this._proxy;
   }
-
+  
   /**
    * This method is used register a function that is invoked to sync the object
    * @param {function} fn - the function to execute - must handle one arg, the object, of type {object}
    */
   subscribe(fn) {
-    this._subscribers.push(fn);
+    super.subscribe('all', fn);
   }
 
   /**
@@ -94,13 +91,13 @@ export default class Tracker {
    * @param {function} fn - the function to execute - must handle one arg, the object, of type {object}
    */
   unsubscribe(fn) {
-    this._subscribers = this._subscribers.filter(item => item !== fn ? item : undefined);
+    super.unsubscribe('all', fn);
   }
 
   /**
    * This method is used to explicitly sync the module with all the subscribers
    */
   sync() {
-    this._subscribers.forEach(item => item.call(this, this.object));
+    this.notify('all', this.object);
   }
 }

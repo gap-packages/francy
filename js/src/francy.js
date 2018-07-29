@@ -44,15 +44,20 @@ export default class Francy extends Renderer {
       //set seed to produce always the same graphs
       Math.seedrandom('Francy!');
     }
-    let frame = await new Frame(this.options).load(this.data).render().then(element => element);
+    let frame = await new Frame(this.options)
+      .load(this.data).render()
+      .then(element => element)
+      .finally(() => this.load({}, true));
     return frame.element.node();
   }
   
   unrender(){}
 }
 
+const francy = new Francy({ appendTo: 'body', callbackHandler: console.log });
+
 if (window) {
-  exports.Francy = window.Francy = Francy;
+  exports.Francy = window.Francy = francy;
 } else {
-  exports.Francy = Francy;
+  exports.Francy = francy;
 }

@@ -1,4 +1,6 @@
-class ConfigurationHandler {
+import Observable from './observable';
+
+class ConfigurationHandler extends Observable {
   /**
    * Creates a instance of ModelTracker.
    * @param {object} object - the object object to keep track of changes.
@@ -6,12 +8,7 @@ class ConfigurationHandler {
    * @param throttle
    */
   constructor(object, { throttle = 1000 } = {}) {
-    /**
-     * This is property is used to flag when the object changes.
-     * @type {boolean}
-     * @private
-     */
-    this._dirty = false;
+    super();
     /**
      * This holds the actual configuration object
      * @type {object}
@@ -24,11 +21,11 @@ class ConfigurationHandler {
       object = JSON.parse(objectStored);
     }
     /**
-     * This is property holds a list of change subscribers.
-     * @type {function}
+     * This is property is used to flag when the object changes.
+     * @type {boolean}
      * @private
      */
-    this._subscribers = [];
+    this._dirty = false;
     /**
      * This is property holds a proxy that handles a dirty flag when object changes.
      * @type {Proxy}
@@ -57,7 +54,7 @@ class ConfigurationHandler {
   set(object, property, value) {
     if (!(value[property] instanceof Object) && object[property] !== value) {
       object[property] = value;
-      this._subscribers.forEach(sub => sub.prop === property ? sub.fn.call(this, value) : undefined);
+      this.notify(property, value);
       this._dirty = true;
     }
     return true;
@@ -85,22 +82,6 @@ class ConfigurationHandler {
   }
 
   /**
-   * This method is used register a function that is invoked to sync the object
-   * @param {function} fn - the function to execute - must handle one arg, the object, of type {object}
-   */
-  subscribe(property, fn) {
-    this._subscribers.push({prop: property, fn: fn});
-  }
-
-  /**
-   * This method is used unregister a function registered previously
-   * @param {function} fn - the function to execute - must handle one arg, the object, of type {object}
-   */
-  unsubscribe(property, fn) {
-    this._subscribers = this._subscribers.filter(sub => sub.prop !== property && sub.fn !== fn);
-  }
-
-  /**
    * This method is used to explicitly sync the module with all the subscribers
    */
   _sync() {
@@ -114,7 +95,8 @@ export const Configuration = new ConfigurationHandler({
   dragNodes: true,
   simulation: true,
   fixedRandomSeed: true,
-  verbose: false
+  verbose: false,
+  transitionDuration: 750 //ms
 }, {
   throttle: 30000 
 });

@@ -12,6 +12,7 @@ export default class MainMenu extends Menu {
     super({ appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
+  // TODO this: https://stackoverflow.com/questions/9100344/pure-css-multi-level-drop-down-menu
   async render() {
     // Otherwise clashes with the canvas itself!
     const menuId = `MainMenu-${this.data.canvas.id}`;
@@ -58,6 +59,12 @@ export default class MainMenu extends Menu {
     let entry = this.element.append('li');
     entry.append('a').html('Francy');
     let content = entry.append('ul');
+    let entry2 = content.append('li');
+    entry2.append('a').html('Plugins');
+    let content2 = entry2.append('ul');
+    content2.append('li').append('a').html('Zoom to Fit');
+    content2.append('li').append('a').html('Zoom to Fit');
+    content2.append('li').append('a').html('Zoom to Fit');
     content.append('li').append('a').on('click', () => this.options.appendTo.canvas.zoomToFit(true)).attr('title', 'Zoom to Fit').html('Zoom to Fit');
     content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(this.SVGParent.node(), 'diagram.png')).attr('title', 'Save to PNG').html('Save to PNG');
     content.append('li').append('a').on('click', () => this.handlePromise(aboutModal.load(this.data).render())).attr('title', 'About').html('About');
@@ -68,23 +75,23 @@ export default class MainMenu extends Menu {
     entry2.append('a').html('Graph Options');
     let content2 = entry2.append('ul');
     content2.append('li').append('a')
-      .attr('title', 'Neighbours').html(`${Configuration.object.showNeighbours ? 'Disable' : 'Enable'} Show Neighbours`)
+      .attr('title', 'Neighbours').html(`${Configuration.object.showNeighbours ? '&#9745' : '&#9744'} Show Neighbours`)
       .on('click', function() {
         Configuration.object.showNeighbours = !Configuration.object.showNeighbours;
       })
       .each(function() {
         Configuration.subscribe('showNeighbours', value => {
-          d3.select(this).html(`${value ? 'Disable' : 'Enable'} Show Neighbours`);
+          d3.select(this).html(`${value ? '&#9745' : '&#9744'} Show Neighbours`);
         });
       });
     content2.append('li').append('a')
-      .attr('title', 'Drag').html(`${Configuration.object.dragNodes ? 'Disable' : 'Enable'} Drag Nodes`)
+      .attr('title', 'Drag').html(`${Configuration.object.dragNodes ? '&#9745' : '&#9744'} Drag Nodes`)
       .on('click', function() {
         Configuration.object.dragNodes = !Configuration.object.dragNodes;
       })
       .each(function() {
         Configuration.subscribe('dragNodes', value => {
-          d3.select(this).html(`${value ? 'Disable' : 'Enable'} Drag Nodes`);
+          d3.select(this).html(`${value ? '&#9745' : '&#9744'} Drag Nodes`);
         });
       });
     let operations = new GraphOperations(this.options);

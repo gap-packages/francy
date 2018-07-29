@@ -10,11 +10,10 @@ export default class Frame extends Composite {
 
   constructor({ appendTo, callbackHandler }) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler });
-    this.canvas = new Canvas(this.options);
     this.menu = new MainMenu(this.options);
+    this.canvas = new Canvas(this.options);
     this.messages = new Message(this.options);
     this.add(this.menu).add(this.canvas).add(this.messages);
-    this.resizeTimeout = undefined;
   }
 
   @Decorators.Data.requires('canvas')

@@ -9,10 +9,12 @@ export const APPEND_ID = 'francy-drawing-div';
 // this will execute always!
 (function createHiddenDrawingDiv() {
   // Create a 'display: none;' div for drawings
-  // well, better putting this as visibility hidden in order to get sizes as visibility prevent this
+  // well, better putting this as 'visibility: hidden;' in order to get sizes 
   // the workaround would be setTimeout(()=>{francy.render}, 10) :/
-  let body = d3.select('body');
-  if (!body.select(`div#${APPEND_ID}`).node()) {
-    body.append('div').attr('id', APPEND_ID).attr('style', 'visibility: false;');
+  if (!window.document.getElementById(`div#${APPEND_ID}`)) {
+    let div = window.document.createElement('div');
+    div.setAttribute('id', APPEND_ID);
+    div.setAttribute('style', 'visibility: false;');
+    window.document.body.appendChild(div);
   }
 })();

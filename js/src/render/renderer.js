@@ -1,5 +1,6 @@
 import BaseRenderer from './base';
 import MathJaxWrapper from './mathjax-wrapper';
+import { Configuration } from '../util/configuration';
 
 /* global d3 */
 
@@ -17,7 +18,7 @@ export default class Renderer extends BaseRenderer {
       this.logger.debug('No [unrender()] method specified...');
     }
     this.element = undefined;
-    this.transitionDuration = 750; //ms
+    this.transitionDuration = Configuration.object.transitionDuration;
   }
   
   _initialize() {}
