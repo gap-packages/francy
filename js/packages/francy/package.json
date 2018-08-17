@@ -1,0 +1,33 @@
+{
+  "name": "francy",
+  "version": "0.9.0",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP",
+  "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcmartins/francy.git"
+  },
+  "keywords": [
+    "gap",
+    "francy",
+    "graphics",
+    "interactivity"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "docs": "./node_modules/.bin/esdoc",
+    "lint": "./node_modules/.bin/eslint ./src/** ",
+    "lint:fix": "./node_modules/.bin/eslint --fix ./src/**",
+    "test": "./node_modules/.bin/karma start karma.conf.js",
+    "coverage": "./node_modules/.bin/nyc --reporter=lcov --reporter=text-lcov npm run test",
+    "webpack:develpment": "./node_modules/.bin/webpack --env.clean --progress",
+    "webpack:production": "./node_modules/.bin/webpack --env.clean --env.production --progress",
+    "webpack:all": "npm run webpack:develpment && ./node_modules/.bin/webpack --env.production --progress",
+    "build:all": "npm run webpack:all && cp ./package.json ./*.md ./dist",
+    "build": "npm run build:all"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "francy-core": "0.9.0"
+  }
+}

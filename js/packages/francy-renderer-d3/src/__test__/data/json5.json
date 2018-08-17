@@ -1,0 +1,54 @@
+{
+  "version": "0.9.0",
+  "mime": "application/vnd.francy+json",
+  "canvas": {
+    "width": 800,
+    "id": "F263",
+    "height": 200,
+    "title": "Example LINE Chart",
+    "zoomToFit": true,
+    "texTypesetting": false,
+    "menus": {},
+    "chart": {
+      "type": "line",
+      "data": {
+        "data1": [
+          "100",
+          "20",
+          "30",
+          "47",
+          "90"
+        ],
+        "data2": [
+          "51",
+          "60",
+          "72",
+          "38",
+          "97"
+        ],
+        "data3": [
+          "50",
+          "60",
+          "70",
+          "80",
+          "90"
+        ]
+      },
+      "id": "F264",
+      "showLegend": true,
+      "axis": {
+        "x": {
+          "domain": [],
+          "title": "X Axis",
+          "scale": "linear"
+        },
+        "y": {
+          "domain": [],
+          "title": "Y Axis",
+          "scale": "linear"
+        }
+      }
+    },
+    "messages": {}
+  }
+}

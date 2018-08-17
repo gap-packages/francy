@@ -1,0 +1,22 @@
+{
+  "name": "francy-renderer-vis",
+  "version": "0.9.0",
+  "description": "A VIS.js Renderer for Francy",
+  "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcmartins/francy.git"
+  },
+  "keywords": [
+    "gap",
+    "francy",
+    "graphics",
+    "interactivity"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "francy-core": "0.9.0",
+    "vis": "4.21.0"
+  },
+  "main": "index.js"
+}
