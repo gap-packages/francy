@@ -1,9 +1,11 @@
 import { Decorators, Renderer } from 'francy-core';
 
+/* global d3 */
+
 export default class Message extends Renderer {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo }) {
+    super({ appendTo: appendTo });
   }
 
   @Decorators.Data.requires('canvas.messages')

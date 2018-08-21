@@ -1,7 +1,4 @@
 import { Decorators } from 'francy-core';
-//import { line as d3Line } from "d3-shape";
-//import { select } from 'd3-selection';
-//import { transition as select } from "d3-transition";
 import Chart from './chart';
 
 /* global d3 */

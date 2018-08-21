@@ -7531,7 +7531,7 @@ var BaseRenderer = function () {
       return promise.then(function (data) {
         return data;
       }).catch(function (error) {
-        return _this.handleErrors(error);
+        return BaseRenderer.handleErrors(error);
       }).finally(function () {
         return loader.hide();
       });
@@ -63219,7 +63219,7 @@ var Francy = (_dec = _francyCore.Decorators.Data.requires('canvas'), (_class = f
   }, {
     key: 'RenderingManager',
     get: function get() {
-      return _renderingManager.RenderingManager;
+      return Francy.RenderingManager;
     }
   }]);
 
@@ -63312,7 +63312,7 @@ var Frame = (_dec = _francyCore.Decorators.Data.requires('canvas'), (_class = fu
 
     _this.menu = new _menuMain2.default(_this.options);
     _this.messages = new _message2.default(_this.options);
-    var Renderer = _renderingManager.RenderingManager.renderer();
+    var Renderer = Francy.RenderingManager.renderer();
     _this.add(_this.menu).add(_this.messages).add(new Renderer(_this.options));
     return _this;
   }
@@ -63537,22 +63537,22 @@ var MainMenu = function (_Menu) {
       var content = entry.append('ul');
       function insertEntry(renderer) {
         content.append('li').append('a').attr('id', renderer.id).on('click', function () {
-          return _renderingManager.RenderingManager.enable(renderer.name);
+          return Francy.RenderingManager.enable(renderer.name);
         }).attr('title', renderer.name).html((renderer.enable ? '&#9745' : '&#9744') + ' ' + renderer.name).each(function () {
           var _this3 = this;
 
-          _renderingManager.RenderingManager.subscribe(_renderingManager.EVENTS.UNREGISTER, function () {
+          Francy.RenderingManager.subscribe(_renderingManager.EVENTS.UNREGISTER, function () {
             return d3.select(d3.select(_this3).node().parentElement).remove();
           });
         });
       }
-      Object.values(_renderingManager.RenderingManager.allRenderers()).forEach(function (o) {
+      Object.values(Francy.RenderingManager.allRenderers()).forEach(function (o) {
         return insertEntry(o);
       });
-      _renderingManager.RenderingManager.subscribe(_renderingManager.EVENTS.REGISTER, function (o) {
+      Francy.RenderingManager.subscribe(_renderingManager.EVENTS.REGISTER, function (o) {
         return insertEntry(o);
       });
-      _renderingManager.RenderingManager.subscribe(_renderingManager.EVENTS.STATUS, function (o) {
+      Francy.RenderingManager.subscribe(_renderingManager.EVENTS.STATUS, function (o) {
         _this4.element.select('#' + o.id).html((o.enable ? '&#9745' : '&#9744') + ' ' + o.name);
       });
     }

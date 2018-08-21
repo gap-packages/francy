@@ -14,15 +14,15 @@ export default class Graph extends Renderer {
     this.callback = new Callback(this.options);
     this.graphOperations = new GraphOperations(this.options);
   }
-  
-  _initialize() {
+
+  initialize() {
     this.element = this.parent.select('g.francy-content');
   }
 
   _applyEvents(element) {
     if (!element) return;
     
-    var self = this;
+    let self = this;
     element
       .on('contextmenu', function(d) {
         let data = d.data || d;

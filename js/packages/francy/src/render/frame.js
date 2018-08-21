@@ -1,7 +1,8 @@
-import { Logger, CompositeRenderer, Decorators } from 'francy-core';
-import { RenderingManager } from './rendering-manager';
+import { Logger, CompositeRenderer, Decorators, RenderingManager } from 'francy-core';
 import MainMenu from './menu-main';
 import Message from './message';
+
+/* global d3 */
 
 export default class Frame extends CompositeRenderer {
 

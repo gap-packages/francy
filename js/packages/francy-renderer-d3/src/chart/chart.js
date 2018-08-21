@@ -1,8 +1,4 @@
 import { Renderer } from 'francy-core';
-//import { scaleLinear, scaleSequential } from 'd3-scale';
-//import { max } from 'd3-array';
-//import { axisBottom, axisLeft } from 'd3-axis';
-//import { interpolateRainbow } from 'd3-scale-chromatic';
 import Tooltip from '../tooltip';
 
 /* global d3 */
@@ -18,8 +14,8 @@ export default class Chart extends Renderer {
     this.datasetNames = undefined;
     this.tooltip = undefined;
   }
-  
-  _initialize() {
+
+  initialize() {
     this.tooltip = new Tooltip(this.options);
     
     this.element = this.parent.select('g.francy-content');

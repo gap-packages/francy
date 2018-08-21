@@ -49,13 +49,13 @@ export default class MathJaxComponent extends BaseComponent {
     });
 
     let safeOnNewMathElement = Decorators.Error.wrap(onNewMathElement).withContext(this).onErrorThrow(false);
-    MathJax.Hub.Register.MessageHook('New Math', (id) => safeOnNewMathElement.handle(id));
+    MathJax.Hub.Register.MessageHook('New Math', id => safeOnNewMathElement.handle(id));
 
     function onNewMathElement(id) {
       if (id && id.length > 1) {
-        var mathJaxElement = d3.select(`#${id[1]}-Frame`);
-        var svgMathJaxElement = mathJaxElement.select('svg');
-        var g = d3.select(mathJaxElement.node().parentNode.parentNode);
+        let mathJaxElement = d3.select(`#${id[1]}-Frame`);
+        let svgMathJaxElement = mathJaxElement.select('svg');
+        let g = d3.select(mathJaxElement.node().parentNode.parentNode);
         if (svgMathJaxElement.node()) {
           // set same font-size
           svgMathJaxElement.style('font-size', g.select('text.francy-label').style('font-size'));

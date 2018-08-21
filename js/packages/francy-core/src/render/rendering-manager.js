@@ -1,4 +1,6 @@
-import { Logger, Observable, Utilities } from 'francy-core';
+import Observable from '../util/observable';
+import {Logger} from '../util/logger';
+import {Utilities} from '../util/utilities';
 
 class Manager extends Observable {
 
@@ -30,7 +32,7 @@ class Manager extends Observable {
 
   enable(name) {
     if (name && name in this._renderers) {
-      for (var prop in this._renderers) {
+      for (let prop in this._renderers) {
         this._renderers[prop].enable = name === prop;
         this.notify(EVENTS.STATUS, this._renderers[prop]);
       }
@@ -43,12 +45,11 @@ class Manager extends Observable {
   }
   
   renderer() {
-    for (var prop in this._renderers) {
+    for (let prop in this._renderers) {
       if (this._renderers[prop].enable) {
         return this._renderers[prop].renderer;
       }
     }
-    return { render: function() { this.parent.append('div').append('span').style('text-align', 'center').text('No Renderer selected...'); }};
   }
 }
 export const EVENTS = {REGISTER: 'REGISTER', UNREGISTER: 'UNREGISTER', STATUS: 'STATUS'};

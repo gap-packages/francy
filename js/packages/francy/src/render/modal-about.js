@@ -1,11 +1,11 @@
 import { Logger, Configuration, Components, Decorators, Modal } from 'francy-core';
 
-/* global VERSION FRANCY_DESC */
+/* global VERSION, FRANCY_DESC */
 
 export default class AboutModal extends Modal {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo }) {
+    super({ appendTo: appendTo });
   }
 
   @Decorators.Initializer.initialize()

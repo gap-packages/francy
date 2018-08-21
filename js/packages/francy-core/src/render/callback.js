@@ -1,4 +1,4 @@
-import BaseRenderer from './base';
+import DataHandler from '../util/data-handler';
 import RequiredArgsModal from './modal/modal-required';
 import ConfirmModal from './modal/modal-confirm';
 import { Decorators } from '../decorator/factory';
@@ -8,9 +8,9 @@ import { Decorators } from '../decorator/factory';
  * Callbacks can have arguments, for which a Modal window will appear to request such input.
  * Callbacks can also show a confirmation message before arguments input / execution.
  * If a Callback does not require an argument and no confirmation message, 
- * then the Callback is executed immediatly.
+ * then the Callback is executed immediately.
  */
-export default class CallbackHandler extends BaseRenderer {
+export default class CallbackHandler extends DataHandler {
 
   /**
    * CallbackHandler constructor
@@ -19,8 +19,8 @@ export default class CallbackHandler extends BaseRenderer {
    * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor(callbackHandler) {
+    super();
     this.callback = callbackHandler;
   }
 

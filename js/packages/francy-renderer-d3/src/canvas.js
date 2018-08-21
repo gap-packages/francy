@@ -11,7 +11,15 @@ export default class Canvas extends CompositeRenderer {
     this.add(new GraphFactory(this.options)).add(new ChartFactory(this.options));
   }
 
+  initialize() {
+    if (Configuration.object.fixedRandomSeed) {
+      //set seed to produce always the same graphs
+      Math.seedrandom('Francy!');
+    }
+  }
+
   @Decorators.Data.requires('canvas')
+  @Decorators.Initializer.initialize()
   async render() {
     let content, zoom = d3.zoom(), self = this;
 

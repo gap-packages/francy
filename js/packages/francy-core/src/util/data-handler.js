@@ -2,13 +2,13 @@ import JsonUtils from '../util/json';
 
 export default class DataHandler {
 
-  constructor(){
+  constructor() {
     this.data = undefined;
   }
 
   /**
    * Loads and stores data if valid
-   * 
+   *
    * @param json a francy valid json
    * @param partial set this to true if the json is not a complete francy json object
    */

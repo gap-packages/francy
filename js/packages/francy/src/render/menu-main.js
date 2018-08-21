@@ -1,13 +1,15 @@
-import { Logger, Configuration, Menu } from 'francy-core';
+import {Logger, Configuration, Menu} from 'francy-core';
 //import GraphOperations from '../graph/graph-operations';
 import AboutModal from './modal-about';
 import * as SvgToPng from 'save-svg-as-png';
-import {RenderingManager, EVENTS} from './rendering-manager';
+import {RenderingManager, EVENTS} from '../../../francy-core/src/render/rendering-manager';
+
+/* global d3, Francy */
 
 export default class MainMenu extends Menu {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({appendTo, callbackHandler}) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler});
   }
 
   // TODO this: https://stackoverflow.com/questions/9100344/pure-css-multi-level-drop-down-menu
@@ -44,7 +46,7 @@ export default class MainMenu extends Menu {
 
     this._buildRenderersMenu();
     this._buildDefaultMenu();
-    
+
     if (this.data.canvas.graph) {
       this._buildGraphMenu();
     }
@@ -57,7 +59,7 @@ export default class MainMenu extends Menu {
 
     return this;
   }
-  
+
   _buildDefaultMenu() {
     let aboutModal = new AboutModal(this.options);
     let content = this.element.select('.francy-menu>ul');
@@ -65,26 +67,32 @@ export default class MainMenu extends Menu {
     content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(this.SVGParent.node(), 'diagram.png')).attr('title', 'Save to PNG').html('Save to PNG');
     content.append('li').append('a').on('click', () => this.handlePromise(aboutModal.load(this.data).render())).attr('title', 'About').html('About');
   }
-  
+
   _buildRenderersMenu() {
     let entry = this.element.select('.francy-menu>ul').append('li');
     entry.append('a').html('Renderers');
     let content = entry.append('ul');
+
     function insertEntry(renderer) {
       content.append('li').append('a').attr('id', renderer.id)
-      .on('click', () => RenderingManager.enable(renderer.name))
-      .attr('title', renderer.name).html(`${renderer.enable ? '&#9745' : '&#9744'} ${renderer.name}`)
-      .each(function() {
-        RenderingManager.subscribe(EVENTS.UNREGISTER, () => d3.select(d3.select(this).node().parentElement).remove());
-      });
+        .on('click', () => {
+          RenderingManager.enable(renderer.name);
+          Configuration.object.activeRenderer = renderer.name;
+        })
+        .attr('title', renderer.name).html(`${renderer.enable ? '&#9745' : '&#9744'} ${renderer.name}`)
+        .each(function () {
+          RenderingManager.subscribe(EVENTS.UNREGISTER, () => d3.select(d3.select(this).node().parentElement).remove());
+        });
     }
+
     Object.values(RenderingManager.allRenderers()).forEach(o => insertEntry(o));
     RenderingManager.subscribe(EVENTS.REGISTER, o => insertEntry(o));
     RenderingManager.subscribe(EVENTS.STATUS, o => {
       this.element.select(`#${o.id}`).html(`${o.enable ? '&#9745' : '&#9744'} ${o.name}`);
+      this.handlePromise(Francy.load(this.data).render());
     });
   }
-  
+
   _buildGraphMenu() {
     let entry2 = this.element.append('li');
     entry2.append('a').html('Graph Options');
@@ -94,7 +102,7 @@ export default class MainMenu extends Menu {
       .on('click', () => {
         Configuration.object.showNeighbours = !Configuration.object.showNeighbours;
       })
-      .each(function() {
+      .each(function () {
         Configuration.subscribe('showNeighbours', value => {
           d3.select(this).html(`${value ? '&#9745' : '&#9744'} Show Neighbours`);
         });
@@ -104,7 +112,7 @@ export default class MainMenu extends Menu {
       .on('click', () => {
         Configuration.object.dragNodes = !Configuration.object.dragNodes;
       })
-      .each(function() {
+      .each(function () {
         Configuration.subscribe('dragNodes', value => {
           d3.select(this).html(`${value ? '&#9745' : '&#9744'} Drag Nodes`);
         });
@@ -115,6 +123,7 @@ export default class MainMenu extends Menu {
       .on('click', () => operations.nodeSelection.clear());*/
   }
 
-  unrender() {}
+  unrender() {
+  }
 
 }

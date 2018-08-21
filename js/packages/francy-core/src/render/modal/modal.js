@@ -7,8 +7,8 @@ export default class Modal extends Renderer {
     this.overlay = undefined;
     this.holder = undefined;
   }
-  
-  _initialize() {
+
+  initialize() {
     // we want to overlay everything, hence 'body' must be used
     this.overlay = d3.select('body').append('div').attr('class', 'francy-overlay');
     this.holder = d3.select('body').append('div').attr('class', 'francy');

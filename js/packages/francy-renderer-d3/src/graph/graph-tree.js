@@ -1,9 +1,4 @@
 import { Logger, Decorators } from 'francy-core';
-//import { select } from 'd3-selection';
-//import { transition as select } from "d3-transition";
-//import { stratify, tree } from 'd3-hierarchy';
-//import { max } from 'd3-array';
-//import { symbol } from "d3-shape";
 import Graph from './graph';
 
 /* global d3 */

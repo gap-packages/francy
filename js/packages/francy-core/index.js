@@ -3,6 +3,7 @@ export {Decorators} from "./src/decorator/factory";
 export {Components} from "./src/component/factory";
 export {Logger} from './src/util/logger';
 export {Utilities} from './src/util/utilities';
+export {RenderingManager} from './src/render/rendering-manager';
 
 export {default as Observable} from './src/util/observable';
 export {default as Callback} from "./src/render/callback";

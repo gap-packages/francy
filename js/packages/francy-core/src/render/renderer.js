@@ -19,8 +19,8 @@ export default class Renderer extends BaseRenderer {
     this.element = undefined;
     this.transitionDuration = Configuration.object.transitionDuration;
   }
-  
-  _initialize() {}
+
+  initialize() {}
 
   get HTMLParent() {
     return this.parent.node().tagName.toLowerCase() === 'svg' ? d3.select(this.parent.node().parentNode) : this.parent;

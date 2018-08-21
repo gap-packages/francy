@@ -1,12 +1,12 @@
-import { Logger } from '../util/logger';
 import DataHandler from '../util/data-handler';
+import { Logger } from '../util/logger';
 import { Exception } from '../util/exception';
 import { Decorators } from '../decorator/factory';
 
 /**
  * Base is the base of renderers and contains multiple utility methods.
  */
-export default class BaseRenderer {
+export default class BaseRenderer extends DataHandler {
 
   /**
    * Base constructor
@@ -16,6 +16,7 @@ export default class BaseRenderer {
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
   constructor({ appendTo = 'body', callbackHandler }) {
+    super();
     /**
      * @typedef {Object} Options
      * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
@@ -23,10 +24,6 @@ export default class BaseRenderer {
      */
     this.options = undefined;
     this.settings({ appendTo: appendTo, callbackHandler: callbackHandler });
-    /**
-     * @type {Object} the internal data model object
-     */
-    this.dataHandler = new DataHandler();
   }
 
   /**
@@ -52,15 +49,6 @@ export default class BaseRenderer {
     return this;
   }
 
-  load(json, partial) {
-    this.dataHandler.load(json, partial);
-    return this;
-  }
-  
-  get data() {
-    return this.dataHandler.data;
-  }
-
   /**
    * Returns the parent element of this class 
    */
@@ -72,7 +60,7 @@ export default class BaseRenderer {
    * Generic error handler.
    * Will log the error and rethrow if error is unknown.
    */
-  handleErrors(error) {
+  static handleErrors(error) {
     if (error instanceof Exception) {
       // well, most of these are just informative
       Logger.debug(error.message);
@@ -90,7 +78,7 @@ export default class BaseRenderer {
     let loader = Decorators.Loader.withContext(this).show();
     return promise
       .then(data => data)
-      .catch(error => this.handleErrors(error))
+      .catch(error => BaseRenderer.handleErrors(error))
       .finally(() => loader.hide());
   }
 

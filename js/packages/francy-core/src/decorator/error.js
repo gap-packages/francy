@@ -38,7 +38,7 @@ export default class ErrorDecorator {
     let result = undefined;
     try {
       result = this.function.apply(this.context, arguments);
-      if (result && typeof result.then == 'function') {
+      if (result && typeof result.then === 'function') {
         result = result.catch(error => {
           this._logEntry(error);
           this._runOnError();

@@ -1,10 +1,4 @@
 import { Configuration, Decorators } from 'francy-core';
-//import { select } from 'd3-selection';
-//import { set } from "d3-collection";
-//import { symbol, line, curveBasisClosed } from "d3-shape";
-//import { polygonHull, polygonCentroid } from "d3-polygon";
-//import { scaleLinear } from 'd3-scale';
-//import { forceSimulation, forceLink, forceManyBody, forceCollide, forceRadial, forceX, forceY } from 'd3-force';
 import Graph from './graph';
 
 /* global d3 */

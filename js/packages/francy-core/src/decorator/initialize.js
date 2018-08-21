@@ -5,10 +5,10 @@ export default class InitializerDecorator {
   
   initialize() {
     return function (target, key, descriptor) {
-      var oldValue = descriptor.value;
+      let oldValue = descriptor.value;
   
       descriptor.value = function() {
-        this._initialize();
+        this.initialize();
         return oldValue.apply(this, arguments);
       };
       return descriptor;
