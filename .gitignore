@@ -1,6 +1,6 @@
 **/doc
 
-**.dirstamp
+**/.dirstamp
 *.libs/
 
 */aclocal.m4
