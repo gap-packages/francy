@@ -9,7 +9,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "test": "lerna run test",
-    "prepare": "lerna run init && lerna run link && lerna run prepare",
+    "prepare": "lerna init && lerna link && lerna run prepare",
     "docs": "esdoc",
     "lint": "eslint ./packages/** ",
     "lint:fix": "eslint --fix ./packages/**",
