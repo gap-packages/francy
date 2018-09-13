@@ -125,96 +125,6 @@ export default class GenericGraph extends Graph {
       });
 
     node.exit().remove();
-    
-    var conjugates = d3.set(canvasNodes.map(function(n) {
-      return +n.conjugate; 
-    }))
-      .values()
-      .map(function(id) {
-        return { 
-          id : id,
-          count : canvasNodes.filter(function(n) {
-            return +n.conjugate == id; 
-          }).length
-        };
-      })
-      .filter( function(conjugate) {
-        return conjugate.count > 2;
-      })
-      .map( function(conjugate) {
-        return conjugate.id; 
-      });
-    
-    var polygon, centroid;
-    
-    var polygonGenerator = function(id) {
-      var node_coords = node
-        .filter(function(d) {
-          return d.conjugate == id; 
-        })
-        .data()
-        .map(function(d) {
-          return [d.x, d.y]; 
-        });
-        
-      return d3.polygonHull(node_coords);
-    };
-    
-    var valueline = d3.line()
-      .x(function(d) {
-        return d[0]; 
-      })
-      .y(function(d) {
-        return d[1]; 
-      })
-      .curve(d3.curveBasisClosed);
-
-    let groups = this.element.selectAll('g.francy-conjugates');
-
-    if (!groups.node()) {
-      groups = this.element.append('g').classed('francy-conjugates', true);
-    }
-
-    var paths = groups.selectAll('.francy-conjugates-group')
-      .data(conjugates, function(d) {
-        return +d; 
-      })
-      .enter()
-      .append('g')
-      .attr('class', 'francy-conjugates-group')
-      .append('path')
-      .attr('stroke', function(d) {
-        return Graph.colors(d*10); 
-      })
-      .attr('fill', function(d) {
-        return Graph.colors(d*10); 
-      })
-      .attr('opacity', 0.3);
-
-    function updateGroups() {
-      conjugates.forEach(function(id) {
-        var path = paths.filter(function(d) {
-          return d == id;
-        })
-          .attr('transform', 'scale(1) translate(0,0)')
-          .attr('d', function(d) {
-            polygon = polygonGenerator(d);
-            centroid = d3.polygonCentroid(polygon);
-
-            // to scale the shape properly around its points:
-            // move the 'g' element to the centroid point, translate
-            // all the path around the center of the 'g' and then
-            // we can scale the 'g' element properly
-            return valueline(
-              polygon.map(function(point) {
-                return [  point[0] - centroid[0], point[1] - centroid[1] ];
-              })
-            );
-          });
-
-        d3.select(path.node().parentNode).attr('transform', 'translate('  + centroid[0] + ',' + (centroid[1]) + ') scale(' + 3 + ')');
-      });
-    }
 
     node = nodeGroup.selectAll('g.francy-node');
 
@@ -224,12 +134,7 @@ export default class GenericGraph extends Graph {
         ylayered = false,
         xlayered = false;
 
-      var xScale = d3.scaleLinear();
-      var yScale = d3.scaleLinear();
-
-      let conj = {};
-      let foci = {};
-      node.each(function(d) {
+      node.each(function() {
         let bound = this.getBBox();
         // calculate default radius for colisions
         // check the widest group Bounding Box
@@ -242,16 +147,12 @@ export default class GenericGraph extends Graph {
         if (symbolRadius < symbolBound.width) {
           symbolRadius = symbolBound.width;
         }
-        conj[d.conjugate] = (conj[d.conjugate] || 0) + 1;
-        foci[d.id] = foci[d.id] || {};
-        foci[d.id].x = xScale(d.conjugate + conj[d.conjugate] + d.size);
-        foci[d.id].y = yScale(d.layer * 100 + d.size);
         // check whether the graph will be layered on y - hasse
-        if (d.layer != 0) {
+        if (node.data()[0].layer != 0) {
           ylayered = true;
         }
         // check whether the graph will be layered on x
-        if (d.conjugate != 0) {
+        if (node.data()[0].conjugate != 0) {
           xlayered = true;
         }
       });
@@ -261,18 +162,17 @@ export default class GenericGraph extends Graph {
         safeTicked = Decorators.Error.wrap(ticked).withContext(self).onErrorThrow(false).onErrorExec(simulation.stop),
         safeEnd = Decorators.Error.wrap(endSimulation).withContext(self);
 
-      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.length || (nodesToAdd.length * radius / 2));
+      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.length || 100);
       let chargeStrength = -5 * Math.log(nodesToAdd.length) * Math.log(linksToAdd.length);
       chargeStrength = chargeStrength < -400 ? chargeStrength : -400;
 
       simulation.nodes(nodesToAdd)
-        //.force('charge-1', ylayered ? undefined : forceManyBody().strength(chargeStrength * 0.15))
-        //.force('x', xlayered ? forceX(d => foci[d.id].x) : forceX())
-        //.force('y', ylayered ? forceY(d => foci[d.id].y).strength(1) : forceY())
-        //.force('r', forceRadial(nodesToAdd.length * radius).strength(1))
-        .force('charge-2', d3.forceManyBody())
+        .force('charge-1', ylayered ? undefined : d3.forceManyBody().strength(chargeStrength * 0.15))
+        .force('x', xlayered ? d3.forceX(d => d.conjugate ? +d.conjugate % 2 === 0 ? 0 : self.data.canvas.width : self.data.canvas.width / 2) : d3.forceX())
+        .force('y', ylayered ? d3.forceY(d => +d.layer * 100).strength(1) : d3.forceY())
+        .force('charge-2', d3.forceManyBody().strength(chargeStrength))
         //.force('link', ylayered ? linkForce.strength(d => d.weight ? Math.sqrt(d.weight) % 1 : 1 / (linksToAdd.length + 1)) : linkForce)
-        .force('link', ylayered ? linkForce.strength(0.01) : linkForce)
+        .force('link', ylayered ? linkForce.strength(1 / (linksToAdd.length + 1)) : linkForce)
         .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2))
         .on('tick', () => safeTicked.handle())
         .on('end', () => safeEnd.handle());
@@ -292,9 +192,8 @@ export default class GenericGraph extends Graph {
       safeTicked.handle();
       loader.hide();
       self.parent.zoomToFit();
-      //updateGroups();
     }
-    
+
     let edges =  link.selectAll('path.francy-edge');
     let labels = link.selectAll('text.francy-label');
 
@@ -375,7 +274,4 @@ export default class GenericGraph extends Graph {
     });
     return newElements;
   }
-
-  unrender() {}
-
 }

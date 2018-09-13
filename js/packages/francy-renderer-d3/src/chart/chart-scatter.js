@@ -64,6 +64,4 @@ export default class ScatterChart extends Chart {
 
     return this;
   }
-
-  unrender() {}
 }

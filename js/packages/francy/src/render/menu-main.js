@@ -1,8 +1,5 @@
-import {Logger, Configuration, Menu} from 'francy-core';
-//import GraphOperations from '../graph/graph-operations';
-import AboutModal from './modal-about';
+import {Logger, Configuration, Menu, RenderingManager, RENDERING_EVENTS, AboutModal} from 'francy-core';
 import * as SvgToPng from 'save-svg-as-png';
-import {RenderingManager, EVENTS} from '../../../francy-core/src/render/rendering-manager';
 
 /* global d3, Francy */
 
@@ -10,9 +7,9 @@ export default class MainMenu extends Menu {
 
   constructor({appendTo, callbackHandler}) {
     super({appendTo: appendTo, callbackHandler: callbackHandler});
+    this.aboutModal = new AboutModal(this.options);
   }
 
-  // TODO this: https://stackoverflow.com/questions/9100344/pure-css-multi-level-drop-down-menu
   async render() {
     // Otherwise clashes with the canvas itself!
     const menuId = `MainMenu-${this.data.canvas.id}`;
@@ -40,16 +37,17 @@ export default class MainMenu extends Menu {
     }
 
     // create default menu entry
-    let entry = this.element.append('li').attr('class', 'francy-menu');
+    let entry = this.element.append('li').attr('class', 'francy-entry');
     entry.append('a').html('Francy');
     entry.append('ul');
 
-    this._buildRenderersMenu();
     this._buildDefaultMenu();
 
-    if (this.data.canvas.graph) {
-      this._buildGraphMenu();
-    }
+    entry = this.element.append('li').attr('class', 'options-entry');
+    entry.append('a').html('Options');
+    entry.append('ul');
+
+    this._buildOptionsMenu();
 
     // Traverse all menus and flatten them!
     let menusIterator = this.iterator(Object.values(this.data.canvas.menus));
@@ -61,15 +59,15 @@ export default class MainMenu extends Menu {
   }
 
   _buildDefaultMenu() {
-    let aboutModal = new AboutModal(this.options);
-    let content = this.element.select('.francy-menu>ul');
+    let content = this.element.select('.francy-entry>ul');
     content.append('li').append('a').on('click', () => this.options.appendTo.canvas.zoomToFit(true)).attr('title', 'Zoom to Fit').html('Zoom to Fit');
     content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(this.SVGParent.node(), 'diagram.png')).attr('title', 'Save to PNG').html('Save to PNG');
-    content.append('li').append('a').on('click', () => this.handlePromise(aboutModal.load(this.data).render())).attr('title', 'About').html('About');
+    content.append('li').append('a').on('click', () => this.handlePromise(this.aboutModal.load(this.data).render())).attr('title', 'About').html('About');
   }
 
-  _buildRenderersMenu() {
-    let entry = this.element.select('.francy-menu>ul').append('li');
+  _buildOptionsMenu() {
+    let self = this;
+    let entry = this.element.select('.options-entry>ul').append('li').attr('id', 'renderers-entry');
     entry.append('a').html('Renderers');
     let content = entry.append('ul');
 
@@ -77,53 +75,81 @@ export default class MainMenu extends Menu {
       content.append('li').append('a').attr('id', renderer.id)
         .on('click', () => {
           RenderingManager.enable(renderer.name);
-          Configuration.object.activeRenderer = renderer.name;
         })
         .attr('title', renderer.name).html(`${renderer.enable ? '&#9745' : '&#9744'} ${renderer.name}`)
         .each(function () {
-          RenderingManager.subscribe(EVENTS.UNREGISTER, () => d3.select(d3.select(this).node().parentElement).remove());
+          RenderingManager.subscribe(RENDERING_EVENTS.UNREGISTER, () => d3.select(d3.select(this).node().parentElement).remove());
         });
     }
 
     Object.values(RenderingManager.allRenderers()).forEach(o => insertEntry(o));
-    RenderingManager.subscribe(EVENTS.REGISTER, o => insertEntry(o));
-    RenderingManager.subscribe(EVENTS.STATUS, o => {
+    RenderingManager.subscribe(RENDERING_EVENTS.REGISTER, o => insertEntry(o));
+    RenderingManager.subscribe(RENDERING_EVENTS.STATUS, o => {
       this.element.select(`#${o.id}`).html(`${o.enable ? '&#9745' : '&#9744'} ${o.name}`);
-      this.handlePromise(Francy.load(this.data).render());
+      if (o.enable) {
+        // remove previous rendered canvas
+        d3.select(`#Canvas-${self.data.canvas.id}`).remove();
+        // re-render
+        setTimeout(() => this.handlePromise(Francy.load(this.data).render()), 10);
+      }
+    });
+    
+    // add separator
+    entry.append('hr');
+    
+    this.addEntryOnOptionsMenu({
+      id: 'verbose-entry',
+      title: `${Configuration.object.verbose ? '&#9745' : '&#9744'} Verbose`,
+      onClickCallback: function() {
+        Configuration.object.verbose = !Configuration.object.verbose;
+      },
+      onEachCallback: function() {
+        Configuration.subscribe('verbose', value => {
+          d3.select(this).html(`${value ? '&#9745' : '&#9744'} Verbose`);
+        });
+      }
     });
   }
 
-  _buildGraphMenu() {
-    let entry2 = this.element.append('li');
-    entry2.append('a').html('Graph Options');
-    let content2 = entry2.append('ul');
-    content2.append('li').append('a')
-      .attr('title', 'Neighbours').html(`${Configuration.object.showNeighbours ? '&#9745' : '&#9744'} Show Neighbours`)
-      .on('click', () => {
-        Configuration.object.showNeighbours = !Configuration.object.showNeighbours;
-      })
-      .each(function () {
-        Configuration.subscribe('showNeighbours', value => {
-          d3.select(this).html(`${value ? '&#9745' : '&#9744'} Show Neighbours`);
-        });
-      });
-    content2.append('li').append('a')
-      .attr('title', 'Drag').html(`${Configuration.object.dragNodes ? '&#9745' : '&#9744'} Drag Nodes`)
-      .on('click', () => {
-        Configuration.object.dragNodes = !Configuration.object.dragNodes;
-      })
-      .each(function () {
-        Configuration.subscribe('dragNodes', value => {
-          d3.select(this).html(`${value ? '&#9745' : '&#9744'} Drag Nodes`);
-        });
-      });
-    /*let operations = new GraphOperations(this.options);
-    content2.append('li').append('a')
-      .attr('title', 'Selection').html('Clear Selected Nodes')
-      .on('click', () => operations.nodeSelection.clear());*/
+  addEntryOnOptionsMenu({id, title, onClickCallback, onEachCallback, withSeparator}) {
+    let entry = this.element.select('.options-entry>ul').data([{id: id, title: title}]);
+    entry = entry.append('li').attr('id', d => d.id);
+    onClickCallback = onClickCallback || function() {};
+    onEachCallback = onEachCallback || function() {};
+    entry.append('a').html(d => d.title)
+      .on('click', onClickCallback)
+      .each(onEachCallback);
+    if (withSeparator) {
+      // add separator
+      entry.append('hr');
+    }
+    return entry;
   }
 
-  unrender() {
+  addEntryOnFrancyMenu({id, title, onClickCallback, onEachCallback, withSeparator}) {
+    let entry = this.element.select('.francy-entry>ul').data([{id: id, title: title}]);
+    entry = entry.append('li').attr('id', d => d.id);
+    onClickCallback = onClickCallback || function() {};
+    onEachCallback = onEachCallback || function() {};
+    entry.append('a').html(d => d.title)
+      .on('click', onClickCallback)
+      .each(onEachCallback);
+    if (withSeparator) {
+      // add separator
+      entry.append('hr');
+    }
+    return entry;
+  }
+  
+  addEntryOnMenu({id, title, onClickCallback, onEachCallback}) {
+    let entry = this.element.data([{id: id, title: title}]);
+    entry = entry.append('li').attr('id', d => d.id);
+    onClickCallback = onClickCallback || function() {};
+    onEachCallback = onEachCallback || function() {};
+    entry.append('a').html(d => d.title)
+      .on('click', onClickCallback)
+      .each(onEachCallback);
+    return entry;
   }
 
 }

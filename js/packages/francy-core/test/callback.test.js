@@ -20,18 +20,18 @@ describe('Callbacks', () => {
   
   it('should return the execute Trigger command with required args', () => {
     window.callback.load({callback: {
-              type: 'server',
-              id: 'F1',
-              trigger: 'click',
-              knownArgs: [],
-              requiredArgs: {
-                F2: {
-                  type: 'number',
-                  id: 'F2',
-                  title: 'How many Circles?',
-                  value: '15'
-                }
-              }}}, true).settings({callbackHandler: handler}).execute();
+      type: 'server',
+      id: 'F1',
+      trigger: 'click',
+      knownArgs: [],
+      requiredArgs: {
+        F2: {
+          type: 'number',
+          id: 'F2',
+          title: 'How many Circles?',
+          value: '15'
+        }
+      }}}, true).settings({callbackHandler: handler}).execute();
     function handler(result) {
       expect(result).to.have.string('Trigger(');
     }
@@ -39,12 +39,12 @@ describe('Callbacks', () => {
   
   it('should return the execute Trigger command without required args', () => {
     window.callback.load({callback: {
-              type: 'server',
-              id: 'F1111',
-              trigger: 'click',
-              knownArgs: [],
-              requiredArgs: {}
-              }}, true).settings({callbackHandler: handler}).execute();
+      type: 'server',
+      id: 'F1111',
+      trigger: 'click',
+      knownArgs: [],
+      requiredArgs: {}
+    }}, true).settings({callbackHandler: handler}).execute();
     function handler(result) {
       expect(result).to.have.string('Trigger(');
     }

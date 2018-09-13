@@ -1,9 +1,13 @@
-import { MIME_TYPE, CLASS_NAME, APPEND_ID } from './utils';
+import { MIME_TYPE, CLASS_NAME } from './utils';
 import { Widget } from '@phosphor/widgets';
 //import { OutputArea } from '@jupyterlab/outputarea';
 import './d3_wrapper';
 import 'francy';
 import 'francy-renderer-d3';
+
+/* global Francy */
+
+/* eslint-disable no-console */
 
 /**
  * A widget for rendering 'application/vnd.francy+json'
@@ -67,3 +71,5 @@ const extension = {
 };
 
 export default extension;
+
+/* eslint-enable no-console */

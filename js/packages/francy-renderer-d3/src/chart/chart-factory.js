@@ -34,7 +34,4 @@ export default class ChartFactory extends Renderer {
 
     return element;
   }
-
-  unrender() {}
-
 }

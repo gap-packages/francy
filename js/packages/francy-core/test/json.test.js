@@ -8,11 +8,11 @@ describe('Json utils', () => {
   it('should return an object', () => {
     expect(JsonUtils).to.be.an('function');
     //expect(JsonUtils.parse(`{"mime": ${JsonUtils.MIME}, "canvas": {}}`)).to.be.an('object');
-    expect(JsonUtils.parse({ "mime": JsonUtils.MIME, "canvas": {} })).to.be.an('object');
+    expect(JsonUtils.parse({ 'mime': JsonUtils.MIME, 'canvas': {} })).to.be.an('object');
     expect(JsonUtils.parse('{"mime": "invalid", "canvas": {}}', true)).to.be.an('object');
-    expect(JsonUtils.parse({ "mime": "invalid", "canvas": {} }, true)).to.be.an('object');
+    expect(JsonUtils.parse({ 'mime': 'invalid', 'canvas': {} }, true)).to.be.an('object');
     expect(JsonUtils.parse('{"canvas": {}}', true)).to.be.an('object');
-    expect(JsonUtils.parse({ "canvas": {} }, true)).to.be.an('object');
+    expect(JsonUtils.parse({ 'canvas': {} }, true)).to.be.an('object');
   });
 
   it('should return undefined', () => {
@@ -24,11 +24,11 @@ describe('Json utils', () => {
     expect(JsonUtils.parse('invalid')).to.be.an('undefined');
     expect(JsonUtils.parse('invalid'), true).to.be.an('undefined');
     expect(JsonUtils.parse('{"mime": "invalid", "canvas": {}}')).to.be.an('undefined');
-    expect(JsonUtils.parse({ "mime": "invalid", "canvas": {} })).to.be.an('undefined');
+    expect(JsonUtils.parse({ 'mime': 'invalid', 'canvas': {} })).to.be.an('undefined');
   });
 
 
-  it("should return the MIME value", () => {
+  it('should return the MIME value', () => {
     expect(JsonUtils.MIME).to.equal('application/vnd.francy+json');
   });
 

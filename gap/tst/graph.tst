@@ -38,7 +38,7 @@ gap> SetInvisible(link, true);
 gap> Invisible(link) = true;
 true
 gap> Add(graph, link);
-gap> GetLink(graph, Id(link));
+gap> GetLink(graph, FrancyId(link));
 <IsFrancyObject/IsLink>
 gap> GetLink(graph, "I'm not there!");
 gap> GetLinks(graph);
@@ -82,7 +82,7 @@ gap> shape := Shape(ShapeType.SQUARE);
 gap> shape1 := Shape(ShapeType.SQUARE);
 <IsFrancyObject/IsShape>
 gap> SetParentShape(shape1, shape);
-gap> ParentShape(shape1) = Id(shape);
+gap> ParentShape(shape1) = FrancyId(shape);
 true
 gap> SetSize(shape1, 5);
 gap> Size(shape1) = 5;

@@ -1,4 +1,5 @@
-import { Logger, CompositeRenderer, Decorators } from 'francy-core';
+import { Logger, CompositeRenderer, Decorators, Configuration } from 'francy-core';
+import * as ignore from 'seedrandom';
 import GraphFactory from './graph/graph-factory';
 import ChartFactory from './chart/chart-factory';
 
@@ -96,12 +97,43 @@ export default class Canvas extends CompositeRenderer {
     this.element.zoomToFit = this.zoomToFit = zoomToFit;
 
     Logger.debug(`Canvas updated [${canvasId}]...`);
+    
+    this._buildMenu();
 
     this.handlePromise(this.renderChildren());
 
     return this;
   }
-
-  unrender() {}
-
+  
+  _buildMenu() {
+    // here we have access to MainMenu
+    if (this.data.canvas.graph) {
+      this.parentClass.MainMenu.addEntryOnOptionsMenu({
+        id: 'neighbours-entry',
+        title: `${Configuration.object.showNeighbours ? '&#9745' : '&#9744'} Show Neighbours`,
+        onClickCallback: function() {
+          Configuration.object.showNeighbours = !Configuration.object.showNeighbours;
+        },
+        onEachCallback: function() {
+          Configuration.subscribe('showNeighbours', value => {
+            d3.select(this).html(`${value ? '&#9745' : '&#9744'} Show Neighbours`);
+          });
+        }
+      });
+   
+      this.parentClass.MainMenu.addEntryOnOptionsMenu({
+        id: 'drag-entry',
+        title: `${Configuration.object.dragNodes ? '&#9745' : '&#9744'} Drag Nodes`,
+        onClickCallback: function() {
+          Configuration.object.dragNodes = !Configuration.object.dragNodes;
+        },
+        onEachCallback: function() {
+          Configuration.subscribe('dragNodes', value => {
+            d3.select(this).html(`${value ? '&#9745' : '&#9744'} Drag Nodes`);
+          });
+        },
+        withSeparator: true
+      });
+    }
+  }
 }

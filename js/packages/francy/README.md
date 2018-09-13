@@ -1,1 +1,1 @@
-# Francy - Core
+# Francy

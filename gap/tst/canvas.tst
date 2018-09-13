@@ -1,6 +1,6 @@
 gap> canvas := Canvas("");
 <IsFrancyObject/IsCanvas>
-gap> Id(canvas);
+gap> FrancyId(canvas);
 "F16"
 gap> SetTitle(canvas, "Quaternion Group Subgroup Lattice");
 gap> Title(canvas);

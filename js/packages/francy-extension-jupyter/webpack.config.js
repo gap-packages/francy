@@ -1,6 +1,5 @@
 var path = require('path');
-//const fPackage = require('./package.json');
-const fPackage = {name: 'Francy', version: '0.9.0', description: '', author: ''};
+const fPackage = require('./package.json');
 const webpack = require('webpack');
 const description = `'${fPackage.name}, v${fPackage.version}, ${fPackage.description}, ${fPackage.author}.'`;
 const defaultPlugins = [
@@ -19,13 +18,17 @@ module.exports = (env = {}) => {
   var loaders = [
     {
       test: /\.js$/,
-      
-      loader: 'babel-loader',
-      query: { 
-        plugins: [ "transform-class-properties", "transform-decorators-legacy", 
-          ["babel-plugin-transform-builtin-extend", { "globals": ["Error"] }]
-        ],  
-        presets: ['env'] }
+      exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env'],
+          plugins: [
+            ["@babel/plugin-proposal-decorators", { "legacy": true }],
+            ["@babel/plugin-transform-classes", { globals: ["Error"] }]
+          ]
+        }
+      }
     },
     //{ test: /\.json$/, loader: 'json-loader' },
     { test: /\.css$/, loader: 'style-loader!css-loader' },
@@ -56,6 +59,9 @@ module.exports = (env = {}) => {
       libraryTarget: 'amd',
       devtoolModuleFilenameTemplate: 'webpack:///[absolute-resource-path]'
     },
+    optimization: {
+      mergeDuplicateChunks: true
+    },
     devtool: 'source-map',
     module: {
       rules: loaders
@@ -85,8 +91,7 @@ module.exports = (env = {}) => {
       }),
       externals: [
         'base/js/namespace',
-        'nbextensions/jupyter_francy/index',
-        'nbextensions/jupyter_francy/d3'
+        'nbextensions/jupyter_francy/index'
       ]
     }),
   
@@ -96,7 +101,7 @@ module.exports = (env = {}) => {
      * It must be an amd module
      */
     Object.assign({}, base, {
-      entry: ['babel-polyfill', path.join(__dirname, 'src', 'nb_index.js')],
+      entry: ['@babel/polyfill', path.join(__dirname, 'src', 'nb_index.js')],
       output: Object.assign({}, base.output, {
         filename: 'index.js',
         path: path.join(
@@ -106,22 +111,5 @@ module.exports = (env = {}) => {
         )
       })
     }),
-  
-    /**
-     * This bundle contains the implementation of the extension dependencies.
-     *
-     * It must be an amd module
-     */
-    Object.assign({}, base, {
-      entry: path.join(__dirname, '..', '..', 'node_modules', 'd3', 'dist', 'd3.min.js'),
-      output: Object.assign({}, base.output, {
-        filename: 'd3.js',
-        path: path.join(
-          __dirname,
-          'jupyter_francy',
-          'nbextension'
-        )
-      })
-    })
   ];
 };

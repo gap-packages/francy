@@ -189,6 +189,4 @@ export default class TreeGraph extends Graph {
 
     return this;
   }
-
-  unrender() {}
 }

@@ -14,8 +14,11 @@
     "interactivity"
   ],
   "license": "MIT",
+  "scripts": {
+    "test": "karma start karma.conf.js"
+  },
+  "main": "index.js",
   "dependencies": {
     "francy-core": "0.9.0"
-  },
-  "main": "index.js"
+  }
 }

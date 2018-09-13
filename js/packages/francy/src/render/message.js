@@ -4,8 +4,8 @@ import { Decorators, Renderer } from 'francy-core';
 
 export default class Message extends Renderer {
 
-  constructor({ appendTo }) {
-    super({ appendTo: appendTo });
+  constructor({appendTo, callbackHandler}) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler});
   }
 
   @Decorators.Data.requires('canvas.messages')
@@ -47,6 +47,4 @@ export default class Message extends Renderer {
 
     return this;
   }
-
-  unrender() {}
 }

@@ -6,10 +6,7 @@
  * dynamically.
  */
 
-__webpack_public_path__ = document
-  .querySelector('body')
-  .getAttribute('data-base-url') +
-  'nbextensions/jupyter_francy/';
+__webpack_public_path__ = document.querySelector('body').getAttribute('data-base-url') + 'nbextensions/jupyter_francy/'; // eslint-disable-line no-undef
 
 /**
  * Export widget models and views, and the npm package version number.

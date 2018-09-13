@@ -3,6 +3,9 @@ import './d3_wrapper';
 import 'francy';
 import 'francy-renderer-d3';
 
+/* global Francy */
+/* eslint-disable no-console */
+
 export function init(Jupyter) {
 
   console.log('Starting configuring module Francy Javascript...');
@@ -41,18 +44,18 @@ function render(props, node) {
 /**
  * Handle when an output is cleared or removed
  */
-function handleClearOutput(event, { cell: { output_area } }) {
+function handleClearOutput(event, { cell: { output_area } }) { // eslint-disable-line no-unused-vars
   /* Get rendered DOM node */
-  const toinsert = output_area.element.find(CLASS_NAME.split(' ')[0]);
+  const toinsert = output_area.element.find(CLASS_NAME.split(' ')[0]); // eslint-disable-line no-unused-vars
   // nothing to do
 }
 
 /**
  * Handle when a new output is added
  */
-function handleAddOutput(event, { output, output_area }) {
+function handleAddOutput(event, { output, output_area }) { // eslint-disable-line no-unused-vars
   /* Get rendered DOM node */
-  const toinsert = output_area.element.find(CLASS_NAME.split(' ')[0]);
+  const toinsert = output_area.element.find(CLASS_NAME.split(' ')[0]); // eslint-disable-line no-unused-vars
   /** e.g. Inject a static image representation into the mime bundle for
    *  endering on Github, etc.
    */
@@ -127,3 +130,5 @@ export function render_cells(notebook) {
     }
   });
 }
+
+/* eslint-enable no-console */

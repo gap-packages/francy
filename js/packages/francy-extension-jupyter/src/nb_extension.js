@@ -1,3 +1,5 @@
+/* global define */
+
 /**
  * This file contains the javascript that is run when the notebook is loaded.
  * It contains some requirejs configuration and the `load_ipython_extension` 
@@ -20,17 +22,21 @@ if (window.require) {
 /**
  * Export the required load_ipython_extention.
  */
-export function load_ipython_extension() {
-  define(
-    [
-      'base/js/namespace',
-      'nbextensions/jupyter_francy/index'
-    ],
-    (Jupyter, Extension) => {
+define(
+  [
+    'base/js/namespace',
+    'nbextensions/jupyter_francy/index'
+  ],
+  (Jupyter, Extension) => {
+    function load_ipython_extension() {
       const { notebook } = Jupyter;
       Extension.init(Jupyter);
       Extension.register_renderer(notebook);
       Extension.render_cells(notebook);
     }
-  );
-}
+    return {
+      load_ipython_extension : load_ipython_extension
+    };
+  }
+);
+

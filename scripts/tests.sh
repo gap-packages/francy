@@ -15,10 +15,8 @@ cd js
 npm run lint
 npm run coverage
 
-cd $CURRENT
-
 # Test Extensions - won't produce any coverage obviously
-cd extensions/jupyter
+cd packages/francy-extension-jupyter
 
 pyenv local 3.6
 

@@ -4,12 +4,37 @@ import { Logger} from '../../util/logger';
 import { Components } from '../../component/factory';
 import { Decorators } from '../../decorator/factory';
 
+/**
+ * Implements a Required Arguments Modal window.
+ * 
+ * The modal window takes a callback and based on the callback configuration will
+ * create the input fields required and display them to the user.
+ * 
+ * @extends {Modal}
+ */
 export default class RequiredArgsModal extends Modal {
 
+  /**
+   * Base constructor
+   * 
+   * @typedef {Object} options
+   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
+   */
   constructor({ appendTo, callbackHandler }) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler });
+    /**
+     * Stores the element
+     * @type {object}
+     */
+    this.element = undefined;
   }
 
+  /**
+   * This method is used to render this component
+   * 
+   * @public
+   */
   @Decorators.Initializer.initialize()
   async render() {
     let modalId = this.data.callback.id;
@@ -43,6 +68,11 @@ export default class RequiredArgsModal extends Modal {
     return this;
   }
 
+  /**
+   * Utility method to handle content build
+   * 
+   * @private
+   */
   _buildContent(form) {
     let self = this;
     

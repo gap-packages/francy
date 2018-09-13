@@ -12,10 +12,10 @@ module.exports = function(config) {
     },
     files: [
       '../../node_modules/@babel/polyfill/dist/polyfill.js',
-      './src/test/**/*.test.js'
+      './src/__test__/**/*.test.js'
     ],
     exclude: [
-      './src/test/data/'
+      './src/__test__/data/'
     ],
     plugins: [
       'karma-chrome-launcher',

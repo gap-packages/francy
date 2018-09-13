@@ -1,10 +1,24 @@
 import {Exception} from '../util/exception';
 
+/**
+ * This {Decorator} class is used to check whether a property is present in the data before executing a method.
+ */
 export default class DataDecorator {
 
+  /**
+   * Default constructor
+   */
   constructor() {
   }
 
+  /**
+   * This function can be used as a decorator to intercept a method and, based on {this.data},
+   * whether to execute it or not.
+   * 
+   * @example @Decorators.Data.requires('canvas.graph')
+   * @param {string} properties - the properties separateed by a dot, e.g. 'data.property'
+   * @public
+   */
   requires(properties) {
     var self = this;
     return function decorator(target, name, descriptor) {
@@ -21,6 +35,14 @@ export default class DataDecorator {
     };
   }
 
+  /**
+   * This function can be used as a decorator to intercept a method and, based on {this.data},
+   * execute it if the property is set to true otherwise rejects the promise.
+   * 
+   * @example @Decorators.Data.enabled('canvas.texTypesetting')
+   * @param {string} properties - the properties separateed by a dot, e.g. 'data.property'
+   * @public
+   */
   enabled(properties) {
     var self = this;
     return function decorator(target, name, descriptor) {
@@ -37,6 +59,12 @@ export default class DataDecorator {
     };
   }
 
+  /**
+   * Helper method to iterate over an object
+   * @param {Object} obj - the object to search the property for
+   * @param {strin} propertyPath - property separated by dot
+   * @private
+   */
   _getProperty(obj, propertyPath) {
 
     var tmp = obj;
@@ -57,6 +85,11 @@ export default class DataDecorator {
     return tmp;
   }
 
+  /**
+   * Helper method to check whether a property has data
+   * @param {Object} obj - the object to check
+   * @private
+   */
   _hasData(obj) {
     return obj && ((obj instanceof Array && obj.length) || (obj instanceof Object && Object.values(obj).length));
   }

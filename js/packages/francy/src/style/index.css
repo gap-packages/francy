@@ -62,6 +62,11 @@
   z-index: 500
 }
 
+.francy-main-menu hr {
+  border-color: #cfcfcf!important;
+  margin: 0.5px!important;
+}
+
 .francy-main-menu li ul li:hover ul {
   position: absolute;
   left: 100%!important;

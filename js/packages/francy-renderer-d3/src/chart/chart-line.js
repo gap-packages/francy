@@ -65,6 +65,4 @@ export default class LineChart extends Chart {
 
     return this;
   }
-
-  unrender() {}
 }

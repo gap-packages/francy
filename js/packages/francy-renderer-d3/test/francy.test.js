@@ -1,48 +1,22 @@
-import * as d3 from 'd3';
 import { expect } from 'chai';
-import Francy from '../francy';
+import './d3_wrapper';
+import 'francy';
+import '../../index';
 import undirected from './data/json1.json';
 import directed from './data/json2.json';
 import tree from './data/json3.json';
 import bar from './data/json4.json';
 import line from './data/json5.json';
 import scatter from './data/json6.json';
-
+    
 describe('Francy Renderer Object', function() {
-
-  window.d3 = global.d3 = d3;
-  window.MathJax = {
-      Hub: {
-        Config: c=>c,
-        Register: {
-          MessageHook: c=>c
-        },
-        Configured: () => {},
-        Queue: c=>c
-      }
-  };
-
-  window.francy = new Francy({ callbackHandler: console.log, appendTo: 'body' });
 
   beforeEach(() => {
     d3.select('body').selectAll('div').remove();
   });
 
-  it('should return an object', function(done) {
-    expect(window.francy).to.be.an('object');
-    done();
-  });
-  
-  it('should reject the promise if no data is present', function(done) {
-    window.francy.render().catch(error => {
-      expect(error).to.be.a('Error');
-      expect(error.message).to.equal('No data here [canvas], nothing to render... continuing...');
-      done();
-    });
-  });
-  
   it('should produce an undirected graph', function(done) {
-     window.francy.load(undirected).render()
+     window.Francy.load(undirected).render()
      .catch(error => done(error))
      .then(object => {
       expect(object).to.be.a('htmldivelement');
@@ -58,7 +32,7 @@ describe('Francy Renderer Object', function() {
   });
 
   it('should produce a directed graph', function(done) {
-     window.francy.load(directed).render()
+     window.Francy.load(directed).render()
      .catch(error => done(error))
      .then(object => {
       expect(object).to.be.a('htmldivelement');
@@ -74,7 +48,7 @@ describe('Francy Renderer Object', function() {
   });
   
   it('should produce a tree graph', function(done) {
-     window.francy.load(tree).render()
+     window.Francy.load(tree).render()
      .catch(error => done(error))
      .then(object => {
       expect(object).to.be.a('htmldivelement');
@@ -90,7 +64,7 @@ describe('Francy Renderer Object', function() {
   });
   
   it('should produce a bar chart', function(done) {
-     window.francy.load(bar).render()
+     window.Francy.load(bar).render()
      .catch(error => done(error))
      .then(object => {
       expect(object).to.be.a('htmldivelement');
@@ -110,7 +84,7 @@ describe('Francy Renderer Object', function() {
 
 
   it('should produce a line chart', function(done) {
-     window.francy.load(line).render()
+     window.Francy.load(line).render()
      .catch(error => done(error))
      .then(object => {
       expect(object).to.be.a('htmldivelement');
@@ -129,7 +103,7 @@ describe('Francy Renderer Object', function() {
   });  
     
   it('should produce a scatter chart', function(done) {
-     window.francy.load(scatter).render()
+     window.Francy.load(scatter).render()
      .catch(error => done(error))
      .then(object => {
       expect(object).to.be.a('htmldivelement');

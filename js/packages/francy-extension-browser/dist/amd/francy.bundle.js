@@ -4533,7 +4533,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _configuration = __webpack_require__(/*! ./src/util/configuration */ "../francy-core/src/util/configuration.js");
 
-Object.defineProperty(exports, "Configuration", {
+Object.defineProperty(exports, 'Configuration', {
   enumerable: true,
   get: function get() {
     return _configuration.Configuration;
@@ -4542,7 +4542,7 @@ Object.defineProperty(exports, "Configuration", {
 
 var _factory = __webpack_require__(/*! ./src/decorator/factory */ "../francy-core/src/decorator/factory.js");
 
-Object.defineProperty(exports, "Decorators", {
+Object.defineProperty(exports, 'Decorators', {
   enumerable: true,
   get: function get() {
     return _factory.Decorators;
@@ -4551,7 +4551,7 @@ Object.defineProperty(exports, "Decorators", {
 
 var _factory2 = __webpack_require__(/*! ./src/component/factory */ "../francy-core/src/component/factory.js");
 
-Object.defineProperty(exports, "Components", {
+Object.defineProperty(exports, 'Components', {
   enumerable: true,
   get: function get() {
     return _factory2.Components;
@@ -4560,7 +4560,7 @@ Object.defineProperty(exports, "Components", {
 
 var _logger = __webpack_require__(/*! ./src/util/logger */ "../francy-core/src/util/logger.js");
 
-Object.defineProperty(exports, "Logger", {
+Object.defineProperty(exports, 'Logger', {
   enumerable: true,
   get: function get() {
     return _logger.Logger;
@@ -4569,16 +4569,31 @@ Object.defineProperty(exports, "Logger", {
 
 var _utilities = __webpack_require__(/*! ./src/util/utilities */ "../francy-core/src/util/utilities.js");
 
-Object.defineProperty(exports, "Utilities", {
+Object.defineProperty(exports, 'Utilities', {
   enumerable: true,
   get: function get() {
     return _utilities.Utilities;
   }
 });
 
+var _renderingManager = __webpack_require__(/*! ./src/render/rendering-manager */ "../francy-core/src/render/rendering-manager.js");
+
+Object.defineProperty(exports, 'RenderingManager', {
+  enumerable: true,
+  get: function get() {
+    return _renderingManager.RenderingManager;
+  }
+});
+Object.defineProperty(exports, 'RENDERING_EVENTS', {
+  enumerable: true,
+  get: function get() {
+    return _renderingManager.RENDERING_EVENTS;
+  }
+});
+
 var _observable = __webpack_require__(/*! ./src/util/observable */ "../francy-core/src/util/observable.js");
 
-Object.defineProperty(exports, "Observable", {
+Object.defineProperty(exports, 'Observable', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_observable).default;
@@ -4587,7 +4602,7 @@ Object.defineProperty(exports, "Observable", {
 
 var _callback = __webpack_require__(/*! ./src/render/callback */ "../francy-core/src/render/callback.js");
 
-Object.defineProperty(exports, "Callback", {
+Object.defineProperty(exports, 'Callback', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_callback).default;
@@ -4596,7 +4611,7 @@ Object.defineProperty(exports, "Callback", {
 
 var _base = __webpack_require__(/*! ./src/render/base */ "../francy-core/src/render/base.js");
 
-Object.defineProperty(exports, "BaseRenderer", {
+Object.defineProperty(exports, 'BaseRenderer', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_base).default;
@@ -4605,7 +4620,7 @@ Object.defineProperty(exports, "BaseRenderer", {
 
 var _composite = __webpack_require__(/*! ./src/render/composite */ "../francy-core/src/render/composite.js");
 
-Object.defineProperty(exports, "CompositeRenderer", {
+Object.defineProperty(exports, 'CompositeRenderer', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_composite).default;
@@ -4614,7 +4629,7 @@ Object.defineProperty(exports, "CompositeRenderer", {
 
 var _renderer = __webpack_require__(/*! ./src/render/renderer */ "../francy-core/src/render/renderer.js");
 
-Object.defineProperty(exports, "Renderer", {
+Object.defineProperty(exports, 'Renderer', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_renderer).default;
@@ -4623,7 +4638,7 @@ Object.defineProperty(exports, "Renderer", {
 
 var _menu = __webpack_require__(/*! ./src/render/menu/menu */ "../francy-core/src/render/menu/menu.js");
 
-Object.defineProperty(exports, "Menu", {
+Object.defineProperty(exports, 'Menu', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_menu).default;
@@ -4632,7 +4647,7 @@ Object.defineProperty(exports, "Menu", {
 
 var _modal = __webpack_require__(/*! ./src/render/modal/modal */ "../francy-core/src/render/modal/modal.js");
 
-Object.defineProperty(exports, "Modal", {
+Object.defineProperty(exports, 'Modal', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_modal).default;
@@ -7046,7 +7061,7 @@ var ErrorDecorator = function () {
       var result = undefined;
       try {
         result = this.function.apply(this.context, arguments);
-        if (result && typeof result.then == 'function') {
+        if (result && typeof result.then === 'function') {
           result = result.catch(function (error) {
             _this._logEntry(error);
             _this._runOnError();
@@ -7250,7 +7265,7 @@ var InitializerDecorator = function () {
         var oldValue = descriptor.value;
 
         descriptor.value = function () {
-          this._initialize();
+          this.initialize();
           return oldValue.apply(this, arguments);
         };
         return descriptor;
@@ -7376,7 +7391,7 @@ var LoaderDecorator = function () {
       if (this.element && this.element.data()[0]) {
         delete this.element.data()[0][this.id];
         // hide only if no more loaders present
-        if (Object.values(this.element.data()[0]).length == 0) {
+        if (Object.values(this.element.data()[0]).length === 0) {
           this.element.style('visibility', 'hidden');
         }
       }
@@ -7408,11 +7423,11 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _logger = __webpack_require__(/*! ../util/logger */ "../francy-core/src/util/logger.js");
-
 var _dataHandler = __webpack_require__(/*! ../util/data-handler */ "../francy-core/src/util/data-handler.js");
 
 var _dataHandler2 = _interopRequireDefault(_dataHandler);
+
+var _logger = __webpack_require__(/*! ../util/logger */ "../francy-core/src/util/logger.js");
 
 var _exception = __webpack_require__(/*! ../util/exception */ "../francy-core/src/util/exception.js");
 
@@ -7422,10 +7437,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 /**
  * Base is the base of renderers and contains multiple utility methods.
  */
-var BaseRenderer = function () {
+var BaseRenderer = function (_DataHandler) {
+  _inherits(BaseRenderer, _DataHandler);
 
   /**
    * Base constructor
@@ -7446,12 +7466,11 @@ var BaseRenderer = function () {
      * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
      * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
      */
-    this.options = undefined;
-    this.settings({ appendTo: appendTo, callbackHandler: callbackHandler });
-    /**
-     * @type {Object} the internal data model object
-     */
-    this.dataHandler = new _dataHandler2.default();
+    var _this = _possibleConstructorReturn(this, (BaseRenderer.__proto__ || Object.getPrototypeOf(BaseRenderer)).call(this));
+
+    _this.options = undefined;
+    _this.settings({ appendTo: appendTo, callbackHandler: callbackHandler });
+    return _this;
   }
 
   /**
@@ -7483,40 +7502,20 @@ var BaseRenderer = function () {
       this.options.callbackHandler = callbackHandler || this.options.callbackHandler;
       return this;
     }
-  }, {
-    key: 'load',
-    value: function load(json, partial) {
-      this.dataHandler.load(json, partial);
-      return this;
-    }
-  }, {
-    key: 'handleErrors',
-
 
     /**
-     * Generic error handler.
-     * Will log the error and rethrow if error is unknown.
+     * Returns the parent element of this class 
      */
-    value: function handleErrors(error) {
-      if (error instanceof _exception.Exception) {
-        // well, most of these are just informative
-        _logger.Logger.debug(error.message);
-        return;
-      }
-      _logger.Logger.error(error.message);
-      throw error;
-    }
+
+  }, {
+    key: 'handlePromise',
+
 
     /**
      * Generic Promise handler.
      * This will show the Loader/Spinner on the application while processing.
      */
-
-  }, {
-    key: 'handlePromise',
     value: function handlePromise(promise) {
-      var _this = this;
-
       var loader = _factory.Decorators.Loader.withContext(this).show();
       return promise.then(function (data) {
         return data;
@@ -7527,24 +7526,31 @@ var BaseRenderer = function () {
       });
     }
   }, {
-    key: 'data',
-    get: function get() {
-      return this.dataHandler.data;
-    }
-
-    /**
-     * Returns the parent element of this class 
-     */
-
-  }, {
     key: 'parent',
     get: function get() {
       return this.options.appendTo.element;
     }
+
+    /**
+     * Generic error handler.
+     * Will log the error and rethrow if error is unknown.
+     */
+
+  }], [{
+    key: 'handleErrors',
+    value: function handleErrors(error) {
+      if (error instanceof _exception.Exception) {
+        // well, most of these are just informative
+        _logger.Logger.debug(error.message);
+        return;
+      }
+      _logger.Logger.error(error.message);
+      throw error;
+    }
   }]);
 
   return BaseRenderer;
-}();
+}(_dataHandler2.default);
 
 exports.default = BaseRenderer;
 
@@ -7569,9 +7575,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _desc, _value, _class;
 
-var _base = __webpack_require__(/*! ./base */ "../francy-core/src/render/base.js");
+var _dataHandler = __webpack_require__(/*! ../util/data-handler */ "../francy-core/src/util/data-handler.js");
 
-var _base2 = _interopRequireDefault(_base);
+var _dataHandler2 = _interopRequireDefault(_dataHandler);
 
 var _modalRequired = __webpack_require__(/*! ./modal/modal-required */ "../francy-core/src/render/modal/modal-required.js");
 
@@ -7627,10 +7633,10 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
  * Callbacks can have arguments, for which a Modal window will appear to request such input.
  * Callbacks can also show a confirmation message before arguments input / execution.
  * If a Callback does not require an argument and no confirmation message, 
- * then the Callback is executed immediatly.
+ * then the Callback is executed immediately.
  */
-var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_class = function (_BaseRenderer) {
-  _inherits(CallbackHandler, _BaseRenderer);
+var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_class = function (_DataHandler) {
+  _inherits(CallbackHandler, _DataHandler);
 
   /**
    * CallbackHandler constructor
@@ -7639,13 +7645,10 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
    * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
-  function CallbackHandler(_ref) {
-    var appendTo = _ref.appendTo,
-        callbackHandler = _ref.callbackHandler;
-
+  function CallbackHandler(callbackHandler) {
     _classCallCheck(this, CallbackHandler);
 
-    var _this = _possibleConstructorReturn(this, (CallbackHandler.__proto__ || Object.getPrototypeOf(CallbackHandler)).call(this, { appendTo: appendTo, callbackHandler: callbackHandler }));
+    var _this = _possibleConstructorReturn(this, (CallbackHandler.__proto__ || Object.getPrototypeOf(CallbackHandler)).call(this));
 
     _this.callback = callbackHandler;
     return _this;
@@ -7654,7 +7657,7 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
   _createClass(CallbackHandler, [{
     key: 'execute',
     value: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var _this2 = this;
 
         var options;
@@ -7708,7 +7711,7 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
       }));
 
       function execute() {
-        return _ref2.apply(this, arguments);
+        return _ref.apply(this, arguments);
       }
 
       return execute;
@@ -7716,7 +7719,7 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
   }, {
     key: '_showConfirmModal',
     value: function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
         var _this3 = this;
 
         var options, modal;
@@ -7747,7 +7750,7 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
       }));
 
       function _showConfirmModal() {
-        return _ref3.apply(this, arguments);
+        return _ref2.apply(this, arguments);
       }
 
       return _showConfirmModal;
@@ -7755,7 +7758,7 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
   }, {
     key: '_showRequiredModal',
     value: function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
         var _this4 = this;
 
         var options, modal;
@@ -7784,7 +7787,7 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
       }));
 
       function _showRequiredModal() {
-        return _ref4.apply(this, arguments);
+        return _ref3.apply(this, arguments);
       }
 
       return _showRequiredModal;
@@ -7799,7 +7802,7 @@ var CallbackHandler = (_dec = _factory.Decorators.Data.requires('callback'), (_c
   }]);
 
   return CallbackHandler;
-}(_base2.default), (_applyDecoratedDescriptor(_class.prototype, 'execute', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'execute'), _class.prototype)), _class));
+}(_dataHandler2.default), (_applyDecoratedDescriptor(_class.prototype, 'execute', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'execute'), _class.prototype)), _class));
 exports.default = CallbackHandler;
 
 /***/ }),
@@ -8146,7 +8149,7 @@ var Menu = function (_Renderer) {
         var action = entry.selectAll('a').data([menuItem]).enter().append('a').attr('title', menuItem.title).html(menuItem.title);
         if (menuItem.callback && Object.values(menuItem.callback).length) {
           action.on('click', function (d) {
-            return new _callback2.default(_this2.options).load(d, true).execute();
+            return new _callback2.default(_this2.options.callbackHandler).load(d, true).execute();
           });
         }
         if (menuItem.menus && Object.values(menuItem.menus).length > 0) {
@@ -8569,8 +8572,8 @@ var Modal = function (_Renderer) {
   }
 
   _createClass(Modal, [{
-    key: '_initialize',
-    value: function _initialize() {
+    key: 'initialize',
+    value: function initialize() {
       // we want to overlay everything, hence 'body' must be used
       this.overlay = d3.select('body').append('div').attr('class', 'francy-overlay');
       this.holder = d3.select('body').append('div').attr('class', 'francy');
@@ -8684,8 +8687,8 @@ var Renderer = function (_BaseRenderer) {
   }
 
   _createClass(Renderer, [{
-    key: '_initialize',
-    value: function _initialize() {}
+    key: 'initialize',
+    value: function initialize() {}
   }, {
     key: 'HTMLParent',
     get: function get() {
@@ -8724,6 +8727,125 @@ var Renderer = function (_BaseRenderer) {
 }(_base2.default);
 
 exports.default = Renderer;
+
+/***/ }),
+
+/***/ "../francy-core/src/render/rendering-manager.js":
+/*!******************************************************!*\
+  !*** ../francy-core/src/render/rendering-manager.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.RenderingManager = exports.RENDERING_EVENTS = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _observable = __webpack_require__(/*! ../util/observable */ "../francy-core/src/util/observable.js");
+
+var _observable2 = _interopRequireDefault(_observable);
+
+var _logger = __webpack_require__(/*! ../util/logger */ "../francy-core/src/util/logger.js");
+
+var _utilities = __webpack_require__(/*! ../util/utilities */ "../francy-core/src/util/utilities.js");
+
+var _configuration = __webpack_require__(/*! ../util/configuration */ "../francy-core/src/util/configuration.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Manager = function (_Observable) {
+  _inherits(Manager, _Observable);
+
+  function Manager() {
+    _classCallCheck(this, Manager);
+
+    // this only adds if does not exist
+    var _this = _possibleConstructorReturn(this, (Manager.__proto__ || Object.getPrototypeOf(Manager)).call(this));
+
+    _configuration.Configuration.addProperty('renderers', {});
+    return _this;
+  }
+
+  _createClass(Manager, [{
+    key: 'register',
+    value: function register(_ref) {
+      var name = _ref.name,
+          renderer = _ref.renderer,
+          enable = _ref.enable;
+
+      if (name && !(name in _configuration.Configuration.object.renderers)) {
+        enable = enable || false;
+        _logger.Logger.info('Registering Renderer: ' + name);
+        _configuration.Configuration.object.renderers[name] = { renderer: renderer, name: name, id: _utilities.Utilities.generateId() };
+        this.notify(RENDERING_EVENTS.REGISTER, _configuration.Configuration.object.renderers[name]);
+        if (enable) {
+          this.enable(name);
+        }
+      } else {
+        // update the renderer has this does not get serialized
+        _configuration.Configuration.object.renderers[name].renderer = renderer;
+        this.notify(RENDERING_EVENTS.REGISTER, _configuration.Configuration.object.renderers[name]);
+      }
+      return this;
+    }
+  }, {
+    key: 'unregister',
+    value: function unregister(name) {
+      if (name) {
+        _logger.Logger.info('Unregistering Renderer: ' + name);
+        this.notify(RENDERING_EVENTS.UNREGISTER, _configuration.Configuration.object.renderers[name]);
+        delete _configuration.Configuration.object.renderers[name];
+      }
+      return this;
+    }
+  }, {
+    key: 'enable',
+    value: function enable(name) {
+      if (name) {
+        _logger.Logger.info('Enabling Renderer: ' + name);
+        for (var prop in _configuration.Configuration.object.renderers) {
+          _configuration.Configuration.object.renderers[prop].enable = name === prop;
+          this.notify(RENDERING_EVENTS.STATUS, _configuration.Configuration.object.renderers[prop]);
+        }
+      }
+      return this;
+    }
+  }, {
+    key: 'allRenderers',
+    value: function allRenderers() {
+      return _configuration.Configuration.object.renderers;
+    }
+  }, {
+    key: 'renderer',
+    value: function renderer() {
+      var renderer = _configuration.Configuration.object.renderers[Object.keys(_configuration.Configuration.object.renderers[0])];
+      for (var prop in _configuration.Configuration.object.renderers) {
+        if (_configuration.Configuration.object.renderers[prop].enable) {
+          renderer = _configuration.Configuration.object.renderers[prop];
+        }
+      }
+      _logger.Logger.info('Active Renderer: ' + renderer.name);
+      return renderer.renderer;
+    }
+  }]);
+
+  return Manager;
+}(_observable2.default);
+
+var RENDERING_EVENTS = exports.RENDERING_EVENTS = { REGISTER: 'REGISTER', UNREGISTER: 'UNREGISTER', STATUS: 'STATUS' };
+var RenderingManager = exports.RenderingManager = new Manager();
 
 /***/ }),
 
@@ -8775,24 +8897,27 @@ var ConfigurationHandler = function (_Observable) {
     _classCallCheck(this, ConfigurationHandler);
 
     /**
-     * This holds the actual configuration object
-     * @type {object}
-     * @private
-     */
-    var _this = _possibleConstructorReturn(this, (ConfigurationHandler.__proto__ || Object.getPrototypeOf(ConfigurationHandler)).call(this));
-
-    var objectStored = window.sessionStorage.getItem('francy.settings');
-    if (!objectStored || (typeof objectStored === 'undefined' ? 'undefined' : _typeof(objectStored)) !== 'object') {
-      _this._sync();
-    } else {
-      object = JSON.parse(objectStored);
-    }
-    /**
      * This is property is used to flag when the object changes.
      * @type {boolean}
      * @private
      */
+    var _this = _possibleConstructorReturn(this, (ConfigurationHandler.__proto__ || Object.getPrototypeOf(ConfigurationHandler)).call(this));
+
     _this._dirty = false;
+    /**
+     * This holds the actual configuration object
+     * @type {object}
+     * @private
+     */
+    var objectStored = window.sessionStorage.getItem('francy.settings');
+    if (!objectStored) {
+      _this._dirty = true;
+      setTimeout(function () {
+        return _this._sync();
+      }, 0);
+    } else {
+      object = JSON.parse(objectStored);
+    }
     /**
      * This is property holds a proxy that handles a dirty flag when object changes.
      * @type {Proxy}
@@ -8805,10 +8930,7 @@ var ConfigurationHandler = function (_Observable) {
      * @private
      */
     setInterval(function () {
-      if (_this._dirty) {
-        _this._dirty = false;
-        return _this._sync();
-      }
+      return _this._sync();
     }, throttle);
     return _this;
   }
@@ -8824,7 +8946,7 @@ var ConfigurationHandler = function (_Observable) {
   _createClass(ConfigurationHandler, [{
     key: 'set',
     value: function set(object, property, value) {
-      if (!(value[property] instanceof Object) && object[property] !== value) {
+      if (object[property] !== value) {
         object[property] = value;
         this.notify(property, value);
         this._dirty = true;
@@ -8847,6 +8969,14 @@ var ConfigurationHandler = function (_Observable) {
       }
       return property in target ? target[property] : target;
     }
+  }, {
+    key: 'has',
+    value: function has(target, key) {
+      if (key[0] === '_') {
+        return false;
+      }
+      return key in target;
+    }
 
     /**
      * Returns the object being tracked
@@ -8854,14 +8984,34 @@ var ConfigurationHandler = function (_Observable) {
      */
 
   }, {
-    key: '_sync',
-
+    key: 'addProperty',
+    value: function addProperty(property, value) {
+      if (!this.hasProperty(property)) {
+        Object.defineProperty(this.object, property, {
+          value: value,
+          writable: true,
+          enumerable: true,
+          configurable: true
+        });
+        this._dirty = true;
+      }
+    }
+  }, {
+    key: 'hasProperty',
+    value: function hasProperty(name) {
+      return name in this.object;
+    }
 
     /**
      * This method is used to explicitly sync the module with all the subscribers
      */
+
+  }, {
+    key: '_sync',
     value: function _sync() {
-      window.sessionStorage.setItem('francy.settings', JSON.stringify(this.object));
+      if (this._dirty) {
+        window.sessionStorage.setItem('francy.settings', JSON.stringify(this.object));
+      }
     }
   }, {
     key: 'object',
@@ -8884,7 +9034,7 @@ var Configuration = exports.Configuration = new ConfigurationHandler({
   verbose: false,
   transitionDuration: 750 //ms
 }, {
-  throttle: 30000
+  throttle: 5000
 });
 
 /***/ }),
@@ -8923,7 +9073,7 @@ var DataHandler = function () {
 
   /**
    * Loads and stores data if valid
-   * 
+   *
    * @param json a francy valid json
    * @param partial set this to true if the json is not a complete francy json object
    */
@@ -9354,7 +9504,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var name = 'D3-Renderer';
 
 // we're expecting Francy to be loaded already!
-Francy.RenderingManager.register({ name: name, renderer: _canvas2.default }).enable(name);
+Francy.RenderingManager.register({ name: name, renderer: _canvas2.default, enable: true });
 
 /***/ }),
 
@@ -9375,7 +9525,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _desc, _value, _class;
+var _dec, _dec2, _desc, _value, _class;
 
 var _francyCore = __webpack_require__(/*! francy-core */ "../francy-core/index.js");
 
@@ -9428,7 +9578,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 /* global d3 */
 
-var Canvas = (_dec = _francyCore.Decorators.Data.requires('canvas'), (_class = function (_CompositeRenderer) {
+var Canvas = (_dec = _francyCore.Decorators.Data.requires('canvas'), _dec2 = _francyCore.Decorators.Initializer.initialize(), (_class = function (_CompositeRenderer) {
   _inherits(Canvas, _CompositeRenderer);
 
   function Canvas(_ref) {
@@ -9444,6 +9594,14 @@ var Canvas = (_dec = _francyCore.Decorators.Data.requires('canvas'), (_class = f
   }
 
   _createClass(Canvas, [{
+    key: 'initialize',
+    value: function initialize() {
+      if (_francyCore.Configuration.object.fixedRandomSeed) {
+        //set seed to produce always the same graphs
+        Math.seedrandom('Francy!');
+      }
+    }
+  }, {
     key: 'render',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -9556,7 +9714,7 @@ var Canvas = (_dec = _francyCore.Decorators.Data.requires('canvas'), (_class = f
   }]);
 
   return Canvas;
-}(_francyCore.CompositeRenderer), (_applyDecoratedDescriptor(_class.prototype, 'render', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'render'), _class.prototype)), _class));
+}(_francyCore.CompositeRenderer), (_applyDecoratedDescriptor(_class.prototype, 'render', [_dec, _dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'render'), _class.prototype)), _class));
 exports.default = Canvas;
 
 /***/ }),
@@ -9579,10 +9737,6 @@ exports.default = undefined;
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dec, _desc, _value, _class;
-//import { scaleBand } from 'd3-scale';
-//import { select } from 'd3-selection';
-//import { transition as select } from "d3-transition";
-
 
 var _francyCore = __webpack_require__(/*! francy-core */ "../francy-core/index.js");
 
@@ -9899,10 +10053,6 @@ exports.default = undefined;
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dec, _desc, _value, _class;
-//import { line as d3Line } from "d3-shape";
-//import { select } from 'd3-selection';
-//import { transition as select } from "d3-transition";
-
 
 var _francyCore = __webpack_require__(/*! francy-core */ "../francy-core/index.js");
 
@@ -10218,11 +10368,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-//import { scaleLinear, scaleSequential } from 'd3-scale';
-//import { max } from 'd3-array';
-//import { axisBottom, axisLeft } from 'd3-axis';
-//import { interpolateRainbow } from 'd3-scale-chromatic';
-
 
 /* global d3 */
 
@@ -10247,8 +10392,8 @@ var Chart = function (_Renderer) {
   }
 
   _createClass(Chart, [{
-    key: '_initialize',
-    value: function _initialize() {
+    key: 'initialize',
+    value: function initialize() {
       var _this2 = this;
 
       this.tooltip = new _tooltip2.default(this.options);
@@ -10522,13 +10667,6 @@ exports.default = undefined;
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dec, _desc, _value, _class;
-//import { select } from 'd3-selection';
-//import { set } from "d3-collection";
-//import { symbol, line, curveBasisClosed } from "d3-shape";
-//import { polygonHull, polygonCentroid } from "d3-polygon";
-//import { scaleLinear } from 'd3-scale';
-//import { forceSimulation, forceLink, forceManyBody, forceCollide, forceRadial, forceX, forceY } from 'd3-force';
-
 
 var _francyCore = __webpack_require__(/*! francy-core */ "../francy-core/index.js");
 
@@ -11208,12 +11346,6 @@ exports.default = undefined;
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dec, _desc, _value, _class;
-//import { select } from 'd3-selection';
-//import { transition as select } from "d3-transition";
-//import { stratify, tree } from 'd3-hierarchy';
-//import { max } from 'd3-array';
-//import { symbol } from "d3-shape";
-
 
 var _francyCore = __webpack_require__(/*! francy-core */ "../francy-core/index.js");
 
@@ -11578,8 +11710,8 @@ var Graph = function (_Renderer) {
   }
 
   _createClass(Graph, [{
-    key: '_initialize',
-    value: function _initialize() {
+    key: 'initialize',
+    value: function initialize() {
       this.element = this.parent.select('g.francy-content');
     }
   }, {
@@ -12035,7 +12167,7 @@ __webpack_require__.r(__webpack_exports__);
 const name = 'VIS-Renderer';
 
 // we're expecting Francy to be loaded already!
-Francy.RenderingManager.register({ name: name, renderer: _src_canvas__WEBPACK_IMPORTED_MODULE_0__["default"] }).enable(name);
+Francy.RenderingManager.register({ name: name, renderer: _src_canvas__WEBPACK_IMPORTED_MODULE_0__["default"] });
 
 /***/ }),
 
@@ -63031,9 +63163,11 @@ var _francy = __webpack_require__(/*! ./src/francy */ "../francy/src/francy.js")
 
 var _francy2 = _interopRequireDefault(_francy);
 
+var _francyCore = __webpack_require__(/*! francy-core */ "../francy-core/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Francy = exports.Francy = new _francy2.default({ appendTo: 'body', callbackHandler: console.log });
+var Francy = exports.Francy = new _francy2.default({ appendTo: 'body', callbackHandler: _francyCore.Logger.info });
 
 if (window) {
   if (!window.Francy) {
@@ -63065,8 +63199,6 @@ var _dec, _desc, _value, _class;
 
 
 var _francyCore = __webpack_require__(/*! francy-core */ "../francy-core/index.js");
-
-var _renderingManager = __webpack_require__(/*! ./render/rendering-manager */ "../francy/src/render/rendering-manager.js");
 
 var _frame = __webpack_require__(/*! ./render/frame */ "../francy/src/render/frame.js");
 
@@ -63124,9 +63256,9 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 /**
  * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.load} function,
  * Francy will handle the creation of that json as long it is a valid and understandable json object to Francy.
- *  
+ *
  * @access public
- * 
+ *
  * @example
  * let francy = new Francy({verbose: true, appendTo: '#div-id', callbackHandler: console.log});
  * francy.load(json).render();
@@ -63153,13 +63285,6 @@ var Francy = (_dec = _francyCore.Decorators.Data.requires('canvas'), (_class = f
     return _this;
   }
 
-  /**
-   * Main entry point. Calling render will trigger the drawing of a json object 
-   * passed through the load method.
-   * @returns {Object} the html element created
-   */
-
-
   _createClass(Francy, [{
     key: 'render',
     value: function () {
@@ -63174,22 +63299,18 @@ var Francy = (_dec = _francyCore.Decorators.Data.requires('canvas'), (_class = f
                 if (this.data.version !== "0.9.0") {
                   _francyCore.Logger.warn('Rendering may fail, data generated in Francy GAP v' + this.data.version + ' using Francy JS v' + "0.9.0" + '... please update your system...');
                 }
-                if (_francyCore.Configuration.object.fixedRandomSeed) {
-                  //set seed to produce always the same graphs
-                  Math.seedrandom('Francy!');
-                }
-                _context.next = 4;
+                _context.next = 3;
                 return new _frame2.default(this.options).load(this.data).render().then(function (element) {
                   return element;
                 }).finally(function () {
                   return _this2.load({}, true);
                 });
 
-              case 4:
+              case 3:
                 frame = _context.sent;
                 return _context.abrupt('return', frame.element.node());
 
-              case 6:
+              case 5:
               case 'end':
                 return _context.stop();
             }
@@ -63209,8 +63330,15 @@ var Francy = (_dec = _francyCore.Decorators.Data.requires('canvas'), (_class = f
   }, {
     key: 'RenderingManager',
     get: function get() {
-      return Francy.RenderingManager;
+      return _francyCore.RenderingManager;
     }
+
+    /**
+     * Main entry point. Calling render will trigger the drawing of a json object
+     * passed through the load method.
+     * @returns {Object} the html element created
+     */
+
   }]);
 
   return Francy;
@@ -63239,8 +63367,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _dec, _desc, _value, _class;
 
 var _francyCore = __webpack_require__(/*! francy-core */ "../francy-core/index.js");
-
-var _renderingManager = __webpack_require__(/*! ./rendering-manager */ "../francy/src/render/rendering-manager.js");
 
 var _menuMain = __webpack_require__(/*! ./menu-main */ "../francy/src/render/menu-main.js");
 
@@ -63289,6 +63415,8 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
+/* global d3 */
+
 var Frame = (_dec = _francyCore.Decorators.Data.requires('canvas'), (_class = function (_CompositeRenderer) {
   _inherits(Frame, _CompositeRenderer);
 
@@ -63302,7 +63430,7 @@ var Frame = (_dec = _francyCore.Decorators.Data.requires('canvas'), (_class = fu
 
     _this.menu = new _menuMain2.default(_this.options);
     _this.messages = new _message2.default(_this.options);
-    var Renderer = Francy.RenderingManager.renderer();
+    var Renderer = _francyCore.RenderingManager.renderer();
     _this.add(_this.menu).add(_this.messages).add(new Renderer(_this.options));
     return _this;
   }
@@ -63341,11 +63469,14 @@ var Frame = (_dec = _francyCore.Decorators.Data.requires('canvas'), (_class = fu
 
                 _francyCore.Logger.debug('Frame updated [' + frameId + ']...');
 
+                // remove 
+                this.element.select('#Canvas-' + this.data.canvas.id).remove();
+
                 this.handlePromise(this.renderChildren());
 
                 return _context.abrupt('return', this);
 
-              case 9:
+              case 10:
               case 'end':
                 return _context.stop();
             }
@@ -63397,8 +63528,6 @@ var _saveSvgAsPng = __webpack_require__(/*! save-svg-as-png */ "../../node_modul
 
 var SvgToPng = _interopRequireWildcard(_saveSvgAsPng);
 
-var _renderingManager = __webpack_require__(/*! ./rendering-manager */ "../francy/src/render/rendering-manager.js");
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -63412,6 +63541,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 //import GraphOperations from '../graph/graph-operations';
 
+
+/* global d3, Francy */
 
 var MainMenu = function (_Menu) {
   _inherits(MainMenu, _Menu);
@@ -63503,47 +63634,63 @@ var MainMenu = function (_Menu) {
   }, {
     key: '_buildDefaultMenu',
     value: function _buildDefaultMenu() {
-      var _this2 = this;
+      var _this3 = this;
 
       var aboutModal = new _modalAbout2.default(this.options);
       var content = this.element.select('.francy-menu>ul');
+      content.append('li').append('a').attr('title', 'Verbose').html((_francyCore.Configuration.object.verbose ? '&#9745' : '&#9744') + ' Verbose').on('click', function () {
+        _francyCore.Configuration.object.verbose = !_francyCore.Configuration.object.verbose;
+      }).each(function () {
+        var _this2 = this;
+
+        _francyCore.Configuration.subscribe('verbose', function (value) {
+          d3.select(_this2).html((value ? '&#9745' : '&#9744') + ' Verbose');
+        });
+      });
       content.append('li').append('a').on('click', function () {
-        return _this2.options.appendTo.canvas.zoomToFit(true);
+        return _this3.options.appendTo.canvas.zoomToFit(true);
       }).attr('title', 'Zoom to Fit').html('Zoom to Fit');
       content.append('li').append('a').on('click', function () {
-        return SvgToPng.saveSvgAsPng(_this2.SVGParent.node(), 'diagram.png');
+        return SvgToPng.saveSvgAsPng(_this3.SVGParent.node(), 'diagram.png');
       }).attr('title', 'Save to PNG').html('Save to PNG');
       content.append('li').append('a').on('click', function () {
-        return _this2.handlePromise(aboutModal.load(_this2.data).render());
+        return _this3.handlePromise(aboutModal.load(_this3.data).render());
       }).attr('title', 'About').html('About');
     }
   }, {
     key: '_buildRenderersMenu',
     value: function _buildRenderersMenu() {
-      var _this4 = this;
+      var _this5 = this;
 
       var entry = this.element.select('.francy-menu>ul').append('li');
       entry.append('a').html('Renderers');
       var content = entry.append('ul');
+
       function insertEntry(renderer) {
         content.append('li').append('a').attr('id', renderer.id).on('click', function () {
-          return Francy.RenderingManager.enable(renderer.name);
+          _francyCore.RenderingManager.enable(renderer.name);
         }).attr('title', renderer.name).html((renderer.enable ? '&#9745' : '&#9744') + ' ' + renderer.name).each(function () {
-          var _this3 = this;
+          var _this4 = this;
 
-          Francy.RenderingManager.subscribe(_renderingManager.EVENTS.UNREGISTER, function () {
-            return d3.select(d3.select(_this3).node().parentElement).remove();
+          _francyCore.RenderingManager.subscribe(_francyCore.RENDERING_EVENTS.UNREGISTER, function () {
+            return d3.select(d3.select(_this4).node().parentElement).remove();
           });
         });
       }
-      Object.values(Francy.RenderingManager.allRenderers()).forEach(function (o) {
+
+      Object.values(_francyCore.RenderingManager.allRenderers()).forEach(function (o) {
         return insertEntry(o);
       });
-      Francy.RenderingManager.subscribe(_renderingManager.EVENTS.REGISTER, function (o) {
+      _francyCore.RenderingManager.subscribe(_francyCore.RENDERING_EVENTS.REGISTER, function (o) {
         return insertEntry(o);
       });
-      Francy.RenderingManager.subscribe(_renderingManager.EVENTS.STATUS, function (o) {
-        _this4.element.select('#' + o.id).html((o.enable ? '&#9745' : '&#9744') + ' ' + o.name);
+      _francyCore.RenderingManager.subscribe(_francyCore.RENDERING_EVENTS.STATUS, function (o) {
+        _this5.element.select('#' + o.id).html((o.enable ? '&#9745' : '&#9744') + ' ' + o.name);
+        if (o.enable) {
+          setTimeout(function () {
+            return _this5.handlePromise(Francy.load(_this5.data).render());
+          }, 10);
+        }
       });
     }
   }, {
@@ -63555,19 +63702,19 @@ var MainMenu = function (_Menu) {
       content2.append('li').append('a').attr('title', 'Neighbours').html((_francyCore.Configuration.object.showNeighbours ? '&#9745' : '&#9744') + ' Show Neighbours').on('click', function () {
         _francyCore.Configuration.object.showNeighbours = !_francyCore.Configuration.object.showNeighbours;
       }).each(function () {
-        var _this5 = this;
+        var _this6 = this;
 
         _francyCore.Configuration.subscribe('showNeighbours', function (value) {
-          d3.select(_this5).html((value ? '&#9745' : '&#9744') + ' Show Neighbours');
+          d3.select(_this6).html((value ? '&#9745' : '&#9744') + ' Show Neighbours');
         });
       });
       content2.append('li').append('a').attr('title', 'Drag').html((_francyCore.Configuration.object.dragNodes ? '&#9745' : '&#9744') + ' Drag Nodes').on('click', function () {
         _francyCore.Configuration.object.dragNodes = !_francyCore.Configuration.object.dragNodes;
       }).each(function () {
-        var _this6 = this;
+        var _this7 = this;
 
         _francyCore.Configuration.subscribe('dragNodes', function (value) {
-          d3.select(_this6).html((value ? '&#9745' : '&#9744') + ' Drag Nodes');
+          d3.select(_this7).html((value ? '&#9745' : '&#9744') + ' Drag Nodes');
         });
       });
       /*let operations = new GraphOperations(this.options);
@@ -63644,6 +63791,8 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
   return desc;
 }
+
+/* global d3 */
 
 var Message = (_dec = _francyCore.Decorators.Data.requires('canvas.messages'), (_class = function (_Renderer) {
   _inherits(Message, _Renderer);
@@ -63797,7 +63946,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-/* global VERSION FRANCY_DESC */
+/* global VERSION, FRANCY_DESC */
 
 var AboutModal = (_dec = _francyCore.Decorators.Initializer.initialize(), _dec2 = _francyCore.Decorators.Data.requires('canvas'), (_class = function (_Modal) {
   _inherits(AboutModal, _Modal);
@@ -63883,108 +64032,6 @@ var AboutModal = (_dec = _francyCore.Decorators.Initializer.initialize(), _dec2 
   return AboutModal;
 }(_francyCore.Modal), (_applyDecoratedDescriptor(_class.prototype, 'render', [_dec, _dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'render'), _class.prototype)), _class));
 exports.default = AboutModal;
-
-/***/ }),
-
-/***/ "../francy/src/render/rendering-manager.js":
-/*!*************************************************!*\
-  !*** ../francy/src/render/rendering-manager.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.RenderingManager = exports.EVENTS = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _francyCore = __webpack_require__(/*! francy-core */ "../francy-core/index.js");
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Manager = function (_Observable) {
-  _inherits(Manager, _Observable);
-
-  function Manager() {
-    _classCallCheck(this, Manager);
-
-    var _this = _possibleConstructorReturn(this, (Manager.__proto__ || Object.getPrototypeOf(Manager)).call(this));
-
-    _this._renderers = {};
-    return _this;
-  }
-
-  _createClass(Manager, [{
-    key: 'register',
-    value: function register(_ref) {
-      var name = _ref.name,
-          renderer = _ref.renderer,
-          enable = _ref.enable;
-
-      if (name) {
-        enable = enable || false;
-        _francyCore.Logger.info('Registering Renderer: ' + name);
-        this._renderers[name] = { renderer: renderer, name: name, id: _francyCore.Utilities.generateId() };
-        this.notify(EVENTS.REGISTER, this._renderers[name]);
-        if (enable) {
-          this.enable(name);
-        }
-      }
-      return this;
-    }
-  }, {
-    key: 'unregister',
-    value: function unregister(name) {
-      if (name && name in this._renderers) {
-        this.notify(EVENTS.UNREGISTER, this._renderers[name]);
-        delete this._renderers[name];
-      }
-      return this;
-    }
-  }, {
-    key: 'enable',
-    value: function enable(name) {
-      if (name && name in this._renderers) {
-        for (var prop in this._renderers) {
-          this._renderers[prop].enable = name === prop;
-          this.notify(EVENTS.STATUS, this._renderers[prop]);
-        }
-      }
-      return this;
-    }
-  }, {
-    key: 'allRenderers',
-    value: function allRenderers() {
-      return this._renderers;
-    }
-  }, {
-    key: 'renderer',
-    value: function renderer() {
-      for (var prop in this._renderers) {
-        if (this._renderers[prop].enable) {
-          return this._renderers[prop].renderer;
-        }
-      }
-      return { render: function render() {
-          this.parent.append('div').append('span').style('text-align', 'center').text('No Renderer selected...');
-        } };
-    }
-  }]);
-
-  return Manager;
-}(_francyCore.Observable);
-
-var EVENTS = exports.EVENTS = { REGISTER: 'REGISTER', UNREGISTER: 'UNREGISTER', STATUS: 'STATUS' };
-var RenderingManager = exports.RenderingManager = new Manager();
 
 /***/ }),
 

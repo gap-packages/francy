@@ -1,6 +1,5 @@
-import {Logger, Configuration, Decorators, Renderer, RenderingManager} from 'francy-core';
+import {Logger, Decorators, Renderer, RenderingManager} from 'francy-core';
 import Frame from './render/frame';
-import * as ignore from 'seedrandom';
 // import css inline - couldn't make this work on the webpack conf :/
 import '!style-loader!css-loader!./style/index.css';
 
@@ -30,14 +29,21 @@ export default class Francy extends Renderer {
     Logger.info(`Francy JS v${VERSION} initialized! Enjoy...`);
   }
 
-  static get RenderingManager() {
+  /**
+   * Returns the {RenderingManager] instance to register and unregister new renderers
+   * 
+   * @returns {RenderingManager} instance
+   * @public
+   */
+  get RenderingManager() {
     return RenderingManager;
   }
 
   /**
    * Main entry point. Calling render will trigger the drawing of a json object
    * passed through the load method.
-   * @returns {Object} the html element created
+   * @returns {object} the html element created
+   * @public
    */
   @Decorators.Data.requires('canvas')
   async render() {
@@ -49,8 +55,5 @@ export default class Francy extends Renderer {
       .then(element => element)
       .finally(() => this.load({}, true));
     return frame.element.node();
-  }
-
-  unrender() {
   }
 }

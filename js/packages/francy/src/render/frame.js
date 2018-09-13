@@ -8,10 +8,10 @@ export default class Frame extends CompositeRenderer {
 
   constructor({ appendTo, callbackHandler }) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler });
-    this.menu = new MainMenu(this.options);
+    this.mainMenu = new MainMenu(this.options);
     this.messages = new Message(this.options);
-    let Renderer = RenderingManager.renderer();
-    this.add(this.menu).add(this.messages).add(new Renderer(this.options));
+    let Renderer = RenderingManager.activeRenderer();
+    this.add(this.mainMenu).add(this.messages).add(new Renderer(this.options));
   }
 
   @Decorators.Data.requires('canvas')
@@ -29,7 +29,7 @@ export default class Frame extends CompositeRenderer {
     if (!this.element.node()) {
       throw new Error(`Oops, could not create frame with id [${frameId}]... Cannot proceed.`);
     }
-    
+
     this.element.style('height', +this.data.canvas.height + 37); // plus menu height
 
     Logger.debug(`Frame updated [${frameId}]...`);
@@ -38,7 +38,9 @@ export default class Frame extends CompositeRenderer {
 
     return this;
   }
-
-  unrender() {}
+  
+  get MainMenu() {
+    return this.mainMenu;
+  }
 
 }

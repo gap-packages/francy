@@ -78,6 +78,4 @@ export default class BarChart extends Chart {
 
     return this;
   }
-
-  unrender() {}
 }

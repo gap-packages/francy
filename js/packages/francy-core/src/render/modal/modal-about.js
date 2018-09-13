@@ -1,11 +1,15 @@
-import { Logger, Configuration, Components, Decorators, Modal } from 'francy-core';
+import Modal from './modal';
+import { Logger } from '../../util/logger';
+import { Configuration } from '../../util/configuration';
+import { Components } from '../../component/factory';
+import { Decorators } from '../../decorator/factory';
 
-/* global VERSION, FRANCY_DESC */
+/* global d3 VERSION FRANCY_DESC */
 
 export default class AboutModal extends Modal {
 
-  constructor({ appendTo }) {
-    super({ appendTo: appendTo });
+  constructor({appendTo, callbackHandler}) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler});
   }
 
   @Decorators.Initializer.initialize()

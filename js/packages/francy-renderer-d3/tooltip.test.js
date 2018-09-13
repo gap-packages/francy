@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { expect } from 'chai';
-import Tooltip  from '../render/tooltip';
+import Tooltip  from '../tooltip';
 
 describe('Tooltips', () => {
   

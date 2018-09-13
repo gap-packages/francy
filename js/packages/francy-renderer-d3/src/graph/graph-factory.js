@@ -29,7 +29,4 @@ export default class Graph extends Renderer {
 
     return element;
   }
-
-  unrender() {}
-
 }

@@ -1,8 +1,6 @@
-import { Logger, CompositeRenderer, Decorators } from 'francy-core';
+import { Logger, CompositeRenderer } from 'francy-core';
 import { DataSet, Network } from 'vis/index-network';
 //import '!style-loader!css-loader!vis/dist/vis-network.min.css';
-
-/* global vis */
 
 export default class Canvas extends CompositeRenderer {
 
@@ -19,7 +17,7 @@ export default class Canvas extends CompositeRenderer {
 
     // create an array with edges
     let links = [];
-    Object.values(this.data.canvas.graph.links).forEach((n) => {
+    Object.values(this.data.canvas.graph.links).forEach(n => {
       links.push({from: n.source, to: n.target, title: n.title});
     });
     var edges = new DataSet(links);
@@ -66,7 +64,4 @@ export default class Canvas extends CompositeRenderer {
 
     return this;
   }
-
-  unrender() {}
-
 }

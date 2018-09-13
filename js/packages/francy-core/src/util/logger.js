@@ -10,6 +10,10 @@ class Log {
    * @param verbose prints extra log information to console.log, defaults to false
    */
   constructor() {
+    /**
+     * Stores the browser console function
+     * @type {function}
+     */
     this.console = console;
   }
 
@@ -19,7 +23,7 @@ class Log {
    */
   debug(message) {
     if (Configuration.object.verbose) {
-      this.console.debug(Log._format('DEBUG', message));
+      this.console.debug(Log._format('D', message));
     }
   }
 
@@ -28,7 +32,7 @@ class Log {
    * @param message the message to print
    */
   info(message) {
-    this.console.info(Log._format('INFO', message));
+    this.console.info(Log._format('I', message));
   }
 
   /**
@@ -38,7 +42,7 @@ class Log {
    */
   error(message, error) {
     error = error || {};
-    this.console.error(Log._format('ERROR', message), error);
+    this.console.error(Log._format('E', message), error);
   }
 
   /**
@@ -48,17 +52,22 @@ class Log {
    */
   warn(message, error) {
     error = error || {};
-    this.console.error(Log._format('WARN', message), error);
+    this.console.error(Log._format('W', message), error);
   }
 
   /**
    * This is a private method that formats all log messages
    * @param level the log level
    * @param message the message to print
+   * @return {string} the formatted strin
    */
   static _format(level, message) {
-    return `[${level}] - ${new Date().toISOString()} - ${message}`;
+    return `[${level} ${new Date().toISOString()}] - ${message}`;
   }
 }
 
+/**
+ * The {Logger} singleton
+ * @public
+ */
 export const Logger = new Log();

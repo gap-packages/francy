@@ -1,9 +1,10 @@
 {
   "version": "0.9.0",
-  "command": {
-    "bootstrap": {
-      "npmClientArgs": ["--no-package-lock"]
-    }
-  },
-  "packages": ["packages/*"]
+  "npmClientArgs": [
+    "--no-lockfile",
+    "--no-package-lock"
+  ],
+  "packages": [
+    "packages/*"
+  ]
 }

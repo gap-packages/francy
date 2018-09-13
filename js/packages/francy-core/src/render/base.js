@@ -3,17 +3,21 @@ import { Logger } from '../util/logger';
 import { Exception } from '../util/exception';
 import { Decorators } from '../decorator/factory';
 
+/* global d3 */
+
 /**
  * Base is the base of renderers and contains multiple utility methods.
+ * 
+ * @extends {DataHandler}
  */
 export default class BaseRenderer extends DataHandler {
 
   /**
    * Base constructor
    * 
-   * @typedef {Object} Options
-   * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
-   * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
+   * @typedef {Object} options
+   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
    */
   constructor({ appendTo = 'body', callbackHandler }) {
     super();
@@ -29,9 +33,11 @@ export default class BaseRenderer extends DataHandler {
   /**
    * Saves the settings in an internal options object.
    * 
-   * @typedef {Object} Options
-   * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
-   * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
+   * @typedef {Object} options
+   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
+   * @returns {object} this instance
+   * @public
    */
   settings({ appendTo, callbackHandler }) {
     this.options = this.options || {};
@@ -50,15 +56,31 @@ export default class BaseRenderer extends DataHandler {
   }
 
   /**
-   * Returns the parent element of this class 
+   * Returns the parent element of this class
+   * 
+   * @return {object} a d3 object
+   * @public
    */
   get parent() {
     return this.options.appendTo.element;
+  }
+
+  /**
+   * Returns the parent class of this class
+   * 
+   * @return {Renderer} the {Renderer} or {Composite} parent of this class
+   * @public
+   */
+  get parentClass() {
+    return this.options.appendTo;
   }
   
   /**
    * Generic error handler.
    * Will log the error and rethrow if error is unknown.
+   * 
+   * @param {Error} error - an error instance
+   * @public
    */
   static handleErrors(error) {
     if (error instanceof Exception) {
@@ -73,6 +95,10 @@ export default class BaseRenderer extends DataHandler {
   /**
    * Generic Promise handler.
    * This will show the Loader/Spinner on the application while processing.
+   * 
+   * @param {Promise} promise - a promise to execute
+   * @return {Object} the result of the promise
+   * @public
    */
   handlePromise(promise) {
     let loader = Decorators.Loader.withContext(this).show();

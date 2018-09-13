@@ -4,12 +4,29 @@ import { Decorators } from '../decorator/factory';
 
 /* global MathJax d3 */
 
+/**
+ * This {Component} class is used to check whether MathJax is available or not.
+ * MathJax is optional, as {Francy} can run without it.
+ * 
+ * @extends {BaseComponent}
+ */
 export default class MathJaxComponent extends BaseComponent {
 
+  /**
+   * Base constructor
+   * 
+   * @typedef {Object} Options
+   * @property {Boolean} verbose prints extra log information to console.log, default false
+   * @property {Boolean} mandatory whether the component is mandatory or optional
+   */
   constructor(mandatory = false, delay = false) {
     super(mandatory, delay);
   }
 
+  /**
+   * Handles MathJax initialization and checks whether the dependency is available or not.
+   * @public
+   */
   initialize() {
     MathJax.Hub.Config({
       showMathMenu: false,
