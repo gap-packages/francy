@@ -1,5 +1,6 @@
 **.json
-**/__test__/*.test.js
+**/*.test.js
+**/test/*.js
 **.html
 karma*.js
 webpack*.js
