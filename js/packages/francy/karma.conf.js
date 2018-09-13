@@ -15,7 +15,7 @@ module.exports = function(config) {
       './src/__test__/**/*.test.js'
     ],
     exclude: [
-      './src/__test__/data/'
+      './src/__test_/data/'
     ],
     plugins: [
       'karma-chrome-launcher',
