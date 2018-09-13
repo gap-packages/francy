@@ -46,6 +46,7 @@
     "karma-mocha-reporter": "2.2.5",
     "karma-webpack": "3.0.4",
     "lerna": "^3.3.2",
+    "lodash.isequal": "4.5.0",
     "mocha": "5.2.0",
     "nyc": "13.0.1",
     "save-svg-as-png": "1.4.6",
