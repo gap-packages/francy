@@ -11,4 +11,4 @@ with open("../../package.json", "r") as read_file:
 
 #version_info = (0, 9, 1, 'alpha')
 #__version__ = ".".join(map(str, version_info))
-__version__ = package.version
+__version__ = package['version']
