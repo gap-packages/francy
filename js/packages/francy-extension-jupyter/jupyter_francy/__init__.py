@@ -7,7 +7,7 @@ import json
 def _jupyter_nbextension_paths():
     return [{
         'section': 'notebook',
-        'src': 'static',
+        'src': 'nbextension',
         'dest': 'jupyter_francy',
         'require': 'jupyter_francy/extension'
     }]
