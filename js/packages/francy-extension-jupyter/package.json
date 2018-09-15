@@ -41,6 +41,14 @@
       "francy-renderer-d3": "./node_modules/francy-renderer-d3"
     }
   },
+  "scripts": {
+    "prepare": "npm run build:lib",
+    "clean": "rm -rf ./lib ./dist ./build ./jupyter_francy/jupyter_francy ./jupyter_francy/__pycache__ ./jupyter_francy/nbextension ./jupyter_francy/labextension ./jupyter_francy.egg-info ./__pycache__",
+    "build:lib": "babel src -d lib",
+    "build:labextension": "cd jupyter_francy && rimraf labextension && mkdirp labextension && cd labextension && npm pack ../..",
+    "build:nbextension": "webpack",
+    "build": "npm run clean && npm run build:lib && npm run build:nbextension && npm run build:labextension"
+  },
   "dependencies": {
     "d3": "5.7.0",
     "francy": "0.9.0",
