@@ -68,6 +68,6 @@ cd js
 npm install
 npm run prepare
 npm run bootstrap
-npm run build:jupyter
+npm run build
 
 cd $CURRENT

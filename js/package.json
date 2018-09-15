@@ -7,17 +7,15 @@
     "url": "https://github.com/mcmartins/francy.git"
   },
   "scripts": {
+    "prepare": "lerna init && lerna link && lerna run prepare",
     "bootstrap": "lerna bootstrap",
     "test": "lerna run test",
-    "prepare": "lerna init && lerna link && lerna run prepare",
+    "build": "lerna run build",
+    "clean": "lerna run clean",
+    "version": "lerna version",
     "docs": "esdoc",
     "lint": "eslint ./packages/** ",
     "lint:fix": "eslint --fix ./packages/**",
-    "clean:jupyter": "cd packages/francy-extension-jupyter && rm -rf ./lib ./dist ./build ./jupyter_francy/jupyter_francy ./jupyter_francy/nbextension ./jupyter_francy/labextension ./jupyter_francy.egg-info",
-    "build:jupyter:lib": "cd packages/francy-extension-jupyter && babel src -d lib",
-    "build:jupyter:labextension": "cd packages/francy-extension-jupyter/jupyter_francy && rimraf labextension && mkdirp labextension && cd labextension && npm pack ../..",
-    "build:jupyter:nbextension": "cd packages/francy-extension-jupyter && webpack --progress",
-    "build:jupyter": "npm run clean:jupyter && npm run build:jupyter:lib && npm run build:jupyter:nbextension && npm run build:jupyter:labextension",
     "coverage": "nyc --reporter=lcov --reporter=text-lcov npm run test"
   },
   "devDependencies": {
