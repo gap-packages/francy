@@ -6,7 +6,7 @@
 
 import json
 
-with open("../../package.json", "r") as read_file:
+with open("package.json", "r") as read_file:
     package = json.load(read_file)
 
 #version_info = (0, 9, 1, 'alpha')
