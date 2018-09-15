@@ -2,15 +2,8 @@
 
 ## Update version number
 
-After merging a feature branche on develop, update the version number in 
-`js/package.json`, `gap/PackageInfo.g`, `extensions/jupyter_francy/_version.py`, and `extensions/jupyter/package.json`.
-
-The versions on the `package.json` can be managed with `npm version`:
-
-```bash
-mcmartins@local:francy/js$ npm version minor
-v0.8.4
-```
+After merging a feature branche on develop, update the version number on /js using 
+`npm run version`. Update `gap/PackageInfo.g` and the tests relying on it.
 
 Make sure all versions are consitent and commit your changes.
 

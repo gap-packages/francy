@@ -1,6 +1,6 @@
 {
   "name": "francy-renderer-vis",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "A VIS.js Renderer for Francy",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "francy-core": "0.9.0",
+    "francy-core": "^0.10.0",
     "vis": "4.21.0"
   },
   "main": "index.js"
