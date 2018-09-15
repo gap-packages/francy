@@ -66,7 +66,6 @@ cp -r gap $GAPROOT/pkg/francy
 #
 cd js
 npm install
-npm run prepare
 npm run bootstrap
 npm run build
 

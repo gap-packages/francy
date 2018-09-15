@@ -18,19 +18,11 @@
     "jupyterlab",
     "jupyterlab-extension"
   ],
-  "scripts": {
-    "prepare": "npm run build:lib",
-    "clean": "rm -rf ./lib ./dist ./build ./jupyter_francy/jupyter_francy ./jupyter_francy/__pycache__ ./jupyter_francy/nbextension ./jupyter_francy/labextension ./jupyter_francy.egg-info ./__pycache__",
-    "build:lib": "babel src -d lib",
-    "build:labextension": "cd jupyter_francy && rimraf labextension && mkdirp labextension && cd labextension && npm pack ../..",
-    "build:nbextension": "webpack --progress",
-    "build": "npm run clean && npm run build:lib && npm run build:nbextension && npm run build:labextension"
-  },
   "jupyterlab": {
     "mimeExtension": "lib/lab_extension",
     "dependencies": {
-      "francy": "^0.9.0",
-      "francy-renderer-d3": "^0.9.0"
+      "francy": "0.9.0",
+      "francy-renderer-d3": "0.9.0"
     },
     "scripts": {
       "prepare": "npm run build:lib",
@@ -39,13 +31,6 @@
       "build:labextension": "cd jupyter_francy && rimraf labextension && mkdirp labextension && cd labextension && npm pack ../..",
       "build:nbextension": "webpack",
       "build": "npm run clean && npm run build:lib && npm run build:nbextension && npm run build:labextension"
-    },
-    "extensions": {
-      "@babel/plugin-proposal-decorators": "7.0.0",
-      "@babel/plugin-transform-classes": "7.0.0",
-      "@babel/plugin-transform-runtime": "7.0.0",
-      "@babel/polyfill": "7.0.0",
-      "@babel/preset-env": "7.0.0"
     },
     "singletonPackages": [
       "francy",
@@ -57,7 +42,9 @@
     }
   },
   "dependencies": {
-    "d3": "5.7.0"
+    "d3": "5.7.0",
+    "francy": "0.9.0",
+    "francy-renderer-d3": "0.9.0"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0",
