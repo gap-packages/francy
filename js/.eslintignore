@@ -1,0 +1,10 @@
+**.json
+**/*.test.js
+**/__test__/*.js
+**.html
+karma*.js
+webpack*.js
+**/node_modules/**
+**/dist/** 
+**/lib/**
+**/jupyter_francy/**

@@ -276,9 +276,7 @@ BindGlobal("GraphType", rec(
 #! @Returns <C>rec</C> of <C>GraphDefaults</C>
 BindGlobal("GraphDefaults", Objectify(NewType(GraphFamily, IsFrancyGraphDefaults and IsFrancyGraphDefaultsRep), rec(
   simulation     := true,
-  collapsed      := true,
-  drag           := false,
-  showNeighbours := false
+  collapsed      := true
 )));
 
 #! @Description
@@ -435,27 +433,6 @@ InstallMethod(ConjugateId, "shape", [IsShape], o -> o!.conjugate);
 #! Sets the <C>Collapsed</C> behavior.
 #! @Arguments IsCanvas, IsBool
 InstallMethod(SetConjugateId, "shape, int", [IsShape, IsInt], function(o, i) o!.conjugate := i; end);
-
-#! @Description
-#! <C>Drag</C> is a property that sets the drag behavior on mouse drag, in the client implementation.
-#! @Returns <C>IsBool</C> True if enabled otherwise False
-#DeclareAttribute("Drag", IsFrancyGraph);
-#InstallMethod(Drag, "graph", [IsFrancyGraph], o -> o!.drag);
-#! @Description
-#! Sets the <C>Drag</C> behavior.
-#! @Arguments IsCanvas, IsBool
-#InstallMethod(SetDrag, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) o!.drag := b; end);
-
-#! @Description
-#! <C>ShowNeighbours</C> is a property that sets the behavior of showing 
-#! connected nodes on click, in the client implementation.
-#! @Returns <C>IsBool</C> True if enabled otherwise False
-#DeclareAttribute("ShowNeighbours", IsFrancyGraph);
-#InstallMethod(ShowNeighbours, "graph", [IsFrancyGraph], o -> o!.showNeighbours);
-#! @Description
-#! Sets the <C>ShowNeighbours</C> behavior.
-#! @Arguments IsCanvas, IsBool
-#InstallMethod(SetShowNeighbours, "graph, boolean", [IsFrancyGraph, IsBool], function(o, b) if o!.type = "tree" then Error("Only supported by GraphType.TREE!"); fi; o!.showNeighbours := b; end);
 
 #! @Description
 #! The <C>Weight</C> of the current link.

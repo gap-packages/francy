@@ -41,3 +41,8 @@ mcmartins@local:~$ pip install jupyter_francy
 mcmartins@local:~$ jupyter lab build # for JupyterLab
 mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Notebook
 ```
+
+## Renderers
+
+Francy supports renderers to be registered and thus producing different representations of graphs.
+

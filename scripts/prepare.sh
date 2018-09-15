@@ -39,6 +39,9 @@ git clone https://github.com/gap-packages/JupyterKernel
 # install latest version of francy-monoid
 git clone https://github.com/gap-packages/FrancyMonoids
 
+# install latest version of subgroup-latice
+git clone https://github.com/mcmartins/subgroup-lattice
+
 # build some packages; default is to build 'io' and 'profiling', in order to
 # generate coverage results. If you need to build additional packages (or for
 # some reason need to build a custom version of io or profiling), please set
@@ -63,12 +66,7 @@ cp -r gap $GAPROOT/pkg/francy
 #
 cd js
 npm install
+npm run bootstrap
 npm run build
-
-cd $CURRENT
-
-cd extensions/jupyter
-npm install
-npm run build:all
 
 cd $CURRENT
