@@ -14,7 +14,7 @@ RUN rm -rf $HOME/inst/gap-master/pkg/francy && mv $HOME/francy/gap $HOME/inst/ga
 
 RUN apt-get -qq install -y curl \
     &&  curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
-    &&  apt-get install -yq nodejs && npm install npm@latest -g && npm --version && node --version
+    &&  apt-get install -yq nodejs && npm install npm@latest -g
 
 # notebook and lab extension installation
 RUN cd $HOME/francy/js && npm install && npm run bootstrap && npm run build \
