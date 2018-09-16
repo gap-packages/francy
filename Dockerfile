@@ -1,4 +1,4 @@
-FROM gapsystem/gap-docker-master:francy
+FROM gapsystem/gap-docker-master:latest
 
 MAINTAINER Manuel Martins <manuelmachadomartins@gmail.com>
 
@@ -12,13 +12,13 @@ RUN rm -rf $HOME/inst/gap-master/pkg/francy && mv $HOME/francy/gap $HOME/inst/ga
   && cd $HOME/inst/gap-master/pkg && git clone --single-branch -b develop https://github.com/gap-packages/FrancyMonoids \
   && git clone https://github.com/mcmartins/subgroup-lattice
 
+RUN npm --version && node --version && nvm --version
+
 # notebook and lab extension installation
 RUN cd $HOME/francy/js && npm install && npm run bootstrap && npm run build \
-  && cd $HOME/francy/js/packages/francy-extension-jupyter \
-  && mv $HOME/francy/js/packages/francy-extension-jupyter/jupyter_francy/nbextension $HOME/francy/js/packages/francy-extension-jupyter/jupyter_francy/jupyter_francy \
-  && pip3 install -e . && jupyter labextension link \
-  && jupyter nbextension install $HOME/francy/js/packages/francy-extension-jupyter/jupyter_francy/jupyter_francy --user \
-  && jupyter nbextension enable jupyter_francy/extension --user
+  && cd $HOME/francy/js/packages/francy-extension-jupyter && pip3 install -e . \
+  && jupyter nbextension install --symlink --py --sys-prefix jupyter_francy \
+  && jupyter nbextension enable --py --sys-prefix jupyter_francy
 
 USER gap
 
