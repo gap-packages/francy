@@ -12,7 +12,9 @@ RUN rm -rf $HOME/inst/gap-master/pkg/francy && mv $HOME/francy/gap $HOME/inst/ga
   && cd $HOME/inst/gap-master/pkg && git clone --single-branch -b develop https://github.com/gap-packages/FrancyMonoids \
   && git clone https://github.com/mcmartins/subgroup-lattice
 
-RUN npm --version && node --version && nvm --version
+RUN apt-get -qq install -y curl \
+    &&  curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
+    &&  apt-get install -yq nodejs && npm install npm@latest -g && npm --version && node --version
 
 # notebook and lab extension installation
 RUN cd $HOME/francy/js && npm install && npm run bootstrap && npm run build \
