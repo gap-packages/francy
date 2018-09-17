@@ -15,7 +15,8 @@ engines:
 exclude_patterns:
   - "**/node_modules/"
   - "**/scripts/"
-  - "**/test/*"
+  - "**/__test__/*"
+  - "**/*.test.js"
   - "**/*.min.js"
   - "**/*.bundle.js*"
   - "**/dist/"
