@@ -151,5 +151,9 @@ export default class MainMenu extends Menu {
       .each(onEachCallback);
     return entry;
   }
+  
+  removeMenuEntry(id) {
+    this.element.select(`#${id}`).remove();
+  }
 
 }

@@ -50,6 +50,7 @@
     "seedrandom": "2.4.4",
     "style-loader": "0.23.0",
     "webpack": "4.19.0",
-    "webpack-cli": "3.1.0"
+    "webpack-cli": "3.1.0",
+    "d3-graphviz": "2.6.0"
   }
 }

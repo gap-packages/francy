@@ -22,7 +22,8 @@ export default class Canvas extends CompositeRenderer {
   @Decorators.Data.requires('canvas')
   @Decorators.Initializer.initialize()
   async render() {
-    let content, zoom = d3.zoom(), self = this;
+    let content, zoom = d3.zoom(),
+      self = this;
 
     function updateZoom(translateX, translateY, scale) {
       self.element.call(zoom.transform, d3.zoomIdentity.translate(translateX, translateY).scale(scale, scale));
@@ -34,7 +35,7 @@ export default class Canvas extends CompositeRenderer {
 
     function stopped() {
       if (d3.event.defaultPrevented) {
-        d3.event.stopPropagation(); 
+        d3.event.stopPropagation();
       }
     }
 
@@ -97,37 +98,37 @@ export default class Canvas extends CompositeRenderer {
     this.element.zoomToFit = this.zoomToFit = zoomToFit;
 
     Logger.debug(`Canvas updated [${canvasId}]...`);
-    
+
     this._buildMenu();
 
     this.handlePromise(this.renderChildren());
 
     return this;
   }
-  
+
   _buildMenu() {
     // here we have access to MainMenu
     if (this.data.canvas.graph) {
       this.parentClass.MainMenu.addEntryOnOptionsMenu({
         id: 'neighbours-entry',
         title: `${Configuration.object.showNeighbours ? '&#9745' : '&#9744'} Show Neighbours`,
-        onClickCallback: function() {
+        onClickCallback: function () {
           Configuration.object.showNeighbours = !Configuration.object.showNeighbours;
         },
-        onEachCallback: function() {
+        onEachCallback: function () {
           Configuration.subscribe('showNeighbours', value => {
             d3.select(this).html(`${value ? '&#9745' : '&#9744'} Show Neighbours`);
           });
         }
       });
-   
+
       this.parentClass.MainMenu.addEntryOnOptionsMenu({
         id: 'drag-entry',
         title: `${Configuration.object.dragNodes ? '&#9745' : '&#9744'} Drag Nodes`,
-        onClickCallback: function() {
+        onClickCallback: function () {
           Configuration.object.dragNodes = !Configuration.object.dragNodes;
         },
-        onEachCallback: function() {
+        onEachCallback: function () {
           Configuration.subscribe('dragNodes', value => {
             d3.select(this).html(`${value ? '&#9745' : '&#9744'} Drag Nodes`);
           });

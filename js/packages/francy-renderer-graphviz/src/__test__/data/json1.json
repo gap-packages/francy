@@ -2,9 +2,9 @@
   "version": "0.9.0",
   "mime": "application/vnd.francy+json",
   "canvas": {
-    "width": 1200,
+    "width": 800,
     "id": "F46",
-    "height": 1200,
+    "height": 600,
     "title": "GraphicSubgroupLattice",
     "zoomToFit": true,
     "texTypesetting": false,
@@ -4601,601 +4601,600 @@
           "callbacks": {}
         }
       },
-      "links": {
-        "F661": {
-          "id": "F661",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F110"
-        },
-        "F662": {
-          "id": "F662",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F129"
-        },
-        "F663": {
-          "id": "F663",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F148"
-        },
-        "F664": {
-          "id": "F664",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F167"
-        },
-        "F665": {
-          "id": "F665",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F186"
-        },
-        "F666": {
-          "id": "F666",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F205"
-        },
-        "F667": {
-          "id": "F667",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F224"
-        },
-        "F668": {
-          "id": "F668",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F243"
-        },
-        "F669": {
-          "id": "F669",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F262"
-        },
-        "F670": {
-          "id": "F670",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F281"
-        },
-        "F671": {
-          "id": "F671",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F300"
-        },
-        "F672": {
-          "id": "F672",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F319"
-        },
-        "F673": {
-          "id": "F673",
-          "source": "F91",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F338"
-        },
-        "F674": {
-          "id": "F674",
-          "source": "F110",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F357"
-        },
-        "F675": {
-          "id": "F675",
-          "source": "F129",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F357"
-        },
-        "F676": {
-          "id": "F676",
-          "source": "F148",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F357"
-        },
-        "F677": {
-          "id": "F677",
-          "source": "F167",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F376"
-        },
-        "F678": {
-          "id": "F678",
-          "source": "F186",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F395"
-        },
-        "F679": {
-          "id": "F679",
-          "source": "F205",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F414"
-        },
-        "F680": {
-          "id": "F680",
-          "source": "F262",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F376"
-        },
-        "F681": {
-          "id": "F681",
-          "source": "F243",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F395"
-        },
-        "F682": {
-          "id": "F682",
-          "source": "F224",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F414"
-        },
-        "F683": {
-          "id": "F683",
-          "source": "F148",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F376"
-        },
-        "F684": {
-          "id": "F684",
-          "source": "F110",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F395"
-        },
-        "F685": {
-          "id": "F685",
-          "source": "F129",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F414"
-        },
-        "F686": {
-          "id": "F686",
-          "source": "F148",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F433"
-        },
-        "F687": {
-          "id": "F687",
-          "source": "F110",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F452"
-        },
-        "F688": {
-          "id": "F688",
-          "source": "F129",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F471"
-        },
-        "F689": {
-          "id": "F689",
-          "source": "F281",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F490"
-        },
-        "F690": {
-          "id": "F690",
-          "source": "F300",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F509"
-        },
-        "F691": {
-          "id": "F691",
-          "source": "F319",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F528"
-        },
-        "F692": {
-          "id": "F692",
-          "source": "F338",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F547"
-        },
-        "F693": {
-          "id": "F693",
-          "source": "F167",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F490"
-        },
-        "F694": {
-          "id": "F694",
-          "source": "F243",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F509"
-        },
-        "F695": {
-          "id": "F695",
-          "source": "F243",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F528"
-        },
-        "F696": {
-          "id": "F696",
-          "source": "F224",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F547"
-        },
-        "F697": {
-          "id": "F697",
-          "source": "F186",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F490"
-        },
-        "F698": {
-          "id": "F698",
-          "source": "F262",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F509"
-        },
-        "F699": {
-          "id": "F699",
-          "source": "F224",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F528"
-        },
-        "F700": {
-          "id": "F700",
-          "source": "F262",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F547"
-        },
-        "F701": {
-          "id": "F701",
-          "source": "F205",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F490"
-        },
-        "F702": {
-          "id": "F702",
-          "source": "F205",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F509"
-        },
-        "F703": {
-          "id": "F703",
-          "source": "F167",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F528"
-        },
-        "F704": {
-          "id": "F704",
-          "source": "F186",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F547"
-        },
-        "F705": {
-          "id": "F705",
-          "source": "F433",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F566"
-        },
-        "F706": {
-          "id": "F706",
-          "source": "F452",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F585"
-        },
-        "F707": {
-          "id": "F707",
-          "source": "F471",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F604"
-        },
-        "F708": {
-          "id": "F708",
-          "source": "F376",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F566"
-        },
-        "F709": {
-          "id": "F709",
-          "source": "F395",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F585"
-        },
-        "F710": {
-          "id": "F710",
-          "source": "F414",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F604"
-        },
-        "F711": {
-          "id": "F711",
-          "source": "F357",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F566"
-        },
-        "F712": {
-          "id": "F712",
-          "source": "F357",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F585"
-        },
-        "F713": {
-          "id": "F713",
-          "source": "F357",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F604"
-        },
-        "F714": {
-          "id": "F714",
-          "source": "F357",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F623"
-        },
-        "F715": {
-          "id": "F715",
-          "source": "F281",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F623"
-        },
-        "F716": {
-          "id": "F716",
-          "source": "F300",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F623"
-        },
-        "F717": {
-          "id": "F717",
-          "source": "F319",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F623"
-        },
-        "F718": {
-          "id": "F718",
-          "source": "F338",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F623"
-        },
-        "F719": {
-          "id": "F719",
-          "source": "F623",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F642"
-        },
-        "F720": {
-          "id": "F720",
-          "source": "F566",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F642"
-        },
-        "F721": {
-          "id": "F721",
-          "source": "F585",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F642"
-        },
-        "F722": {
-          "id": "F722",
-          "source": "F604",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F642"
-        },
-        "F723": {
-          "id": "F723",
-          "source": "F490",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F642"
-        },
-        "F724": {
-          "id": "F724",
-          "source": "F509",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F642"
-        },
-        "F725": {
-          "id": "F725",
-          "source": "F528",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F642"
-        },
-        "F726": {
-          "id": "F726",
-          "source": "F547",
-          "length": 0,
-          "weight": 0,
-          "color": "",
-          "invisible": false,
-          "target": "F642"
-        }
+      "links": {"F661": {
+        "id": "F661",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F110"
+      },
+      "F662": {
+        "id": "F662",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F129"
+      },
+      "F663": {
+        "id": "F663",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F148"
+      },
+      "F664": {
+        "id": "F664",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F167"
+      },
+      "F665": {
+        "id": "F665",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F186"
+      },
+      "F666": {
+        "id": "F666",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F205"
+      },
+      "F667": {
+        "id": "F667",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F224"
+      },
+      "F668": {
+        "id": "F668",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F243"
+      },
+      "F669": {
+        "id": "F669",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F262"
+      },
+      "F670": {
+        "id": "F670",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F281"
+      },
+      "F671": {
+        "id": "F671",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F300"
+      },
+      "F672": {
+        "id": "F672",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F319"
+      },
+      "F673": {
+        "id": "F673",
+        "source": "F91",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F338"
+      },
+      "F674": {
+        "id": "F674",
+        "source": "F110",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F357"
+      },
+      "F675": {
+        "id": "F675",
+        "source": "F129",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F357"
+      },
+      "F676": {
+        "id": "F676",
+        "source": "F148",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F357"
+      },
+      "F677": {
+        "id": "F677",
+        "source": "F167",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F376"
+      },
+      "F678": {
+        "id": "F678",
+        "source": "F186",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F395"
+      },
+      "F679": {
+        "id": "F679",
+        "source": "F205",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F414"
+      },
+      "F680": {
+        "id": "F680",
+        "source": "F262",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F376"
+      },
+      "F681": {
+        "id": "F681",
+        "source": "F243",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F395"
+      },
+      "F682": {
+        "id": "F682",
+        "source": "F224",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F414"
+      },
+      "F683": {
+        "id": "F683",
+        "source": "F148",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F376"
+      },
+      "F684": {
+        "id": "F684",
+        "source": "F110",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F395"
+      },
+      "F685": {
+        "id": "F685",
+        "source": "F129",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F414"
+      },
+      "F686": {
+        "id": "F686",
+        "source": "F148",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F433"
+      },
+      "F687": {
+        "id": "F687",
+        "source": "F110",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F452"
+      },
+      "F688": {
+        "id": "F688",
+        "source": "F129",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F471"
+      },
+      "F689": {
+        "id": "F689",
+        "source": "F281",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F490"
+      },
+      "F690": {
+        "id": "F690",
+        "source": "F300",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F509"
+      },
+      "F691": {
+        "id": "F691",
+        "source": "F319",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F528"
+      },
+      "F692": {
+        "id": "F692",
+        "source": "F338",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F547"
+      },
+      "F693": {
+        "id": "F693",
+        "source": "F167",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F490"
+      },
+      "F694": {
+        "id": "F694",
+        "source": "F243",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F509"
+      },
+      "F695": {
+        "id": "F695",
+        "source": "F243",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F528"
+      },
+      "F696": {
+        "id": "F696",
+        "source": "F224",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F547"
+      },
+      "F697": {
+        "id": "F697",
+        "source": "F186",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F490"
+      },
+      "F698": {
+        "id": "F698",
+        "source": "F262",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F509"
+      },
+      "F699": {
+        "id": "F699",
+        "source": "F224",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F528"
+      },
+      "F700": {
+        "id": "F700",
+        "source": "F262",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F547"
+      },
+      "F701": {
+        "id": "F701",
+        "source": "F205",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F490"
+      },
+      "F702": {
+        "id": "F702",
+        "source": "F205",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F509"
+      },
+      "F703": {
+        "id": "F703",
+        "source": "F167",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F528"
+      },
+      "F704": {
+        "id": "F704",
+        "source": "F186",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F547"
+      },
+      "F705": {
+        "id": "F705",
+        "source": "F433",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F566"
+      },
+      "F706": {
+        "id": "F706",
+        "source": "F452",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F585"
+      },
+      "F707": {
+        "id": "F707",
+        "source": "F471",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F604"
+      },
+      "F708": {
+        "id": "F708",
+        "source": "F376",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F566"
+      },
+      "F709": {
+        "id": "F709",
+        "source": "F395",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F585"
+      },
+      "F710": {
+        "id": "F710",
+        "source": "F414",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F604"
+      },
+      "F711": {
+        "id": "F711",
+        "source": "F357",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F566"
+      },
+      "F712": {
+        "id": "F712",
+        "source": "F357",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F585"
+      },
+      "F713": {
+        "id": "F713",
+        "source": "F357",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F604"
+      },
+      "F714": {
+        "id": "F714",
+        "source": "F357",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F623"
+      },
+      "F715": {
+        "id": "F715",
+        "source": "F281",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F623"
+      },
+      "F716": {
+        "id": "F716",
+        "source": "F300",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F623"
+      },
+      "F717": {
+        "id": "F717",
+        "source": "F319",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F623"
+      },
+      "F718": {
+        "id": "F718",
+        "source": "F338",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F623"
+      },
+      "F719": {
+        "id": "F719",
+        "source": "F623",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F642"
+      },
+      "F720": {
+        "id": "F720",
+        "source": "F566",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F642"
+      },
+      "F721": {
+        "id": "F721",
+        "source": "F585",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F642"
+      },
+      "F722": {
+        "id": "F722",
+        "source": "F604",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F642"
+      },
+      "F723": {
+        "id": "F723",
+        "source": "F490",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F642"
+      },
+      "F724": {
+        "id": "F724",
+        "source": "F509",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F642"
+      },
+      "F725": {
+        "id": "F725",
+        "source": "F528",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F642"
+      },
+      "F726": {
+        "id": "F726",
+        "source": "F547",
+        "length": 0,
+        "weight": 0,
+        "color": "",
+        "invisible": false,
+        "target": "F642"
+      }
       }
     },
     "messages": {

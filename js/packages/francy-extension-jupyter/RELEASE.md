@@ -2,11 +2,22 @@
 
 This document guides an extension maintainer through creating and publishing a release of jupyter_francy. This process creates a Python source package and a Python universal wheel and uploads them to PyPI.
 
-## Update version number
+## Git Flow
 
-Update the version number in `_version.py`, and `package.json`.
+Follow the git flow:
 
-Commit your changes, add git tag for this version, and push both commit and tag to your origin/remote repo.
+```bash
+mcmartins@local:~$ git checkout develop # just to make sure
+mcmartins@local:~$ git flow init # all defaults except the tag prefix that should be 'v'
+mcmartins@local:~$ git flow release start 0.10.0
+mcmartins@local:~$ cd js && npm run version # update the release version
+mcmartins@local:~$ git add . && git commit -m "verion bump for release" && git push
+mcmartins@local:~$ git checkout master
+mcmartins@local:~$ git merge release/0.10.0
+mcmartins@local:~$ git flow release finish '0.10.0'
+mcmartins@local:~$ git push
+mcmartins@local:~$ git push --tags
+```
 
 ## Remove generated files
 

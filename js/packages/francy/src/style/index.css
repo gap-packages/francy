@@ -6,6 +6,12 @@
   font-size: 13px
 }
 
+.francy-content {
+  height: 100%;
+  overflow: auto;
+  clear: both;
+}
+
 .francy-size10 {
   font-size: 10px!important
 }

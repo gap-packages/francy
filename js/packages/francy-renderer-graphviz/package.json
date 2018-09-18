@@ -1,7 +1,7 @@
 {
-  "name": "francy-renderer-vis",
+  "name": "francy-renderer-graphviz",
   "version": "0.10.0",
-  "description": "A VIS.js Renderer for Francy",
+  "description": "A d3-graphviz Renderer for Francy",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
     "type": "git",
@@ -15,8 +15,13 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "francy-core": "^0.10.0",
-    "vis": "4.21.0"
+    "francy-core": "^0.10.0"
+  },
+  "devDependencies": {
+    "francy": "^0.10.0"
+  },
+  "scripts": {
+    "test": "karma start karma.conf.js"
   },
   "main": "index.js"
 }

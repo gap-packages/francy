@@ -26,7 +26,7 @@ class ConfigurationHandler extends Observable {
      * @type {object}
      * @private
      */
-    let objectStored = window.sessionStorage.getItem('francy.settings');
+    let objectStored = window.localStorage.getItem('francy.settings');
     if (!objectStored) {
       this._dirty = true;
       setTimeout(()=>this._sync(), 0);
@@ -140,7 +140,7 @@ class ConfigurationHandler extends Observable {
    */
   _sync() {
     if (this._dirty) {
-      window.sessionStorage.setItem('francy.settings', JSON.stringify(this.object));
+      window.localStorage.setItem('francy.settings', JSON.stringify(this.object));
     }
   }
 }
