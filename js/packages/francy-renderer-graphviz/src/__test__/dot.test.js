@@ -1,4 +1,6 @@
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
+chai.use(require('chai-string'));
+
 import DOTLanguageHelper from '../util/dot-converter';
 import graph from './data/json1.json';
 import * as d3 from 'd3';
@@ -9,10 +11,12 @@ describe('Json utils', () => {
 
   beforeEach(() => {});
 
-  it('should return an object', () => {
+  it('should convert json to dot', () => {
     //expect(DOTLanguageHelper).to.be.an('function');
     let dotLanguageHelper = new DOTLanguageHelper();
-    console.log(dotLanguageHelper.load(graph).convert());
+    let dot = dotLanguageHelper.load(graph).convert();
+    chai.use(require('chai-string'));
+    expect(dot).to.equalIgnoreSpaces('graph "Example undirected graph" { "F148" [ id="F148" label="G" shape="circle" ]; "F149" [ id="F149" label="1" shape="circle" ];  "F148" -- "F149" [ id="F150" ]; }');
   });
 
 });

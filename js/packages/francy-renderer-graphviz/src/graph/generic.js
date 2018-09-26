@@ -26,7 +26,7 @@ export default class GraphGeneric extends Graph {
       .keyMode('id')
       .dot(dot)
       .render(function () {
-        self.parentClass.element = this._selection.selectWithoutDataPropagation(`svg`);
+        self.parentClass.element = this._selection.selectWithoutDataPropagation('svg');
         self.parentClass.element.attr('width', '100%').attr('height', self.data.canvas.height)
           .attr('viewBox', undefined)
           .attr('id', `Canvas-${self.data.canvas.id}`)
@@ -34,7 +34,7 @@ export default class GraphGeneric extends Graph {
 
         self.options.appendTo.zoom = this.zoomBehavior();
 
-        self.element = self.parentClass.element.selectWithoutDataPropagation(`g`);
+        self.element = self.parentClass.element.selectWithoutDataPropagation('g');
         self.element.classed('francy-content', true);
         self.element.selectWithoutDataPropagation('title').remove();
         self.element.selectWithoutDataPropagation('polygon').remove();

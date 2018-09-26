@@ -50,7 +50,9 @@ export default class AboutModal extends Modal {
       .attr('value', Configuration.object.verbose)
       .attr('name', 'Verbose')
       .property('checked', Configuration.object.verbose)
-      .on('change', function () { Configuration.object.verbose = this.value = this.checked = !Configuration.object.verbose })
+      .on('change', function () {
+        Configuration.object.verbose = this.value = this.checked = !Configuration.object.verbose; 
+      })
       .on('input', this.onchange)
       .on('keyup', this.onchange)
       .on('paste', this.onchange);

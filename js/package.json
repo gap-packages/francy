@@ -28,8 +28,10 @@
     "babel-eslint": "10.0.0",
     "babel-loader": "8.0.2",
     "chai": "4.2.0",
+    "chai-string": "^1.5.0",
     "css-loader": "1.0.0",
     "d3": "5.7.0",
+    "d3-graphviz": "2.6.0",
     "del": "3.0.0",
     "esdoc": "1.1.0",
     "esdoc-ecmascript-proposal-plugin": "1.0.0",
@@ -49,9 +51,8 @@
     "save-svg-as-png": "1.4.6",
     "seedrandom": "2.4.4",
     "style-loader": "0.23.0",
+    "viz.js": "1.8.1",
     "webpack": "4.20.2",
-    "webpack-cli": "3.1.1",
-    "d3-graphviz": "2.6.0",
-    "viz.js": "1.8.1"
+    "webpack-cli": "3.1.1"
   }
 }
