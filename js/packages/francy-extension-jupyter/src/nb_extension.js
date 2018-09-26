@@ -35,7 +35,7 @@ define(
       Extension.render_cells(notebook);
     }
     return {
-      load_ipython_extension : load_ipython_extension
+      load_ipython_extension: load_ipython_extension
     };
   }
 );

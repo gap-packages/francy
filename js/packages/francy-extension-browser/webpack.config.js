@@ -51,12 +51,12 @@ module.exports = (env = {}) => {
     },
     plugins: defaultPlugins
   };
-  
+
   let browser = JSON.parse(JSON.stringify(amd));
   browser.target = 'web';
   browser.output.libraryTarget = 'umd';
   browser.output.path = path.join(__dirname, './dist/browser');
   browser.plugins = defaultPlugins;
-  
-  return [ amd, browser ];
+
+  return [amd, browser];
 };

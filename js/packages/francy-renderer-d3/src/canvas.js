@@ -1,7 +1,7 @@
-import { Logger, CompositeRenderer, Decorators, Configuration } from 'francy-core';
+import { Logger, RenderingManager, RENDERING_EVENTS, CompositeRenderer, Decorators, Configuration } from 'francy-core';
 import * as ignore from 'seedrandom';
-import GraphFactory from './graph/graph-factory';
-import ChartFactory from './chart/chart-factory';
+import GraphFactory from './graph/factory';
+import ChartFactory from './chart/factory';
 
 /* global d3 */
 
@@ -73,7 +73,9 @@ export default class Canvas extends CompositeRenderer {
       // create a svg element detached from the DOM!
       Logger.debug(`Creating Canvas [${canvasId}]...`);
       this.element = this.parent.append('svg')
-        .attr('class', 'francy-canvas')
+        .classed('francy-canvas', true)
+        .attr('xmlns', 'http://www.w3.org/2000/svg')
+        .attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
         .attr('id', canvasId);
     }
 
@@ -82,12 +84,15 @@ export default class Canvas extends CompositeRenderer {
       throw new Error(`Oops, could not create canvas with id [${canvasId}]... Cannot proceed.`);
     }
 
-    this.element.attr('width', this.data.canvas.width).attr('height', this.data.canvas.height);
+    this.element.attr('width', '100%').attr('height', this.data.canvas.height);
 
     content = this.element.select('g.francy-content');
 
     if (!content.node()) {
-      content = this.element.append('g').attr('class', 'francy-content');
+      content = this.element.append('g')
+        .classed('francy-content', true)
+        .classed('graph', true)
+        .attr('id', 'graph0');
       zoom.on('zoom', zoomed);
       // remove zoom on double click!
       this.element.call(zoom).on('dblclick.zoom', null);
@@ -107,34 +112,49 @@ export default class Canvas extends CompositeRenderer {
   }
 
   _buildMenu() {
+    let self = this;
     // here we have access to MainMenu
     if (this.data.canvas.graph) {
-      this.parentClass.MainMenu.addEntryOnOptionsMenu({
-        id: 'neighbours-entry',
-        title: `${Configuration.object.showNeighbours ? '&#9745' : '&#9744'} Show Neighbours`,
-        onClickCallback: function () {
+      this.parentClass.MainMenu.addMultiMenuOnSettingsMenu({
+        menuId: 'graph-settings-entry',
+        menuTitle: 'Graph',
+        entryId: 'neighbours-entry',
+        entryTitle: `${Configuration.object.showNeighbours ? '&#9745' : '&#9744'} Show Neighbours`,
+        entryOnClickCallback: function () {
           Configuration.object.showNeighbours = !Configuration.object.showNeighbours;
         },
-        onEachCallback: function () {
+        entryOnEachCallback: function () {
+          let showNeighboursId = `showNeighbours-onChange-${self.data.canvas.id}`;
           Configuration.subscribe('showNeighbours', value => {
             d3.select(this).html(`${value ? '&#9745' : '&#9744'} Show Neighbours`);
-          });
+          }, showNeighboursId);
         }
       });
 
-      this.parentClass.MainMenu.addEntryOnOptionsMenu({
-        id: 'drag-entry',
-        title: `${Configuration.object.dragNodes ? '&#9745' : '&#9744'} Drag Nodes`,
-        onClickCallback: function () {
+      this.parentClass.MainMenu.addMultiMenuOnSettingsMenu({
+        menuId: 'graph-settings-entry',
+        menuTitle: 'Graph',
+        entryId: 'drag-entry',
+        entryTitle: `${Configuration.object.dragNodes ? '&#9745' : '&#9744'} Drag Nodes`,
+        entryOnClickCallback: function () {
           Configuration.object.dragNodes = !Configuration.object.dragNodes;
         },
-        onEachCallback: function () {
+        entryOnEachCallback: function () {
+          let dragNodesId = `dragNodes-onChange-${self.data.canvas.id}`;
           Configuration.subscribe('dragNodes', value => {
             d3.select(this).html(`${value ? '&#9745' : '&#9744'} Drag Nodes`);
-          });
-        },
-        withSeparator: true
+          }, dragNodesId);
+        }
       });
     }
+
+    let removeMenuId = `graphSettings-removeMenu-${self.data.canvas.id}`;
+    // remove menu if renderer is disabled
+    RenderingManager.subscribe(RENDERING_EVENTS.STATUS, r => {
+      if (!r.enable) {
+        this.parentClass.MainMenu.removeMenuEntry('graph-settings-entry');
+      }
+    }, removeMenuId);
+
   }
 }

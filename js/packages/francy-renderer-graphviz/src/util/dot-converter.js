@@ -1,26 +1,16 @@
-import { DataHandler, Decorators } from 'francy-core';
+import { DataHandler, Decorators, Utilities } from 'francy-core';
 
-export default class DOTLanguageHelper extends DataHandler {
+/**
+ * This class converts Francy Json into DOT Language required by Graphviz.
+ * 
+ * @see https://www.graphviz.org/doc/info/lang.html
+ * @extends {DataHandler}
+ */
+export default class DOTLanguageConverterHelper extends DataHandler {
 
   constructor() {
     super();
     this.dotString = '';
-  }
-
-  // TODO https://www.graphviz.org/doc/info/lang.html
-  @Decorators.Data.requires('canvas.graph')
-  @Decorators.Initializer.initialize()
-  build() {
-    this.dotString += this.directed ? 'digraph ' : 'graph ';
-    this.dotString += '"' + this.data.canvas.title + '" {\n';
-    this._iterateNodes();
-    if (this.tree) {
-      this._createTree();
-    } else {
-      this._iterateLinks();
-    }
-    this.dotString += '\n}';
-    return this.dotString;
   }
 
   initialize() {
@@ -37,6 +27,20 @@ export default class DOTLanguageHelper extends DataHandler {
     }
   }
 
+  @Decorators.Data.requires('canvas.graph')
+  @Decorators.Initializer.initialize()
+  convert() {
+    this.dotString += this.directed ? 'digraph ' : 'graph ';
+    this.dotString += '"' + this.data.canvas.title + '" {';
+    this._iterateNodes();
+    if (this.tree) {
+      this._createTree();
+    } else {
+      this._iterateLinks();
+    }
+    return this.dotString += '\n}';
+  }
+
   _iterateNodes() {
     Object.values(this.data.canvas.graph.nodes).forEach(node => {
       this.dotString += this._createNode(node);
@@ -50,21 +54,19 @@ export default class DOTLanguageHelper extends DataHandler {
   }
 
   _createLeaf(node) {
-    let dotLink = '\t' + node.id;
+    let dotLink = '\n\t"' + node.id + '"';
     dotLink += this.directed ? ' -> ' : ' -- ';
-    dotLink += '{ ' + this.treeLinks[node.id].join(' ') + ' }';
-    dotLink += '\n';
-    return dotLink;
+    return dotLink += '{ ' + this.treeLinks[node.id].join('" "') + ' }';
   }
 
   _createNode(node) {
-    let dotNode = '\t' + node.id;
+    let dotNode = '\n\t"' + node.id + '"';
     dotNode += ' [';
-    dotNode += ' label="' + node.title + '"';
+    dotNode += ' id="' + node.id + '"';
+    dotNode += ' label="' + node.title.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') + '"';
     dotNode += ' shape="' + node.type + '"';
     dotNode += node.color ? ' fillcolor="' + node.color + '"' : '';
-    dotNode += ' ];\n';
-    return dotNode;
+    return dotNode += ' ];';
   }
 
   _iterateLinks() {
@@ -74,18 +76,17 @@ export default class DOTLanguageHelper extends DataHandler {
   }
 
   _createLink(link) {
-    let dotLink = '\t' + link.source;
+    let dotLink = `\n\t "${Utilities.isObject(link.source) ? link.source.id : link.source}"`;
     dotLink += this.directed ? ' -> ' : ' -- ';
-    dotLink += link.target;
+    dotLink += `"${Utilities.isObject(link.target) ? link.target.id : link.target}"`;
+    dotLink += ' [';
+    dotLink += ' id="' + link.id + '"';
     if (link.title || link.type || link.color) {
-      dotLink += ' [';
-      dotLink += link.title ? ' label="' + link.title + '"' : '';
+      dotLink += link.title ? ' label="' + link.title.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') + '"' : '';
       dotLink += link.type ? ' shape="' + link.type + '"' : '';
       dotLink += link.color ? ' color="' + link.color + '"' : '';
-      dotLink += ' ];';
     }
-    dotLink += '\n';
-    return dotLink;
+    return dotLink += ' ];';
   }
 
 }

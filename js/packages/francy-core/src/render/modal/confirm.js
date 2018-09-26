@@ -1,5 +1,5 @@
-import Modal from './modal';
-import { Logger} from '../../util/logger';
+import Modal from './base';
+import { Logger } from '../../util/logger';
 import { Components } from '../../component/factory';
 import { Decorators } from '../../decorator/factory';
 
@@ -45,7 +45,7 @@ export default class ConfirmModal extends Modal {
       .attr('class', 'francy-modal');
 
     let form = this.element.append('form');
-    
+
     this._buildHeader(form, 'Confirm');
 
     let content = form.append('div').attr('class', 'francy-modal-content')

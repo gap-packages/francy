@@ -1,12 +1,12 @@
-import {Logger, Configuration, Menu, RenderingManager, RENDERING_EVENTS, AboutModal} from 'francy-core';
+import { Logger, Configuration, Menu, RenderingManager, RENDERING_EVENTS, AboutModal } from 'francy-core';
 import * as SvgToPng from 'save-svg-as-png';
 
-/* global d3, Francy */
+/* global d3 */
 
 export default class MainMenu extends Menu {
 
-  constructor({appendTo, callbackHandler}) {
-    super({appendTo: appendTo, callbackHandler: callbackHandler});
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
     this.aboutModal = new AboutModal(this.options);
   }
 
@@ -43,11 +43,11 @@ export default class MainMenu extends Menu {
 
     this._buildDefaultMenu();
 
-    entry = this.element.append('li').attr('class', 'options-entry');
-    entry.append('a').html('Options');
+    entry = this.element.append('li').attr('class', 'settings-entry');
+    entry.append('a').html('Settings');
     entry.append('ul');
 
-    this._buildOptionsMenu();
+    this._buildSettingsMenu();
 
     // Traverse all menus and flatten them!
     let menusIterator = this.iterator(Object.values(this.data.canvas.menus));
@@ -59,63 +59,80 @@ export default class MainMenu extends Menu {
   }
 
   _buildDefaultMenu() {
-    let content = this.element.select('.francy-entry>ul');
-    content.append('li').append('a').on('click', () => this.options.appendTo.canvas.zoomToFit(true)).attr('title', 'Zoom to Fit').html('Zoom to Fit');
-    content.append('li').append('a').on('click', () => SvgToPng.saveSvgAsPng(this.SVGParent.node(), 'diagram.png')).attr('title', 'Save to PNG').html('Save to PNG');
-    content.append('li').append('a').on('click', () => this.handlePromise(this.aboutModal.load(this.data).render())).attr('title', 'About').html('About');
+    let self = this;
+    this._addEntryOnFrancyMenu({
+      id: 'zoom-entry',
+      title: 'Zoom to Fit',
+      onClickCallback: function () {
+        self.options.appendTo.canvas.zoomToFit(true);
+      }
+    });
+    this._addEntryOnFrancyMenu({
+      id: 'save-entry',
+      title: 'Save to PNG',
+      onClickCallback: function () {
+        SvgToPng.saveSvgAsPng(self.SVGParent.node(), 'diagram.png');
+      }
+    });
+    this._addEntryOnFrancyMenu({
+      id: 'about-entry',
+      title: 'About',
+      onClickCallback: function () {
+        self.handlePromise(self.aboutModal.load(self.data).render());
+      }
+    });
   }
 
-  _buildOptionsMenu() {
+  _buildSettingsMenu() {
     let self = this;
-    let entry = this.element.select('.options-entry>ul').append('li').attr('id', 'renderers-entry');
-    entry.append('a').html('Renderers');
-    let content = entry.append('ul');
 
-    function insertEntry(renderer) {
-      content.append('li').append('a').attr('id', renderer.id)
-        .on('click', () => {
-          RenderingManager.enable(renderer.name);
-        })
-        .attr('title', renderer.name).html(`${renderer.enable ? '&#9745' : '&#9744'} ${renderer.name}`)
-        .each(function () {
-          RenderingManager.subscribe(RENDERING_EVENTS.UNREGISTER, () => d3.select(d3.select(this).node().parentElement).remove());
-        });
+    function insertEntry(o) {
+      self.addMultiMenuOnSettingsMenu({
+        menuId: 'renderers-entry',
+        menuTitle: 'Renderers',
+        entryId: o.id,
+        entryTitle: `${o.enable ? '&#9745' : '&#9744'} ${o.name}`,
+        entryOnClickCallback: function () {
+          RenderingManager.enable(o.name);
+        },
+        entryOnEachCallback: function () {
+          let unregisterId = `renderer-${o.name}-unregister-${self.data.canvas.id}`;
+          RenderingManager.subscribe(RENDERING_EVENTS.UNREGISTER, onUnregister, unregisterId);
+        }
+      });
+
+      function onUnregister() {
+        d3.select(d3.select(this).node().parentElement).remove();
+      }
     }
 
-    Object.values(RenderingManager.allRenderers()).forEach(o => insertEntry(o));
-    RenderingManager.subscribe(RENDERING_EVENTS.REGISTER, o => insertEntry(o));
-    RenderingManager.subscribe(RENDERING_EVENTS.STATUS, o => {
-      this.element.select(`#${o.id}`).html(`${o.enable ? '&#9745' : '&#9744'} ${o.name}`);
+    let registerId = `renderers-register-${self.data.canvas.id}`;
+    RenderingManager.subscribe(RENDERING_EVENTS.REGISTER, insertEntry, registerId);
+
+    let reRenderId = `renderer-rerender-${self.data.canvas.id}`;
+    RenderingManager.subscribe(RENDERING_EVENTS.STATUS, reRender, reRenderId);
+
+    function reRender(o) {
+      self.element.select(`.${o.id}`).html(`${o.enable ? '&#9745' : '&#9744'} ${o.name}`);
       if (o.enable) {
         // remove previous rendered canvas
-        d3.select(`#Canvas-${self.data.canvas.id}`).remove();
+        self.parent.select(`#Canvas-${self.data.canvas.id}>g`).selectAll('*').remove();
         // re-render
-        setTimeout(() => this.handlePromise(Francy.load(this.data).render()), 10);
+        setTimeout(() => {
+          let Renderer = RenderingManager.activeRenderer();
+          self.handlePromise(new Renderer(self.options).load(self.data).render());
+        }, 100);
       }
-    });
-    
-    // add separator
-    entry.append('hr');
-    
-    this.addEntryOnOptionsMenu({
-      id: 'verbose-entry',
-      title: `${Configuration.object.verbose ? '&#9745' : '&#9744'} Verbose`,
-      onClickCallback: function() {
-        Configuration.object.verbose = !Configuration.object.verbose;
-      },
-      onEachCallback: function() {
-        Configuration.subscribe('verbose', value => {
-          d3.select(this).html(`${value ? '&#9745' : '&#9744'} Verbose`);
-        });
-      }
-    });
+    }
+
+    Object.values(RenderingManager.allRenderers()).forEach(insertEntry);
   }
 
-  addEntryOnOptionsMenu({id, title, onClickCallback, onEachCallback, withSeparator}) {
-    let entry = this.element.select('.options-entry>ul').data([{id: id, title: title}]);
-    entry = entry.append('li').attr('id', d => d.id);
-    onClickCallback = onClickCallback || function() {};
-    onEachCallback = onEachCallback || function() {};
+  addEntryOnSettingsMenu({ id, title, onClickCallback, onEachCallback, withSeparator }) {
+    let entry = this.element.select('.settings-entry>ul').data([{ id: id, title: title }]);
+    entry = entry.append('li').attr('class', d => d.id);
+    onClickCallback = onClickCallback || function () {};
+    onEachCallback = onEachCallback || function () {};
     entry.append('a').html(d => d.title)
       .on('click', onClickCallback)
       .each(onEachCallback);
@@ -126,11 +143,40 @@ export default class MainMenu extends Menu {
     return entry;
   }
 
-  addEntryOnFrancyMenu({id, title, onClickCallback, onEachCallback, withSeparator}) {
-    let entry = this.element.select('.francy-entry>ul').data([{id: id, title: title}]);
-    entry = entry.append('li').attr('id', d => d.id);
-    onClickCallback = onClickCallback || function() {};
-    onEachCallback = onEachCallback || function() {};
+  addMultiMenuOnSettingsMenu({ menuId, menuTitle, entryId, entryTitle, entryOnClickCallback, entryOnEachCallback }) {
+    let entry = this.element.select(`.settings-entry>ul>li.${menuId}`);
+    if (!entry.node()) {
+      entry = this.element.select('.settings-entry>ul').append('li').attr('class', menuId);
+      entry.append('a').text(`${menuTitle}`).append('span').style('float', 'right').html('>');
+    }
+
+    let content = entry.select('ul');
+    if (!content.node()) {
+      content = entry.append('ul');
+    }
+
+    entryOnClickCallback = entryOnClickCallback || function () {};
+    entryOnEachCallback = entryOnEachCallback || function () {};
+
+    function insertEntry({ entryId, entryTitle, entryOnClickCallback, entryOnEachCallback }) {
+      let entryMenu = content.select(`li>a.${entryId}`);
+      if (!entryMenu.node()) {
+        entryMenu = content.append('li').append('a').attr('class', entryId);
+      }
+      entryMenu.html(entryTitle)
+        .attr('title', entryTitle)
+        .on('click', entryOnClickCallback)
+        .each(entryOnEachCallback);
+    }
+
+    insertEntry({ entryId, entryTitle, entryOnClickCallback, entryOnEachCallback });
+  }
+
+  _addEntryOnFrancyMenu({ id, title, onClickCallback, onEachCallback, withSeparator }) {
+    let entry = this.element.select('.francy-entry>ul').data([{ id: id, title: title }]);
+    entry = entry.append('li').attr('class', d => d.id);
+    onClickCallback = onClickCallback || function () {};
+    onEachCallback = onEachCallback || function () {};
     entry.append('a').html(d => d.title)
       .on('click', onClickCallback)
       .each(onEachCallback);
@@ -140,20 +186,20 @@ export default class MainMenu extends Menu {
     }
     return entry;
   }
-  
-  addEntryOnMenu({id, title, onClickCallback, onEachCallback}) {
-    let entry = this.element.data([{id: id, title: title}]);
-    entry = entry.append('li').attr('id', d => d.id);
-    onClickCallback = onClickCallback || function() {};
-    onEachCallback = onEachCallback || function() {};
+
+  addEntryOnMenu({ id, title, onClickCallback, onEachCallback }) {
+    let entry = this.element.data([{ id: id, title: title }]);
+    entry = entry.append('li').attr('class', d => d.id);
+    onClickCallback = onClickCallback || function () {};
+    onEachCallback = onEachCallback || function () {};
     entry.append('a').html(d => d.title)
       .on('click', onClickCallback)
       .each(onEachCallback);
     return entry;
   }
-  
+
   removeMenuEntry(id) {
-    this.element.select(`#${id}`).remove();
+    this.element.select(`.${id}`).remove();
   }
 
 }

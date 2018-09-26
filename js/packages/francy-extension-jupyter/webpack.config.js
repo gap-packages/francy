@@ -3,7 +3,7 @@ const fPackage = require('./package.json');
 const webpack = require('webpack');
 const description = `'${fPackage.name}, v${fPackage.version}, ${fPackage.description}, ${fPackage.author}.'`;
 const defaultPlugins = [
-  new webpack.DefinePlugin({VERSION: JSON.stringify(fPackage.version), FRANCY_DESC: description}), 
+  new webpack.DefinePlugin({ VERSION: JSON.stringify(fPackage.version), FRANCY_DESC: description }),
   new webpack.BannerPlugin(description)
 ];
 
@@ -15,8 +15,7 @@ module.exports = (env = {}) => {
    * Custom webpack loaders are generally the same for all webpack bundles, hence
    * stored in a separate local variable.
    */
-  var loaders = [
-    {
+  var loaders = [{
       test: /\.js$/,
       exclude: /(node_modules|bower_components)/,
       use: {
@@ -52,7 +51,7 @@ module.exports = (env = {}) => {
       loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
     }
   ];
-  
+
   var base = {
     mode: isProduction ? 'production' : 'development',
     output: {
@@ -68,7 +67,7 @@ module.exports = (env = {}) => {
     },
     plugins: defaultPlugins
   };
-  
+
   return [
     /**
      * Notebook extension
@@ -91,10 +90,11 @@ module.exports = (env = {}) => {
       }),
       externals: [
         'base/js/namespace',
+        'nbextensions/jupyter_francy/viz',
         'nbextensions/jupyter_francy/index'
       ]
     }),
-  
+
     /**
      * This bundle contains the implementation of the extension.
      *
@@ -111,5 +111,6 @@ module.exports = (env = {}) => {
         )
       })
     }),
+
   ];
 };

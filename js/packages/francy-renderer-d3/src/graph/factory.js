@@ -1,6 +1,6 @@
 import { Decorators, Renderer } from 'francy-core';
-import TreeGraph from './graph-tree';
-import GenericGraph from './graph-generic';
+import TreeGraph from './tree';
+import GenericGraph from './generic';
 
 export default class Graph extends Renderer {
 

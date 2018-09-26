@@ -1,5 +1,4 @@
-import { Configuration, Decorators } from 'francy-core';
-import Graph from './graph';
+import { Configuration, Decorators, Graph } from 'francy-core';
 
 /* global d3 */
 
@@ -83,7 +82,7 @@ export default class GenericGraph extends Graph {
 
     linkEnter.filter(d => d.title).append('text')
       .classed('francy-label', true)
-      .style('font-size', d => d.invisible ? 0 : 7 * Math.sqrt(d.weight || 1))
+      //.style('font - size', d => d.invisible ? 0 : 7 * Math.sqrt(d.weight || 1))
       .style('opacity', 0.1)
       .style('opacity', 0.1)
       .text(d => d.title)
@@ -92,7 +91,7 @@ export default class GenericGraph extends Graph {
     link.exit().remove();
 
     link = linkGroup.selectAll('g.francy-link');
-    
+
     // on mouse over show labels opacity 1
     this.graphOperations.labelsOpacityBehavior(link);
 
@@ -110,16 +109,20 @@ export default class GenericGraph extends Graph {
     nodeEnter.filter(d => d.title).append('text')
       .classed('francy-label', true)
       .text(d => d.title)
-      .style('font-size', d => 7 * Math.sqrt(d.size))
-      .attr('x', function() {
+      //.style('font-size', d => 7 * Math.sqrt(d.size))
+      .attr('x', function () {
         // apply mathjax if this is the case
         let text = d3.select(this);
         if (text.text().startsWith('$') && text.text().endsWith('$')) {
           // we need to set the position after re-render the latex
-          self.handlePromise(self.mathjax.settings({appendTo: {element: text}, renderType: 'SVG', postFunction: () => {
-            text.attr('x', self.setLabelXPosition(this));
-            simulation.restart();
-          }}).render());
+          self.handlePromise(self.mathjax.settings({
+            appendTo: { element: text },
+            renderType: 'SVG',
+            postFunction: () => {
+              text.attr('x', self.setLabelXPosition(this));
+              simulation.restart();
+            }
+          }).render());
         }
         return self.setLabelXPosition(this);
       });
@@ -129,12 +132,12 @@ export default class GenericGraph extends Graph {
     node = nodeGroup.selectAll('g.francy-node');
 
     if (simulationActive) {
-      let radius = 0, 
-        symbolRadius = 0, 
+      let radius = 0,
+        symbolRadius = 0,
         ylayered = false,
         xlayered = false;
 
-      node.each(function() {
+      node.each(function () {
         let bound = this.getBBox();
         // calculate default radius for colisions
         // check the widest group Bounding Box
@@ -190,16 +193,16 @@ export default class GenericGraph extends Graph {
     function endSimulation() {
       self.parent.attr('visibility', 'visible');
       safeTicked.handle();
-      loader.hide();
       self.parent.zoomToFit();
+      loader.hide();
     }
 
-    let edges =  link.selectAll('path.francy-edge');
+    let edges = link.selectAll('path.francy-edge');
     let labels = link.selectAll('text.francy-label');
 
     function ticked() {
       edges
-        .attr('d', function(d) {
+        .attr('d', function (d) {
           if (d.source.id === d.target.id) {
             return `M${d.source.x},${d.source.y} A${d.target.size + 10},${d.target.size + 10} -45,1,0 ${d.source.x - 1},${d.source.y}`;
           }
@@ -207,17 +210,21 @@ export default class GenericGraph extends Graph {
         });
 
       if (self.data.canvas.graph.type === 'directed') {
-        link.each(function() {
-        
-          let g = d3.select(this), data = g.data()[0],
+        link.each(function () {
+
+          let g = d3.select(this),
+            data = g.data()[0],
             pathEl = g.select('path.francy-edge').node(),
             pathLength = pathEl.getTotalLength(),
             nodeEl = d3.select(`#${data.target.id} > path.francy-symbol`).node(),
             nodeSize = (Math.floor(nodeEl.getBBox().width) + 4) / 2,
             pathPoint = pathEl.getPointAtLength(pathLength - nodeSize - (data.weight || 1)),
             pathPoint2 = pathEl.getPointAtLength(pathLength - nodeSize),
-            x1 = pathPoint.x, y1 = pathPoint.y, x2 = pathPoint2.x, y2 = pathPoint2.y;
-         
+            x1 = pathPoint.x,
+            y1 = pathPoint.y,
+            x2 = pathPoint2.x,
+            y2 = pathPoint2.y;
+
           if (data.source.id === data.target.id) {
             x2 += (x1 - x2) / (y1 - y2);
             y2 += (y1 - y2) / (x1 - x2);
@@ -244,13 +251,13 @@ export default class GenericGraph extends Graph {
 
       let connectedNodes = self.graphOperations.connectedNodes(node, canvasNodes, link, canvasLinks);
       let nodeOnClick = node.on('click');
-      node.on('click', function(d) {
+      node.on('click', function (d) {
         // default, highlight connected nodes
         connectedNodes.call(this);
         // any callbacks will be handled here
         nodeOnClick && nodeOnClick.call(this, d);
       });
-      link.on('click', function() {
+      link.on('click', function () {
         // default, highlight connected nodes
         connectedNodes.call(this);
       });
@@ -266,7 +273,10 @@ export default class GenericGraph extends Graph {
       let data = d3Element.find(d => d.id === o.id);
       if (data) {
         let tmp = Object.assign({}, o);
-        delete tmp.source; delete tmp.target; delete tmp.x; delete tmp.y; // ignore these
+        delete tmp.source;
+        delete tmp.target;
+        delete tmp.x;
+        delete tmp.y; // ignore these
         newElements.push(Object.assign(data, tmp));
       } else {
         newElements.push(o);

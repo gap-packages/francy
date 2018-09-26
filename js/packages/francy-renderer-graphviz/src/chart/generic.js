@@ -8,7 +8,7 @@ export default class ChartGeneric extends Renderer {
 
   @Decorators.Data.requires('canvas.chart')
   async render() {
-
+    this.parent.append('center').append('h1').html('Not supported by this renderer...');
   }
 
 }

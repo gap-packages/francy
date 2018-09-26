@@ -1,7 +1,8 @@
 import { MIME_TYPE, CLASS_NAME, APPEND_ID } from './utils';
-import './d3_wrapper';
+import './wrapper';
 import 'francy';
 import 'francy-renderer-d3';
+import 'francy-renderer-graphviz';
 
 /* global Francy */
 /* eslint-disable no-console */
@@ -13,10 +14,10 @@ export function init(Jupyter) {
   // start Francy
   Francy.settings({
     appendTo: `#${APPEND_ID}`,
-    callbackHandler: function(command) {
+    callbackHandler: function (command) {
       Jupyter.notebook.kernel.execute(command, {
         iopub: {
-          output: function(msg) {
+          output: function (msg) {
             if (msg.content && msg.content.data && msg.content.data[MIME_TYPE]) {
               // This will update an existing canvas by its ID!
               Francy.load(msg.content.data[MIME_TYPE]).render()
@@ -82,7 +83,7 @@ export function register_renderer(notebook) {
     .reduce((result, cell) => cell.output_area ? cell : result, {});
 
   /* A function to render output of 'application/vnd.francy+json' mime type */
-  const append_mime = function(data, metadata, element) {
+  const append_mime = function (data, metadata, element) {
     /* Create a DOM node to render to */
     const toinsert = this.create_output_subarea(
       metadata,

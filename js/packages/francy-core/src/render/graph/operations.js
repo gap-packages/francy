@@ -1,4 +1,5 @@
-import { BaseRenderer, Configuration } from 'francy-core';
+import BaseRenderer from '../base';
+import { Configuration } from '../../util/configuration';
 
 /* global d3 */
 
@@ -9,16 +10,16 @@ export default class GraphOperations extends BaseRenderer {
     this.load(this.options.appendTo.data); // this will be most likely the Frame!
     var self = this;
     this.nodeOperations = {
-      clear: function() {
-        this._getAll().each(function(){
+      clear: function () {
+        this._getAll().each(function () {
           let node = d3.select(this);
           delete node.data()[0].selected;
           node.classed('francy-selected', d => d.selected);
         }).classed('francy-selected', d => d.selected);
       },
-      getAll: function() {
+      getAll: function () {
         var selected = [];
-        this._getAll().each(function(){
+        this._getAll().each(function () {
           selected.push(d3.select(this).data()[0].id);
         });
         return selected;
@@ -37,8 +38,9 @@ export default class GraphOperations extends BaseRenderer {
   get nodeSelection() {
     return this.nodeOperations;
   }
-  
+
   dragBehavior(node, simulation, active) {
+    let self = this;
 
     function enableDrag(enable) {
       node.call(d3.drag()
@@ -46,7 +48,7 @@ export default class GraphOperations extends BaseRenderer {
         .on('drag', enable ? dragged : undefined)
         .on('end', enable ? dragended : undefined));
     }
-      
+
     function dragstarted(d) {
       if (!d3.event.active && active) {
         simulation.on('end', undefined);
@@ -70,12 +72,13 @@ export default class GraphOperations extends BaseRenderer {
     }
 
     // subscribe to update drag behavior on configuration change
-    Configuration.subscribe('dragNodes', (value) => enableDrag.call(this, value));
-    
+    let enableDragId = `enable-drag-${self.data.canvas.id}`;
+    Configuration.subscribe('dragNodes', (value) => enableDrag.call(this, value), enableDragId);
+
     // enable drag behavior
     return enableDrag;
   }
-  
+
   connectedNodes(node, canvasNodes, link, canvasLinks) {
     let self = this;
     //Toggle stores whether the highlighting is on
@@ -88,7 +91,7 @@ export default class GraphOperations extends BaseRenderer {
       linkedByIndex[`${i},${i}`] = 1;
     }
 
-    canvasLinks.forEach(function(d) {
+    canvasLinks.forEach(function (d) {
       linkedByIndex[`${d.source.index},${d.target.index}`] = 1;
     });
 
@@ -100,14 +103,14 @@ export default class GraphOperations extends BaseRenderer {
         let d = el.node().__data__;
         if (el.attr('class').includes('francy-node')) {
           node.style('opacity', o => linkedByIndex[`${d.index},${o.index}`] || linkedByIndex[`${o.index},${d.index}`] ? 1 : 0.1);
-          link.style('opacity', function(o) {
+          link.style('opacity', function (o) {
             let opacity = d.index === o.source.index || d.index === o.target.index ? 1 : 0.1;
             d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
             return opacity;
           });
         } else if (el.attr('class').includes('francy-link')) {
           node.style('opacity', o => d.source.id === o.id || d.target.id === o.id ? 1 : 0.1);
-          link.style('opacity', function(o) {
+          link.style('opacity', function (o) {
             let opacity = d.index === o.index ? 1 : 0.1;
             d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
             return opacity;
@@ -121,7 +124,7 @@ export default class GraphOperations extends BaseRenderer {
       } else {
         //Put them back to opacity 1
         node.style('opacity', 1);
-        link.style('opacity', function() {
+        link.style('opacity', function () {
           d3.select(this).select('text').style('opacity', 0.1);
           return 1;
         });
@@ -136,11 +139,11 @@ export default class GraphOperations extends BaseRenderer {
   }
 
   labelsOpacityBehavior(link) {
-    link.on('mouseover', function(){
+    link.on('mouseover', function () {
       d3.select(this).selectAll('text')
         .style('opacity', 1)
         .style('opacity', 1);
-    }).on('mouseleave', function(){
+    }).on('mouseleave', function () {
       d3.select(this).selectAll('text')
         .style('opacity', 0.1)
         .style('opacity', 0.1);

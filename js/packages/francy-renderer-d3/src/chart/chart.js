@@ -1,5 +1,4 @@
-import { Renderer } from 'francy-core';
-import Tooltip from '../tooltip';
+import { Renderer, Tooltip } from 'francy-core';
 
 /* global d3 */
 
@@ -17,16 +16,16 @@ export default class Chart extends Renderer {
 
   initialize() {
     this.tooltip = new Tooltip(this.options);
-    
+
     this.element = this.parent.select('g.francy-content');
-    
+
     this.axis = this.data.canvas.chart.axis;
     this.datasets = this.data.canvas.chart.data;
     this.datasetNames = Object.keys(this.datasets);
 
     this.xScale = d3.scaleLinear().range([0, this.width]).domain(this.axis.x.domain);
     this.yScale = d3.scaleLinear().range([this.height, 0]).domain(this.axis.y.domain);
-    
+
     this.allValues = [];
     this.datasetNames.forEach(key => this.allValues = this.allValues.concat(this.datasets[key]));
 
@@ -38,7 +37,7 @@ export default class Chart extends Renderer {
       this.xScale.domain([0, this.allValues.length / this.datasetNames.length]);
     }
   }
-  
+
   _renderAxis() {
     // force rebuild axis again
     let xAxisGroup = this.element.selectAll('g.francy-x-axis');
@@ -81,7 +80,7 @@ export default class Chart extends Renderer {
       .style('text-anchor', 'end')
       .text(this.axis.y.title);
   }
-  
+
   _renderLegend() {
     if (this.data.canvas.chart.showLegend) {
 

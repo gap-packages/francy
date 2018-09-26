@@ -1,4 +1,4 @@
-import Modal from './modal';
+import Modal from './base';
 import { Logger } from '../../util/logger';
 import { Configuration } from '../../util/configuration';
 import { Components } from '../../component/factory';
@@ -8,8 +8,8 @@ import { Decorators } from '../../decorator/factory';
 
 export default class AboutModal extends Modal {
 
-  constructor({appendTo, callbackHandler}) {
-    super({appendTo: appendTo, callbackHandler: callbackHandler});
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
   }
 
   @Decorators.Initializer.initialize()
@@ -25,7 +25,7 @@ export default class AboutModal extends Modal {
       .attr('class', 'francy-modal');
 
     let form = this.element.append('form');
-    
+
     this._buildHeader(form, `About Francy v${VERSION}`);
 
     let content = form.append('div').attr('class', 'francy-modal-content')
@@ -36,17 +36,30 @@ export default class AboutModal extends Modal {
     content.append('br');
     content.append('br');
     content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
-    
+    content.append('br');
+
     if (Configuration.object.verbose) {
+      content.append('br');
       content.append('span').text('Loaded Data:');
-      content.append('pre').attr('class', 'francy').html(Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
+      content.append('pre').attr('class', 'francy').style('text-align', 'left').html(Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
     }
+
+    content.append('div').text('Verbose').append('div').append('input')
+      .attr('type', 'checkbox')
+      .attr('required', null)
+      .attr('value', Configuration.object.verbose)
+      .attr('name', 'Verbose')
+      .property('checked', Configuration.object.verbose)
+      .on('change', function () { Configuration.object.verbose = this.value = this.checked = !Configuration.object.verbose })
+      .on('input', this.onchange)
+      .on('keyup', this.onchange)
+      .on('paste', this.onchange);
 
     let footer = form.append('div').attr('class', 'francy-modal-footer');
 
-    footer.append('button').text('Ok').on('click', () => { 
-      d3.event.preventDefault(); 
-      this.unrender.call(this); 
+    footer.append('button').text('Ok').on('click', () => {
+      d3.event.preventDefault();
+      this.unrender.call(this);
     });
 
     // disable keyboard shortcuts when using this modal in Jupyter

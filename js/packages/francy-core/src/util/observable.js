@@ -1,4 +1,4 @@
-import isEqual from 'lodash.isequal';
+import { Utilities } from './utilities';
 
 /**
  * This {Observable} class contains the utility methods for implementing the Observer Pattern.
@@ -16,7 +16,7 @@ export default class Observable {
      * @type {function}
      * @private
      */
-    this._subscribers = [];
+    this._subscribers = {};
   }
 
   /**
@@ -25,8 +25,11 @@ export default class Observable {
    * @param {function} fn - the function to execute - must handle one arg, the object, of type {Object}
    * @public
    */
-  subscribe(property, fn) {
-    this._subscribers.push({property: property, fn: fn});
+  subscribe(property, fn, id) {
+    if (!id) {
+      throw new Error('ID is mandatory');
+    }
+    this._subscribers[id] = { property: property, fn: fn };
   }
 
   /**
@@ -35,8 +38,19 @@ export default class Observable {
    * @param {function} fn - the function to execute - must handle one arg, the object, of type {Object}
    * @public
    */
-  unsubscribe(property, fn) {
-    this._subscribers = this._subscribers.filter(s => !isEqual(s.property, property) && !isEqual(s.fn, fn));
+  unsubscribe(property, fn, id) {
+    if (!id) {
+      throw new Error('ID is mandatory');
+    }
+    delete this._subscribers[id];
+  }
+
+  /**
+   * This method is used to unregister all functions registered previously
+   * @public
+   */
+  unsubscribeAll() {
+    this._subscribers = [];
   }
 
   /**
@@ -46,7 +60,8 @@ export default class Observable {
    * @public
    */
   notify(property, value) {
-    this._subscribers.forEach(s => isEqual(s.property, property) && s.fn.call(this, value));
+    Object.values(this._subscribers).forEach(s =>
+      Utilities.isEqual(s.property, property) && s.fn.call(this, value));
   }
 
 }

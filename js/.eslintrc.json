@@ -35,7 +35,7 @@
     "semi": [1, "always"],
     "space-unary-ops": 2,
     "brace-style": ["error", "1tbs"],
-    "no-unused-vars": [2, { "vars": "all", "varsIgnorePattern": "ignore" }],
+    "no-unused-vars": [2, { "vars": "all", "varsIgnorePattern": ".*ignore" }],
     "no-global-assign": ["error", { "exceptions": ["__webpack_public_path__"] }]
   }
 }

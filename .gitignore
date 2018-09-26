@@ -66,3 +66,5 @@ gap/dist/
 build.sh
 
 *.ipynb_checkpoints
+
+*.log

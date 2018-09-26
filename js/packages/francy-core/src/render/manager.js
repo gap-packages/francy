@@ -1,8 +1,8 @@
 import Observable from '../util/observable';
-import {Logger} from '../util/logger';
-import {Utilities} from '../util/utilities';
-import {Configuration} from '../util/configuration';
-import {RuntimeException} from '../util/exception';
+import { Logger } from '../util/logger';
+import { Utilities } from '../util/utilities';
+import { Configuration } from '../util/configuration';
+import { RuntimeException } from '../util/exception';
 
 /**
  * This class implements all the methods to handle multiple renderers on {Francy}.
@@ -42,19 +42,19 @@ class RenderingManagerHandler extends Observable {
    * @returns {object} this instance
    * @public
    */
-  register({name, renderer, enable}) {
+  register({ name, renderer, enable }) {
     if (name && !(name in Configuration.object.renderers)) {
       enable = enable || false;
       Logger.info(`Registering Renderer: ${name}`);
-      Configuration.object.renderers[name] = {renderer: renderer, name: name, id: Utilities.generateId()};
+      Configuration.object.renderers[name] = { renderer: renderer, name: name, id: Utilities.generateId() };
       this.notify(RENDERING_EVENTS.REGISTER, Configuration.object.renderers[name]);
-      if (enable) { 
+      if (enable) {
         this.enable(name);
       }
     } else {
       // update the renderer has this does not get serialized
       Configuration.object.renderers[name].renderer = renderer;
-      this.notify(RENDERING_EVENTS.REGISTER, Configuration.object.renderers[name]);
+      //this.notify(RENDERING_EVENTS.REGISTER, Configuration.object.renderers[name]);
     }
     return this;
   }
@@ -87,13 +87,17 @@ class RenderingManagerHandler extends Observable {
     if (name) {
       Logger.info(`Enabling Renderer: ${name}`);
       for (let prop in Configuration.object.renderers) {
-        Configuration.object.renderers[prop].enable = name === prop;
-        this.notify(RENDERING_EVENTS.STATUS, Configuration.object.renderers[prop]);
+        let previous = Configuration.object.renderers[prop].enable;
+        let current = name === prop;
+        if (previous !== current) {
+          Configuration.object.renderers[prop].enable = current;
+          this.notify(RENDERING_EVENTS.STATUS, Configuration.object.renderers[prop]);
+        }
       }
     }
     return this;
   }
-  
+
   /**
    * This method returns all the renderers registered
    * 
@@ -103,7 +107,7 @@ class RenderingManagerHandler extends Observable {
   allRenderers() {
     return Configuration.object.renderers;
   }
-  
+
   /**
    * This method returns the current active renderer.
    * 
@@ -128,7 +132,7 @@ class RenderingManagerHandler extends Observable {
  * The events supported by {RenderingManager}.
  * @public
  */
-export const RENDERING_EVENTS = {REGISTER: 'REGISTER', UNREGISTER: 'UNREGISTER', STATUS: 'STATUS'};
+export const RENDERING_EVENTS = { REGISTER: 'REGISTER', UNREGISTER: 'UNREGISTER', STATUS: 'STATUS' };
 /**
  * The {RenderingManager} singleton
  * @public

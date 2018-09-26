@@ -1,6 +1,6 @@
 import BaseRenderer from './base';
-import RequiredArgsModal from './modal/modal-required';
-import ConfirmModal from './modal/modal-confirm';
+import RequiredArgsModal from './modal/required';
+import ConfirmModal from './modal/confirm';
 import { Decorators } from '../decorator/factory';
 
 /**
@@ -27,7 +27,7 @@ export default class CallbackHandler extends BaseRenderer {
      */
     this.callback = callbackHandler;
   }
-  
+
   /**
    * Runs callback function. If this callback is configured to get input from the user,
    * this will be prompt before execution.

@@ -1,5 +1,5 @@
-import { Decorators, Menu } from 'francy-core';
-
+import { Decorators } from '../../decorator/factory';
+import Menu from './base';
 /* global d3 */
 
 export default class ContextMenu extends Menu {

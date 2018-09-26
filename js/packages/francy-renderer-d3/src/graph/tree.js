@@ -1,5 +1,4 @@
-import { Logger, Decorators } from 'francy-core';
-import Graph from './graph';
+import { Logger, Decorators, Graph } from 'francy-core';
 
 /* global d3 */
 
@@ -57,7 +56,7 @@ export default class TreeGraph extends Graph {
 
     async function update(source) {
       let self = this;
-      
+
       let treeData = treemap(root);
 
       let nodes = treeData.descendants(),
@@ -76,11 +75,11 @@ export default class TreeGraph extends Graph {
 
       let linkEnter = link.enter().append('g')
         .classed('francy-link', true);
-        
+
       linkEnter.append('path')
         .attr('class', 'francy-edge')
         .attr('d', () => {
-          let o = {x: source.x0, y: source.y0};
+          let o = { x: source.x0, y: source.y0 };
           return diagonal(o, o);
         });
 
@@ -91,10 +90,10 @@ export default class TreeGraph extends Graph {
       link.exit().selectAll('path.francy-edge')
         .transition().duration(this.transitionDuration)
         .attr('d', () => {
-          let o = {x: source.x, y: source.y};
+          let o = { x: source.x, y: source.y };
           return diagonal(o, o);
         }).remove();
-      
+
       link.exit().transition().duration(this.transitionDuration).remove();
 
       nodes.forEach((d) => {
@@ -132,14 +131,18 @@ export default class TreeGraph extends Graph {
         .text(d => d.data.title)
         .style('font-size', d => 7 * Math.sqrt(d.weight || 1))
         .style('cursor', d => d.children || d._children ? 'pointer' : 'default')
-        .attr('x', function() {
+        .attr('x', function () {
           // apply mathjax if this is the case
           let text = d3.select(this);
           if (text.text().startsWith('$') && text.text().endsWith('$')) {
             // we need to set the position after re-render the latex
-            self.handlePromise(self.mathjax.settings({appendTo: {element: text}, renderType: 'SVG', postFunction: () => {
-              text.attr('x', self.setLabelXPosition(this));
-            }}).render());
+            self.handlePromise(self.mathjax.settings({
+              appendTo: { element: text },
+              renderType: 'SVG',
+              postFunction: () => {
+                text.attr('x', self.setLabelXPosition(this));
+              }
+            }).render());
           }
           return self.setLabelXPosition(this);
         });
@@ -159,12 +162,12 @@ export default class TreeGraph extends Graph {
         .style('cursor', d => d.children || d._children ? 'pointer' : 'default');
 
       node = nodeGroup.selectAll('g.francy-node');
-      
+
       if (node.node()) {
         this._applyEvents(node);
 
         let nodeOnClick = node.on('click');
-        node.on('click', function(d) {
+        node.on('click', function (d) {
           // any callbacks will be handled here
           nodeOnClick.call(this, d.data);
           // default, highlight connected nodes

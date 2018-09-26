@@ -8,10 +8,11 @@ export default class Frame extends CompositeRenderer {
 
   constructor({ appendTo, callbackHandler }) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler });
+    let Renderer = RenderingManager.activeRenderer();
     this.mainMenu = new MainMenu(this.options);
     this.messages = new Message(this.options);
-    let Renderer = RenderingManager.activeRenderer();
-    this.add(this.mainMenu).add(this.messages).add(new Renderer(this.options));
+    this.canvas = new Renderer(this.options);
+    this.add(this.mainMenu).add(this.messages).add(this.canvas);
   }
 
   @Decorators.Data.requires('canvas')
@@ -38,7 +39,7 @@ export default class Frame extends CompositeRenderer {
 
     return this;
   }
-  
+
   get MainMenu() {
     return this.mainMenu;
   }

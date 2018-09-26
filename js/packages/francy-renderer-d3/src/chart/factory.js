@@ -1,7 +1,7 @@
 import { Decorators, Renderer } from 'francy-core';
-import BarChart from './chart-bar';
-import LineChart from './chart-line';
-import ScatterChart from './chart-scatter';
+import BarChart from './bar';
+import LineChart from './line';
+import ScatterChart from './scatter';
 
 export default class ChartFactory extends Renderer {
 
@@ -11,7 +11,7 @@ export default class ChartFactory extends Renderer {
 
   @Decorators.Data.requires('canvas.chart')
   async render() {
-    
+
     let element = undefined;
     let chart = undefined;
     switch (this.data.canvas.chart.type) {
