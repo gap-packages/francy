@@ -62,6 +62,7 @@ export default class DOTLanguageConverterHelper extends DataHandler {
   _createNode(node) {
     let dotNode = '\n\t"' + node.id + '"';
     dotNode += ' [';
+    dotNode += ' style="filled"';
     dotNode += ' id="' + node.id + '"';
     dotNode += ' label="' + node.title.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') + '"';
     dotNode += ' shape="' + node.type + '"';
@@ -81,10 +82,11 @@ export default class DOTLanguageConverterHelper extends DataHandler {
     dotLink += `"${Utilities.isObject(link.target) ? link.target.id : link.target}"`;
     dotLink += ' [';
     dotLink += ' id="' + link.id + '"';
+    dotLink += ' style="filled"';
     if (link.title || link.type || link.color) {
       dotLink += link.title ? ' label="' + link.title.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') + '"' : '';
       dotLink += link.type ? ' shape="' + link.type + '"' : '';
-      dotLink += link.color ? ' color="' + link.color + '"' : '';
+      dotLink += link.color ? ' fillcolor="' + link.color + '" color="' + link.color + '"' : '';
     }
     return dotLink += ' ];';
   }

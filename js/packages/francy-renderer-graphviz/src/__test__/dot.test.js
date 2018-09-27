@@ -3,11 +3,11 @@ chai.use(require('chai-string'));
 
 import DOTLanguageHelper from '../util/dot-converter';
 import graph from './data/json1.json';
-import * as d3 from 'd3';
+//import * as d3 from 'd3';
 
-describe('Json utils', () => {
+describe('DOT Language utils', () => {
 
-  window.d3 = global.d3 = d3;
+  //window.d3 = global.d3 = d3;
 
   beforeEach(() => {});
 

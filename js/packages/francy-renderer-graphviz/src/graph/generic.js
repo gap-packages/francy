@@ -44,12 +44,12 @@ export default class GraphGeneric extends Graph {
         let nodes = self.element.selectAll('.node');
         let links = self.element.selectAll('.edge');
 
-        nodes.classed('francy-node', true)
-          .classed('francy-highlight', true)
-          .classed('francy-selected', d => d.selected)
-          .each(function (d) {
+        nodes.each(function (d) {
             Object.assign(d, self.data.canvas.graph.nodes[d.key]);
-          });
+          })
+          .classed('francy-node', true)
+          .classed('francy-highlight', true)
+          .classed('francy-selected', d => d.selected);
 
         self._applyEvents(nodes);
 

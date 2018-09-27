@@ -24,7 +24,7 @@
           "id": "F148",
           "size": 10,
           "title": "G",
-          "color": "",
+          "color": "red",
           "highlight": true,
           "layer": 1,
           "parent": "",
@@ -53,7 +53,7 @@
           "id": "F150",
           "source": "F148",
           "weight": 1,
-          "color": "",
+          "color": "green",
           "target": "F149"
         }
       }

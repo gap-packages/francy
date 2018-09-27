@@ -53,7 +53,7 @@
           "id": "F150",
           "source": "F148",
           "weight": 1,
-          "color": "",
+          "color": "red",
           "target": "F149"
         }
       }

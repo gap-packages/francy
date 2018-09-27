@@ -7,6 +7,22 @@
   overflow: hidden
 }
 
+.francy-menu-arrow-right {
+  width: 0px;
+  height: 0px;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-left: 3px solid #000;
+  margin-top: 10%
+}
+
+.francy-menu-arrow-down {
+  width: 0px;
+  height: 0px;
+  border-left: 4px solid transparent;
+  border-top: 4px solid #000
+}
+
 .francy-content {
   height: 100%;
   overflow: hidden;

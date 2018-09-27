@@ -33,6 +33,7 @@ export default class Menu extends Renderer {
         action.on('click', d => new CallbackHandler(this.options).load(d, true).execute());
       }
       if (menuItem.menus && Object.values(menuItem.menus).length > 0) {
+        action.append('div').classed('francy-menu-arrow-down', true).style('float', 'right');
         let content = entry.append('ul');
         let subMenusIterator = this.iterator(Object.values(menuItem.menus));
         this.traverse(content, subMenusIterator);
@@ -49,10 +50,10 @@ export default class Menu extends Renderer {
   iterator(array) {
     let nextIndex = 0;
     return {
-      next: function() {
+      next: function () {
         return this.hasNext() ? array[nextIndex++] : undefined;
       },
-      hasNext: function() {
+      hasNext: function () {
         return nextIndex < array.length;
       }
     };

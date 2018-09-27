@@ -38,13 +38,13 @@ export default class MainMenu extends Menu {
 
     // create default menu entry
     let entry = this.element.append('li').attr('class', 'francy-entry');
-    entry.append('a').html('Francy');
+    entry.append('a').attr('title', 'Francy').html('Francy').append('div').classed('francy-menu-arrow-down', true).style('float', 'right');
     entry.append('ul');
 
     this._buildDefaultMenu();
 
     entry = this.element.append('li').attr('class', 'settings-entry');
-    entry.append('a').html('Settings');
+    entry.append('a').attr('title', 'Settings').html('Settings').append('div').classed('francy-menu-arrow-down', true).style('float', 'right');
     entry.append('ul');
 
     this._buildSettingsMenu();
@@ -133,7 +133,7 @@ export default class MainMenu extends Menu {
     entry = entry.append('li').attr('class', d => d.id);
     onClickCallback = onClickCallback || function () {};
     onEachCallback = onEachCallback || function () {};
-    entry.append('a').html(d => d.title)
+    entry.append('a').attr('title', d => d.title).html(d => d.title)
       .on('click', onClickCallback)
       .each(onEachCallback);
     if (withSeparator) {
@@ -147,7 +147,7 @@ export default class MainMenu extends Menu {
     let entry = this.element.select(`.settings-entry>ul>li.${menuId}`);
     if (!entry.node()) {
       entry = this.element.select('.settings-entry>ul').append('li').attr('class', menuId);
-      entry.append('a').text(`${menuTitle}`).append('span').style('float', 'right').html('>');
+      entry.append('a').text(menuTitle).append('div').classed('francy-menu-arrow-right', true).style('float', 'right');
     }
 
     let content = entry.select('ul');
@@ -164,7 +164,6 @@ export default class MainMenu extends Menu {
         entryMenu = content.append('li').append('a').attr('class', entryId);
       }
       entryMenu.html(entryTitle)
-        .attr('title', entryTitle)
         .on('click', entryOnClickCallback)
         .each(entryOnEachCallback);
     }
