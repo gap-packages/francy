@@ -62,8 +62,8 @@ export default class DOTLanguageConverterHelper extends DataHandler {
   _createNode(node) {
     let dotNode = '\n\t"' + node.id + '"';
     dotNode += ' [';
-    dotNode += ' style="filled"';
     dotNode += ' id="' + node.id + '"';
+    dotNode += ' style="filled"';
     dotNode += ' label="' + node.title.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') + '"';
     dotNode += ' shape="' + node.type + '"';
     dotNode += node.color ? ' fillcolor="' + node.color + '"' : '';

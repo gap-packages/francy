@@ -16,7 +16,7 @@ describe('DOT Language utils', () => {
     let dotLanguageHelper = new DOTLanguageHelper();
     let dot = dotLanguageHelper.load(graph).convert();
     chai.use(require('chai-string'));
-    expect(dot).to.equalIgnoreSpaces('graph "Example undirected graph" { "F148" [ id="F148" label="G" shape="circle" ]; "F149" [ id="F149" label="1" shape="circle" ];  "F148" -- "F149" [ id="F150" ]; }');
+    expect(dot).to.equalIgnoreSpaces('graph "Example undirected graph" { "F148" [  id="F148" style="filled"  label="G" shape="circle" ]; "F149" [  id="F149"  style="filled" label="1" shape="circle" ];  "F148" -- "F149" [ id="F150" style="filled" fillcolor="red" color="red" ]; }');
   });
 
 });
