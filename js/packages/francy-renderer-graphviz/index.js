@@ -5,4 +5,4 @@ import Canvas from './src/canvas';
 const name = 'GraphViz-Renderer';
 
 // we're expecting Francy to be loaded already!
-Francy.RenderingManager.register({ name: name, renderer: Canvas, enable: false });
+Francy.RenderingManager.register({ name: name, renderer: Canvas });

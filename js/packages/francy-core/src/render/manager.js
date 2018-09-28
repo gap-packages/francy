@@ -46,7 +46,7 @@ class RenderingManagerHandler extends Observable {
     if (name && !(name in Configuration.object.renderers)) {
       enable = enable || false;
       Logger.info(`Registering Renderer: ${name}`);
-      Configuration.object.renderers[name] = { renderer: renderer, name: name, id: Utilities.generateId() };
+      Configuration.object.renderers[name] = { enable: false, renderer: renderer, name: name, id: Utilities.generateId() };
       this.notify(RENDERING_EVENTS.REGISTER, Configuration.object.renderers[name]);
       if (enable) {
         this.enable(name);
