@@ -9,7 +9,9 @@ USER root
 RUN apt-get update && apt-get install python3-pip -y
 
 RUN rm -rf $HOME/inst/gap-master/pkg/francy && mv $HOME/francy/gap $HOME/inst/gap-master/pkg/francy \
-  && cd $HOME/inst/gap-master/pkg && git clone --single-branch -b develop https://github.com/gap-packages/FrancyMonoids \
+  && cd $HOME/inst/gap-master/pkg \
+  && rm -rf JupyterKernel && git clone https://github.com/gap-packages/JupyterKernel \
+  && git clone --single-branch -b develop https://github.com/gap-packages/FrancyMonoids \
   && git clone https://github.com/mcmartins/subgroup-lattice
 
 RUN apt-get -qq install -y curl \
