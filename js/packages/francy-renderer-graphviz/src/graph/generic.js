@@ -17,11 +17,13 @@ export default class GraphGeneric extends Graph {
   async render() {
     let self = this,
       loader = Decorators.Loader.withContext(this).show(),
-      dot = new DOTLanguageConverterHelper().load(this.data).convert(),
-      transition = d3.transition().duration(this.transitionDuration);
+      dot = new DOTLanguageConverterHelper().load(this.data).convert();
+    //transition = d3.transition().duration(this.transitionDuration);
 
     self.parent
-      .graphviz().transition(transition)
+      .graphviz()
+      .logEvents(false)
+      .fade(false)
       .engine(Configuration.object.graphvizEngine)
       .keyMode('id')
       .dot(dot)
@@ -36,7 +38,7 @@ export default class GraphGeneric extends Graph {
 
         self.element = self.parentClass.element.selectWithoutDataPropagation('g');
         self.element.classed('francy-content', true);
-        self.element.selectWithoutDataPropagation('title').remove();
+        self.element.selectAll('title').remove();
         self.element.selectWithoutDataPropagation('polygon').remove();
 
         let nodesG = self.element.append('g').classed('francy-nodes', true);
@@ -45,11 +47,32 @@ export default class GraphGeneric extends Graph {
         let links = self.element.selectAll('.edge');
 
         nodes.each(function (d) {
-          Object.assign(d, self.data.canvas.graph.nodes[d.key]);
-        })
+            Object.assign(d, self.data.canvas.graph.nodes[d.key]);
+          })
           .classed('francy-node', true)
           .classed('francy-highlight', true)
           .classed('francy-selected', d => d.selected);
+
+        nodes.selectAll('text')
+          .classed('francy-label', true)
+          .attr('x', function () {
+            // apply mathjax if this is the case
+            let text = d3.select(this);
+            if (text.text().startsWith('$') && text.text().endsWith('$')) {
+              // we need to set the position after re-render the latex
+              let x = text.datum().attributes.x;
+              let y = text.datum().attributes.y;
+              self.handlePromise(self.mathjax.settings({
+                appendTo: { element: text },
+                renderType: 'SVG',
+                postFunction: function () {
+                  d3.select(text.node().parentNode).select('svg').attr('x', x);
+                  d3.select(text.node().parentNode).select('svg').attr('y', y);
+                }
+              }).render());
+            }
+            return text.datum().attributes.x;
+          });
 
         self._applyEvents(nodes);
 
@@ -72,6 +95,10 @@ export default class GraphGeneric extends Graph {
       .onerror(function () {
         loader.hide();
       });
+  }
+
+  setLabelXPosition(element) {
+    return element.data().x;
   }
 
 }
