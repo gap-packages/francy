@@ -33,14 +33,12 @@ export default class MathJaxWrapper extends BaseRenderer {
   @Decorators.Data.enabled('canvas.texTypesetting')
   async render() {
     // if no element here just return...
-    if (!Components.MathJax.isAvailable || 
+    if (!Components.MathJax.isAvailable ||
       !this.parent || !this.parent.node()) return;
     // check for a post exec function
-    this.options.postFunction = this.options.postFunction || function() {};
+    this.options.postFunction = this.options.postFunction || function () {};
     MathJax.Hub.Queue(
-      ['setRenderer', MathJax.Hub, this.options.renderType],
-      ['Typeset', MathJax.Hub, this.parent.node()],
-      [this.options.postFunction]
+      ['setRenderer', MathJax.Hub, this.options.renderType], ['Typeset', MathJax.Hub, this.parent.node()], [this.options.postFunction]
     );
   }
 

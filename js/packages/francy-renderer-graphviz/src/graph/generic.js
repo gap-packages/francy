@@ -62,12 +62,14 @@ export default class GraphGeneric extends Graph {
               // we need to set the position after re-render the latex
               let x = text.datum().attributes.x;
               let y = text.datum().attributes.y;
+              let parentG = d3.select(text.node().parentNode);
               self.handlePromise(self.mathjax.settings({
                 appendTo: { element: text },
                 renderType: 'SVG',
                 postFunction: function () {
-                  d3.select(text.node().parentNode).select('svg').attr('x', x);
-                  d3.select(text.node().parentNode).select('svg').attr('y', y);
+                  let svg = parentG.select('svg');
+                  self.setLabelXPosition(svg, x);
+                  self.setLabelYPosition(svg, y);
                 }
               }).render());
             }
@@ -97,8 +99,14 @@ export default class GraphGeneric extends Graph {
       });
   }
 
-  setLabelXPosition(element) {
-    return element.data().x;
+  setLabelXPosition(element, x) {
+    let width = element.node().width.baseVal.value;
+    element.attr('x', Math.ceil(Number(x) - (width / 2)));
+  }
+
+  setLabelYPosition(element, y) {
+    let height = element.node().height.baseVal.value;
+    element.attr('y', Math.ceil(Number(y) - (height / 2)));
   }
 
 }

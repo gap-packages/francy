@@ -43,7 +43,7 @@ export default class GenericGraph extends Graph {
         .attr('orient', 'auto')
         .append('path')
         .attr('d', 'M0,-5 L10,0 L0,5')
-        .style('fill', d => d.color || undefined);
+        .style('fill', d => d.color || '#000');
     }
 
     let nodeGroup = this.element.selectAll('g.francy-nodes');
@@ -70,7 +70,7 @@ export default class GenericGraph extends Graph {
     linkEnter.append('path')
       .classed('francy-edge', true)
       .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 1))
-      .style('stroke', d => d.color || undefined);
+      .style('stroke', d => d.color || '#000');
 
     if (this.data.canvas.graph.type === 'directed') {
       linkEnter.append('path')
@@ -102,7 +102,7 @@ export default class GenericGraph extends Graph {
 
     nodeEnter.append('path')
       .attr('d', d3.symbol().type(d => Graph.getSymbol(d.type)).size(d => d.size * 100))
-      .style('fill', d => d.color || d.conjugate ? Graph.colors(d.conjugate * 5) : Graph.colors(d.layer * 5))
+      .style('fill', d => d.conjugate ? Graph.colors(d.conjugate * 5) : d.color ? d.color : Graph.colors(d.layer * 5))
       .classed('francy-symbol', true)
       .classed('francy-context', d => Object.values(d.menus).length && Object.values(d.menus).length > 0);
 

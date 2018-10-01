@@ -81,6 +81,7 @@ export default class MathJaxComponent extends BaseComponent {
           let height = svgMathJaxElement.node().height.baseVal.value;
           svgMathJaxElement.attr('x', -width / 2);
           svgMathJaxElement.attr('y', -height / 2);
+          g.select('text.francy-label').remove();
           g.append(() => svgMathJaxElement.node());
         }
       }

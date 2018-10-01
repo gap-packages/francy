@@ -1,4 +1,6 @@
-import { DataHandler, Decorators, Utilities } from 'francy-core';
+import { DataHandler, Decorators, Utilities, Configuration, Graph } from 'francy-core';
+
+/* global d3 */
 
 /**
  * This class converts Francy Json into DOT Language required by Graphviz.
@@ -31,7 +33,8 @@ export default class DOTLanguageConverterHelper extends DataHandler {
   @Decorators.Initializer.initialize()
   convert() {
     this.dotString += this.directed ? 'digraph ' : 'graph ';
-    this.dotString += '"' + this.data.canvas.title + '" {';
+    this.dotString += `"${this.data.canvas.title}" {`;
+    this.dotString += `\t graph [ rankdir="${Configuration.object.graphvizRankdir}" ]`;
     this._iterateNodes();
     if (this.tree) {
       this._createTree();
@@ -54,19 +57,19 @@ export default class DOTLanguageConverterHelper extends DataHandler {
   }
 
   _createLeaf(node) {
-    let dotLink = '\n\t"' + node.id + '"';
+    let dotLink = `\n\t"${node.id}"`;
     dotLink += this.directed ? ' -> ' : ' -- ';
-    return dotLink += '{ ' + this.treeLinks[node.id].join('" "') + ' }';
+    return dotLink += `{ ${this.treeLinks[node.id].join('" "')} }`;
   }
 
   _createNode(node) {
-    let dotNode = '\n\t"' + node.id + '"';
+    let dotNode = `\n\t"${node.id}"`;
     dotNode += ' [';
-    dotNode += ' id="' + node.id + '"';
+    dotNode += ` id="${node.id}"`;
     dotNode += ' style="filled"';
-    dotNode += ' label="' + node.title.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') + '"';
-    dotNode += ' shape="' + node.type + '"';
-    dotNode += node.color ? ' fillcolor="' + node.color + '"' : '';
+    dotNode += ` label="${node.title.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')}"`;
+    dotNode += ` shape="${node.type}"`;
+    dotNode += ` fillcolor="${node.conjugate ? d3.color(Graph.colors(node.conjugate * 5)).hex() : node.color ? node.color : d3.color(Graph.colors(node.layer * 5)).hex()}"`;
     return dotNode += ' ];';
   }
 
@@ -81,12 +84,11 @@ export default class DOTLanguageConverterHelper extends DataHandler {
     dotLink += this.directed ? ' -> ' : ' -- ';
     dotLink += `"${Utilities.isObject(link.target) ? link.target.id : link.target}"`;
     dotLink += ' [';
-    dotLink += ' id="' + link.id + '"';
-    dotLink += ' style="filled"';
+    dotLink += ` id="${link.id}"`;
     if (link.title || link.type || link.color) {
-      dotLink += link.title ? ' label="' + link.title.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') + '"' : '';
-      dotLink += link.type ? ' shape="' + link.type + '"' : '';
-      dotLink += link.color ? ' fillcolor="' + link.color + '" color="' + link.color + '"' : '';
+      dotLink += link.title ? ` label="${link.title.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')}"` : '';
+      dotLink += link.type ? ` shape="${link.type}"` : '';
+      dotLink += link.color ? ` fillcolor="${d3.color(link.color).hex()}" color="${d3.color(link.color).hex()}"` : '';
     }
     return dotLink += ' ];';
   }

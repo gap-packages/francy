@@ -3,11 +3,13 @@ chai.use(require('chai-string'));
 
 import DOTLanguageHelper from '../util/dot-converter';
 import graph from './data/json1.json';
-//import * as d3 from 'd3';
+import { Configuration } from 'francy-core';
+import * as d3 from 'd3';
 
 describe('DOT Language utils', () => {
 
-  //window.d3 = global.d3 = d3;
+  window.d3 = global.d3 = d3;
+  Configuration.addProperty('graphvizRankdir', 'TB');
 
   beforeEach(() => {});
 
@@ -16,7 +18,11 @@ describe('DOT Language utils', () => {
     let dotLanguageHelper = new DOTLanguageHelper();
     let dot = dotLanguageHelper.load(graph).convert();
     chai.use(require('chai-string'));
-    expect(dot).to.equalIgnoreSpaces('graph "Example undirected graph" { "F148" [  id="F148" style="filled"  label="G" shape="circle" ]; "F149" [  id="F149"  style="filled" label="1" shape="circle" ];  "F148" -- "F149" [ id="F150" style="filled" fillcolor="red" color="red" ]; }');
+    expect(dot).to.equalIgnoreSpaces('graph "Example undirected graph" {  graph [ rankdir="TB" ]\
+        "F148" [ id="F148" style="filled" label="G" shape="circle" fillcolor="#963db3" ];\
+        "F149" [ id="F149" style="filled" label="1" shape="circle" fillcolor="#bf3caf" ];\
+         "F148" -- "F149" [ id="F150" fillcolor="#ff0000" color="#ff0000" ];\
+    }');
   });
 
 });

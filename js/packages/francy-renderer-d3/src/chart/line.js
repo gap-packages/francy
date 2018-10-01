@@ -11,7 +11,7 @@ export default class LineChart extends Chart {
 
   @Decorators.Initializer.initialize()
   async render() {
-    
+
     let linesGroup = this.element.selectAll('g.francy-lines');
 
     if (!linesGroup.node()) {
@@ -19,13 +19,13 @@ export default class LineChart extends Chart {
     }
 
     var self = this;
-    
-    this.datasetNames.forEach(function(key, index) {
+
+    this.datasetNames.forEach(function (key, index) {
       let valueLine = d3.line()
-        .x(function(d, i) {
+        .x(function (d, i) {
           return self.xScale(i);
         })
-        .y(function(d) {
+        .y(function (d) {
           return self.yScale(d);
         });
 
@@ -42,14 +42,14 @@ export default class LineChart extends Chart {
         .style('stroke-width', '5px')
         .attr('class', `francy-line-${index}`)
         .attr('d', valueLine)
-        .on('mouseenter', function(d) {
+        .on('mouseenter', function (d) {
           d3.select(this).transition()
             .duration(250)
             .style('stroke-opacity', 0.5)
             .style('stroke-width', '10px');
           self.handlePromise(self.tooltip.load(Chart.tooltip(key, d), true).render());
         })
-        .on('mouseleave', function() {
+        .on('mouseleave', function () {
           d3.select(this).transition()
             .duration(250)
             .style('stroke-opacity', 1)

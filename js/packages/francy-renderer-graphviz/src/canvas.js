@@ -10,8 +10,10 @@ export default class Canvas extends CompositeRenderer {
     super({ appendTo: appendTo, callbackHandler: callbackHandler });
     this.add(new GraphGeneric(this.options)).add(new ChartGeneric(this.options));
     this.graphvizEngines = ['circo', 'dot', 'fdp', 'neato', 'osage', 'patchwork', 'twopi'];
+    this.graphvizRankdirs = { 'TB': 'Top to Bottom', 'LR': 'Left to Right', 'BT': 'Bottom to Top', 'RL': 'Right to Left' };
     // this only adds if does not exist
     Configuration.addProperty('graphvizEngine', 'dot');
+    Configuration.addProperty('graphvizRankdir', 'TB');
   }
 
   @Decorators.Data.requires('canvas')
@@ -84,20 +86,16 @@ export default class Canvas extends CompositeRenderer {
         },
         entryOnEachCallback: function () {
           let engineCheckId = `graphvizEngine-checkbox-${self.data.canvas.id}`;
-          Configuration.subscribe('graphvizEngine', buttonCheckbox, engineCheckId);
+          Configuration.subscribe('graphvizEngine', function (value) {
+            d3.select(this).html(`${value === engine ? '&#9745' : '&#9744'} ${engine}`);
+          }, engineCheckId);
         }
       });
-
-      function buttonCheckbox(value) {
-        d3.select(this).html(`${value === engine ? '&#9745' : '&#9744'} ${engine}`);
-      }
     });
 
     // re-render when engine changes
     let engineRenderId = `graphvizEngine-reRender-${self.data.canvas.id}`;
-    Configuration.subscribe('graphvizEngine', reRender, engineRenderId);
-
-    function reRender() {
+    Configuration.subscribe('graphvizEngine', function () {
       // remove previous rendered canvas
       self.element.select('g').selectAll('*').remove();
       // re-render
@@ -105,16 +103,46 @@ export default class Canvas extends CompositeRenderer {
         let Renderer = RenderingManager.activeRenderer();
         self.handlePromise(new Renderer(self.options).load(self.data).render());
       }, 100);
-    }
+    }, engineRenderId);
+
+    Object.keys(this.graphvizRankdirs).forEach((dir) => {
+      this.parentClass.MainMenu.addMultiMenuOnSettingsMenu({
+        menuId: 'graphviz-rankdir-entry',
+        menuTitle: 'Viz Rankdir',
+        entryId: `graphviz-rankdir-${dir}-entry`,
+        entryTitle: `${Configuration.object.graphvizRankdir === dir ? '&#9745' : '&#9744'} ${self.graphvizRankdirs[dir]}`,
+        entryOnClickCallback: function () {
+          Configuration.object.graphvizRankdir = dir;
+        },
+        entryOnEachCallback: function () {
+          let dirCheckId = `graphvizEngine-rankdir-${self.data.canvas.id}`;
+          Configuration.subscribe('graphvizRankdir', function (value) {
+            d3.select(this).html(`${value === dir ? '&#9745' : '&#9744'} ${dir}`);
+          }, dirCheckId);
+        }
+      });
+    });
+
+    // re-render when engine changes
+    let dirRenderId = `graphvizRankdir-reRender-${self.data.canvas.id}`;
+    Configuration.subscribe('graphvizRankdir', function () {
+      // remove previous rendered canvas
+      self.element.select('g').selectAll('*').remove();
+      // re-render
+      setTimeout(() => {
+        let Renderer = RenderingManager.activeRenderer();
+        self.handlePromise(new Renderer(self.options).load(self.data).render());
+      }, 100);
+    }, dirRenderId);
 
     // remove menu if renderer is disabled
     let rendererDisableId = `graphvizEngine-disable-${self.data.canvas.id}`;
-    RenderingManager.subscribe(RENDERING_EVENTS.STATUS, onDisableRenderer, rendererDisableId);
-
-    function onDisableRenderer(r) {
+    RenderingManager.subscribe(RENDERING_EVENTS.STATUS, function (r) {
       if (!r.enable) {
         self.parentClass.MainMenu.removeMenuEntry('graphviz-engines-entry');
+        self.parentClass.MainMenu.removeMenuEntry('graphviz-rankdir-entry');
       }
-    }
+    }, rendererDisableId);
+
   }
 }

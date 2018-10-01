@@ -55,19 +55,6 @@
   cursor: pointer
 }
 
-.francy-links path,
-.francy-links ellipse,
-.francy-links polygon {
-  stroke: #000;
-  fill: none
-}
-
-.francy-arrows path,
-.francy-arrows ellipse,
-.francy-arrows polygon {
-  fill: #000
-}
-
 .francy a {
   color: inherit
 }

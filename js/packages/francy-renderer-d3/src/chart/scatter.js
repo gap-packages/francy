@@ -17,10 +17,10 @@ export default class ScatterChart extends Chart {
     if (!scatterGroup.node()) {
       scatterGroup = this.element.append('g').attr('class', 'francy-scatters');
     }
-    
+
     let self = this;
 
-    this.datasetNames.forEach(function(key, index) {
+    this.datasetNames.forEach(function (key, index) {
       let scatter = scatterGroup.selectAll(`.francy-scatter-${index}`).data(self.datasets[key]);
 
       scatter.exit().transition().duration(750)
@@ -34,20 +34,20 @@ export default class ScatterChart extends Chart {
         .style('fill', () => Chart.colors(index * 5))
         .attr('class', `francy-scatter-${index}`)
         .attr('r', 5)
-        .attr('cx', function(d, i) {
+        .attr('cx', function (d, i) {
           return self.xScale(i);
         })
-        .attr('cy', function(d) {
+        .attr('cy', function (d) {
           return self.yScale(d);
         })
-        .on('mouseenter', function(d) {
+        .on('mouseenter', function (d) {
           d3.select(this).transition()
             .duration(250)
             .style('fill-opacity', 0.5)
             .attr('r', 10);
           self.handlePromise(self.tooltip.load(Chart.tooltip(key, d), true).render());
         })
-        .on('mouseleave', function() {
+        .on('mouseleave', function () {
           d3.select(this).transition()
             .duration(250)
             .style('fill-opacity', 1)
