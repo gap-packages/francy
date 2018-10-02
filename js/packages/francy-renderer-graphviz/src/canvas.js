@@ -144,5 +144,31 @@ export default class Canvas extends CompositeRenderer {
       }
     }, rendererDisableId);
 
+    if (this.data.canvas.graph) {
+      this.parentClass.MainMenu.addMultiMenuOnSettingsMenu({
+        menuId: 'graph-settings-entry',
+        menuTitle: 'Graph',
+        entryId: 'neighbours-entry',
+        entryTitle: `${Configuration.object.showNeighbours ? '&#9745' : '&#9744'} Show Neighbours`,
+        entryOnClickCallback: function () {
+          Configuration.object.showNeighbours = !Configuration.object.showNeighbours;
+        },
+        entryOnEachCallback: function () {
+          let showNeighboursId = `showNeighbours-onChange-${self.data.canvas.id}`;
+          Configuration.subscribe('showNeighbours', value => {
+            d3.select(this).html(`${value ? '&#9745' : '&#9744'} Show Neighbours`);
+          }, showNeighboursId);
+        }
+      });
+
+      let removeMenuId = `graphSettings-removeMenu-${self.data.canvas.id}`;
+      // remove menu if renderer is disabled
+      RenderingManager.subscribe(RENDERING_EVENTS.STATUS, r => {
+        if (!r.enable) {
+          this.parentClass.MainMenu.removeMenuEntry('graph-settings-entry');
+        }
+      }, removeMenuId);
+    }
+
   }
 }

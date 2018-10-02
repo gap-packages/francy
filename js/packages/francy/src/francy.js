@@ -1,4 +1,4 @@
-import {Logger, Decorators, Renderer, RenderingManager} from 'francy-core';
+import { Logger, Decorators, Renderer, RenderingManager } from 'francy-core';
 import Frame from './render/frame';
 // import css inline - couldn't make this work on the webpack conf :/
 import '!style-loader!css-loader!./style/index.css';
@@ -23,8 +23,8 @@ export default class Francy extends Renderer {
    * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
-  constructor({appendTo, callbackHandler}) {
-    super({appendTo: appendTo, callbackHandler: callbackHandler});
+  constructor({ appendTo, callbackHandler }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler });
     // all good!
     Logger.info(`Francy JS v${VERSION} initialized! Enjoy...`);
   }

@@ -17,8 +17,9 @@ export default class GraphGeneric extends Graph {
   async render() {
     let self = this,
       loader = Decorators.Loader.withContext(this).show(),
-      dot = new DOTLanguageConverterHelper().load(this.data).convert();
-    //transition = d3.transition().duration(this.transitionDuration);
+      dot = new DOTLanguageConverterHelper().load(this.data).convert(),
+      canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
+      canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
 
     self.parent
       .graphviz()
@@ -76,8 +77,6 @@ export default class GraphGeneric extends Graph {
             return text.datum().attributes.x;
           });
 
-        self._applyEvents(nodes);
-
         links.classed('francy-link', true).each(function (d) {
           Object.assign(d, self.data.canvas.graph.links[d.key]);
         });
@@ -89,6 +88,21 @@ export default class GraphGeneric extends Graph {
         });
         removedLinks.each(function () {
           linksG.node().appendChild(d3.select(this).node());
+        });
+
+        self._applyEvents(nodes);
+
+        let connectedNodes = self._connectedNodes(nodes, canvasNodes, links, canvasLinks);
+        let nodeOnClick = nodes.on('click');
+        nodes.on('click', function (d) {
+          // default, highlight connected nodes
+          connectedNodes.call(this);
+          // any callbacks will be handled here
+          nodeOnClick && nodeOnClick.call(this, d);
+        });
+        links.on('click', function () {
+          // default, highlight connected nodes
+          connectedNodes.call(this);
         });
 
         self.parentClass.zoomToFit(true);
@@ -107,6 +121,63 @@ export default class GraphGeneric extends Graph {
   setLabelYPosition(element, y) {
     let height = element.node().height.baseVal.value;
     element.attr('y', Math.ceil(Number(y) - (height / 2)));
+  }
+
+  _connectedNodes(node, canvasNodes, link, canvasLinks) {
+    let self = this;
+    //Toggle stores whether the highlighting is on
+    let toggle = false;
+
+    //Create an array logging what is connected to what
+    let linkedByIndex = {};
+
+    canvasLinks.forEach(function (d) {
+      linkedByIndex[`${d.source},${d.source}`] = true;
+      linkedByIndex[`${d.target},${d.target}`] = true;
+      linkedByIndex[`${d.source},${d.target}`] = true;
+    });
+
+    function connected() {
+      if (!Configuration.object.showNeighbours) return;
+      let el = d3.select(this);
+      if (!toggle) {
+        //Reduce the opacity of all but the neighbouring nodes
+        let d = el.datum();
+        if (el.attr('class').includes('francy-node')) {
+          node.style('opacity', o => linkedByIndex[`${d.id},${o.id}`] || linkedByIndex[`${o.id},${d.id}`] ? 1 : 0.1);
+          link.style('opacity', function (o) {
+            let opacity = d.id === o.source || d.id === o.target ? 1 : 0.1;
+            d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
+            return opacity;
+          });
+        } else if (el.attr('class').includes('francy-link')) {
+          node.style('opacity', o => d.source === o.id || d.target === o.id ? 1 : 0.1);
+          link.style('opacity', function (o) {
+            let opacity = d.source === o.target ? 1 : 0.1;
+            d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
+            return opacity;
+          });
+        }
+        setTimeout(() => {
+          d3.select('body').on('click', () => toggle ? connected.call(this) : undefined);
+        }, 0);
+        //Reduce the op
+        toggle = true;
+      } else {
+        //Put them back to opacity 1
+        node.style('opacity', 1);
+        link.style('opacity', function () {
+          d3.select(this).select('text').style('opacity', 0.1);
+          return 1;
+        });
+        self.graphOperations.labelsOpacityBehavior(link);
+        d3.select('body').on('click', undefined);
+        toggle = false;
+      }
+      d3.event.preventDefault();
+    }
+
+    return connected;
   }
 
 }

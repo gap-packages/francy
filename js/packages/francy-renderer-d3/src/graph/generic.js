@@ -241,9 +241,7 @@ export default class GenericGraph extends Graph {
       node.attr('transform', d => `translate(${d.x},${d.y})`);
     }
 
-    if (Configuration.object.dragNodes) {
-      this.graphOperations.dragBehavior(node, simulation, simulationActive).call(this, true);
-    }
+    this.graphOperations.dragBehavior(node, simulation, simulationActive).call(this, Configuration.object.dragNodes);
 
     if (node && !node.empty()) {
 

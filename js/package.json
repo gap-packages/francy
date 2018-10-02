@@ -10,6 +10,7 @@
     "bootstrap": "lerna bootstrap",
     "test": "lerna run test",
     "build": "lerna run build",
+    "build:production": "lerna run build:production",
     "clean": "lerna run clean",
     "version": "lerna version",
     "docs": "esdoc",
@@ -18,15 +19,15 @@
     "coverage": "nyc --reporter=lcov --reporter=text-lcov npm run test"
   },
   "devDependencies": {
-    "@babel/cli": "7.1.0",
-    "@babel/core": "7.1.0",
-    "@babel/plugin-proposal-decorators": "7.1.0",
+    "@babel/cli": "7.1.2",
+    "@babel/core": "7.1.2",
+    "@babel/plugin-proposal-decorators": "7.1.2",
     "@babel/plugin-transform-classes": "7.1.0",
     "@babel/plugin-transform-runtime": "7.1.0",
     "@babel/polyfill": "7.0.0",
     "@babel/preset-env": "7.1.0",
-    "babel-eslint": "10.0.0",
-    "babel-loader": "8.0.2",
+    "babel-eslint": "10.0.1",
+    "babel-loader": "8.0.4",
     "chai": "4.2.0",
     "chai-string": "^1.5.0",
     "css-loader": "1.0.0",
@@ -36,7 +37,7 @@
     "esdoc": "1.1.0",
     "esdoc-ecmascript-proposal-plugin": "1.0.0",
     "esdoc-standard-plugin": "1.0.0",
-    "eslint": "5.6.0",
+    "eslint": "5.6.1",
     "isparta": "4.1.0",
     "karma": "3.0.0",
     "karma-chai": "0.1.0",
@@ -50,9 +51,10 @@
     "nyc": "13.0.1",
     "save-svg-as-png": "1.4.6",
     "seedrandom": "2.4.4",
+    "uglifyjs-webpack-plugin": "2.0.1",
     "style-loader": "0.23.0",
     "viz.js": "1.8.1",
     "webpack": "4.20.2",
-    "webpack-cli": "3.1.1"
+    "webpack-cli": "3.1.2"
   }
 }

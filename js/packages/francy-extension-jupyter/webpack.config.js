@@ -1,4 +1,5 @@
 var path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const fPackage = require('./package.json');
 const webpack = require('webpack');
 const description = `'${fPackage.name}, v${fPackage.version}, ${fPackage.description}, ${fPackage.author}.'`;
@@ -10,6 +11,8 @@ const defaultPlugins = [
 module.exports = (env = {}) => {
 
   const isProduction = env.production === true;
+
+  console.log(`Running webpack for production environment? ${isProduction}`);
 
   /**
    * Custom webpack loaders are generally the same for all webpack bundles, hence
@@ -24,44 +27,63 @@ module.exports = (env = {}) => {
           presets: ['@babel/preset-env'],
           plugins: [
             ["@babel/plugin-proposal-decorators", { "legacy": true }],
-            ["@babel/plugin-transform-classes", { globals: ["Error"] }]
+            ["@babel/plugin-transform-classes", { "globals": ["Error"] }]
           ]
         }
       }
     },
     //{ test: /\.json$/, loader: 'json-loader' },
-    { test: /\.css$/, loader: 'style-loader!css-loader' },
-    { test: /\.html$/, loader: 'file-loader' },
-    { test: /\.(jpg|png|gif)$/, loader: 'file-loader' },
-    {
-      test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-      loader: 'url-loader?limit=10000&mimetype=application/font-woff'
-    },
-    {
-      test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-      loader: 'url-loader?limit=10000&mimetype=application/font-woff'
-    },
-    {
-      test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-      loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
-    },
-    { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader' },
-    {
-      test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-      loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
-    }
+    //{ test: /\.css$/, loader: '!style-loader!css-loader' },
+    //{ test: /\.html$/, loader: 'file-loader' },
+    //{ test: /\.(jpg|png|gif)$/, loader: 'file-loader' },
+    //{
+    //  test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+    //  loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+    //},
+    //{
+    //  test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+    //  loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+    //},
+    //{
+    //  test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+    //  loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
+    //},
+    //{ test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader' },
+    //{
+    //  test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+    //  loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+    //}
   ];
 
   var base = {
     mode: isProduction ? 'production' : 'development',
+    stats: {
+      colors: false,
+      hash: true,
+      timings: true,
+      assets: true,
+      chunks: true,
+      chunkModules: true,
+      modules: true,
+      children: true,
+    },
     output: {
       libraryTarget: 'amd',
       devtoolModuleFilenameTemplate: 'webpack:///[absolute-resource-path]'
     },
     optimization: {
-      mergeDuplicateChunks: true
+      //runtimeChunk: false,
+      minimizer: [
+        new UglifyJsPlugin({
+          parallel: true,
+          uglifyOptions: {
+            ecma: 6,
+            compress: false
+          }
+        })
+      ]
     },
-    devtool: 'source-map',
+    devtool: isProduction ? '' : 'source-map',
     module: {
       rules: loaders
     },
@@ -94,7 +116,6 @@ module.exports = (env = {}) => {
         'nbextensions/jupyter_francy/index'
       ]
     }),
-
     /**
      * This bundle contains the implementation of the extension.
      *
@@ -110,7 +131,6 @@ module.exports = (env = {}) => {
           'nbextension'
         )
       })
-    }),
-
+    })
   ];
 };
