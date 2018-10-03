@@ -92,3 +92,14 @@ in any Framework / Programing Language / OS.
 
 Note: An external library is needed in order to translate the JSON produced into its Graphical representation, 
 see _Francy - JS_ a javascript implementation module.
+
+# Usage
+
+In order to use this module:
+
+```bash
+mcmartins@local:~$ wget -qO- https://github.com/mcmartins/francy/archive/v0.12.0.tar.gz | tar xzf - francy-0.12.0/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
+```
+
+Note: 
+Make sure [Francy JS](/js) is installed on your system.
