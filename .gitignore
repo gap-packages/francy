@@ -50,7 +50,6 @@ coverage
 **/*.egg-info/
 **/build/
 gap/dist/
-**/packages/**/dist/
 **/lib/
 
 # Compiled javascript
