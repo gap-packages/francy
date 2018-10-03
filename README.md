@@ -45,6 +45,7 @@ In order to use this module in Jupyter, install it as follows, both jupyter lab 
 mcmartins@local:~$ pip install jupyter_francy
 mcmartins@local:~$ jupyter lab build # for JupyterLab
 mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Notebook
+mcmartins@local:~$ wget -qO- https://github.com/mcmartins/francy/archive/v0.12.0.tar.gz | tar xzf - francy-0.12.0/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
 ```
 
 The jupyter extension requires the GAP Kernel and Francy GAP packages installed.
@@ -52,6 +53,8 @@ The jupyter extension requires the GAP Kernel and Francy GAP packages installed.
 See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel)
 
 See [Graphics Semantics Package for GAP](/gap)
+
+See [Javascript Renderers](/js)
 
 # Package Structure
 

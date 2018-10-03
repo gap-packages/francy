@@ -7,10 +7,10 @@ Follow the git flow:
 ```bash
 mcmartins@local:~$ git checkout develop # just to make sure
 mcmartins@local:~$ git flow init # all defaults except the tag prefix that should be 'v'
-mcmartins@local:~$ git flow release start 0.10.0
+mcmartins@local:~$ git flow release start 0.12.0
 mcmartins@local:~$ git checkout master
-mcmartins@local:~$ git merge release/0.10.0
-mcmartins@local:~$ git flow release finish '0.10.0'
+mcmartins@local:~$ git merge release/0.12.0
+mcmartins@local:~$ git flow release finish '0.12.0'
 mcmartins@local:~$ git push
 mcmartins@local:~$ git push --tags
 ```
