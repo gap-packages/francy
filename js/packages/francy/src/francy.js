@@ -26,7 +26,7 @@ export default class Francy extends Renderer {
   constructor({ appendTo, callbackHandler }) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler });
     // all good!
-    Logger.info(`Francy JS v${VERSION} initialized! Enjoy...`);
+    Logger.info(`Francy JS v${VERSION}! Enjoy...`);
   }
 
   /**

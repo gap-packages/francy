@@ -69,6 +69,7 @@ export default class GenericGraph extends Graph {
 
     linkEnter.append('path')
       .classed('francy-edge', true)
+      .style('fill', 'none')
       .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 1))
       .style('stroke', d => d.color || '#000');
 

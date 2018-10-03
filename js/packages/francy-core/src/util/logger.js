@@ -41,8 +41,11 @@ class Log {
    * @param error the error Object to attach to the message
    */
   error(message, error) {
-    error = error || {};
-    this.console.error(Log._format('E', message), error);
+    if (error) {
+      this.console.error(Log._format('E', message), error);
+    } else {
+      this.console.error(Log._format('E', message));
+    }
   }
 
   /**
@@ -51,8 +54,11 @@ class Log {
    * @param error the error Object to attach to the message
    */
   warn(message, error) {
-    error = error || {};
-    this.console.error(Log._format('W', message), error);
+    if (error) {
+      this.console.info(Log._format('W', message), error);
+    } else {
+      this.console.info(Log._format('W', message));
+    }
   }
 
   /**
