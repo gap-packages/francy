@@ -91,8 +91,8 @@ export default class Canvas extends CompositeRenderer {
     if (!content.node()) {
       content = this.element.append('g')
         .classed('francy-content', true)
-          .classed('graph', true)
-          .attr('id', 'graph0');
+        .classed('graph', true)
+        .attr('id', 'graph0');
       zoom.on('zoom', zoomed);
       // remove zoom on double click!
       this.element.call(zoom).on('dblclick.zoom', null);
