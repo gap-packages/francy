@@ -1,6 +1,6 @@
 {
   "name": "francy-extension-jupyter",
-  "version": "0.10.0",
+  "version": "0.12.0",
   "description": "A package for rendering application/vnd.francy+json in Jupyter",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "main": "lib/index.js",
@@ -21,9 +21,9 @@
   "jupyterlab": {
     "mimeExtension": "lib/lab_extension",
     "dependencies": {
-      "francy": "^0.10.0",
-      "francy-renderer-d3": "^0.10.0",
-      "francy-renderer-graphviz": "^0.10.0"
+      "francy": "^0.12.0",
+      "francy-renderer-d3": "^0.12.0",
+      "francy-renderer-graphviz": "^0.12.0"
     },
     "singletonPackages": [
       "francy",
@@ -48,9 +48,9 @@
     "d3": "5.7.0",
     "d3-graphviz": "2.6.0",
     "viz.js": "1.8.1",
-    "francy": "^0.10.0",
-    "francy-renderer-d3": "^0.10.0",
-    "francy-renderer-graphviz": "^0.10.0"
+    "francy": "^0.12.0",
+    "francy-renderer-d3": "^0.12.0",
+    "francy-renderer-graphviz": "^0.12.0"
   },
   "devDependencies": {
     "@babel/cli": "7.1.2",
