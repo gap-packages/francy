@@ -1,9 +1,6 @@
-#############################################################################
-##
-#W  francy.gd                   FRANCY library                 Manuel Martins
-##
-#Y  Copyright (C) 2017 Manuel Martins
-##
+#
+# francy: Interactive Discrete Mathematics in GAP
+#
 #! @Chapter Francy Core
 #!
 #! Francy is responsible for generating JSON metadata which allows external
@@ -29,8 +26,6 @@
 #! Please see Francy-JS for client implementation.
 
 
-#############################################################################
-##
 #! @Section Categories
 #! In this section we show the Francy Core Categories.
 
@@ -47,8 +42,6 @@ DeclareCategory("IsFrancyDefaultObject", IsObject);
 DeclareCategory("IsFrancyTypeObject", IsObject);
 
 
-#############################################################################
-##
 #! @Section Families
 #! In this section we show the Francy Core Families.
 
@@ -58,8 +51,6 @@ DeclareCategory("IsFrancyTypeObject", IsObject);
 BindGlobal("FrancyFamily", NewFamily("FrancyFamily", IsFrancyObject));
 
 
-#############################################################################
-##
 #! @Section Global
 #! In this section we show the Francy Core Types
 
@@ -72,8 +63,7 @@ BindGlobal("FrancyFamily", NewFamily("FrancyFamily", IsFrancyObject));
 #! @Returns <C>IsString</C> with content 'application/vnd.francy+json'
 BindGlobal("FrancyMIMEType", "application/vnd.francy+json");
 
-#############################################################################
-##
+
 #! @Section Attributes
 #! In this section we show the Francy Core Attributes
 

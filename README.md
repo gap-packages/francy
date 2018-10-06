@@ -23,17 +23,17 @@ The binder includes all packages from `bootstrap-pkg-full`, plus:
 
 ## Master
 
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/master)
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/master?urlpath=lab)
-[![Build Status](https://travis-ci.org/mcmartins/francy.svg?branch=master)](https://travis-ci.org/mcmartins/francy)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master?urlpath=lab)
+[![Build Status](https://travis-ci.org/mcmartins/francy.svg?branch=master)](https://travis-ci.org/gap-packages/francy)
 
 ## Develop
 
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/develop)
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/mcmartins/francy/develop?urlpath=lab)
-[![Build Status](https://travis-ci.org/mcmartins/francy.svg?branch=develop)](https://travis-ci.org/mcmartins/francy)
-[![Test Coverage Status](https://codecov.io/gh/mcmartins/francy/branch/develop/graph/badge.svg)](https://codecov.io/gh/mcmartins/francy)
-[![JS Maintainability](https://api.codeclimate.com/v1/badges/db52d89d90ab0d7e6fd4/maintainability)](https://codeclimate.com/github/mcmartins/francy/maintainability)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/develop)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/develop?urlpath=lab)
+[![Build Status](https://travis-ci.org/gap-packages/francy.svg?branch=develop)](https://travis-ci.org/gap-packages/francy)
+[![Test Coverage Status](https://codecov.io/gh/gap-packages/francy/branch/develop/graph/badge.svg)](https://codecov.io/gh/gap-packages/francy)
+[![JS Maintainability](https://api.codeclimate.com/v1/badges/db52d89d90ab0d7e6fd4/maintainability)](https://codeclimate.com/github/gap-packages/francy/maintainability)
 
 # Jupyter Integration
 
@@ -45,7 +45,7 @@ In order to use this module in Jupyter, install it as follows, both jupyter lab 
 mcmartins@local:~$ pip install jupyter_francy
 mcmartins@local:~$ jupyter lab build # for JupyterLab
 mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Notebook
-mcmartins@local:~$ wget -qO- https://github.com/mcmartins/francy/archive/v0.12.0.tar.gz | tar xzf - francy-0.12.0/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
+mcmartins@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/v0.12.0.tar.gz | tar xzf - francy-0.12.0/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
 ```
 
 The jupyter extension requires the GAP Kernel and Francy GAP packages installed.
@@ -58,13 +58,12 @@ See [Javascript Renderers](/js)
 
 # Package Structure
 
-|||
-|:-------------------------------------|:---|
+|:-----------|:-----------------------------------------------------------------------------|
 | scripts    | contains scripts used by travis to set-up the environment and release process|
-| notebooks  | contains some notebooks with francy examples   |
-| js         | contains the source code of francy-js | 
-| gap        | contains the source code of francy-gap |
-| extensions | contains the extensions built for Jupyter Notebook and Lab |
+| notebooks  | contains some notebooks with francy examples                                 |
+| js         | contains the source code of francy-js                                        |
+| gap        | contains the source code of francy-gap                                       |
+| extensions | contains the extensions built for Jupyter Notebook and Lab                   |
 
 # License
 

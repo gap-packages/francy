@@ -1,9 +1,7 @@
-#############################################################################
-##
-#W  callback.gd                 FRANCY library                 Manuel Martins
-##
-#Y  Copyright (C) 2017 Manuel Martins
-##
+#
+# francy: Interactive Discrete Mathematics in GAP
+#
+
 #! @Chapter Francy Callbacks
 #!
 #! <C>Callbacks</C> are objects that hold a function, a list of arguments 
@@ -15,8 +13,6 @@
 #! Please see Francy-JS for client implementation.
 
 
-#############################################################################
-##
 #! @Section Categories
 #! In this section we show the Francy Callback Categories.
 
@@ -37,8 +33,6 @@ DeclareCategory("IsArgType", IsFrancyTypeObject);
 DeclareCategory("IsTriggerType", IsFrancyTypeObject);
 
 
-#############################################################################
-##
 #! @Section Families
 #! In this section we show the Francy Callback Families.
 
@@ -48,8 +42,6 @@ DeclareCategory("IsTriggerType", IsFrancyTypeObject);
 BindGlobal("CallbackFamily", NewFamily("CallbackFamily", IsCallback));
 
 
-#############################################################################
-##
 #! @Section Representations
 #! In this section we show the Francy Callback Representations.
 
@@ -86,8 +78,6 @@ BindGlobal("ArgTypeObjectType",  NewType(CallbackFamily, IsArgType and IsArgType
 BindGlobal("TriggerTypeObjectType", NewType(CallbackFamily, IsTriggerType and IsTriggerTypeRep));
 
 
-#############################################################################
-##
 #! @Section Operations
 #! In this section we show the Francy Callback Operations.
 
@@ -157,8 +147,7 @@ DeclareOperation("Trigger", [IsString]);
 #! @Returns <C>Callback</C>
 #DeclareOperation("Remove", [IsCallback, IsRequiredArg]);
 
-#############################################################################
-##
+
 #! @Section Globals
 #! In this section we show the Global Callback Francy Records for multi purpose.
 
@@ -193,8 +182,7 @@ BindGlobal("TriggerType", rec(
   CLICK        := Objectify(TriggerTypeObjectType, rec(value := "click"))
 ));
 
-#############################################################################
-##
+
 #! @Section Attributes
 #! In this section we show the Francy Callback Attributes
 

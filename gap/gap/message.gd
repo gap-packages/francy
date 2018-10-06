@@ -1,17 +1,13 @@
-#############################################################################
-##
-#W  message.gd                    FRANCY library                  Manuel Martins
-##
-#Y  Copyright (C) 2017 Manuel Martins
-##
+#
+# francy: Interactive Discrete Mathematics in GAP
+#
 #! @Chapter Francy Messages
-#! TODO FrancyMessage
+#! <C>FrancyMessage</C> is an object that holds a message.
 #! <P/>
+#! These messages can be used to provide information to users in the form of <C>SUCCESS</C>, <C>INFO</C>, <C>WARNING</C>, <C>ERROR</C>.
 #! Please see Francy-JS for client implementation.
 
 
-#############################################################################
-##
 #! @Section Categories
 #! In this section we show the Francy FrancyMessage Categories.
 
@@ -24,8 +20,6 @@ DeclareCategory("IsFrancyMessage", IsFrancyObject);
 DeclareCategory("IsFrancyMessageType", IsFrancyObject);
 
 
-#############################################################################
-##
 #! @Section Families
 #! In this section we show the Francy FrancyMessage Families.
 
@@ -35,8 +29,6 @@ DeclareCategory("IsFrancyMessageType", IsFrancyObject);
 BindGlobal("FrancyMessageFamily", NewFamily("FrancyMessageFamily", IsFrancyObject));
 
 
-#############################################################################
-##
 #! @Section Representations
 #! In this section we show the Francy FrancyMessage Representations.
 
@@ -56,8 +48,7 @@ BindGlobal("FrancyMessageObjectType", NewType(FrancyMessageFamily, IsFrancyMessa
 #! Creates a new type for <C>FrancyMessageType/C> objects.
 BindGlobal("FrancyMessageTypeObjectType", NewType(FrancyMessageFamily, IsFrancyMessageType and IsFrancyMessageTypeRep));
 
-#############################################################################
-##
+
 #! @Section Operations
 #! In this section we show the Francy FrancyMessage Operations.
 
@@ -68,8 +59,7 @@ BindGlobal("FrancyMessageTypeObjectType", NewType(FrancyMessageFamily, IsFrancyM
 #! @Returns <C>FrancyMessage</C>
 DeclareOperation("FrancyMessage", [IsFrancyMessageType, IsString, IsString]);
 
-#############################################################################
-##
+
 #! @Section Global
 #! In this section we show the Global Callback Francy Records for multi purpose.
 
@@ -85,8 +75,6 @@ BindGlobal("FrancyMessageType", rec(
 ));
 
 
-#############################################################################
-##
 #! @Section Attributes
 #! In this section we show the Francy Core Attributes
 

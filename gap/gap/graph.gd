@@ -1,15 +1,14 @@
-#############################################################################
-##
-#W  shape.gd                   FRANCY library                  Manuel Martins
-##
-#Y  Copyright (C) 2017 Manuel Martins
-##
+#
+# francy: Interactive Discrete Mathematics in GAP
+#
 #! @Chapter Francy Graphs
-#!
+#! It is possible to build <C>Graphs</C>, direct or indirect.
+#! <P/>
+#! Please see examples section.
+#! <P/>
 #! Please see Francy-JS for client implementation.
 
-#############################################################################
-##
+
 #! @Section Categories
 #! In this section we show the Francy Graph Categories.
 
@@ -46,8 +45,6 @@ DeclareCategory("IsLink", IsFrancyObject);
 DeclareCategory("IsLinkDefaults", IsFrancyDefaultObject);
 
 
-#############################################################################
-##
 #! @Section Families
 #! In this section we show the Francy Graph Families.
 
@@ -66,8 +63,7 @@ BindGlobal("ShapeFamily", NewFamily("ShapeFamily", IsShape));
 #! @Returns <C>LinkFamily</C>
 BindGlobal("LinkFamily", NewFamily("LinkFamily", IsLink));
 
-#############################################################################
-##
+
 #! @Section Representations
 #! In this section we show the Francy Graph Representations.
 
@@ -123,8 +119,7 @@ BindGlobal("ShapeTypeObjectType", NewType(ShapeFamily, IsShapeType and IsShapeTy
 #! Creates a new type for <C>GraphType/C> objects.
 BindGlobal("GraphTypeObjectType", NewType(GraphFamily, IsFrancyGraphType and IsFrancyGraphTypeRep));
 
-#############################################################################
-##
+
 #! @Section Operations
 #! In this section we show the Francy Graph Operations.
 
@@ -257,8 +252,7 @@ DeclareOperation("GetLink", [IsFrancyGraph, IsString]);
 #! @Returns <C>List(Link)</C>
 DeclareOperation("GetLinks", [IsFrancyGraph]);
 
-#############################################################################
-##
+
 #! @Section Global
 #! In this section we show the Global Callback Francy Records for multi purpose.
 
@@ -313,11 +307,8 @@ BindGlobal("LinkDefaults", Objectify(NewType(LinkFamily, IsLinkDefaults and IsLi
 )));
 
 
-#############################################################################
-##
 #! @Section Attributes
 #! In this section we show the Francy Core Attributes
-
 
 #! @Description
 #! Sets the title on the Shape.

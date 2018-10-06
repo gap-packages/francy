@@ -1,9 +1,6 @@
-#############################################################################
-##
-#W  menu.gd                    FRANCY library                  Manuel Martins
-##
-#Y  Copyright (C) 2017 Manuel Martins
-##
+#
+# francy: Interactive Discrete Mathematics in GAP
+#
 #! @Chapter Francy Menus
 #! Menus are agregators of actions that are represented here by <C>Callbacks</C>.
 #! Menus can have SubMenus, and are constituted by a Title and a Callback.
@@ -11,8 +8,6 @@
 #! Please see Francy-JS for client implementation.
 
 
-#############################################################################
-##
 #! @Section Categories
 #! In this section we show the Francy Menu Categories.
 
@@ -21,8 +16,6 @@
 DeclareCategory("IsMenu", IsFrancyObject);
 
 
-#############################################################################
-##
 #! @Section Families
 #! In this section we show the Francy Menu Families.
 
@@ -32,8 +25,6 @@ DeclareCategory("IsMenu", IsFrancyObject);
 BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
 
 
-#############################################################################
-##
 #! @Section Representations
 #! In this section we show the Francy Menu Representations.
 
@@ -46,8 +37,6 @@ DeclareRepresentation("IsMenuRep", IsComponentObjectRep, [], IsMenu);
 BindGlobal("MenuObjectType", NewType(MenuFamily, IsMenu and IsMenuRep));
 
 
-#############################################################################
-##
 #! @Section Operations
 #! In this section we show the Francy Menu Operations.
 
@@ -73,8 +62,6 @@ DeclareOperation("Menu", [IsString, IsCallback]);
 #DeclareOperation("Remove", [IsMenu, IsMenu]);
 
 
-#############################################################################
-##
 #! @Section Attributes
 #! In this section we show the Francy Core Attributes
 

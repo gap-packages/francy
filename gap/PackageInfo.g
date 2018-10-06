@@ -1,7 +1,11 @@
-#############################################################################
-##  
-##  PackageInfo.g for the GAP package FRANCY
-##
+#
+# francy: Interactive Discrete Mathematics in GAP
+#
+# This file contains package meta data. For additional information on
+# the meaning and correct usage of these fields, please consult the
+# manual of the "Example" package as well as the comments in its
+# PackageInfo.g file.
+#
 
 SetPackageInfo(rec(
 
@@ -36,10 +40,10 @@ SetPackageInfo(rec(
   CommunicatedBy   := "TBD",
   SourceRepository := rec(
     Type := "git",
-    URL  := "https://github.com/mcmartins/francy",
+    URL  := "https://github.com/gap-packages/francy",
   ),
   IssueTrackerURL := Concatenation(~.SourceRepository.URL, "/issues"),
-  PackageWWWHome  := "https://github.com/mcmartins/francy",
+  PackageWWWHome  := "https://github.com/gap-packages/francy",
   README_URL      := Concatenation(~.PackageWWWHome, "/README.md"),
   PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
   ArchiveURL      := Concatenation(~.SourceRepository.URL, "/releases/download/v",
@@ -59,18 +63,18 @@ SetPackageInfo(rec(
   ),
 
   Dependencies := rec(
-    GAP                    := ">=4.9",
-    NeededOtherPackages    := [["GAPDoc", ">= 1.5"],
-                              ["json", ">= 1.1.0"],
-                              ["JupyterKernel", ">= 0.99999"]],
+    GAP                    := ">=4.10",
+    NeededOtherPackages    := [["GAPDoc", ">= 1.6.1"],
+                              ["json", ">= 2.0.0"],
+                              ["JupyterKernel", ">= 1.0"]],
     SuggestedOtherPackages := [],
     ExternalConditions     := []
   ),
 
-  AvailabilityTest := function() return true; end,
+  AvailabilityTest := ReturnTrue,
 
   TestFile := "tst/testall.g",
 
-  Keywords := ["Interactive", "Graphics", "Charts", "Graphs"]
+  Keywords := ["Jupyter", "User Interface", "Interactive", "Graphics", "Charts", "Graphs"]
 
 ));

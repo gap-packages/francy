@@ -98,7 +98,7 @@ see _Francy - JS_ a javascript implementation module.
 In order to use this module:
 
 ```bash
-mcmartins@local:~$ wget -qO- https://github.com/mcmartins/francy/archive/v0.12.0.tar.gz | tar xzf - francy-0.12.0/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
+mcmartins@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/v0.12.0.tar.gz | tar xzf - francy-0.12.0/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
 ```
 
 Note: 

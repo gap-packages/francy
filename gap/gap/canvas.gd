@@ -1,17 +1,12 @@
-#############################################################################
-##
-#W  canvas.gd                   FRANCY library                 Manuel Martins
-##
-#Y  Copyright (C) 2017 Manuel Martins
-##
+#
+# francy: Interactive Discrete Mathematics in GAP
+#
 #! @Chapter Francy Canvas
 #! A <C>Canvas</C> is an area where the graphics representation of Francy live.
 #! <P/>
 #! Please see Francy-JS for client implementation.
 
 
-#############################################################################
-##
 #! @Section Categories
 #! In this section we show the Francy Canvas Categories.
 
@@ -24,8 +19,6 @@ DeclareCategory("IsCanvas", IsFrancyObject);
 DeclareCategory("IsCanvasDefaults", IsFrancyDefaultObject);
 
 
-#############################################################################
-##
 #! @Section Families
 #! In this section we show the Francy Canvas Families.
 
@@ -35,8 +28,6 @@ DeclareCategory("IsCanvasDefaults", IsFrancyDefaultObject);
 BindGlobal("CanvasFamily", NewFamily("CanvasFamily", IsCanvas));
 
 
-#############################################################################
-##
 #! @Section Representations
 #! In this section we show the Francy Canvas Representations.
 
@@ -53,8 +44,6 @@ DeclareRepresentation("IsCanvasDefaultsRep", IsComponentObjectRep, [], IsCanvasD
 BindGlobal("CanvasObjectType", NewType(CanvasFamily, IsCanvas and IsCanvasRep));
 
 
-#############################################################################
-##
 #! @Section Operations
 #! In this section we show the Francy Canvas Operations.
 
@@ -138,8 +127,6 @@ DeclareOperation("Draw", [IsCanvas]);
 DeclareOperation("DrawSplash", [IsCanvas]);
 
 
-#############################################################################
-##
 #! @Section Global
 #! In this section we show the Global Francy Canvas Records for multi purpose.
 
@@ -152,8 +139,7 @@ BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults an
   texTypesetting := false
 )));
 
-#############################################################################
-##
+
 #! @Section Attributes
 #! In this section we show the Francy Attributes
 

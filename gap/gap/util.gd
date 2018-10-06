@@ -1,14 +1,9 @@
-#############################################################################
-##
-#W  util.gd                   FRANCY library                 Manuel Martins
-##
-#Y  Copyright (C) 2017 Manuel Martins
-##
+#
+# francy: Interactive Discrete Mathematics in GAP
+#
 #! @Chapter Francy Util
 
 
-#############################################################################
-##
 #! @Section Operations
 #! In this section we show the Francy Util Operations.
 #! Contains utility methods to handle Object printing/viewing, Sanitizing, etc.

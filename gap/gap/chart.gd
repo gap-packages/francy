@@ -1,9 +1,6 @@
-#############################################################################
-##
-#W  chart.gd                   FRANCY library                  Manuel Martins
-##
-#Y  Copyright (C) 2017 Manuel Martins
-##
+#
+# francy: Interactive Discrete Mathematics in GAP
+#
 #! @Chapter Francy Charts
 #! It is possible to build <C>Charts</C> with simple <C>Datasets</C>.
 #! <P/>
@@ -12,8 +9,6 @@
 #! Please see Francy-JS for client implementation.
 
 
-#############################################################################
-##
 #! @Section Categories
 #! In this section we show the Francy Chart Categories.
 
@@ -46,8 +41,6 @@ DeclareCategory("IsYAxis", IsFrancyObject);
 DeclareCategory("IsDataset", IsFrancyObject);
 
 
-#############################################################################
-##
 #! @Section Families
 #! In this section we show the Francy Chart Families.
 
@@ -57,8 +50,6 @@ DeclareCategory("IsDataset", IsFrancyObject);
 BindGlobal("ChartFamily", NewFamily("ChartFamily", IsChart));
 
 
-#############################################################################
-##
 #! @Section Representations
 #! In this section we show the Francy Chart Representations.
 
@@ -111,8 +102,6 @@ BindGlobal("ChartTypeObjectType",  NewType(ChartFamily, IsChartType and IsChartT
 BindGlobal("AxisScaleTypeObjectType",  NewType(ChartFamily, IsAxisScaleType and IsAxisScaleTypeRep));
 
 
-#############################################################################
-##
 #! @Section Operations
 #! In this section we show the Francy Chart Operations.
 
@@ -175,8 +164,7 @@ DeclareOperation("XAxis", [IsAxisScaleType, IsString, IsList]);
 #! @Returns <C>YAxis</C>
 DeclareOperation("YAxis", [IsAxisScaleType, IsString, IsList]);
 
-#############################################################################
-##
+
 #! @Section Global
 #! In this section we show the Global Chart Francy Records for multi purpose.
 
@@ -205,8 +193,6 @@ BindGlobal("ChartDefaults", Objectify(NewType(ChartFamily, IsChartDefaults and I
 )));
 
 
-#############################################################################
-##
 #! @Section Attributes
 #! In this section we show the Francy Attributes
 
