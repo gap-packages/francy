@@ -45,6 +45,11 @@ cd gap
 cat makedoc.g | $GAP
 
 cd $CURRENT/gap
+
+# configure git
+git config credential.helper "store --file=.git/credentials"
+echo "https://${GITHUB_ADMIN_KEY}:@github.com" > .git/credentials
+
 # Add a new remote pointing to the GitHubPagesForGAP repository
 git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
 git fetch gh-gap
@@ -59,7 +64,7 @@ cd gh-pages
 cp -f ../PackageInfo.g ../README* .
 cp -f ../doc/*.{css,html,js,txt} doc/
 
-$GAPROOT/bin/gap.sh update.g
+$GAP update.g
 
 git add PackageInfo.g README* doc/ _data/package.yml
 git commit -m "Setup gh-pages based on GitHubPagesForGAP"
