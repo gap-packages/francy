@@ -42,4 +42,4 @@ cd $CURRENT
 
 cd gap
 
-$GAP makedoc.g 
+cat makedoc.g | $GAP
