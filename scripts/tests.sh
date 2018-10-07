@@ -43,3 +43,24 @@ cd $CURRENT
 cd gap
 
 cat makedoc.g | $GAP
+
+cd $CURRENT/gap
+# Add a new remote pointing to the GitHubPagesForGAP repository
+git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
+git fetch gh-gap
+
+# Create a fresh gh-pages branch from the new remote
+git branch gh-pages gh-gap/gh-pages --no-track
+
+# Create a new worktree and change into it
+git worktree add gh-pages gh-pages
+cd gh-pages
+
+cp -f ../PackageInfo.g ../README* .
+cp -f ../doc/*.{css,html,js,txt} doc/
+
+$GAPROOT/bin/gap.sh update.g
+
+git add PackageInfo.g README* doc/ _data/package.yml
+git commit -m "Setup gh-pages based on GitHubPagesForGAP"
+git push -f --set-upstream origin gh-pages
