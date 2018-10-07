@@ -42,4 +42,4 @@ cd $CURRENT
 
 cd gap
 
-$GAPROOT/bin/gap.sh makedoc.g 
+$GAP makedoc.g 
