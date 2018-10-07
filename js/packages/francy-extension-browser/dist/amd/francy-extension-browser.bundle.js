@@ -6638,11 +6638,9 @@ function (_BaseRenderer) {
       var toggle = 0; //Create an array logging what is connected to what
 
       var linkedByIndex = {};
-
-      for (var i = 0; i < canvasNodes.length; i++) {
+      canvasNodes.forEach(function (d, i) {
         linkedByIndex["".concat(i, ",").concat(i)] = 1;
-      }
-
+      });
       canvasLinks.forEach(function (d) {
         linkedByIndex["".concat(d.source.index, ",").concat(d.target.index)] = 1;
       });
@@ -10298,8 +10296,8 @@ function (_Graph) {
                 }).attr('text-anchor', 'middle');
                 link.exit().remove();
                 link = linkGroup.selectAll('g.francy-link'); // on mouse over show labels opacity 1
+                //this.graphOperations.labelsOpacityBehavior(link);
 
-                this.graphOperations.labelsOpacityBehavior(link);
                 nodeEnter = node.enter().append('g').attr('id', function (d) {
                   return d.id;
                 }).classed('francy-node', true).classed('francy-highlight', true).classed('francy-selected', function (d) {
@@ -10424,7 +10422,7 @@ function (_Graph) {
 
                 return _context.abrupt("return", this);
 
-              case 35:
+              case 34:
               case "end":
                 return _context.stop();
             }
@@ -11314,7 +11312,7 @@ function (_Graph) {
         var sourceId = _typeof(d.source) === 'object' ? d.source.id : d.source;
         var targetId = _typeof(d.target) === 'object' ? d.target.id : d.target;
         linkedByIndex["".concat(sourceId, ",").concat(sourceId)] = true;
-        linkedByIndex["".concat(targetId, ",").concat(targetId)] = true;
+        linkedByIndex["".concat(targetId, ",").concat(sourceId)] = true;
         linkedByIndex["".concat(sourceId, ",").concat(targetId)] = true;
       });
 
@@ -11347,7 +11345,8 @@ function (_Graph) {
             });
             link.style('opacity', function (o) {
               var localTargetId = _typeof(o.target) === 'object' ? o.target.id : o.target;
-              var opacity = sourceId === localTargetId ? 1 : 0.1;
+              var localSourceId = _typeof(o.source) === 'object' ? o.source.id : o.source;
+              var opacity = sourceId === localSourceId && targetId === localTargetId ? 1 : 0.1;
               d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
               return opacity;
             });

@@ -17,8 +17,8 @@ mcmartins@local:~$ git push --tags
 
 Notes:
 
-After runing `git flow release start <v>`, update the version number on /js using 
-`npm run version`. Update `gap/PackageInfo.g` and the tests relying on it.
+Update the project version number using `npm run version` in /js. 
+Update `gap/PackageInfo.g` and the tests relying on it.
 
 Make sure all versions are consitent and commit your changes.
 

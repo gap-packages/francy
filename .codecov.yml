@@ -18,6 +18,10 @@ ignore:
   - "read.g"
   - "tst/*"     # ignore test harness code
   - "tst/**/*"  # ignore test harness code
-  - "test/*"     # ignore test harness code
-  - "test/**/*"  # ignore test harness code
-  - "**/*.js"
+  - "test/*"    # ignore test harness code
+  - "test/**/*" # ignore test harness code
+  - "node_modules/**/*"
+  - "dist/**/*"
+  - "*.bundle.js*"
+  - "webpack.config.js"
+  - "karma.conf.js"

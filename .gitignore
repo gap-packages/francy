@@ -1,5 +1,3 @@
-**/doc
-
 **/.dirstamp
 *.libs/
 
@@ -67,3 +65,4 @@ build.sh
 *.ipynb_checkpoints
 
 *.log
+gh-pages/

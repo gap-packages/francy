@@ -14,6 +14,7 @@ cd js
 
 npm run lint
 npm run coverage
+npm run docs
 
 # Test Extensions - won't produce any coverage obviously
 cd packages/francy-extension-jupyter
@@ -38,3 +39,7 @@ pip3.6 install -e .
 #`pyenv which jupyter` labextension list 2>&1 | grep -q jupyter_francy
 
 cd $CURRENT
+
+cd gap
+
+$GAPROOT/bin/gap.sh makedoc.g 

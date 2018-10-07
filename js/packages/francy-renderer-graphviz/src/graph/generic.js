@@ -48,8 +48,8 @@ export default class GraphGeneric extends Graph {
         let links = self.element.selectAll('.edge');
 
         nodes.each(function (d) {
-          Object.assign(d, self.data.canvas.graph.nodes[d.key]);
-        })
+            Object.assign(d, self.data.canvas.graph.nodes[d.key]);
+          })
           .classed('francy-node', true)
           .classed('francy-highlight', true)
           .classed('francy-selected', d => d.selected);
@@ -135,7 +135,7 @@ export default class GraphGeneric extends Graph {
       let sourceId = typeof d.source === 'object' ? d.source.id : d.source;
       let targetId = typeof d.target === 'object' ? d.target.id : d.target;
       linkedByIndex[`${sourceId},${sourceId}`] = true;
-      linkedByIndex[`${targetId},${targetId}`] = true;
+      linkedByIndex[`${targetId},${sourceId}`] = true;
       linkedByIndex[`${sourceId},${targetId}`] = true;
     });
 
@@ -160,7 +160,8 @@ export default class GraphGeneric extends Graph {
           node.style('opacity', o => sourceId === o.id || targetId === o.id ? 1 : 0.1);
           link.style('opacity', function (o) {
             let localTargetId = typeof o.target === 'object' ? o.target.id : o.target;
-            let opacity = sourceId === localTargetId ? 1 : 0.1;
+            let localSourceId = typeof o.source === 'object' ? o.source.id : o.source;
+            let opacity = sourceId === localSourceId && targetId === localTargetId ? 1 : 0.1;
             d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
             return opacity;
           });

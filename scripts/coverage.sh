@@ -28,16 +28,4 @@ GAPInput
 # generate source coverage reports by running gcov
 #gcov -o . $COVDIR/*.c*
 
-cd js
-
-################################################################################
-#
-# Install codeclimate agent
-#
-curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-chmod +x ./cc-test-reporter
-./cc-test-reporter before-build
-./cc-test-reporter after-build
-
-cd $CURRENT
 bash <(curl -s https://codecov.io/bash)

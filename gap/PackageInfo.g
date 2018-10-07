@@ -12,7 +12,7 @@ SetPackageInfo(rec(
   PackageName := "Francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
   Version     := "0.12.0",
-  Date        := "11/03/2018",
+  Date        := "07/10/2018",
 
   Persons := [
     rec(
@@ -46,8 +46,9 @@ SetPackageInfo(rec(
   PackageWWWHome  := "https://github.com/gap-packages/francy",
   README_URL      := Concatenation(~.PackageWWWHome, "/README.md"),
   PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
-  ArchiveURL      := Concatenation(~.SourceRepository.URL, "/releases/download/v",
-                                    ~.Version, "/francy-", ~.Version),
+  ArchiveURL      := Concatenation(~.SourceRepository.URL, 
+                                   "/releases/download/v", ~.Version, 
+                                   "/", ~.PackageName, "-", ~.Version),
   ArchiveFormats  := ".tar.gz",
 
   AbstractHTML :=

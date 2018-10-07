@@ -86,10 +86,10 @@ export default class GraphOperations extends BaseRenderer {
 
     //Create an array logging what is connected to what
     let linkedByIndex = {};
-
-    for (let i = 0; i < canvasNodes.length; i++) {
+    
+    canvasNodes.forEach(function (d, i) {
       linkedByIndex[`${i},${i}`] = 1;
-    }
+    });
 
     canvasLinks.forEach(function (d) {
       linkedByIndex[`${d.source.index},${d.target.index}`] = 1;

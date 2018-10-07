@@ -9,9 +9,12 @@ See [Graphics Semantics Package for GAP](/gap)
 
 There is javascript implementation of the graphical representation that works on Jupyter, embeded in a Web page or as a Desktop Application (e.g. using electron).
 
-See [Graphics Interface using Javascritp and D3.v5](/js)
+See [Graphics Interface](/js)
 
 ## Binder 
+
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master?urlpath=lab)
 
 The binder includes all packages from `bootstrap-pkg-full`, plus:
 
@@ -21,18 +24,10 @@ The binder includes all packages from `bootstrap-pkg-full`, plus:
 
 [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel)
 
-## Master
+## Status 
 
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master)
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master?urlpath=lab)
-[![Build Status](https://travis-ci.org/mcmartins/francy.svg?branch=master)](https://travis-ci.org/gap-packages/francy)
-
-## Develop
-
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/develop)
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/develop?urlpath=lab)
-[![Build Status](https://travis-ci.org/gap-packages/francy.svg?branch=develop)](https://travis-ci.org/gap-packages/francy)
-[![Test Coverage Status](https://codecov.io/gh/gap-packages/francy/branch/develop/graph/badge.svg)](https://codecov.io/gh/gap-packages/francy)
+[![Build Status](https://travis-ci.org/gap-packages/francy.svg?branch=master)](https://travis-ci.org/gap-packages/francy)
+[![Test Coverage Status](https://codecov.io/gh/gap-packages/francy/branch/master/graph/badge.svg)](https://codecov.io/gh/gap-packages/francy)
 [![JS Maintainability](https://api.codeclimate.com/v1/badges/db52d89d90ab0d7e6fd4/maintainability)](https://codeclimate.com/github/gap-packages/francy/maintainability)
 
 # Jupyter Integration
@@ -58,6 +53,7 @@ See [Javascript Renderers](/js)
 
 # Package Structure
 
+|Directory   |Description                                                                   |
 |:-----------|:-----------------------------------------------------------------------------|
 | scripts    | contains scripts used by travis to set-up the environment and release process|
 | notebooks  | contains some notebooks with francy examples                                 |

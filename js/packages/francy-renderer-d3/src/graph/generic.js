@@ -94,7 +94,7 @@ export default class GenericGraph extends Graph {
     link = linkGroup.selectAll('g.francy-link');
 
     // on mouse over show labels opacity 1
-    this.graphOperations.labelsOpacityBehavior(link);
+    //this.graphOperations.labelsOpacityBehavior(link);
 
     let nodeEnter = node.enter().append('g').attr('id', d => d.id)
       .classed('francy-node', true)
