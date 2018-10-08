@@ -9,7 +9,7 @@
 
 SetPackageInfo(rec(
 
-  PackageName := "Francy",
+  PackageName := "francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
   Version     := "0.12.0",
   Date        := "07/10/2018",
