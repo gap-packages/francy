@@ -47,8 +47,8 @@ cat makedoc.g | $GAP
 cd $CURRENT/gap
 
 # configure git
-git config credential.helper "store --file=.git/credentials"
-echo "https://${GITHUB_ADMIN_KEY}:@github.com" > .git/credentials
+git config credential.helper "store --file=$CURRENT/.git-credentials"
+echo "https://${GITHUB_ADMIN_KEY}:@github.com" > $CURRENT/.git-credentials
 
 # Add a new remote pointing to the GitHubPagesForGAP repository
 git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
