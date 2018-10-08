@@ -46,19 +46,14 @@ python3.6 setup.py bdist_wheel --universal
 
 `pyenv which twine` upload dist/*
 
-# Release JS documentation
+# Release documentation
 
-cd $CURRENT/js
-
-npm run docs
-
-# Release GAP documentation
+cd $CURRENT/gap
 
 # configure git
 git config credential.helper "store --file=$CURRENT/.git-credentials"
 echo "https://${GITHUB_ADMIN_KEY}:@github.com" > $CURRENT/.git-credentials
 
-cd $CURRENT/gap
 # Add a new remote pointing to the GitHubPagesForGAP repository
 git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
 git fetch gh-gap
@@ -74,7 +69,7 @@ cp -f ../PackageInfo.g ../README* .
 cp -f ../doc/*.{css,html,js,txt} doc/
 mkdir -p doc/js && cp -rf ../../js/doc doc/js
 
-$GAPROOT/bin/gap.sh update.g
+$GAP update.g
 
 git add PackageInfo.g README* doc/ _data/package.yml
 git commit -m "Setup gh-pages based on GitHubPagesForGAP"

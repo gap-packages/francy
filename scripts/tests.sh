@@ -38,8 +38,6 @@ pip3.6 install -e .
 #`pyenv which jupyter` labextension link
 #`pyenv which jupyter` labextension list 2>&1 | grep -q jupyter_francy
 
-cd $CURRENT
-
 # Release JS documentation
 
 cd $CURRENT/js
@@ -48,11 +46,14 @@ npm run docs
 
 # Release GAP documentation
 
+cd $CURRENT/gap
+
+cat makedoc.g | $GAP
+
 # configure git
 git config credential.helper "store --file=$CURRENT/.git-credentials"
 echo "https://${GITHUB_ADMIN_KEY}:@github.com" > $CURRENT/.git-credentials
 
-cd $CURRENT/gap
 # Add a new remote pointing to the GitHubPagesForGAP repository
 git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
 git fetch gh-gap
@@ -68,7 +69,7 @@ cp -f ../PackageInfo.g ../README* .
 cp -f ../doc/*.{css,html,js,txt} doc/
 mkdir -p doc/js && cp -rf ../../js/doc doc/js
 
-$GAPROOT/bin/gap.sh update.g
+$GAP update.g
 
 git add PackageInfo.g README* doc/ _data/package.yml
 git commit -m "Setup gh-pages based on GitHubPagesForGAP"

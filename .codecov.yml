@@ -23,5 +23,5 @@ ignore:
   - "node_modules/**/*"
   - "dist/**/*"
   - "*.bundle.js*"
-  - "webpack.config.js"
-  - "karma.conf.js"
+  - "*.config.js*"
+  - "*.conf.js*"
