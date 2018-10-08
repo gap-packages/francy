@@ -46,7 +46,7 @@ SetPackageInfo(rec(
   IssueTrackerURL := Concatenation(~.SourceRepository.URL, "/issues"),
   PackageWWWHome  := Concatenation("https://gap-packages.github.io/", ~.PackageName),
   PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
-  README_URL      := Concatenation(~.PackageWWWHome, "README.md"),
+  README_URL      := Concatenation(~.PackageWWWHome, "/README.md"),
   ArchiveURL      := Concatenation(~.SourceRepository.URL, "/archive/v", ~.Version),
   ArchiveFormats  := ".tar.gz",
 
