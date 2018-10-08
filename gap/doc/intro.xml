@@ -23,15 +23,13 @@
     Further instructions can be found at
     <URL>https://jupyter.org/install</URL>. This package requires the &GAP; packages &JupyterKernel; and &json;, all of which are distributed with &GAP;. In order to nistall &Francy;, please follow the instructions:
     <Log>
-      <Log>
-        user@local:~$ pip install jupyter_francy
-      </Log>
-      <Log>
-        user@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy
-      </Log>
-      <Log>
-        user@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/vPACKAGE-VERSION.tar.gz | tar xzf - francy-PACKAGE-VERSION/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
-      </Log>
+      user@local:~$ pip install jupyter_francy
+    </Log>
+    <Log>
+      user@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy
+    </Log>
+    <Log>
+      user@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/vPACKAGE-VERSION.tar.gz | tar xzf - francy-PACKAGE-VERSION/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
     </Log>
 
   </Section>
