@@ -16,14 +16,15 @@ SetPackageInfo(rec(
 
   Persons := [
     rec(
-      LastName     := "Martins",
-      FirstNames   := "Manuel",
-      IsAuthor     := true,
-      IsMaintainer := true,
-      Email        := "manuelmachadomartins@gmail.com",
-      WWWHome      := "http://github.com/mcmartins",
-      Institution  := "Universidade Aberta",
-      Place        := "Lisbon, PT"
+      LastName      := "Martins",
+      FirstNames    := "Manuel",
+      IsAuthor      := true,
+      IsMaintainer  := true,
+      Email         := "manuelmachadomartins@gmail.com",
+      WWWHome       := "http://github.com/mcmartins",
+      PostalAddress := "Departamento de Ciências e Tecnologia da Universidade Aberta | Faculdade de Ciências e Tecnologia da Universidade de Coimbra",
+      Institution   := "Departamento de Ciências e Tecnologia da Universidade Aberta | Faculdade de Ciências e Tecnologia da Universidade de Coimbra",
+      Place         := "Lisbon, Coimbra - PT"
     )
   ],
 
@@ -40,15 +41,12 @@ SetPackageInfo(rec(
   CommunicatedBy   := "TBD",
   SourceRepository := rec(
     Type := "git",
-    URL  := "https://github.com/gap-packages/francy",
+    URL  := Concatenation( "https://github.com/gap-packages/", ~.PackageName ),
   ),
   IssueTrackerURL := Concatenation(~.SourceRepository.URL, "/issues"),
-  PackageWWWHome  := "https://github.com/gap-packages/francy",
-  README_URL      := Concatenation(~.PackageWWWHome, "/README.md"),
+  PackageWWWHome  := Concatenation("https://gap-packages.github.io/", ~.PackageName),
   PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
-  ArchiveURL      := Concatenation(~.SourceRepository.URL, 
-                                   "/releases/download/v", ~.Version, 
-                                   "/", ~.PackageName, "-", ~.Version),
+  ArchiveURL      := Concatenation(~.SourceRepository.URL, "/archive/v", ~.Version),
   ArchiveFormats  := ".tar.gz",
 
   AbstractHTML :=
@@ -56,8 +54,8 @@ SetPackageInfo(rec(
 
   PackageDoc := rec(
     BookName         := "Francy",
-    ArchiveURLSubset := ["htm","doc"],
-    HTMLStart        := "doc/chapters.htm",
+    ArchiveURLSubset := ["doc"],
+    HTMLStart        := "doc/chap0.html",
     PDFFile          := "doc/manual.pdf",
     SixFile          := "doc/manual.six",
     LongTitle        := "FRANCY - A Framework for Interactive Discrete Mathematics"
