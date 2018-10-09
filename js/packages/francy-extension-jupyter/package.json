@@ -1,6 +1,6 @@
 {
   "name": "francy-extension-jupyter",
-  "version": "0.12.2",
+  "version": "0.14.0",
   "description": "A package for rendering application/vnd.francy+json in Jupyter",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "main": "lib/index.js",
@@ -47,9 +47,9 @@
   "dependencies": {
     "d3": "5.7.0",
     "d3-graphviz": "2.6.0",
-    "francy": "^0.12.2",
-    "francy-renderer-d3": "^0.12.2",
-    "francy-renderer-graphviz": "^0.12.2",
+    "francy": "^0.14.0",
+    "francy-renderer-d3": "^0.14.0",
+    "francy-renderer-graphviz": "^0.14.0",
     "viz.js": "1.8.1"
   },
   "devDependencies": {
