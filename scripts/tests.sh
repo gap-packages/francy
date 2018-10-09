@@ -49,10 +49,6 @@ cd $CURRENT/gap
 
 cat makedoc.g | $GAP
 
-
-
-
-
 # Release documentation
 
 cd $CURRENT/gap
