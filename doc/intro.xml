@@ -21,7 +21,7 @@
       > pip install notebook
     </Log>
     Further instructions can be found at
-    <URL>https://jupyter.org/install</URL>. This package requires the &GAP; packages &JupyterKernel; and &json;, all of which are distributed with &GAP;. In order to nistall &Francy;, please follow the instructions:
+    <URL>https://jupyter.org/install</URL>. This package requires the &GAP; packages &JupyterKernel; and &json;, all of which are distributed with &GAP;. In order to install &Francy;, please follow the instructions:
     <Log>
       user@local:~$ pip install jupyter_francy
     </Log>

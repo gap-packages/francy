@@ -56,3 +56,9 @@ mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy #
 </body>
 </html>
 ```
+
+# Package Structure
+
+|Directory   |Description                                                 |
+|:-----------|:-----------------------------------------------------------|
+| packages   | contains thge packages that builds up francy-js            |

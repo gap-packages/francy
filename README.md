@@ -9,8 +9,6 @@ Francy is a package for GAP and provides a framework for Interactive Discrete Ma
 Unlike [XGAP](https://github.com/gap-packages/xgap), Francy is not linked with any GUI framework and instead, 
 this package is responsible for the generation of a semantic model that can be used to produce a graphical representation using any other framework / language.
 
-See [Graphics Semantics Package for GAP](/gap)
-
 There is javascript implementation of the graphical representation that works on Jupyter, embeded in a Web page or as a Desktop Application (e.g. using electron).
 
 See [Graphics Interface](/js)
@@ -36,26 +34,25 @@ In order to use this module in Jupyter, install it as follows, both jupyter lab 
 mcmartins@local:~$ pip install jupyter_francy
 mcmartins@local:~$ jupyter lab build # for JupyterLab
 mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Notebook
-mcmartins@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/v0.14.0.tar.gz | tar xzf - francy-0.14.0/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
+mcmartins@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/v0.14.0.tar.gz | tar xzf - --strip=1 -C /path-to-gap/pkg
 ```
 
-The jupyter extension requires the GAP Kernel and Francy GAP packages installed.
+The jupyter extension requires the JupyterKernel GAP package installed.
 
 See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel)
 
-See [Graphics Semantics Package for GAP](/gap)
-
-See [Javascript Renderers](/js)
-
 # Package Structure
 
-|Directory   |Description                                                                   |
-|:-----------|:-----------------------------------------------------------------------------|
-| scripts    | contains scripts used by travis to set-up the environment and release process|
-| notebooks  | contains some notebooks with francy examples                                 |
-| js         | contains the source code of francy-js                                        |
-| gap        | contains the source code of francy-gap                                       |
-| extensions | contains the extensions built for Jupyter Notebook and Lab                   |
+|Directory   |Description                                                     |
+|:-----------|:---------------------------------------------------------------|
+| scripts    | contains scripts used by travis                                |
+| tst        | contains gap code tests                                        |
+| schema     | contains the francy JSON Schema                                |
+| notebooks  | contains some notebooks with francy examples                   |
+| js         | contains the source code of francy-js                          |
+| gap        | contains the source code of francy-gap                         |
+| examples   | contains examples used throughout the francy-gap documentation |
+| doc        | contains introductory documentation for francy-gap             |
 
 # License
 

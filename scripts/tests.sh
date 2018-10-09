@@ -45,13 +45,11 @@ npm run docs
 
 # GAP documentation
 
-cd $CURRENT/gap
+cd $CURRENT
 
 cat makedoc.g | $GAP
 
 # Release documentation
-
-cd $CURRENT/gap
 
 # configure git
 git config credential.helper "store --file=$CURRENT/.git-credentials"
