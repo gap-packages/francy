@@ -36,7 +36,7 @@ In order to use this module in Jupyter, install it as follows, both jupyter lab 
 mcmartins@local:~$ pip install jupyter_francy
 mcmartins@local:~$ jupyter lab build # for JupyterLab
 mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Notebook
-mcmartins@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/v0.12.2.tar.gz | tar xzf - francy-0.12.2/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
+mcmartins@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/v0.14.0.tar.gz | tar xzf - francy-0.14.0/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
 ```
 
 The jupyter extension requires the GAP Kernel and Francy GAP packages installed.

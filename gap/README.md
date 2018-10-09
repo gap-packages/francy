@@ -46,7 +46,7 @@ by Markus Pfeiffer (https://markusp.morphism.de/).
 Homepage: https://gap-packages.github.io/JupyterKernel/
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-Loading  Francy 0.12.2 (FRANCY - A Framework for Interactive Discrete Mathematics)
+Loading  Francy 0.14.0 (FRANCY - A Framework for Interactive Discrete Mathematics)
 by Manuel Martins (http://github.com/mcmartins).
 Homepage: https://github.com/gap-packages/francy
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -91,7 +91,7 @@ see _Francy - JS_ a javascript implementation module.
 # Usage
 
 ```bash
-mcmartins@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/v0.12.2.tar.gz | tar xzf - francy-0.12.2/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
+mcmartins@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/v0.14.0.tar.gz | tar xzf - francy-0.14.0/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
 ```
 
 Note: 
