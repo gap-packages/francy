@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/gap-packages/francy.svg?branch=master)](https://travis-ci.org/gap-packages/francy)
+[![Test Coverage Status](https://codecov.io/gh/gap-packages/francy/branch/master/graph/badge.svg)](https://codecov.io/gh/gap-packages/francy)
+[![PyPI version](https://badge.fury.io/py/jupyter-francy.svg)](https://badge.fury.io/py/jupyter-francy)
+
 # Francy
 
 Francy is a package for GAP and provides a framework for Interactive Discrete Mathematics.
@@ -24,14 +28,7 @@ The binder includes all packages from `bootstrap-pkg-full`, plus:
 
 [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel)
 
-## Status 
-
-[![Build Status](https://travis-ci.org/gap-packages/francy.svg?branch=master)](https://travis-ci.org/gap-packages/francy)
-[![Test Coverage Status](https://codecov.io/gh/gap-packages/francy/branch/master/graph/badge.svg)](https://codecov.io/gh/gap-packages/francy)
-
 # Jupyter Integration
-
-[![PyPI version](https://badge.fury.io/py/jupyter-francy.svg)](https://badge.fury.io/py/jupyter-francy)
 
 In order to use this module in Jupyter, install it as follows, both jupyter lab and notebook extension:
 
@@ -39,7 +36,7 @@ In order to use this module in Jupyter, install it as follows, both jupyter lab 
 mcmartins@local:~$ pip install jupyter_francy
 mcmartins@local:~$ jupyter lab build # for JupyterLab
 mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Notebook
-mcmartins@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/v0.12.0.tar.gz | tar xzf - francy-0.12.0/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
+mcmartins@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/v0.12.2.tar.gz | tar xzf - francy-0.12.2/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
 ```
 
 The jupyter extension requires the GAP Kernel and Francy GAP packages installed.
