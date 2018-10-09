@@ -16,12 +16,12 @@ ignore:
   - "PackageInfo.g"
   - "init.g"
   - "read.g"
-  - "tst/*"     # ignore test harness code
   - "tst/**/*"  # ignore test harness code
-  - "test/*"    # ignore test harness code
   - "test/**/*" # ignore test harness code
   - "node_modules/**/*"
   - "dist/**/*"
-  - "*.bundle.js*"
-  - "*.config.js*"
-  - "*.conf.js*"
+  - "**/**/*.min.js*"
+  - "**/**/*.bundle.js*"
+  - "**/**/*.config.js*"
+  - "**/**/*.conf.js*"
+  - "**/**/*.test.js*"

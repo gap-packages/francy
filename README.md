@@ -28,7 +28,6 @@ The binder includes all packages from `bootstrap-pkg-full`, plus:
 
 [![Build Status](https://travis-ci.org/gap-packages/francy.svg?branch=master)](https://travis-ci.org/gap-packages/francy)
 [![Test Coverage Status](https://codecov.io/gh/gap-packages/francy/branch/master/graph/badge.svg)](https://codecov.io/gh/gap-packages/francy)
-[![JS Maintainability](https://api.codeclimate.com/v1/badges/db52d89d90ab0d7e6fd4/maintainability)](https://codeclimate.com/github/gap-packages/francy/maintainability)
 
 # Jupyter Integration
 

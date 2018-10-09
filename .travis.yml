@@ -39,7 +39,7 @@ before_script:
   - scripts/prepare.sh
 script:
   - scripts/tests.sh
-after_script:
+after_success:
   - scripts/coverage.sh
 
 deploy:
