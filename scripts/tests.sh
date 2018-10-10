@@ -68,7 +68,7 @@ cd gh-pages
 
 cp -f ../PackageInfo.g ../README* .
 cp -f ../doc/*.{css,html,js,txt} doc/
-mkdir -p doc/js && cp -rf ../../js/doc doc/js
+mkdir -p doc/js && cp -rf ../js/doc doc/js
 
 $GAP update.g
 
