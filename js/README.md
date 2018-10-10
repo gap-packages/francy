@@ -18,7 +18,7 @@ Francy implements 2 renderers at the moment:
 
 Note: 
 Make sure [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter.
-Make sure [Francy GAP](/gap) is installed on GAP.
+Make sure [Francy GAP](/) is installed on GAP.
 
 ## Jupyter integration
 

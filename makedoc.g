@@ -12,6 +12,6 @@ AutoDoc(rec(autodoc := true,
             scaffold := rec(includes := ["intro.xml"],
                             entities := rec(Jupyter := "<URL Text=\"Jupyter\">https://jupyter.org</URL>",
                                             SubgroupLattice := "<URL Text=\"SubgroupLattice\">https://github.com/mcmartins/subgroup-lattice</URL>",
+                                            FrancyMonoids := "<URL Text=\"FrancyMonoids\">https://github.com/gap-packages/FrancyMonoids</URL>",
                                             JupyterKernel := "<Package>JupyterKernel</Package>",
-                                            FrancyMonoids := "<Package>FrancyMonoids</Package>",
                                             json := "<Package>json</Package>"))));
