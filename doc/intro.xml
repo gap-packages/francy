@@ -6,19 +6,31 @@
   <Section>
     <Heading>Francy</Heading>
 
-    Francy arose from the necessity of having a lightweight framework forbuilding interactive graphics, generated from GAP, running primarily on theweb, primarily in a Jupyter Notebook. An initial attempt to re-use XGAP andport it was made, but the lack of
-    a standardized data exchange format betweenGAP and the graphics renderer, and the simplistic initial requirements of the project were the basis for the creation of a new GAP package.
+    &Francy; arose from the necessity of having a lightweight framework forbuilding interactive graphics, generated from GAP, running primarily on theweb, primarily in a Jupyter Notebook. An initial attempt to re-use XGAP andport it was made, but the lack
+    of a standardized data exchange format betweenGAP and the graphics renderer, and the simplistic initial requirements of the project were the basis for the creation of a new GAP package.
 
   </Section>
 
+  <Section>
+    <Heading>Applications</Heading>
+
+    &Francy; has potentially many applications and can be &Francy; 3 used to provide a graphical representation of data structures, allowing one to navigate through and explore properties or relations of these structures. In this way, &Francy; can be used
+    to enrich a learning environment where GAP provides a library of thousands of functions implementing algebraic algorithms as well as large data libraries of algebraic objects. Example packages using &Francy;: &FrancyMonoids;, &SubgroupLattice;
+
+  </Section>
+
+  <Section>
+    <Heading>Functionality</Heading>
+    &Francy; provides an interface to draw graphics using objects. This interface is based on simple concepts of drawing and graph theory, allowing the creation of directed and undirected graphs, trees, line charts, bar charts and scatter charts. These graphical
+    objects are drawn inside a canvas that includes a space for menus and to display informative messages. Within the canvas it is possible to interact with the graphical objects by clicking, selecting, dragging and zooming
+  </Section>
 
   <Section>
     <Heading>Installation</Heading>
 
     This package requires &Jupyter; to be installed on your system, which on most Python installations can be achieved by issuing the following command.
-
     <Log>
-      > pip install notebook
+      user@local:~$ pip install notebook
     </Log>
     Further instructions can be found at
     <URL>https://jupyter.org/install</URL>. This package requires the &GAP; packages &JupyterKernel; and &json;, all of which are distributed with &GAP;. In order to install &Francy;, please follow the instructions:
@@ -28,25 +40,23 @@
     <Log>
       user@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy
     </Log>
-    <Log>
-      user@local:~$ wget -qO- https://github.com/gap-packages/francy/archive/vPACKAGE-VERSION.tar.gz | tar xzf - francy-PACKAGE-VERSION/gap/ --strip=1 --transform 's/gap/francy/' -C /path-to-gap/pkg
-    </Log>
 
   </Section>
 
   <Section>
     <Heading>How it works</Heading>
 
-    &Francy; requires a rendering package to display graphics. Francy uses Renderers based on d3.js and Graphviz, for rendering the semantic representation produced by the GAP package. This library is distributed both as a browser module and as a Jupyter
-    extension. The Jupyter extension can be used in Jupyter Notebooks or Jupyter Lab, using the &JupyterKernel; and the MIME type application/vnd.francy+json to render the document
+    &Francy; requires a rendering package to display graphics. &Francy; uses Renderers based on d3.js and Graphviz, for rendering the semantic representation produced by the GAP package. This library is distributed both as a browser module and as a Jupyter
+    extension. The Jupyter extension can be used in Jupyter Notebooks or Jupyter Lab, using the &JupyterKernel; and the MIME type application/vnd.francy+json to render the document Please check the documentation for more information:
+    <URL Text="JavaScript Documentation">https://gap-packages.github.io/francy/doc/js/doc/index.html</URL>.
 
   </Section>
 
   <Section>
-    <Heading>Francy Javascript Renderers</Heading>
 
-    Please check the documentation for more information:
-    <URL Text="javascript-documentation">https://gap-packages.github.io/francy/doc/js/doc/index.html</URL>.
+    <Heading>Publications</Heading>
+
+    <URL Text="Publications">https://doi.org/10.1007/978-3-319-96418-8_42</URL>.
 
   </Section>
 

@@ -1,4 +1,4 @@
-# Francy - Javascript module
+# Francy - Javascript
 
 This Javascript module produces graphics based on the semantic model produced by Francy GAP.
 
@@ -7,6 +7,7 @@ Francy depends on [d3.v5](https://d3js.org/).
 ## Renderers
 
 Francy supports renderers to be registered and thus producing different representations of graphs.
+The renderers can be swithed at any time using the user interface, by selecting `Settings > Renderers` in the main menu.
 
 Francy implements 2 renderers at the moment:
 
@@ -59,6 +60,12 @@ mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy #
 
 # Package Structure
 
-|Directory   |Description                                                 |
-|:-----------|:-----------------------------------------------------------|
-| packages   | contains thge packages that builds up francy-js            |
+|Directory                          |Description                                                      |
+|:----------------------------------|:----------------------------------------------------------------|
+| packages                          | contains the packages that builds up francy-js                  |
+| packages/francy                   | contains the base components of Francy                          |
+| packages/francy-core              | contains the core components of Francy                          |
+| packages/francy-extension-browser | contains the browser extension classes, for browser integration |
+| packages/francy-extension-jupyter | contains the browser extension classes, for jupyter integration |
+| packages/francy-renderer-d3       | contains the classes to produce graphics with D3                |
+| packages/francy-renderer-graphviz | contains the classes to produce graphics with D3-Graphviz       |

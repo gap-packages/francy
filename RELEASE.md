@@ -1,6 +1,17 @@
-# Making a francy release
+# Francy releases
 
-## Update version number
+Francy releases are done automatically using Travis.CI
+
+Notes:
+
+Update the project version number using `npm run version` in /js. 
+Update `gap/PackageInfo.g` and the tests relying on it.
+
+Make sure all versions are consitent and commit your changes.
+
+Travis will run and push a new release of the jupyter_francy extension to PyPi.
+
+## Git Flow
 
 Follow the git flow:
 
@@ -14,12 +25,3 @@ mcmartins@local:~$ git flow release finish '0.14.0'
 mcmartins@local:~$ git push
 mcmartins@local:~$ git push --tags
 ```
-
-Notes:
-
-Update the project version number using `npm run version` in /js. 
-Update `gap/PackageInfo.g` and the tests relying on it.
-
-Make sure all versions are consitent and commit your changes.
-
-Travis will run and push a new release of the jupyter_francy extension to PyPi.
