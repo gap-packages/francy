@@ -20,13 +20,18 @@ See [Graphics Interface](/js)
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master)
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master?urlpath=lab)
 
-The binder includes all packages from `bootstrap-pkg-full`, plus:
+This binder includes the following notebooks:
 
-[Francy Monoids](https://github.com/gap-packages/FrancyMonoids)
-
-[Francy Subgroup Lattice](https://github.com/mcmartins/subgroup-lattice)
-
-[Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel)
+|Notebook                        |Description                                                     |
+|:-------------------------------|:---------------------------------------------------------------|
+|francy-features.ipynb           | Contains examples of all features in Francy                    |
+|francy-monoids-mult-three.ipynb | Contains an example of proofs used in a paper                  |
+|francy-monoids.ipynb            | Contains FrancyMonoids package examples                        |
+|francy-numericalsgps.ipynb      | Same as above, but the algorithms are visible in the notebook  |
+|francy.ipynb                    | First notebook ever created with Francy                        |
+|ICMS_2018.ipynb                 | Presentation notebook for the ICMS 2018 in USA                 |
+|orbital-graphs.ipynb            | Constains some reseach algorithms for orbital graphs           |
+|subgroup-lattice.ipynb          | Contains Subgroup-Lattice package examples                     |
 
 # Jupyter Integration
 
