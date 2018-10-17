@@ -37,8 +37,8 @@ SetPackageInfo(rec(
   ##  "other"     for all other packages
   ##
 
-  Status           := "dev",
-  CommunicatedBy   := "TBD",
+  Status := "deposited",
+
   SourceRepository := rec(
     Type := "git",
     URL  := Concatenation( "https://github.com/gap-packages/", ~.PackageName ),
