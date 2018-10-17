@@ -1,6 +1,6 @@
 {
   "name": "francy-renderer-graphviz",
-  "version": "0.14.0",
+  "version": "1.0.0",
   "description": "A d3-graphviz Renderer for Francy",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
@@ -15,10 +15,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "francy-core": "^0.14.0"
+    "francy-core": "^1.0.0"
   },
   "devDependencies": {
-    "francy": "^0.14.0"
+    "francy": "^1.0.0"
   },
   "scripts": {
     "test": "karma start karma.conf.js"
