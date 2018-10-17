@@ -1,4 +1,4 @@
-/*! 'francy-extension-browser, v0.12.0, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.' */
+/*! 'francy-extension-browser, v0.14.0, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.' */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -2110,7 +2110,9 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = options.transform(obj.css);
+	    result = typeof options.transform === 'function'
+		 ? options.transform(obj.css) 
+		 : options.transform.default(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.
@@ -7449,10 +7451,10 @@ function (_Modal) {
                 this.element = this.holder.append('div').attr('id', modalId).attr('class', 'francy-modal');
                 form = this.element.append('form');
 
-                this._buildHeader(form, "About Francy v".concat("0.12.0"));
+                this._buildHeader(form, "About Francy v".concat("0.14.0"));
 
                 content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body').style('text-align', 'center');
-                content.append('span').text('francy-extension-browser, v0.12.0, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.');
+                content.append('span').text('francy-extension-browser, v0.14.0, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.');
                 content.append('br');
                 content.append('br');
                 content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
@@ -11681,7 +11683,7 @@ function (_Renderer) {
       callbackHandler: callbackHandler
     })); // all good!
 
-    francy_core__WEBPACK_IMPORTED_MODULE_0__["Logger"].info("Francy JS v".concat("0.12.0", "! Enjoy..."));
+    francy_core__WEBPACK_IMPORTED_MODULE_0__["Logger"].info("Francy JS v".concat("0.14.0", "! Enjoy..."));
     return _this;
   }
   /**
@@ -11712,8 +11714,8 @@ function (_Renderer) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (this.data.version !== "0.12.0") {
-                  francy_core__WEBPACK_IMPORTED_MODULE_0__["Logger"].warn("Rendering may fail, data generated in Francy GAP v".concat(this.data.version, " using Francy JS v").concat("0.12.0", "... please update your system..."));
+                if (this.data.version !== "0.14.0") {
+                  francy_core__WEBPACK_IMPORTED_MODULE_0__["Logger"].warn("Rendering may fail, data generated in Francy GAP v".concat(this.data.version, " using Francy JS v").concat("0.14.0", "... please update your system..."));
                 }
 
                 _context.next = 3;

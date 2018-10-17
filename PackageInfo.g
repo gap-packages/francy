@@ -11,8 +11,8 @@ SetPackageInfo(rec(
 
   PackageName := "Francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
-  Version     := "0.14.0",
-  Date        := "09/10/2018",
+  Version     := "1.0.0",
+  Date        := "17/10/2018",
 
   Persons := [
     rec(
@@ -27,15 +27,6 @@ SetPackageInfo(rec(
       Place         := "Lisbon, Coimbra - PT"
     )
   ],
-
-  ##  Status information. Currently the following cases are recognized:
-  ##  "accepted"    for successfully refereed packages
-  ##  "submitted"   for packages submitted for the refereeing
-  ##  "deposited"   for packages for which the GAP developers agreed
-  ##          to distribute them with the core GAP system
-  ##  "dev"       for development versions of packages
-  ##  "other"     for all other packages
-  ##
 
   Status := "deposited",
 
