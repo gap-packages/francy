@@ -75,3 +75,28 @@ $GAP update.g
 git add PackageInfo.g README* doc/ _data/package.yml
 git commit -m "Setup gh-pages based on GitHubPagesForGAP"
 git push -f --set-upstream origin gh-pages
+
+echo "Release to Github..."
+
+cd $CURRENT
+
+release="release-$TRAVIS_BRANCH"
+json="{"tag_name": "$TRAVIS_BRANCH", "name": "$release", "body": "Francy Release $TRAVIS_BRANCH"}"
+
+upload_url=$(curl -s -H "Authorization: token $GITHUB_ADMIN_KEY" -d $json \
+  "https://api.github.com/repos/gap-packages/francy/releases" | jq -r '.upload_url')
+
+upload_url="${upload_url%\{*}"
+filename="francy-$TRAVIS_BRANCH.tar.gz"
+
+echo "creating release artifact : $filename"
+
+echo -e "doc/\nexamples/\ngap/\ntst/\ninit.g\nLICENSE\nmakedoc.g\nPackageInfo.g\nread.g" > package.txt
+tar -czf $filename --files-from package.txt
+
+echo "uploading asset to: $upload_url"
+
+curl -s -H "Authorization: token $GITHUB_ADMIN_KEY" -H "Content-Type: application/tar+gzip" \
+  --data-binary @$filename "$upload_url?name=$filename&label=$filename"
+
+echo "Done"

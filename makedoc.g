@@ -15,3 +15,5 @@ AutoDoc(rec(autodoc := true,
                                             FrancyMonoids := "<URL Text=\"FrancyMonoids\">https://github.com/gap-packages/FrancyMonoids</URL>",
                                             JupyterKernel := "<Package>JupyterKernel</Package>",
                                             json := "<Package>json</Package>"))));
+
+QUIT;
