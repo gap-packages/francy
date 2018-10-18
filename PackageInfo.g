@@ -40,7 +40,7 @@ SetPackageInfo(rec(
   README_URL      := Concatenation(~.PackageWWWHome, "/README.md"),
   ArchiveURL      := Concatenation("https://github.com/gap-packages/francy/",
                                 "releases/download/v", ~.Version,
-                                "/francy-v", ~.Version),
+                                "/francy-", ~.Version),
   ArchiveFormats  := ".tar.gz",
 
   AbstractHTML :=

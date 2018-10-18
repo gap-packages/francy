@@ -33,12 +33,28 @@ json="{\"tag_name\": \"$TRAVIS_BRANCH\", \"name\": \"$release\", \"body\": \"Fra
 upload_url=$(curl -s -H "Authorization: token $GITHUB_ADMIN_KEY" -d "$json" "https://api.github.com/repos/gap-packages/francy/releases" | jq -r '.upload_url')
 
 upload_url="${upload_url%\{*}"
-filename="francy-$TRAVIS_BRANCH.tar.gz"
+version=${TRAVIS_BRANCH:1}
+folder="francy-$version"
+filename="$folder.tar.gz"
 
 echo "creating release artifact : $filename"
 
-echo -e "doc/\nexamples/\ngap/\ntst/\ninit.g\nLICENSE\nmakedoc.g\nPackageInfo.g\nread.g" > package.txt
-tar -czf $filename --files-from package.txt
+mkdir -p $folder
+
+cd $folder
+cp -Rfp ../doc .
+cp -Rfp ../examples .
+cp -Rfp ../gap/ .
+cp -Rfp ../tst/ .
+cp -Rfp ../init.g .
+cp -Rfp ../LICENSE .
+cp -Rfp ../makedoc.g .
+cp -Rfp ../PackageInfo.g .
+cp -Rfp ../read.g .
+cp -Rfp ../README.md .
+cd ..
+
+tar -czf $filename $folder
 
 echo "uploading asset to: $upload_url"
 
