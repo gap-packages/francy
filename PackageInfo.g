@@ -11,7 +11,7 @@ SetPackageInfo(rec(
 
   PackageName := "Francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
-  Version     := "1.0.2",
+  Version     := "1.0.3",
   Date        := "18/10/2018",
 
   Persons := [
@@ -22,8 +22,14 @@ SetPackageInfo(rec(
       IsMaintainer  := true,
       Email         := "manuelmachadomartins@gmail.com",
       WWWHome       := "http://github.com/mcmartins",
-      PostalAddress := "Departamento de Ciências e Tecnologia da Universidade Aberta | Faculdade de Ciências e Tecnologia da Universidade de Coimbra",
-      Institution   := "Departamento de Ciências e Tecnologia da Universidade Aberta | Faculdade de Ciências e Tecnologia da Universidade de Coimbra",
+      PostalAddress := Concatenation("Departamento de Ciências e Tecnologia da Universidade Aberta", "\n", 
+                                    "Lisboa, Portugal", "\n", 
+                                    "Faculdade de Ciências e Tecnologia da Universidade de Coimbra", "\n", 
+                                    "Coimbra, Portugal"),
+      Institution   := Concatenation("Departamento de Ciências e Tecnologia da Universidade Aberta", "\n", 
+                                    "Lisboa, Portugal", "\n", 
+                                    "Faculdade de Ciências e Tecnologia da Universidade de Coimbra", "\n", 
+                                    "Coimbra, Portugal"),
       Place         := "Lisbon, Coimbra - PT"
     )
   ],

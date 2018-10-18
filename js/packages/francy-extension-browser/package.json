@@ -1,6 +1,6 @@
 {
   "name": "francy-extension-browser",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
@@ -18,9 +18,9 @@
   "dependencies": {
     "d3": "5.7.0",
     "d3-graphviz": "2.6.0",
-    "francy": "^1.0.2",
-    "francy-renderer-d3": "^1.0.2",
-    "francy-renderer-graphviz": "^1.0.2"
+    "francy": "^1.0.3",
+    "francy-renderer-d3": "^1.0.3",
+    "francy-renderer-graphviz": "^1.0.3"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0",
