@@ -28,10 +28,9 @@ echo "Release to Github..."
 cd $CURRENT
 
 release="release-$TRAVIS_BRANCH"
-json="{"tag_name": "$TRAVIS_BRANCH", "name": "$release", "body": "Francy Release $TRAVIS_BRANCH"}"
+json="{\"tag_name\": \"$TRAVIS_BRANCH\", \"name\": \"$release\", \"body\": \"Francy Release $TRAVIS_BRANCH\"}"
 
-upload_url=$(curl -s -H "Authorization: token $GITHUB_ADMIN_KEY" -d $json \
-  "https://api.github.com/repos/gap-packages/francy/releases" | jq -r '.upload_url')
+upload_url=$(curl -s -H "Authorization: token $GITHUB_ADMIN_KEY" -d "$json" "https://api.github.com/repos/gap-packages/francy/releases" | jq -r '.upload_url')
 
 upload_url="${upload_url%\{*}"
 filename="francy-$TRAVIS_BRANCH.tar.gz"
