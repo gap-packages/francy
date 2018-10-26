@@ -9,13 +9,13 @@ gap> shape := Shape(ShapeType.CIRCLE);
 gap> Add(graph, shape);
 gap> Add(canvas, graph);
 gap> 
-gap> HelloWorld := function(name)
+gap> myFirstFunction := function(name)
 >     Add(canvas, FrancyMessage(Concatenation("Hello, ", name)));
 >     return Draw(canvas);
 > end;
 function( name ) ... end
 gap> 
-gap> callback1 := Callback(HelloWorld);
+gap> callback1 := Callback(myFirstFunction);
 <IsFrancyObject/IsCallback>
 gap> arg1 := RequiredArg(ArgType.STRING, "Your Name?");
 <IsFrancyObject/IsCallback>
