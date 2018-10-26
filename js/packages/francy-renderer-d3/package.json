@@ -1,6 +1,6 @@
 {
   "name": "francy-renderer-d3",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A D3.js Renderer for Francy",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
@@ -19,9 +19,9 @@
   },
   "main": "index.js",
   "dependencies": {
-    "francy-core": "^1.0.3"
+    "francy-core": "^1.0.4"
   },
   "devDependencies": {
-    "francy": "^1.0.3"
+    "francy": "^1.0.4"
   }
 }
