@@ -15,12 +15,13 @@ RUN rm -rf $HOME/inst/gap-master/pkg/francy && mv $HOME/francy $HOME/inst/gap-ma
   && git clone https://github.com/mcmartins/subgroup-lattice
 
 RUN apt-get -qq install -y curl \
-    &&  curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
-    &&  apt-get install -yq nodejs && npm install npm@latest -g
+    && curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
+    && apt-get install -yq nodejs && npm install npm@latest -g
 
 # notebook and lab extension installation
 RUN cd $HOME/inst/gap-master/pkg/francy/js && npm install --unsafe-perm && npm run bootstrap && npm run build \
   && cd $HOME/inst/gap-master/pkg/francy/js/packages/francy-extension-jupyter && pip3 install -e . \
+  && jupyter labextension link \
   && jupyter nbextension install --symlink --py --sys-prefix jupyter_francy \
   && jupyter nbextension enable --py --sys-prefix jupyter_francy
 
