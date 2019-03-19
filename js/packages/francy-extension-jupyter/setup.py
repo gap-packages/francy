@@ -45,7 +45,7 @@ labextension = pjoin(here, name, 'labextension')
 # Representative files that should exist after a successful build
 jstargets = [
     pjoin(nbextension, 'extension.js'),
-    pjoin(here, 'lib', 'lab_extension.js'),
+    pjoin(labextension, 'extension.js'),
 ]
 
 version_ns = {}
@@ -61,13 +61,13 @@ cmdclass['jsdeps'] = combine_commands(
 package_data = {
     name: [
         'nbextension/*.*js*',
-        'labextension/*.tgz'
+        'labextension/*.*js*'
     ]
 }
 
 data_files = expand_data_files([
     ('share/jupyter/nbextensions/jupyter_francy', [pjoin(nbextension, '*.js*')]),
-    ('share/jupyter/lab/extensions', [pjoin(labextension, '*.tgz')])
+    ('share/jupyter/lab/extensions', [pjoin(labextension, '*.js*')])
 ])
 
 setup_args = dict(

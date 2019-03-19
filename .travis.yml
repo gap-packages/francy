@@ -5,6 +5,7 @@ env:
   global:
     - GAPROOT=$HOME/gap
     - COVDIR=coverage
+    - NODE_OPTIONS=--max-old-space-size=4096
 
 addons:
   apt:
