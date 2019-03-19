@@ -1,4 +1,6 @@
 var path = require('path');
+var fs = require('fs');
+var replace = require("replace");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const fPackage = require('./package.json');
 const webpack = require('webpack');
@@ -13,6 +15,22 @@ module.exports = (env = {}) => {
   const isProduction = env.production === true;
 
   console.log(`Running webpack for production environment? ${isProduction}`);
+
+  fs.mkdir('./jupyter_francy/labextension', { recursive: true }, (err) => {
+    if (err) throw err;
+  });
+  
+  fs.copyFile('./lab.package.json', './jupyter_francy/labextension/package.json', (err) => {
+    if (err) throw err;
+  });
+
+  replace({
+      regex: 'VERSION',
+      replacement: JSON.stringify(fPackage.version),
+      paths: ['./jupyter_francy/labextension/package.json'],
+      recursive: true,
+      silent: true,
+  });
 
   /**
    * Custom webpack loaders are generally the same for all webpack bundles, hence
@@ -129,6 +147,20 @@ module.exports = (env = {}) => {
           __dirname,
           'jupyter_francy',
           'nbextension'
+        )
+      })
+    }),
+    /**
+     * This is the jupyter lab extension builder. 
+     */
+    Object.assign({}, base, {
+      entry: ['@babel/polyfill', path.join(__dirname, 'src', 'lab_extension.js')],
+      output: Object.assign({}, base.output, {
+        filename: 'extension.js',
+        path: path.join(
+          __dirname,
+          'jupyter_francy',
+          'labextension'
         )
       })
     })

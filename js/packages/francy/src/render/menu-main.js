@@ -113,15 +113,20 @@ export default class MainMenu extends Menu {
     RenderingManager.subscribe(RENDERING_EVENTS.STATUS, reRender, reRenderId);
 
     function reRender(o) {
-      self.element.select(`.${o.id}`).html(`${o.enable ? '&#9745' : '&#9744'} ${o.name}`);
-      if (o.enable) {
-        // remove previous rendered canvas
-        self.parent.select(`#Canvas-${self.data.canvas.id}>g`).selectAll('*').remove();
-        // re-render
-        setTimeout(() => {
-          let Renderer = RenderingManager.activeRenderer();
-          self.handlePromise(new Renderer(self.parent.options).load(self.parent.data).render());
-        }, 10);
+      var canvas = self.parent.select(`#Canvas-${self.data.canvas.id}>g`);
+      if (canvas.node()) {
+        self.element.select(`.${o.id}`).html(`${o.enable ? '&#9745' : '&#9744'} ${o.name}`);
+        if (o.enable) {
+          // remove previous rendered canvas
+          self.parent.select(`#Canvas-${self.data.canvas.id}>g`).selectAll('*').remove();
+          // re-render
+          setTimeout(() => {
+            let Renderer = RenderingManager.activeRenderer();
+            self.handlePromise(new Renderer(self.options).load(self.data).render());
+          }, 10);
+        }
+      } else {
+        RenderingManager.unsubscribe(RENDERING_EVENTS.STATUS, reRender, reRenderId);
       }
     }
 

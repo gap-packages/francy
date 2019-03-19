@@ -50,6 +50,7 @@ export class OutputWidget extends Widget {
     Francy.load(model.data[this._mimeType]).render()
       .catch(error => console.error(error))
       .then(element => this.node.appendChild(element));
+    return Promise.resolve(true);
   }
 
 }

@@ -1,0 +1,21 @@
+{
+  "name": "jupyter-francy",
+  "version": VERSION,
+  "description": "A package for rendering application/vnd.francy+json in JupyterLab",
+  "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcmartins/francy.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "gap",
+    "francy",
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension"
+  ],
+  "jupyterlab": {
+    "mimeExtension": "extension"
+  }
+}
