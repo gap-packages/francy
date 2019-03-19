@@ -1,4 +1,3 @@
-import {Logger} from '../util/logger';
 import { Utilities } from '../util/utilities';
 
 /* global d3 */
@@ -39,10 +38,9 @@ export default class LoaderDecorator {
    */
   withContext(ctx) {
     this.context = ctx;
-    try {
-      this.element = d3.select(`a.loader#Loader-${ctx.data.canvas ? ctx.data.canvas.id : ctx.options.appendTo.data.canvas.id}`);
-    } catch(e) {
-      Logger.info(`We can't do anything about this! An error occurred: ${e}`);
+    var loader = d3.select(`a.loader#Loader-${ctx.data ? ctx.data.canvas ? ctx.data.canvas.id : ctx.options.appendTo.data.canvas.id : ''}`);
+    if (loader.node()) {
+      this.element = loader;
     }
     return this;
   }

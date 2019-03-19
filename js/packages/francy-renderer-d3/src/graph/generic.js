@@ -215,9 +215,12 @@ export default class GenericGraph extends Graph {
 
           let g = d3.select(this),
             data = g.data()[0],
-            pathEl = g.select('path.francy-edge').node(),
+            nodeEl = d3.select(`#${data.target.id} > .francy-symbol`).node();
+
+          if (!nodeEl) return;
+
+          let pathEl = g.select('.francy-edge').node(),
             pathLength = pathEl.getTotalLength(),
-            nodeEl = d3.select(`#${data.target.id} > path.francy-symbol`).node(),
             nodeSize = (Math.floor(nodeEl.getBBox().width) + 4) / 2,
             pathPoint = pathEl.getPointAtLength(pathLength - nodeSize - (data.weight || 1)),
             pathPoint2 = pathEl.getPointAtLength(pathLength - nodeSize),
@@ -231,7 +234,7 @@ export default class GenericGraph extends Graph {
             y2 += (y1 - y2) / (x1 - x2);
           }
 
-          g.select('path.francy-edge-arrow').attr('d', `M${x1},${y1} L${x2},${y2}`);
+          g.select('.francy-edge-arrow').attr('d', `M${x1},${y1} L${x2},${y2}`);
         });
       }
 

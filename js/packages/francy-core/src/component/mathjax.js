@@ -28,6 +28,13 @@ export default class MathJaxComponent extends BaseComponent {
    * @public
    */
   initialize() {
+    var global = (0, eval)('this');
+    if (!('MathJax' in global)) {
+      throw new Error('MathJax is not available...');
+    }
+    
+    Logger.debug('MathJax is available...');
+    
     MathJax.Hub.Config({
       showMathMenu: false,
       skipStartupTypeset: true,

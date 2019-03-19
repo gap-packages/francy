@@ -31,7 +31,7 @@ export default class JupyterDecorator {
       if (e.name === 'ReferenceError') {
         Logger.info('It seems we\'re not running on Jupyter, cannot register events... continuing...');
       } else {
-        Logger.warn(`We can't do anything about this! An error occurred: [${e}]`);
+        Logger.warn(`We can't do anything about this! An error occurred [${e}]`);
       }
     }
   }

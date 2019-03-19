@@ -1,5 +1,5 @@
 import { Logger, RenderingManager, RENDERING_EVENTS, CompositeRenderer, Decorators, Configuration } from 'francy-core';
-import * as ignore from 'seedrandom';
+import seedrandom from 'seedrandom';
 import GraphFactory from './graph/factory';
 import ChartFactory from './chart/factory';
 
@@ -15,7 +15,7 @@ export default class Canvas extends CompositeRenderer {
   initialize() {
     if (Configuration.object.fixedRandomSeed) {
       //set seed to produce always the same graphs
-      Math.seedrandom('Francy!');
+      seedrandom('Francy!', { global: true });
     }
   }
 

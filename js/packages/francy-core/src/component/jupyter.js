@@ -1,8 +1,6 @@
 import { Logger } from '../util/logger';
 import BaseComponent from './base';
 
-/* global Jupyter */
-
 /**
  * This {Component} class is used to check whether jupyter is available or not.
  * Jupyter is optional, as {Francy} can run without it.
@@ -26,8 +24,9 @@ export default class JupyterComponent extends BaseComponent {
    * @public
    */
   initialize() {
-    if (!Jupyter) {
-      throw new Error('This is not Jupyter is not imported and Francy won\'t work without it... please import D3 v5+ library.');
+    var global = (0, eval)('this');
+    if (!('Jupyter' in global)) {
+      throw new Error('We\'re not running on Jupyter...');
     }
     Logger.debug('Jupyter is available...');
   }

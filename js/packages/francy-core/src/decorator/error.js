@@ -30,6 +30,11 @@ export default class ErrorDecorator {
      * @type {boolean}
      */
     this.throw = false;
+    /**
+     * Stores the flag for print stack trace to logs or not
+     * @type {boolean}
+     */
+    this.printStackTrace = true;
   }
   
   /**
@@ -56,6 +61,21 @@ export default class ErrorDecorator {
     this.context = ctx;
     return this;
   }
+  
+  /**
+   * This method stores a flag to indicate whether the error should be printed to log.
+   * 
+   * @public
+   * @param {boolean} bool - true if the error must be logged, otherwise false. 
+   * Defaults to true.
+   * @return {this} instance
+   */
+  withStackTrace(bool) {
+    if(typeof (bool) === 'boolean'){
+      this.printStackTrace = bool;
+    }
+    return this;
+  }
 
   /**
    * This method stores the function to execute in case an error occurs running 
@@ -77,13 +97,13 @@ export default class ErrorDecorator {
    * fails to execute, or if the error must be handled safelly.
    * 
    * @public
-   * @param {boolean} t - true if the error must be propagated, otherwise false. 
+   * @param {boolean} bool - true if the error must be propagated, otherwise false. 
    * Defaults to false.
    * @return {this} instance
    */
-  onErrorThrow(t) {
-    if(typeof (t) === 'boolean'){
-      this.throw = t;
+  onErrorThrow(bool) {
+    if(typeof (bool) === 'boolean'){
+      this.throw = bool;
     }
     return this;
   }
@@ -134,8 +154,12 @@ export default class ErrorDecorator {
    * Helper method to log
    * @private
    */
-  _logEntry(error) {
-    Logger.info(`We can't do anything about this! An error occurred: [${error}]`);
+  _logEntry(e) {
+    if (this.printStackTrace) {
+      Logger.info('Oops, we can\'t do anything about this...', e);
+    } else {
+      Logger.info(`Oops, we can't do anything about this... [${e}]`);
+    }
   }
 
 }

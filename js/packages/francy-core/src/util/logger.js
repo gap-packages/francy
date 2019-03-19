@@ -21,9 +21,23 @@ class Log {
    * Creates a [DEBUG] entry in the console log
    * @param message the message to print
    */
-  debug(message) {
+  // debug(message) {
+  //  if (Configuration.object.verbose) {
+  //     this.console.debug(Log._format('D', message));
+  //  }
+  //}
+
+  /**
+   * Creates a [DEBUG] entry in the console log
+   * @param message the message to print
+   */
+  debug(message, object) {
     if (Configuration.object.verbose) {
-      this.console.debug(Log._format('D', message));
+      if (object) {
+        this.console.debug(Log._format('D', message), object);
+      } else {
+        this.console.debug(Log._format('D', message));
+      }
     }
   }
 
@@ -31,8 +45,20 @@ class Log {
    * Creates an [INFO] entry in the console log
    * @param message the message to print
    */
-  info(message) {
-    this.console.info(Log._format('I', message));
+  //info(message) {
+  //  this.console.info(Log._format('I', message));
+  //}
+  
+  /**
+   * Creates an [INFO] entry in the console log
+   * @param message the message to print
+   */
+  info(message, object) {
+    if (object) {
+      this.console.info(Log._format('I', message), object);
+    } else {
+      this.console.info(Log._format('I', message));
+    }
   }
 
   /**
@@ -40,9 +66,9 @@ class Log {
    * @param message the message to print
    * @param error the error Object to attach to the message
    */
-  error(message, error) {
-    if (error) {
-      this.console.error(Log._format('E', message), error);
+  error(message, object) {
+    if (object) {
+      this.console.error(Log._format('E', message), object);
     } else {
       this.console.error(Log._format('E', message));
     }
@@ -53,9 +79,9 @@ class Log {
    * @param message the message to print
    * @param error the error Object to attach to the message
    */
-  warn(message, error) {
-    if (error) {
-      this.console.info(Log._format('W', message), error);
+  warn(message, object) {
+    if (object) {
+      this.console.info(Log._format('W', message), object);
     } else {
       this.console.info(Log._format('W', message));
     }

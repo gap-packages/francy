@@ -120,8 +120,8 @@ export default class MainMenu extends Menu {
         // re-render
         setTimeout(() => {
           let Renderer = RenderingManager.activeRenderer();
-          self.handlePromise(new Renderer(self.options).load(self.data).render());
-        }, 100);
+          self.handlePromise(new Renderer(self.parent.options).load(self.parent.data).render());
+        }, 10);
       }
     }
 
