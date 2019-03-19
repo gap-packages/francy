@@ -18,16 +18,15 @@ module.exports = (env = {}) => {
 
   fs.mkdir('./jupyter_francy/labextension', { recursive: true }, (err) => {
     if (err) throw err;
-  });
-  
-  fs.copyFile('./lab.package.json', './jupyter_francy/labextension/package.json', (err) => {
-    if (err) throw err;
-    replace({
-        regex: 'VERSION',
-        replacement: JSON.stringify(fPackage.version),
-        paths: ['./jupyter_francy/labextension/package.json'],
-        recursive: true,
-        silent: true,
+    fs.copyFile('./lab.package.json', './jupyter_francy/labextension/package.json', (err) => {
+      if (err) throw err;
+      replace({
+          regex: 'VERSION',
+          replacement: JSON.stringify(fPackage.version),
+          paths: ['./jupyter_francy/labextension/package.json'],
+          recursive: true,
+          silent: true,
+      });
     });
   });
 
