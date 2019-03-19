@@ -21,9 +21,10 @@ RUN apt-get -qq install -y curl \
 # notebook and lab extension installation
 RUN cd $HOME/inst/gap-master/pkg/francy/js && npm install --unsafe-perm && npm run bootstrap && npm run build \
   && cd $HOME/inst/gap-master/pkg/francy/js/packages/francy-extension-jupyter && pip3 install -e . \
-  && jupyter labextension link \
   && jupyter nbextension install --symlink --py --sys-prefix jupyter_francy \
-  && jupyter nbextension enable --py --sys-prefix jupyter_francy
+  && jupyter nbextension enable --py --sys-prefix jupyter_francy \
+  && jupyter lab build 
+  #&& cd $HOME/inst/gap-master/pkg/francy/js/packages/francy-extension-jupyter/jupyter_francy/labextension && jupyter labextension install .
 
 USER gap
 

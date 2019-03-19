@@ -29,8 +29,8 @@
     "build:production": "npm run clean && npm run build:lib && webpack --env.production --config webpack.config.js"
   },
   "dependencies": {
-    "d3": "5.7.0",
-    "d3-graphviz": "2.6.0",
+    "d3": "5.9.2",
+    "d3-graphviz": "2.6.1",
     "francy": "^1.0.4",
     "francy-core": "^1.0.4",
     "francy-renderer-d3": "^1.0.4",
