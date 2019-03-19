@@ -17,7 +17,7 @@
     "lint": "eslint ./packages/** ",
     "lint:fix": "eslint --fix ./packages/**",
     "coverage": "npm run test",
-    "publish": "lerna publish --skip-git"
+    "publish": "lerna publish --skip-git --force-publish"
   },
   "devDependencies": {
     "@babel/cli": "7.2.3",
