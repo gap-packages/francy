@@ -33,6 +33,7 @@ pip3.6 install -e .
 `pyenv which jupyter` nbextension list 2>&1 | grep -q jupyter_francy
 
 # install extension link on jupyter lab
+cd jupyter_francy/labextension
 `pyenv which jupyter` labextension link
 `pyenv which jupyter` labextension list 2>&1 | grep -q jupyter_francy
 
