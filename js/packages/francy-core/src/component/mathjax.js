@@ -72,7 +72,7 @@ export default class MathJaxComponent extends BaseComponent {
       }
     });
 
-    let safeOnNewMathElement = Decorators.Error.wrap(onNewMathElement).withContext(this).onErrorThrow(false);
+    let safeOnNewMathElement = Decorators.Error.wrap(onNewMathElement).withStackTrace(false).withContext(this).onErrorThrow(false);
     MathJax.Hub.Register.MessageHook('New Math', id => safeOnNewMathElement.handle(id));
 
     function onNewMathElement(id) {

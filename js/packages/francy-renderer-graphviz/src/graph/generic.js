@@ -69,8 +69,10 @@ export default class GraphGeneric extends Graph {
                 renderType: 'SVG',
                 postFunction: function () {
                   let svg = parentG.select('svg');
-                  self.setLabelXPosition(svg, x);
-                  self.setLabelYPosition(svg, y);
+                  if (svg.node()) {
+                    self.setLabelXPosition(svg, x);
+                    self.setLabelYPosition(svg, y);
+                  }
                 }
               }).render());
             }

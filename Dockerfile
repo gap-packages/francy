@@ -23,7 +23,7 @@ RUN cd $HOME/inst/gap-master/pkg/francy/js && npm install --unsafe-perm && npm r
   && cd $HOME/inst/gap-master/pkg/francy/js/packages/francy-extension-jupyter && pip3 install -e . \
   && jupyter nbextension install --symlink --py --sys-prefix jupyter_francy \
   && jupyter nbextension enable --py --sys-prefix jupyter_francy \
-  && jupyter lab build 
+  && jupyter labextension link
 
 USER gap
 
