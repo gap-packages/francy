@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import './d3_wrapper';
-import Francy from 'francy';
+import { FrancyApp, ConfigurationHandler, DefaultConfiguration } from 'francy';
 import D3Renderer from '../../index';
 import undirected from './data/json1.json';
 import directed from './data/json2.json';
@@ -13,16 +13,11 @@ import scatter from './data/json6.json';
     
 describe('Francy Renderer Object', function() {
 
+  var Francy = new FrancyApp({ appendTo: 'body', callbackHandler: console.log, configuration: new ConfigurationHandler({configuration: DefaultConfiguration}) });
+  Francy.RenderingManager.register(new D3Renderer().getConfiguration());
+  
   beforeEach(() => {
     d3.select('body').selectAll('div').remove();
-  });
-
-  before(function() {
-    Francy.RenderingManager.register({
-      name: D3Renderer.name, 
-      renderer: D3Renderer.renderer, 
-      enable: D3Renderer.enable
-    });
   });
 
   it('should produce an undirected graph', function(done) {

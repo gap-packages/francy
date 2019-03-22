@@ -1,10 +1,12 @@
 import * as d3 from 'd3';
 import { expect } from 'chai';
 import './d3_wrapper';
-import Francy from '../../index';
+import { FrancyApp, ConfigurationHandler, DefaultConfiguration } from '../../index';
 import undirected from './data/json1.json';
 
 describe('Francy Renderer Object', function () {
+
+  var Francy = new FrancyApp({ appendTo: 'body', callbackHandler: console.log, configuration: new ConfigurationHandler({configuration: DefaultConfiguration}) });
 
   beforeEach(() => {
     d3.select('body').selectAll('div').remove();

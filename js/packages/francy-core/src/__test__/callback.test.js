@@ -1,13 +1,17 @@
 import * as d3 from 'd3';
 import { expect } from 'chai';
 import Callback from '../render/callback';
+import { default as ConfigurationHandler, DefaultConfiguration } from '../util/configuration';
+import { default as RenderingManagerHandler, RENDERING_EVENTS } from '../render/manager';
 
 describe('Callbacks', () => {
 
-  var options = { appendTo: 'body', callbackHandler: console.log };
+    var configuration = new ConfigurationHandler(DefaultConfiguration);
+  var options = { appendTo: 'body', callbackHandler: console.log, configuration: configuration};
+  var context = { configuration: configuration, renderingManager: new RenderingManagerHandler({configuration: configuration})};
   window.d3 = global.d3 = d3;
   
-  window.callback = new Callback(options);
+  window.callback = new Callback(options, context);
   
   beforeEach(() => {
     d3.select('body').selectAll('div').remove();

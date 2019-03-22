@@ -3,13 +3,17 @@ import { expect } from 'chai';
 import json1 from './data/json1.json';
 import RequiredArgsModal from '../render/modal/required';
 import AboutModal from '../render/modal/about';
+import { default as ConfigurationHandler, DefaultConfiguration } from '../util/configuration';
+import { default as RenderingManagerHandler, RENDERING_EVENTS } from '../render/manager';
 
 describe('Modal Windows', () => {
 
-  var options = { appendTo: 'body', callbackHandler: console.log };
+  var configuration = new ConfigurationHandler(DefaultConfiguration);
+  var options = { appendTo: 'body', callbackHandler: console.log, configuration: configuration};
+  var context = { configuration: configuration, renderingManager: new RenderingManagerHandler({configuration: configuration})};
   window.d3 = global.d3 = d3;
-  window.about = new AboutModal(options);
-  window.required = new RequiredArgsModal(options);
+  window.about = new AboutModal(options, context);
+  window.required = new RequiredArgsModal(options, context);
 
   beforeEach(() => {
     d3.select('body').selectAll('div').remove();

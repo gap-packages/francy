@@ -3,19 +3,21 @@ chai.use(require('chai-string'));
 
 import DOTLanguageHelper from '../util/dot-converter';
 import graph from './data/json1.json';
-import { Configuration } from 'francy-core';
+import {  ConfigurationHandler, DefaultConfiguration } from 'francy';
 import * as d3 from 'd3';
 
 describe('DOT Language utils', () => {
 
   window.d3 = global.d3 = d3;
-  Configuration.addProperty('graphvizRankdir', 'TB');
+  var configuration = new ConfigurationHandler({configuration: DefaultConfiguration})
+  configuration.addProperty('graphvizRankdir', 'TB');
 
   beforeEach(() => {});
 
   it('should convert json to dot', () => {
     //expect(DOTLanguageHelper).to.be.an('function');
-    let dotLanguageHelper = new DOTLanguageHelper();
+    
+    let dotLanguageHelper = new DOTLanguageHelper({ configuration:configuration });
     let dot = dotLanguageHelper.load(graph).convert();
     chai.use(require('chai-string'));
     expect(dot).to.equalIgnoreSpaces('graph "Example undirected graph" {  graph [ rankdir="TB" ]\
