@@ -5,8 +5,8 @@ import Renderer from './renderer';
 
 export default class Tooltip extends Renderer {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
   }
 
   @Decorators.Data.requires('messages')

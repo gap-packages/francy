@@ -1,8 +1,9 @@
+import { RenderingConfiguration } from 'francy-core';
 import Canvas from './src/canvas';
 
-/* global Francy */
+export default class D3Renderer extends RenderingConfiguration {
 
-const name = 'D3-Renderer';
-
-// we're expecting Francy to be loaded already!
-Francy.RenderingManager.register({name: name, renderer: Canvas, enable: true});
+  constructor() {
+    super(Canvas, 'D3-Renderer', true);
+  }
+}

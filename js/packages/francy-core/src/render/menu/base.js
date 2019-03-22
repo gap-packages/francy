@@ -13,8 +13,8 @@ export default class Menu extends Renderer {
    * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
    */
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
   }
 
   /**

@@ -1,7 +1,6 @@
 import Observable from '../util/observable';
 import { Logger } from '../util/logger';
 import { Utilities } from '../util/utilities';
-import { Configuration } from '../util/configuration';
 import { RuntimeException } from '../util/exception';
 
 /**
@@ -21,15 +20,16 @@ import { RuntimeException } from '../util/exception';
  * 
  * @extends {Observable}
  */
-class RenderingManagerHandler extends Observable {
+export default class RenderingManagerHandler extends Observable {
 
   /**
    * Default Constructor
    */
-  constructor() {
+  constructor(context) {
     super();
+    this.context = context;
     // this only adds if does not exist
-    Configuration.addProperty('renderers', {});
+    this.context.configuration.addProperty('renderers', {});
   }
 
   /**
@@ -43,17 +43,17 @@ class RenderingManagerHandler extends Observable {
    * @public
    */
   register({ name, renderer, enable }) {
-    if (name && !(name in Configuration.object.renderers)) {
+    if (name && !(name in this.context.configuration.object.renderers)) {
       enable = enable || false;
       Logger.info(`Registering Renderer: ${name}`);
-      Configuration.object.renderers[name] = { enable: false, renderer: renderer, name: name, id: Utilities.generateId() };
-      this.notify(RENDERING_EVENTS.REGISTER, Configuration.object.renderers[name]);
+      this.context.configuration.object.renderers[name] = { enable: false, renderer: renderer, name: name, id: Utilities.generateId() };
+      this.notify(RENDERING_EVENTS.REGISTER, this.context.configuration.object.renderers[name]);
       if (enable) {
         this.enable(name);
       }
     } else {
       // update the renderer has this does not get serialized
-      Configuration.object.renderers[name].renderer = renderer;
+      this.context.configuration.object.renderers[name].renderer = renderer;
       //this.notify(RENDERING_EVENTS.REGISTER, Configuration.object.renderers[name]);
     }
     return this;
@@ -69,8 +69,8 @@ class RenderingManagerHandler extends Observable {
   unregister(name) {
     if (name) {
       Logger.info(`Unregistering Renderer: ${name}`);
-      this.notify(RENDERING_EVENTS.UNREGISTER, Configuration.object.renderers[name]);
-      delete Configuration.object.renderers[name];
+      this.notify(RENDERING_EVENTS.UNREGISTER, this.context.configuration.object.renderers[name]);
+      delete this.context.configuration.object.renderers[name];
     }
     return this;
   }
@@ -86,12 +86,12 @@ class RenderingManagerHandler extends Observable {
   enable(name) {
     if (name) {
       Logger.info(`Enabling Renderer: ${name}`);
-      for (let prop in Configuration.object.renderers) {
-        let previous = Configuration.object.renderers[prop].enable;
+      for (let prop in this.context.configuration.object.renderers) {
+        let previous = this.context.configuration.object.renderers[prop].enable;
         let current = name === prop;
         if (previous !== current) {
-          Configuration.object.renderers[prop].enable = current;
-          this.notify(RENDERING_EVENTS.STATUS, Configuration.object.renderers[prop]);
+          this.context.configuration.object.renderers[prop].enable = current;
+          this.notify(RENDERING_EVENTS.STATUS, this.context.configuration.object.renderers[prop]);
         }
       }
     }
@@ -105,7 +105,7 @@ class RenderingManagerHandler extends Observable {
    * @public
    */
   allRenderers() {
-    return Configuration.object.renderers;
+    return this.context.configuration.object.renderers;
   }
 
   /**
@@ -115,10 +115,10 @@ class RenderingManagerHandler extends Observable {
    * @public
    */
   activeRenderer() {
-    let r = Configuration.object.renderers[Object.keys(Configuration.object.renderers[0])];
-    for (let prop in Configuration.object.renderers) {
-      if (Configuration.object.renderers[prop].enable) {
-        r = Configuration.object.renderers[prop];
+    let r = this.context.configuration.object.renderers[Object.keys(this.context.configuration.object.renderers[0])];
+    for (let prop in this.context.configuration.object.renderers) {
+      if (this.context.configuration.object.renderers[prop].enable) {
+        r = this.context.configuration.object.renderers[prop];
       }
     }
     if (!r.renderer) {
@@ -137,4 +137,4 @@ export const RENDERING_EVENTS = { REGISTER: 'REGISTER', UNREGISTER: 'UNREGISTER'
  * The {RenderingManager} singleton
  * @public
  */
-export const RenderingManager = new RenderingManagerHandler();
+//export const RenderingManager = new RenderingManagerHandler();

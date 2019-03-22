@@ -15,8 +15,8 @@ export default class JupyterComponent extends BaseComponent {
    * @property {Boolean} verbose prints extra log information to console.log, default false
    * @property {Boolean} mandatory whether the component is mandatory or optional
    */
-  constructor(mandatory = false, delay = false) {
-    super(mandatory, delay);
+  constructor(mandatory = false, delay = false, retries = 1) {
+    super(mandatory, delay, retries);
   }
   
   /**

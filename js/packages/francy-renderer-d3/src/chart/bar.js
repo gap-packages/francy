@@ -5,8 +5,8 @@ import Chart from './chart';
 
 export default class BarChart extends Chart {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
   }
 
   @Decorators.Initializer.initialize()

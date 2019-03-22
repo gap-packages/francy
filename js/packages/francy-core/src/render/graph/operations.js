@@ -1,12 +1,11 @@
 import BaseRenderer from '../base';
-import { Configuration } from '../../util/configuration';
 
 /* global d3 */
 
 export default class GraphOperations extends BaseRenderer {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
     this.load(this.options.appendTo.data); // this will be most likely the Frame!
     var self = this;
     this.nodeOperations = {
@@ -73,7 +72,7 @@ export default class GraphOperations extends BaseRenderer {
 
     // subscribe to update drag behavior on configuration change
     let enableDragId = `enable-drag-${self.data.canvas.id}`;
-    Configuration.subscribe('dragNodes', (value) => enableDrag.call(this, value), enableDragId);
+    self.context.configuration.subscribe('dragNodes', (value) => enableDrag.call(this, value), enableDragId);
 
     // enable drag behavior
     return enableDrag;
@@ -96,7 +95,7 @@ export default class GraphOperations extends BaseRenderer {
     });
 
     function connected() {
-      if (!Configuration.object.showNeighbours) return;
+      if (!self.context.configuration.object.showNeighbours) return;
       if (toggle === 0) {
         //Reduce the opacity of all but the neighbouring nodes
         let el = d3.select(this);

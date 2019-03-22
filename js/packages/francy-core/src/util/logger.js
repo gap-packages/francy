@@ -1,4 +1,4 @@
-import { Configuration } from './configuration';
+import { GlobalConfiguration } from './configuration';
 
 /**
  * This class provides a logger for the Francy application.
@@ -21,18 +21,8 @@ class Log {
    * Creates a [DEBUG] entry in the console log
    * @param message the message to print
    */
-  // debug(message) {
-  //  if (Configuration.object.verbose) {
-  //     this.console.debug(Log._format('D', message));
-  //  }
-  //}
-
-  /**
-   * Creates a [DEBUG] entry in the console log
-   * @param message the message to print
-   */
   debug(message, object) {
-    if (Configuration.object.verbose) {
+    if (GlobalConfiguration.object.verbose) {
       if (object) {
         this.console.debug(Log._format('D', message), object);
       } else {
@@ -40,14 +30,6 @@ class Log {
       }
     }
   }
-
-  /**
-   * Creates an [INFO] entry in the console log
-   * @param message the message to print
-   */
-  //info(message) {
-  //  this.console.info(Log._format('I', message));
-  //}
   
   /**
    * Creates an [INFO] entry in the console log

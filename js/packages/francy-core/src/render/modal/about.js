@@ -1,6 +1,5 @@
 import Modal from './base';
 import { Logger } from '../../util/logger';
-import { Configuration } from '../../util/configuration';
 import { Components } from '../../component/factory';
 import { Decorators } from '../../decorator/factory';
 
@@ -8,13 +7,15 @@ import { Decorators } from '../../decorator/factory';
 
 export default class AboutModal extends Modal {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
   }
 
   @Decorators.Initializer.initialize()
   @Decorators.Data.requires('canvas')
   async render() {
+    
+    var self = this;
 
     let modalId = 'AboutModalWindow';
 
@@ -38,7 +39,7 @@ export default class AboutModal extends Modal {
     content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
     content.append('br');
 
-    if (Configuration.object.verbose) {
+    if (self.context.configuration.object.verbose) {
       content.append('br');
       content.append('span').text('Loaded Data:');
       content.append('pre').attr('class', 'francy').style('text-align', 'left').html(Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
@@ -47,11 +48,11 @@ export default class AboutModal extends Modal {
     content.append('div').text('Verbose').append('div').append('input')
       .attr('type', 'checkbox')
       .attr('required', null)
-      .attr('value', Configuration.object.verbose)
+      .attr('value', self.context.configuration.object.verbose)
       .attr('name', 'Verbose')
-      .property('checked', Configuration.object.verbose)
+      .property('checked', self.context.configuration.object.verbose)
       .on('change', function () {
-        Configuration.object.verbose = this.value = this.checked = !Configuration.object.verbose; 
+        self.context.configuration.object.verbose = this.value = this.checked = !self.context.configuration.object.verbose; 
       })
       .on('input', this.onchange)
       .on('keyup', this.onchange)

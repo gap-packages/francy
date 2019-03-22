@@ -1,4 +1,4 @@
-import { DataHandler, Decorators, Utilities, Configuration, Graph } from 'francy-core';
+import { DataHandler, Decorators, Utilities, Graph } from 'francy-core';
 
 /* global d3 */
 
@@ -10,8 +10,9 @@ import { DataHandler, Decorators, Utilities, Configuration, Graph } from 'francy
  */
 export default class DOTLanguageConverterHelper extends DataHandler {
 
-  constructor() {
+  constructor(context) {
     super();
+    this.context = context;
     this.dotString = '';
   }
 
@@ -34,7 +35,7 @@ export default class DOTLanguageConverterHelper extends DataHandler {
   convert() {
     this.dotString += this.directed ? 'digraph ' : 'graph ';
     this.dotString += `"${this.data.canvas.title}" {`;
-    this.dotString += `\t graph [ rankdir="${Configuration.object.graphvizRankdir}" ]`;
+    this.dotString += `\t graph [ rankdir="${this.context.configuration.object.graphvizRankdir}" ]`;
     this._iterateNodes();
     if (this.tree) {
       this._createTree();

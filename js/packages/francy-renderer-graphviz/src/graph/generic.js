@@ -1,15 +1,15 @@
-import { Graph, Decorators, Callback, Configuration, Tooltip, ContextMenu } from 'francy-core';
+import { Graph, Decorators, Callback, Tooltip, ContextMenu, Utilities } from 'francy-core';
 import DOTLanguageConverterHelper from '../util/dot-converter';
 
 /* global d3 */
 
 export default class GraphGeneric extends Graph {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
-    this.callback = new Callback(this.options);
-    this.tooltip = new Tooltip(this.options);
-    this.contextMenu = new ContextMenu(this.options);
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+    this.callback = new Callback(this.options, this.context);
+    this.tooltip = new Tooltip(this.options, this.context);
+    this.contextMenu = new ContextMenu(this.options, this.context);
   }
 
   @Decorators.Data.requires('canvas.graph')
@@ -17,7 +17,7 @@ export default class GraphGeneric extends Graph {
   async render() {
     let self = this,
       loader = Decorators.Loader.withContext(this).show(),
-      dot = new DOTLanguageConverterHelper().load(this.data).convert(),
+      dot = new DOTLanguageConverterHelper(this.context).load(this.data).convert(),
       canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
       canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
 
@@ -25,7 +25,7 @@ export default class GraphGeneric extends Graph {
       .graphviz()
       .logEvents(false)
       .fade(false)
-      .engine(Configuration.object.graphvizEngine)
+      .engine(self.context.configuration.object.graphvizEngine)
       .keyMode('id')
       .dot(dot)
       .render(function () {
@@ -134,15 +134,15 @@ export default class GraphGeneric extends Graph {
     let linkedByIndex = {};
 
     canvasLinks.forEach(function (d) {
-      let sourceId = typeof d.source === 'object' ? d.source.id : d.source;
-      let targetId = typeof d.target === 'object' ? d.target.id : d.target;
+      let sourceId = Utilities.isObject(d.source) ? d.source.id : d.source;
+      let targetId = Utilities.isObject( d.target) ? d.target.id : d.target;
       linkedByIndex[`${sourceId},${sourceId}`] = true;
       linkedByIndex[`${targetId},${sourceId}`] = true;
       linkedByIndex[`${sourceId},${targetId}`] = true;
     });
 
     function connected() {
-      if (!Configuration.object.showNeighbours) return;
+      if (!self.context.configuration.object.showNeighbours) return;
       let el = d3.select(this);
       if (!toggle) {
         //Reduce the opacity of all but the neighbouring nodes
@@ -150,19 +150,19 @@ export default class GraphGeneric extends Graph {
         if (el.attr('class').includes('francy-node')) {
           node.style('opacity', o => linkedByIndex[`${d.id},${o.id}`] || linkedByIndex[`${o.id},${d.id}`] ? 1 : 0.1);
           link.style('opacity', function (o) {
-            let localTargetId = typeof o.target === 'object' ? o.target.id : o.target;
-            let localSourceId = typeof o.source === 'object' ? o.source.id : o.source;
+            let localTargetId = Utilities.isObject(o.target) ? o.target.id : o.target;
+            let localSourceId = Utilities.isObject(o.source) ? o.source.id : o.source;
             let opacity = d.id === localSourceId || d.id === localTargetId ? 1 : 0.1;
             d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
             return opacity;
           });
         } else if (el.attr('class').includes('francy-link')) {
-          let sourceId = typeof d.source === 'object' ? d.source.id : d.source;
-          let targetId = typeof d.target === 'object' ? d.target.id : d.target;
+          let sourceId = Utilities.isObject(d.source) ? d.source.id : d.source;
+          let targetId = Utilities.isObject(d.target) ? d.target.id : d.target;
           node.style('opacity', o => sourceId === o.id || targetId === o.id ? 1 : 0.1);
           link.style('opacity', function (o) {
-            let localTargetId = typeof o.target === 'object' ? o.target.id : o.target;
-            let localSourceId = typeof o.source === 'object' ? o.source.id : o.source;
+            let localTargetId = Utilities.isObject(o.target) ? o.target.id : o.target;
+            let localSourceId = Utilities.isObject(o.source) ? o.source.id : o.source;
             let opacity = sourceId === localSourceId && targetId === localTargetId ? 1 : 0.1;
             d3.select(this).on('mouseleave', undefined).select('text').style('opacity', opacity);
             return opacity;

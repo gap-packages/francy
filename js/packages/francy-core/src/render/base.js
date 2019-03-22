@@ -19,7 +19,7 @@ export default class BaseRenderer extends DataHandler {
    * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
    */
-  constructor({ appendTo = 'body', callbackHandler }) {
+  constructor({ appendTo = 'body', callbackHandler }, context = { }) {
     super();
     /**
      * @typedef {Object} Options
@@ -28,6 +28,7 @@ export default class BaseRenderer extends DataHandler {
      */
     this.options = undefined;
     this.settings({ appendTo: appendTo, callbackHandler: callbackHandler });
+    this.context = context;
   }
 
   /**

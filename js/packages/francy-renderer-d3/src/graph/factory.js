@@ -4,8 +4,8 @@ import GenericGraph from './generic';
 
 export default class Graph extends Renderer {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
   }
 
   @Decorators.Data.requires('canvas.graph')
@@ -15,10 +15,10 @@ export default class Graph extends Renderer {
     let graph = element;
     switch (this.data.canvas.graph.type) {
     case 'tree':
-      graph = new TreeGraph(this.options);
+      graph = new TreeGraph(this.options, this.context);
       break;
     default:
-      graph = new GenericGraph(this.options);
+      graph = new GenericGraph(this.options, this.context);
     }
 
     element = await this.handlePromise(graph.load(this.data).render());

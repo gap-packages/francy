@@ -2,7 +2,7 @@
 
 A JupyterLab and Jupyter Notebook extension for rendering mime 'application/vnd.francy+json'
 
-![output renderer](http://g.recordit.co/QAsC7YULcY.gif)
+<!--- ![output renderer](http://g.recordit.co/QAsC7YULcY.gif) --->
 
 ## Install
 

@@ -30,8 +30,7 @@ define(
   (Jupyter, Extension) => {
     function load_ipython_extension() {
       const { notebook } = Jupyter;
-      Extension.init(Jupyter);
-      Extension.register_renderer(notebook);
+      Extension.register_renderer(Extension.init(Jupyter), notebook);
       Extension.render_cells(notebook);
     }
     return {

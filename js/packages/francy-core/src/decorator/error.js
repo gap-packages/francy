@@ -1,4 +1,5 @@
-import {Logger} from '../util/logger';
+import { Logger } from '../util/logger';
+import { Utilities } from '../util/utilities';
 
 /**
  * This {Decorator} class is used to safelly execute methods within a specified context.
@@ -35,6 +36,11 @@ export default class ErrorDecorator {
      * @type {boolean}
      */
     this.printStackTrace = true;
+    /**
+     * Stores the number of retries for successful execution
+     * @type {number}
+     */
+    this.retries = 1;
   }
   
   /**
@@ -45,7 +51,7 @@ export default class ErrorDecorator {
    * @return {this} instance
    */
   wrap(fn) {
-    if (typeof fn !== 'function') throw Error(`[${fn}] is not a function!`);
+    if (!Utilities.isFunction(fn)) throw Error(`[${fn}] is not a function!`);
     this.function = fn;
     return this;
   }
@@ -71,8 +77,23 @@ export default class ErrorDecorator {
    * @return {this} instance
    */
   withStackTrace(bool) {
-    if(typeof (bool) === 'boolean'){
+    if(Utilities.isBoolean(bool)){
       this.printStackTrace = bool;
+    }
+    return this;
+  }
+  
+  /**
+   * This method stores the number of retries to execute the function.
+   * 
+   * @public
+   * @param {integer} bool - true if the error must be logged, otherwise false. 
+   * Defaults to true.
+   * @return {this} instance
+   */
+  withRetries(n) {
+    if(!isNaN(n)){
+      this.retries = Math.floor(n);
     }
     return this;
   }
@@ -86,7 +107,7 @@ export default class ErrorDecorator {
    * @return {this} instance
    */
   onErrorExec(fn) {
-    if (typeof fn === 'function') {
+    if (Utilities.isFunction(fn)) {
       this.onErrorFns.push(fn);
     }
     return this;
@@ -102,7 +123,7 @@ export default class ErrorDecorator {
    * @return {this} instance
    */
   onErrorThrow(bool) {
-    if(typeof (bool) === 'boolean'){
+    if(Utilities.isBoolean(bool)){
       this.throw = bool;
     }
     return this;
@@ -114,23 +135,36 @@ export default class ErrorDecorator {
    * @public
    */
   handle() {
-    let result = undefined;
-    try {
-      result = this.function.apply(this.context, arguments);
-      if (result && typeof result.then === 'function') {
-        result = result.catch(error => {
-          this._logEntry(error);
-          this._runOnError();
-        }).then(result => result);
-      }
-    } catch (error) {
-      this._logEntry(error);
+    const pause = (duration) => new Promise(r => setTimeout(r, duration));
+
+    const backoff = (retries, fn, delay = 500) => {
+      Logger.debug(`Call function [${this.context.constructor.name + '.' + this.function.name}] retry number [${(this.retries - retries + 1) + ' / ' + this.retries}]`);
+      return fn.catch(err => {
+        return retries > 1
+          ? pause(delay).then(() => backoff(retries - 1, fn, delay * 2)) 
+          : Promise.reject(err);
+      });
+    };
+
+    return backoff(this.retries, this._handle(arguments)).catch(e => {
+      this._logEntry(e);
       this._runOnError();
-      if (this.throw) {
-        throw error;
-      }
+      if (this.throw) throw e;
+    }).then(result => result);
+  }
+
+  /**
+   * This method will execute the wrapped function.
+   * 
+   * @private
+   */
+  _handle() {
+    try {
+      let result = this.function.apply(this.context, arguments);
+      return Utilities.isaPromise(result) ? result : Promise.resolve(result);
+    } catch (error) {
+      return Promise.reject(error);
     }
-    return result;
   }
 
   /**

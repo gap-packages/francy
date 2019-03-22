@@ -4,8 +4,8 @@ import Menu from './base';
 
 export default class ContextMenu extends Menu {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
   }
 
   @Decorators.Data.requires('menus')

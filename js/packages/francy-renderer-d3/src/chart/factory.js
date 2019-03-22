@@ -5,8 +5,8 @@ import ScatterChart from './scatter';
 
 export default class ChartFactory extends Renderer {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
   }
 
   @Decorators.Data.requires('canvas.chart')
@@ -16,13 +16,13 @@ export default class ChartFactory extends Renderer {
     let chart = undefined;
     switch (this.data.canvas.chart.type) {
     case 'bar':
-      chart = new BarChart(this.options);
+      chart = new BarChart(this.options, this.context);
       break;
     case 'line':
-      chart = new LineChart(this.options);
+      chart = new LineChart(this.options, this.context);
       break;
     case 'scatter':
-      chart = new ScatterChart(this.options);
+      chart = new ScatterChart(this.options, this.context);
       break;
     }
 

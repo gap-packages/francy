@@ -1,4 +1,4 @@
-import { Logger, CompositeRenderer, Decorators, RenderingManager } from 'francy-core';
+import { Logger, CompositeRenderer, Decorators } from 'francy-core';
 import MainMenu from './menu-main';
 import Message from './message';
 
@@ -6,12 +6,12 @@ import Message from './message';
 
 export default class Frame extends CompositeRenderer {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
-    let Renderer = RenderingManager.activeRenderer();
-    this.mainMenu = new MainMenu(this.options);
-    this.messages = new Message(this.options);
-    this.canvas = new Renderer(this.options);
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+    let Renderer = this.context.renderingManager.activeRenderer();
+    this.mainMenu = new MainMenu(this.options, this.context);
+    this.messages = new Message(this.options, this.context);
+    this.canvas = new Renderer(this.options, this.context);
     this.add(this.mainMenu).add(this.messages).add(this.canvas);
   }
 

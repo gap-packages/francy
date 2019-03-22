@@ -8,16 +8,16 @@ import ContextMenu from '../menu/context';
 
 export default class Graph extends Renderer {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
   }
 
   initialize() {
     this.element = this.parent.select('g.francy-content');
-    this.tooltip = new Tooltip(this.options);
-    this.contextMenu = new ContextMenu(this.options);
-    this.callback = new Callback(this.options);
-    this.graphOperations = new GraphOperations(this.options);
+    this.tooltip = new Tooltip(this.options, this.context);
+    this.contextMenu = new ContextMenu(this.options, this.context);
+    this.callback = new Callback(this.options, this.context);
+    this.graphOperations = new GraphOperations(this.options, this.context);
   }
 
   _applyEvents(element) {

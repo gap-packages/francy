@@ -16,18 +16,16 @@ module.exports = (env = {}) => {
 
   console.log(`Running webpack for production environment? ${isProduction}`);
 
-  fs.mkdir('./jupyter_francy/labextension', { recursive: true }, (err) => {
-    if (err) throw err;
-    fs.copyFile('./lab.package.json', './jupyter_francy/labextension/package.json', (err) => {
-      if (err) throw err;
-      replace({
-          regex: 'VERSION',
-          replacement: JSON.stringify(fPackage.version),
-          paths: ['./jupyter_francy/labextension/package.json'],
-          recursive: true,
-          silent: true,
-      });
-    });
+  fs.mkdirSync('./jupyter_francy/labextension', { recursive: true });
+  fs.copyFileSync('./lab.README.md', './jupyter_francy/labextension/README.md');
+  fs.copyFileSync('./lab.package.json', './jupyter_francy/labextension/package.json');
+
+  replace({
+    regex: 'VERSION',
+    replacement: JSON.stringify(fPackage.version),
+    paths: ['./jupyter_francy/labextension/package.json'],
+    recursive: true,
+    silent: true,
   });
 
   /**
@@ -47,29 +45,7 @@ module.exports = (env = {}) => {
           ]
         }
       }
-    },
-    //{ test: /\.json$/, loader: 'json-loader' },
-    //{ test: /\.css$/, loader: '!style-loader!css-loader' },
-    //{ test: /\.html$/, loader: 'file-loader' },
-    //{ test: /\.(jpg|png|gif)$/, loader: 'file-loader' },
-    //{
-    //  test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-    //  loader: 'url-loader?limit=10000&mimetype=application/font-woff'
-    //},
-    //{
-    //  test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-    //  loader: 'url-loader?limit=10000&mimetype=application/font-woff'
-    //},
-    //{
-    //  test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-    //  loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
-    //},
-    //{ test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader' },
-    //{
-    //  test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-    //  loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
-    //}
-  ];
+    }];
 
   var base = {
     mode: isProduction ? 'production' : 'development',
@@ -120,11 +96,7 @@ module.exports = (env = {}) => {
       entry: path.join(__dirname, 'src', 'nb_extension.js'),
       output: Object.assign({}, base.output, {
         filename: 'extension.js',
-        path: path.join(
-          __dirname,
-          'jupyter_francy',
-          'nbextension'
-        )
+        path: path.join(__dirname, 'jupyter_francy', 'nbextension')
       }),
       externals: [
         'base/js/namespace',
@@ -141,11 +113,7 @@ module.exports = (env = {}) => {
       entry: ['@babel/polyfill', path.join(__dirname, 'src', 'nb_index.js')],
       output: Object.assign({}, base.output, {
         filename: 'index.js',
-        path: path.join(
-          __dirname,
-          'jupyter_francy',
-          'nbextension'
-        )
+        path: path.join(__dirname, 'jupyter_francy', 'nbextension')
       })
     }),
     /**
@@ -155,11 +123,7 @@ module.exports = (env = {}) => {
       entry: ['@babel/polyfill', path.join(__dirname, 'src', 'lab_extension.js')],
       output: Object.assign({}, base.output, {
         filename: 'extension.js',
-        path: path.join(
-          __dirname,
-          'jupyter_francy',
-          'labextension'
-        )
+        path: path.join(__dirname, 'jupyter_francy', 'labextension')
       })
     })
   ];

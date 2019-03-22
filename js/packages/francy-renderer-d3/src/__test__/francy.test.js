@@ -1,13 +1,15 @@
 import { expect } from 'chai';
 import './d3_wrapper';
-import 'francy';
-import '../../index';
+import Francy from 'francy';
+import D3Renderer from '../../index';
 import undirected from './data/json1.json';
 import directed from './data/json2.json';
 import tree from './data/json3.json';
 import bar from './data/json4.json';
 import line from './data/json5.json';
 import scatter from './data/json6.json';
+
+/* global d3 */
     
 describe('Francy Renderer Object', function() {
 
@@ -15,8 +17,16 @@ describe('Francy Renderer Object', function() {
     d3.select('body').selectAll('div').remove();
   });
 
+  before(function() {
+    Francy.RenderingManager.register({
+      name: D3Renderer.name, 
+      renderer: D3Renderer.renderer, 
+      enable: D3Renderer.enable
+    });
+  });
+
   it('should produce an undirected graph', function(done) {
-     window.Francy.load(undirected).render()
+     Francy.load(undirected).render()
      .catch(error => done(error))
      .then(object => {
       expect(object).to.be.a('htmldivelement');
@@ -32,7 +42,7 @@ describe('Francy Renderer Object', function() {
   });
 
   it('should produce a directed graph', function(done) {
-     window.Francy.load(directed).render()
+     Francy.load(directed).render()
      .catch(error => done(error))
      .then(object => {
       expect(object).to.be.a('htmldivelement');
@@ -48,7 +58,7 @@ describe('Francy Renderer Object', function() {
   });
   
   it('should produce a tree graph', function(done) {
-     window.Francy.load(tree).render()
+     Francy.load(tree).render()
      .catch(error => done(error))
      .then(object => {
       expect(object).to.be.a('htmldivelement');
@@ -64,7 +74,7 @@ describe('Francy Renderer Object', function() {
   });
   
   it('should produce a bar chart', function(done) {
-     window.Francy.load(bar).render()
+     Francy.load(bar).render()
      .catch(error => done(error))
      .then(object => {
       expect(object).to.be.a('htmldivelement');
@@ -84,7 +94,7 @@ describe('Francy Renderer Object', function() {
 
 
   it('should produce a line chart', function(done) {
-     window.Francy.load(line).render()
+     Francy.load(line).render()
      .catch(error => done(error))
      .then(object => {
       expect(object).to.be.a('htmldivelement');
@@ -103,7 +113,7 @@ describe('Francy Renderer Object', function() {
   });  
     
   it('should produce a scatter chart', function(done) {
-     window.Francy.load(scatter).render()
+     Francy.load(scatter).render()
      .catch(error => done(error))
      .then(object => {
       expect(object).to.be.a('htmldivelement');

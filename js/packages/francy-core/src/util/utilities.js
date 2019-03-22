@@ -25,8 +25,24 @@ export const Utilities = {
     return typeof a === 'object' && a !== null;
   },
 
+  isBoolean: function(a) {
+    return typeof a === 'boolean';
+  },
+  
+  isFunction: function(a) {
+    return typeof a === 'function';
+  },
+  
   isEqual: function (a, b) {
     return _isEqual(a, b);
-  }
+  },
+  
+  sanitize: function(a, b) {
+    b = b ? b : '';
+    return a.replace(/[^a-zA-Z0-9]/g, b);
+  },
 
+  isaPromise: function(a) {
+    return a && typeof a.then === 'function';
+  }
 };

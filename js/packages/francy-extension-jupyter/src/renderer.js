@@ -1,10 +1,9 @@
 import { MIME_TYPE, CLASS_NAME, APPEND_ID } from './utils';
 import './wrapper';
-import 'francy';
-import 'francy-renderer-d3';
-import 'francy-renderer-graphviz';
+import { FrancyApp, ConfigurationHandler, DefaultConfiguration } from 'francy';
+import D3Renderer from 'francy-renderer-d3';
+import GraphizRenderer from 'francy-renderer-graphviz';
 
-/* global Francy */
 /* eslint-disable no-console */
 
 export function init(Jupyter) {
@@ -12,7 +11,8 @@ export function init(Jupyter) {
   console.log('Starting configuring module Francy Javascript...');
 
   // start Francy
-  Francy.settings({
+  let Francy = new FrancyApp({
+    configuration: new ConfigurationHandler({configuration: DefaultConfiguration}),
     appendTo: `#${APPEND_ID}`,
     callbackHandler: function (command) {
       Jupyter.notebook.kernel.execute(command, {
@@ -29,14 +29,20 @@ export function init(Jupyter) {
       }, {});
     }
   });
-
+  
+  // register available renderers
+  Francy.RenderingManager.register(new D3Renderer().getConfiguration());
+  Francy.RenderingManager.register(new GraphizRenderer().getConfiguration());
+  
   console.log('Finished configuring module Francy Javascript.');
+  
+  return Francy;
 }
 
 /**
  * Render data to the DOM node
  */
-function render(props, node) {
+function render(Francy, props, node) {
   Francy.load(props.data).render()
     .catch(error => console.error(error))
     .then(element => node.append(element));
@@ -76,7 +82,7 @@ function handleAddOutput(event, { output, output_area }) { // eslint-disable-lin
  * Register the mime type and append_mime function with the notebook's
  * output area
  */
-export function register_renderer(notebook) {
+export function register_renderer(Francy, notebook) {
   /* Get an instance of output_area from a CodeCell instance */
   const { output_area } = notebook
     .get_cells()
@@ -93,7 +99,7 @@ export function register_renderer(notebook) {
     this.keyboard_manager.register_events(toinsert);
     /* Render data to DOM node */
     const props = { data, metadata: metadata[MIME_TYPE] };
-    render(props, toinsert[0]);
+    render(Francy, props, toinsert[0]);
     element.append(toinsert);
     return toinsert;
   };

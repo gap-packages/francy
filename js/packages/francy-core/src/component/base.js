@@ -22,7 +22,7 @@ export default class BaseComponent {
    * @property {Boolean} verbose prints extra log information to console.log, default false
    * @property {Boolean} mandatory whether the component is mandatory or optional
    */
-  constructor(mandatory = false, delay = false) {
+  constructor(mandatory = false, delay = false, retries = 1) {
     if (this.initialize === undefined || typeof this.initialize !== 'function') {
       throw new TypeError('Must override [initialize()] method!');
     }
@@ -39,9 +39,9 @@ export default class BaseComponent {
     this.options = {};
     this.settings({ mandatory: mandatory });
     // run initialization
-    let decorator = Decorators.Error.wrap(this._initialize).withContext(this).withStackTrace(false).onErrorThrow(mandatory).onErrorExec(this._onError);
+    let decorator = Decorators.Error.wrap(this._initialize).withRetries(retries).withContext(this).withStackTrace(false).onErrorThrow(mandatory).onErrorExec(this._onError);
     if (delay) {
-      setTimeout(() => decorator.handle(), 10);
+      setTimeout(() => decorator.handle(), 100);
     } else {
       decorator.handle();
     }

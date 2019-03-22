@@ -4,8 +4,8 @@ import { Renderer, Tooltip } from 'francy-core';
 
 export default class Chart extends Renderer {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
     this.axis = undefined;
     this.yScale = undefined;
     this.xScale = undefined;
@@ -15,7 +15,7 @@ export default class Chart extends Renderer {
   }
 
   initialize() {
-    this.tooltip = new Tooltip(this.options);
+    this.tooltip = new Tooltip(this.options, this.context);
 
     this.element = this.parent.select('g.francy-content');
 

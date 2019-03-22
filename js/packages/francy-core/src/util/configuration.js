@@ -6,14 +6,14 @@ import Observable from './observable';
  * 
  * @extends {Observable}
  */
-class ConfigurationHandler extends Observable {
+export default class ConfigurationHandler extends Observable {
   /**
    * Creates a instance of ModelTracker.
    * @param {object} object - the object object to keep track of changes.
    * @param {object} config
    * @param {number} config.throttle - the interval for storing dirty data
    */
-  constructor(object, { throttle = 1000 } = {}) {
+  constructor(object, { throttle = 1000 } = {}, backend = undefined) {
     super();
     /**
      * This is property is used to flag when the object changes.
@@ -21,17 +21,33 @@ class ConfigurationHandler extends Observable {
      * @private
      */
     this._dirty = false;
+    this.throttle = throttle;
+    this.backend = backend;
+    this._load(object);
+  }
+  
+  _load(object) {
     /**
      * This holds the actual configuration object
      * @type {object}
      * @private
      */
-    let objectStored = window.localStorage.getItem('francy.settings');
-    if (!objectStored) {
-      this._dirty = true;
-      setTimeout(()=>this._sync(), 0);
-    } else {
-      object = JSON.parse(objectStored);
+    if (this.backend) {
+      let objectStored = window.localStorage.getItem('francy.settings');
+      if (!objectStored) {
+        this._dirty = true;
+        setTimeout(() => this._sync(), 0);
+      } else {
+        object = Object.assign(object, JSON.parse(objectStored));
+      }
+      /**
+     * Sync listeners every second, if data is dirty
+     * @type {setInterval}
+     * @private
+     */
+      setInterval(() => {
+        return this._sync();
+      }, this.throttle);
     }
     /**
      * This is property holds a proxy that handles a dirty flag when object changes.
@@ -39,14 +55,6 @@ class ConfigurationHandler extends Observable {
      * @private
      */
     this._proxy = new Proxy(object, this);
-    /**
-     * Sync listeners every second, if data is dirty
-     * @type {setInterval}
-     * @private
-     */
-    setInterval(() => {
-      return this._sync();
-    }, throttle);
   }
 
   /**
@@ -139,23 +147,28 @@ class ConfigurationHandler extends Observable {
    * @private
    */
   _sync() {
-    if (this._dirty) {
-      window.localStorage.setItem('francy.settings', JSON.stringify(this.object));
+    if (this._dirty && this.backend) {
+      this.backend.setItem('francy.settings', JSON.stringify(this.object));
     }
   }
 }
 
-/**
- * The {Configuration} singleton
- * @public
- */
-export const Configuration = new ConfigurationHandler({
+
+export const DefaultConfiguration = {
   showNeighbours: true,
   dragNodes: true,
-  simulation: true,
-  fixedRandomSeed: true,
+  simulation: true
+};
+
+/**
+ * The global {Configuration} singleton
+ * @public
+ */
+export const GlobalConfiguration = new ConfigurationHandler({
   verbose: false,
-  transitionDuration: 750 //ms
+  transitionDuration: 750, //ms
+  fixedRandomSeed: true,
 }, {
   throttle: 5000 
-});
+}, window.localStorage
+);

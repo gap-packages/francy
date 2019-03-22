@@ -2,11 +2,9 @@ import { MIME_TYPE, CLASS_NAME } from './utils';
 import { Widget } from '@phosphor/widgets';
 //import { OutputArea } from '@jupyterlab/outputarea';
 import './wrapper';
-import 'francy';
-import 'francy-renderer-d3';
-import 'francy-renderer-graphviz';
-
-/* global Francy */
+import { FrancyApp, ConfigurationHandler, DefaultConfiguration } from 'francy';
+import D3Renderer from 'francy-renderer-d3';
+import GraphizRenderer from 'francy-renderer-graphviz';
 
 /* eslint-disable no-console */
 
@@ -24,7 +22,8 @@ export class OutputWidget extends Widget {
     this.addClass(CLASS_NAME);
     var self = this;
     // update the callback handler with the session kernel
-    Francy.settings({
+    this.Francy  = new FrancyApp({
+      configuration: new ConfigurationHandler({configuration: DefaultConfiguration}),
       callbackHandler: function (cmd) {
         // NOTE it should be implemented like this:
         // at this point we know the element exists and the OutputArea is 2 levels up: this.parent.parent
@@ -34,20 +33,23 @@ export class OutputWidget extends Widget {
         future.onIOPub = function (msg) {
           if (msg.content && msg.content.data && msg.content.data[MIME_TYPE]) {
             // This will update an existing canvas by its ID!
-            Francy.load(msg.content.data[MIME_TYPE]).render()
+            self.Francy.load(msg.content.data[MIME_TYPE]).render()
               .catch(error => console.error(error))
               .then(element => console.log('Interactive trigger result: ', element));
           }
         };
       }
     });
+    // register available renderers
+    this.Francy.RenderingManager.register(new D3Renderer().getConfiguration());
+    this.Francy.RenderingManager.register(new GraphizRenderer().getConfiguration());
   }
 
   /**
    * Render 'application/vnd.francy+json' into this widget's node.
    */
   renderModel(model) {
-    Francy.load(model.data[this._mimeType]).render()
+    this.Francy.load(model.data[this._mimeType]).render()
       .catch(error => console.error(error))
       .then(element => this.node.appendChild(element));
     return Promise.resolve(true);

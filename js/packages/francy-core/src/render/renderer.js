@@ -1,7 +1,7 @@
 import BaseRenderer from './base';
 import MathJaxWrapper from './mathjax-wrapper';
-import { Configuration } from '../util/configuration';
 import { Logger } from '../util/logger';
+import { GlobalConfiguration } from '../util/configuration';
 
 /* global d3 */
 
@@ -21,8 +21,8 @@ export default class Renderer extends BaseRenderer {
    * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
    */
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
     if (new.target === Renderer) {
       throw new TypeError('Cannot instantiate [Renderer] classes directly!');
     }
@@ -41,7 +41,7 @@ export default class Renderer extends BaseRenderer {
      * Stores the default animation duration
      * @type {number}
      */
-    this.transitionDuration = Configuration.object.transitionDuration;
+    this.transitionDuration = GlobalConfiguration.object.transitionDuration;
   }
 
   /**
@@ -119,7 +119,7 @@ export default class Renderer extends BaseRenderer {
    * @public
    */
   get mathjax() {
-    return new MathJaxWrapper(this.options).load(this.data);
+    return new MathJaxWrapper(this.options, this.context).load(this.data);
   }
 
 }

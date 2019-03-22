@@ -1,13 +1,13 @@
-import { Logger, Menu, RenderingManager, RENDERING_EVENTS, AboutModal } from 'francy-core';
+import { Logger, Menu, RENDERING_EVENTS, AboutModal, Utilities } from 'francy-core';
 import * as SvgToPng from 'save-svg-as-png';
 
 /* global d3 */
 
 export default class MainMenu extends Menu {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
-    this.aboutModal = new AboutModal(this.options);
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+    this.aboutModal = new AboutModal(this.options, this.context);
   }
 
   async render() {
@@ -38,7 +38,7 @@ export default class MainMenu extends Menu {
 
     // create default menu entry
     let entry = this.element.append('li').attr('class', 'francy-entry');
-    entry.append('a').attr('title', 'Francy').html('Francy').append('div').classed('francy-menu-arrow-down', true).style('float', 'right');
+    entry.append('a').attr('title', 'francy').html('francy').append('div').classed('francy-menu-arrow-down', true).style('float', 'right');
     entry.append('ul');
 
     this._buildDefaultMenu();
@@ -71,7 +71,10 @@ export default class MainMenu extends Menu {
       id: 'save-entry',
       title: 'Save to PNG',
       onClickCallback: function () {
-        SvgToPng.saveSvgAsPng(self.SVGParent.node(), 'diagram.png');
+        let name = self.data.canvas.title 
+          ? Utilities.sanitize(self.data.canvas.title, '_') + '.png' 
+          : 'diagram.png';
+        SvgToPng.saveSvgAsPng(self.SVGParent.node(), name);
       }
     });
     this._addEntryOnFrancyMenu({
@@ -93,11 +96,11 @@ export default class MainMenu extends Menu {
         entryId: o.id,
         entryTitle: `${o.enable ? '&#9745' : '&#9744'} ${o.name}`,
         entryOnClickCallback: function () {
-          RenderingManager.enable(o.name);
+          self.context.renderingManager.enable(o.name);
         },
         entryOnEachCallback: function () {
           let unregisterId = `renderer-${o.name}-unregister-${self.data.canvas.id}`;
-          RenderingManager.subscribe(RENDERING_EVENTS.UNREGISTER, onUnregister, unregisterId);
+          self.context.renderingManager.subscribe(RENDERING_EVENTS.UNREGISTER, onUnregister, unregisterId);
         }
       });
 
@@ -107,13 +110,13 @@ export default class MainMenu extends Menu {
     }
 
     let registerId = `renderers-register-${self.data.canvas.id}`;
-    RenderingManager.subscribe(RENDERING_EVENTS.REGISTER, insertEntry, registerId);
+    self.context.renderingManager.subscribe(RENDERING_EVENTS.REGISTER, insertEntry, registerId);
 
     let reRenderId = `renderer-rerender-${self.data.canvas.id}`;
-    RenderingManager.subscribe(RENDERING_EVENTS.STATUS, reRender, reRenderId);
+    self.context.renderingManager.subscribe(RENDERING_EVENTS.STATUS, reRender, reRenderId);
 
     function reRender(o) {
-      var canvas = self.parent.select(`#Canvas-${self.data.canvas.id}>g`);
+      var canvas = d3.select(`#Canvas-${self.data.canvas.id}`);
       if (canvas.node()) {
         self.element.select(`.${o.id}`).html(`${o.enable ? '&#9745' : '&#9744'} ${o.name}`);
         if (o.enable) {
@@ -121,16 +124,18 @@ export default class MainMenu extends Menu {
           self.parent.select(`#Canvas-${self.data.canvas.id}>g`).selectAll('*').remove();
           // re-render
           setTimeout(() => {
-            let Renderer = RenderingManager.activeRenderer();
-            self.handlePromise(new Renderer(self.options).load(self.data).render());
-          }, 10);
+            let Renderer = self.context.renderingManager.activeRenderer();
+            self.handlePromise(new Renderer(self.options, self.context).load(self.data).render());
+          }, 100);
         }
       } else {
-        RenderingManager.unsubscribe(RENDERING_EVENTS.STATUS, reRender, reRenderId);
+        Logger.info(`The Canvas ${self.data.canvas.id} seems to have disapeared... removing events associated to it`);
+        self.context.renderingManager.unsubscribe(RENDERING_EVENTS.STATUS, reRender, reRenderId);
+        self.context.renderingManager.unsubscribe(RENDERING_EVENTS.REGISTER, insertEntry, registerId);
       }
     }
 
-    Object.values(RenderingManager.allRenderers()).forEach(insertEntry);
+    Object.values(self.context.renderingManager.allRenderers()).forEach(insertEntry);
   }
 
   addEntryOnSettingsMenu({ id, title, onClickCallback, onEachCallback, withSeparator }) {

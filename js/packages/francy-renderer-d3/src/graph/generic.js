@@ -1,18 +1,18 @@
-import { Configuration, Decorators, Graph } from 'francy-core';
+import { Decorators, Graph } from 'francy-core';
 
 /* global d3 */
 
 export default class GenericGraph extends Graph {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
   }
 
   @Decorators.Initializer.initialize()
   async render() {
     let self = this,
       loader = Decorators.Loader.withContext(this).show(),
-      simulationActive = this.data.canvas.graph.simulation || Configuration.object.simulation,
+      simulationActive = this.data.canvas.graph.simulation || this.context.configuration.object.simulation,
       canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
       canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
 
@@ -245,7 +245,7 @@ export default class GenericGraph extends Graph {
       node.attr('transform', d => `translate(${d.x},${d.y})`);
     }
 
-    this.graphOperations.dragBehavior(node, simulation, simulationActive).call(this, Configuration.object.dragNodes);
+    this.graphOperations.dragBehavior(node, simulation, simulationActive).call(this, this.context.configuration.object.dragNodes);
 
     if (node && !node.empty()) {
 
@@ -278,7 +278,7 @@ export default class GenericGraph extends Graph {
         delete tmp.source;
         delete tmp.target;
         delete tmp.x;
-        delete tmp.y; // ignore these
+        delete tmp.y; // ignore all these
         newElements.push(Object.assign(data, tmp));
       } else {
         newElements.push(o);

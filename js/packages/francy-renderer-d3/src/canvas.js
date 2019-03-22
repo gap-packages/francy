@@ -1,4 +1,4 @@
-import { Logger, RenderingManager, RENDERING_EVENTS, CompositeRenderer, Decorators, Configuration } from 'francy-core';
+import { Logger, RENDERING_EVENTS, CompositeRenderer, Decorators, GlobalConfiguration } from 'francy-core';
 import seedrandom from 'seedrandom';
 import GraphFactory from './graph/factory';
 import ChartFactory from './chart/factory';
@@ -7,13 +7,13 @@ import ChartFactory from './chart/factory';
 
 export default class Canvas extends CompositeRenderer {
 
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
-    this.add(new GraphFactory(this.options)).add(new ChartFactory(this.options));
+  constructor({ appendTo, callbackHandler }, context) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+    this.add(new GraphFactory(this.options, this.context)).add(new ChartFactory(this.options, this.context));
   }
 
   initialize() {
-    if (Configuration.object.fixedRandomSeed) {
+    if (GlobalConfiguration.object.fixedRandomSeed) {
       //set seed to produce always the same graphs
       seedrandom('Francy!', { global: true });
     }
@@ -119,13 +119,13 @@ export default class Canvas extends CompositeRenderer {
         menuId: 'graph-settings-entry',
         menuTitle: 'Graph',
         entryId: 'neighbours-entry',
-        entryTitle: `${Configuration.object.showNeighbours ? '&#9745' : '&#9744'} Show Neighbours`,
+        entryTitle: `${self.context.configuration.object.showNeighbours ? '&#9745' : '&#9744'} Show Neighbours`,
         entryOnClickCallback: function () {
-          Configuration.object.showNeighbours = !Configuration.object.showNeighbours;
+          self.context.configuration.object.showNeighbours = !self.context.configuration.object.showNeighbours;
         },
         entryOnEachCallback: function () {
           let showNeighboursId = `showNeighbours-onChange-${self.data.canvas.id}`;
-          Configuration.subscribe('showNeighbours', value => {
+          self.context.configuration.subscribe('showNeighbours', value => {
             d3.select(this).html(`${value ? '&#9745' : '&#9744'} Show Neighbours`);
           }, showNeighboursId);
         }
@@ -135,13 +135,13 @@ export default class Canvas extends CompositeRenderer {
         menuId: 'graph-settings-entry',
         menuTitle: 'Graph',
         entryId: 'drag-entry',
-        entryTitle: `${Configuration.object.dragNodes ? '&#9745' : '&#9744'} Drag Nodes`,
+        entryTitle: `${self.context.configuration.object.dragNodes ? '&#9745' : '&#9744'} Drag Nodes`,
         entryOnClickCallback: function () {
-          Configuration.object.dragNodes = !Configuration.object.dragNodes;
+          self.context.configuration.object.dragNodes = !self.context.configuration.object.dragNodes;
         },
         entryOnEachCallback: function () {
           let dragNodesId = `dragNodes-onChange-${self.data.canvas.id}`;
-          Configuration.subscribe('dragNodes', value => {
+          self.context.configuration.subscribe('dragNodes', value => {
             d3.select(this).html(`${value ? '&#9745' : '&#9744'} Drag Nodes`);
           }, dragNodesId);
         }
@@ -150,7 +150,7 @@ export default class Canvas extends CompositeRenderer {
 
     let removeMenuId = `graphSettings-removeMenu-${self.data.canvas.id}`;
     // remove menu if renderer is disabled
-    RenderingManager.subscribe(RENDERING_EVENTS.STATUS, r => {
+    self.context.renderingManager.subscribe(RENDERING_EVENTS.STATUS, r => {
       if (!r.enable) {
         this.parentClass.MainMenu.removeMenuEntry('graph-settings-entry');
       }

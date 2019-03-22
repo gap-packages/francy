@@ -1,16 +1,17 @@
-export { Configuration } from './src/util/configuration';
 export { Decorators } from './src/decorator/factory';
 export { Components } from './src/component/factory';
 export { Logger } from './src/util/logger';
 export { Utilities } from './src/util/utilities';
-export { RenderingManager, RENDERING_EVENTS } from './src/render/manager';
 
+export { default as ConfigurationHandler, DefaultConfiguration, GlobalConfiguration } from './src/util/configuration';
+export { default as RenderingManagerHandler, RENDERING_EVENTS } from './src/render/manager';
 export { default as DataHandler } from './src/util/data-handler';
 export { default as Observable } from './src/util/observable';
 export { default as Callback } from './src/render/callback';
 export { default as BaseRenderer } from './src/render/base';
 export { default as CompositeRenderer } from './src/render/composite';
 export { default as Renderer } from './src/render/renderer';
+export { default as RenderingConfiguration } from './src/render/rendering-configuration';
 export { default as Graph } from './src/render/graph/base';
 export { default as GraphOperations } from './src/render/graph/operations';
 export { default as Menu } from './src/render/menu/base';

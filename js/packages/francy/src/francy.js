@@ -1,9 +1,11 @@
-import { Logger, Decorators, Renderer, RenderingManager } from 'francy-core';
+import { Logger, Decorators, Renderer, RenderingManagerHandler } from 'francy-core';
 import Frame from './render/frame';
 // import css inline - couldn't make this work on the webpack conf :/
 import '!style-loader!css-loader!./style/index.css';
 
 /* global VERSION */
+
+(() => Logger.info(`Francy JS v${VERSION}! Enjoy...`))();
 
 /**
  * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.load} function,
@@ -12,7 +14,7 @@ import '!style-loader!css-loader!./style/index.css';
  * @access public
  *
  * @example
- * let francy = new Francy({verbose: true, appendTo: '#div-id', callbackHandler: console.log});
+ * let francy = new Francy({appendTo: '#div-id', callbackHandler: console.log, configuration: ConfigurationHandler({})});
  * francy.load(json).render();
  */
 export default class Francy extends Renderer {
@@ -23,10 +25,9 @@ export default class Francy extends Renderer {
    * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
-  constructor({ appendTo, callbackHandler }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler });
+  constructor({ appendTo, callbackHandler, configuration }) {
+    super({ appendTo: appendTo, callbackHandler: callbackHandler }, { configuration: configuration, renderingManager: new RenderingManagerHandler({configuration: configuration}) });
     // all good!
-    Logger.info(`Francy JS v${VERSION}! Enjoy...`);
   }
 
   /**
@@ -36,7 +37,7 @@ export default class Francy extends Renderer {
    * @public
    */
   get RenderingManager() {
-    return RenderingManager;
+    return this.context.renderingManager; //RenderingManager;
   }
 
   /**
@@ -50,7 +51,7 @@ export default class Francy extends Renderer {
     if (this.data.version !== VERSION) {
       Logger.warn(`Rendering may fail, data generated in Francy GAP v${this.data.version} using Francy JS v${VERSION}... please update your system...`);
     }
-    let frame = await new Frame(this.options)
+    let frame = await new Frame(this.options, this.context)
       .load(this.data).render()
       .then(element => element)
       .finally(() => this.load({}, true));
