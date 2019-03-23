@@ -8,7 +8,7 @@ import GraphizRenderer from 'francy-renderer-graphviz';
 
 export function init(Jupyter) {
 
-  console.log('Starting configuring module Francy Javascript...');
+  //console.log('Starting configuring module Francy Javascript...');
 
   // start Francy
   let Francy = new FrancyApp({
@@ -34,7 +34,7 @@ export function init(Jupyter) {
   Francy.RenderingManager.register(new D3Renderer().getConfiguration());
   Francy.RenderingManager.register(new GraphizRenderer().getConfiguration());
   
-  console.log('Finished configuring module Francy Javascript.');
+  //console.log('Finished configuring module Francy Javascript.');
   
   return Francy;
 }
@@ -82,7 +82,7 @@ function handleAddOutput(event, { output, output_area }) { // eslint-disable-lin
  * Register the mime type and append_mime function with the notebook's
  * output area
  */
-export function register_renderer(Francy, notebook) {
+export function register_renderer(Jupyter, notebook) {
   /* Get an instance of output_area from a CodeCell instance */
   const { output_area } = notebook
     .get_cells()
@@ -99,6 +99,7 @@ export function register_renderer(Francy, notebook) {
     this.keyboard_manager.register_events(toinsert);
     /* Render data to DOM node */
     const props = { data, metadata: metadata[MIME_TYPE] };
+    let Francy = init(Jupyter);
     render(Francy, props, toinsert[0]);
     element.append(toinsert);
     return toinsert;

@@ -1,5 +1,6 @@
 import Modal from './base';
 import { Logger } from '../../util/logger';
+import { GlobalConfiguration } from '../../util/configuration';
 import { Components } from '../../component/factory';
 import { Decorators } from '../../decorator/factory';
 
@@ -39,7 +40,7 @@ export default class AboutModal extends Modal {
     content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
     content.append('br');
 
-    if (self.context.configuration.object.verbose) {
+    if (GlobalConfiguration.object.verbose) {
       content.append('br');
       content.append('span').text('Loaded Data:');
       content.append('pre').attr('class', 'francy').style('text-align', 'left').html(Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
@@ -48,11 +49,11 @@ export default class AboutModal extends Modal {
     content.append('div').text('Verbose').append('div').append('input')
       .attr('type', 'checkbox')
       .attr('required', null)
-      .attr('value', self.context.configuration.object.verbose)
+      .attr('value', GlobalConfiguration.object.verbose)
       .attr('name', 'Verbose')
-      .property('checked', self.context.configuration.object.verbose)
+      .property('checked', GlobalConfiguration.object.verbose)
       .on('change', function () {
-        self.context.configuration.object.verbose = this.value = this.checked = !self.context.configuration.object.verbose; 
+        GlobalConfiguration.object.verbose = this.value = this.checked = !GlobalConfiguration.object.verbose; 
       })
       .on('input', this.onchange)
       .on('keyup', this.onchange)
