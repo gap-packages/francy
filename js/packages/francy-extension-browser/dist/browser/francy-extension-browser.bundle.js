@@ -1,4 +1,4 @@
-/*! 'francy-extension-browser, v1.0.4, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.' */
+/*! 'francy-extension-browser, v1.0.4 - Francy - An Interactive Discrete Mathematics Framework for GAP, by Manuel Martins <manuelmachadomartins@gmail.com>.' */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -4671,7 +4671,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var Components = {
   D3: new _d3__WEBPACK_IMPORTED_MODULE_0__["default"](true, true, 1),
-  MathJax: new _mathjax__WEBPACK_IMPORTED_MODULE_1__["default"](false, true, 3),
+  MathJax: new _mathjax__WEBPACK_IMPORTED_MODULE_1__["default"](false, true, 10),
   Jupyter: new _jupyter__WEBPACK_IMPORTED_MODULE_2__["default"](false, false, 1)
 };
 
@@ -4893,7 +4893,7 @@ function (_BaseComponent) {
       });
 
       function onNewMathElement(id) {
-        if (id && id.length > 1) {
+        if (id && id.length >= 1) {
           var mathJaxElement = d3.select("#".concat(id[1], "-Frame"));
           var svgMathJaxElement = mathJaxElement.select('svg');
           var g = d3.select(mathJaxElement.node().parentNode.parentNode);
@@ -7568,7 +7568,7 @@ function (_Modal) {
                 this._buildHeader(form, "About Francy v".concat("1.0.4"));
 
                 content = form.append('div').attr('class', 'francy-modal-content').append('div').attr('class', 'francy-table').append('div').attr('class', 'francy-table-body').style('text-align', 'center');
-                content.append('span').text('francy-extension-browser, v1.0.4, Francy - An Interactive Discrete Mathematics Framework for GAP, Manuel Martins <manuelmachadomartins@gmail.com>.');
+                content.append('span').text('francy-extension-browser, v1.0.4 - Francy - An Interactive Discrete Mathematics Framework for GAP, by Manuel Martins <manuelmachadomartins@gmail.com>.');
                 content.append('br');
                 content.append('br');
                 content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');

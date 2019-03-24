@@ -4,7 +4,7 @@ var replace = require("replace");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const fPackage = require('./package.json');
 const webpack = require('webpack');
-const description = `'${fPackage.name}, v${fPackage.version}, ${fPackage.description}, ${fPackage.author}.'`;
+const description = `'${fPackage.name}, v${fPackage.version} - ${fPackage.description}, by ${fPackage.author}.'`;
 const defaultPlugins = [
   new webpack.DefinePlugin({ VERSION: JSON.stringify(fPackage.version), FRANCY_DESC: description }),
   new webpack.BannerPlugin(description)

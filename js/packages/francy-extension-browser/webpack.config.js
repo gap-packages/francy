@@ -2,7 +2,7 @@ const path = require('path');
 const del = require('del');
 const webpack = require('webpack');
 const fPackage = require('./package.json');
-const description = `'${fPackage.name}, v${fPackage.version}, ${fPackage.description}, ${fPackage.author}.'`;
+const description = `'${fPackage.name}, v${fPackage.version} - ${fPackage.description}, by ${fPackage.author}.'`;
 const defaultPlugins = [
   new webpack.DefinePlugin({ VERSION: JSON.stringify(fPackage.version), FRANCY_DESC: description }),
   new webpack.BannerPlugin(description)

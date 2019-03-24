@@ -16,6 +16,6 @@ import JupyterComponent from './jupyter';
  */
 export const Components = {
   D3: new D3Component(true, true, 1),
-  MathJax: new MathJaxComponent(false, true, 3),
+  MathJax: new MathJaxComponent(false, true, 10),
   Jupyter: new JupyterComponent(false, false, 1)
 };
