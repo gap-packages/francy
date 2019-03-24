@@ -4470,7 +4470,7 @@ function () {
       mandatory: mandatory
     }); // run initialization
 
-    var decorator = _decorator_factory__WEBPACK_IMPORTED_MODULE_1__["Decorators"].Error.wrap(this._initialize).withRetries(retries).withContext(this).withStackTrace(false).onErrorThrow(mandatory).onErrorExec(this._onError);
+    var decorator = _decorator_factory__WEBPACK_IMPORTED_MODULE_1__["Decorators"].Error.wrap(this._initialize).withRetries(retries).withLogRetries(true).withContext(this).withStackTrace(false).onErrorThrow(mandatory).onErrorExec(this._onError);
 
     if (delay) {
       setTimeout(function () {
@@ -4883,8 +4883,8 @@ function (_BaseComponent) {
       });
 
       function onNewMathElement(id) {
-        if (id && id.length >= 1) {
-          var mathJaxElement = d3.select("#".concat(id[1], "-Frame"));
+        if (id && id.length === 1) {
+          var mathJaxElement = d3.select("#".concat(id[0][1], "-Frame"));
           var svgMathJaxElement = mathJaxElement.select('svg');
           var g = d3.select(mathJaxElement.node().parentNode.parentNode);
 
@@ -5133,6 +5133,12 @@ function () {
 
     this.printStackTrace = true;
     /**
+     * Stores the flag for print stack trace to logs or not
+     * @type {boolean}
+     */
+
+    this.logRetries = false;
+    /**
      * Stores the number of retries for successful execution
      * @type {number}
      */
@@ -5183,6 +5189,24 @@ function () {
     value: function withStackTrace(bool) {
       if (_util_utilities__WEBPACK_IMPORTED_MODULE_1__["Utilities"].isBoolean(bool)) {
         this.printStackTrace = bool;
+      }
+
+      return this;
+    }
+    /**
+     * This method stores a flag to indicate whether the error should be printed to log.
+     * 
+     * @public
+     * @param {boolean} bool - true if the error must be logged, otherwise false. 
+     * Defaults to true.
+     * @return {this} instance
+     */
+
+  }, {
+    key: "withLogRetries",
+    value: function withLogRetries(bool) {
+      if (_util_utilities__WEBPACK_IMPORTED_MODULE_1__["Utilities"].isBoolean(bool)) {
+        this.logRetries = bool;
       }
 
       return this;
@@ -5261,7 +5285,11 @@ function () {
 
       var backoff = function backoff(retries, fn) {
         var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 500;
-        _util_logger__WEBPACK_IMPORTED_MODULE_0__["Logger"].debug("Call function [".concat(_this.context.constructor.name + '.' + _this.function.name, "] retry number [").concat(_this.retries - retries + 1 + ' / ' + _this.retries, "]"));
+
+        if (_this.logRetries) {
+          _util_logger__WEBPACK_IMPORTED_MODULE_0__["Logger"].debug("Call function [".concat(_this.context.constructor.name + '.' + _this.function.name, "] retry number [").concat(_this.retries - retries + 1 + ' / ' + _this.retries, "]"));
+        }
+
         return fn.catch(function (err) {
           return retries > 1 ? pause(delay).then(function () {
             return backoff(retries - 1, fn, delay * 2);

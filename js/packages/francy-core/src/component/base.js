@@ -39,7 +39,7 @@ export default class BaseComponent {
     this.options = {};
     this.settings({ mandatory: mandatory });
     // run initialization
-    let decorator = Decorators.Error.wrap(this._initialize).withRetries(retries).withContext(this).withStackTrace(false).onErrorThrow(mandatory).onErrorExec(this._onError);
+    let decorator = Decorators.Error.wrap(this._initialize).withRetries(retries).withLogRetries(true).withContext(this).withStackTrace(false).onErrorThrow(mandatory).onErrorExec(this._onError);
     if (delay) {
       setTimeout(() => decorator.handle(), 100);
     } else {

@@ -76,8 +76,8 @@ export default class MathJaxComponent extends BaseComponent {
     MathJax.Hub.Register.MessageHook('New Math', id => safeOnNewMathElement.handle(id));
 
     function onNewMathElement(id) {
-      if (id && id.length >= 1) {
-        let mathJaxElement = d3.select(`#${id[1]}-Frame`);
+      if (id && id.length === 1) {
+        let mathJaxElement = d3.select(`#${id[0][1]}-Frame`);
         let svgMathJaxElement = mathJaxElement.select('svg');
         let g = d3.select(mathJaxElement.node().parentNode.parentNode);
         if (svgMathJaxElement.node()) {
@@ -95,7 +95,5 @@ export default class MathJaxComponent extends BaseComponent {
     }
 
     MathJax.Hub.Configured();
-    
-    Logger.debug('MathJax is available...');
   }
 }

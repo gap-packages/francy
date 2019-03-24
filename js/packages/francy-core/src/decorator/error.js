@@ -37,6 +37,11 @@ export default class ErrorDecorator {
      */
     this.printStackTrace = true;
     /**
+     * Stores the flag for print stack trace to logs or not
+     * @type {boolean}
+     */
+    this.logRetries = false;
+    /**
      * Stores the number of retries for successful execution
      * @type {number}
      */
@@ -79,6 +84,21 @@ export default class ErrorDecorator {
   withStackTrace(bool) {
     if(Utilities.isBoolean(bool)){
       this.printStackTrace = bool;
+    }
+    return this;
+  }
+  
+  /**
+   * This method stores a flag to indicate whether the error should be printed to log.
+   * 
+   * @public
+   * @param {boolean} bool - true if the error must be logged, otherwise false. 
+   * Defaults to true.
+   * @return {this} instance
+   */
+  withLogRetries(bool) {
+    if(Utilities.isBoolean(bool)){
+      this.logRetries = bool;
     }
     return this;
   }
@@ -138,7 +158,9 @@ export default class ErrorDecorator {
     const pause = (duration) => new Promise(r => setTimeout(r, duration));
 
     const backoff = (retries, fn, delay = 500) => {
-      Logger.debug(`Call function [${this.context.constructor.name + '.' + this.function.name}] retry number [${(this.retries - retries + 1) + ' / ' + this.retries}]`);
+      if (this.logRetries) {
+        Logger.debug(`Call function [${this.context.constructor.name + '.' + this.function.name}] retry number [${(this.retries - retries + 1) + ' / ' + this.retries}]`);
+      }
       return fn.catch(err => {
         return retries > 1
           ? pause(delay).then(() => backoff(retries - 1, fn, delay * 2)) 
