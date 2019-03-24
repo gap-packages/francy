@@ -7484,8 +7484,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AboutModal; });
 /* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base */ "../francy-core/src/render/modal/base.js");
 /* harmony import */ var _util_logger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/logger */ "../francy-core/src/util/logger.js");
-/* harmony import */ var _component_factory__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../component/factory */ "../francy-core/src/component/factory.js");
-/* harmony import */ var _decorator_factory__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../decorator/factory */ "../francy-core/src/decorator/factory.js");
+/* harmony import */ var _util_configuration__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/configuration */ "../francy-core/src/util/configuration.js");
+/* harmony import */ var _component_factory__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../component/factory */ "../francy-core/src/component/factory.js");
+/* harmony import */ var _decorator_factory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../decorator/factory */ "../francy-core/src/decorator/factory.js");
 var _dec, _dec2, _class;
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -7516,9 +7517,10 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 
 
+
 /* global d3 VERSION FRANCY_DESC */
 
-var AboutModal = (_dec = _decorator_factory__WEBPACK_IMPORTED_MODULE_3__["Decorators"].Initializer.initialize(), _dec2 = _decorator_factory__WEBPACK_IMPORTED_MODULE_3__["Decorators"].Data.requires('canvas'), (_class =
+var AboutModal = (_dec = _decorator_factory__WEBPACK_IMPORTED_MODULE_4__["Decorators"].Initializer.initialize(), _dec2 = _decorator_factory__WEBPACK_IMPORTED_MODULE_4__["Decorators"].Data.requires('canvas'), (_class =
 /*#__PURE__*/
 function (_Modal) {
   _inherits(AboutModal, _Modal);
@@ -7543,12 +7545,11 @@ function (_Modal) {
       regeneratorRuntime.mark(function _callee() {
         var _this = this;
 
-        var self, modalId, form, content, footer;
+        var modalId, form, content, footer;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                self = this;
                 modalId = 'AboutModalWindow';
                 _util_logger__WEBPACK_IMPORTED_MODULE_1__["Logger"].debug("Creating About Modal [".concat(modalId, "]..."));
                 this.element = this.holder.append('div').attr('id', modalId).attr('class', 'francy-modal');
@@ -7563,14 +7564,14 @@ function (_Modal) {
                 content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
                 content.append('br');
 
-                if (self.context.configuration.object.verbose) {
+                if (_util_configuration__WEBPACK_IMPORTED_MODULE_2__["GlobalConfiguration"].object.verbose) {
                   content.append('br');
                   content.append('span').text('Loaded Data:');
-                  content.append('pre').attr('class', 'francy').style('text-align', 'left').html(_decorator_factory__WEBPACK_IMPORTED_MODULE_3__["Decorators"].Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
+                  content.append('pre').attr('class', 'francy').style('text-align', 'left').html(_decorator_factory__WEBPACK_IMPORTED_MODULE_4__["Decorators"].Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
                 }
 
-                content.append('div').text('Verbose').append('div').append('input').attr('type', 'checkbox').attr('required', null).attr('value', self.context.configuration.object.verbose).attr('name', 'Verbose').property('checked', self.context.configuration.object.verbose).on('change', function () {
-                  self.context.configuration.object.verbose = this.value = this.checked = !self.context.configuration.object.verbose;
+                content.append('div').text('Verbose').append('div').append('input').attr('type', 'checkbox').attr('required', null).attr('value', _util_configuration__WEBPACK_IMPORTED_MODULE_2__["GlobalConfiguration"].object.verbose).attr('name', 'Verbose').property('checked', _util_configuration__WEBPACK_IMPORTED_MODULE_2__["GlobalConfiguration"].object.verbose).on('change', function () {
+                  _util_configuration__WEBPACK_IMPORTED_MODULE_2__["GlobalConfiguration"].object.verbose = this.value = this.checked = !_util_configuration__WEBPACK_IMPORTED_MODULE_2__["GlobalConfiguration"].object.verbose;
                 }).on('input', this.onchange).on('keyup', this.onchange).on('paste', this.onchange);
                 footer = form.append('div').attr('class', 'francy-modal-footer');
                 footer.append('button').text('Ok').on('click', function () {
@@ -7579,14 +7580,14 @@ function (_Modal) {
                   _this.unrender.call(_this);
                 }); // disable keyboard shortcuts when using this modal in Jupyter
 
-                if (_component_factory__WEBPACK_IMPORTED_MODULE_2__["Components"].Jupyter.isAvailable) {
-                  _decorator_factory__WEBPACK_IMPORTED_MODULE_3__["Decorators"].Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
+                if (_component_factory__WEBPACK_IMPORTED_MODULE_3__["Components"].Jupyter.isAvailable) {
+                  _decorator_factory__WEBPACK_IMPORTED_MODULE_4__["Decorators"].Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
                 }
 
                 _util_logger__WEBPACK_IMPORTED_MODULE_1__["Logger"].debug("Modal About updated [".concat(modalId, "]..."));
                 return _context.abrupt("return", this);
 
-              case 19:
+              case 18:
               case "end":
                 return _context.stop();
             }

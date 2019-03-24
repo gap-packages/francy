@@ -15,9 +15,6 @@ export default class AboutModal extends Modal {
   @Decorators.Initializer.initialize()
   @Decorators.Data.requires('canvas')
   async render() {
-    
-    var self = this;
-
     let modalId = 'AboutModalWindow';
 
     Logger.debug(`Creating About Modal [${modalId}]...`);

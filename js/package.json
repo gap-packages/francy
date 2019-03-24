@@ -40,6 +40,7 @@
     "esdoc-standard-plugin": "1.0.0",
     "eslint": "5.15.3",
     "isparta": "4.1.1",
+    "@jupyterlab/rendermime": "0.19.1",
     "karma": "4.0.1",
     "karma-chai": "0.1.0",
     "karma-chrome-launcher": "2.2.0",
