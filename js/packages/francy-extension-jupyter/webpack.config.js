@@ -8,13 +8,15 @@ const description = `'${fPackage.name}, v${fPackage.version} - ${fPackage.descri
 const defaultPlugins = [
   new webpack.DefinePlugin({ VERSION: JSON.stringify(fPackage.version), FRANCY_DESC: description }),
   new webpack.BannerPlugin(description)
+  //new webpack.IgnorePlugin({
+  //  resourceRegExp: /^.*$/,
+  //  contextRegExp: /@jupyterlab|@phosphor/
+  //})
 ];
 
 module.exports = (env = {}) => {
 
-  const isProduction = env.production === true;
-
-  console.log(`Running webpack for production environment? ${isProduction}`);
+  console.log(`Running webpack for production environment? ${env.production}`);
 
   fs.mkdirSync('./jupyter_francy/labextension', { recursive: true });
   fs.copyFileSync('./lab.README.md', './jupyter_francy/labextension/README.md');
@@ -51,7 +53,7 @@ module.exports = (env = {}) => {
     }];
 
   var base = {
-    mode: isProduction ? 'production' : 'development',
+    mode: env.production ? 'production' : 'development',
     stats: {
       colors: false,
       hash: true,
@@ -78,7 +80,7 @@ module.exports = (env = {}) => {
         })
       ]
     },
-    devtool: isProduction ? '' : 'source-map',
+    devtool: env.production ? '' : 'source-map',
     module: {
       rules: loaders
     },

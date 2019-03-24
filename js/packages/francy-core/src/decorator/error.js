@@ -161,14 +161,14 @@ export default class ErrorDecorator {
       if (this.logRetries) {
         Logger.debug(`Call function [${this.context.constructor.name + '.' + this.function.name}] retry number [${(this.retries - retries + 1) + ' / ' + this.retries}]`);
       }
-      return fn.catch(err => {
+      return fn.apply(this, arguments).catch(err => {
         return retries > 1
           ? pause(delay).then(() => backoff(retries - 1, fn, delay * 2)) 
           : Promise.reject(err);
       });
     };
 
-    return backoff(this.retries, this._handle(arguments)).catch(e => {
+    return backoff(this.retries, this._handle).catch(e => {
       this._logEntry(e);
       this._runOnError();
       if (this.throw) throw e;

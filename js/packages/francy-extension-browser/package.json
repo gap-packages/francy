@@ -45,7 +45,9 @@
     "webpack-cli": "3.3.0"
   },
   "scripts": {
-    "build": "webpack"
+    "clean": "rm -rf ./dist/*",
+    "build": "webpack --config webpack.config.js",
+    "build:production": "webpack --env.production --config webpack.config.js"
   },
   "files": [
     "README.md",

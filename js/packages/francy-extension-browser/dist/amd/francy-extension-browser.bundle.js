@@ -4905,7 +4905,6 @@ function (_BaseComponent) {
       }
 
       MathJax.Hub.Configured();
-      _util_logger__WEBPACK_IMPORTED_MODULE_1__["Logger"].debug('MathJax is available...');
     }
   }]);
 
@@ -5275,7 +5274,8 @@ function () {
   }, {
     key: "handle",
     value: function handle() {
-      var _this = this;
+      var _this = this,
+          _arguments = arguments;
 
       var pause = function pause(duration) {
         return new Promise(function (r) {
@@ -5290,14 +5290,14 @@ function () {
           _util_logger__WEBPACK_IMPORTED_MODULE_0__["Logger"].debug("Call function [".concat(_this.context.constructor.name + '.' + _this.function.name, "] retry number [").concat(_this.retries - retries + 1 + ' / ' + _this.retries, "]"));
         }
 
-        return fn.catch(function (err) {
+        return fn.apply(_this, _arguments).catch(function (err) {
           return retries > 1 ? pause(delay).then(function () {
             return backoff(retries - 1, fn, delay * 2);
           }) : Promise.reject(err);
         });
       };
 
-      return backoff(this.retries, this._handle(arguments)).catch(function (e) {
+      return backoff(this.retries, this._handle).catch(function (e) {
         _this._logEntry(e);
 
         _this._runOnError();

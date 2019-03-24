@@ -26,7 +26,11 @@ export default class Francy extends Renderer {
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
   constructor({ appendTo, callbackHandler, configuration }) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, { configuration: configuration, renderingManager: new RenderingManagerHandler({configuration: configuration}) });
+    super({ 
+      appendTo: appendTo, callbackHandler: callbackHandler 
+    }, { 
+      configuration: configuration, renderingManager: new RenderingManagerHandler({ configuration: configuration }) 
+    });
     // all good!
   }
 
