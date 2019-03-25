@@ -277,8 +277,8 @@ export default class GenericGraph extends Graph {
         let tmp = Object.assign({}, o);
         delete tmp.source;
         delete tmp.target;
-        delete tmp.x;
-        delete tmp.y; // ignore all these
+        //delete tmp.x;
+        //delete tmp.y; // ignore all these
         newElements.push(Object.assign(data, tmp));
       } else {
         newElements.push(o);

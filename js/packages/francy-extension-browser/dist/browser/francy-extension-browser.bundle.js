@@ -4470,6 +4470,12 @@ function () {
 
     this.available = false;
     /**
+     * Stores whether this component initialization is delayed
+     * @type {boolean]
+     */
+
+    this.delay = delay;
+    /**
      * Stores the options for this component
      * @typedef {object} options
      * @property {boolean} options.mandatory whether the component is mandatory or optional
@@ -4478,17 +4484,20 @@ function () {
     this.options = {};
     this.settings({
       mandatory: mandatory
-    }); // run initialization
+    });
+    this._safeInitializeDecorator = _decorator_factory__WEBPACK_IMPORTED_MODULE_1__["Decorators"].Error.wrap(this._initialize).withRetries(retries).withLogRetries(true).withContext(this).withStackTrace(false).onErrorThrow(mandatory).onErrorExec(this._onError); // run initialization
 
-    var decorator = _decorator_factory__WEBPACK_IMPORTED_MODULE_1__["Decorators"].Error.wrap(this._initialize).withRetries(retries).withLogRetries(true).withContext(this).withStackTrace(false).onErrorThrow(mandatory).onErrorExec(this._onError);
-
-    if (delay) {
-      setTimeout(function () {
-        return decorator.handle();
-      }, 100);
-    } else {
-      decorator.handle();
-    }
+    if (!this.delay) this._safeInitializeDecorator.handle(); //if (this.delay) {
+    //  setTimeout(() => {
+    //    this._safeInitializeDecorator.handle();
+    //    // give it another chance later...
+    //    if (!this.available) {
+    //      this.executed = false;
+    //    }
+    //  }, 0);
+    //} else { 
+    //  this._safeInitializeDecorator.handle(); 
+    //}
   }
   /**
    * Saves the settings in an internal options object.
@@ -4514,12 +4523,17 @@ function () {
      */
 
   }, {
-    key: "_initialize",
-
+    key: "tryInitialize",
+    value: function tryInitialize() {
+      if (!this.isAvailable) this._safeInitializeDecorator.handle();
+    }
     /**
      * This is a helper method to handle component initialization.
      * @private
      */
+
+  }, {
+    key: "_initialize",
     value: function _initialize() {
       this.initialize();
       this.available = true;
@@ -4670,8 +4684,8 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 var Components = {
-  D3: new _d3__WEBPACK_IMPORTED_MODULE_0__["default"](true, true, 1),
-  MathJax: new _mathjax__WEBPACK_IMPORTED_MODULE_1__["default"](false, true, 10),
+  D3: new _d3__WEBPACK_IMPORTED_MODULE_0__["default"](true, false, 1),
+  MathJax: new _mathjax__WEBPACK_IMPORTED_MODULE_1__["default"](false, false, 5),
   Jupyter: new _jupyter__WEBPACK_IMPORTED_MODULE_2__["default"](false, false, 1)
 };
 
@@ -4821,7 +4835,7 @@ function (_BaseComponent) {
   function MathJaxComponent() {
     var mandatory = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
     var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-    var retries = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 3;
+    var retries = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 5;
 
     _classCallCheck(this, MathJaxComponent);
 
@@ -4893,8 +4907,8 @@ function (_BaseComponent) {
       });
 
       function onNewMathElement(id) {
-        if (id && id.length === 1) {
-          var mathJaxElement = d3.select("#".concat(id[0][1], "-Frame"));
+        if (id && id.length > 1) {
+          var mathJaxElement = d3.select("#".concat(id[1], "-Frame"));
           var svgMathJaxElement = mathJaxElement.select('svg');
           var g = d3.select(mathJaxElement.node().parentNode.parentNode);
 
@@ -5153,6 +5167,12 @@ function () {
      */
 
     this.retries = 1;
+    /**
+     * Stores the flag that shows if this decorator has beens executed before
+     * @type {boolean}
+     */
+
+    this.executed = false;
   }
   /**
    * This method stores the function to be executed safelly.
@@ -5287,6 +5307,8 @@ function () {
       var _this = this,
           _arguments = arguments;
 
+      this.executed = true;
+
       var pause = function pause(duration) {
         return new Promise(function (r) {
           return setTimeout(r, duration);
@@ -5297,7 +5319,7 @@ function () {
         var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 500;
 
         if (_this.logRetries) {
-          _util_logger__WEBPACK_IMPORTED_MODULE_0__["Logger"].debug("Call function [".concat(_this.context.constructor.name + '.' + _this.function.name, "] retry number [").concat(_this.retries - retries + 1 + ' / ' + _this.retries, "]"));
+          _util_logger__WEBPACK_IMPORTED_MODULE_0__["Logger"].debug("Call [".concat(_this.retries - retries + 1 + '/' + _this.retries, "] to function [").concat(_this.context.constructor.name + '.' + _this.function.name, "]"));
         }
 
         return fn.apply(_this, _arguments).catch(function (err) {
@@ -6969,7 +6991,7 @@ function (_Observable) {
 
       if (name && !(name in this.context.configuration.object.renderers)) {
         enable = enable || false;
-        _util_logger__WEBPACK_IMPORTED_MODULE_1__["Logger"].info("Registering Renderer: ".concat(name));
+        _util_logger__WEBPACK_IMPORTED_MODULE_1__["Logger"].debug("Registering Renderer: ".concat(name));
         this.context.configuration.object.renderers[name] = {
           enable: false,
           renderer: renderer,
@@ -7000,7 +7022,7 @@ function (_Observable) {
     key: "unregister",
     value: function unregister(name) {
       if (name) {
-        _util_logger__WEBPACK_IMPORTED_MODULE_1__["Logger"].info("Unregistering Renderer: ".concat(name));
+        _util_logger__WEBPACK_IMPORTED_MODULE_1__["Logger"].debug("Unregistering Renderer: ".concat(name));
         this.notify(RENDERING_EVENTS.UNREGISTER, this.context.configuration.object.renderers[name]);
         delete this.context.configuration.object.renderers[name];
       }
@@ -8803,13 +8825,17 @@ var GlobalConfiguration = new ConfigurationHandler({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DataHandler; });
-/* harmony import */ var _util_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/json */ "../francy-core/src/util/json.js");
+/* harmony import */ var _json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./json */ "../francy-core/src/util/json.js");
+/* harmony import */ var _logger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./logger */ "../francy-core/src/util/logger.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+
+
+/* global VERSION */
 
 /**
  * This class provides utility methods to handle and store data.
@@ -8843,10 +8869,14 @@ function () {
   _createClass(DataHandler, [{
     key: "load",
     value: function load(json, partial) {
-      var data = _util_json__WEBPACK_IMPORTED_MODULE_0__["default"].parse(json, partial);
+      var data = _json__WEBPACK_IMPORTED_MODULE_0__["default"].parse(json, partial);
 
       if (data) {
         this.data = data;
+
+        if (this.data.version !== "1.0.4") {
+          _logger__WEBPACK_IMPORTED_MODULE_1__["Logger"].warn("Data was generated in Francy GAP v".concat(this.data.version, " and you're using Francy JS v").concat("1.0.4", "... Rendering may fail, please update your system..."));
+        }
       }
 
       return this;
@@ -10735,9 +10765,8 @@ function (_Graph) {
         if (data) {
           var tmp = Object.assign({}, o);
           delete tmp.source;
-          delete tmp.target;
-          delete tmp.x;
-          delete tmp.y; // ignore all these
+          delete tmp.target; //delete tmp.x;
+          //delete tmp.y; // ignore all these
 
           newElements.push(Object.assign(data, tmp));
         } else {
@@ -12022,22 +12051,18 @@ function (_Renderer) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (this.data.version !== "1.0.4") {
-                  francy_core__WEBPACK_IMPORTED_MODULE_0__["Logger"].warn("Rendering may fail, data generated in Francy GAP v".concat(this.data.version, " using Francy JS v").concat("1.0.4", "... please update your system..."));
-                }
-
-                _context.next = 3;
+                _context.next = 2;
                 return new _render_frame__WEBPACK_IMPORTED_MODULE_1__["default"](this.options, this.context).load(this.data).render().then(function (element) {
                   return element;
                 }).finally(function () {
                   return _this.load({}, true);
                 });
 
-              case 3:
+              case 2:
                 frame = _context.sent;
                 return _context.abrupt("return", frame.element.node());
 
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -12054,7 +12079,19 @@ function (_Renderer) {
   }, {
     key: "RenderingManager",
     get: function get() {
-      return this.context.renderingManager; //RenderingManager;
+      return this.context.renderingManager;
+    }
+    /**
+     * Returns the {Components] instance to to get external components
+     * 
+     * @returns {Components} instance
+     * @public
+     */
+
+  }, {
+    key: "Components",
+    get: function get() {
+      return francy_core__WEBPACK_IMPORTED_MODULE_0__["Components"];
     }
   }]);
 

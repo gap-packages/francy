@@ -45,7 +45,7 @@ export default class RenderingManagerHandler extends Observable {
   register({ name, renderer, enable }) {
     if (name && !(name in this.context.configuration.object.renderers)) {
       enable = enable || false;
-      Logger.info(`Registering Renderer: ${name}`);
+      Logger.debug(`Registering Renderer: ${name}`);
       this.context.configuration.object.renderers[name] = { enable: false, renderer: renderer, name: name, id: Utilities.generateId() };
       this.notify(RENDERING_EVENTS.REGISTER, this.context.configuration.object.renderers[name]);
       if (enable) {
@@ -68,7 +68,7 @@ export default class RenderingManagerHandler extends Observable {
    */
   unregister(name) {
     if (name) {
-      Logger.info(`Unregistering Renderer: ${name}`);
+      Logger.debug(`Unregistering Renderer: ${name}`);
       this.notify(RENDERING_EVENTS.UNREGISTER, this.context.configuration.object.renderers[name]);
       delete this.context.configuration.object.renderers[name];
     }

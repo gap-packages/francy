@@ -46,6 +46,11 @@ export default class ErrorDecorator {
      * @type {number}
      */
     this.retries = 1;
+    /**
+     * Stores the flag that shows if this decorator has beens executed before
+     * @type {boolean}
+     */
+    this.executed = false;
   }
   
   /**
@@ -155,11 +160,13 @@ export default class ErrorDecorator {
    * @public
    */
   handle() {
+    this.executed = true;
+
     const pause = (duration) => new Promise(r => setTimeout(r, duration));
 
     const backoff = (retries, fn, delay = 500) => {
       if (this.logRetries) {
-        Logger.debug(`Call function [${this.context.constructor.name + '.' + this.function.name}] retry number [${(this.retries - retries + 1) + ' / ' + this.retries}]`);
+        Logger.debug(`Call [${(this.retries - retries + 1) + '/' + this.retries}] to function [${this.context.constructor.name + '.' + this.function.name}]`);
       }
       return fn.apply(this, arguments).catch(err => {
         return retries > 1

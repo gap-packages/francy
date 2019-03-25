@@ -33,7 +33,9 @@ export function init(Jupyter) {
   // register available renderers
   Francy.RenderingManager.register(new D3Renderer().getConfiguration());
   Francy.RenderingManager.register(new GraphizRenderer().getConfiguration());
-  
+  // try to initialize MathJax just in case - hack
+  Francy.Components.MathJax.tryInitialize();
+
   //console.log('Finished configuring module Francy Javascript.');
   
   return Francy;

@@ -19,7 +19,7 @@ export default class MathJaxComponent extends BaseComponent {
    * @property {Boolean} verbose prints extra log information to console.log, default false
    * @property {Boolean} mandatory whether the component is mandatory or optional
    */
-  constructor(mandatory = false, delay = true, retries = 3) {
+  constructor(mandatory = false, delay = true, retries = 5) {
     super(mandatory, delay, retries);
   }
 
@@ -76,8 +76,8 @@ export default class MathJaxComponent extends BaseComponent {
     MathJax.Hub.Register.MessageHook('New Math', id => safeOnNewMathElement.handle(id));
 
     function onNewMathElement(id) {
-      if (id && id.length === 1) {
-        let mathJaxElement = d3.select(`#${id[0][1]}-Frame`);
+      if (id && id.length > 1) {
+        let mathJaxElement = d3.select(`#${id[1]}-Frame`);
         let svgMathJaxElement = mathJaxElement.select('svg');
         let g = d3.select(mathJaxElement.node().parentNode.parentNode);
         if (svgMathJaxElement.node()) {

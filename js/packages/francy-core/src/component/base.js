@@ -32,19 +32,33 @@ export default class BaseComponent {
      */
     this.available = false;
     /**
+     * Stores whether this component initialization is delayed
+     * @type {boolean]
+     */
+    this.delay = delay;
+    /**
      * Stores the options for this component
      * @typedef {object} options
      * @property {boolean} options.mandatory whether the component is mandatory or optional
      */
     this.options = {};
     this.settings({ mandatory: mandatory });
+    this._safeInitializeDecorator = Decorators.Error.wrap(this._initialize).withRetries(retries)
+      .withLogRetries(true).withContext(this).withStackTrace(false)
+      .onErrorThrow(mandatory).onErrorExec(this._onError);
     // run initialization
-    let decorator = Decorators.Error.wrap(this._initialize).withRetries(retries).withLogRetries(true).withContext(this).withStackTrace(false).onErrorThrow(mandatory).onErrorExec(this._onError);
-    if (delay) {
-      setTimeout(() => decorator.handle(), 100);
-    } else {
-      decorator.handle();
-    }
+    if (!this.delay) this._safeInitializeDecorator.handle();
+    //if (this.delay) {
+    //  setTimeout(() => {
+    //    this._safeInitializeDecorator.handle();
+    //    // give it another chance later...
+    //    if (!this.available) {
+    //      this.executed = false;
+    //    }
+    //  }, 0);
+    //} else { 
+    //  this._safeInitializeDecorator.handle(); 
+    //}
   }
 
   /**
@@ -67,6 +81,10 @@ export default class BaseComponent {
    */
   get isAvailable(){
     return this.available;
+  }
+  
+  tryInitialize() {
+    if (!this.isAvailable) this._safeInitializeDecorator.handle();
   }
 
   /**

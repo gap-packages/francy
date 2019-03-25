@@ -1,4 +1,4 @@
-import { Logger, Decorators, Renderer, RenderingManagerHandler } from 'francy-core';
+import { Logger, Decorators, Renderer, RenderingManagerHandler, Components } from 'francy-core';
 import Frame from './render/frame';
 // import css inline - couldn't make this work on the webpack conf :/
 import '!style-loader!css-loader!./style/index.css';
@@ -41,7 +41,18 @@ export default class Francy extends Renderer {
    * @public
    */
   get RenderingManager() {
-    return this.context.renderingManager; //RenderingManager;
+    return this.context.renderingManager;
+  }
+  
+
+  /**
+   * Returns the {Components] instance to to get external components
+   * 
+   * @returns {Components} instance
+   * @public
+   */
+  get Components() {
+    return Components;
   }
 
   /**
@@ -52,9 +63,6 @@ export default class Francy extends Renderer {
    */
   @Decorators.Data.requires('canvas')
   async render() {
-    if (this.data.version !== VERSION) {
-      Logger.warn(`Rendering may fail, data generated in Francy GAP v${this.data.version} using Francy JS v${VERSION}... please update your system...`);
-    }
     let frame = await new Frame(this.options, this.context)
       .load(this.data).render()
       .then(element => element)

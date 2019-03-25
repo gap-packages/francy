@@ -8,10 +8,6 @@ const description = `'${fPackage.name}, v${fPackage.version} - ${fPackage.descri
 const defaultPlugins = [
   new webpack.DefinePlugin({ VERSION: JSON.stringify(fPackage.version), FRANCY_DESC: description }),
   new webpack.BannerPlugin(description)
-  //new webpack.IgnorePlugin({
-  //  resourceRegExp: /^.*$/,
-  //  contextRegExp: /@jupyterlab|@phosphor/
-  //})
 ];
 
 module.exports = (env = {}) => {
@@ -76,7 +72,8 @@ module.exports = (env = {}) => {
           uglifyOptions: {
             ecma: 6,
             compress: false
-          }
+          },
+          exclude: /@jupyterlab\/|@phosphor\//
         })
       ]
     },
