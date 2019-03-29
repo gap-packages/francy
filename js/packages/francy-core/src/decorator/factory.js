@@ -1,9 +1,9 @@
-import InitializerDecorator from './initialize';
-import LoaderDecorator from './loader';
+import DataDecorator from './data';
 import ErrorDecorator from './error';
 import HighlightDecorator from './highlight';
+import InitializerDecorator from './initialize';
 import JupyterDecorator from './jupyter';
-import DataDecorator from './data';
+import LoaderDecorator from './loader';
 
 /**
  * {Decorators} is a singleton and runs before everything else

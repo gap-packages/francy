@@ -1,4 +1,4 @@
-import { Logger, CompositeRenderer, Decorators } from 'francy-core';
+import { CompositeRenderer, Decorators, Logger } from 'francy-core';
 import MainMenu from './menu-main';
 import Message from './message';
 

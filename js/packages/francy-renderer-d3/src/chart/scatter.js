@@ -1,5 +1,5 @@
-import { Decorators } from 'francy-core';
 import Chart from './chart';
+import { Decorators } from 'francy-core';
 
 /* global d3 */
 

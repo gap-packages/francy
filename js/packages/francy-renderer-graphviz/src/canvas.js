@@ -1,6 +1,6 @@
-import { Logger, RENDERING_EVENTS, CompositeRenderer, Decorators } from 'francy-core';
-import GraphGeneric from './graph/generic';
+import { CompositeRenderer, Decorators, Logger, RENDERING_EVENTS } from 'francy-core';
 import ChartGeneric from './chart/generic';
+import GraphGeneric from './graph/generic';
 
 /* global d3 */
 

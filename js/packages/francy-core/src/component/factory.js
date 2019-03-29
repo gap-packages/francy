@@ -1,6 +1,6 @@
 import D3Component from './d3';
-import MathJaxComponent from './mathjax';
 import JupyterComponent from './jupyter';
+import MathJaxComponent from './mathjax';
 
 /**
  * {Components} is a singleton and runs before everything else starting each component

@@ -1,4 +1,4 @@
-import { DataHandler, Decorators, Utilities, Graph } from 'francy-core';
+import { DataHandler, Decorators, Graph, Utilities } from 'francy-core';
 
 /* global d3 */
 

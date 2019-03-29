@@ -1,5 +1,5 @@
-import Renderer from '../renderer';
 import CallbackHandler from '../callback';
+import Renderer from '../renderer';
 
 /**
  * This class contains helper functions to handle the creation of menus

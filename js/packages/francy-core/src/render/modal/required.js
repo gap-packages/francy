@@ -1,8 +1,8 @@
-import Modal from './base';
-import GraphOperations from '../graph/operations';
-import { Logger } from '../../util/logger';
 import { Components } from '../../component/factory';
 import { Decorators } from '../../decorator/factory';
+import GraphOperations from '../graph/operations';
+import { Logger } from '../../util/logger';
+import Modal from './base';
 
 /**
  * Implements a Required Arguments Modal window.

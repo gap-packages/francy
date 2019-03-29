@@ -1,5 +1,5 @@
-import { Logger} from '../util/logger';
 import { Decorators } from '../decorator/factory';
+import { Logger} from '../util/logger';
 
 /**
  * Base is the base of renderers and contains multiple utility methods.

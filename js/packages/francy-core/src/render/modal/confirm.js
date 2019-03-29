@@ -1,7 +1,7 @@
-import Modal from './base';
-import { Logger } from '../../util/logger';
 import { Components } from '../../component/factory';
 import { Decorators } from '../../decorator/factory';
+import { Logger } from '../../util/logger';
+import Modal from './base';
 
 /**
  * Implements a Confirmation Modal window.

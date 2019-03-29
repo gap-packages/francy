@@ -1,5 +1,5 @@
-import { Logger } from '../util/logger';
 import BaseComponent from './base';
+import { Logger } from '../util/logger';
 
 /**
  * This {Component} class is used to check whether jupyter is available or not.

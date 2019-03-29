@@ -1,7 +1,7 @@
-import Observable from '../util/observable';
 import { Logger } from '../util/logger';
-import { Utilities } from '../util/utilities';
+import Observable from '../util/observable';
 import { RuntimeException } from '../util/exception';
+import { Utilities } from '../util/utilities';
 
 /**
  * This class implements all the methods to handle multiple renderers on {Francy}.

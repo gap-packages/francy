@@ -1,8 +1,8 @@
+import Callback from '../callback';
+import ContextMenu from '../menu/context';
 import GraphOperations from './operations';
 import Renderer from '../renderer';
-import Callback from '../callback';
 import Tooltip from '../tooltip';
-import ContextMenu from '../menu/context';
 
 /* global d3 */
 

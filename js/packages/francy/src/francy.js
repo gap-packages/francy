@@ -1,15 +1,15 @@
-import Frame from './render/frame';
 // import css inline - couldn't make this work on the webpack conf :/
 import '!style-loader!css-loader!./style/index.css';
 import { 
-  Logger, 
+  Components, 
+  ConfigurationHandler, 
   Decorators, 
+  DefaultConfiguration, 
+  Logger, 
   Renderer, 
   RenderingManagerHandler, 
-  Components, 
-  Utilities, 
-  ConfigurationHandler, 
-  DefaultConfiguration } from 'francy-core';
+  Utilities } from 'francy-core';
+import Frame from './render/frame';
 
 /* global VERSION */
 

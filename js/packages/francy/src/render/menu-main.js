@@ -1,5 +1,5 @@
-import { Logger, Menu, RENDERING_EVENTS, AboutModal, Utilities } from 'francy-core';
 import * as SvgToPng from 'save-svg-as-png';
+import { AboutModal, Logger, Menu, RENDERING_EVENTS, Utilities } from 'francy-core';
 
 /* global d3 */
 

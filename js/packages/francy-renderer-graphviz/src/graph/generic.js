@@ -1,4 +1,4 @@
-import { Graph, Decorators, Callback, Tooltip, ContextMenu, Utilities } from 'francy-core';
+import { Callback, ContextMenu, Decorators, Graph, Tooltip, Utilities } from 'francy-core';
 import DOTLanguageConverterHelper from '../util/dot-converter';
 
 /* global d3 */

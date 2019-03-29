@@ -1,8 +1,8 @@
-import Modal from './base';
-import { Logger } from '../../util/logger';
-import { GlobalConfiguration } from '../../util/configuration';
 import { Components } from '../../component/factory';
 import { Decorators } from '../../decorator/factory';
+import { GlobalConfiguration } from '../../util/configuration';
+import { Logger } from '../../util/logger';
+import Modal from './base';
 
 /* global d3 VERSION FRANCY_DESC */
 
@@ -36,9 +36,9 @@ export default class AboutModal extends Modal {
     content.append('br');
     content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
     content.append('br');
-
+    content.append('br');
+    
     if (GlobalConfiguration.object.verbose) {
-      content.append('br');
       content.append('span').text('Loaded Data:');
       content.append('pre').attr('class', 'francy').style('text-align', 'left').html(Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
     }

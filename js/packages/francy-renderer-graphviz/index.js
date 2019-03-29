@@ -1,5 +1,5 @@
-import { RenderingConfiguration } from 'francy-core';
 import Canvas from './src/canvas';
+import { RenderingConfiguration } from 'francy-core';
 
 export class GraphvizRenderer extends RenderingConfiguration {
     

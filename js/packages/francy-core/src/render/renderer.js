@@ -1,7 +1,7 @@
 import BaseRenderer from './base';
-import MathJaxWrapper from './mathjax-wrapper';
-import { Logger } from '../util/logger';
 import { GlobalConfiguration } from '../util/configuration';
+import { Logger } from '../util/logger';
+import MathJaxWrapper from './mathjax-wrapper';
 
 /* global d3 */
 

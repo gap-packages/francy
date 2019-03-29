@@ -1,6 +1,6 @@
-import { Logger, RENDERING_EVENTS, CompositeRenderer, Decorators, GlobalConfiguration, seedrandom } from 'francy-core';
-import GraphFactory from './graph/factory';
+import { CompositeRenderer, Decorators, GlobalConfiguration, Logger, RENDERING_EVENTS, seedrandom } from 'francy-core';
 import ChartFactory from './chart/factory';
+import GraphFactory from './graph/factory';
 
 /* global d3 */
 

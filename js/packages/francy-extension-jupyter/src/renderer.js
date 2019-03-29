@@ -1,4 +1,4 @@
-import { MIME_TYPE, CLASS_NAME, APPEND_ID } from './utils';
+import { APPEND_ID, CLASS_NAME, MIME_TYPE } from './utils';
 
 export function init(Jupyter, { FrancyApp, Logger, Renderers = []}) {
   // start Francy

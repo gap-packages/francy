@@ -1,7 +1,7 @@
 import BaseRenderer from './base';
-import RequiredArgsModal from './modal/required';
 import ConfirmModal from './modal/confirm';
 import { Decorators } from '../decorator/factory';
+import RequiredArgsModal from './modal/required';
 
 /**
  * CallbackHandler is responsible for handling Callbacks and display Modal windows accodingly.

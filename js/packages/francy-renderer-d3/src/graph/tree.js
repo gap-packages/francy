@@ -1,4 +1,4 @@
-import { Logger, Decorators, Graph } from 'francy-core';
+import { Decorators, Graph, Logger } from 'francy-core';
 
 /* global d3 */
 

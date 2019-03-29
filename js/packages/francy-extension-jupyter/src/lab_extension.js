@@ -1,11 +1,11 @@
-import { MIME_TYPE, CLASS_NAME } from './utils';
-import { Widget } from '@phosphor/widgets';
-//import { ILatexTypesetter as ignore } from '@jupyterlab/rendermime'; // required to load mathjax into JLab!
-//import { OutputArea } from '@jupyterlab/outputarea';
 import './vendor';
+import { CLASS_NAME, MIME_TYPE } from './utils';
 import { FrancyApp, Logger } from 'francy';
 import { D3Renderer } from 'francy-renderer-d3';
 import { GraphvizRenderer } from 'francy-renderer-graphviz';
+//import { ILatexTypesetter as ignore } from '@jupyterlab/rendermime'; // required to load mathjax into JLab!
+//import { OutputArea } from '@jupyterlab/outputarea';
+import { Widget } from '@phosphor/widgets';
 
 /**
  * A widget for rendering 'application/vnd.francy+json'

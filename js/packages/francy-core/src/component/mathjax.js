@@ -1,6 +1,6 @@
 import BaseComponent from './base';
-import { Logger} from '../util/logger';
 import { Decorators } from '../decorator/factory';
+import { Logger} from '../util/logger';
 
 /* global MathJax d3 */
 

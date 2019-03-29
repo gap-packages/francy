@@ -1,7 +1,7 @@
 import DataHandler from '../util/data-handler';
-import { Logger } from '../util/logger';
-import { Exception } from '../util/exception';
 import { Decorators } from '../decorator/factory';
+import { Exception } from '../util/exception';
+import { Logger } from '../util/logger';
 
 /* global d3 */
 
