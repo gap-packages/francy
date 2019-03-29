@@ -12,7 +12,7 @@
     "build": "lerna run build",
     "build:production": "lerna run build:production",
     "clean": "lerna run clean",
-    "version": "lerna version",
+    "version": "lerna version --no-push",
     "docs": "esdoc",
     "lint": "eslint ./packages/** ",
     "lint:fix": "eslint --fix ./packages/**",
