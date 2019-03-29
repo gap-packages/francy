@@ -32,10 +32,15 @@
       "always"
     ],
     "no-else-return": 1,
-    "semi": [1, "always"],
     "space-unary-ops": 2,
     "brace-style": ["error", "1tbs"],
     "no-unused-vars": [2, { "vars": "all", "varsIgnorePattern": ".*ignore" }],
-    "no-global-assign": ["error", { "exceptions": ["__webpack_public_path__"] }]
+    "no-global-assign": ["error", { "exceptions": ["__webpack_public_path__"] }],
+    "sort-imports": ["error", {
+        "ignoreCase": false,
+        "ignoreDeclarationSort": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+    }]
   }
 }

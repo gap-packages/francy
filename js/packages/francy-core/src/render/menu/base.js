@@ -30,7 +30,7 @@ export default class Menu extends Renderer {
       let entry = appendTo.append('li');
       let action = entry.selectAll('a').data([menuItem]).enter().append('a').attr('title', menuItem.title).html(menuItem.title);
       if (menuItem.callback && Object.values(menuItem.callback).length) {
-        action.on('click', d => new CallbackHandler(this.options).load(d, true).execute());
+        action.on('click', d => new CallbackHandler(this.options, this.context).load(d, true).execute());
       }
       if (menuItem.menus && Object.values(menuItem.menus).length > 0) {
         action.append('div').classed('francy-menu-arrow-down', true).style('float', 'right');

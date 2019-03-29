@@ -1,8 +1,6 @@
 import { Logger} from '../util/logger';
 import BaseComponent from './base';
 
-/* global d3 */
-
 /**
  * This {Component} class is used to check whether d3 is available or not.
  * d3 is mandatory, as it used d3 to implement the basic graphics for {Francy}.
@@ -27,7 +25,8 @@ export default class D3Component extends BaseComponent {
    * @public
    */
   initialize() {
-    if (!d3) {
+    var global = (0, eval)('this');
+    if (!('d3' in global)) {
       throw new Error('D3 is not imported and Francy won\'t work without it... please import D3 v5+ library.');
     }
     Logger.debug('D3 is available...');

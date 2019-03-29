@@ -1,9 +1,8 @@
 import { MIME_TYPE, CLASS_NAME, APPEND_ID } from './utils';
 
-export function init(Jupyter, { FrancyApp, ConfigurationHandler, DefaultConfiguration, Logger, Renderers = []}) {
+export function init(Jupyter, { FrancyApp, Logger, Renderers = []}) {
   // start Francy
   let Francy = new FrancyApp({
-    configuration: new ConfigurationHandler({configuration: DefaultConfiguration}),
     appendTo: `#${APPEND_ID}`,
     callbackHandler: function (command) {
       Jupyter.notebook.kernel.execute(command, {
@@ -72,7 +71,7 @@ function handleAddOutput(event, { output, output_area }) { // eslint-disable-lin
  * Register the mime type and append_mime function with the notebook's
  * output area
  */
-export function register_renderer(Jupyter, { FrancyApp, ConfigurationHandler, DefaultConfiguration, Logger, Renderers = [] }, notebook) {
+export function register_renderer(Jupyter, { FrancyApp, Logger, Renderers = [] }, notebook) {
   /* Get an instance of output_area from a CodeCell instance */
   const { output_area } = notebook
     .get_cells()
@@ -90,9 +89,7 @@ export function register_renderer(Jupyter, { FrancyApp, ConfigurationHandler, De
     /* Render data to DOM node */
     const props = { data, metadata: metadata[MIME_TYPE] };
     let Francy = init(Jupyter, { 
-      FrancyApp: FrancyApp, 
-      ConfigurationHandler: ConfigurationHandler, 
-      DefaultConfiguration: DefaultConfiguration,
+      FrancyApp: FrancyApp,
       Logger: Logger,
       Renderers: Renderers
     });

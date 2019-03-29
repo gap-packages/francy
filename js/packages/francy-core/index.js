@@ -3,7 +3,7 @@ export { Components } from './src/component/factory';
 export { Logger } from './src/util/logger';
 export { Utilities } from './src/util/utilities';
 
-export { default as ConfigurationHandler, DefaultConfiguration, GlobalConfiguration } from './src/util/configuration';
+export { default as ConfigurationHandler, DefaultConfiguration, GlobalConfiguration, BACKEND } from './src/util/configuration';
 export { default as RenderingManagerHandler, RENDERING_EVENTS } from './src/render/manager';
 export { default as DataHandler } from './src/util/data-handler';
 export { default as Observable } from './src/util/observable';
@@ -21,3 +21,4 @@ export { default as RequiredArgsModal } from './src/render/modal/required';
 export { default as ConfirmModal } from './src/render/modal/confirm';
 export { default as Tooltip } from './src/render/tooltip';
 export { default as ContextMenu } from './src/render/menu/context';
+export { default as seedrandom } from 'seedrandom';

@@ -73,7 +73,8 @@ class Log {
    * This is a private method that formats all log messages
    * @param level the log level
    * @param message the message to print
-   * @return {string} the formatted strin
+   * @return {string} the formatted string
+   * @private
    */
   static _format(level, message) {
     return `[${level} ${new Date().toISOString()}] - ${message}`;

@@ -70,7 +70,7 @@ export default class Canvas extends CompositeRenderer {
 
     this.element.zoomToFit = this.zoomToFit = zoomToFit;
 
-    Logger.debug(`Canvas updated [${frameId}]...`);
+    Logger.debug(`(${this.context.instanceId}) Canvas updated [${frameId}]...`);
 
     this._buildMenu();
 

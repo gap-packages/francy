@@ -1,4 +1,6 @@
 import _isEqual from 'lodash.isequal';
+import _reduce from 'lodash.reduce';
+import alea from 'seedrandom';
 
 /**
  * {Utilities} functions object.
@@ -8,6 +10,7 @@ import _isEqual from 'lodash.isequal';
  * @public
  */
 export const Utilities = {
+  aleaRandomGenerator: () => new alea(),
   /**
    * Generates an ID
    * 
@@ -18,7 +21,7 @@ export const Utilities = {
     // Math.random should be unique because of its seeding algorithm
     // Convert it to base 36 (numbers + letters), 
     // and grab the first 9 characters after the decimal
-    return `L-${Math.random().toString(36).substr(2, 9)}`;
+    return `L-${this.aleaRandomGenerator().double().toString(36).substr(2, 9)}`;
   },
 
   isObject: function (a) {
@@ -35,6 +38,10 @@ export const Utilities = {
   
   isEqual: function (a, b) {
     return _isEqual(a, b);
+  },
+  
+  getDifferences: function(a, b) {
+    return _reduce(a, (result, value, key) => _isEqual(value, b[key]) ? result : result.concat(key), []);
   },
   
   sanitize: function(a, b) {

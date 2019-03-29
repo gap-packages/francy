@@ -45,7 +45,7 @@ export default class RenderingManagerHandler extends Observable {
   register({ name, renderer, enable }) {
     if (name && !(name in this.context.configuration.object.renderers)) {
       enable = enable || false;
-      Logger.debug(`Registering Renderer: ${name}`);
+      Logger.debug(`(${this.context.instanceId}) Registering Renderer: ${name}`);
       this.context.configuration.object.renderers[name] = { enable: false, renderer: renderer, name: name, id: Utilities.generateId() };
       this.notify(RENDERING_EVENTS.REGISTER, this.context.configuration.object.renderers[name]);
       if (enable) {
@@ -68,7 +68,7 @@ export default class RenderingManagerHandler extends Observable {
    */
   unregister(name) {
     if (name) {
-      Logger.debug(`Unregistering Renderer: ${name}`);
+      Logger.debug(`(${this.context.instanceId}) Unregistering Renderer: ${name}`);
       this.notify(RENDERING_EVENTS.UNREGISTER, this.context.configuration.object.renderers[name]);
       delete this.context.configuration.object.renderers[name];
     }
@@ -85,7 +85,7 @@ export default class RenderingManagerHandler extends Observable {
    */
   enable(name) {
     if (name) {
-      Logger.info(`Enabling Renderer: ${name}`);
+      Logger.info(`(${this.context.instanceId}) Enabling Renderer: ${name}`);
       for (let prop in this.context.configuration.object.renderers) {
         let previous = this.context.configuration.object.renderers[prop].enable;
         let current = name === prop;
@@ -124,7 +124,7 @@ export default class RenderingManagerHandler extends Observable {
     if (!r.renderer) {
       throw new RuntimeException('No renderers registered!');
     }
-    Logger.debug(`Active Renderer: ${r.name}`);
+    Logger.debug(`(${this.context.instanceId}) Active Renderer: ${r.name}`);
     return r.renderer;
   }
 }

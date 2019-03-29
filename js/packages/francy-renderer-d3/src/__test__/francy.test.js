@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import './d3_wrapper';
-import { FrancyApp, ConfigurationHandler, DefaultConfiguration } from 'francy';
+import { FrancyApp, Logger } from 'francy';
 import { D3Renderer } from '../../index';
 import undirected from './data/json1.json';
 import directed from './data/json2.json';
@@ -13,7 +13,7 @@ import scatter from './data/json6.json';
     
 describe('Francy Renderer Object', function() {
 
-  var Francy = new FrancyApp({ appendTo: 'body', callbackHandler: console.log, configuration: new ConfigurationHandler({configuration: DefaultConfiguration}) });
+  var Francy = new FrancyApp({ appendTo: 'body', callbackHandler: Logger.info });
   Francy.RenderingManager.register(new D3Renderer().getConfiguration());
   
   beforeEach(() => {

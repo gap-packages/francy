@@ -22,8 +22,7 @@
     appendTo: '#francy_draw', 
     callbackHandler: (json) => {
       Logger.info(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
-    }, 
-    configuration: new ConfigurationHandler({ configuration: DefaultConfiguration }) 
+    }
   });
 
   // register available renderers

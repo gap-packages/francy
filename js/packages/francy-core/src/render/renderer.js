@@ -30,7 +30,7 @@ export default class Renderer extends BaseRenderer {
       throw new TypeError('Must override [render()] method!');
     }
     if (this.unrender === undefined) {
-      Logger.debug('No [unrender()] method specified...');
+      Logger.debug(`(${this.context.instanceId}) No [unrender()] method specified...`);
     }
     /**
      * Stores the element renderer

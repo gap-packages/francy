@@ -15,7 +15,7 @@ import JupyterComponent from './jupyter';
  * @public
  */
 export const Components = {
-  D3: new D3Component(false, false, 1),
+  D3: new D3Component(false, false, 3),
   Jupyter: new JupyterComponent(false, false, 1),
   MathJax: new MathJaxComponent(false, false, 5)
 };

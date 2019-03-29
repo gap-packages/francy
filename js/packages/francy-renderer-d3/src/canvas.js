@@ -1,5 +1,4 @@
-import { Logger, RENDERING_EVENTS, CompositeRenderer, Decorators, GlobalConfiguration } from 'francy-core';
-import seedrandom from 'seedrandom';
+import { Logger, RENDERING_EVENTS, CompositeRenderer, Decorators, GlobalConfiguration, seedrandom } from 'francy-core';
 import GraphFactory from './graph/factory';
 import ChartFactory from './chart/factory';
 
@@ -72,7 +71,7 @@ export default class Canvas extends CompositeRenderer {
     // check if the canvas is already present
     if (!this.element.node()) {
       // create a svg element detached from the DOM!
-      Logger.debug(`Creating Canvas [${canvasId}]...`);
+      Logger.debug(`(${this.context.instanceId}) Creating Canvas [${canvasId}]...`);
       this.element = this.parent.append('svg')
         .classed('francy-canvas', true)
         .attr('xmlns', 'http://www.w3.org/2000/svg')
@@ -103,7 +102,7 @@ export default class Canvas extends CompositeRenderer {
 
     this.element.zoomToFit = this.zoomToFit = zoomToFit;
 
-    Logger.debug(`Canvas updated [${canvasId}]...`);
+    Logger.debug(`(${this.context.instanceId}) Canvas updated [${canvasId}]...`);
 
     this._buildMenu();
 

@@ -72,7 +72,7 @@ export default class CallbackHandler extends BaseRenderer {
   async _showRequiredModal() {
     let options = this.options;
     options.callbackHandler = o => this._execute.call(this, o);
-    let modal = new RequiredArgsModal(options);
+    let modal = new RequiredArgsModal(options, this.context);
     return await this.handlePromise(modal.load(this.data, true).render());
   }
 

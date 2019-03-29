@@ -38,8 +38,6 @@ define(
       const { notebook } = Jupyter;
       Extension.register_renderer(Jupyter, { 
         FrancyApp: FrancyJS.FrancyApp,
-        ConfigurationHandler: FrancyJS.ConfigurationHandler, 
-        DefaultConfiguration: FrancyJS.DefaultConfiguration, 
         Logger: FrancyJS.Logger, 
         Renderers: [ D3Renderer.D3Renderer, GraphvizRenderer.GraphvizRenderer ]
       }, notebook);

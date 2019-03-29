@@ -3,7 +3,7 @@ import { Widget } from '@phosphor/widgets';
 //import { ILatexTypesetter as ignore } from '@jupyterlab/rendermime'; // required to load mathjax into JLab!
 //import { OutputArea } from '@jupyterlab/outputarea';
 import './vendor';
-import { FrancyApp, ConfigurationHandler, DefaultConfiguration, Logger } from 'francy';
+import { FrancyApp, Logger } from 'francy';
 import { D3Renderer } from 'francy-renderer-d3';
 import { GraphvizRenderer } from 'francy-renderer-graphviz';
 
@@ -22,7 +22,6 @@ export class OutputWidget extends Widget {
     var self = this;
     // update the callback handler with the session kernel
     this.Francy  = new FrancyApp({
-      configuration: new ConfigurationHandler({configuration: DefaultConfiguration}),
       callbackHandler: function (cmd) {
         // NOTE it should be implemented like this:
         // at this point we know the element exists and the OutputArea is 2 levels up: this.parent.parent

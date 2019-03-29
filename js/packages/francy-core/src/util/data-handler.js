@@ -36,7 +36,7 @@ export default class DataHandler {
     let data = JsonUtils.parse(json, partial);
     if (data) {
       this.data = data;
-      if (this.data.version !== VERSION && !this.alertOnDataVersion) {
+      if (!partial && !this.alertOnDataVersion && this.data.version !== VERSION) {
         this.alertOnDataVersion = true;
         Logger.warn(`Data was generated in Francy GAP v${this.data.version} and you're using Francy JS v${VERSION}... Rendering may fail, please update your system...`);
       }

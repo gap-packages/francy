@@ -43,7 +43,7 @@ export default class TreeGraph extends Graph {
     }
 
     update.call(this, root)
-      .catch(error => Logger.warn(error))
+      .catch(error => Logger.warn(`(${this.context.instanceId}) ${error}`, error))
       .then(setTimeout(this.parent.zoomToFit, this.transitionDuration));
 
     function collapse(d) {
@@ -188,7 +188,7 @@ export default class TreeGraph extends Graph {
           d._children = null;
         }
         update.call(self, d)
-          .catch(error => self.logger.warn(error))
+          .catch(error => self.logger.warn(`(${this.context.instanceId}) ${error}`, error))
           .then(setTimeout(self.parent.zoomToFit, self.transitionDuration));
       }
     }

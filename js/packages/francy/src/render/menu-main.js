@@ -23,7 +23,7 @@ export default class MainMenu extends Menu {
     // Check if the menu is already present
     if (!this.element.node()) {
       // create a div element detached from the DOM!
-      Logger.debug(`Creating Main Menu [${menuId}]...`);
+      Logger.debug(`(${this.context.instanceId}) Creating Main Menu [${menuId}]...`);
       this.element = this.parent.append('div').attr('class', 'francy-main-menu-holder').attr('id', menuId);
     }
 
@@ -43,7 +43,7 @@ export default class MainMenu extends Menu {
 
     // create default menu entry
     let entry = this.element.append('li').attr('class', 'francy-entry');
-    entry.append('a').attr('title', 'francy').html('francy').append('div').classed('francy-menu-arrow-down', true).style('float', 'right');
+    entry.append('a').attr('title', 'Francy').html('Francy').append('div').classed('francy-menu-arrow-down', true).style('float', 'right');
     entry.append('ul');
 
     this._buildDefaultMenu();
@@ -58,7 +58,7 @@ export default class MainMenu extends Menu {
     let menusIterator = this.iterator(Object.values(this.data.canvas.menus));
     this.traverse(this.element, menusIterator);
 
-    Logger.debug(`Main Menu updated [${menuId}]...`);
+    Logger.debug(`(${this.context.instanceId}) Main Menu updated [${menuId}]...`);
 
     return this;
   }
@@ -136,7 +136,7 @@ export default class MainMenu extends Menu {
           }, 100);
         }
       } else {
-        Logger.info(`The Canvas ${self.data.canvas.id} seems to have disapeared... removing events associated to it`);
+        Logger.debug(`(${this.context.instanceId}) The Canvas ${self.data.canvas.id} seems to have disapeared... removing events associated to it`);
         self.context.renderingManager.unsubscribe(RENDERING_EVENTS.STATUS, reRender, reRenderId);
         self.context.renderingManager.unsubscribe(RENDERING_EVENTS.REGISTER, insertEntry, registerId);
       }

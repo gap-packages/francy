@@ -1,7 +1,15 @@
-import { Logger, Decorators, Renderer, RenderingManagerHandler, Components } from 'francy-core';
 import Frame from './render/frame';
 // import css inline - couldn't make this work on the webpack conf :/
 import '!style-loader!css-loader!./style/index.css';
+import { 
+  Logger, 
+  Decorators, 
+  Renderer, 
+  RenderingManagerHandler, 
+  Components, 
+  Utilities, 
+  ConfigurationHandler, 
+  DefaultConfiguration } from 'francy-core';
 
 /* global VERSION */
 
@@ -25,11 +33,23 @@ export class FrancyApp extends Renderer {
    * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
    * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
    */
-  constructor({ appendTo, callbackHandler, configuration }) {
+  constructor({ appendTo, callbackHandler }) {
     super({ 
-      appendTo: appendTo, callbackHandler: callbackHandler 
-    }, { 
-      configuration: configuration, renderingManager: new RenderingManagerHandler({ configuration: configuration }) 
+      appendTo: appendTo, 
+      callbackHandler: callbackHandler 
+    }, {
+      renderingManager: new RenderingManagerHandler({ 
+        configuration: new ConfigurationHandler({ 
+          configuration: DefaultConfiguration 
+        }), 
+        instanceId: Utilities.generateId() 
+      }),
+      get configuration() {
+        return this.renderingManager.context.configuration; 
+      }, 
+      get instanceId() {
+        return this.renderingManager.context.instanceId; 
+      },
     });
     // all good!
   }

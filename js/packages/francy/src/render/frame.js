@@ -27,7 +27,7 @@ export default class Frame extends CompositeRenderer {
     // check if the canvas is already present
     if (!this.element.node()) {
       // create a svg element detached from the DOM!
-      Logger.debug(`Creating Frame [${frameId}]...`);
+      Logger.debug(`(${this.context.instanceId}) Creating Frame [${frameId}]...`);
       this.element = this.parent.append('div').attr('class', 'francy').attr('id', frameId);
     }
 
@@ -38,7 +38,7 @@ export default class Frame extends CompositeRenderer {
 
     this.element.style('height', +this.data.canvas.height + 37); // plus menu height
 
-    Logger.debug(`Frame updated [${frameId}]...`);
+    Logger.debug(`(${this.context.instanceId}) Frame updated [${frameId}]...`);
     
     this.removeChildren();
     this.addChild(this.mainMenu).addChild(this.messages).addChild(this.canvas);

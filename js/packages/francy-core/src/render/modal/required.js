@@ -39,7 +39,7 @@ export default class RequiredArgsModal extends Modal {
   async render() {
     let modalId = this.data.callback.id;
 
-    Logger.debug(`Creating Callback Modal [${modalId}]...`);
+    Logger.debug(`(${this.context.instanceId}) Creating Callback Modal [${modalId}]...`);
 
     this.element = this.holder.append('div')
       .attr('id', modalId)
@@ -47,7 +47,7 @@ export default class RequiredArgsModal extends Modal {
 
     let form = this.element.append('form');
 
-    this._buildHeader(form, 'Required arguments&nbsp;');
+    this._buildHeader(form);
 
     this._buildContent(form);
 
@@ -63,7 +63,7 @@ export default class RequiredArgsModal extends Modal {
       inputElement.focus();
     }
 
-    Logger.debug(`Callback Modal updated [${modalId}]...`);
+    Logger.debug(`(${this.context.instanceId}) Callback Modal updated [${modalId}]...`);
 
     return this;
   }

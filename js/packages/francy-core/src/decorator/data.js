@@ -62,7 +62,7 @@ export default class DataDecorator {
   /**
    * Helper method to iterate over an object
    * @param {Object} obj - the object to search the property for
-   * @param {strin} propertyPath - property separated by dot
+   * @param {string} propertyPath - property separated by dot
    * @private
    */
   _getProperty(obj, propertyPath) {

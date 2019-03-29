@@ -25,8 +25,7 @@ This extension can be used in `offline` mode in a web page as follows:
       appendTo: '#francy_draw', 
       callbackHandler: (json) => {
         Logger.info(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
-      }, 
-      configuration: new ConfigurationHandler({ configuration: DefaultConfiguration }) 
+      }
     });
 
     // register available renderers

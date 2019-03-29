@@ -1,4 +1,5 @@
 import Observable from './observable';
+import { Utilities } from './utilities';
 
 /**
  * This class provides the application configuration.
@@ -13,41 +14,57 @@ export default class ConfigurationHandler extends Observable {
    * @param {object} config
    * @param {number} config.throttle - the interval for storing dirty data
    */
-  constructor(object, { throttle = 1000 } = {}, backend = undefined) {
+  constructor(object, { throttle = 5000, backend = BACKEND.NONE } = {}) {
     super();
     /**
      * This is property is used to flag when the object changes.
      * @type {boolean}
      * @private
      */
-    this._dirty = false;
-    this.throttle = throttle;
-    this.backend = backend;
+    this._localDirty = false;
+    /**
+     * This is property is used to flag when the object changes in the store.
+     * @type {boolean}
+     * @private
+     */
+    this._storageDirty = false;
+    /**
+     * The interval time to check and store changes
+     * @private
+     */
+    this._throttle = throttle;
+    /**
+     * The backend to be used
+     * @private
+     */
+    this._backend = backend;
+    // load configuration object
     this._load(object);
   }
   
+  /**
+   * This loads the configuration object
+   * @type function
+   * @private
+   */
   _load(object) {
-    /**
-     * This holds the actual configuration object
-     * @type {object}
-     * @private
-     */
-    if (this.backend) {
-      let objectStored = window.localStorage.getItem('francy.settings');
+    if (this._backend) {
+      let objectStored = this._backend.getItem(SETTINGS_KEY);
       if (!objectStored) {
-        this._dirty = true;
-        setTimeout(() => this._sync(), 0);
+        this._localDirty = true;
       } else {
         object = Object.assign(object, JSON.parse(objectStored));
       }
       /**
-     * Sync listeners every second, if data is dirty
-     * @type {setInterval}
-     * @private
-     */
+       * Sync listeners every second, if data is dirty
+       * @type {setInterval}
+       * @private
+       */
       setInterval(() => {
-        return this._sync();
-      }, this.throttle);
+        this._syncPull();
+        this._syncPush();
+        return;
+      }, this._throttle);
     }
     /**
      * This is property holds a proxy that handles a dirty flag when object changes.
@@ -68,7 +85,7 @@ export default class ConfigurationHandler extends Observable {
     if (object[property] !== value) {
       object[property] = value;
       this.notify(property, value);
-      this._dirty = true;
+      this._localDirty = true;
     }
     return true;
   }
@@ -126,7 +143,7 @@ export default class ConfigurationHandler extends Observable {
         enumerable: true,
         configurable: true
       });
-      this._dirty = true;
+      this._localDirty = true;
     }
     return this;
   }
@@ -146,12 +163,41 @@ export default class ConfigurationHandler extends Observable {
    * This method is used to explicitly sync the module with all the subscribers
    * @private
    */
-  _sync() {
-    if (this._dirty && this.backend) {
-      this.backend.setItem('francy.settings', JSON.stringify(this.object));
+  _syncPush() {
+    if (this._localDirty && !this._storageDirty) {
+      this._backend.setItem(SETTINGS_KEY, JSON.stringify(this.object));
+    }
+  }
+  
+  /**
+   * This method is used to explicitly sync the current object from the storage
+   * @private
+   */
+  _syncPull() {
+    if (!this._localDirty) {
+    // check for changes and load them
+      let item = this._backend.getItem(SETTINGS_KEY);
+      if (item) {
+        let obj = Object.assign({}, JSON.parse(item));
+        let diffs = Utilities.getDifferences(obj, this.object);
+        if (diffs.length > 0) {
+          this._storageDirty = true;
+          diffs.forEach((key) => {
+            this.object[key] = obj[key];
+          });
+          this._localDirty = false;
+          this._storageDirty = false;
+        }
+      }
     }
   }
 }
+
+/**
+ * Settings key to be stored in the local/session storage
+ * @private
+ */
+const SETTINGS_KEY = 'francy.settings';
 
 /**
  * The minimal default {Configuration} object singleton
@@ -164,6 +210,16 @@ export const DefaultConfiguration = {
 };
 
 /**
+ * The list of backends supported
+ * @public
+ */
+export const BACKEND = {
+  SESSION: window.sessionStorage,
+  LOCAL: window.localStorage,
+  NONE: undefined
+};
+
+/**
  * The global {Configuration} singleton
  * @public
  */
@@ -172,6 +228,6 @@ export const GlobalConfiguration = new ConfigurationHandler({
   transitionDuration: 750, //ms
   fixedRandomSeed: true,
 }, {
-  throttle: 5000 
-}, window.localStorage
-);
+  throttle: 5000,
+  backend: BACKEND.LOCAL
+});

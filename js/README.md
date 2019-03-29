@@ -53,8 +53,7 @@ mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy #
       appendTo: '#francy_draw', 
       callbackHandler: (json) => {
         Logger.info(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
-      }, 
-      configuration: new ConfigurationHandler({ configuration: DefaultConfiguration }) 
+      }
     });
 
     // register available renderers

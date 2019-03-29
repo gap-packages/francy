@@ -1,12 +1,12 @@
 import * as d3 from 'd3';
 import { expect } from 'chai';
 import './d3_wrapper';
-import { FrancyApp, ConfigurationHandler, DefaultConfiguration } from '../../index';
+import { FrancyApp, Logger } from '../../index';
 import undirected from './data/json1.json';
 
 describe('Francy Renderer Object', function () {
 
-  var Francy = new FrancyApp({ appendTo: 'body', callbackHandler: console.log, configuration: new ConfigurationHandler({configuration: DefaultConfiguration}) });
+  var Francy = new FrancyApp({ appendTo: 'body', callbackHandler: Logger.info });
 
   beforeEach(() => {
     d3.select('body').selectAll('div').remove();

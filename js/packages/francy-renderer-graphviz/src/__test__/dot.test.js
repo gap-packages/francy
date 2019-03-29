@@ -3,7 +3,7 @@ chai.use(require('chai-string'));
 
 import DOTLanguageHelper from '../util/dot-converter';
 import graph from './data/json1.json';
-import { ConfigurationHandler, DefaultConfiguration } from 'francy';
+import { ConfigurationHandler, DefaultConfiguration } from 'francy-core';
 import * as d3 from 'd3';
 
 describe('DOT Language utils', () => {

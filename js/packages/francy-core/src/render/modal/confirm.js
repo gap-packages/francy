@@ -38,7 +38,7 @@ export default class ConfirmModal extends Modal {
   async render() {
     let modalId = this.data.callback.id;
 
-    Logger.debug(`Creating Confirm Modal [${modalId}]...`);
+    Logger.debug(`(${this.context.instanceId}) Creating Confirm Modal [${modalId}]...`);
 
     this.element = this.holder.append('div')
       .attr('id', modalId)
@@ -46,7 +46,7 @@ export default class ConfirmModal extends Modal {
 
     let form = this.element.append('form');
 
-    this._buildHeader(form, 'Confirm');
+    this._buildHeader(form);
 
     let content = form.append('div').attr('class', 'francy-modal-content')
       .append('div').attr('class', 'francy-table')
@@ -63,7 +63,7 @@ export default class ConfirmModal extends Modal {
       Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-overlay', '.francy-modal']);
     }
 
-    Logger.debug(`Confirm Modal updated [${modalId}]...`);
+    Logger.debug(`(${this.context.instanceId}) Confirm Modal updated [${modalId}]...`);
 
     return this;
   }

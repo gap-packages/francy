@@ -17,7 +17,7 @@ export default class AboutModal extends Modal {
   async render() {
     let modalId = 'AboutModalWindow';
 
-    Logger.debug(`Creating About Modal [${modalId}]...`);
+    Logger.debug(`(${this.context.instanceId}) Creating About Modal [${modalId}]...`);
 
     this.element = this.holder.append('div')
       .attr('id', modalId)
@@ -68,7 +68,7 @@ export default class AboutModal extends Modal {
       Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
     }
 
-    Logger.debug(`Modal About updated [${modalId}]...`);
+    Logger.debug(`(${this.context.instanceId}) Modal About updated [${modalId}]...`);
 
     return this;
   }
