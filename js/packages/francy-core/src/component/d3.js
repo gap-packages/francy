@@ -18,7 +18,7 @@ export default class D3Component extends BaseComponent {
    * @property {Boolean} verbose prints extra log information to console.log, default false
    * @property {Boolean} mandatory whether the component is mandatory or optional
    */
-  constructor(mandatory = true, delay = false, retries = 1) {
+  constructor(mandatory, delay, retries) {
     super(mandatory, delay, retries);
   }
   

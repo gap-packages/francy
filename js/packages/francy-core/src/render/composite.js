@@ -35,10 +35,21 @@ export default class Composite extends Renderer {
    * @returns {object} this instance
    * @public
    */
-  add(renderer) {
+  addChild(renderer) {
     if (renderer) {
       this.renderers.push(renderer);
     }
+    return this;
+  }
+  
+  /**
+   * This method removes all {Renderer} instances to be rendered.
+   * 
+   * @returns {object} this instance
+   * @public
+   */
+  removeChildren() {
+    this.renderers = [];
     return this;
   }
 

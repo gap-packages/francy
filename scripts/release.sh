@@ -103,3 +103,17 @@ curl -s -H "Authorization: token $GITHUB_ADMIN_KEY" -H "Content-Type: applicatio
   --data-binary @$filename "$upload_url?name=$filename&label=$filename"
 
 echo "Done"
+
+# Release to npm
+
+echo "Release to NPM..."
+
+cd $CURRENT/js/packages/francy-extension-browser
+
+npm publish
+
+cd $CURRENT/js/packages/francy-extension-jupyter/jupyter_francy/labextension/
+
+npm publish
+
+echo "Done"

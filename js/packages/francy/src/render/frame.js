@@ -4,6 +4,12 @@ import Message from './message';
 
 /* global d3 */
 
+/**
+ * The {Frame} is the highest component containing the building block of {Francy} .
+ * This renderers the {MainMenu}, {Messages} and the active {Renderer} {Canvas}
+ *
+ * @access private
+ */
 export default class Frame extends CompositeRenderer {
 
   constructor({ appendTo, callbackHandler }, context) {
@@ -12,7 +18,6 @@ export default class Frame extends CompositeRenderer {
     this.mainMenu = new MainMenu(this.options, this.context);
     this.messages = new Message(this.options, this.context);
     this.canvas = new Renderer(this.options, this.context);
-    this.add(this.mainMenu).add(this.messages).add(this.canvas);
   }
 
   @Decorators.Data.requires('canvas')
@@ -34,7 +39,9 @@ export default class Frame extends CompositeRenderer {
     this.element.style('height', +this.data.canvas.height + 37); // plus menu height
 
     Logger.debug(`Frame updated [${frameId}]...`);
-
+    
+    this.removeChildren();
+    this.addChild(this.mainMenu).addChild(this.messages).addChild(this.canvas);
     this.handlePromise(this.renderChildren());
 
     return this;

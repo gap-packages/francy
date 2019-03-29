@@ -17,7 +17,7 @@ import '!style-loader!css-loader!./style/index.css';
  * let francy = new Francy({appendTo: '#div-id', callbackHandler: console.log, configuration: ConfigurationHandler({})});
  * francy.load(json).render();
  */
-export default class Francy extends Renderer {
+export class FrancyApp extends Renderer {
 
   /**
    * Creates an instance of Francy with the following options:

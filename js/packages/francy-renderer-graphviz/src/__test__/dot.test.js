@@ -3,13 +3,13 @@ chai.use(require('chai-string'));
 
 import DOTLanguageHelper from '../util/dot-converter';
 import graph from './data/json1.json';
-import {  ConfigurationHandler, DefaultConfiguration } from 'francy';
+import { ConfigurationHandler, DefaultConfiguration } from 'francy';
 import * as d3 from 'd3';
 
 describe('DOT Language utils', () => {
 
   window.d3 = global.d3 = d3;
-  var configuration = new ConfigurationHandler({configuration: DefaultConfiguration})
+  var configuration = new ConfigurationHandler({configuration: DefaultConfiguration});
   configuration.addProperty('graphvizRankdir', 'TB');
 
   beforeEach(() => {});

@@ -40,7 +40,7 @@ In order to use this module in Jupyter, install it as follows, both jupyter lab 
 ```bash
 mcmartins@local:~$ pip install jupyter_francy
 mcmartins@local:~$ jupyter lab build # for JupyterLab
-mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Notebook
+mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Jupyter Notebook
 ```
 
 The jupyter extension requires the JupyterKernel GAP package installed.

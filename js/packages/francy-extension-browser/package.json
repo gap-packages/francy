@@ -46,8 +46,8 @@
   },
   "scripts": {
     "clean": "rm -rf ./dist/*",
-    "build": "webpack --config webpack.config.js",
-    "build:production": "webpack --env.production --config webpack.config.js"
+    "build": "npm run clean && webpack --config webpack.config.js",
+    "build:production": "npm run clean && webpack --env.production --config webpack.config.js"
   },
   "files": [
     "README.md",

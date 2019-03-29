@@ -13,8 +13,8 @@ export default class GenericGraph extends Graph {
     let self = this,
       loader = Decorators.Loader.withContext(this).show(),
       simulationActive = this.data.canvas.graph.simulation || this.context.configuration.object.simulation,
-      canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
-      canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
+      canvasNodes = this.data.canvas.graph.nodes ? JSON.parse(JSON.stringify(Object.values(this.data.canvas.graph.nodes))) : [],
+      canvasLinks = this.data.canvas.graph.links ? JSON.parse(JSON.stringify(Object.values(this.data.canvas.graph.links))) : [];
 
     let linkGroup = this.element.selectAll('g.francy-links');
 
@@ -166,7 +166,7 @@ export default class GenericGraph extends Graph {
         safeTicked = Decorators.Error.wrap(ticked).withContext(self).onErrorThrow(false).onErrorExec(simulation.stop),
         safeEnd = Decorators.Error.wrap(endSimulation).withContext(self);
 
-      let linkForce = d3.forceLink(canvasLinks).id(d => d.id).distance(d => d.length || 100);
+      let linkForce = d3.forceLink(linksToAdd).id(d => d.id).distance(d => d.length || 100);
       let chargeStrength = -5 * Math.log(nodesToAdd.length) * Math.log(linksToAdd.length);
       chargeStrength = chargeStrength < -400 ? chargeStrength : -400;
 
@@ -273,14 +273,17 @@ export default class GenericGraph extends Graph {
     let newElements = [];
     canvasObjects.forEach(o => {
       let data = d3Element.find(d => d.id === o.id);
+      let tmp = Object.assign({}, o);
       if (data) {
-        let tmp = Object.assign({}, o);
+        // remove positions from old ones
+        delete tmp.x;
+        delete tmp.y;
         delete tmp.source;
         delete tmp.target;
-        //delete tmp.x;
-        //delete tmp.y; // ignore all these
         newElements.push(Object.assign(data, tmp));
       } else {
+        delete o.x;
+        delete o.y;
         newElements.push(o);
       }
     });

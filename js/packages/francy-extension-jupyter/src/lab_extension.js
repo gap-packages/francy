@@ -1,13 +1,11 @@
 import { MIME_TYPE, CLASS_NAME } from './utils';
 import { Widget } from '@phosphor/widgets';
-import { ILatexTypesetter as ignore } from '@jupyterlab/rendermime'; // required to load mathjax into JLab!
+//import { ILatexTypesetter as ignore } from '@jupyterlab/rendermime'; // required to load mathjax into JLab!
 //import { OutputArea } from '@jupyterlab/outputarea';
-import './wrapper';
-import { FrancyApp, ConfigurationHandler, DefaultConfiguration } from 'francy';
-import D3Renderer from 'francy-renderer-d3';
-import GraphizRenderer from 'francy-renderer-graphviz';
-
-/* eslint-disable no-console */
+import './vendor';
+import { FrancyApp, ConfigurationHandler, DefaultConfiguration, Logger } from 'francy';
+import { D3Renderer } from 'francy-renderer-d3';
+import { GraphvizRenderer } from 'francy-renderer-graphviz';
 
 /**
  * A widget for rendering 'application/vnd.francy+json'
@@ -35,15 +33,15 @@ export class OutputWidget extends Widget {
           if (msg.content && msg.content.data && msg.content.data[MIME_TYPE]) {
             // This will update an existing canvas by its ID!
             self.Francy.load(msg.content.data[MIME_TYPE]).render()
-              .catch(error => console.error(error))
-              .then(element => console.log('Interactive trigger result: ', element));
+              .catch(error => Logger.error(error))
+              .then(element => Logger.debug('Interactive trigger result: ', element));
           }
         };
       }
     });
     // register available renderers
     this.Francy.RenderingManager.register(new D3Renderer().getConfiguration());
-    this.Francy.RenderingManager.register(new GraphizRenderer().getConfiguration());
+    this.Francy.RenderingManager.register(new GraphvizRenderer().getConfiguration());
     // try to initialize MathJax just in case - hack
     this.Francy.Components.MathJax.tryInitialize();
   }
@@ -53,7 +51,7 @@ export class OutputWidget extends Widget {
    */
   renderModel(model) {
     this.Francy.load(model.data[this._mimeType]).render()
-      .catch(error => console.error(error))
+      .catch(error => Logger.error(error))
       .then(element => this.node.appendChild(element));
     return Promise.resolve(true);
   }
@@ -78,5 +76,3 @@ const extension = {
 };
 
 export default extension;
-
-/* eslint-enable no-console */

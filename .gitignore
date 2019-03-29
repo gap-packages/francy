@@ -51,7 +51,7 @@ gap/dist/
 **/lib/
 
 # Compiled javascript
-**/jupyter_francy/__pycache__/
+**/__pycache__/
 **/jupyter_francy/static/
 **/jupyter_francy/jupyter_francy.egg-info/
 
@@ -66,3 +66,5 @@ build.sh
 
 *.log
 gh-pages/
+
+**/dist/*

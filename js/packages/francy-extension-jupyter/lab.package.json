@@ -17,5 +17,10 @@
   ],
   "jupyterlab": {
     "mimeExtension": "extension"
-  }
+  },
+  "files": [
+    "README.md",
+    "extension.js",
+    "package.json"
+  ]
 }

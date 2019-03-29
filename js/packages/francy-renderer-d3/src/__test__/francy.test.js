@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import './d3_wrapper';
 import { FrancyApp, ConfigurationHandler, DefaultConfiguration } from 'francy';
-import D3Renderer from '../../index';
+import { D3Renderer } from '../../index';
 import undirected from './data/json1.json';
 import directed from './data/json2.json';
 import tree from './data/json3.json';

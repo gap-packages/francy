@@ -2,6 +2,11 @@ import { Decorators, Renderer } from 'francy-core';
 
 /* global d3 */
 
+/**
+ * The {Message} holds the messages for the current Graphics.
+ *
+ * @access private
+ */
 export default class Message extends Renderer {
 
   constructor({ appendTo, callbackHandler }, context) {

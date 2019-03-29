@@ -20,7 +20,7 @@ Note:
 Make sure [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter.
 Make sure [Francy GAP](/) is installed on GAP.
 
-## Jupyter integration
+### Jupyter integration
 
 In order to use this module in Jupyter, it can be installed as a notebook extension and lab extension:
 
@@ -30,7 +30,7 @@ mcmartins@local:~$ jupyter lab build # for JupyterLab
 mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Notebook
 ```
 
-## Browser integration
+### Browser integration
 
 ```html
 <html>
@@ -38,8 +38,10 @@ mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy #
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v5,graphviz">
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://unpkg.com/viz.js@1.8.1/viz.js"></script>
-  <script src="https://unpkg.com/d3-graphviz@2.6.0/build/d3-graphviz.js"></script>
-  <script src="https://cdn.rawgit.com/mcmartins/francy/master/js/packages/francy-extension-browser/dist/browser/francy-extension-browser.bundle.js"></script>
+  <script src="https://unpkg.com/d3-graphviz@2.6.1/build/d3-graphviz.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.1.0/dist/FrancyJS.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.1.0/dist/D3Renderer.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.1.0/dist/GraphvizRenderer.bundle.js"></script>
   <title>Francy</title>
 </head>
 <body>
@@ -47,10 +49,20 @@ mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy #
   <script>
 
     // configure francy
-    Francy.settings({ appendTo: '#francy-drawing-div', callbackHandler: console.log });
+    var Francy = new FrancyApp({ 
+      appendTo: '#francy_draw', 
+      callbackHandler: (json) => {
+        Logger.info(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
+      }, 
+      configuration: new ConfigurationHandler({ configuration: DefaultConfiguration }) 
+    });
+
+    // register available renderers
+    Francy.RenderingManager.register(new D3Renderer().getConfiguration());
+    Francy.RenderingManager.register(new GraphvizRenderer().getConfiguration());
 
     d3.json("json.json", function (error, json) {
-      francy.load(json).render().catch(error => Console.log(error)).then(element => console.log('do whatever with the element:', element));
+      Francy.load(json).render().catch(error => Console.log(error)).then(element => console.log('do whatever with the element:', element));
     });
 
   </script>
@@ -69,3 +81,7 @@ mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy #
 | packages/francy-extension-jupyter | contains the browser extension classes, for jupyter integration |
 | packages/francy-renderer-d3       | contains the classes to produce graphics with D3                |
 | packages/francy-renderer-graphviz | contains the classes to produce graphics with D3-Graphviz       |
+
+# License
+
+[MIT](LICENSE) License

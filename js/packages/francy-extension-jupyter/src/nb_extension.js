@@ -19,18 +19,30 @@ if (window.require) {
   });
 }
 
+require(['nbextensions/jupyter_francy/Vendors']);
+
 /**
  * Export the required load_ipython_extention.
  */
 define(
   [
     'base/js/namespace',
+    'nbextensions/jupyter_francy/Vendors',
+    'nbextensions/jupyter_francy/FrancyJS',
+    'nbextensions/jupyter_francy/D3Renderer',
+    'nbextensions/jupyter_francy/GraphvizRenderer',
     'nbextensions/jupyter_francy/index'
   ],
-  (Jupyter, Extension) => {
+  (Jupyter, Vendors, FrancyJS, D3Renderer, GraphvizRenderer, Extension) => {
     function load_ipython_extension() {
       const { notebook } = Jupyter;
-      Extension.register_renderer(Jupyter, notebook);
+      Extension.register_renderer(Jupyter, { 
+        FrancyApp: FrancyJS.FrancyApp,
+        ConfigurationHandler: FrancyJS.ConfigurationHandler, 
+        DefaultConfiguration: FrancyJS.DefaultConfiguration, 
+        Logger: FrancyJS.Logger, 
+        Renderers: [ D3Renderer.D3Renderer, GraphvizRenderer.GraphvizRenderer ]
+      }, notebook);
       Extension.render_cells(notebook);
     }
     return {

@@ -4,9 +4,11 @@
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v5">
   <script src="https://unpkg.com/viz.js@1.8.1/viz.js"></script>
   <script src="https://d3js.org/d3.v5.min.js"></script>
-  <script src="https://unpkg.com/d3-graphviz@2.6.0/build/d3-graphviz.js"></script>
+  <script src="https://unpkg.com/d3-graphviz@2.6.1/build/d3-graphviz.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full,Safe"></script>
-  <script src="../dist/browser/francy-extension-browser.bundle.js"></script>
+  <script src="../dist/FrancyJS.bundle.js"></script>
+  <script src="../dist/D3Renderer.bundle.js"></script>
+  <script src="../dist/GraphvizRenderer.bundle.js"></script>
   <title>Francy Test</title>
 </head>
 
@@ -15,11 +17,18 @@
 </body>
 
 <script>
-  /* global Francy */
+  
+  var Francy = new FrancyApp({ 
+    appendTo: '#francy_draw', 
+    callbackHandler: (json) => {
+      Logger.info(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
+    }, 
+    configuration: new ConfigurationHandler({ configuration: DefaultConfiguration }) 
+  });
 
-  function trigger(json) {
-    console.log(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
-  }
+  // register available renderers
+  Francy.RenderingManager.register(new D3Renderer().getConfiguration());
+  Francy.RenderingManager.register(new GraphvizRenderer().getConfiguration());
 
   function resolvePromise(francy) {
     francy.render().catch(error => console.log(error)).then(element => {
@@ -31,9 +40,6 @@
       }
     });
   }
-
-  let settings = { appendTo: '#francy_draw', callbackHandler: trigger };
-  Francy.settings(settings);
 
   fetch('json1.json')
     .then(response => response.json())

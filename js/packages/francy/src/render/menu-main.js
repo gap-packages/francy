@@ -3,6 +3,11 @@ import * as SvgToPng from 'save-svg-as-png';
 
 /* global d3 */
 
+/**
+ * The {MainMenu} holds the default options for the current Graphics.
+ *
+ * @access private
+ */
 export default class MainMenu extends Menu {
 
   constructor({ appendTo, callbackHandler }, context) {
@@ -125,7 +130,9 @@ export default class MainMenu extends Menu {
           // re-render
           setTimeout(() => {
             let Renderer = self.context.renderingManager.activeRenderer();
-            self.handlePromise(new Renderer(self.options, self.context).load(self.data).render());
+            self.options.appendTo.data = self.options.appendTo.canvas.data;
+            self.options.appendTo.canvas = new Renderer(self.options, self.context);
+            self.handlePromise(self.options.appendTo.render());
           }, 100);
         }
       } else {

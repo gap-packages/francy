@@ -8,7 +8,8 @@ export default class Canvas extends CompositeRenderer {
 
   constructor({ appendTo, callbackHandler }, context) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
-    this.add(new GraphGeneric(this.options, this.context)).add(new ChartGeneric(this.options, this.context));
+    this.graphFactory = new GraphGeneric(this.options, this.context);
+    this.chartFactory = new ChartGeneric(this.options, this.context);
     this.graphvizEngines = ['circo', 'dot', 'fdp', 'neato', 'osage', 'patchwork', 'twopi'];
     this.graphvizRankdirs = { 'TB': 'Top to Bottom', 'LR': 'Left to Right', 'BT': 'Bottom to Top', 'RL': 'Right to Left' };
     // this only adds if does not exist
@@ -73,6 +74,8 @@ export default class Canvas extends CompositeRenderer {
 
     this._buildMenu();
 
+    this.removeChildren();
+    this.addChild(this.graphFactory).addChild(this.chartFactory);
     this.handlePromise(this.renderChildren());
 
     return this;
@@ -105,7 +108,9 @@ export default class Canvas extends CompositeRenderer {
       // re-render
       setTimeout(() => {
         let Renderer = self.context.renderingManager.activeRenderer();
-        self.handlePromise(new Renderer(self.options, self.context).load(self.data).render());
+        self.options.appendTo.data = self.options.appendTo.canvas.data;
+        self.options.appendTo.canvas = new Renderer(self.options, self.context);
+        self.handlePromise(self.options.appendTo.render());
       }, 100);
     }
 

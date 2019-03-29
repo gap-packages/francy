@@ -9,7 +9,8 @@ export default class Canvas extends CompositeRenderer {
 
   constructor({ appendTo, callbackHandler }, context) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
-    this.add(new GraphFactory(this.options, this.context)).add(new ChartFactory(this.options, this.context));
+    this.graphFactory = new GraphFactory(this.options, this.context);
+    this.chartFactory = new ChartFactory(this.options, this.context);
   }
 
   initialize() {
@@ -106,6 +107,8 @@ export default class Canvas extends CompositeRenderer {
 
     this._buildMenu();
 
+    this.removeChildren();
+    this.addChild(this.graphFactory).addChild(this.chartFactory);
     this.handlePromise(this.renderChildren());
 
     return this;

@@ -17,6 +17,11 @@ export default class DataHandler {
      * @type {object}
      */
     this.data = undefined;
+    /**
+     * If the Francy GAP version is different from the JS version this flag stores if the user has been informed once.
+     * @type {boolean}
+     */
+    this.alertOnDataVersion = false;
   }
 
   /**
@@ -31,7 +36,8 @@ export default class DataHandler {
     let data = JsonUtils.parse(json, partial);
     if (data) {
       this.data = data;
-      if (this.data.version !== VERSION) {
+      if (this.data.version !== VERSION && !this.alertOnDataVersion) {
+        this.alertOnDataVersion = true;
         Logger.warn(`Data was generated in Francy GAP v${this.data.version} and you're using Francy JS v${VERSION}... Rendering may fail, please update your system...`);
       }
     }

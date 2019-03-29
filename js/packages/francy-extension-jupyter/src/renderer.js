@@ -1,15 +1,6 @@
 import { MIME_TYPE, CLASS_NAME, APPEND_ID } from './utils';
-import './wrapper';
-import { FrancyApp, ConfigurationHandler, DefaultConfiguration } from 'francy';
-import D3Renderer from 'francy-renderer-d3';
-import GraphizRenderer from 'francy-renderer-graphviz';
 
-/* eslint-disable no-console */
-
-export function init(Jupyter) {
-
-  //console.log('Starting configuring module Francy Javascript...');
-
+export function init(Jupyter, { FrancyApp, ConfigurationHandler, DefaultConfiguration, Logger, Renderers = []}) {
   // start Francy
   let Francy = new FrancyApp({
     configuration: new ConfigurationHandler({configuration: DefaultConfiguration}),
@@ -21,8 +12,8 @@ export function init(Jupyter) {
             if (msg.content && msg.content.data && msg.content.data[MIME_TYPE]) {
               // This will update an existing canvas by its ID!
               Francy.load(msg.content.data[MIME_TYPE]).render()
-                .catch(error => console.error(error))
-                .then(element => console.log('Trigger result', element));
+                .catch(error => Logger.error(error))
+                .then(element => Logger.debug('Interactive trigger result', element));
             }
           }
         }
@@ -31,12 +22,9 @@ export function init(Jupyter) {
   });
   
   // register available renderers
-  Francy.RenderingManager.register(new D3Renderer().getConfiguration());
-  Francy.RenderingManager.register(new GraphizRenderer().getConfiguration());
+  Renderers.forEach(Renderer => Francy.RenderingManager.register(new Renderer().getConfiguration()));
   // try to initialize MathJax just in case - hack
   Francy.Components.MathJax.tryInitialize();
-
-  //console.log('Finished configuring module Francy Javascript.');
   
   return Francy;
 }
@@ -44,9 +32,9 @@ export function init(Jupyter) {
 /**
  * Render data to the DOM node
  */
-function render(Francy, props, node) {
+function render({ Francy, Logger }, props, node) {
   Francy.load(props.data).render()
-    .catch(error => console.error(error))
+    .catch(error => Logger.error(error))
     .then(element => node.append(element));
 }
 
@@ -84,7 +72,7 @@ function handleAddOutput(event, { output, output_area }) { // eslint-disable-lin
  * Register the mime type and append_mime function with the notebook's
  * output area
  */
-export function register_renderer(Jupyter, notebook) {
+export function register_renderer(Jupyter, { FrancyApp, ConfigurationHandler, DefaultConfiguration, Logger, Renderers = [] }, notebook) {
   /* Get an instance of output_area from a CodeCell instance */
   const { output_area } = notebook
     .get_cells()
@@ -101,8 +89,14 @@ export function register_renderer(Jupyter, notebook) {
     this.keyboard_manager.register_events(toinsert);
     /* Render data to DOM node */
     const props = { data, metadata: metadata[MIME_TYPE] };
-    let Francy = init(Jupyter);
-    render(Francy, props, toinsert[0]);
+    let Francy = init(Jupyter, { 
+      FrancyApp: FrancyApp, 
+      ConfigurationHandler: ConfigurationHandler, 
+      DefaultConfiguration: DefaultConfiguration,
+      Logger: Logger,
+      Renderers: Renderers
+    });
+    render({ Francy: Francy, Logger: Logger }, props, toinsert[0]);
     element.append(toinsert);
     return toinsert;
   };
@@ -140,5 +134,3 @@ export function render_cells(notebook) {
     }
   });
 }
-
-/* eslint-enable no-console */

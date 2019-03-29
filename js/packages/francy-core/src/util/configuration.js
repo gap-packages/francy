@@ -153,7 +153,10 @@ export default class ConfigurationHandler extends Observable {
   }
 }
 
-
+/**
+ * The minimal default {Configuration} object singleton
+ * @public
+ */
 export const DefaultConfiguration = {
   showNeighbours: true,
   dragNodes: true,

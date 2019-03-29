@@ -25,3 +25,11 @@ jupyter lab --watch
 jupyter nbextension install --symlink --py --sys-prefix jupyter_francy
 jupyter nbextension enable --py --sys-prefix jupyter_francy
 ```
+
+Note: 
+Make sure [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter.
+Make sure [Francy GAP](/) is installed on GAP.
+
+# License
+
+[MIT](LICENSE) License

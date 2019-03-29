@@ -18,8 +18,8 @@ export default class GraphGeneric extends Graph {
     let self = this,
       loader = Decorators.Loader.withContext(this).show(),
       dot = new DOTLanguageConverterHelper(this.context).load(this.data).convert(),
-      canvasNodes = this.data.canvas.graph.nodes ? Object.values(this.data.canvas.graph.nodes) : [],
-      canvasLinks = this.data.canvas.graph.links ? Object.values(this.data.canvas.graph.links) : [];
+      canvasNodes = this.data.canvas.graph.nodes ? JSON.parse(JSON.stringify(Object.values(this.data.canvas.graph.nodes))) : [],
+      canvasLinks = this.data.canvas.graph.links ? JSON.parse(JSON.stringify(Object.values(this.data.canvas.graph.links))) : [];
 
     self.parent
       .graphviz()
@@ -116,13 +116,17 @@ export default class GraphGeneric extends Graph {
   }
 
   setLabelXPosition(element, x) {
-    let width = element.node().width.baseVal.value;
-    element.attr('x', Math.ceil(Number(x) - (width / 2)));
+    if (element.node().width && element.node().width.baseVal && element.node().width.baseVal.value) {
+      let width = element.node().width.baseVal.value;
+      element.attr('x', Math.ceil(Number(x) - (width / 2)));
+    }
   }
 
   setLabelYPosition(element, y) {
-    let height = element.node().height.baseVal.value;
-    element.attr('y', Math.ceil(Number(y) - (height / 2)));
+    if (element.node().height && element.node().height.baseVal && element.node().height.baseVal.value) {
+      let height = element.node().height.baseVal.value;
+      element.attr('y', Math.ceil(Number(y) - (height / 2)));
+    }
   }
 
   _connectedNodes(node, canvasNodes, link, canvasLinks) {
