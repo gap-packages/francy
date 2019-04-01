@@ -1,7 +1,7 @@
 {
   "name": "francy-extension-jupyter",
   "version": "1.1.1",
-  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP. Renders 'application/vnd.francy+json' MIME Type on Jupyter Environments",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP. Renders [application/vnd.francy+json] MIME Type on Jupyter Environments",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "main": "lib/index.js",
   "repository": {
