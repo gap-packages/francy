@@ -2,8 +2,21 @@ import BaseRenderer from '../base';
 
 /* global d3 */
 
+/**
+ * Implements a Utility Graph operations.
+  * 
+ * @extends {BaseRenderer}
+ */
 export default class GraphOperations extends BaseRenderer {
 
+/**
+   * Base constructor
+   * 
+   * @typedef {Object} options
+   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
+   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   */
   constructor({ appendTo, callbackHandler }, context) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
     this.load(this.options.appendTo.data); // this will be most likely the Frame!

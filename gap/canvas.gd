@@ -8,7 +8,7 @@
 
 
 #! @Section Categories
-#! In this section we show the Francy Canvas Categories.
+#! In this section we show all Francy Canvas Categories.
 
 #! @Description
 #! Identifies <C>Canvas</C> objects.
@@ -20,7 +20,7 @@ DeclareCategory("IsCanvasDefaults", IsFrancyDefaultObject);
 
 
 #! @Section Families
-#! In this section we show the Francy Canvas Families.
+#! In this section we show all Francy Canvas Families.
 
 #! @Description
 #! This Family identifies all <C>Canvas</C> objects
@@ -29,7 +29,7 @@ BindGlobal("CanvasFamily", NewFamily("CanvasFamily", IsCanvas));
 
 
 #! @Section Representations
-#! In this section we show the Francy Canvas Representations.
+#! In this section we show all Francy Canvas Representations.
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Canvas</C> internal representation.
@@ -45,7 +45,7 @@ BindGlobal("CanvasObjectType", NewType(CanvasFamily, IsCanvas and IsCanvasRep));
 
 
 #! @Section Operations
-#! In this section we show the Francy Canvas Operations.
+#! In this section we show all Francy Canvas Operations.
 
 #! @Description
 #! Canvas represents a base element to draw graphics on. Inspired by
@@ -128,7 +128,7 @@ DeclareOperation("DrawSplash", [IsCanvas]);
 
 
 #! @Section Global
-#! In this section we show the Global Francy Canvas Records for multi purpose.
+#! In this section we show all Global Francy Canvas Records for multi purpose.
 
 #! @Description
 #! This <C>rec</C> holds all the default setting for a canvas
@@ -184,7 +184,7 @@ InstallMethod(Title, "canvas", [IsCanvas], o -> o!.title);
 InstallMethod(SetTitle, "canvas, string", [IsCanvas, IsString], function(o, s) o!.title := s; end);
 
 #! @Description
-#! Enables Tex typestting on the client implementation
+#! Enables usage of Tex typestting on the client implementation, if supported.
 #! @Returns <C>IsBool</C> with the title of the object
 DeclareAttribute("TexTypesetting", IsCanvas);
 InstallMethod(TexTypesetting, "canvas", [IsCanvas], o -> o!.texTypesetting);

@@ -10,7 +10,7 @@
 
 
 #! @Section Categories
-#! In this section we show the Francy Chart Categories.
+#! In this section we show all Francy Chart Categories.
 
 #! @Description
 #! Identifies <C>Chart</C> objects.
@@ -42,7 +42,7 @@ DeclareCategory("IsDataset", IsFrancyObject);
 
 
 #! @Section Families
-#! In this section we show the Francy Chart Families.
+#! In this section we show all Francy Chart Families.
 
 #! @Description
 #! This Family identifies all <C>Chart</C> objects
@@ -103,7 +103,7 @@ BindGlobal("AxisScaleTypeObjectType",  NewType(ChartFamily, IsAxisScaleType and 
 
 
 #! @Section Operations
-#! In this section we show the Francy Chart Operations.
+#! In this section we show all Francy Chart Operations.
 
 #! @Description
 #! Every object to draw will be a subclass of this object. This will allow
@@ -166,7 +166,7 @@ DeclareOperation("YAxis", [IsAxisScaleType, IsString, IsList]);
 
 
 #! @Section Global
-#! In this section we show the Global Chart Francy Records for multi purpose.
+#! In this section we show all Global Chart Francy Records for multi purpose.
 
 #! @Description
 #! The various types of Charts supported.
@@ -194,7 +194,7 @@ BindGlobal("ChartDefaults", Objectify(NewType(ChartFamily, IsChartDefaults and I
 
 
 #! @Section Attributes
-#! In this section we show the Francy Attributes
+#! In this section we show all Francy Attributes
 
 #! @Description
 #! <C>ShowLegend</C> is a property that enables or disables the legend in the client implementation.

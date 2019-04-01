@@ -6,9 +6,10 @@
   <Section>
     <Heading>Francy</Heading>
 
-    &Francy; arose from the necessity of having a lightweight framework forbuilding interactive graphics, generated from GAP, running primarily on theweb, primarily in a Jupyter Notebook. An initial attempt to re-use XGAP andport it was made, but the lack
-    of a standardized data exchange format betweenGAP and the graphics renderer, and the simplistic initial requirements of the project were the basis for the creation of a new GAP package.
-
+    &Francy; arose from the necessity of having a lightweight framework forbuilding interactive graphics, generated from GAP, running primarily on the web, primarily in a &Jupyter; Notebook. An initial attempt to re-use XGAP andport it was made, but the lack
+    of a standardized data exchange format between GAP and the graphics renderer, and the simplistic initial requirements of the project were the basis for the creation of a new GAP package.
+    
+    Take a look at &Francy; functionality on this <URL Text="Jupyter Notebook">https://mybinder.org/v2/gh/gap-packages/francy/master?filepath=francy-features.ipynb</URL>.
   </Section>
 
   <Section>
@@ -35,10 +36,21 @@
       pip install jupyter_francy -U
     </Log>
 
-    It is necessary to enable &Francy; on your &Jupyter; installation:
+    It is necessary to enable &Francy; on your &Jupyter; Notebook installation:
     <Log>
       jupyter nbextension enable --py --sys-prefix jupyter_francy
     </Log>
+    
+    For &Jupyter; Lab, please run:
+    <Log>
+      jupyter labextension build
+    </Log>
+    
+    Alternatively, on &Jupyter; Lab &Francy; can be installed by simply executing:
+    <Log>
+      jupyter labextension jupyter-francy
+    </Log>
+    This will load the module from <URL>https://npmjs.org</URL>. This approach should only be used if you want to use &Francy; only on &Jupyter; Lab.
 
   </Section>
 
@@ -46,18 +58,16 @@
     <Heading>How it works</Heading>
 
     &Francy; requires a rendering package to display graphics. &Francy; uses Renderers based on d3.js and Graphviz, for rendering the semantic representation produced by the GAP package. This library is distributed both as a browser module and as a Jupyter
-    extension. The Jupyter extension can be used in Jupyter Notebooks or Jupyter Lab, using the &JupyterKernel; and the MIME type application/vnd.francy+json to render the document Please check the documentation for more information:
+    extension. The Jupyter extension can be used in &Jupyter; Notebook or &Jupyter; Lab, using the &JupyterKernel; and the MIME type 'application/vnd.francy+json' to render the document Please check the documentation for more information:
     <URL Text="JavaScript Documentation">https://gap-packages.github.io/francy/doc/js/doc/index.html</URL>.
 
   </Section>
 
   <Section>
-
     <Heading>Publications</Heading>
 
     <URL Text="ICMS 2018">https://doi.org/10.1007/978-3-319-96418-8_42</URL>
 
   </Section>
-
 
 </Chapter>

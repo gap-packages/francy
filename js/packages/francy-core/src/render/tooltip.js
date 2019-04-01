@@ -3,12 +3,32 @@ import Renderer from './renderer';
 
 /* global d3 */
 
+/**
+ * Implements a Tooltip.
+ * 
+ * This component shows a tooltip containing a set of messages.
+ * 
+ * @extends {Renderer}
+ */
 export default class Tooltip extends Renderer {
 
+  /**
+   * Base constructor
+   * 
+   * @typedef {Object} options
+   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
+   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   */
   constructor({ appendTo, callbackHandler }, context) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
   }
 
+  /**
+   * This method is used to render this component
+   * 
+   * @public
+   */
   @Decorators.Data.requires('messages')
   async render() {
 
@@ -39,11 +59,19 @@ export default class Tooltip extends Renderer {
 
     // show tooltip
     this.element.style('display', 'block');
+    
+    // destroy me after some time
+    setTimeout(this.unrender, 10000);
 
     return this;
   }
 
-  unrender() {
+  /**
+   * This method is used to destroy this component
+   * 
+   * @public
+   */
+  unrender() {  
     if (this.element) {
       this.element.selectAll('*').remove();
       this.element.style('display', null);

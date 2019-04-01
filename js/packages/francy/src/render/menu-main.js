@@ -137,8 +137,8 @@ export default class MainMenu extends Menu {
         }
       } else {
         Logger.debug(`(${this.context.instanceId}) The Canvas ${self.data.canvas.id} seems to have disapeared... removing events associated to it`);
-        self.context.renderingManager.unsubscribe(RENDERING_EVENTS.STATUS, reRender, reRenderId);
-        self.context.renderingManager.unsubscribe(RENDERING_EVENTS.REGISTER, insertEntry, registerId);
+        self.context.renderingManager.unsubscribe(reRenderId);
+        self.context.renderingManager.unsubscribe(registerId);
       }
     }
 

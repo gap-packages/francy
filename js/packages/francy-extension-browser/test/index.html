@@ -26,8 +26,8 @@
   });
 
   // register available renderers
-  Francy.RenderingManager.register(new D3Renderer().getConfiguration());
-  Francy.RenderingManager.register(new GraphvizRenderer().getConfiguration());
+  Francy.RenderingManager.register(new D3Renderer());
+  Francy.RenderingManager.register(new GraphvizRenderer());
 
   function resolvePromise(francy) {
     francy.render().catch(error => console.log(error)).then(element => {

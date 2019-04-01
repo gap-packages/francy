@@ -29,8 +29,8 @@ This extension can be used in `offline` mode in a web page as follows:
     });
 
     // register available renderers
-    Francy.RenderingManager.register(new D3Renderer().getConfiguration());
-    Francy.RenderingManager.register(new GraphvizRenderer().getConfiguration());
+    Francy.RenderingManager.register(new D3Renderer());
+    Francy.RenderingManager.register(new GraphvizRenderer());
 
     d3.json("json.json", function (error, json) {
       Francy.load(json).render().catch(error => Console.log(error)).then(element => console.log('do whatever with the element:', element));

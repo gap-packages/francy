@@ -9,7 +9,7 @@
 
 
 #! @Section Categories
-#! In this section we show the Francy FrancyMessage Categories.
+#! In this section we show all Francy FrancyMessage Categories.
 
 #! @Description
 #! Identifies <C>FrancyMessage</C> objects.
@@ -21,7 +21,7 @@ DeclareCategory("IsFrancyMessageType", IsFrancyObject);
 
 
 #! @Section Families
-#! In this section we show the Francy FrancyMessage Families.
+#! In this section we show all Francy FrancyMessage Families.
 
 #! @Description
 #! This Family identifies all <C>FrancyMessages</C> objects
@@ -30,7 +30,7 @@ BindGlobal("FrancyMessageFamily", NewFamily("FrancyMessageFamily", IsFrancyObjec
 
 
 #! @Section Representations
-#! In this section we show the Francy FrancyMessage Representations.
+#! In this section we show all Francy FrancyMessage Representations.
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>FrancyMessage</C> internal representation.
@@ -50,7 +50,7 @@ BindGlobal("FrancyMessageTypeObjectType", NewType(FrancyMessageFamily, IsFrancyM
 
 
 #! @Section Operations
-#! In this section we show the Francy FrancyMessage Operations.
+#! In this section we show all Francy FrancyMessage Operations.
 
 #! @Description
 #! Adds an info label with the format label: value
@@ -61,7 +61,7 @@ DeclareOperation("FrancyMessage", [IsFrancyMessageType, IsString, IsString]);
 
 
 #! @Section Global
-#! In this section we show the Global Callback Francy Records for multi purpose.
+#! In this section we show all Global Callback Francy Records for multi purpose.
 
 #! @Description
 #! The various types of Graph supported.
@@ -76,7 +76,7 @@ BindGlobal("FrancyMessageType", rec(
 
 
 #! @Section Attributes
-#! In this section we show the Francy Core Attributes
+#! In this section we show all Francy Core Attributes
 
 #! @Description
 #! A title on a <C>FrancyMessage</C> is used to display the title information to the user.

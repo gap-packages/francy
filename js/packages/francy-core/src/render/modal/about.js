@@ -6,8 +6,23 @@ import Modal from './base';
 
 /* global d3 VERSION FRANCY_DESC */
 
+/**
+ * Implements The About Modal Window.
+ * 
+ * This component shows information about this app.
+ * 
+ * @extends {Modal}
+ */
 export default class AboutModal extends Modal {
 
+  /**
+   * Base constructor
+   * 
+   * @typedef {Object} options
+   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
+   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   */
   constructor({ appendTo, callbackHandler }, context) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
   }

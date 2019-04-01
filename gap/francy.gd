@@ -27,7 +27,7 @@
 
 
 #! @Section Categories
-#! In this section we show the Francy Core Categories.
+#! In this section we show all Francy Core Categories.
 
 #! @Description
 #! Identifies all <C>Objects</C> in Francy.
@@ -43,7 +43,7 @@ DeclareCategory("IsFrancyTypeObject", IsObject);
 
 
 #! @Section Families
-#! In this section we show the Francy Core Families.
+#! In this section we show all Francy Core Families.
 
 #! @Description
 #! This Family identifies all objects of this package 
@@ -52,7 +52,7 @@ BindGlobal("FrancyFamily", NewFamily("FrancyFamily", IsFrancyObject));
 
 
 #! @Section Global
-#! In this section we show the Francy Core Types
+#! In this section we show all Francy Core Types
 
 #! @Description
 #! Specifies the content-type mime of this package. 
@@ -65,7 +65,7 @@ BindGlobal("FrancyMIMEType", "application/vnd.francy+json");
 
 
 #! @Section Attributes
-#! In this section we show the Francy Core Attributes
+#! In this section we show all Francy Core Attributes
 
 #! @Description
 #! All Objects created in Francy have a generated identifier.

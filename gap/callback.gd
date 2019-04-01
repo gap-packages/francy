@@ -14,7 +14,7 @@
 
 
 #! @Section Categories
-#! In this section we show the Francy Callback Categories.
+#! In this section we show all Francy Callback Categories.
 
 #! @Description
 #! Identifies <C>Callback</C> objects.
@@ -34,7 +34,7 @@ DeclareCategory("IsTriggerType", IsFrancyTypeObject);
 
 
 #! @Section Families
-#! In this section we show the Francy Callback Families.
+#! In this section we show all Francy Callback Families.
 
 #! @Description
 #! This Family identifies all <C>Callback</C> objects
@@ -43,7 +43,7 @@ BindGlobal("CallbackFamily", NewFamily("CallbackFamily", IsCallback));
 
 
 #! @Section Representations
-#! In this section we show the Francy Callback Representations.
+#! In this section we show all Francy Callback Representations.
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Callback</C> internal representation.
@@ -79,7 +79,7 @@ BindGlobal("TriggerTypeObjectType", NewType(CallbackFamily, IsTriggerType and Is
 
 
 #! @Section Operations
-#! In this section we show the Francy Callback Operations.
+#! In this section we show all Francy Callback Operations.
 
 #! @Description
 #! Creates a Callback object that holds a function and args to be executed 
@@ -210,14 +210,11 @@ InstallMethod(Value, "requiredArg", [IsRequiredArg], o -> o!.value);
 InstallMethod(SetValue, "requiredArg, string", [IsRequiredArg, IsString], function(o, s) o!.value := s; end);
 
 #! @Description
-#! A value on a required arg is the actual input to be passed to gap.
-#! These values are stored as <C>String</C> for convenience, 
-#! even if the <C>ArgType</C> specified for the <C>RequiredArg</C> is another.
-#! Explicit conversion is required within the <C>Callback</C>function.
-#! @Returns <C>IsString</C> with the value of the object
+#! This will display a confirmation message before any callback is executed.
+#! @Returns <C>IsString</C> with the message oto be shown to the user prior to the callback execution
 DeclareAttribute("ConfirmMessage", IsCallback);
 InstallMethod(ConfirmMessage, "callback", [IsCallback], o -> o!.confirm);
 #! @Description
-#! Sets the value of the required arg.
+#! Sets the value of the message to display to the user.
 #! @Arguments IsRequiredArg, IsString
 InstallMethod(SetConfirmMessage, "callback, string", [IsCallback, IsString], function(o, s) o!.confirm := s; end);

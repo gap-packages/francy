@@ -38,7 +38,7 @@ export default class Observable {
    * @param {function} fn - the function to execute - must handle one arg, the object, of type {Object}
    * @public
    */
-  unsubscribe(property, fn, id) {
+  unsubscribe(id) {
     if (!id) {
       throw new Error('ID is mandatory');
     }

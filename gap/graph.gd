@@ -10,7 +10,7 @@
 
 
 #! @Section Categories
-#! In this section we show the Francy Graph Categories.
+#! In this section we show all Francy Graph Categories.
 
 #! @Description
 #! Identifies <C>Graph</C> objects.
@@ -46,7 +46,7 @@ DeclareCategory("IsLinkDefaults", IsFrancyDefaultObject);
 
 
 #! @Section Families
-#! In this section we show the Francy Graph Families.
+#! In this section we show all Francy Graph Families.
 
 #! @Description
 #! This Family identifies all <C>Graph</C> objects
@@ -65,7 +65,7 @@ BindGlobal("LinkFamily", NewFamily("LinkFamily", IsLink));
 
 
 #! @Section Representations
-#! In this section we show the Francy Graph Representations.
+#! In this section we show all Francy Graph Representations.
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Graph</C> internal representation.
@@ -121,7 +121,7 @@ BindGlobal("GraphTypeObjectType", NewType(GraphFamily, IsFrancyGraphType and IsF
 
 
 #! @Section Operations
-#! In this section we show the Francy Graph Operations.
+#! In this section we show all Francy Graph Operations.
 
 #! @Description
 #! Every object to draw will be a subclass of this object. This will allow
@@ -254,7 +254,7 @@ DeclareOperation("GetLinks", [IsFrancyGraph]);
 
 
 #! @Section Global
-#! In this section we show the Global Callback Francy Records for multi purpose.
+#! In this section we show all Global Callback Francy Records for multi purpose.
 
 #! @Description
 #! The various types of Graph supported.
@@ -308,7 +308,7 @@ BindGlobal("LinkDefaults", Objectify(NewType(LinkFamily, IsLinkDefaults and IsLi
 
 
 #! @Section Attributes
-#! In this section we show the Francy Core Attributes
+#! In this section we show all Francy Core Attributes
 
 #! @Description
 #! Sets the title on the Shape.

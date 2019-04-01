@@ -1,10 +1,10 @@
 /**
- * This class contains methods to deal with JSON.
+ * This class contains methods to handle this application JSON data.
  */
 export default class JsonUtils {
 
   /**
-   * Parses an input nd checks whether this input is valid and returns a JSON object.
+   * Parses an input, checks whether this input is valid and returns a JSON object.
    * @param input - the input to parse
    * @param partial - if the input is not a complete Francy JSON Object, defaults to false
    * @returns {json} - if the input is a valid JSON object, otherwise returns {undefined}
@@ -28,3 +28,5 @@ export default class JsonUtils {
     return 'application/vnd.francy+json';
   }
 }
+
+export const MIME = JsonUtils.MIME;

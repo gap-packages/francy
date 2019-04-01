@@ -5,7 +5,7 @@
 
 
 #! @Section Operations
-#! In this section we show the Francy Util Operations.
+#! In this section we show all Francy Util Operations.
 #! Contains utility methods to handle Object printing/viewing, Sanitizing, etc.
 
 #! @Description

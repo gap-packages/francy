@@ -1,2 +1,2 @@
 export { FrancyApp } from './src/francy';
-export { Logger } from 'francy-core';
+export { MIME, Logger } from 'francy-core';

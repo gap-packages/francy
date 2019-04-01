@@ -6,8 +6,23 @@ import Tooltip from '../tooltip';
 
 /* global d3 */
 
+/**
+ * Implements a Generic Graph.
+ * 
+ * This component holds utility methods for handling Graph structures.
+ * 
+ * @extends {Renderer}
+ */
 export default class Graph extends Renderer {
 
+/**
+   * Base constructor
+   * 
+   * @typedef {Object} options
+   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
+   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   */
   constructor({ appendTo, callbackHandler }, context) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
   }

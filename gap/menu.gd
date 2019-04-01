@@ -9,7 +9,7 @@
 
 
 #! @Section Categories
-#! In this section we show the Francy Menu Categories.
+#! In this section we show all Francy Menu Categories.
 
 #! @Description
 #! Identifies <C>Menu</C> objects.
@@ -17,7 +17,7 @@ DeclareCategory("IsMenu", IsFrancyObject);
 
 
 #! @Section Families
-#! In this section we show the Francy Menu Families.
+#! In this section we show all Francy Menu Families.
 
 #! @Description
 #! This Family identifies all <C>Menu</C> objects
@@ -26,7 +26,7 @@ BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
 
 
 #! @Section Representations
-#! In this section we show the Francy Menu Representations.
+#! In this section we show all Francy Menu Representations.
 
 #! @Description
 #! Checks whether an <C>Object</C> has a <C>Menu</C> internal representation.
@@ -38,7 +38,7 @@ BindGlobal("MenuObjectType", NewType(MenuFamily, IsMenu and IsMenuRep));
 
 
 #! @Section Operations
-#! In this section we show the Francy Menu Operations.
+#! In this section we show all Francy Menu Operations.
 
 #! @Description
 #! Creates a Menu for a <C>Callback</C>
@@ -63,7 +63,7 @@ DeclareOperation("Menu", [IsString, IsCallback]);
 
 
 #! @Section Attributes
-#! In this section we show the Francy Core Attributes
+#! In this section we show all Francy Core Attributes
 
 #! @Description
 #! A title on a <C>Menu</C> is used to identify the menu entry.

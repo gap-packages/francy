@@ -1,7 +1,7 @@
 {
   "name": "jupyter-francy",
   "version": VERSION,
-  "description": "A package for rendering application/vnd.francy+json in JupyterLab",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP. Renders 'application/vnd.francy+json' MIME Type on Jupyter Environments",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
     "type": "git",

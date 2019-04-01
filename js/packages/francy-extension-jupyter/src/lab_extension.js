@@ -39,8 +39,8 @@ export class OutputWidget extends Widget {
       }
     });
     // register available renderers
-    this.Francy.RenderingManager.register(new D3Renderer().getConfiguration());
-    this.Francy.RenderingManager.register(new GraphvizRenderer().getConfiguration());
+    this.Francy.RenderingManager.register(new D3Renderer());
+    this.Francy.RenderingManager.register(new GraphvizRenderer());
     // try to initialize MathJax just in case - hack
     this.Francy.Components.MathJax.tryInitialize();
   }

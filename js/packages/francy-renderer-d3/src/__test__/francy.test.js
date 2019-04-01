@@ -14,7 +14,7 @@ import scatter from './data/json6.json';
 describe('Francy Renderer Object', function() {
 
   var Francy = new FrancyApp({ appendTo: 'body', callbackHandler: Logger.info });
-  Francy.RenderingManager.register(new D3Renderer().getConfiguration());
+  Francy.RenderingManager.register(new D3Renderer());
   
   beforeEach(() => {
     d3.select('body').selectAll('div').remove();

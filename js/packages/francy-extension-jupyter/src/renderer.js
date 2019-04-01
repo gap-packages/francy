@@ -21,7 +21,7 @@ export function init(Jupyter, { FrancyApp, Logger, Renderers = []}) {
   });
   
   // register available renderers
-  Renderers.forEach(Renderer => Francy.RenderingManager.register(new Renderer().getConfiguration()));
+  Renderers.forEach(Renderer => Francy.RenderingManager.register(new Renderer()));
   // try to initialize MathJax just in case - hack
   Francy.Components.MathJax.tryInitialize();
   
