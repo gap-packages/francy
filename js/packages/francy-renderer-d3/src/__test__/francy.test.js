@@ -2,12 +2,12 @@ import { expect } from 'chai';
 import './d3_wrapper';
 import { FrancyApp, Logger } from 'francy';
 import { D3Renderer } from '../../index';
-import undirected from './data/json1.json';
-import directed from './data/json2.json';
-import tree from './data/json3.json';
-import bar from './data/json4.json';
-import line from './data/json5.json';
-import scatter from './data/json6.json';
+import undirected from '../../node_modules/francy/src/__test__/data/json1.json';
+import directed from '../../node_modules/francy/src/__test__/data/json2.json';
+import tree from '../../node_modules/francy/src/__test__/data/json3.json';
+import bar from '../../node_modules/francy/src/__test__/data/json4.json';
+import line from '../../node_modules/francy/src/__test__/data/json5.json';
+import scatter from '../../node_modules/francy/src/__test__/data/json6.json';
 
 /* global d3 */
     

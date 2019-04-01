@@ -4,7 +4,7 @@ import json1 from './data/json1.json';
 import RequiredArgsModal from '../render/modal/required';
 import AboutModal from '../render/modal/about';
 import { default as ConfigurationHandler, DefaultConfiguration } from '../util/configuration';
-import { default as RenderingManagerHandler, RENDERING_EVENTS } from '../render/manager';
+import { default as RenderingManagerHandler, RENDERING_EVENTS } from '../render/rendering-manager';
 
 describe('Modal Windows', () => {
 

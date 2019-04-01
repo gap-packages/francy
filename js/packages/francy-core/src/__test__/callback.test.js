@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import { expect } from 'chai';
 import Callback from '../render/callback';
 import { default as ConfigurationHandler, DefaultConfiguration } from '../util/configuration';
-import { default as RenderingManagerHandler, RENDERING_EVENTS } from '../render/manager';
+import { default as RenderingManagerHandler, RENDERING_EVENTS } from '../render/rendering-manager';
 
 describe('Callbacks', () => {
 

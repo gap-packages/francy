@@ -29,7 +29,7 @@ This binder includes the following notebooks:
 
 |Notebook                        |Description                                                     |
 |:-------------------------------|:---------------------------------------------------------------|
-|francy-features.ipynb           | Contains examples of all features in Francy                    |
+|francy-features.ipynb           | Contains examples of all features present in Francy            |
 |francy-monoids-mult-three.ipynb | Contains an example of proofs used in a paper                  |
 |francy-monoids.ipynb            | Contains FrancyMonoids package examples                        |
 |francy-numericalsgps.ipynb      | Same as above, but the algorithms are visible in the notebook  |

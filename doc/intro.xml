@@ -50,7 +50,7 @@
     <Log>
       jupyter labextension jupyter-francy
     </Log>
-    This will load the module from <URL>https://npmjs.org</URL>. This approach should only be used if you want to use &Francy; only on &Jupyter; Lab.
+    This will load the module from <URL>https://npmjs.org</URL>. This approach should be used if you want to run &Francy; only on &Jupyter; Lab.
 
   </Section>
 

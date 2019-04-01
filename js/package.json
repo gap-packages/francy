@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "francy-js",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP",
   "repository": {
     "type": "git",
     "url": "https://github.com/mcmartins/francy.git"
@@ -12,7 +13,7 @@
     "build": "lerna run build",
     "build:production": "lerna run build:production",
     "clean": "lerna run clean",
-    "version": "lerna version --no-push",
+    "version": "lerna version --no-git-tag-version --no-push",
     "docs": "esdoc",
     "lint": "eslint ./packages/** ",
     "lint:fix": "eslint --fix ./packages/**",
