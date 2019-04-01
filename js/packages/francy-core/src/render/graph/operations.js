@@ -9,7 +9,7 @@ import BaseRenderer from '../base';
  */
 export default class GraphOperations extends BaseRenderer {
 
-/**
+  /**
    * Base constructor
    * 
    * @typedef {Object} options

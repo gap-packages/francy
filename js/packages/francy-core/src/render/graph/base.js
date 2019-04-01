@@ -15,7 +15,7 @@ import Tooltip from '../tooltip';
  */
 export default class Graph extends Renderer {
 
-/**
+  /**
    * Base constructor
    * 
    * @typedef {Object} options

@@ -1,6 +1,5 @@
 import { Logger } from '../util/logger';
 import Observable from '../util/observable';
-import RenderingConfiguration from './rendering-configuration';
 import { RuntimeException } from '../util/exception';
 import { Utilities } from '../util/utilities';
 
