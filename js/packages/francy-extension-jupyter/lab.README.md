@@ -7,7 +7,7 @@ A JupyterLab extension for rendering mime 'application/vnd.francy+json'.
 ## Install
 
 ```bash
-jupyter labextension install jupyter-francy
+mcmartins@local:~$ jupyter labextension install jupyter-francy
 ```
 
 Note: 

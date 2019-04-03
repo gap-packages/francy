@@ -11,9 +11,9 @@ This extension can be used in `offline` mode in a web page as follows:
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://unpkg.com/viz.js@1.8.1/viz.js"></script>
   <script src="https://unpkg.com/d3-graphviz@2.6.1/build/d3-graphviz.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.1.0/dist/FrancyJS.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.1.0/dist/D3Renderer.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.1.0/dist/GraphvizRenderer.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.1.2/dist/FrancyJS.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.1.2/dist/D3Renderer.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.1.2/dist/GraphvizRenderer.bundle.js"></script>
   <title>Francy</title>
 </head>
 <body>
@@ -22,9 +22,9 @@ This extension can be used in `offline` mode in a web page as follows:
 
     // configure francy
     var Francy = new FrancyApp({ 
-      appendTo: '#francy_draw', 
+      appendTo: '#francy-drawing-div', 
       callbackHandler: (json) => {
-        Logger.info(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
+        Logger.info(`Input from callback: ${json}`);
       }
     });
 
@@ -33,7 +33,7 @@ This extension can be used in `offline` mode in a web page as follows:
     Francy.RenderingManager.register(new GraphvizRenderer());
 
     d3.json("json.json", function (error, json) {
-      Francy.load(json).render().catch(error => Console.log(error)).then(element => console.log('do whatever with the element:', element));
+      Francy.load(json).render().catch(error => Logger.error(error)).then(element => Logger.info('... Do whatever with me:', element));
     });
 
   </script>

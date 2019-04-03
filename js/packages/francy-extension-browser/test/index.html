@@ -13,15 +13,15 @@
 </head>
 
 <body>
-  <div id="francy_draw" style="visibility:hidden;"></div>
+  <div id="francy-drawing-div" style="visibility:hidden;"></div>
 </body>
 
 <script>
   
   var Francy = new FrancyApp({ 
-    appendTo: '#francy_draw', 
+    appendTo: '#francy-drawing-div', 
     callbackHandler: (json) => {
-      Logger.info(`Trigger(${JSON.stringify(JSON.stringify(json))});`);
+      Logger.info(`Input from callback: ${json}`);
     }
   });
 
@@ -30,12 +30,12 @@
   Francy.RenderingManager.register(new GraphvizRenderer());
 
   function resolvePromise(francy) {
-    francy.render().catch(error => console.log(error)).then(element => {
+    francy.render().catch(error => Logger.error(error)).then(element => {
       // NOTE: we're using a visible div to append the object so no need to do anything here
-      //document.getElementsByTagName('body')[0].appendChild(element);
+      // document.getElementsByTagName('body')[0].appendChild(element);
       if (element) {
         document.body.appendChild(element);
-        console.log('Object rendered...', element);
+        Logger.info('Object rendered...', element);
       }
     });
   }

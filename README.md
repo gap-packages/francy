@@ -25,7 +25,7 @@ Jupyter Lab Binder
 
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master?urlpath=lab)
 
-This binder includes the following notebooks:
+These binders include the following notebooks:
 
 |Notebook                        |Description                                                     |
 |:-------------------------------|:---------------------------------------------------------------|
