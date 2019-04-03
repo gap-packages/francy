@@ -15,6 +15,11 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "dependencies": {
+    "francy": "^1.1.2",
+    "francy-renderer-d3": "^1.1.2",
+    "francy-renderer-graphviz": "^1.1.2"
+  },
   "devDependencies": {
     "@babel/cli": "7.2.3",
     "@babel/core": "7.4.0",
