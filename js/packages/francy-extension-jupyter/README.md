@@ -1,5 +1,8 @@
 # Francy Jupyter Extension - jupyter_francy
 
+[![npm version](https://badge.fury.io/js/jupyter-francy.svg)](https://badge.fury.io/js/jupyter-francy)
+[![PyPI version](https://badge.fury.io/py/jupyter-francy.svg)](https://badge.fury.io/py/jupyter-francy)
+
 A JupyterLab and Jupyter Notebook extension for rendering mime 'application/vnd.francy+json'
 
 <!--- ![output renderer](http://g.recordit.co/QAsC7YULcY.gif) --->
