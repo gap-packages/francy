@@ -1,5 +1,7 @@
 # Francy Browser Extension
 
+[![npm version](https://badge.fury.io/js/francy-extension-browser.svg)](https://badge.fury.io/js/francy-extension-browser)
+
 This is part of the Francy project, please check documentation [here](https://github.com/gap-packages/francy).
 
 This extension can be used in `offline` mode in a web page as follows:
