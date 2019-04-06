@@ -13,9 +13,9 @@ This extension can be used in `offline` mode in a web page as follows:
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://unpkg.com/viz.js@1.8.1/viz.js"></script>
   <script src="https://unpkg.com/d3-graphviz@2.6.1/build/d3-graphviz.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.1.2/dist/FrancyJS.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.1.2/dist/D3Renderer.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.1.2/dist/GraphvizRenderer.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.1.3/dist/FrancyJS.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.1.3/dist/D3Renderer.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.1.3/dist/GraphvizRenderer.bundle.js"></script>
   <title>Francy</title>
 </head>
 <body>

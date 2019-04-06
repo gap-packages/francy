@@ -19,6 +19,7 @@
     "mimeExtension": "extension"
   },
   "files": [
+    "LICENSE",
     "README.md",
     "extension.js",
     "package.json"

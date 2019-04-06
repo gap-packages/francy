@@ -49,7 +49,7 @@ export default class AboutModal extends Modal {
     content.append('span').text(FRANCY_DESC);
     content.append('br');
     content.append('br');
-    content.append('span').append('a').attr('href', 'https://github.com/mcmartins/francy').text('Francy on Github');
+    content.append('span').append('a').attr('href', 'https://github.com/gap-packages/francy').attr('target', '_blank').text('Francy on Github');
     content.append('br');
     content.append('br');
     

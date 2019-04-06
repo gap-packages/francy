@@ -463,7 +463,11 @@ div.output_subarea {
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
   margin: 11px 3px 0 0;
-  visibility: hidden;
+  visibility: hidden
+}
+
+a[target='_blank']::after {
+  content:' \25F3'
 }
 
 /* Safari */

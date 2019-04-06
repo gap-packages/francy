@@ -6,16 +6,11 @@ import {Logger} from '../util/logger';
  * This {Decorator} class is used to handle Jupyter functions.
  */
 export default class JupyterDecorator {
-
-  /**
-   * Default constructor
-   * @example Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
-   */
-  constructor() {
-  }
   
   /**
    * This method register a class or classes on Jupyter keyboard_manager events
+   * 
+   * @example Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
    * 
    * @param {string[]} classes - an Array of css classes to add on Jupyter keyboard_manager events
    * @public

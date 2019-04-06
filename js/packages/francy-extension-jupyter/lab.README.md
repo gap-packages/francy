@@ -2,7 +2,7 @@
 
 This is part of the Francy project, please check documentation [here](https://github.com/gap-packages/francy).
 
-A JupyterLab extension for rendering mime 'application/vnd.francy+json'.
+A JupyterLab extension for rendering MIME Type 'application/vnd.francy+json'.
 
 ## Install
 

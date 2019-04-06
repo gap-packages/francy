@@ -20,6 +20,7 @@ module.exports = (env = {}) => {
   fs.copyFileSync('./lab.README.md', './jupyter_francy/labextension/README.md');
   fs.copyFileSync('./lab.package.json', './jupyter_francy/labextension/package.json');
   fs.copyFileSync('./.npmrc', './jupyter_francy/labextension/.npmrc');
+  fs.copyFileSync('./LICENSE', './jupyter_francy/labextension/LICENSE');
 
   replace({
     regex: 'VERSION',

@@ -26,28 +26,20 @@ import LoaderDecorator from './loader';
  */
 export const Decorators = {
 
-  get Data() {
-    return new DataDecorator();
-  },
-  
   get Loader() {
     return new LoaderDecorator();
-  },
-  
-  get Initializer() {
-    return new InitializerDecorator();
   },
   
   get Error() {
     return new ErrorDecorator();
   },
   
-  get Highlight() {
-    return new HighlightDecorator();
-  },
+  Data: DataDecorator,
   
-  get Jupyter() {
-    return new JupyterDecorator();
-  }
+  Initializer: InitializerDecorator,
+  
+  Highlight: HighlightDecorator,
+  
+  Jupyter: JupyterDecorator
   
 };

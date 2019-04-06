@@ -6,12 +6,6 @@ import {Exception} from '../util/exception';
 export default class DataDecorator {
 
   /**
-   * Default constructor
-   */
-  constructor() {
-  }
-
-  /**
    * This function can be used as a decorator to intercept a method and, based on {this.data},
    * whether to execute it or not.
    * 
@@ -19,13 +13,12 @@ export default class DataDecorator {
    * @param {string} properties - the properties separateed by a dot, e.g. 'data.property'
    * @public
    */
-  requires(properties) {
-    var self = this;
+  static requires(properties) {
     return function decorator(target, name, descriptor) {
       var oldValue = descriptor.value;
 
       descriptor.value = function () {
-        if (!self._hasData(self._getProperty(this.data, properties))) {
+        if (!DataDecorator._hasData(DataDecorator._getProperty(this.data, properties))) {
           return Promise.reject(new Exception(`No data here [${properties}], nothing to render... continuing...`));
         }
         return oldValue.apply(this, arguments);
@@ -43,13 +36,12 @@ export default class DataDecorator {
    * @param {string} properties - the properties separateed by a dot, e.g. 'data.property'
    * @public
    */
-  enabled(properties) {
-    var self = this;
+  static enabled(properties) {
     return function decorator(target, name, descriptor) {
       var oldValue = descriptor.value;
 
       descriptor.value = function () {
-        if (!self._getProperty(this.data, properties)) {
+        if (!DataDecorator._getProperty(this.data, properties)) {
           return Promise.reject(new Exception(`Property disabled [${properties}], skip execution... continuing...`));
         }
         return oldValue.apply(this, arguments);
@@ -65,7 +57,7 @@ export default class DataDecorator {
    * @param {string} propertyPath - property separated by dot
    * @private
    */
-  _getProperty(obj, propertyPath) {
+  static _getProperty(obj, propertyPath) {
 
     var tmp = obj;
 
@@ -90,7 +82,7 @@ export default class DataDecorator {
    * @param {Object} obj - the object to check
    * @private
    */
-  _hasData(obj) {
+  static _hasData(obj) {
     return obj && ((obj instanceof Array && obj.length) || (obj instanceof Object && Object.values(obj).length));
   }
 }
