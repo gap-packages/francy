@@ -70,7 +70,7 @@ export default class GenericGraph extends Graph {
     linkEnter.append('path')
       .classed('francy-edge', true)
       .style('fill', 'none')
-      .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 1))
+      .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.4))
       .style('stroke', d => d.color || '#000');
 
     if (this.data.canvas.graph.type === 'directed') {
@@ -78,7 +78,7 @@ export default class GenericGraph extends Graph {
         .classed('francy-edge-arrow', true)
         .style('stroke', 'none')
         .style('marker-start', d => `url(#arrow-${d.id})`)
-        .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 1));
+        .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.4));
     }
 
     linkEnter.filter(d => d.title).append('text')
@@ -110,7 +110,7 @@ export default class GenericGraph extends Graph {
     nodeEnter.filter(d => d.title).append('text')
       .classed('francy-label', true)
       .text(d => d.title)
-      //.style('font-size', d => 7 * Math.sqrt(d.size))
+      .style('font-size', d => 5 * Math.sqrt(d.size))
       .attr('x', function () {
         // apply mathjax if this is the case
         let text = d3.select(this);
@@ -120,12 +120,12 @@ export default class GenericGraph extends Graph {
             appendTo: { element: text },
             renderType: 'SVG',
             postFunction: () => {
-              text.attr('x', self.setLabelXPosition(this));
+              self.setLabelXPosition(this);
               simulation.restart();
             }
           }).render());
         }
-        return self.setLabelXPosition(this);
+        return self._getXPosition(this);
       });
 
     node.exit().remove();

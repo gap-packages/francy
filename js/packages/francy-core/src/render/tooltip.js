@@ -60,8 +60,8 @@ export default class Tooltip extends Renderer {
     // show tooltip
     this.element.style('display', 'block');
     
-    // destroy me after some time
-    setTimeout(this.unrender, 10000);
+    // destroy me after default delay
+    this.autoUnrender();
 
     return this;
   }

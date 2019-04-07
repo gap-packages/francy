@@ -81,6 +81,7 @@ export default class GraphGeneric extends Graph {
 
         links.classed('francy-link', true).each(function (d) {
           Object.assign(d, self.data.canvas.graph.links[d.key]);
+          d3.select(this).style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.4));
         });
 
         let removedNodes = nodes.remove();
@@ -115,17 +116,25 @@ export default class GraphGeneric extends Graph {
       });
   }
 
-  setLabelXPosition(element, x) {
-    if (element.node().width && element.node().width.baseVal && element.node().width.baseVal.value) {
+  async setLabelXPosition(element, x) {
+    try {
       let width = element.node().width.baseVal.value;
       element.attr('x', Math.ceil(Number(x) - (width / 2)));
+    } catch (Error) {
+      // don't care, this might fail for multiple reasons
+      // the use rmight have switch renderer for instance
+      // no worries if something is not properly aligned :P
     }
   }
 
-  setLabelYPosition(element, y) {
-    if (element.node().height && element.node().height.baseVal && element.node().height.baseVal.value) {
+  async setLabelYPosition(element, y) {
+    try {
       let height = element.node().height.baseVal.value;
       element.attr('y', Math.ceil(Number(y) - (height / 2)));
+    } catch (Error) {
+      // don't care, this might fail for multiple reasons
+      // the use rmight have switch renderer for instance
+      // no worries if something is not properly aligned :P
     }
   }
 

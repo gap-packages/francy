@@ -122,5 +122,16 @@ export default class Renderer extends BaseRenderer {
   get mathjax() {
     return new MathJaxWrapper(this.options, this.context).load(this.data);
   }
+  
+  /**
+   * Sets an execution of 'unrender()' with the certain delay.
+   * 
+   * @param {integer} delay - the delay in ms to call 'unrender()' function, defaults to 10000 ms
+   * @public
+   */
+  autoUnrender(delay = 10000) {
+    // destroy me after some time
+    setTimeout(() => this.unrender && this.unrender(), delay);
+  }
 
 }

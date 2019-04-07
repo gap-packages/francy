@@ -108,12 +108,22 @@ echo "Done"
 
 echo "Release to NPM..."
 
-cd $CURRENT/js/packages/francy-extension-browser
+cd $CURRENT/js/packages/francy
+npm publish
 
+cd $CURRENT/js/packages/francy-core
+npm publish
+
+cd $CURRENT/js/packages/francy-extension-browser
 npm publish
 
 cd $CURRENT/js/packages/francy-extension-jupyter/jupyter_francy/labextension/
+npm publish
 
+cd $CURRENT/js/packages/francy-renderer-d3
+npm publish
+
+cd $CURRENT/js/packages/francy-renderer-graphviz
 npm publish
 
 echo "Done"

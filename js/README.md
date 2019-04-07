@@ -1,5 +1,12 @@
 # Francy - Javascript
 
+[![npm version](https://badge.fury.io/js/francy.svg)](https://badge.fury.io/js/francy)
+[![npm version](https://badge.fury.io/js/francy-core.svg)](https://badge.fury.io/js/francy-core)
+[![npm version](https://badge.fury.io/js/francy-extension-browser.svg)](https://badge.fury.io/js/francy-extension-browser)
+[![npm version](https://badge.fury.io/js/jupyter-francy.svg)](https://badge.fury.io/js/jupyter-francy)
+[![npm version](https://badge.fury.io/js/francy-renderer-d3.svg)](https://badge.fury.io/js/francy-renderer-d3)
+[![npm version](https://badge.fury.io/js/francy-renderer-graphviz.svg)](https://badge.fury.io/js/francy-renderer-graphviz)
+
 This Javascript module produces graphics based on the semantic model produced by Francy GAP.
 
 Francy depends on [d3.v5](https://d3js.org/).

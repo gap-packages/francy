@@ -79,7 +79,7 @@ export default class TreeGraph extends Graph {
       linkEnter.append('path')
         .attr('class', 'francy-edge')
         .style('fill', 'none')
-        .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 1))
+        .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.4))
         .style('stroke', d => d.color || '#000')
         .attr('d', () => {
           let o = { x: source.x0, y: source.y0 };
@@ -132,7 +132,7 @@ export default class TreeGraph extends Graph {
       nodeEnter.filter(d => d.data.title).append('text')
         .attr('class', 'francy-label')
         .text(d => d.data.title)
-        .style('font-size', d => 7 * Math.sqrt(d.weight || 1))
+        .style('font-size', d => 5 * Math.sqrt(d.weight || 1))
         .style('cursor', d => d.children || d._children ? 'pointer' : 'default')
         .attr('x', function () {
           // apply mathjax if this is the case
@@ -143,11 +143,11 @@ export default class TreeGraph extends Graph {
               appendTo: { element: text },
               renderType: 'SVG',
               postFunction: () => {
-                text.attr('x', self.setLabelXPosition(this));
+                self.setLabelXPosition(this);
               }
             }).render());
           }
-          return self.setLabelXPosition(this);
+          return self._getXPosition(this);
         });
 
       let nodeUpdate = nodeEnter.merge(node);

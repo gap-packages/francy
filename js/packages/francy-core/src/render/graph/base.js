@@ -141,14 +141,34 @@ export default class Graph extends Renderer {
     return element;
   }
 
-  setLabelXPosition(element) {
+  _getXPosition(element) {
     let bound = element.getBBox();
     return -Math.ceil(bound.width / 2);
   }
 
-  setLabelYPosition(element) {
+  setLabelXPosition(element) {
+    try {
+      d3.select(element).attr('x', this._getXPosition(element));
+    } catch (Error) {
+      // don't care, this might fail for multiple reasons
+      // the use rmight have switch renderer for instance
+      // no worries if something is not properly aligned :P
+    } 
+  }
+  
+  _getYPosition(element) {
     let bound = element.getBBox();
     return Math.floor(bound.height / 2);
+  }
+
+  setLabelYPosition(element) {
+    try {
+      d3.select(element).attr('y', this._getYPosition(element));
+    } catch (Error) {
+      // don't care, this might fail for multiple reasons
+      // the use rmight have switch renderer for instance
+      // no worries if something is not properly aligned :P
+    } 
   }
 
 }
