@@ -81,7 +81,7 @@ export default class GraphGeneric extends Graph {
 
         links.classed('francy-link', true).each(function (d) {
           Object.assign(d, self.data.canvas.graph.links[d.key]);
-          d3.select(this).style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.4));
+          d3.select(this).style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.2));
         });
 
         let removedNodes = nodes.remove();
@@ -116,7 +116,7 @@ export default class GraphGeneric extends Graph {
       });
   }
 
-  async setLabelXPosition(element, x) {
+  setLabelXPosition(element, x) {
     try {
       let width = element.node().width.baseVal.value;
       element.attr('x', Math.ceil(Number(x) - (width / 2)));
@@ -127,7 +127,7 @@ export default class GraphGeneric extends Graph {
     }
   }
 
-  async setLabelYPosition(element, y) {
+  setLabelYPosition(element, y) {
     try {
       let height = element.node().height.baseVal.value;
       element.attr('y', Math.ceil(Number(y) - (height / 2)));

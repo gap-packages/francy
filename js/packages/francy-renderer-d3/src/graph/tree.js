@@ -79,7 +79,7 @@ export default class TreeGraph extends Graph {
       linkEnter.append('path')
         .attr('class', 'francy-edge')
         .style('fill', 'none')
-        .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.4))
+        .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.2))
         .style('stroke', d => d.color || '#000')
         .attr('d', () => {
           let o = { x: source.x0, y: source.y0 };
