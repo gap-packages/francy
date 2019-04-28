@@ -5,10 +5,13 @@
   <script src="https://unpkg.com/viz.js@1.8.1/viz.js"></script>
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://unpkg.com/d3-graphviz@2.6.1/build/d3-graphviz.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full,Safe"></script>
   <script src="../dist/FrancyJS.bundle.js"></script>
   <script src="../dist/D3Renderer.bundle.js"></script>
   <script src="../dist/GraphvizRenderer.bundle.js"></script>
+  <script src="../dist/VisRenderer.bundle.js"></script>
   <title>Francy Test</title>
 </head>
 
@@ -28,6 +31,7 @@
   // register available renderers
   Francy.RenderingManager.register(new D3Renderer());
   Francy.RenderingManager.register(new GraphvizRenderer());
+  Francy.RenderingManager.register(new VisRenderer());
 
   function resolvePromise(francy) {
     francy.render().catch(error => Logger.error(error)).then(element => {

@@ -1,9 +1,9 @@
 import Canvas from './src/canvas';
 import { RenderingConfiguration } from 'francy-core';
 
-export class GraphvizRenderer extends RenderingConfiguration {
+export class VisRenderer extends RenderingConfiguration {
     
   constructor(isDefault = false) {
-    super(Canvas, 'GraphViz-Renderer', isDefault);
+    super(Canvas, 'Vis-Renderer', isDefault);
   }
 }

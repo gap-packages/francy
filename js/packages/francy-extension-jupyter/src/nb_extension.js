@@ -31,15 +31,16 @@ define(
     'nbextensions/jupyter_francy/FrancyJS',
     'nbextensions/jupyter_francy/D3Renderer',
     'nbextensions/jupyter_francy/GraphvizRenderer',
+    'nbextensions/jupyter_francy/VisRenderer',
     'nbextensions/jupyter_francy/index'
   ],
-  (Jupyter, Vendors, FrancyJS, D3Renderer, GraphvizRenderer, Extension) => {
+  (Jupyter, Vendors, FrancyJS, D3Renderer, GraphvizRenderer, VisRenderer, Extension) => {
     function load_ipython_extension() {
       const { notebook } = Jupyter;
       Extension.register_renderer(Jupyter, { 
         FrancyApp: FrancyJS.FrancyApp,
         Logger: FrancyJS.Logger, 
-        Renderers: [ D3Renderer.D3Renderer, GraphvizRenderer.GraphvizRenderer ]
+        Renderers: [ D3Renderer.D3Renderer, GraphvizRenderer.GraphvizRenderer, VisRenderer.VisRenderer ]
       }, notebook);
       Extension.render_cells(notebook);
     }

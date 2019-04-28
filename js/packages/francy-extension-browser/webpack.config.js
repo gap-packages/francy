@@ -39,7 +39,8 @@ module.exports = (env = {}) => {
     entry: {
       FrancyJS: ['@babel/polyfill', 'francy'],
       D3Renderer: ['francy-renderer-d3'],
-      GraphvizRenderer: ['francy-renderer-graphviz']
+      GraphvizRenderer: ['francy-renderer-graphviz'],
+      VisRenderer: ['francy-renderer-vis']
     },
     stats: {
       colors: false,

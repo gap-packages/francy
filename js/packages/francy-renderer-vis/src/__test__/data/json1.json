@@ -1,0 +1,63 @@
+{
+  "version": "1.1.3",
+  "mime": "application/vnd.francy+json",
+  "canvas": {
+    "width": 800,
+    "id": "F146",
+    "height": 100,
+    "title": "Example undirected graph",
+    "zoomToFit": true,
+    "texTypesetting": false,
+    "menus": {},
+    "graph": {
+      "type": "undirected",
+      "id": "F147",
+      "simulation": true,
+      "collapsed": true,
+      "drag": false,
+      "showNeighbours": false,
+      "nodes": {
+        "F148": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "id": "F148",
+          "size": 10,
+          "title": "G",
+          "color": "",
+          "highlight": true,
+          "layer": 1,
+          "parent": "",
+          "menus": {},
+          "messages": {},
+          "callbacks": {}
+        },
+        "F149": {
+          "x": 0,
+          "y": 0,
+          "type": "circle",
+          "id": "F149",
+          "size": 10,
+          "title": "1",
+          "color": "",
+          "highlight": true,
+          "layer": 2,
+          "parent": "",
+          "menus": {},
+          "messages": {},
+          "callbacks": {}
+        }
+      },
+      "links": {
+        "F150": {
+          "id": "F150",
+          "source": "F148",
+          "weight": 1,
+          "color": "red",
+          "target": "F149"
+        }
+      }
+    },
+    "messages": {}
+  }
+}

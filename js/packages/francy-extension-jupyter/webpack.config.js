@@ -108,6 +108,7 @@ module.exports = (env = {}) => {
         'nbextensions/jupyter_francy/FrancyJS',
         'nbextensions/jupyter_francy/D3Renderer',
         'nbextensions/jupyter_francy/GraphvizRenderer',
+        'nbextensions/jupyter_francy/VisRenderer',
         'nbextensions/jupyter_francy/index'
       ]
     }),
@@ -128,7 +129,8 @@ module.exports = (env = {}) => {
         Vendors: [path.join(__dirname, 'src', 'vendor.js')],
         FrancyJS: ['@babel/polyfill', 'francy'],
         D3Renderer: ['@babel/polyfill/noConflict','francy-renderer-d3'],
-        GraphvizRenderer: ['@babel/polyfill/noConflict','francy-renderer-graphviz']
+        GraphvizRenderer: ['@babel/polyfill/noConflict','francy-renderer-graphviz'],
+        VisRenderer: ['@babel/polyfill/noConflict','francy-renderer-vis']
       },
       output: Object.assign({}, base.output, {
         filename: '[name].js',

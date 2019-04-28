@@ -126,7 +126,7 @@ export default class MainMenu extends Menu {
         self.element.select(`.${o.id}`).html(`${o.enable ? '&#9745' : '&#9744'} ${o.name}`);
         if (o.enable) {
           // remove previous rendered canvas
-          self.parent.select(`#Canvas-${self.data.canvas.id}>g`).selectAll('*').remove();
+          self.parent.select(`#Canvas-${self.data.canvas.id}`).remove();
           // re-render
           setTimeout(() => {
             let Renderer = self.context.renderingManager.activeRenderer();

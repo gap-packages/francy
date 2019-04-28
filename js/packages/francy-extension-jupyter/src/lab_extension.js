@@ -3,6 +3,7 @@ import { CLASS_NAME, MIME_TYPE } from './utils';
 import { FrancyApp, Logger } from 'francy';
 import { D3Renderer } from 'francy-renderer-d3';
 import { GraphvizRenderer } from 'francy-renderer-graphviz';
+import { VisRenderer } from 'francy-renderer-vis';
 //import { ILatexTypesetter as ignore } from '@jupyterlab/rendermime'; // required to load mathjax into JLab!
 //import { OutputArea } from '@jupyterlab/outputarea';
 import { Widget } from '@phosphor/widgets';
@@ -41,6 +42,7 @@ export class OutputWidget extends Widget {
     // register available renderers
     this.Francy.RenderingManager.register(new D3Renderer());
     this.Francy.RenderingManager.register(new GraphvizRenderer());
+    this.Francy.RenderingManager.register(new VisRenderer());
     // try to initialize MathJax just in case - hack
     this.Francy.Components.MathJax.tryInitialize();
   }
