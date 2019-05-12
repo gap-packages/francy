@@ -1,6 +1,6 @@
 {
   "name": "francy-renderer-vis",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A vis Renderer for Francy",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
@@ -15,10 +15,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "francy-core": "^1.2.0"
+    "francy-core": "^1.2.1"
   },
   "devDependencies": {
-    "francy": "^1.2.0"
+    "francy": "^1.2.1"
   },
   "scripts": {
     "test": "karma start karma.conf.js"
