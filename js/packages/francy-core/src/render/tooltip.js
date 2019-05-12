@@ -1,8 +1,6 @@
 import { Decorators } from '../decorator/factory';
 import Renderer from './renderer';
 
-/* global d3 */
-
 /**
  * Implements a Tooltip.
  * 
@@ -42,7 +40,7 @@ export default class Tooltip extends Renderer {
     // check if it exists already
     if (this.element.selectAll('*').node()) return;
 
-    let position = d3.mouse(this.SVGParent.node());
+    let position = this._mousePosition();
 
     // TODO this won't be visible all the times, fine until someone complains about :P
     this.element.style('left', (position[0] + 15) + 'px').style('top', (position[1] - 15) + 'px');

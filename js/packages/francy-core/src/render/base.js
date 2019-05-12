@@ -93,6 +93,17 @@ export default class BaseRenderer extends DataHandler {
     Logger.error(error.message);
     throw error;
   }
+  
+  /**
+   * Returns the current mouse position.
+   * 
+   * @private
+   */
+  _mousePosition() {
+    var x = ((event.screenX + event.clientX) / 2) - event.pageX + event.offsetX;
+    var y = ((event.screenY + event.clientY) / 2) - event.pageY + event.offsetY;
+    return [x, y];
+  }
 
   /**
    * Generic Promise handler.

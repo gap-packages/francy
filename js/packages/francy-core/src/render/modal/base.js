@@ -86,6 +86,7 @@ export default class Modal extends Renderer {
       }
       return false;
     });
+
     footer.append('button').text('Cancel').on('click', () => { 
       d3.event.preventDefault(); 
       this.unrender.call(this); 

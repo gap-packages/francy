@@ -51,6 +51,7 @@ export class FrancyApp extends Renderer {
         return this.renderingManager.context.instanceId; 
       },
     });
+    this.frame = undefined;
     // all good!
   }
 
@@ -83,10 +84,13 @@ export class FrancyApp extends Renderer {
    */
   @Decorators.Data.requires('canvas')
   async render() {
-    let frame = await new Frame(this.options, this.context)
+    if (!this.frame) {
+      this.frame = new Frame(this.options, this.context);
+    }
+    let graph = await this.frame
       .load(this.data).render()
       .then(element => element)
       .finally(() => this.load({}, true));
-    return frame.element.node();
+    return graph.element.node();
   }
 }

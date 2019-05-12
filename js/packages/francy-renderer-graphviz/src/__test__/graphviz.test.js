@@ -1,16 +1,15 @@
 import { expect } from 'chai';
 import { FrancyApp, Logger } from 'francy';
-import { VisRenderer } from '../../index';
+import { GraphvizRenderer } from '../../index';
 import './d3_wrapper';
 
 import undirected from './data/json1.json';
-import * as vis from 'vis';
+import * as viz_ignore from 'viz.js';
 
 describe('Render Graph', () => {
 
-  window.vis = global.vis = vis;
   var Francy = new FrancyApp({ appendTo: 'body', callbackHandler: Logger.info });
-  Francy.RenderingManager.register(new VisRenderer());
+  Francy.RenderingManager.register(new GraphvizRenderer());
 
   beforeEach(() => {});
 

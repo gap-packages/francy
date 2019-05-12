@@ -15,7 +15,7 @@ export default class JupyterDecorator {
    * @param {string[]} classes - an Array of css classes to add on Jupyter keyboard_manager events
    * @public
    */
-  registerKeyboardEvents(classes) {
+  static registerKeyboardEvents(classes) {
     // disable keyboard shortcuts in Jupyter for specific css classed elements
     if (!classes) return;
     try {

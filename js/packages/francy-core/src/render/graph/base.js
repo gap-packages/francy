@@ -33,6 +33,29 @@ export default class Graph extends Renderer {
     this.contextMenu = new ContextMenu(this.options, this.context);
     this.callback = new Callback(this.options, this.context);
     this.graphOperations = new GraphOperations(this.options, this.context);
+    this.OnEvent = {
+      mouseOut: () => this.tooltip.unrender(),
+      mouseIn: (data) => {
+        if (data.messages) {
+          // default, show tooltip
+          this.handlePromise(this.tooltip.load({ messages: data.messages }, true).render());
+          // ok, this is almost an hack, because this should be rendered on
+          // the tooltip itself.. but because a tooltip gets only the messages 
+          // object to render and not the whole `this.data` object, 
+          // we can't check for the property canvas.texTypesetting, 
+          // hence this:
+          this.handlePromise(this.mathjax.settings({ appendTo: this.tooltip, renderType: 'HTML-CSS' }).render());
+        }
+      },
+      doubleClick: (data) => this._executeCallback.call(this, this, data, 'dblclick'),
+      click: (data) => this._executeCallback.call(this, this, data, 'click'),
+      contextMenu: (data) => {
+      // default, build context menu
+        this.handlePromise(this.contextMenu.load(data, true).render());
+        // any callbacks will be handled here
+        this._executeCallback.call(this, this, data, 'contextmenu');
+      }
+    };
   }
 
   _applyEvents(element) {
@@ -43,38 +66,23 @@ export default class Graph extends Renderer {
       .on('contextmenu', function (d) {
         let data = d.data || d;
         self._selectNode.call(this, self, data);
-        // default, build context menu
-        self.handlePromise(self.contextMenu.load(data, true).render());
-        // any callbacks will be handled here
-        self._executeCallback.call(this, self, data, 'contextmenu');
+        self.OnEvent.contextMenu(data);
       })
       .on('click', function (d) {
         let data = d.data || d;
         self._selectNode.call(this, self, data);
-        // any callbacks will be handled here
-        self._executeCallback.call(this, self, data, 'click');
+        self.OnEvent.click(data);
       })
       .on('dblclick', function (d) {
         let data = d.data || d;
-        // any callbacks will be handled here
-        self._executeCallback.call(this, self, data, 'dblclick');
+        self.OnEvent.doubleClick(data);
       })
       .on('mouseover', function (d) {
         let data = d.data || d;
-        if (data.messages) {
-          // default, show tooltip
-          self.handlePromise(self.tooltip.load({ messages: data.messages }, true).render());
-          // ok, this is almost an hack, because this should be rendered on
-          // the tooltip itself.. but because a tooltip gets only the messages 
-          // object to render and not the whole `this.data` object, 
-          // we can't check for the property canvas.texTypesetting, 
-          // hence this:
-          self.handlePromise(self.mathjax.settings({ appendTo: self.tooltip, renderType: 'HTML-CSS' }).render());
-        }
+        self.OnEvent.mouseIn(data);
       })
       .on('mouseout', function () {
-        // default, hide tooltip
-        self.tooltip.unrender();
+        self.OnEvent.mouseOut();
       });
   }
 

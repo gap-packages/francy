@@ -3,7 +3,6 @@ import Menu from './base';
 
 /* global d3 */
 
-
 /**
  * Implements a Context Menu.
  * 
@@ -28,7 +27,9 @@ export default class ContextMenu extends Menu {
   @Decorators.Data.requires('menus')
   async render() {
 
-    d3.event.preventDefault();
+    if (d3.event) {
+      d3.event.preventDefault();
+    }
 
     this.element = this.HTMLParent.select('div.francy-context-menu-holder');
     // check if the menu holder is already present
@@ -37,7 +38,7 @@ export default class ContextMenu extends Menu {
         .attr('class', 'francy-context-menu-holder');
     }
 
-    let position = d3.mouse(this.SVGParent.node());
+    let position = this._mousePosition();
 
     this.element.style('left', position[0] + 5 + 'px').style('top', position[1] + 5 + 'px');
 

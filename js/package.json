@@ -54,13 +54,13 @@
     "lodash.reduce": "4.6.0",
     "mocha": "6.1.4",
     "puppeteer": "1.15.0",
-    "save-svg-as-png": "1.4.12",
+    "save-svg-as-png": "1.4.14",
     "seedrandom": "3.0.1",
     "style-loader": "0.23.1",
     "uglifyjs-webpack-plugin": "2.1.2",
     "vis": "4.21.0",
     "viz.js": "1.8.1",
-    "webpack": "4.30.0",
-    "webpack-cli": "3.3.1"
+    "webpack": "4.31.0",
+    "webpack-cli": "3.3.2"
   }
 }

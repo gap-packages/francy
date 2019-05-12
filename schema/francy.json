@@ -1,14 +1,14 @@
 {
   "definitions": {},
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "https://github.com/mcmartins/francy/gap/schema/francy.json",
+  "$id": "https://github.com/gap-packages/francy/gap/schema/francy.json",
   "type": "object",
   "properties": {
     "mime": {
       "type": "string",
       "title": "The Mime Schema.",
-      "description": "An explanation about the purpose of this instance.",
-      "default": "",
+      "description": "Describes the type of mime object to be rendered.",
+      "default": "application/vnd.francy+json",
       "examples": [
         "application/vnd.francy+json"
       ]
@@ -16,7 +16,7 @@
     "version": {
       "type": "string",
       "title": "The Version Schema.",
-      "description": "An explanation about the purpose of this instance.",
+      "description": "Describes the version of the generated data.",
       "default": "",
       "examples": [
         "0.0.1"
@@ -28,7 +28,7 @@
         "width": {
           "type": "string",
           "title": "The Width Schema.",
-          "description": "An explanation about the purpose of this instance.",
+          "description": "The canvas width.",
           "default": "",
           "examples": [
             "800"
@@ -37,7 +37,7 @@
         "height": {
           "type": "string",
           "title": "The Height Schema.",
-          "description": "An explanation about the purpose of this instance.",
+          "description": "The canvas height.",
           "default": "",
           "examples": [
             "600"
@@ -46,16 +46,16 @@
         "id": {
           "type": "string",
           "title": "The Id Schema.",
-          "description": "An explanation about the purpose of this instance.",
+          "description": "A unique identifier that identifies this object.",
           "default": "",
           "examples": [
-            "A197731FA6674899EC0A97DF399ED5BC"
+            "F123"
           ]
         },
         "title": {
           "type": "string",
           "title": "The Title Schema.",
-          "description": "An explanation about the purpose of this instance.",
+          "description": "A title for the canvas.",
           "default": "",
           "examples": [
             "Quaternion Group Subgroup Lattice"
@@ -70,16 +70,16 @@
                 "id": {
                   "type": "string",
                   "title": "The Id Schema.",
-                  "description": "An explanation about the purpose of this instance.",
+                  "description": "A unique identifier that identifies this object.",
                   "default": "",
                   "examples": [
-                    "366688A254054F9AFC43A6EA5008CAD2"
+                    "F123"
                   ]
                 },
                 "title": {
                   "type": "string",
                   "title": "The Title Schema.",
-                  "description": "An explanation about the purpose of this instance.",
+                  "description": "A title for the menu to be used as label.",
                   "default": "",
                   "examples": [
                     "Add Circle"
@@ -91,10 +91,10 @@
                     "id": {
                       "type": "string",
                       "title": "The Id Schema.",
-                      "description": "An explanation about the purpose of this instance.",
+                      "description": "A unique identifier that identifies this object.",
                       "default": "",
                       "examples": [
-                        "9A4E435F8A234BBD34DD34C838182A5C"
+                        "F123"
                       ]
                     },
                     "trigger": {
@@ -132,7 +132,7 @@
                             "id": {
                               "type": "string",
                               "title": "The Id Schema.",
-                              "description": "An explanation about the purpose of this instance.",
+                              "description": "A unique identifier that identifies this object.",
                               "default": "",
                               "examples": [
                                 "8F794C1FA828467404CA41218DCFC68D"

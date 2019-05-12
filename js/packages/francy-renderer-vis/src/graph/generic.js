@@ -22,6 +22,9 @@ export default class GraphGeneric extends Graph {
     canvasNodes.forEach(function(node){
       node['label'] = node.title;
       node['group'] = node.conjugate || node.layer;
+      node['borderWidth'] =  node.invisible ? 0 : Math.sqrt(node.weight || 0.2);
+      node['chosen'] = node.selected;
+      node['shape'] = node.type;
     });
     
     canvasLinks.forEach(function(link){
@@ -33,8 +36,8 @@ export default class GraphGeneric extends Graph {
     });
       
     var network = new vis.Network(this.parent.node(), {
-      nodes: canvasNodes,
-      edges: canvasLinks
+      nodes: new vis.DataSet(canvasNodes),
+      edges: new vis.DataSet(canvasLinks)
     }, {
       nodes: {
         borderWidth: 2
@@ -44,16 +47,56 @@ export default class GraphGeneric extends Graph {
       },
       layout: {
         hierarchical: {
-          direction: 'UD',
-          sortMethod: 'directed'
+          direction: self.context.configuration.object.visLayoutDirection,
+          sortMethod: self.context.configuration.object.visLayoutSortMethod
         }
       },
-      height: self.data.canvas.height
+      height: self.data.canvas.height + ''
     });
+    
+    // update the zoom to fit function
+    self.parentClass.zoomToFit = () => network.fit();
   
     network.on('stabilized', function() {
       loader.hide();
     });
+    
+    network.on('click', function(params) {
+      params.event.preventDefault();
+      let data = resolveNode.call(this, params);
+      self.OnEvent.click(data);
+    });
+    
+    network.on('oncontext', function (params) {
+      params.event.preventDefault();
+      let data = resolveNode.call(this, params);
+      self.OnEvent.contextMenu(data);
+    });
+
+    network.on('doubleClick', function (params) {
+      params.event.preventDefault();
+      let data = resolveNode.call(this, params);
+      self.OnEvent.doubleClick(data);
+    });
+      
+    network.on('hoverNode', function (params) {
+      params.event.preventDefault();
+      let data = resolveNode.call(this, params);
+      self.OnEvent.mouseIn(data);
+    });
+      
+    network.on('blurNode', function () {
+      self.OnEvent.mouseOut();
+    });
+      
+    function resolveNode(params) {
+      let nodeIndex = this.getNodeAt(params.pointer.DOM);
+      if (nodeIndex) {
+        let node = this.body.nodes[nodeIndex];
+        return node.options;
+      }
+    }
+    
   }
 
 }
