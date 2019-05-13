@@ -36,7 +36,7 @@ export default class Graph extends Renderer {
     this.OnEvent = {
       mouseOut: () => this.tooltip.unrender(),
       mouseIn: (data) => {
-        if (data.messages) {
+        if (data && data.messages) {
           // default, show tooltip
           this.handlePromise(this.tooltip.load({ messages: data.messages }, true).render());
           // ok, this is almost an hack, because this should be rendered on
@@ -95,7 +95,7 @@ export default class Graph extends Renderer {
   }
 
   _executeCallback(self, data, event) {
-    if (data.callbacks) {
+    if (data && data.callbacks) {
       Object.values(data.callbacks).forEach(cb => {
         // execute only the ones that match the event!
         cb.trigger === event && self.handlePromise(self.callback.load({ callback: cb }, true).execute());

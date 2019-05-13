@@ -15,7 +15,7 @@ RUN rm -rf $HOME/inst/gap-master/pkg/francy && mv $HOME/francy $HOME/inst/gap-ma
   && git clone https://github.com/mcmartins/subgroup-lattice
 
 RUN apt-get -qq install -y curl \
-    && curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash - \
+    && curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - \
     && apt-get install -yq nodejs && npm install npm@latest -g
 
 # notebook and lab extension installation

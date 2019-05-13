@@ -40,7 +40,7 @@ export default class DataHandler {
         this.alertOnDataVersion = true;
         Logger.warn(`Data was generated in Francy GAP v${this.data.version} and you're using Francy JS v${VERSION}... Rendering may fail, please update your system...`);
       }
-    }
+    }data
     return this;
   }
 

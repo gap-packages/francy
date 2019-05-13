@@ -78,7 +78,7 @@ version=${TRAVIS_BRANCH:1}
 folder="francy-$version"
 filename="$folder.tar.gz"
 
-echo "creating release artifact : $filename"
+echo "Creating release artifact : $filename"
 
 mkdir -p $folder
 
@@ -97,7 +97,7 @@ cd ..
 
 tar -czf $filename $folder
 
-echo "uploading asset to: $upload_url"
+echo "Uploading asset to: $upload_url"
 
 curl -s -H "Authorization: token $GITHUB_ADMIN_KEY" -H "Content-Type: application/tar+gzip" \
   --data-binary @$filename "$upload_url?name=$filename&label=$filename"
@@ -109,12 +109,14 @@ echo "Done"
 echo "Release to NPM..."
 
 # config npm token for authentication
-npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+npm config set '//registry.npmjs.org/:_authToken' ${NPM_TOKEN}
 
-cd $CURRENT/js/packages/francy
-npm publish
+echo "NPM configured for user: $(npm whoami)"
 
 cd $CURRENT/js/packages/francy-core
+npm publish
+
+cd $CURRENT/js/packages/francy
 npm publish
 
 cd $CURRENT/js/packages/francy-extension-browser
