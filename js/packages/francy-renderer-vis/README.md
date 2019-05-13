@@ -1,6 +1,6 @@
 # Francy VisJS Renderer
 
-[![npm version](https://badge.fury.io/js/francy-renderer-vis.svg)](https://badge.fury.io/js/francy-renderer-vis)
+[![npm version](https://badge.fury.io/js/francy-renderer-visjs.svg)](https://badge.fury.io/js/francy-renderer-visjs)
 
 This package contains the implementation of graphs and charts using vis js.
 

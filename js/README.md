@@ -6,6 +6,7 @@
 [![npm version](https://badge.fury.io/js/jupyter-francy.svg)](https://badge.fury.io/js/jupyter-francy)
 [![npm version](https://badge.fury.io/js/francy-renderer-d3.svg)](https://badge.fury.io/js/francy-renderer-d3)
 [![npm version](https://badge.fury.io/js/francy-renderer-graphviz.svg)](https://badge.fury.io/js/francy-renderer-graphviz)
+[![npm version](https://badge.fury.io/js/francy-renderer-visjs.svg)](https://badge.fury.io/js/francy-renderer-visjs)
 
 This Javascript module produces graphics based on the semantic model produced by Francy GAP.
 
@@ -55,10 +56,10 @@ mcmartins@local:~$ jupyter labextension install jupyter-francy
   <script src="https://unpkg.com/d3-graphviz@2.6.1/build/d3-graphviz.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" />
-  <script src="https://unpkg.com/francy-extension-browser@1.2.1/dist/FrancyJS.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.2.1/dist/D3Renderer.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.2.1/dist/GraphvizRenderer.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.2.1/dist/VisRenderer.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.2.2/dist/FrancyJS.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.2.2/dist/D3Renderer.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.2.2/dist/GraphvizRenderer.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.2.2/dist/VisRenderer.bundle.js"></script>
   <title>Francy</title>
 </head>
 <body>
@@ -98,6 +99,7 @@ mcmartins@local:~$ jupyter labextension install jupyter-francy
 | packages/francy-extension-jupyter | contains the browser extension classes, for jupyter integration |
 | packages/francy-renderer-d3       | contains the classes to produce graphics with D3                |
 | packages/francy-renderer-graphviz | contains the classes to produce graphics with D3-Graphviz       |
+| packages/francy-renderer-vis      | contains the classes to produce graphics with Vis.js            |
 
 # License
 

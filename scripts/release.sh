@@ -108,6 +108,9 @@ echo "Done"
 
 echo "Release to NPM..."
 
+# config npm token for authentication
+npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+
 cd $CURRENT/js/packages/francy
 npm publish
 
@@ -124,6 +127,9 @@ cd $CURRENT/js/packages/francy-renderer-d3
 npm publish
 
 cd $CURRENT/js/packages/francy-renderer-graphviz
+npm publish
+
+cd $CURRENT/js/packages/francy-renderer-vis
 npm publish
 
 echo "Done"

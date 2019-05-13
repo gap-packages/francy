@@ -3,7 +3,7 @@ import { FrancyApp, Logger } from 'francy';
 import { VisRenderer } from '../../index';
 import './d3_wrapper';
 
-import undirected from './data/json1.json';
+import undirected from '../../node_modules/francy/src/__test__/data/json1.json';
 import * as vis from 'vis';
 
 describe('Render Graph', () => {
