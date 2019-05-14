@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import { expect } from 'chai';
 import './d3_wrapper';
 import { FrancyApp, Logger } from '../../index';
-import undirected from './data/json1.json';
+import undirected from '../../node_modules/francy-core/src/__test__/data/json1.json';
 
 describe('Francy Renderer Object', function () {
 

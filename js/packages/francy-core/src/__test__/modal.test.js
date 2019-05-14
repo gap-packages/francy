@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { expect } from 'chai';
-import json1 from '../../node_modules/francy/src/__test__/data/json1.json';
+import json1 from './data/json1.json';
 import RequiredArgsModal from '../render/modal/required';
 import AboutModal from '../render/modal/about';
 import { default as ConfigurationHandler, DefaultConfiguration } from '../util/configuration';
