@@ -13,7 +13,8 @@
     "francy",
     "jupyter",
     "jupyterlab",
-    "jupyterlab-extension"
+    "jupyterlab-extension",
+    "extension"
   ],
   "jupyterlab": {
     "mimeExtension": "extension"

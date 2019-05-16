@@ -1,12 +1,12 @@
 {
   "name": "francy-extension-jupyter",
   "version": "1.2.3",
-  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Jupyter Notebook/Lab Extension",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcmartins/francy.git"
+    "url": "https://github.com/gap-packages/francy.git"
   },
   "license": "MIT",
   "keywords": [
@@ -16,7 +16,8 @@
     "jupyterlab",
     "jupyterlab-extension",
     "jupyter notebook",
-    "jupyter notebook extension"
+    "jupyter notebook extension",
+    "extension"
   ],
   "scripts": {
     "clean": "rm -rf ./lib ./dist ./build ./jupyter_francy/jupyter_francy ./jupyter_francy/__pycache__ ./jupyter_francy/nbextension ./jupyter_francy/labextension ./jupyter_francy.egg-info ./__pycache__",

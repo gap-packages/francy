@@ -1,17 +1,17 @@
 {
   "name": "francy-renderer-graphviz",
   "version": "1.2.3",
-  "description": "A d3-graphviz Renderer for Francy",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - A Graphviz Renderer",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcmartins/francy.git"
+    "url": "https://github.com/gap-packages/francy.git"
   },
   "keywords": [
     "gap",
     "francy",
-    "graphics",
-    "interactivity"
+    "graphviz",
+    "renderer"
   ],
   "license": "MIT",
   "dependencies": {

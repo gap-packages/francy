@@ -1,17 +1,17 @@
 {
   "name": "francy-extension-browser",
   "version": "1.2.3",
-  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Browser Extension",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcmartins/francy.git"
+    "url": "https://github.com/gap-packages/francy.git"
   },
   "keywords": [
     "gap",
     "francy",
-    "graphics",
-    "interactivity"
+    "browser",
+    "extension"
   ],
   "license": "MIT",
   "main": "index.js",

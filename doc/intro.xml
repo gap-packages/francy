@@ -34,7 +34,7 @@
 
     This package requires the &GAP; packages &JupyterKernel; and &json;, all of which are distributed with &GAP;. &Francy; follows a similar installation procedure to &JupyterKernel;, so it requires &Jupyter; to be installed on your system. 
     Please note, you need to run the installation commands from the same python version &Jupyter; is installed on. 
-    In order to install &Francy;, please run the following command to download the latest version available from <URL>https://pypi.org/</URL>:
+    In order to install/update &Francy;, please run the following command to download the latest version available from <URL>https://pypi.org/</URL>:
     <Log>
       mcmartins@local:~$ pip install jupyter_francy -U
     </Log>

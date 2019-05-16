@@ -5,7 +5,7 @@
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcmartins/francy.git"
+    "url": "https://github.com/gap-packages/francy.git"
   },
   "keywords": [
     "gap",
@@ -17,8 +17,8 @@
   "scripts": {
     "test": "karma start karma.conf.js"
   },
-  "main": "index.js",
   "dependencies": {
     "francy-core": "^1.2.3"
-  }
+  },
+  "main": "index.js"
 }

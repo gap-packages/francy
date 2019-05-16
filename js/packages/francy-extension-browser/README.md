@@ -39,7 +39,7 @@ This extension can be used in `offline` mode in a web page as follows:
     Francy.RenderingManager.register(new VisRenderer());
 
     d3.json("json.json", function (error, json) {
-      Francy.load(json).render().catch(error => Logger.error(error)).then(element => Logger.info('... Do whatever with me:', element));
+      Francy.load(json).render().catch(error => Logger.error(error)).then(element => Logger.info('Do whatever with me:', element));
     });
 
   </script>

@@ -1,17 +1,17 @@
 {
   "name": "francy-core",
   "version": "1.2.3",
-  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Core library",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcmartins/francy.git"
+    "url": "https://github.com/gap-packages/francy.git"
   },
   "keywords": [
     "gap",
     "francy",
-    "graphics",
-    "interactivity"
+    "core",
+    "extension"
   ],
   "license": "MIT",
   "scripts": {

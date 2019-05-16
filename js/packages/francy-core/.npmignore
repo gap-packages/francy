@@ -29,9 +29,6 @@ node_modules
 # Intellij
 .idea
 
-# Tests
-test
-
 # VisualStudio
 taco.json
 *.sln
@@ -49,7 +46,12 @@ wepack.config.js
 # istanbul
 .nyc_output
 
-src
-doc
-style
+# Karma
+karma.conf.js
+
+# Tests
+src/__test__
 test
+
+# Documentation
+doc

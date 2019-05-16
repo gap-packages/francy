@@ -6,7 +6,7 @@
 [![npm version](https://badge.fury.io/js/jupyter-francy.svg)](https://badge.fury.io/js/jupyter-francy)
 [![npm version](https://badge.fury.io/js/francy-renderer-d3.svg)](https://badge.fury.io/js/francy-renderer-d3)
 [![npm version](https://badge.fury.io/js/francy-renderer-graphviz.svg)](https://badge.fury.io/js/francy-renderer-graphviz)
-[![npm version](https://badge.fury.io/js/francy-renderer-visjs.svg)](https://badge.fury.io/js/francy-renderer-visjs)
+[![npm version](https://badge.fury.io/js/francy-renderer-vis.svg)](https://badge.fury.io/js/francy-renderer-vis)
 
 This Javascript module produces graphics based on the semantic model produced by Francy GAP.
 
@@ -19,15 +19,15 @@ The renderers can be swithed at any time using the user interface, by selecting 
 
 Francy implements 3 renderers at the moment:
 
-1. D3 using D3 forces to get a representation of network graphs and charts.
-2. Graphviz using one of 'circo', 'dot', 'fdp', 'neato', 'osage', 'patchwork' or 'twopi' engines to get different representations.
-3. Vis networks.
+1. [D3](https://d3js.org/) using D3 forces to get a representation of network graphs and charts.
+2. [Graphviz](https://www.graphviz.org/), [d3-graphviz](https://github.com/magjac/d3-graphviz), using one of 'circo', 'dot', 'fdp', 'neato', 'osage', 'patchwork' or 'twopi' engines to get different representations.
+3. [Vis](http://visjs.org/) using dynamic customizable networks.
 
 ## Usage
 
 Note: 
-Make sure [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter.
-Make sure [Francy GAP](/) is installed on GAP.
+Make sure [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter - JupyterKernel is distributed with GAP by default, since v4.10 :)
+Make sure [Francy GAP](/) is installed on GAP - Francy is distributed with GAP by default, since v4.10 :)
 
 ### Jupyter integration
 
@@ -80,7 +80,7 @@ mcmartins@local:~$ jupyter labextension install jupyter-francy
     Francy.RenderingManager.register(new VisRenderer());
 
     d3.json("json.json", function (error, json) {
-      Francy.load(json).render().catch(error => Logger.error(error)).then(element => Logger.info('... Do whatever with me:', element));
+      Francy.load(json).render().catch(error => Logger.error(error)).then(element => Logger.info('Do whatever with me:', element));
     });
 
   </script>

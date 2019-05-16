@@ -1,17 +1,17 @@
 {
   "name": "francy-renderer-d3",
   "version": "1.2.3",
-  "description": "A D3.js Renderer for Francy",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - A D3.js Renderer",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcmartins/francy.git"
+    "url": "https://github.com/gap-packages/francy.git"
   },
   "keywords": [
     "gap",
     "francy",
-    "graphics",
-    "interactivity"
+    "d3",
+    "renderer"
   ],
   "license": "MIT",
   "scripts": {

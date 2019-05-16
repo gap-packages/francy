@@ -10,6 +10,7 @@ import { Utilities } from './utilities';
 export default class ConfigurationHandler extends Observable {
   /**
    * Creates a instance of ModelTracker.
+   * 
    * @param {object} object - the object object to keep track of changes.
    * @param {object} config
    * @param {number} config.throttle - the interval for storing dirty data
