@@ -7,7 +7,7 @@
 
 # Francy
 
-Francy is a package for GAP and provides a framework for Interactive Discrete Mathematics.
+Francy is a package for GAP that provides a framework for Interactive Discrete Mathematics.
 
 Unlike [XGAP](https://github.com/gap-packages/xgap), Francy is not linked with any GUI framework and instead, 
 this package is responsible for the generation of a semantic model that can be used to produce a graphical representation using any other framework / language.
@@ -22,11 +22,11 @@ See [Graphics Interface](/js)
 
 Jupyter Notebook Binder
 
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master)
 
 Jupyter Lab Binder
 
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master?urlpath=lab)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master?urlpath=lab)
 
 These binders include the following notebooks:
 
@@ -38,7 +38,7 @@ These binders include the following notebooks:
 |francy-numericalsgps.ipynb      | Same as above, but the algorithms are visible in the notebook  |
 |francy.ipynb                    | First notebook ever created with Francy                        |
 |ICMS_2018.ipynb                 | Presentation notebook for the ICMS 2018 in USA                 |
-|orbital-graphs.ipynb            | Constains some reseach algorithms for orbital graphs           |
+|orbital-graphs.ipynb            | Contains some reseach algorithms for orbital graphs            |
 |subgroup-lattice.ipynb          | Contains Subgroup-Lattice package examples                     |
 
 # Jupyter Integration
@@ -51,9 +51,8 @@ mcmartins@local:~$ jupyter lab build # for JupyterLab
 mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Jupyter Notebook
 ```
 
-The jupyter extension requires the JupyterKernel GAP package installed.
-
-See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel)
+The jupyter extension requires the JupyterKernel GAP package installed. 
+See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel) for more information.
 
 # Package Structure
 
@@ -67,6 +66,14 @@ See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel)
 | gap        | contains the source code of francy-gap                         |
 | examples   | contains examples used throughout francy-gap documentation     |
 | doc        | contains introductory documentation for francy-gap             |
+
+# Other projects based or inspired by Francy
+
+| Project                                                    | Author                                           | Description                                              |
+|:-----------------------------------------------------------|:-------------------------------------------------|:---------------------------------------------------------|
+| [Jupyterviz](https://github.com/nathancarter/jupyterviz)   | [Nathan Carter](https://github.com/nathancarter) | Provides general purpose visualization tools             |                            
+| [Francy Julia](https://github.com/fieker/Francy)           | [Claus Fieker](https://github.com/fieker)        | Francy ported to Julia language                          |
+| [Francy Widgets](https://github.com/zerline/francy-widget) | [Odile Bénassy](https://github.com/zerline)      | Francy Python adapter for representing graphs in Jupyter |
 
 # License
 
