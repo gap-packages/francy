@@ -11,8 +11,8 @@ mcmartins@local:~$ jupyter labextension install jupyter-francy
 ```
 
 Note: 
-Make sure [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter.
-Make sure [Francy GAP](/) is installed on GAP.
+Make sure [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter - JupyterKernel is distributed with GAP by default, since v4.10 :)
+Make sure [Francy GAP](/) is installed on GAP - Francy is distributed with GAP by default, since v4.10 :)
 
 # License
 

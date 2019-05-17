@@ -15,10 +15,10 @@ This extension can be used in `offline` mode in a web page as follows:
   <script src="https://unpkg.com/d3-graphviz@2.6.1/build/d3-graphviz.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" />
-  <script src="https://unpkg.com/francy-extension-browser@1.2.3/dist/FrancyJS.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.2.3/dist/D3Renderer.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.2.3/dist/GraphvizRenderer.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.2.3/dist/VisRenderer.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.2.4/dist/FrancyJS.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.2.4/dist/D3Renderer.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.2.4/dist/GraphvizRenderer.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@1.2.4/dist/VisRenderer.bundle.js"></script>
   <title>Francy</title>
 </head>
 <body>

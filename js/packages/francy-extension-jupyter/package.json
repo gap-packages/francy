@@ -1,6 +1,6 @@
 {
   "name": "francy-extension-jupyter",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Jupyter Notebook/Lab Extension",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "main": "lib/index.js",
@@ -30,11 +30,11 @@
   "dependencies": {
     "d3": "5.9.2",
     "d3-graphviz": "2.6.1",
-    "francy": "^1.2.3",
-    "francy-core": "^1.2.3",
-    "francy-renderer-d3": "^1.2.3",
-    "francy-renderer-graphviz": "^1.2.3",
-    "francy-renderer-vis": "^1.2.3",
+    "francy": "^1.2.4",
+    "francy-core": "^1.2.4",
+    "francy-renderer-d3": "^1.2.4",
+    "francy-renderer-graphviz": "^1.2.4",
+    "francy-renderer-vis": "^1.2.4",
     "vis": "4.21.0",
     "viz.js": "1.8.1"
   },
