@@ -80,6 +80,16 @@ export default class Renderer extends BaseRenderer {
   get SVGParent() {
     return this.parent.node().tagName.toLowerCase() === 'div' ? this.parent.select('svg') : this.parent;
   }
+  
+  /**
+   * Returns the Canvas element if available, otherwise the parent element whatever it is (most likely an HTML)
+   * 
+   * @returns {object} the SVG element
+   * @public
+   */
+  get HTMLCanvasParent() {
+    return this.parent.node().tagName.toLowerCase() === 'div' ? this.parent.select('canvas') : this.parent;
+  }
 
   /**
    * Returns a static object containing margins

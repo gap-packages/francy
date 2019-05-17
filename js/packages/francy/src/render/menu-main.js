@@ -79,7 +79,23 @@ export default class MainMenu extends Menu {
         let name = self.data.canvas.title 
           ? Utilities.sanitize(self.data.canvas.title, '_') + '.png' 
           : 'diagram.png';
-        SvgToPng.saveSvgAsPng(self.SVGParent.node(), name);
+        if (self.SVGParent.node()) {
+          SvgToPng.saveSvgAsPng(self.SVGParent.node(), name);
+        } else if (self.HTMLCanvasParent.node()) {
+          let link = document.createElement('a');
+          link.download = name;
+          link.href = self.HTMLCanvasParent.node().toDataURL();
+          if (document.createEvent) {
+            let e = document.createEvent('MouseEvents');
+            e.initMouseEvent('click', true, true, window,
+              0, 0, 0, 0, 0, false, false, false,
+              false, 0, null);
+      
+            link.dispatchEvent(e);
+          } else if (link.fireEvent) {
+            link.fireEvent('onclick');
+          }
+        }
       }
     });
     this._addEntryOnFrancyMenu({

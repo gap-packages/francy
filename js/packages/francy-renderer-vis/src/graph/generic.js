@@ -1,4 +1,4 @@
-import { Callback, ContextMenu, Decorators, Graph, Tooltip } from 'francy-core';
+import { Callback, ContextMenu, Decorators, Graph, Tooltip, Utilities } from 'francy-core';
 
 /* global vis */
 
@@ -18,6 +18,15 @@ export default class GraphGeneric extends Graph {
       loader = Decorators.Loader.withContext(this).show(),
       canvasNodes = this.data.canvas.graph.nodes ? JSON.parse(JSON.stringify(Object.values(this.data.canvas.graph.nodes))) : [],
       canvasLinks = this.data.canvas.graph.links ? JSON.parse(JSON.stringify(Object.values(this.data.canvas.graph.links))) : [];
+
+    canvasLinks.forEach(function(link){
+      if (self.data.canvas.graph.type === 'directed') {
+        link['arrows'] = 'to';
+      }
+      link['label'] = link.title;
+      link['from'] = link.source;
+      link['to'] = link.target;
+    });
       
     canvasNodes.forEach(function(node){
       node['label'] = node.title;
@@ -25,25 +34,23 @@ export default class GraphGeneric extends Graph {
       node['borderWidth'] =  node.invisible ? 0 : Math.sqrt(node.weight || 0.2);
       node['chosen'] = node.selected;
       node['shape'] = node.type;
-    });
-    
-    canvasLinks.forEach(function(link){
-      if (self.data.canvas.graph.type === 'directed') {
-        link['arrows'] = 'to';
+      if (self.data.canvas.graph.type === 'tree') {
+        // safe as there are no links on trees - yeah, it's an hack
+        canvasLinks.push({id: Utilities.generateId(), from: node.parent, to: node.id});
       }
-      link['from'] = link.source;
-      link['to'] = link.target;
     });
-      
+
     var network = new vis.Network(this.parent.node(), {
       nodes: new vis.DataSet(canvasNodes),
       edges: new vis.DataSet(canvasLinks)
     }, {
       nodes: {
-        borderWidth: 2
+        borderWidth: 2,
+        size: 10
       },
       interaction: {
-        hover: true
+        hover: true,
+        dragNodes: self.data.canvas.graph.type !== 'tree'
       },
       layout: {
         hierarchical: {
@@ -54,13 +61,17 @@ export default class GraphGeneric extends Graph {
       height: self.data.canvas.height + ''
     });
     
-    // update the zoom to fit function
+    // update the 'zoom to fit' function
     self.parentClass.zoomToFit = () => network.fit();
   
     network.on('stabilized', function() {
       loader.hide();
     });
     
+    network.on('animationFinished', function() {
+      loader.hide();
+    });
+
     network.on('click', function(params) {
       params.event.preventDefault();
       let data = resolveNode.call(this, params);
@@ -96,7 +107,6 @@ export default class GraphGeneric extends Graph {
         return node.options;
       }
     }
-    
   }
 
 }
