@@ -1,106 +1,116 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# Copyright (c) Manuel Martins.
+# Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
 from __future__ import print_function
+from glob import glob
+from os.path import join as pjoin
 
-# the name of the project
+
+from setupbase import (
+    create_cmdclass, install_npm, ensure_targets,
+    find_packages, combine_commands, ensure_python,
+    get_version, HERE
+)
+
+from setuptools import setup
+
+
+# The name of the project
 name = 'jupyter_francy'
 
-#-----------------------------------------------------------------------------
-# Minimal Python version sanity check
-#-----------------------------------------------------------------------------
+# Ensure a valid python version
+ensure_python('>=3.4')
 
-import sys
+# Get our version
+version = get_version(pjoin(name, '_version.py'))
 
-v = sys.version_info
-if v[:2] < (3, 3):
-    # Note: 3.3 is untested, but we'll still allow it
-    error = 'ERROR: %s requires Python version 3.3 or above.' % name
-    print(error, file=sys.stderr)
-    sys.exit(1)
-
-#-----------------------------------------------------------------------------
-# get on with it
-#-----------------------------------------------------------------------------
-
-import io
-import os
-from os.path import join as pjoin
-from glob import glob
-
-from setuptools import setup, find_packages
-
-from setupbase import (create_cmdclass, install_npm, ensure_targets,
-    combine_commands, expand_data_files)
-    
-from pkg_resources import resource_filename
-
-here = os.path.abspath(os.path.dirname(__file__))
-nbextension = pjoin(here, name, 'nbextension')
-labextension = pjoin(here, name, 'labextension')
+nb_path = pjoin(HERE, name, 'nbextension', 'static')
+lab_path = pjoin(HERE, name, 'labextension')
 
 # Representative files that should exist after a successful build
 jstargets = [
-    pjoin(nbextension, 'extension.js'),
-    pjoin(labextension, 'extension.js'),
+    pjoin(nb_path, 'index.js'),
+    pjoin(HERE, 'lib', 'plugin.js'),
 ]
 
-version_ns = {}
-with io.open(pjoin(here, name, '_version.py'), encoding='utf8') as f:
-    exec(f.read(), {}, version_ns)
-
-cmdclass = create_cmdclass(('jsdeps',))
-cmdclass['jsdeps'] = combine_commands(
-    install_npm(here, build_cmd='build:all'),
-    ensure_targets(jstargets)
-)
-
-package_data = {
+package_data_spec = {
     name: [
-        'nbextension/*.*js*',
-        'labextension/*.*js*'
+        'nbextension/static/*.*js*',
+        'labextension/*.tgz'
     ]
 }
 
-data_files = expand_data_files([
-    ('share/jupyter/nbextensions/jupyter_francy', [pjoin(nbextension, '*.js*')]),
-    ('share/jupyter/lab/extensions', [pjoin(labextension, '*.js*')])
-])
+data_files_spec = [
+    ('share/jupyter/nbextensions/jupyter_francy',
+        nb_path, '*.js*'),
+    ('share/jupyter/lab/extensions', lab_path, '*.tgz'),
+    ('etc/jupyter/nbconfig/notebook.d' , HERE, 'jupyter_francy.json')
+]
+
+
+cmdclass = create_cmdclass('jsdeps', package_data_spec=package_data_spec,
+    data_files_spec=data_files_spec)
+cmdclass['jsdeps'] = combine_commands(
+    install_npm(HERE, build_cmd='build:all'),
+    ensure_targets(jstargets),
+)
+
 
 setup_args = dict(
-    name                 = name,
-    version              = version_ns['__version__'],
-    scripts              = glob(pjoin('scripts', '*')),
-    cmdclass             = cmdclass,
-    packages             = find_packages(here),
-    package_data         = package_data,
-    include_package_data = True,
-    data_files           = data_files,
-    long_description     = 'Jupyter Notebook and Jupyter Lab plugin for Francy - An Interactive Discrete Mathematics Framework for GAP.',
-    author               = 'Manuel Martins',
-    author_email         = 'manuelmachadomartins@gmail.com',
-    url                  = 'http://jupyter.org',
-    license              = 'BSD',
-    platforms            = 'Linux, Mac OS X, Windows',
-    keywords             = ['ipython', 'jupyter', 'francy', 'gap'],
-    classifiers          = [
+    name            = name,
+    description     = 'Jupyter Notebook and Jupyter Lab plugin for Francy - An Interactive Discrete Mathematics Framework for GAP.',
+    version         = version,
+    scripts         = glob(pjoin('scripts', '*')),
+    cmdclass        = cmdclass,
+    packages        = find_packages(),
+    author          = 'Manuel Martins',
+    author_email    = 'manuelmachadomartins@gmail.com',
+    url             = 'https://github.com/gap-packages/francy',
+    license         = 'BSD',
+    platforms       = "Linux, Mac OS X, Windows",
+    keywords        = ['Jupyter', 'Widgets', 'IPython', 'GAP'],
+    classifiers     = [
         'Intended Audience :: Developers',
-        'Intended Audience :: System Administrators',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Framework :: Jupyter',
     ],
-    install_requires     = [
-        'notebook>=4.3.0'
-    ]
+    include_package_data = True,
+    install_requires = [
+        'notebook>=4.3.0',
+        #'ipywidgets>=7.0.0',
+    ],
+    extras_require = {
+        'test': [
+            'pytest>=3.6',
+            'pytest-cov',
+            'nbval',
+        ],
+        'examples': [
+            # Any requirements for the examples to run
+        ],
+        'docs': [
+            'sphinx>=1.5',
+            'recommonmark',
+            'sphinx_rtd_theme',
+            'nbsphinx>=0.2.13,<0.4.0',
+            'jupyter_sphinx',
+            'nbsphinx-link',
+            'pytest_check_links',
+            'pypandoc',
+        ],
+    },
+    entry_points = {
+    },
 )
 
 if __name__ == '__main__':
