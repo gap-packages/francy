@@ -86,7 +86,8 @@ export default class RequiredArgsModal extends Modal {
       row.append('div').attr('class', 'francy-table-cell').append('label')
         .attr('for', arg.id).text(arg.title);
       if (arg.type === 'select') {
-        let operations = new GraphOperations(this.options);
+        let operations = self.parentClass.graphFactory && self.parentClass.graphFactory.graphOperations 
+          ? self.parentClass.graphFactory.graphOperations : new GraphOperations(self.options);
         let selectedNodes = Object.values(operations.nodeSelection.getAll());
         row.append('div').attr('class', 'francy-table-cell').append('select')
           .attr('class', 'francy-arg')

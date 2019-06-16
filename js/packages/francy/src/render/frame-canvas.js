@@ -1,4 +1,4 @@
-import { CompositeRenderer, Decorators, Message, Logger } from 'francy-core';
+import { CompositeRenderer, Decorators, Logger, Message } from 'francy-core';
 import MainMenu from './menu-main';
 
 /* global d3 */

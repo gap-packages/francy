@@ -107,6 +107,10 @@ export default class GraphGeneric extends Graph {
         return node.options;
       }
     }
+    
+    this.graphOperations.nodeOperations.getAll = function () {
+      return network.getSelectedNodes();
+    };
   }
 
 }
