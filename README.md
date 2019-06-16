@@ -39,6 +39,7 @@ These binders include the following notebooks:
 |francy.ipynb                    | First notebook ever created with Francy                        |
 |ICMS_2018.ipynb                 | Presentation notebook for the ICMS 2018 in USA                 |
 |orbital-graphs.ipynb            | Contains some reseach algorithms for orbital graphs            |
+|output-widget.ipynb             | Contains an example of the output of 'plain/text' elements     |
 |subgroup-lattice.ipynb          | Contains Subgroup-Lattice package examples                     |
 
 # Jupyter Integration

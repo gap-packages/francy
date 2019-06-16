@@ -1,6 +1,6 @@
-import { APPEND_ID, CLASS_NAME, MIME_TYPE } from './utils';
+import { APPEND_ID, CLASS_NAME, MIME_TYPE_FRANCY, MIME_TYPE_TEXT } from './utils';
 
-export function init(Jupyter, { FrancyApp, Logger, Renderers = []}) {
+export function init(Jupyter, { FrancyApp, Logger, Renderers = [] }) {
   // start Francy
   let Francy = new FrancyApp({
     appendTo: `#${APPEND_ID}`,
@@ -8,11 +8,15 @@ export function init(Jupyter, { FrancyApp, Logger, Renderers = []}) {
       Jupyter.notebook.kernel.execute(command, {
         iopub: {
           output: function (msg) {
-            if (msg.content && msg.content.data && msg.content.data[MIME_TYPE]) {
-              // This will update an existing canvas by its ID!
-              Francy.load(msg.content.data[MIME_TYPE]).render()
-                .catch(error => Logger.error(error))
-                .then(element => Logger.debug('Interactive trigger result', element));
+            if (msg.content && msg.content.data) {
+              if (msg.content.data[MIME_TYPE_FRANCY]) {
+                // This will update an existing canvas by its ID!
+                Francy.load(msg.content.data[MIME_TYPE_FRANCY]);
+              } else if (msg.content.data[MIME_TYPE_TEXT]) {
+                // This will add an output div!
+                Francy.load(msg.content.data[MIME_TYPE_TEXT]);
+              }
+              Francy.render().catch(error => Logger.error(error));
             }
           }
         }
@@ -31,10 +35,9 @@ export function init(Jupyter, { FrancyApp, Logger, Renderers = []}) {
 /**
  * Render data to the DOM node
  */
-function render({ Francy, Logger }, props, node) {
+function render({ Francy, Logger }, props) {
   Francy.load(props.data).render()
-    .catch(error => Logger.error(error))
-    .then(element => node.append(element));
+    .catch(error => Logger.error(error));
 }
 
 /**
@@ -53,7 +56,7 @@ function handleAddOutput(event, { output, output_area }) { // eslint-disable-lin
   /* Get rendered DOM node */
   const toinsert = output_area.element.find(CLASS_NAME.split(' ')[0]); // eslint-disable-line no-unused-vars
   /** e.g. Inject a static image representation into the mime bundle for
-   *  endering on Github, etc.
+   *  rendering on Github, etc.
    */
   // if (toinsert) {
   //   renderLibrary.toPng(toinsert[0]).then(url => {
@@ -83,17 +86,18 @@ export function register_renderer(Jupyter, { FrancyApp, Logger, Renderers = [] }
     const toinsert = this.create_output_subarea(
       metadata,
       CLASS_NAME,
-      MIME_TYPE
+      MIME_TYPE_FRANCY
     );
     this.keyboard_manager.register_events(toinsert);
     /* Render data to DOM node */
-    const props = { data, metadata: metadata[MIME_TYPE] };
-    let Francy = init(Jupyter, { 
+    const props = { data, metadata: metadata[MIME_TYPE_FRANCY] };
+    let Francy = init(Jupyter, {
       FrancyApp: FrancyApp,
       Logger: Logger,
       Renderers: Renderers
     });
-    render({ Francy: Francy, Logger: Logger }, props, toinsert[0]);
+    Francy.settings({ appendTo: toinsert[0] });
+    render({ Francy: Francy, Logger: Logger }, props);
     element.append(toinsert);
     return toinsert;
   };
@@ -105,7 +109,7 @@ export function register_renderer(Jupyter, { FrancyApp, Logger, Renderers = [] }
   output_area.events.on('output_added.OutputArea', handleAddOutput);
 
   /* Register the mime type and append_mim function with output_area */
-  output_area.register_mime_type(MIME_TYPE, append_mime, {
+  output_area.register_mime_type(MIME_TYPE_FRANCY, append_mime, {
     /* Is output safe? */
     safe: true,
     /* Index of renderer in `output_area.display_order` */
@@ -123,7 +127,7 @@ export function render_cells(notebook) {
     if (
       cell.output_area &&
       cell.output_area.outputs.find(
-        output => output.data && output.data[MIME_TYPE]
+        output => output.data && output.data[MIME_TYPE_FRANCY]
       )
     ) {
       /* Re-render the cell */

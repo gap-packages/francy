@@ -92,5 +92,15 @@ export const Utilities = {
    */
   isaPromise: function(a) {
     return a && typeof a.then === 'function';
+  },
+  
+  /**
+   * Checks whether an object is is empty or not by checking its properties
+   * 
+   * @returns {boolean} true if is empty, otherwise false
+   * @public
+   */
+  isObjectEmpty(o) {
+    return o && o.constructor === Object && Object.entries(o).length === 0;
   }
 };

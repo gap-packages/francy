@@ -38,7 +38,7 @@ export default class Graph extends Renderer {
       mouseIn: (data) => {
         if (data && data.messages) {
           // default, show tooltip
-          this.handlePromise(this.tooltip.load({ messages: data.messages }, true).render());
+          this.handlePromise(this.tooltip.load({ messages: data.messages }).render());
           // ok, this is almost an hack, because this should be rendered on
           // the tooltip itself.. but because a tooltip gets only the messages 
           // object to render and not the whole `this.data` object, 
@@ -51,7 +51,7 @@ export default class Graph extends Renderer {
       click: (data) => this._executeCallback.call(this, this, data, 'click'),
       contextMenu: (data) => {
       // default, build context menu
-        this.handlePromise(this.contextMenu.load(data, true).render());
+        this.handlePromise(this.contextMenu.load(data).render());
         // any callbacks will be handled here
         this._executeCallback.call(this, this, data, 'contextmenu');
       }
@@ -98,7 +98,7 @@ export default class Graph extends Renderer {
     if (data && data.callbacks) {
       Object.values(data.callbacks).forEach(cb => {
         // execute only the ones that match the event!
-        cb.trigger === event && self.handlePromise(self.callback.load({ callback: cb }, true).execute());
+        cb.trigger === event && self.handlePromise(self.callback.load({ callback: cb }).execute());
       });
     }
   }

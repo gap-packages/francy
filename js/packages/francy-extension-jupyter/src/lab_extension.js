@@ -1,5 +1,5 @@
 import './vendor';
-import { CLASS_NAME, MIME_TYPE } from './utils';
+import { CLASS_NAME, MIME_TYPE_FRANCY, MIME_TYPE_TEXT } from './utils';
 import { FrancyApp, Logger } from 'francy';
 import { D3Renderer } from 'francy-renderer-d3';
 import { GraphvizRenderer } from 'francy-renderer-graphviz';
@@ -30,11 +30,15 @@ export class OutputWidget extends Widget {
         // NOTE but francy holds state in the DOM (d3 behaviour), so we need to reuse it:
         let future = self._session.kernel.requestExecute({ code: cmd });
         future.onIOPub = function (msg) {
-          if (msg.content && msg.content.data && msg.content.data[MIME_TYPE]) {
-            // This will update an existing canvas by its ID!
-            self.Francy.load(msg.content.data[MIME_TYPE]).render()
-              .catch(error => Logger.error(error))
-              .then(element => Logger.debug('Interactive trigger result: ', element));
+          if (msg.content && msg.content.data) {
+            if (msg.content.data[MIME_TYPE_FRANCY]) {
+              // This will update an existing canvas by its ID!
+              self.Francy.load(msg.content.data[MIME_TYPE_FRANCY]);
+            } else if (msg.content.data[MIME_TYPE_TEXT]) {
+              // This will add an output div!
+              self.Francy.load(msg.content.data[MIME_TYPE_TEXT]);
+            }
+            self.Francy.render().catch(error => Logger.error(error));
           }
         };
       }
@@ -64,7 +68,7 @@ export class OutputWidget extends Widget {
  */
 export const rendererFactory = {
   safe: true,
-  mimeTypes: [MIME_TYPE],
+  mimeTypes: [MIME_TYPE_FRANCY],
   createRenderer: options => new OutputWidget(options)
 };
 

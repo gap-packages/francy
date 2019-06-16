@@ -38,7 +38,7 @@ export default class LoaderDecorator {
    */
   withContext(ctx) {
     this.context = ctx;
-    var loader = d3.select(`a.loader#Loader-${ctx.data ? ctx.data.canvas ? ctx.data.canvas.id : ctx.options.appendTo.data.canvas.id : ''}`);
+    var loader = d3.select(`a.loader#Loader-${ctx.data ? ctx.data.canvas ? ctx.data.canvas.id : ctx.options.appendTo.id : ''}`);
     if (loader.node()) {
       this.element = loader;
     }

@@ -3,13 +3,12 @@ import '!style-loader!css-loader!./style/index.css';
 import { 
   Components, 
   ConfigurationHandler, 
-  Decorators, 
-  DefaultConfiguration, 
+  DefaultConfiguration,
   Logger, 
   Renderer, 
   RenderingManagerHandler, 
   Utilities } from 'francy-core';
-import Frame from './render/frame';
+import Factory from './render/factory';
 
 /* global VERSION */
 
@@ -51,7 +50,7 @@ export class FrancyApp extends Renderer {
         return this.renderingManager.context.instanceId; 
       },
     });
-    this.frame = undefined;
+    this.factory = undefined;
     // all good!
   }
 
@@ -64,7 +63,6 @@ export class FrancyApp extends Renderer {
   get RenderingManager() {
     return this.context.renderingManager;
   }
-  
 
   /**
    * Returns the {Components] instance to to get external components
@@ -82,15 +80,13 @@ export class FrancyApp extends Renderer {
    * @returns {object} the html element created
    * @public
    */
-  @Decorators.Data.requires('canvas')
   async render() {
-    if (!this.frame) {
-      this.frame = new Frame(this.options, this.context);
+    // lazy load initialization
+    if (!this.factory) {
+      this.factory = new Factory(this.options, this.context);
     }
-    let graph = await this.frame
-      .load(this.data).render()
-      .then(element => element)
-      .finally(() => this.load({}, true));
-    return graph.element.node();
+    return await this.factory.load(this.data).render()
+      .then(result => result.element.node())
+      .finally(() => this.load({}));
   }
 }

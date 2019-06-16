@@ -52,7 +52,7 @@ export default class BarChart extends Chart {
         .on('mouseenter', function (d) {
           d3.select(this).transition()
             .duration(250).style('fill-opacity', 0.5);
-          self.handlePromise(self.tooltip.load(Chart.tooltip(key, d), true).render());
+          self.handlePromise(self.tooltip.load(Chart.tooltip(key, d)).render());
         })
         .on('mouseleave', function () {
           d3.select(this).transition()

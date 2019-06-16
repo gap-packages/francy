@@ -470,6 +470,23 @@ a[target='_blank']::after {
   content:' \25F3'
 }
 
+.francy-output {
+  margin-top: 5px;
+  border: solid 1px #cfcfcf;
+  display: grid;
+}
+
+.francy-output-header {
+  background-color: #f6f6f6;
+  border-bottom: solid 1px #cfcfcf;
+  padding: 5px;
+  font-weight: 700;
+}
+
+.francy-output-value {
+  padding: 5px
+}
+
 /* Safari */
 
 @-webkit-keyframes spin {

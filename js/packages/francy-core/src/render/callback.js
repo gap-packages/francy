@@ -2,6 +2,7 @@ import BaseRenderer from './base';
 import ConfirmModal from './modal/confirm';
 import { Decorators } from '../decorator/factory';
 import RequiredArgsModal from './modal/required';
+import { Utilities } from '../util/utilities';
 
 /**
  * CallbackHandler is responsible for handling Callbacks and display Modal windows accodingly.
@@ -38,13 +39,9 @@ export default class CallbackHandler extends BaseRenderer {
    */
   @Decorators.Data.requires('callback')
   async execute() {
-    let options = this.options;
     if (this.data.callback.confirm) {
-      if (Object.keys(this.data.callback.requiredArgs).length) {
-        options.callbackHandler = () => this._showRequiredModal.call(this);
-      }
       return await this.handlePromise(this._showConfirmModal());
-    } else if (Object.keys(this.data.callback.requiredArgs).length) {
+    } else if (!Utilities.isObjectEmpty(this.data.callback.requiredArgs)) {
       return await this.handlePromise(this._showRequiredModal.call(this));
     }
     // Trigger is the expected command on GAP for this event!
@@ -58,11 +55,11 @@ export default class CallbackHandler extends BaseRenderer {
    */
   async _showConfirmModal() {
     let options = this.options;
-    if (Object.keys(this.data.callback.requiredArgs).length) {
+    if (!Utilities.isObjectEmpty(this.data.callback.requiredArgs)) {
       options.callbackHandler = () => this._showRequiredModal.call(this);
     }
     let modal = new ConfirmModal(options, this.context);
-    return await this.handlePromise(modal.load(this.data, true).render());
+    return await this.handlePromise(modal.load(this.data).render());
   }
 
   /**
@@ -74,7 +71,7 @@ export default class CallbackHandler extends BaseRenderer {
     let options = this.options;
     options.callbackHandler = o => this._execute.call(this, o);
     let modal = new RequiredArgsModal(options, this.context);
-    return await this.handlePromise(modal.load(this.data, true).render());
+    return await this.handlePromise(modal.load(this.data).render());
   }
 
   /**

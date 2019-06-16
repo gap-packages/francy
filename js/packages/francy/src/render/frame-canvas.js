@@ -1,6 +1,5 @@
-import { CompositeRenderer, Decorators, Logger } from 'francy-core';
+import { CompositeRenderer, Decorators, Message, Logger } from 'francy-core';
 import MainMenu from './menu-main';
-import Message from './message';
 
 /* global d3 */
 
@@ -10,7 +9,7 @@ import Message from './message';
  *
  * @access private
  */
-export default class Frame extends CompositeRenderer {
+export default class CanvasFrame extends CompositeRenderer {
 
   constructor({ appendTo, callbackHandler }, context) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
@@ -43,7 +42,7 @@ export default class Frame extends CompositeRenderer {
     this.removeChildren();
     this.addChild(this.mainMenu).addChild(this.messages).addChild(this.canvas);
     this.handlePromise(this.renderChildren());
-
+    
     return this;
   }
 

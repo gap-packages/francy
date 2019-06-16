@@ -6,9 +6,9 @@ import { default as RenderingManagerHandler, RENDERING_EVENTS } from '../render/
 
 describe('Callbacks', () => {
 
-    var configuration = new ConfigurationHandler(DefaultConfiguration);
+  var configuration = new ConfigurationHandler(DefaultConfiguration);
   var options = { appendTo: 'body', callbackHandler: console.log, configuration: configuration};
-  var context = { configuration: configuration, renderingManager: new RenderingManagerHandler({configuration: configuration})};
+  var context = { configuration: configuration, renderingManager: new RenderingManagerHandler({ configuration: configuration })};
   window.d3 = global.d3 = d3;
   
   window.callback = new Callback(options, context);
@@ -23,35 +23,59 @@ describe('Callbacks', () => {
   });
   
   it('should return the execute Trigger command with required args', () => {
-    window.callback.load({callback: {
-      type: 'server',
-      id: 'F1',
-      trigger: 'click',
-      knownArgs: [],
-      requiredArgs: {
-        F2: {
-          type: 'number',
-          id: 'F2',
-          title: 'How many Circles?',
-          value: '15'
+    window.callback.load({
+      callback: {
+        type: 'server',
+        id: 'F1',
+        trigger: 'click',
+        knownArgs: [],
+        requiredArgs: {
+          F2: {
+            type: 'number',
+            id: 'F2',
+            title: 'How many Circles?',
+            value: '15'
+          }
         }
-      }}}, true).settings({callbackHandler: handler}).execute();
+      }
+    }).settings({ callbackHandler: handler }).execute();
     function handler(result) {
+      console.log(result);
       expect(result).to.have.string('Trigger(');
     }
   });
   
   it('should return the execute Trigger command without required args', () => {
-    window.callback.load({callback: {
-      type: 'server',
-      id: 'F1111',
-      trigger: 'click',
-      knownArgs: [],
-      requiredArgs: {}
-    }}, true).settings({callbackHandler: handler}).execute();
+    window.callback.load({
+      callback: {
+        type: 'server',
+        id: 'F1111',
+        trigger: 'click',
+        knownArgs: [],
+        requiredArgs: {}
+      }
+    }).settings({ callbackHandler: handler }).execute();
     function handler(result) {
+      console.log(result);
       expect(result).to.have.string('Trigger(');
     }
   });
-
+  
+  it('should return the confirmation message', () => {
+    window.callback.load({
+      callback: {
+        type: 'server',
+        id: 'F1111',
+        trigger: 'click',
+        knownArgs: [],
+        requiredArgs: {},
+        confirm: 'Confirm Message'
+      }
+    }).settings({ callbackHandler: handler }).execute();
+    function handler(result) {
+      console.log(result);
+      expect(result).to.have.string('Confirm Message');
+    }
+  });
+  
 });

@@ -1,4 +1,5 @@
-import { Decorators, Renderer } from 'francy-core';
+import { Decorators } from '../decorator/factory';
+import Renderer from './renderer';
 
 /* global d3 */
 
