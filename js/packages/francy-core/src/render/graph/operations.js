@@ -19,7 +19,7 @@ export default class GraphOperations extends BaseRenderer {
    */
   constructor({ appendTo, callbackHandler }, context) {
     super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
-    this.load(this.options.appendTo.data); // this will be most likely the Frame!
+    this.load(this.options.appendTo.data); // this will be most likely the Frame! Until is not...
     var self = this;
     this.nodeOperations = {
       clear: function () {

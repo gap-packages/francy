@@ -49,8 +49,8 @@ export default class BaseRenderer extends DataHandler {
     if (!this.options.appendTo && !appendTo) {
       throw new Error('Missing an element or id to append the graphics to!');
     }
-    if (typeof appendTo === 'string') {
-      appendTo = {element: d3.select(appendTo)};
+    if (appendTo && !appendTo.element) {
+      appendTo = { element: d3.select(appendTo) };
     }
     this.options.appendTo = appendTo || this.options.appendTo;
     this.options.callbackHandler = callbackHandler || this.options.callbackHandler;
@@ -102,7 +102,7 @@ export default class BaseRenderer extends DataHandler {
   _mousePosition() {
     var x = ((event.screenX + event.clientX) / 2) - event.pageX + event.offsetX;
     var y = ((event.screenY + event.clientY) / 2) - event.pageY + event.offsetY;
-    return [x, y];
+    return [ x, y ];
   }
 
   /**

@@ -1,4 +1,5 @@
-export const MIME_TYPE = 'application/vnd.francy+json';
+export const MIME_TYPE_FRANCY = 'application/vnd.francy+json';
+export const MIME_TYPE_TEXT = 'text/plain';
 export const CLASS_NAME = 'jp-OutputWidget-Francy';
 export const APPEND_ID = 'francy-drawing-div';
 

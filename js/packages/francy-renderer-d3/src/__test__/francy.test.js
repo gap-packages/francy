@@ -24,14 +24,14 @@ describe('Francy Renderer Object', function() {
      Francy.load(undirected).render()
      .catch(error => done(error))
      .then(object => {
-      expect(object).to.be.a('htmldivelement');
-      
-      setTimeout(function() {
-        expect(d3.select(object).selectAll('svg').size()).to.be.equals(1);
-        expect(d3.select(object).selectAll('.francy-node').size()).to.be.equals(2);
-        expect(d3.select(object).selectAll('.francy-link').size()).to.be.equals(1);
-        done();
-      }, 0);
+        expect(object).to.be.a('htmldivelement');
+        
+        setTimeout(function() {
+          expect(d3.select(object).selectAll('svg').size()).to.be.equals(1);
+          expect(d3.select(object).selectAll('.francy-node').size()).to.be.equals(2);
+          expect(d3.select(object).selectAll('.francy-link').size()).to.be.equals(1);
+          done();
+        }, 0);
       
     });
   });
@@ -40,14 +40,14 @@ describe('Francy Renderer Object', function() {
      Francy.load(directed).render()
      .catch(error => done(error))
      .then(object => {
-      expect(object).to.be.a('htmldivelement');
-      
-      setTimeout(function() {
-        expect(d3.select(object).selectAll('svg').size()).to.be.equals(1);
-        expect(d3.select(object).selectAll('.francy-node').size()).to.be.equals(2);
-        expect(d3.select(object).selectAll('.francy-link').size()).to.be.equals(1);
-        done();
-      }, 0);
+        expect(object).to.be.a('htmldivelement');
+        
+        setTimeout(function() {
+          expect(d3.select(object).selectAll('svg').size()).to.be.equals(1);
+          expect(d3.select(object).selectAll('.francy-node').size()).to.be.equals(2);
+          expect(d3.select(object).selectAll('.francy-link').size()).to.be.equals(1);
+          done();
+        }, 0);
       
     });
   });

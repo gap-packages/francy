@@ -8,19 +8,19 @@ import {Logger} from '../util/logger';
 export default class JupyterDecorator {
   
   /**
-   * This method register a class or classes on Jupyter keyboard_manager events
+   * This method registers elements on Jupyter keyboard_manager events
    * 
    * @example Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
    * 
-   * @param {string[]} classes - an Array of css classes to add on Jupyter keyboard_manager events
+   * @param {object[]} elements - an Array of elements to add on Jupyter keyboard_manager events
    * @public
    */
-  static registerKeyboardEvents(classes) {
+  static registerKeyboardEvents(elements) {
     // disable keyboard shortcuts in Jupyter for specific css classed elements
-    if (!classes) return;
+    if (!elements) return;
     try {
-      classes.map((c) => {
-        Jupyter.keyboard_manager.register_events(c);
+      elements.map(element => {
+        Jupyter.keyboard_manager.register_events(element);
       });
     } catch (e) {
       if (e.name === 'ReferenceError') {

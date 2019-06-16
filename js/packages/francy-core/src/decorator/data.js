@@ -1,10 +1,34 @@
-import {Exception} from '../util/exception';
+import { Exception } from '../util/exception';
+import { Utilities } from '../util/utilities';
 
 /**
  * This {Decorator} class is used to check whether a property is present in the data before executing a method.
  */
 export default class DataDecorator {
+  
+  /**
+   * This function can be used as a decorator to intercept a method and, based on {this.data},
+   * whether to execute it or not.
+   * 
+   * @example @Decorators.Data.requires('canvas.graph')
+   * @param {string} properties - the properties separateed by a dot, e.g. 'data.property'
+   * @public
+   */
+  static notEmpty() {
+    return function decorator(target, name, descriptor) {
+      var oldValue = descriptor.value;
 
+      descriptor.value = function () {
+        if (Utilities.isObjectEmpty(this.data)) {
+          return Promise.reject(new Exception('No data here, nothing to render!'));
+        }
+        return oldValue.apply(this, arguments);
+      };
+
+      return descriptor;
+    };
+  }
+  
   /**
    * This function can be used as a decorator to intercept a method and, based on {this.data},
    * whether to execute it or not.
@@ -83,6 +107,6 @@ export default class DataDecorator {
    * @private
    */
   static _hasData(obj) {
-    return obj && ((obj instanceof Array && obj.length) || (obj instanceof Object && Object.values(obj).length));
+    return obj && ((typeof obj === 'string' && obj) || (obj instanceof Array && obj.length) || (obj instanceof Object && Object.values(obj).length));
   }
 }

@@ -44,7 +44,8 @@ export default class AboutModal extends Modal {
 
     let content = form.append('div').attr('class', 'francy-modal-content')
       .append('div').attr('class', 'francy-table')
-      .append('div').attr('class', 'francy-table-body').style('text-align', 'center');
+      .append('div').attr('class', 'francy-table-body')
+      .style('text-align', 'center');
 
     content.append('span').text(FRANCY_DESC);
     content.append('br');
@@ -52,6 +53,12 @@ export default class AboutModal extends Modal {
     content.append('span').append('a').attr('href', 'https://github.com/gap-packages/francy').attr('target', '_blank').text('Francy on Github');
     content.append('br');
     content.append('br');
+    
+    if (this.data.version !== VERSION) {
+      content.append('span').text(`Data was generated in Francy GAP v${this.data.version} and you're using Francy JS v${VERSION}... Rendering may fail, please update your system...`);
+      content.append('br');
+      content.append('br');
+    }
     
     if (GlobalConfiguration.object.verbose) {
       content.append('span').text('Loaded Data:');
