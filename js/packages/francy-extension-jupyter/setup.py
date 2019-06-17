@@ -27,18 +27,19 @@ ensure_python('>=3.4')
 # Get our version
 version = get_version(pjoin(name, '_version.py'))
 
-nb_path = pjoin(HERE, name, 'nbextension', 'static')
+nb_path = pjoin(HERE, name, 'nbextension')
 lab_path = pjoin(HERE, name, 'labextension')
 
 # Representative files that should exist after a successful build
 jstargets = [
     pjoin(nb_path, 'index.js'),
-    pjoin(HERE, 'lib', 'plugin.js'),
+    pjoin(labextension, 'extension.js'),
+    pjoin(HERE, 'lib', 'nb_extension.js'),
 ]
 
 package_data_spec = {
     name: [
-        'nbextension/static/*.*js*',
+        'nbextension/*.*js*',
         'labextension/*.tgz'
     ]
 }
@@ -50,14 +51,12 @@ data_files_spec = [
     ('etc/jupyter/nbconfig/notebook.d' , HERE, 'jupyter_francy.json')
 ]
 
-
 cmdclass = create_cmdclass('jsdeps', package_data_spec=package_data_spec,
     data_files_spec=data_files_spec)
 cmdclass['jsdeps'] = combine_commands(
     install_npm(HERE, build_cmd='build:all'),
     ensure_targets(jstargets),
 )
-
 
 setup_args = dict(
     name            = name,
@@ -87,7 +86,6 @@ setup_args = dict(
     include_package_data = True,
     install_requires = [
         'notebook>=4.3.0',
-        #'ipywidgets>=7.0.0',
     ],
     extras_require = {
         'test': [

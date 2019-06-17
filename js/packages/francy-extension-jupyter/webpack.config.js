@@ -32,8 +32,42 @@ module.exports = [
   {
     entry: './src/nb_extension.js',
     output: {
+      filename: 'extension.js',
+      path: path.resolve(__dirname, 'jupyter_francy', 'nbextension'),
+      libraryTarget: 'amd'
+    },
+    module: {
+      rules: rules
+    },
+    devtool: 'source-map',
+    externals,
+    resolve,
+  },
+  {
+    entry: './src/nb_index.js',
+    output: {
       filename: 'index.js',
-      path: path.resolve(__dirname, 'jupyter_francy', 'nbextension', 'static'),
+      path: path.resolve(__dirname, 'jupyter_francy', 'nbextension'),
+      libraryTarget: 'amd'
+    },
+    module: {
+      rules: rules
+    },
+    devtool: 'source-map',
+    externals,
+    resolve,
+  },
+  {
+    entry: {
+        Vendors: [path.join(__dirname, 'src', 'vendor.js')],
+        FrancyJS: ['@babel/polyfill', 'francy'],
+        D3Renderer: ['@babel/polyfill/noConflict','francy-renderer-d3'],
+        GraphvizRenderer: ['@babel/polyfill/noConflict','francy-renderer-graphviz'],
+        VisRenderer: ['@babel/polyfill/noConflict','francy-renderer-vis']
+    },
+    output: {
+      filename: '[name].js',
+      path: path.resolve(__dirname, 'jupyter_francy', 'nbextension'),
       libraryTarget: 'amd'
     },
     module: {
@@ -81,7 +115,7 @@ module.exports = [
     entry: './src/index.js',
     output: {
       filename: 'embed-bundle.js',
-      path: path.resolve(__dirname, 'docs', 'source', '_static'),
+      path: path.resolve(__dirname, 'docs', 'source'),
       library: "francy-extension-jupyter",
       libraryTarget: 'amd'
     },
