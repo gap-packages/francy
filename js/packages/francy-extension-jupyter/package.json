@@ -6,62 +6,49 @@
     "name": "Manuel Martins",
     "email": "manuelmachadomartins@gmail.com"
   },
+  "license": "MIT",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/gap-packages/francy"
   },
-  "license": "MIT",
-  "keywords": [
-    "gap",
-    "francy",
-    "jupyter",
-    "jupyterlab",
-    "jupyterlab-extension",
-    "jupyter notebook",
-    "jupyter notebook extension",
-    "extension"
-  ],
   "scripts": {
     "build": "npm run build:lib && npm run build:nbextension",
     "build:all": "npm run build:labextension && npm run build:nbextension",
     "build:lib": "babel src -d lib",
-    "build:nbextension": "webpack --config webpack.config.js",
+    "build:nbextension": "webpack --mode=development",
     "build:labextension": "npm run clean:labextension && mkdirp jupyter_francy/labextension && cd jupyter_francy/labextension && npm pack ../..",
-    "build:production": "npm run clean && npm run build:lib && webpack --env.production --config webpack.config.js",
+    "build:production": "npm run clean && npm run build:lib && webpack --env.production",
     "build:jupyter": "npm run build",
     "clean": "npm run clean:lib && npm run clean:nbextension && npm run clean:labextension && rimraf __pycache__ jupyter_francy/__pycache__",
     "clean:lib": "rimraf lib",
     "clean:labextension": "rimraf jupyter_francy/labextension",
     "clean:nbextension": "rimraf jupyter_francy/nbextension",
-    "prepack": "npm run build:lib",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "npm-run-all -p watch:*",
-    "watch:lib": "tsc -w",
-    "watch:nbextension": "webpack --watch"
+    "watch": "npm-run-all -p watch:*"
   },
   "dependencies": {
-    "d3": "5.9.2",
-    "d3-graphviz": "2.6.1",
+    "d3": "^5.9.2",
+    "d3-graphviz": "^2.6.1",
     "francy": "^1.2.4",
     "francy-core": "^1.2.4",
     "francy-renderer-d3": "^1.2.4",
     "francy-renderer-graphviz": "^1.2.4",
     "francy-renderer-vis": "^1.2.4",
-    "vis": "4.21.0",
-    "viz.js": "1.8.1"
+    "vis": "^4.21.0",
+    "viz.js": "^1.8.1"
   },
   "devDependencies": {
     "@babel/cli": "7.4.4",
-    "@babel/core": "7.4.4",
+    "@babel/core": "7.0.0",
     "@babel/plugin-proposal-decorators": "7.4.4",
     "@babel/plugin-transform-classes": "7.4.4",
     "@babel/plugin-transform-runtime": "7.4.4",
-    "@babel/polyfill": "7.4.4",
     "@babel/preset-env": "7.4.4",
     "@jupyterlab/rendermime": "0.19.1",
     "@phosphor/widgets": "1.6.0",
-    "babel-loader": "8.0.6",
+    "babel-loader": "^8.0.6",
+    "babel-polyfill": "6.26.0",
     "css-loader": "2.1.1",
     "file-loader": "3.0.1",
     "json-loader": "0.5.7",
@@ -72,6 +59,7 @@
     "karma-mocha": "^1.3.0",
     "karma-mocha-reporter": "^2.2.5",
     "lodash.isequal": "4.5.0",
+    "lodash.reduce": "4.5.0",
     "mkdirp": "^0.5.1",
     "mocha": "^5.2.0",
     "npm-run-all": "4.1.5",
@@ -80,7 +68,10 @@
     "source-map-loader": "^0.2.4",
     "style-loader": "0.23.1",
     "url-loader": "1.1.2",
-    "webpack": "4.31.0",
-    "webpack-cli": "3.3.2"
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2"
+  },
+  "jupyterlab": {
+    "extension": "src/lab_extension"
   }
 }
