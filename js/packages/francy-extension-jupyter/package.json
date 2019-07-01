@@ -6,6 +6,12 @@
     "name": "Manuel Martins",
     "email": "manuelmachadomartins@gmail.com"
   },
+  "keywords": [
+    "gap",
+    "francy",
+    "jupyter",
+    "extension"
+  ],
   "license": "MIT",
   "main": "lib/index.js",
   "repository": {
@@ -28,6 +34,8 @@
     "watch": "npm-run-all -p watch:*"
   },
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
     "d3": "^5.9.2",
     "d3-graphviz": "^2.6.1",
     "francy": "^1.2.4",
@@ -35,6 +43,7 @@
     "francy-renderer-d3": "^1.2.4",
     "francy-renderer-graphviz": "^1.2.4",
     "francy-renderer-vis": "^1.2.4",
+    "seedrandom": "^3.0.1",
     "vis": "^4.21.0",
     "viz.js": "^1.8.1"
   },
@@ -58,7 +67,7 @@
     "karma-ie-launcher": "^1.0.0",
     "karma-mocha": "^1.3.0",
     "karma-mocha-reporter": "^2.2.5",
-    "lodash.isequal": "4.5.0",
+    "lodash.isequal": "^4.5.0",
     "lodash.reduce": "4.5.0",
     "mkdirp": "^0.5.1",
     "mocha": "^5.2.0",

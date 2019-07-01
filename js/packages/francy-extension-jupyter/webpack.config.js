@@ -1,7 +1,7 @@
-var path = require('path');
-var version = require('./package.json').version;
+const path = require('path');
+const version = require('./package.json').version;
 
-var loaders = [
+const loaders = [
     {
 	test: /\.js$/,
 	exclude: /(node_modules|bower_components)/,
@@ -42,15 +42,7 @@ module.exports = [
             path: path.resolve(__dirname, 'jupyter_francy', 'nbextension'),
             libraryTarget: 'amd'
 	},
-	externals: [
-            'base/js/namespace',
-            'nbextensions/jupyter_francy/Vendors',
-            'nbextensions/jupyter_francy/FrancyJS',
-            'nbextensions/jupyter_francy/D3Renderer',
-            'nbextensions/jupyter_francy/GraphvizRenderer',
-            'nbextensions/jupyter_francy/VisRenderer',
-            'nbextensions/jupyter_francy/index'
-	]
+	externals: externals
     },
     {// jupyter_francy bundle for the notebook
 	entry: './src/index.js',
@@ -68,9 +60,9 @@ module.exports = [
 	entry: {
 	    Vendors: './src/vendor.js',
             FrancyJS: ['babel-polyfill', 'francy'],
-            //D3Renderer: ['babel-polyfill/noConflict','francy-renderer-d3'],
-            //GraphvizRenderer: ['babel-polyfill/noConflict','francy-renderer-graphviz'],
-            //VisRenderer: ['babel-polyfill/noConflict','francy-renderer-vis']
+            D3Renderer: ['babel-polyfill','francy-renderer-d3'],
+            GraphvizRenderer: ['babel-polyfill','francy-renderer-graphviz'],
+            VisRenderer: ['babel-polyfill','francy-renderer-vis']
 	},
 	output: {
             filename: '[name].js',
@@ -80,13 +72,6 @@ module.exports = [
 	devtool: 'source-map',
 	module: {
             rules: loaders
-	}
-    },
-    {// Lab extension
-	entry: ['babel-polyfill', './src/lab_extension.js'],
-	output: {
-            filename: 'extension.js',
-            path: path.resolve(__dirname, 'jupyter_francy', 'labextension')
 	}
     },
     {// embeddable jupyter_francy bundle (?)
