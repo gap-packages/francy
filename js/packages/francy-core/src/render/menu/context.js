@@ -1,8 +1,6 @@
 import { Decorators } from '../../decorator/factory';
 import Menu from './base';
 
-/* global d3 */
-
 /**
  * Implements a Context Menu.
  * 

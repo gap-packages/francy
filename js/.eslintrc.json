@@ -12,6 +12,8 @@
   "globals": {
     "d3": true,
     "VERSION": true,
+    "DESCRIPTION": true,
+    "FRANCY_DESC": true,
     "MathJax": true
   },
   "rules": {

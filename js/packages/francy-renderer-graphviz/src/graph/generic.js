@@ -1,8 +1,6 @@
 import { Callback, ContextMenu, Decorators, Graph, Tooltip, Utilities } from 'francy-core';
 import DOTLanguageConverterHelper from '../util/dot-converter';
 
-/* global d3 */
-
 export default class GraphGeneric extends Graph {
 
   constructor({ appendTo, callbackHandler }, context) {

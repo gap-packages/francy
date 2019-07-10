@@ -393,8 +393,8 @@ div.output_subarea.jp-OutputWidget-Francy.output_result {
 .francy-message-holder {
   position: absolute;
   width: fit-content;
-  max-width: 40%;
-  min-width: 30%;
+  max-width: 50%;
+  min-width: 25%;
   top: 55px;
   left: 10px;
 }

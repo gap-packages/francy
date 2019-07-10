@@ -6,11 +6,11 @@ COPY --chown=1000:1000 . $HOME/francy
 
 USER root
 
-RUN apt-get update && apt-get install python3-pip -y
+RUN apt-get update && apt-get install python3-pip inkscape -y
 
 RUN rm -rf $HOME/inst/gap-master/pkg/francy && mv $HOME/francy $HOME/inst/gap-master/pkg/francy \
   && cd $HOME/inst/gap-master/pkg \
-  && rm -rf JupyterKernel && git clone https://github.com/gap-packages/JupyterKernel \
+  && rm -rf JupyterKernel && git clone --single-branch --branch LINTER https://github.com/mcmartins/JupyterKernel \
   && git clone https://github.com/gap-packages/FrancyMonoids \
   && git clone https://github.com/mcmartins/subgroup-lattice
 

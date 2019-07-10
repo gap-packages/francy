@@ -3,8 +3,6 @@ import { Decorators } from '../decorator/factory';
 import { Exception } from '../util/exception';
 import { Logger } from '../util/logger';
 
-/* global d3 */
-
 /**
  * Base is the base of renderers and contains multiple utility methods.
  * 

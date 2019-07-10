@@ -28,7 +28,7 @@
     "build:jupyter": "npm run build"
   },
   "dependencies": {
-    "d3": "5.9.2",
+    "d3": "5.9.7",
     "d3-graphviz": "2.6.1",
     "francy": "^1.2.4",
     "francy-core": "^1.2.4",
@@ -39,15 +39,15 @@
     "viz.js": "1.8.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.4.4",
-    "@babel/core": "7.4.5",
+    "@babel/cli": "7.5.0",
+    "@babel/core": "7.5.4",
     "@babel/plugin-proposal-decorators": "7.4.4",
     "@babel/plugin-transform-classes": "7.4.4",
-    "@babel/plugin-transform-runtime": "7.4.4",
+    "@babel/plugin-transform-runtime": "7.5.0",
     "@babel/polyfill": "7.4.4",
-    "@babel/preset-env": "7.4.5",
-    "@jupyterlab/rendermime": "0.19.1",
-    "@phosphor/widgets": "1.7.0",
+    "@babel/preset-env": "7.5.4",
+    "@jupyterlab/rendermime": "1.0.1",
+    "@phosphor/widgets": "1.8.1",
     "babel-loader": "8.0.6",
     "css-loader": "3.0.0",
     "file-loader": "4.0.0",
@@ -58,8 +58,8 @@
     "replace": "1.1.0",
     "rimraf": "2.6.3",
     "style-loader": "0.23.1",
-    "url-loader": "1.1.2",
-    "webpack": "4.34.0",
-    "webpack-cli": "3.3.4"
+    "url-loader": "2.0.1",
+    "webpack": "4.35.3",
+    "webpack-cli": "3.3.5"
   }
 }

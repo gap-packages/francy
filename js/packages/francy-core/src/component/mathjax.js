@@ -2,8 +2,6 @@ import BaseComponent from './base';
 import { Decorators } from '../decorator/factory';
 import { Logger} from '../util/logger';
 
-/* global MathJax d3 */
-
 /**
  * This {Component} class is used to check whether MathJax is available or not.
  * MathJax is optional, as {Francy} can run without it.

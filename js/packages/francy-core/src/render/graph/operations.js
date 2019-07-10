@@ -1,7 +1,5 @@
 import BaseRenderer from '../base';
 
-/* global d3 */
-
 /**
  * Implements a Utility Graph operations.
   * 
