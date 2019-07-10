@@ -6,7 +6,7 @@ COPY --chown=1000:1000 . $HOME/francy
 
 USER root
 
-RUN apt-get update && apt-get install python3-pip inkscape -y
+RUN apt-get update && apt-get install python3-pip inkscape pandoc texlive-xetex -y
 
 RUN rm -rf $HOME/inst/gap-master/pkg/francy && mv $HOME/francy $HOME/inst/gap-master/pkg/francy \
   && cd $HOME/inst/gap-master/pkg \
