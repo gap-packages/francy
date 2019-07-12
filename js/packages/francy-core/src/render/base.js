@@ -98,8 +98,8 @@ export default class BaseRenderer extends DataHandler {
    * @private
    */
   _mousePosition() {
-    var x = ((event.screenX + event.clientX) / 2) - event.pageX + event.offsetX;
-    var y = ((event.screenY + event.clientY) / 2) - event.pageY + event.offsetY;
+    let x = ((event.screenX + event.clientX) / 2) - event.pageX + event.offsetX;
+    let y = ((event.screenY + event.clientY) / 2) - event.pageY + event.offsetY;
     return [ x, y ];
   }
 
