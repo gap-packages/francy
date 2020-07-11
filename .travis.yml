@@ -37,6 +37,8 @@ branches:
     - develop
     - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
+before_install:
+  - npm i npm@latest -g
 before_script:
   - scripts/prepare.sh
 script:
