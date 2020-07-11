@@ -16,7 +16,7 @@
     "clean": "lerna run clean",
     "version": "lerna version --no-git-tag-version --no-push",
     "docs": "esdoc",
-    "lint": "eslint ./packages/** ",
+    "lint": "eslint ./packages/**",
     "lint:fix": "eslint --fix ./packages/**",
     "coverage": "npm run test",
     "publish": "lerna publish --skip-git --force-publish"
