@@ -36,8 +36,8 @@ branches:
     - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
 before_install:
-  - curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-  - sudo apt-get install -y nodejs
+  - nvm install 14.5.0
+  - nvm alias default 14.5.0
 before_script:
   - scripts/prepare.sh
 script:
