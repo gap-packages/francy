@@ -16,6 +16,17 @@
     "FRANCY_DESC": true,
     "MathJax": true
   },
+  "ignorePatterns": [
+    "**.json",
+    "**/*.test.js",
+    "**/__test__/*.js",
+    "**.html",
+    "karma*.js",
+    "**/node_modules/**",
+    "**/dist/**", 
+    "**/lib/**",
+    "**/jupyter_francy/**"
+  ],
   "rules": {
     "indent": [
       "error",
