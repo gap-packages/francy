@@ -39,6 +39,7 @@ branches:
 
 before_install:
   - npm i npm@latest -g
+  - curl -sL https://deb.nodesource.com/setup_13.x | -E bash -
 before_script:
   - scripts/prepare.sh
 script:
