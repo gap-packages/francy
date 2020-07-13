@@ -7,16 +7,11 @@ env:
     - COVDIR=coverage
     - NODE_OPTIONS=--max-old-space-size=4096
 
-node_js:
-  - 14
-
 addons:
   apt:
     update: true
 
   apt_packages:
-    - nodejs
-    - npm
     - libgmp-dev
     - libreadline-dev
     - libgmp-dev:i386
@@ -40,8 +35,6 @@ branches:
     - develop
     - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
-before_install:
-  - npm i npm@latest -g
 before_script:
   - scripts/prepare.sh
 script:
