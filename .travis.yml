@@ -38,6 +38,8 @@ branches:
 before_install:
   - nvm install 14.5.0
   - nvm alias default 14.5.0
+  - pyenv install 3.8.1
+  - pyenv global 3.8.1
 before_script:
   - scripts/prepare.sh
 script:

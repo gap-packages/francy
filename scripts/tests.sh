@@ -18,12 +18,11 @@ npm run coverage
 # Test Extensions - won't produce any coverage obviously
 cd packages/francy-extension-jupyter
 
-# switch to python3.8
-pyenv local 3.8
-
 echo "PATH for pyenv `pyenv root`"
 echo "PATH for pip `which pip`"
 echo "PATH for pip `which pip3`"
+echo "PATH for jupyter `which jupyter`"
+echo "PATH for jlpm `which jlpm`"
 
 # upgrade pip
 pip3 install --upgrade pip
@@ -36,7 +35,7 @@ pip3 install jupyterlab
 pip3 install -e .
 
 # make sure pyenv is correctly in path
-export PATH=$PATH:/opt/pyenv/versions/3.6/bin/
+export PATH=$PATH:/opt/pyenv/versions/3.8.1/bin/
 
 # install extension link on jupyter notebook
 jupyter nbextension install --symlink --py --sys-prefix jupyter_francy
