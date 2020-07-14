@@ -27,6 +27,11 @@ pip3.6 install jupyterlab
 # install extension on pip
 pip3.6 install -e .
 
+# make sure pyenv is correctly in path
+#export PATH=$PATH:
+echo "PATH for JupyterLab `pyenv which jupyter`"
+echo "PATH for JLPM `pyenv which jlpm`"
+
 # install extension link on jupyter notebook
 `pyenv which jupyter` nbextension install --symlink --py --sys-prefix jupyter_francy
 `pyenv which jupyter` nbextension enable --py --sys-prefix jupyter_francy
