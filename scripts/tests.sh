@@ -34,9 +34,6 @@ pip3 install jupyterlab
 # install extension on pip
 pip3 install -e .
 
-# make sure pyenv is correctly in path
-export PATH=$PATH:/opt/pyenv/versions/3.8.1/bin/
-
 # install extension link on jupyter notebook
 jupyter nbextension install --symlink --py --sys-prefix jupyter_francy
 jupyter nbextension enable --py --sys-prefix jupyter_francy
