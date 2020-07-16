@@ -1,8 +1,6 @@
 import Chart from './chart';
 import { Decorators } from 'francy-core';
 
-/* global d3 */
-
 export default class LineChart extends Chart {
 
   constructor({ appendTo, callbackHandler }, context) {

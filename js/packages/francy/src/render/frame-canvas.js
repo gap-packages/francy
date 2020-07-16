@@ -1,8 +1,6 @@
 import { CompositeRenderer, Decorators, Logger, Message } from 'francy-core';
 import MainMenu from './menu-main';
 
-/* global d3 */
-
 /**
  * The {Frame} is the highest component containing the building block of {Francy} .
  * This renderers the {MainMenu}, {Messages} and the active {Renderer} {Canvas}

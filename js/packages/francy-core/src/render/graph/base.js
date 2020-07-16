@@ -4,8 +4,6 @@ import GraphOperations from './operations';
 import Renderer from '../renderer';
 import Tooltip from '../tooltip';
 
-/* global d3 */
-
 /**
  * Implements a Generic Graph.
  * 

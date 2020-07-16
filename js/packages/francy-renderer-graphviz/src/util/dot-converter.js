@@ -1,7 +1,5 @@
 import { DataHandler, Decorators, Graph, Utilities } from 'francy-core';
 
-/* global d3 */
-
 /**
  * This class converts Francy Json into DOT Language required by Graphviz.
  * 

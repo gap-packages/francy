@@ -10,8 +10,6 @@ import {
   Utilities } from 'francy-core';
 import Factory from './render/factory';
 
-/* global VERSION */
-
 (() => Logger.info(`Francy JS v${VERSION}! Enjoy...`))();
 
 /**

@@ -38,7 +38,9 @@ export class OutputWidget extends Widget {
               // This will add an output div!
               self.Francy.load(msg.content.data[MIME_TYPE_TEXT]);
             }
-            self.Francy.render().catch(error => Logger.error(error));
+            self.Francy.render()
+              .then(element => self.node.appendChild(element))
+              .catch(error => Logger.error(error));
           }
         };
       }

@@ -1,8 +1,6 @@
 import * as SvgToPng from 'save-svg-as-png';
 import { AboutModal, Logger, Menu, RENDERING_EVENTS, Utilities } from 'francy-core';
 
-/* global d3 */
-
 /**
  * The {MainMenu} holds the default options for the current Graphics.
  *

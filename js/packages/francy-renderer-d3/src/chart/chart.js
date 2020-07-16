@@ -1,7 +1,5 @@
 import { Renderer, Tooltip } from 'francy-core';
 
-/* global d3 */
-
 export default class Chart extends Renderer {
 
   constructor({ appendTo, callbackHandler }, context) {

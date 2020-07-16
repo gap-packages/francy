@@ -89,7 +89,7 @@ export default class DataDecorator {
       var properties = propertyPath.split('.');
 
       for (var property of properties) {
-        if (!tmp.hasOwnProperty(property)) {
+        if (!Object.prototype.hasOwnProperty.call(tmp, property)) {
           tmp = undefined;
           break;
         } else {

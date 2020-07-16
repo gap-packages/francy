@@ -3,8 +3,6 @@ import { GlobalConfiguration } from '../util/configuration';
 import { Logger } from '../util/logger';
 import MathJaxWrapper from './mathjax-wrapper';
 
-/* global d3 */
-
 /**
  * This class represents a rendable component.
  * Instances of this class must implement a {Renderer#render} method

@@ -3,8 +3,6 @@ import { Decorators } from '../decorator/factory';
 import { Exception } from '../util/exception';
 import { Logger } from '../util/logger';
 
-/* global d3 */
-
 /**
  * Base is the base of renderers and contains multiple utility methods.
  * 
@@ -100,8 +98,8 @@ export default class BaseRenderer extends DataHandler {
    * @private
    */
   _mousePosition() {
-    var x = ((event.screenX + event.clientX) / 2) - event.pageX + event.offsetX;
-    var y = ((event.screenY + event.clientY) / 2) - event.pageY + event.offsetY;
+    let x = ((event.screenX + event.clientX) / 2) - event.pageX + event.offsetX;
+    let y = ((event.screenY + event.clientY) / 2) - event.pageY + event.offsetY;
     return [ x, y ];
   }
 

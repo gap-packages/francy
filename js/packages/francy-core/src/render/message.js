@@ -1,8 +1,6 @@
 import { Decorators } from '../decorator/factory';
 import Renderer from './renderer';
 
-/* global d3 */
-
 /**
  * The {Message} holds the messages for the current Graphics.
  *
