@@ -4,8 +4,6 @@ import { GlobalConfiguration } from '../../util/configuration';
 import { Logger } from '../../util/logger';
 import Modal from './base';
 
-/* global d3 VERSION FRANCY_DESC */
-
 /**
  * Implements The About Modal Window.
  * 
@@ -62,7 +60,7 @@ export default class AboutModal extends Modal {
     
     if (GlobalConfiguration.object.verbose) {
       content.append('span').text('Loaded Data:');
-      content.append('pre').attr('class', 'francy').style('text-align', 'left').html(Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2)));
+      content.append('pre').attr('class', 'francy').style('text-align', 'left').html(Decorators.Highlight.syntax(JSON.stringify(this.data, null, 2)));
     }
 
     content.append('div').text('Verbose').append('div').append('input')

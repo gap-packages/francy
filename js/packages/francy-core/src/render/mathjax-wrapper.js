@@ -2,8 +2,6 @@ import BaseRenderer from './base';
 import { Components } from '../component/factory';
 import { Decorators } from '../decorator/factory';
 
-/* global MathJax */
-
 /**
  * This class wraps the MathJax component and renders MathJax components 
  * by replacing HTML or SVG components with the MathJax representation.

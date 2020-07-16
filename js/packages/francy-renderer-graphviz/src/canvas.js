@@ -2,8 +2,6 @@ import { CompositeRenderer, Decorators, Logger, RENDERING_EVENTS } from 'francy-
 import ChartGeneric from './chart/generic';
 import GraphGeneric from './graph/generic';
 
-/* global d3 */
-
 export default class Canvas extends CompositeRenderer {
 
   constructor({ appendTo, callbackHandler }, context) {

@@ -2,18 +2,32 @@
   "env": {
     "browser": true,
     "commonjs": true,
-    "es6": true
+    "es2020": true
   },
   "extends": "eslint:recommended",
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaVersion": 11
   },
   "parser": "babel-eslint",
   "globals": {
     "d3": true,
     "VERSION": true,
+    "DESCRIPTION": true,
+    "FRANCY_DESC": true,
     "MathJax": true
   },
+  "ignorePatterns": [
+    "**.json",
+    "**/*.test.js",
+    "**/__test__/*.js",
+    "**.html",
+    "karma*.js",
+    "**/node_modules/**",
+    "**/dist/**", 
+    "**/lib/**",
+    "**/jupyter_francy/**"
+  ],
   "rules": {
     "indent": [
       "error",

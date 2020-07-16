@@ -1,7 +1,5 @@
 import Renderer from '../renderer';
 
-/* global d3 */
-
 /**
  * Implements basic methods for handling Modal windows.
  * 

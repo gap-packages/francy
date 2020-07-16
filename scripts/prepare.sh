@@ -64,7 +64,7 @@ cp -r . $GAPROOT/pkg/francy
 # Install francy-js and extensions build tools
 #
 cd js
-npm install
+npm ci
 npm run bootstrap
 npm run build:production
 

@@ -1,7 +1,5 @@
 import { Utilities } from '../util/utilities';
 
-/* global d3 */
-
 /**
  * This {Decorator} class is used to show / hide a loader on {Francy}.
  */

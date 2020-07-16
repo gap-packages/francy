@@ -2,8 +2,6 @@ import { CompositeRenderer, Decorators, GlobalConfiguration, Logger, RENDERING_E
 import ChartFactory from './chart/factory';
 import GraphFactory from './graph/factory';
 
-/* global d3 */
-
 export default class Canvas extends CompositeRenderer {
 
   constructor({ appendTo, callbackHandler }, context) {

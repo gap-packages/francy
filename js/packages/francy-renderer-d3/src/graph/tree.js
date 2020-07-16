@@ -1,7 +1,5 @@
 import { Decorators, Graph, Logger } from 'francy-core';
 
-/* global d3 */
-
 export default class TreeGraph extends Graph {
 
   constructor({ appendTo, callbackHandler }, context) {

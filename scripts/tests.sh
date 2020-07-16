@@ -18,21 +18,28 @@ npm run coverage
 # Test Extensions - won't produce any coverage obviously
 cd packages/francy-extension-jupyter
 
-pyenv local 3.6
+echo "PATH for pyenv `pyenv root`"
+echo "PATH for pip `which pip`"
+echo "PATH for pip `which pip3`"
+echo "PATH for jupyter `which jupyter`"
+echo "PATH for jlpm `which jlpm`"
+
+# upgrade pip
+pip3 install --upgrade pip
 
 # install jupyter
-pip3.6 install jupyter
-pip3.6 install jupyterlab
+pip3 install jupyter
+pip3 install jupyterlab
 
 # install extension on pip
-pip3.6 install -e .
+pip3 install -e .
 
 # install extension link on jupyter notebook
-`pyenv which jupyter` nbextension install --symlink --py --sys-prefix jupyter_francy
-`pyenv which jupyter` nbextension enable --py --sys-prefix jupyter_francy
-`pyenv which jupyter` nbextension list 2>&1 | grep -q jupyter_francy
+jupyter nbextension install --symlink --py --sys-prefix jupyter_francy
+jupyter nbextension enable --py --sys-prefix jupyter_francy
+jupyter nbextension list 2>&1 | grep -q jupyter_francy
 
 # install extension link on jupyter lab
 cd jupyter_francy/labextension
-`pyenv which jupyter` labextension link
-`pyenv which jupyter` labextension list 2>&1 | grep -q jupyter_francy
+jupyter labextension link --debug
+jupyter labextension list 2>&1 | grep -q jupyter_francy

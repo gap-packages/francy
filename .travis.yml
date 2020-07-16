@@ -12,8 +12,6 @@ addons:
     update: true
 
   apt_packages:
-    - nodejs
-    - npm
     - libgmp-dev
     - libreadline-dev
     - libgmp-dev:i386
@@ -37,6 +35,10 @@ branches:
     - develop
     - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
+before_install:
+  - nvm install 14.5.0
+  - nvm alias default 14.5.0
+  - pyenv global 3.6.3
 before_script:
   - scripts/prepare.sh
 script:

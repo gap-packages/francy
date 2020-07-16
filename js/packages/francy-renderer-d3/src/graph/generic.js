@@ -1,7 +1,5 @@
 import { Decorators, Graph } from 'francy-core';
 
-/* global d3 */
-
 export default class GenericGraph extends Graph {
 
   constructor({ appendTo, callbackHandler }, context) {
@@ -78,7 +76,7 @@ export default class GenericGraph extends Graph {
         .classed('francy-edge-arrow', true)
         .style('stroke', 'none')
         .style('marker-start', d => `url(#arrow-${d.id})`)
-        .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.2));
+        .style('stroke-width', d => d.invisible ? 0 : 1.2);
     }
 
     linkEnter.filter(d => d.title).append('text')
