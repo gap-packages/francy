@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/gap-packages/francy.svg?branch=master)](https://travis-ci.org/gap-packages/francy)
+[![Build Status](https://github.com/gap-packages/francy/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/gap-packages/francy/actions?query=workflow%3ACI+branch%3Amaster)
 [![Test Coverage Status](https://codecov.io/gh/gap-packages/francy/branch/master/graph/badge.svg)](https://codecov.io/gh/gap-packages/francy)
 
 [![npm version](https://badge.fury.io/js/francy-extension-browser.svg)](https://badge.fury.io/js/francy-extension-browser)
