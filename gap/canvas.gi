@@ -177,7 +177,10 @@ function(canvas)
   local object;
   object := rec();
   object!.mime    := FrancyMIMEType;
-  object!.version := InstalledPackageVersion("francy");
+  #object!.version := InstalledPackageVersion("francy");
+  # FIXME/HACK/TODO: hardcode version 1.2.4, for the sake of the 1.2.5
+  # interim release. To be reverted for future releases.
+  object!.version := "1.2.4";
   object!.canvas  := Sanitize(canvas);
   return Objectify(
     JupyterRenderableType, 
