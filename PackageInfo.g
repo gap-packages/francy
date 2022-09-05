@@ -56,7 +56,7 @@ SetPackageInfo(rec(
   PackageDoc := rec(
     BookName         := "Francy",
     ArchiveURLSubset := ["doc"],
-    HTMLStart        := "doc/chap0.html",
+    HTMLStart        := "doc/chap0_mj.html",
     PDFFile          := "doc/manual.pdf",
     SixFile          := "doc/manual.six",
     LongTitle        := "FRANCY - A Framework for Interactive Discrete Mathematics"
