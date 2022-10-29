@@ -42,7 +42,7 @@
     "esdoc-standard-plugin": "1.0.0",
     "eslint": "5.16.0",
     "isparta": "4.1.1",
-    "karma": "4.1.0",
+    "karma": "6.4.1",
     "karma-chai": "0.1.0",
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage": "1.1.2",
