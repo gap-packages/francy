@@ -29,7 +29,7 @@
     "@babel/plugin-transform-runtime": "7.4.4",
     "@babel/polyfill": "7.4.4",
     "@babel/preset-env": "7.4.4",
-    "@jupyterlab/rendermime": "0.19.1",
+    "@jupyterlab/rendermime": "3.5.1",
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.6",
     "chai": "4.2.0",
