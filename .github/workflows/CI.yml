@@ -1,0 +1,63 @@
+name: CI
+
+# Trigger the workflow on push or pull request
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+
+# the `concurrency` settings ensure that not too many CI jobs run in parallel
+concurrency:
+  # group by workflow and ref; the last slightly strange component ensures that for pull
+  # requests, we limit to 1 concurrent job, but for the master branch we don't
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.ref != 'refs/heads/master' || github.run_number }}
+  # Cancel intermediate builds, but only if it is a pull request build.
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+
+jobs:
+  # The CI test job
+  test:
+    name: ${{ matrix.gap-branch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        gap-branch:
+          - master
+          - stable-4.12
+          - stable-4.11
+          - stable-4.10
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: 'Install initial dependencies'
+        run: |
+          sudo apt-get install libzmq3-dev nodejs npm
+      - uses: gap-actions/setup-gap@v2
+        with:
+          GAP_PKGS_TO_BUILD: "io profiling crypting json ZeroMQInterface"
+          GAPBRANCH: ${{ matrix.gap-branch }}
+      - uses: gap-actions/build-pkg@v1
+      - uses: gap-actions/run-pkg-tests@v2
+      - uses: gap-actions/process-coverage@v2
+      - uses: codecov/codecov-action@v3
+
+  # The documentation job
+  manual:
+    name: Build manuals
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: gap-actions/setup-gap@v2
+      - uses: gap-actions/build-pkg-docs@v1
+        with:
+          use-latex: 'true'
+      - name: 'Upload documentation'
+        uses: actions/upload-artifact@v3
+        with:
+          name: manual
+          path: ./doc/manual.pdf
+          if-no-files-found: error
