@@ -95,15 +95,15 @@ export default class GraphGeneric extends Graph {
 
         let connectedNodes = self._connectedNodes(nodes, canvasNodes, links, canvasLinks);
         let nodeOnClick = nodes.on('click');
-        nodes.on('click', function (d) {
+        nodes.on('click', function (e, d) {
           // default, highlight connected nodes
-          connectedNodes.call(this);
+          connectedNodes.call(this, e);
           // any callbacks will be handled here
-          nodeOnClick && nodeOnClick.call(this, d);
+          nodeOnClick && nodeOnClick.call(this, e, d);
         });
-        links.on('click', function () {
+        links.on('click', function (e) {
           // default, highlight connected nodes
-          connectedNodes.call(this);
+          connectedNodes.call(this, e);
         });
 
         self.parentClass.zoomToFit(true);
@@ -119,8 +119,8 @@ export default class GraphGeneric extends Graph {
       let width = element.node().width.baseVal.value;
       element.attr('x', Math.ceil(Number(x) - (width / 2)));
     } catch (Error) {
-      // don't care, this might fail for multiple reasons
-      // the use rmight have switch renderer for instance
+      // don't care, this might fail for multiple reasons,
+      // the user might have switch renderer for instance,
       // no worries if something is not properly aligned :P
     }
   }
@@ -130,8 +130,8 @@ export default class GraphGeneric extends Graph {
       let height = element.node().height.baseVal.value;
       element.attr('y', Math.ceil(Number(y) - (height / 2)));
     } catch (Error) {
-      // don't care, this might fail for multiple reasons
-      // the use rmight have switch renderer for instance
+      // don't care, this might fail for multiple reasons,
+      // the user might have switch renderer for instance,
       // no worries if something is not properly aligned :P
     }
   }
@@ -152,7 +152,7 @@ export default class GraphGeneric extends Graph {
       linkedByIndex[`${sourceId},${targetId}`] = true;
     });
 
-    function connected() {
+    function connected(e) {
       if (!self.context.configuration.object.showNeighbours) return;
       let el = d3.select(this);
       if (!toggle) {
@@ -180,7 +180,7 @@ export default class GraphGeneric extends Graph {
           });
         }
         setTimeout(() => {
-          d3.select('body').on('click', () => toggle ? connected.call(this) : undefined);
+          d3.select('body').on('click', (e) => toggle ? connected.call(this, e) : undefined);
         }, 0);
         //Reduce the op
         toggle = true;
@@ -195,7 +195,9 @@ export default class GraphGeneric extends Graph {
         d3.select('body').on('click', undefined);
         toggle = false;
       }
-      d3.event.preventDefault();
+      if (e) {
+        e.preventDefault();
+      }
     }
 
     return connected;

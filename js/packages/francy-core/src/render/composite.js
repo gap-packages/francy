@@ -3,22 +3,22 @@ import Renderer from './renderer';
 /**
  * This class is a composite of multiple renderers.
  * Being a {Renderer} class it provides a {Composite#add} method
- * that allows the adition of child {Renderer}s that will be rendered within this renderer, being this their parent.
- * 
+ * that allows the addition of child {Renderer}s that will be rendered within this renderer, being this their parent.
+ *
  * @extends {Renderer]
  */
 export default class Composite extends Renderer {
 
   /**
    * Base constructor
-   * 
+   *
    * @typedef {Object} options
-   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {String} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
-   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   * @property {Object} context - the context of the application, usually a configuration and a rendering manager instance
    */
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
     if (new.target === Composite) {
       throw new TypeError('Cannot instantiate [Composite] classes directly!');
     }
@@ -31,8 +31,8 @@ export default class Composite extends Renderer {
 
   /**
    * This method adds a {Renderer} instance for rendering all children
-   * 
-   * @paran {Renderer} renderer - a child renderer
+   *
+   * @param {Renderer} renderer - a child renderer
    * @returns {object} this instance
    * @public
    */
@@ -42,10 +42,10 @@ export default class Composite extends Renderer {
     }
     return this;
   }
-  
+
   /**
    * This method removes all {Renderer} instances to be rendered.
-   * 
+   *
    * @returns {object} this instance
    * @public
    */

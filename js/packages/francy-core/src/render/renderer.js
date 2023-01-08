@@ -1,27 +1,27 @@
 import BaseRenderer from './base';
-import { GlobalConfiguration } from '../util/configuration';
-import { Logger } from '../util/logger';
+import {GlobalConfiguration} from '../util/configuration';
+import {Logger} from '../util/logger';
 import MathJaxWrapper from './mathjax-wrapper';
 
 /**
  * This class represents a rendable component.
  * Instances of this class must implement a {Renderer#render} method
- * and optionaly an {Renderer#unrender} method.
- * 
+ * and optionally an {Renderer#unrender} method.
+ *
  * @extends {BaseRenderer}
  */
 export default class Renderer extends BaseRenderer {
 
   /**
    * Base constructor
-   * 
+   *
    * @typedef {Object} options
-   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {String} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
-   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   * @property {Object} context - the context of the application, usually a configuration and a rendering manager instance
    */
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
     if (new.target === Renderer) {
       throw new TypeError('Cannot instantiate [Renderer] classes directly!');
     }
@@ -44,24 +44,26 @@ export default class Renderer extends BaseRenderer {
   }
 
   /**
-   * This method is used by the decorator {Decorators.Initializer.initialize()} 
+   * This method is used by the decorator {Decorators.Initializer.initialize()}
    * to initialize this renderer.
-   * 
+   *
    * @override
    * @public
    */
-  initialize() {}
-  
+  initialize() {
+  }
+
   /**
    * Handles component unrender
-   * 
+   *
    * @public
    */
-  unrender() {}
+  unrender() {
+  }
 
   /**
    * Return the HTML component holding this element
-   * 
+   *
    * @returns {object} the first HTML element holding this component, otherwise the parent element whatever it is (most likely an HTML)
    * @public
    */
@@ -71,17 +73,17 @@ export default class Renderer extends BaseRenderer {
 
   /**
    * Returns the SVG element if available, otherwise the parent element whatever it is (most likely an HTML)
-   * 
+   *
    * @returns {object} the SVG element
    * @public
    */
   get SVGParent() {
     return this.parent.node().tagName.toLowerCase() === 'div' ? this.parent.select('svg') : this.parent;
   }
-  
+
   /**
    * Returns the Canvas element if available, otherwise the parent element whatever it is (most likely an HTML)
-   * 
+   *
    * @returns {object} the SVG element
    * @public
    */
@@ -91,17 +93,17 @@ export default class Renderer extends BaseRenderer {
 
   /**
    * Returns a static object containing margins
-   * 
+   *
    * @returns {object} and object containing default margins: { top: 50, right: 50, bottom: 50, left: 50 }
    * @public
    */
   get margin() {
-    return { top: 50, right: 50, bottom: 50, left: 50 };
+    return {top: 50, right: 50, bottom: 50, left: 50};
   }
-  
+
   /**
    * Returns the width of the parent
-   * 
+   *
    * @returns {number} the width of the html parent
    * @public
    */
@@ -109,10 +111,10 @@ export default class Renderer extends BaseRenderer {
     let width = +this.parent.attr('width') || d3.select('body').node().getBoundingClientRect().width;
     return width - this.margin.left - this.margin.right;
   }
-  
+
   /**
    * Returns the height of the parent
-   * 
+   *
    * @returns {number} the height of the html parent
    * @public
    */
@@ -120,20 +122,20 @@ export default class Renderer extends BaseRenderer {
     let height = +this.parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
     return height - this.margin.top - this.margin.bottom;
   }
-  
+
   /**
    * Returns the MathJax component
-   * 
+   *
    * @returns {MathJaxWrapper} the MathJax component
    * @public
    */
   get mathjax() {
     return new MathJaxWrapper(this.options, this.context).load(this.data);
   }
-  
+
   /**
    * Sets an execution of 'unrender()' with the certain delay.
-   * 
+   *
    * @param {integer} delay - the delay in ms to call 'unrender()' function, defaults to 10000 ms
    * @public
    */

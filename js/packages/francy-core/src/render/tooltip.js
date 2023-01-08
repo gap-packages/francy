@@ -1,30 +1,30 @@
-import { Decorators } from '../decorator/factory';
+import {Decorators} from '../decorator/factory';
 import Renderer from './renderer';
 
 /**
  * Implements a Tooltip.
- * 
- * This component shows a tooltip containing a set of messages.
- * 
+ *
+ * This component creates a tooltip containing a set of messages.
+ *
  * @extends {Renderer}
  */
 export default class Tooltip extends Renderer {
 
   /**
    * Base constructor
-   * 
+   *
    * @typedef {Object} options
-   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {String} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
-   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   * @property {Object} context - the context of the application, usually a configuration and a rendering manager instance
    */
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
   }
 
   /**
    * This method is used to render this component
-   * 
+   *
    * @public
    */
   @Decorators.Data.requires('messages')
@@ -57,7 +57,7 @@ export default class Tooltip extends Renderer {
 
     // show tooltip
     this.element.style('display', 'block');
-    
+
     // destroy me after default delay
     this.autoUnrender();
 
@@ -66,10 +66,10 @@ export default class Tooltip extends Renderer {
 
   /**
    * This method is used to destroy this component
-   * 
+   *
    * @public
    */
-  unrender() {  
+  unrender() {
     if (this.element) {
       this.element.selectAll('*').remove();
       this.element.style('display', null);

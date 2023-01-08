@@ -2,11 +2,10 @@
 
 <head>
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v5">
-  <script src="https://unpkg.com/viz.js@1.8.1/viz.js"></script>
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <script src="https://unpkg.com/d3-graphviz@2.6.1/build/d3-graphviz.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
+  <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full,Safe"></script>
   <script src="../dist/FrancyJS.bundle.js"></script>
   <script src="../dist/D3Renderer.bundle.js"></script>
@@ -44,43 +43,43 @@
     });
   }
 
-  fetch('../node_modules/francy/src/__test__/data/json1.json')
+  fetch('../../francy-core/src/__test__/data/json1.json')
     .then(response => response.json())
     .then(json => {
       resolvePromise(Francy.load(json));
     });
 
-  fetch('../node_modules/francy/src/__test__/data/json2.json')
+  fetch('../../francy-core/src/__test__/data/json2.json')
     .then(response => response.json())
     .then(json => {
       resolvePromise(Francy.load(json));
     });
 
-  fetch('../node_modules/francy/src/__test__/data/json3.json')
+  fetch('../../francy-core/src/__test__/data/json3.json')
     .then(response => response.json())
     .then(json => {
       resolvePromise(Francy.load(json));
     });
 
-  fetch('../node_modules/francy/src/__test__/data/json4.json')
+  fetch('../../francy-core/src/__test__/data/json4.json')
     .then(response => response.json())
     .then(json => {
       resolvePromise(Francy.load(json));
     });
 
-  fetch('../node_modules/francy/src/__test__/data/json5.json')
+  fetch('../../francy-core/src/__test__/data/json5.json')
     .then(response => response.json())
     .then(json => {
       resolvePromise(Francy.load(json));
     });
 
-  fetch('../node_modules/francy/src/__test__/data/json6.json')
+  fetch('../../francy-core/src/__test__/data/json6.json')
     .then(response => response.json())
     .then(json => {
       resolvePromise(Francy.load(json));
     });
 
-  fetch('../node_modules/francy/src/__test__/data/json7.json')
+  fetch('../../francy-core/src/__test__/data/json7.json')
     .then(response => response.json())
     .then(json => {
       resolvePromise(Francy.load(json));

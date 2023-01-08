@@ -1,22 +1,21 @@
-import { Exception } from '../util/exception';
-import { Utilities } from '../util/utilities';
+import {Exception} from '../util/exception';
+import {Utilities} from '../util/utilities';
 
 /**
  * This {Decorator} class is used to check whether a property is present in the data before executing a method.
  */
 export default class DataDecorator {
-  
+
   /**
    * This function can be used as a decorator to intercept a method and, based on {this.data},
    * whether to execute it or not.
-   * 
-   * @example @Decorators.Data.requires('canvas.graph')
-   * @param {string} properties - the properties separateed by a dot, e.g. 'data.property'
+   *
+   * @example @Decorators.Data.notEmpty()
    * @public
    */
   static notEmpty() {
     return function decorator(target, name, descriptor) {
-      var oldValue = descriptor.value;
+      let oldValue = descriptor.value;
 
       descriptor.value = function () {
         if (Utilities.isObjectEmpty(this.data)) {
@@ -28,18 +27,18 @@ export default class DataDecorator {
       return descriptor;
     };
   }
-  
+
   /**
    * This function can be used as a decorator to intercept a method and, based on {this.data},
    * whether to execute it or not.
-   * 
+   *
    * @example @Decorators.Data.requires('canvas.graph')
-   * @param {string} properties - the properties separateed by a dot, e.g. 'data.property'
+   * @param {string} properties - the properties separated by a dot, e.g. 'data.property'
    * @public
    */
   static requires(properties) {
     return function decorator(target, name, descriptor) {
-      var oldValue = descriptor.value;
+      let oldValue = descriptor.value;
 
       descriptor.value = function () {
         if (!DataDecorator._hasData(DataDecorator._getProperty(this.data, properties))) {
@@ -55,14 +54,14 @@ export default class DataDecorator {
   /**
    * This function can be used as a decorator to intercept a method and, based on {this.data},
    * execute it if the property is set to true otherwise rejects the promise.
-   * 
+   *
    * @example @Decorators.Data.enabled('canvas.texTypesetting')
-   * @param {string} properties - the properties separateed by a dot, e.g. 'data.property'
+   * @param {string} properties - the properties separated by a dot, e.g. 'data.property'
    * @public
    */
   static enabled(properties) {
     return function decorator(target, name, descriptor) {
-      var oldValue = descriptor.value;
+      let oldValue = descriptor.value;
 
       descriptor.value = function () {
         if (!DataDecorator._getProperty(this.data, properties)) {
@@ -83,12 +82,12 @@ export default class DataDecorator {
    */
   static _getProperty(obj, propertyPath) {
 
-    var tmp = obj;
+    let tmp = obj;
 
     if (tmp && propertyPath) {
-      var properties = propertyPath.split('.');
+      let properties = propertyPath.split('.');
 
-      for (var property of properties) {
+      for (let property of properties) {
         if (!Object.prototype.hasOwnProperty.call(tmp, property)) {
           tmp = undefined;
           break;

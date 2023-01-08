@@ -35,12 +35,12 @@ export default class GraphGeneric extends Graph {
       node['chosen'] = node.selected;
       node['shape'] = node.type;
       if (self.data.canvas.graph.type === 'tree') {
-        // safe as there are no links on trees - yeah, it's an hack
+        // safe as there are no links on trees - yeah, it's a hack
         canvasLinks.push({id: Utilities.generateId(), from: node.parent, to: node.id});
       }
     });
 
-    var network = new vis.Network(this.parent.node(), {
+    let network = new vis.Network(this.parent.node(), {
       nodes: new vis.DataSet(canvasNodes),
       edges: new vis.DataSet(canvasLinks)
     }, {

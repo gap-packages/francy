@@ -1,0 +1,77 @@
+{
+  "name": "francy-extension-jupyterlab",
+  "version": "2.0.0",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Jupyter Notebook/Lab Extension",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gap-packages/francy.git"
+  },
+  "homepage": "https://github.com/gap-packages/francy",
+  "bugs": {
+    "url": "https://github.com/gap-packages/francy/issues"
+  },
+  "author": {
+    "name": "Manuel Martins",
+    "email": "manuelmachadomartins@gmail.com"
+  },
+  "main": "src/index.js",
+  "files": [
+    "src/**/*.js"
+  ],
+  "directories": {
+    "lib": "src/"
+  },
+  "license": "MIT",
+  "keywords": [
+    "gap",
+    "francy",
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension",
+    "jupyter notebook",
+    "jupyter notebook extension",
+    "extension"
+  ],
+  "jupyterlab": {
+    "webpackConfig": "./webpack.config.js",
+    "extension": true,
+    "outputDir": "jupyter-francy/labextension",
+    "discovery": {
+      "kernel": [
+        {
+          "kernel_spec": {
+            "language": "^gap"
+          },
+          "base": {
+            "name": "jupyter-francy"
+          },
+          "managers": [
+            "pip",
+            "conda"
+          ]
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf ./lib ./dist ./build ./jupyter-francy/jupyter-francy ./jupyter-francy/__pycache__ ./jupyter-francy/labextension ./jupyter_francy.egg-info ./__pycache__",
+    "build:lib": "",
+    "build:labextension": "jupyter labextension build .",
+    "build:labextension:dev": "jupyter labextension build --development True .",
+    "build": "npm run clean && npm run build:lib && npm run build:labextension:dev",
+    "build:prod": "npm run clean && npm run build:lib && npm run build:labextension",
+    "build:jupyter": "npm run build"
+  },
+  "dependencies": {
+    "francy": "^2.0.0",
+    "francy-core": "^2.0.0",
+    "francy-renderer-d3": "^2.0.0",
+    "francy-renderer-graphviz": "^2.0.0",
+    "francy-renderer-vis": "^2.0.0"
+  },
+  "devDependencies": {
+    "@jupyterlab/builder": "^3.5.0",
+    "@jupyterlab/notebook": "^3.5.0",
+    "@jupyterlab/rendermime": "^3.5.0"
+  }
+}

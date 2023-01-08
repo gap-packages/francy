@@ -226,6 +226,7 @@ function(canvas)
     PrintTo(name, page);
 
     if ARCH_IS_MAC_OS_X() or ARCH_IS_UNIX() then
+        # FIXME in some distributions this does not work!
         Exec("open ",name);
     elif ARCH_IS_WINDOWS() then
         Exec("start ",name);

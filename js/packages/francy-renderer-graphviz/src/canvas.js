@@ -10,7 +10,7 @@ export default class Canvas extends CompositeRenderer {
     this.chartFactory = new ChartGeneric(this.options, this.context);
     this.graphvizEngines = ['circo', 'dot', 'fdp', 'neato', 'osage', 'patchwork', 'twopi'];
     this.graphvizRankdirs = { 'TB': 'Top to Bottom', 'LR': 'Left to Right', 'BT': 'Bottom to Top', 'RL': 'Right to Left' };
-    // this only adds if does not exist
+    // add only if it does not exist
     this.context.configuration.addProperty('graphvizEngine', 'dot');
     this.context.configuration.addProperty('graphvizRankdir', 'TB');
   }
@@ -40,7 +40,7 @@ export default class Canvas extends CompositeRenderer {
     }
 
     function zoomToFit(force) {
-      // only execute if enable, of course
+      // only execute if enabled, of course
       if (self.data.canvas.zoomToFit || force) {
         let bounds = self.element.select('g.francy-content').node().getBBox();
 
@@ -62,7 +62,7 @@ export default class Canvas extends CompositeRenderer {
 
         self.element.select('g.francy-content').transition().duration(self.transitionDuration)
           .attr('transform', `translate(${translateX},${translateY})scale(${scale},${scale})`)
-          .on('end', () => updateZoom(translateX, translateY, scale));
+          .on('end', (e) => updateZoom(translateX, translateY, scale));
       }
     }
 
@@ -80,7 +80,7 @@ export default class Canvas extends CompositeRenderer {
   }
 
   _buildMenu() {
-    var self = this;
+    let self = this;
     // here we have access to MainMenu
     this.graphvizEngines.forEach((engine) => {
       this.parentClass.MainMenu.addMultiMenuOnSettingsMenu({

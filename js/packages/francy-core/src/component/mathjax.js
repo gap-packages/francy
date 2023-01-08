@@ -1,18 +1,18 @@
 import BaseComponent from './base';
-import { Decorators } from '../decorator/factory';
-import { Logger} from '../util/logger';
+import {Decorators} from '../decorator/factory';
+import {Logger} from '../util/logger';
 
 /**
  * This {Component} class is used to check whether MathJax is available or not.
  * MathJax is optional, as {Francy} can run without it.
- * 
+ *
  * @extends {BaseComponent}
  */
 export default class MathJaxComponent extends BaseComponent {
 
   /**
    * Base constructor
-   * 
+   *
    * @typedef {Object} Options
    * @property {Boolean} verbose prints extra log information to console.log, default false
    * @property {Boolean} mandatory whether the component is mandatory or optional
@@ -26,19 +26,21 @@ export default class MathJaxComponent extends BaseComponent {
    * @public
    */
   initialize() {
-    var global = (0, eval)('this');
+    let global = (0, eval)('this');
     if (!('MathJax' in global)) {
       throw new Error('MathJax is not available...');
     }
-    
+
     Logger.debug('MathJax is available...');
-    
+
+    // FIXME this is not working on jupyterlab
+
     MathJax.Hub.Config({
       showMathMenu: false,
       skipStartupTypeset: true,
       tex2jax: {
-        inlineMath: [ ['$','$'], ['\\(','\\)'] ],
-        displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
         processEscapes: true,
         processEnvironments: true
       },
@@ -50,22 +52,22 @@ export default class MathJaxComponent extends BaseComponent {
         availableFonts: [],
         imageFont: null,
         preferredFont: null,
-        font: 'STIX-Web', 
+        font: 'STIX-Web',
         webFont: 'STIX-Web',
         styles: {'.MathJax_Display': {'margin': 0}},
-        linebreaks: { 
-          automatic: true 
+        linebreaks: {
+          automatic: true
         }
       },
       'SVG': {
         availableFonts: [],
         imageFont: null,
         preferredFont: null,
-        font: 'STIX-Web', 
+        font: 'STIX-Web',
         webFont: 'STIX-Web',
         styles: {'.MathJax_Display': {'margin': 0}},
-        linebreaks: { 
-          automatic: true 
+        linebreaks: {
+          automatic: true
         }
       }
     });
@@ -76,10 +78,10 @@ export default class MathJaxComponent extends BaseComponent {
     function onNewMathElement(id) {
       if (id && id.length > 1) {
         let mathJaxElement = d3.select(`#${id[1]}-Frame`);
-        if (!mathJaxElement.node()) return; // the element might have disapeared
+        if (!mathJaxElement.node()) return; // the element might have disappeared
         let svgMathJaxElement = mathJaxElement.select('svg');
         if (svgMathJaxElement.node()) {
-          if (!mathJaxElement.node().parentNode) return; // the element might have disapeared
+          if (!mathJaxElement.node().parentNode) return; // the element might have disappeared
           let g = d3.select(mathJaxElement.node().parentNode.parentNode);
           // set same font-size
           svgMathJaxElement.style('font-size', g.select('text.francy-label').style('font-size'));

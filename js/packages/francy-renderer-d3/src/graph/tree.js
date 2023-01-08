@@ -1,9 +1,9 @@
-import { Decorators, Graph, Logger } from 'francy-core';
+import {Decorators, Graph, Logger} from 'francy-core';
 
 export default class TreeGraph extends Graph {
 
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
   }
 
   @Decorators.Initializer.initialize()
@@ -34,7 +34,7 @@ export default class TreeGraph extends Graph {
     let size = d3.max(levelWidth) * 100;
 
     let treemap = d3.tree().size([size, size])
-      .separation((a, b) => a.parent == b.parent ? a.data.size : a.data.size * 2);
+      .separation((a, b) => a.parent === b.parent ? a.data.size : a.data.size * 2);
 
     if (this.data.canvas.graph.collapsed) {
       root.children.forEach(collapse);
@@ -42,7 +42,7 @@ export default class TreeGraph extends Graph {
 
     update.call(this, root)
       .catch(error => Logger.warn(`(${this.context.instanceId}) ${error}`, error))
-      .then(setTimeout(this.parent.zoomToFit, this.transitionDuration));
+      .then(() => setTimeout(this.parent.zoomToFit, this.transitionDuration));
 
     function collapse(d) {
       if (d.children) {
@@ -80,7 +80,7 @@ export default class TreeGraph extends Graph {
         .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.2))
         .style('stroke', d => d.color || '#000')
         .attr('d', () => {
-          let o = { x: source.x0, y: source.y0 };
+          let o = {x: source.x0, y: source.y0};
           return diagonal(o, o);
         });
 
@@ -91,7 +91,7 @@ export default class TreeGraph extends Graph {
       link.exit().selectAll('path.francy-edge')
         .transition().duration(this.transitionDuration)
         .attr('d', () => {
-          let o = { x: source.x, y: source.y };
+          let o = {x: source.x, y: source.y};
           return diagonal(o, o);
         }).remove();
 
@@ -138,7 +138,7 @@ export default class TreeGraph extends Graph {
           if (text.text().startsWith('$') && text.text().endsWith('$')) {
             // we need to set the position after re-render the latex
             self.handlePromise(self.mathjax.settings({
-              appendTo: { element: text },
+              appendTo: {element: text},
               renderType: 'SVG',
               postFunction: () => {
                 self.setLabelXPosition(this);
@@ -168,16 +168,16 @@ export default class TreeGraph extends Graph {
         this._applyEvents(node);
 
         let nodeOnClick = node.on('click');
-        node.on('click', function (d) {
+        node.on('click', function (e, d) {
           // any callbacks will be handled here
-          nodeOnClick.call(this, d.data);
+          nodeOnClick.call(this, e, d.data);
           // default, highlight connected nodes
-          click.call(this, d);
+          click.call(this, e, d);
         });
       }
 
       // Toggle children on click.
-      function click(d) {
+      function click(e, d) {
         if (d.children) {
           d._children = d.children;
           d.children = null;
@@ -187,7 +187,7 @@ export default class TreeGraph extends Graph {
         }
         update.call(self, d)
           .catch(error => Logger.warn(`(${this.context.instanceId}) ${error}`, error))
-          .then(setTimeout(self.parent.zoomToFit, self.transitionDuration));
+          .then(() => setTimeout(self.parent.zoomToFit, self.transitionDuration));
       }
     }
 

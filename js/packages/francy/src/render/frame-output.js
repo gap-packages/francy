@@ -1,4 +1,8 @@
-import { Decorators, Logger, Renderer } from 'francy-core';
+import {
+  Decorators,
+  Logger,
+  Renderer
+} from 'francy-core';
 
 /**
  * The {Message} holds the messages for the current Graphics.
@@ -7,8 +11,8 @@ import { Decorators, Logger, Renderer } from 'francy-core';
  */
 export default class OutputFrame extends Renderer {
 
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
   }
 
   @Decorators.Data.requires('output')
@@ -22,12 +26,12 @@ export default class OutputFrame extends Renderer {
       this.element = this.parent.append('div').classed('francy-output', true);
       this.element.append('span').classed('francy-output-header', true).html('Output');
     }
-    
+
     this.element.append('span').classed('francy-output-value', true).html(this.data.output);
-    
+
     Logger.debug(`(${this.context.instanceId}) Output updated [francy-output]...`);
-    
+
     return this;
   }
-  
+
 }

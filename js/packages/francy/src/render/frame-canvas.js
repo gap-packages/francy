@@ -1,4 +1,9 @@
-import { CompositeRenderer, Decorators, Logger, Message } from 'francy-core';
+import {
+  CompositeRenderer,
+  Decorators,
+  Logger,
+  Message
+} from 'francy-core';
 import MainMenu from './menu-main';
 
 /**
@@ -9,8 +14,8 @@ import MainMenu from './menu-main';
  */
 export default class CanvasFrame extends CompositeRenderer {
 
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
     let Renderer = this.context.renderingManager.activeRenderer();
     this.mainMenu = new MainMenu(this.options, this.context);
     this.messages = new Message(this.options, this.context);
@@ -36,11 +41,11 @@ export default class CanvasFrame extends CompositeRenderer {
     this.element.style('height', +this.data.canvas.height + 37); // plus menu height
 
     Logger.debug(`(${this.context.instanceId}) Frame updated [${frameId}]...`);
-    
+
     this.removeChildren();
     this.addChild(this.mainMenu).addChild(this.messages).addChild(this.canvas);
     this.handlePromise(this.renderChildren());
-    
+
     return this;
   }
 

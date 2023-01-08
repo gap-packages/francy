@@ -1,4 +1,4 @@
-import { Decorators } from '../decorator/factory';
+import {Decorators} from '../decorator/factory';
 import Renderer from './renderer';
 
 /**
@@ -8,8 +8,8 @@ import Renderer from './renderer';
  */
 export default class Message extends Renderer {
 
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
   }
 
   @Decorators.Data.requires('canvas.messages')
@@ -33,7 +33,7 @@ export default class Message extends Renderer {
 
     let message = this.element.selectAll('div.francy-alert').data(messages, d => d.id);
     let messageEnter = message.enter().append('div').attr('id', d => d.id)
-      .attr('class', d => `francy-alert alert-${d.type}`).on('click', function() {
+      .attr('class', d => `francy-alert alert-${d.type}`).on('click', function (e) {
         d3.select(this).style('display', 'none');
       });
     messageEnter.append('span').attr('class', 'strong').text(d => d.title);
@@ -45,7 +45,7 @@ export default class Message extends Renderer {
     message.exit().remove();
 
     this.element.style('display', 'block');
-    
+
     // render mathjax
     this.handlePromise(this.mathjax.settings({appendTo: this, renderType: 'HTML-CSS'}).render());
 

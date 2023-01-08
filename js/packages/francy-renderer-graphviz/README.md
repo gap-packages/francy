@@ -6,7 +6,7 @@ This package contains the implementation of graphs and charts using viz.js (Gaph
 
 # Usage
 
-On loaded this package it can be then registered within Francy RenderingManager:
+This package can be registered with Francy RenderingManager:
 
 ```
 Francy.RenderingManager.register(new GraphvizRenderer());

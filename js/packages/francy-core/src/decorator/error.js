@@ -1,11 +1,11 @@
-import { Logger } from '../util/logger';
-import { Utilities } from '../util/utilities';
+import {Logger} from '../util/logger';
+import {Utilities} from '../util/utilities';
 
 /**
- * This {Decorator} class is used to safelly execute methods within a specified context.
+ * This {Decorator} class is used to safely execute methods within a specified context.
  */
 export default class ErrorDecorator {
-  
+
   /**
    * Default constructor
    * @example Decorators.Error.wrap(function(){}).withContext(this).onErrorThrow(false).onErrorExec(function(){}).handle()
@@ -47,15 +47,15 @@ export default class ErrorDecorator {
      */
     this.retries = 1;
     /**
-     * Stores the flag that shows if this decorator has beens executed before
+     * Stores the flag that shows if this decorator has been executed before
      * @type {boolean}
      */
     this.executed = false;
   }
-  
+
   /**
-   * This method stores the function to be executed safelly.
-   * 
+   * This method stores the function to be executed safely.
+   *
    * @public
    * @param {function} fn - a function to wrap
    * @return {this} instance
@@ -68,7 +68,7 @@ export default class ErrorDecorator {
 
   /**
    * This method stores the context where the wrapped function will run.
-   * 
+   *
    * @public
    * @param {Object} ctx - the context where this function will run
    * @return {this} instance
@@ -77,56 +77,55 @@ export default class ErrorDecorator {
     this.context = ctx;
     return this;
   }
-  
+
   /**
    * This method stores a flag to indicate whether the error should be printed to log.
-   * 
+   *
    * @public
-   * @param {boolean} bool - true if the error must be logged, otherwise false. 
+   * @param {boolean} bool - true if the error must be logged, otherwise false.
    * Defaults to true.
    * @return {this} instance
    */
   withStackTrace(bool) {
-    if(Utilities.isBoolean(bool)){
+    if (Utilities.isBoolean(bool)) {
       this.printStackTrace = bool;
     }
     return this;
   }
-  
+
   /**
    * This method stores a flag to indicate whether the error should be printed to log.
-   * 
+   *
    * @public
-   * @param {boolean} bool - true if the error must be logged, otherwise false. 
+   * @param {boolean} bool - true if the error must be logged, otherwise false.
    * Defaults to true.
    * @return {this} instance
    */
   withLogRetries(bool) {
-    if(Utilities.isBoolean(bool)){
+    if (Utilities.isBoolean(bool)) {
       this.logRetries = bool;
     }
     return this;
   }
-  
+
   /**
    * This method stores the number of retries to execute the function.
-   * 
+   *
    * @public
-   * @param {integer} bool - true if the error must be logged, otherwise false. 
-   * Defaults to true.
+   * @param {integer} n - the number of retries
    * @return {this} instance
    */
   withRetries(n) {
-    if(!isNaN(n)){
+    if (!isNaN(n)) {
       this.retries = Math.floor(n);
     }
     return this;
   }
 
   /**
-   * This method stores the function to execute in case an error occurs running 
+   * This method stores the function to execute in case an error occurs running
    * the wrapped function.
-   * 
+   *
    * @public
    * @param {function} fn - a function to execute if an error occurs
    * @return {this} instance
@@ -139,16 +138,16 @@ export default class ErrorDecorator {
   }
 
   /**
-   * This method stores whether we should propagte the error if the function 
-   * fails to execute, or if the error must be handled safelly.
-   * 
+   * This method stores whether we should propagate the error if the function
+   * fails to execute, or if the error must be handled safely.
+   *
    * @public
-   * @param {boolean} bool - true if the error must be propagated, otherwise false. 
+   * @param {boolean} bool - true if the error must be propagated, otherwise false.
    * Defaults to false.
    * @return {this} instance
    */
   onErrorThrow(bool) {
-    if(Utilities.isBoolean(bool)){
+    if (Utilities.isBoolean(bool)) {
       this.throw = bool;
     }
     return this;
@@ -156,7 +155,7 @@ export default class ErrorDecorator {
 
   /**
    * This method will execute the wrapped function.
-   * 
+   *
    * @public
    */
   handle() {
@@ -170,7 +169,7 @@ export default class ErrorDecorator {
       }
       return fn.apply(this, arguments).catch(err => {
         return retries > 1
-          ? pause(delay).then(() => backoff(retries - 1, fn, delay * 2)) 
+          ? pause(delay).then(() => backoff(retries - 1, fn, delay * 2))
           : Promise.reject(err);
       });
     };
@@ -184,7 +183,7 @@ export default class ErrorDecorator {
 
   /**
    * This method will execute the wrapped function.
-   * 
+   *
    * @private
    */
   _handle() {
@@ -204,7 +203,7 @@ export default class ErrorDecorator {
     this.onErrorFns.forEach(fn => {
       try {
         fn.call(this.context);
-      } catch(error) {
+      } catch (error) {
         this._logEntry(error);
         if (this.throw) {
           throw error;

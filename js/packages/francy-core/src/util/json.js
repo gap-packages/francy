@@ -5,7 +5,7 @@ export default class JsonUtils {
 
   /**
    * Parses an input, checks whether this input is valid and returns a JSON object.
-   * 
+   *
    * @param input - the input to parse
    * @returns {object} - if the input is a valid JSON object returns an object
    */
@@ -17,7 +17,7 @@ export default class JsonUtils {
       if (match) {
         input = JSON.parse(match[0]);
       } else {
-        input = { output: input };
+        input = {output: input};
       }
     }
     return input;
@@ -25,13 +25,13 @@ export default class JsonUtils {
 
   /**
    * Returns a static string representing the mime type supported by this package
-   * 
+   *
    * @returns {string} constant string 'application/vnd.francy+json'
    */
   static get MIME() {
     return 'application/vnd.francy+json';
   }
-  
+
 }
 
 export const MIME = JsonUtils.MIME;

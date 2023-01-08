@@ -1,5 +1,11 @@
 import * as SvgToPng from 'save-svg-as-png';
-import { AboutModal, Logger, Menu, RENDERING_EVENTS, Utilities } from 'francy-core';
+import {
+  AboutModal,
+  Logger,
+  Menu,
+  RENDERING_EVENTS,
+  Utilities
+} from 'francy-core';
 
 /**
  * The {MainMenu} holds the default options for the current Graphics.
@@ -8,8 +14,8 @@ import { AboutModal, Logger, Menu, RENDERING_EVENTS, Utilities } from 'francy-co
  */
 export default class MainMenu extends Menu {
 
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
     this.aboutModal = new AboutModal(this.options, this.context);
   }
 
@@ -66,16 +72,16 @@ export default class MainMenu extends Menu {
     this._addEntryOnFrancyMenu({
       id: 'zoom-entry',
       title: 'Zoom to Fit',
-      onClickCallback: function () {
+      onClickCallback: function (e) {
         self.options.appendTo.canvas.zoomToFit(true);
       }
     });
     this._addEntryOnFrancyMenu({
       id: 'save-entry',
       title: 'Save to PNG',
-      onClickCallback: function () {
-        let name = self.data.canvas.title 
-          ? Utilities.sanitize(self.data.canvas.title, '_') + '.png' 
+      onClickCallback: function (e) {
+        let name = self.data.canvas.title
+          ? Utilities.sanitize(self.data.canvas.title, '_') + '.png'
           : 'diagram.png';
         if (self.SVGParent.node()) {
           SvgToPng.saveSvgAsPng(self.SVGParent.node(), name);
@@ -88,7 +94,7 @@ export default class MainMenu extends Menu {
             e.initMouseEvent('click', true, true, window,
               0, 0, 0, 0, 0, false, false, false,
               false, 0, null);
-      
+
             link.dispatchEvent(e);
           } else if (link.fireEvent) {
             link.fireEvent('onclick');
@@ -99,7 +105,7 @@ export default class MainMenu extends Menu {
     this._addEntryOnFrancyMenu({
       id: 'about-entry',
       title: 'About',
-      onClickCallback: function () {
+      onClickCallback: function (e) {
         self.handlePromise(self.aboutModal.load(self.data).render());
       }
     });
@@ -114,7 +120,7 @@ export default class MainMenu extends Menu {
         menuTitle: 'Renderers',
         entryId: o.id,
         entryTitle: `${o.enable ? '&#9745' : '&#9744'} ${o.name}`,
-        entryOnClickCallback: function () {
+        entryOnClickCallback: function (e) {
           self.context.renderingManager.enable(o.name);
         },
         entryOnEachCallback: function () {
@@ -135,7 +141,7 @@ export default class MainMenu extends Menu {
     self.context.renderingManager.subscribe(RENDERING_EVENTS.STATUS, reRender, reRenderId);
 
     function reRender(o) {
-      var canvas = d3.select(`#Canvas-${self.data.canvas.id}`);
+      let canvas = d3.select(`#Canvas-${self.data.canvas.id}`);
       if (canvas.node()) {
         self.element.select(`.${o.id}`).html(`${o.enable ? '&#9745' : '&#9744'} ${o.name}`);
         if (o.enable) {
@@ -150,7 +156,7 @@ export default class MainMenu extends Menu {
           }, 100);
         }
       } else {
-        Logger.debug(`(${this.context.instanceId}) The Canvas ${self.data.canvas.id} seems to have disapeared... removing events associated to it`);
+        Logger.debug(`(${this.context.instanceId}) The Canvas ${self.data.canvas.id} seems to have disappeared... removing events associated to it`);
         self.context.renderingManager.unsubscribe(reRenderId);
         self.context.renderingManager.unsubscribe(registerId);
       }
@@ -159,11 +165,13 @@ export default class MainMenu extends Menu {
     Object.values(self.context.renderingManager.allRenderers()).forEach(insertEntry);
   }
 
-  addEntryOnSettingsMenu({ id, title, onClickCallback, onEachCallback, withSeparator }) {
-    let entry = this.element.select('.settings-entry>ul').data([{ id: id, title: title }]);
+  addEntryOnSettingsMenu({id, title, onClickCallback, onEachCallback, withSeparator}) {
+    let entry = this.element.select('.settings-entry>ul').data([{id: id, title: title}]);
     entry = entry.append('li').attr('class', d => d.id);
-    onClickCallback = onClickCallback || function () {};
-    onEachCallback = onEachCallback || function () {};
+    onClickCallback = onClickCallback || function (e) {
+    };
+    onEachCallback = onEachCallback || function () {
+    };
     entry.append('a').attr('title', d => d.title).html(d => d.title)
       .on('click', onClickCallback)
       .each(onEachCallback);
@@ -174,7 +182,7 @@ export default class MainMenu extends Menu {
     return entry;
   }
 
-  addMultiMenuOnSettingsMenu({ menuId, menuTitle, entryId, entryTitle, entryOnClickCallback, entryOnEachCallback }) {
+  addMultiMenuOnSettingsMenu({menuId, menuTitle, entryId, entryTitle, entryOnClickCallback, entryOnEachCallback}) {
     let entry = this.element.select(`.settings-entry>ul>li.${menuId}`);
     if (!entry.node()) {
       entry = this.element.select('.settings-entry>ul').append('li').attr('class', menuId);
@@ -186,10 +194,12 @@ export default class MainMenu extends Menu {
       content = entry.append('ul');
     }
 
-    entryOnClickCallback = entryOnClickCallback || function () {};
-    entryOnEachCallback = entryOnEachCallback || function () {};
+    entryOnClickCallback = entryOnClickCallback || function (e) {
+    };
+    entryOnEachCallback = entryOnEachCallback || function () {
+    };
 
-    function insertEntry({ entryId, entryTitle, entryOnClickCallback, entryOnEachCallback }) {
+    function insertEntry({entryId, entryTitle, entryOnClickCallback, entryOnEachCallback}) {
       let entryMenu = content.select(`li>a.${entryId}`);
       if (!entryMenu.node()) {
         entryMenu = content.append('li').append('a').attr('class', entryId);
@@ -199,14 +209,16 @@ export default class MainMenu extends Menu {
         .each(entryOnEachCallback);
     }
 
-    insertEntry({ entryId, entryTitle, entryOnClickCallback, entryOnEachCallback });
+    insertEntry({entryId, entryTitle, entryOnClickCallback, entryOnEachCallback});
   }
 
-  _addEntryOnFrancyMenu({ id, title, onClickCallback, onEachCallback, withSeparator }) {
-    let entry = this.element.select('.francy-entry>ul').data([{ id: id, title: title }]);
+  _addEntryOnFrancyMenu({id, title, onClickCallback, onEachCallback, withSeparator}) {
+    let entry = this.element.select('.francy-entry>ul').data([{id: id, title: title}]);
     entry = entry.append('li').attr('class', d => d.id);
-    onClickCallback = onClickCallback || function () {};
-    onEachCallback = onEachCallback || function () {};
+    onClickCallback = onClickCallback || function (e) {
+    };
+    onEachCallback = onEachCallback || function () {
+    };
     entry.append('a').html(d => d.title)
       .on('click', onClickCallback)
       .each(onEachCallback);
@@ -217,11 +229,13 @@ export default class MainMenu extends Menu {
     return entry;
   }
 
-  addEntryOnMenu({ id, title, onClickCallback, onEachCallback }) {
-    let entry = this.element.data([{ id: id, title: title }]);
+  addEntryOnMenu({id, title, onClickCallback, onEachCallback}) {
+    let entry = this.element.data([{id: id, title: title}]);
     entry = entry.append('li').attr('class', d => d.id);
-    onClickCallback = onClickCallback || function () {};
-    onEachCallback = onEachCallback || function () {};
+    onClickCallback = onClickCallback || function (e) {
+    };
+    onEachCallback = onEachCallback || function () {
+    };
     entry.append('a').html(d => d.title)
       .on('click', onClickCallback)
       .each(onEachCallback);

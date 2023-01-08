@@ -1,11 +1,11 @@
 # Francy releases
 
-Francy releases are done automatically using Travis.CI
+Francy's releases are done automatically using GitHub Actions.
 
 Update the project version number using `npm run version` in /js. 
 Update `gap/PackageInfo.g` and the tests relying on it.
 
-Make sure all versions are consitent and commit your changes. Follow the Git Flow.
+Make sure all versions are consistent and commit your changes. Follow the Git Flow.
 
 Travis will run and push a new release of the jupyter_francy extension to PyPi.
 

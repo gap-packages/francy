@@ -8,8 +8,8 @@
 }
 
 .francy-menu-arrow-right {
-  width: 0px;
-  height: 0px;
+  width: 0;
+  height: 0;
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
   border-left: 3px solid #000;
@@ -17,8 +17,8 @@
 }
 
 .francy-menu-arrow-down {
-  width: 0px;
-  height: 0px;
+  width: 0;
+  height: 0;
   border-left: 4px solid transparent;
   border-top: 4px solid #000
 }
@@ -60,11 +60,12 @@
 }
 
 .francy-main-menu {
-  background: #f6f6f6;
-  float: left;
-  list-style: none;
-  width: 100%;
-  border-bottom: 1px solid #cfcfcf
+  background: #f6f6f6!important;
+  float: left!important;
+  list-style: none!important;
+  width: 100%!important;
+  border-bottom: 1px solid #cfcfcf!important;
+  padding-left: 0!important;
 }
 
 .francy-main-menu li {
@@ -75,26 +76,26 @@
 }
 
 .francy-main-menu li ul {
-  box-shadow: 5px 5px 5px grey;
-  min-width: 120px;
-  z-index: 500
+  box-shadow: 5px 5px 5px grey!important;
+  min-width: 120px!important;
+  z-index: 500!important;
 }
 
 .francy-main-menu hr {
   border-color: #cfcfcf!important;
-  margin: 0.1px!important;
+  margin: 0 !important;
 }
 
 .francy-main-menu li ul li:hover ul {
-  position: absolute;
+  position: absolute!important;
   left: 100%!important;
   top: 0!important;
 }
 
 .francy-main-menu li ul li ul {
   left: -9999px!important;
-  list-style: none;
-  position: absolute
+  list-style: none!important;
+  position: absolute;
 }
 
 .francy-main-menu li a {
@@ -124,21 +125,22 @@
 }
 
 .francy-main-menu li:hover ul {
-  left: 0
+  left: 0;
+  padding-left: 0!important;
 }
 
 .francy-main-menu li:hover ul a {
-  text-decoration: none
+  text-decoration: none!important;
 }
 
 .francy-main-menu li:hover ul li a:hover {
-  background: #ededed
+  background: #ededed!important;
 }
 
 .francy-main-menu ul {
   left: -9999px;
-  list-style: none;
-  position: absolute
+  list-style: none!important;
+  position: absolute;
 }
 
 .francy-main-menu ul a {
@@ -149,8 +151,8 @@
 }
 
 .francy-main-menu ul li {
-  float: none;
-  width: 100%
+  float: none!important;
+  width: 100%!important
 }
 
 .francy-context-menu-holder {
@@ -172,7 +174,7 @@
 .francy-node ellipse,
 .francy-node polygon {
   stroke: #000;
-  stroke-width: 0.1px
+  stroke-width: 0;
 }
 
 .francy-lines path,
@@ -260,6 +262,9 @@
   padding: 0
 }
 
+.jp-OutputWidget-Francy {
+  padding-right: 0!important;
+}
 
 div.output_subarea.jp-OutputWidget-Francy.output_result {
   padding: 0;
@@ -298,10 +303,10 @@ div.output_subarea.jp-OutputWidget-Francy.output_result {
 }
 
 .francy-context-menu ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  cursor: pointer
+  list-style-type: none!important;
+  margin: 0!important;
+  padding: 0!important;
+  cursor: pointer!important;
 }
 
 .francy-context-menu ul li a {

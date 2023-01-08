@@ -2,14 +2,17 @@
   "env": {
     "browser": true,
     "commonjs": true,
-    "es2020": true
+    "es2020": true,
+    "es2021": true,
+    "es2022": true
   },
   "extends": "eslint:recommended",
   "parserOptions": {
+    "requireConfigFile": false,
     "sourceType": "module",
-    "ecmaVersion": 11
+    "ecmaVersion": 13
   },
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "globals": {
     "d3": true,
     "VERSION": true,
@@ -26,7 +29,8 @@
     "**/node_modules/**",
     "**/dist/**", 
     "**/lib/**",
-    "**/jupyter_francy/**"
+    "**/jupyter_francy/**",
+    "**/jupyter-francy/**"
   ],
   "rules": {
     "indent": [

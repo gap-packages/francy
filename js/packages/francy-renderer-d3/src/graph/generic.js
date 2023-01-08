@@ -138,7 +138,7 @@ export default class GenericGraph extends Graph {
 
       node.each(function () {
         let bound = this.getBBox();
-        // calculate default radius for colisions
+        // calculate default radius for collisions
         // check the widest group Bounding Box
         if (radius < bound.width) {
           radius = bound.width;
@@ -150,11 +150,11 @@ export default class GenericGraph extends Graph {
           symbolRadius = symbolBound.width;
         }
         // check whether the graph will be layered on y - hasse
-        if (node.data()[0].layer != 0) {
+        if (node.data()[0].layer !== 0) {
           ylayered = true;
         }
         // check whether the graph will be layered on x
-        if (node.data()[0].conjugate != 0) {
+        if (node.data()[0].conjugate !== 0) {
           xlayered = true;
         }
       });
@@ -176,8 +176,8 @@ export default class GenericGraph extends Graph {
         //.force('link', ylayered ? linkForce.strength(d => d.weight ? Math.sqrt(d.weight) % 1 : 1 / (linksToAdd.length + 1)) : linkForce)
         .force('link', ylayered ? linkForce.strength(1 / (linksToAdd.length + 1)) : linkForce)
         .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2))
-        .on('tick', () => safeTicked.handle())
-        .on('end', () => safeEnd.handle());
+        .on('tick', (e) => safeTicked.handle())
+        .on('end', (e) => safeEnd.handle());
 
       if (nodesToAdd.length >= 1000 || linksToAdd.length >= 1000) {
         self.parent.attr('visibility', 'hidden');
@@ -251,15 +251,15 @@ export default class GenericGraph extends Graph {
 
       let connectedNodes = self.graphOperations.connectedNodes(node, canvasNodes, link, canvasLinks);
       let nodeOnClick = node.on('click');
-      node.on('click', function (d) {
+      node.on('click', function (e, d) {
         // default, highlight connected nodes
-        connectedNodes.call(this);
+        connectedNodes.call(this, e);
         // any callbacks will be handled here
-        nodeOnClick && nodeOnClick.call(this, d);
+        nodeOnClick && nodeOnClick.call(this, e, d);
       });
-      link.on('click', function () {
+      link.on('click', function (e) {
         // default, highlight connected nodes
-        connectedNodes.call(this);
+        connectedNodes.call(this, e);
       });
     }
 

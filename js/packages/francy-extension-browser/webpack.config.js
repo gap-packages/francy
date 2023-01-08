@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require('terser-webpack-plugin');
 const fPackage = require('./package.json');
 const description = `'${fPackage.name}, v${fPackage.version} - ${fPackage.description}, by ${fPackage.author}.'`;
 const defaultPlugins = [
@@ -24,7 +24,6 @@ module.exports = (env = {}) => {
     use: {
       loader: 'babel-loader',
       options: {
-        presets: ['@babel/preset-env'],
         plugins: [
           ['@babel/plugin-proposal-decorators', { 'legacy': true }],
           ['@babel/plugin-transform-classes', { 'globals': ['Error'] }]
@@ -37,7 +36,7 @@ module.exports = (env = {}) => {
     mode: env.production ? 'production' : 'development',
     target: 'web',
     entry: {
-      FrancyJS: ['@babel/polyfill', 'francy'],
+      FrancyJS: ['francy'],
       D3Renderer: ['francy-renderer-d3'],
       GraphvizRenderer: ['francy-renderer-graphviz'],
       VisRenderer: ['francy-renderer-vis']
@@ -62,7 +61,7 @@ module.exports = (env = {}) => {
       minimizer: [
         new UglifyJsPlugin({
           parallel: true,
-          uglifyOptions: {
+          terserOptions: {
             ecma: 6,
             compress: false
           }
@@ -73,7 +72,10 @@ module.exports = (env = {}) => {
     module: {
       rules: loaders
     },
-    plugins: defaultPlugins
+    plugins: defaultPlugins,
+    experiments: {
+      topLevelAwait: true
+    }
   };
 
   return [ web ];

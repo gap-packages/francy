@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import './d3_wrapper';
-import { FrancyApp, Logger } from 'francy';
+import { FrancyApp } from 'francy';
+import { Logger } from 'francy-core';
 import { D3Renderer } from '../../index';
 import undirected from '../../node_modules/francy-core/src/__test__/data/json1.json';
 import directed from '../../node_modules/francy-core/src/__test__/data/json2.json';

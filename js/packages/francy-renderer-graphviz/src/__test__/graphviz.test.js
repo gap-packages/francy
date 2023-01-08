@@ -1,5 +1,6 @@
 import { expect } from 'chai';
-import { FrancyApp, Logger } from 'francy';
+import { FrancyApp } from 'francy';
+import { Logger } from 'francy-core';
 import { GraphvizRenderer } from '../../index';
 import './d3_wrapper';
 

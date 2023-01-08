@@ -1,32 +1,32 @@
 import BaseRenderer from './base';
-import { Components } from '../component/factory';
-import { Decorators } from '../decorator/factory';
+import {Components} from '../component/factory';
+import {Decorators} from '../decorator/factory';
 
 /**
- * This class wraps the MathJax component and renders MathJax components 
+ * This class wraps the MathJax component and renders MathJax strings,
  * by replacing HTML or SVG components with the MathJax representation.
- * 
+ *
  * @example mathjax.settings({appendTo: {element: text}, renderType: 'SVG', postFunction: () => {}}).render()
- * 
+ *
  * @extends {BaseRenderer}
  */
 export default class MathJaxWrapper extends BaseRenderer {
 
   /**
    * Base constructor
-   * 
+   *
    * @typedef {Object} options
    * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
-   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   * @property {Object} context - the context of the application, usually a configuration and a rendering manager instance
    */
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
   }
 
   /**
    * This method is used to render this component
-   * 
+   *
    * @public
    */
   @Decorators.Data.enabled('canvas.texTypesetting')
@@ -35,7 +35,8 @@ export default class MathJaxWrapper extends BaseRenderer {
     if (!Components.MathJax.isAvailable ||
       !this.parent || !this.parent.node()) return;
     // check for a post exec function
-    this.options.postFunction = this.options.postFunction || function () {};
+    this.options.postFunction = this.options.postFunction || function () {
+    };
     MathJax.Hub.Queue(
       ['setRenderer', MathJax.Hub, this.options.renderType], ['Typeset', MathJax.Hub, this.parent.node()], [this.options.postFunction]
     );
@@ -43,7 +44,7 @@ export default class MathJaxWrapper extends BaseRenderer {
 
   /**
    * Saves the settings in an internal options object.
-   * 
+   *
    * @typedef {Object} options
    * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
@@ -52,8 +53,8 @@ export default class MathJaxWrapper extends BaseRenderer {
    * @returns {object} this instance
    * @public
    */
-  settings({ appendTo, callbackHandler, renderType, postFunction }) {
-    super.settings({ appendTo, callbackHandler });
+  settings({appendTo, callbackHandler, renderType, postFunction}) {
+    super.settings({appendTo, callbackHandler});
     this.options.renderType = renderType;
     this.options.postFunction = postFunction;
     return this;

@@ -4,7 +4,7 @@ import MathJaxComponent from './mathjax';
 
 /**
  * {Components} is a singleton and runs before everything else starting each component
- * 
+ *
  * @example Components.D3.isAvailable
  * @example Components.Jupyter.isAvailable
  * @example Components.MathJax.isAvailable
@@ -17,5 +17,5 @@ import MathJaxComponent from './mathjax';
 export const Components = {
   D3: new D3Component(false, false, 3),
   Jupyter: new JupyterComponent(false, false, 1),
-  MathJax: new MathJaxComponent(false, false, 5)
+  MathJax: new MathJaxComponent(false, true, 5)
 };
