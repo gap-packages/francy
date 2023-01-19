@@ -53,9 +53,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
+        working-directory: js
       - run: npm install
+        working-directory: js
       - run: npm run bootstrap
+        working-directory: js
       - run: npm run test
+        working-directory: js
       - uses: codecov/codecov-action@v3
 
   # The documentation job
