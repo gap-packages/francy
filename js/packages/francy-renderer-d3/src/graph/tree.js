@@ -132,19 +132,9 @@ export default class TreeGraph extends Graph {
         .text(d => d.data.title)
         .style('font-size', d => 5 * Math.sqrt(d.weight || 1))
         .style('cursor', d => d.children || d._children ? 'pointer' : 'default')
-        .attr('x', function () {
-          // apply mathjax if this is the case
-          let text = d3.select(this);
-          if (text.text().startsWith('$') && text.text().endsWith('$')) {
-            // we need to set the position after re-render the latex
-            self.handlePromise(self.mathjax.settings({
-              appendTo: {element: text},
-              renderType: 'SVG',
-              postFunction: () => {
-                self.setLabelXPosition(this);
-              }
-            }).render());
-          }
+        .attr('x', function handleText() {
+          // apply mathTypesetting if this is the case
+          self.handleTypesetting(d3.select(this));
           return self._getXPosition(this);
         });
 
@@ -159,7 +149,7 @@ export default class TreeGraph extends Graph {
         .remove();
 
       nodeGroup.selectAll('path.francy-symbol')
-        .style('fill', d => d.children || d._children ? '#fff' : Graph.colors(d.data.layer * 5))
+        .style('fill', d => d.children || d._children ? '#f2f2f2' : Graph.colors(d.data.layer * 5))
         .style('cursor', d => d.children || d._children ? 'pointer' : 'default');
 
       node = nodeGroup.selectAll('g.francy-node');

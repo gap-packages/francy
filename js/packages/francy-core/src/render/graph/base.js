@@ -42,7 +42,7 @@ export default class Graph extends Renderer {
           // object to render and not the whole `this.data` object, 
           // we can't check for the property canvas.texTypesetting, 
           // hence this:
-          this.handlePromise(this.mathjax.settings({appendTo: this.tooltip, renderType: 'HTML-CSS'}).render());
+          this.handlePromise(this.mathTypesetting(this.tooltip.parent.node()));
         }
       },
       doubleClick: (e, data) => this._executeCallback.call(this, this, data, 'dblclick'),
@@ -152,28 +152,41 @@ export default class Graph extends Renderer {
     return -Math.ceil(bound.width / 2);
   }
 
-  setLabelXPosition(element) {
-    try {
-      d3.select(element).attr('x', this._getXPosition(element));
-    } catch (Error) {
-      // don't care, this might fail for multiple reasons
-      // the use rmight have switch renderer for instance
-      // no worries if something is not properly aligned :P
-    }
-  }
-
   _getYPosition(element) {
     let bound = element.getBBox();
     return Math.floor(bound.height / 2);
   }
 
-  setLabelYPosition(element) {
+  setLabelXPosition(element, width) {
     try {
-      d3.select(element).attr('y', this._getYPosition(element));
+      element.attr('x', -Math.ceil(width / 2));
     } catch (Error) {
-      // don't care, this might fail for multiple reasons
-      // the use rmight have switch renderer for instance
+      // don't care, this might fail for multiple reasons,
+      // the user might have switch renderer for instance,
       // no worries if something is not properly aligned :P
+    }
+  }
+
+  setLabelYPosition(element, height) {
+    try {
+      element.attr('y', -Math.ceil(height / 2));
+    } catch (Error) {
+      // don't care, this might fail for multiple reasons,
+      // the user might have switch renderer for instance,
+      // no worries if something is not properly aligned :P
+    }
+  }
+
+  handleTypesetting(text) {
+    if (text.text().startsWith('$') && text.text().endsWith('$')) {
+      // we need to set the position after re-render the latex
+      this.handlePromise(this.mathTypesetting(text.node()));
+      let foreignObject = d3.select(text.node().parentElement).append('foreignObject');
+      foreignObject.node().appendChild(text.select('mjx-container').node());
+      let mathExpr = foreignObject.select('mjx-math').node()
+      this.setLabelXPosition(foreignObject, mathExpr.clientWidth);
+      this.setLabelYPosition(foreignObject, mathExpr.clientHeight);
+      text.remove();
     }
   }
 

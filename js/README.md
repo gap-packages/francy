@@ -1,13 +1,5 @@
 # Francy - Javascript
 
-[![npm version](https://badge.fury.io/js/francy.svg)](https://badge.fury.io/js/francy)
-[![npm version](https://badge.fury.io/js/francy-core.svg)](https://badge.fury.io/js/francy-core)
-[![npm version](https://badge.fury.io/js/francy-extension-browser.svg)](https://badge.fury.io/js/francy-extension-browser)
-[![npm version](https://badge.fury.io/js/jupyter-francy.svg)](https://badge.fury.io/js/jupyter-francy)
-[![npm version](https://badge.fury.io/js/francy-renderer-d3.svg)](https://badge.fury.io/js/francy-renderer-d3)
-[![npm version](https://badge.fury.io/js/francy-renderer-graphviz.svg)](https://badge.fury.io/js/francy-renderer-graphviz)
-[![npm version](https://badge.fury.io/js/francy-renderer-vis.svg)](https://badge.fury.io/js/francy-renderer-vis)
-
 This Javascript module produces graphics based on the semantic model produced by Francy GAP.
 
 Francy depends on [d3.v7](https://d3js.org/).
@@ -35,10 +27,8 @@ In order to use this module on JupyterLab:
 
 ```bash
 mcmartins@local:~$ cd pkgs/francy/js/packages/francy-extension-jupyterlab/
-mcmartins@local:~$ pip install .
+mcmartins@local:~$ pip install -U .
 ```
-
-NOTE: Jupyter notebook integration is only available on version 1.x.x of Francy.
 
 ### Browser integration
 
@@ -85,7 +75,8 @@ NOTE: Jupyter notebook integration is only available on version 1.x.x of Francy.
 
 # Contribute
 
-Bug fixing, new features or new Renderers, contributions are welcome! This section provides basic information in order to start contributing to the Javascript code base.
+Bug fixing, new features or new Renderers, are welcome! 
+This section provides basic information to start contributing to the Javascript code base.
 
 ## Development
 
@@ -108,9 +99,6 @@ mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ pip install -e .
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ # for JupyterLab
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ jupyter labextension link
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ jupyter lab --watch
-mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ # for Notebook
-mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ jupyter nbextension install --symlink --py --sys-prefix jupyter_francy
-mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ jupyter nbextension enable --py --sys-prefix jupyter_francy
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ # run jupyter locally
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ cd ~/francy/notebooks
 mcmartins@local:~/francy/notebooks $ jupyter notebook --ip=0.0.0.0 --port=8080 --no-browser
@@ -128,7 +116,6 @@ Please follow these [instructions](/RELEASE.md) for releasing.
 | packages/francy                      | contains the base components of Francy                             |
 | packages/francy-core                 | contains the core components of Francy                             |
 | packages/francy-extension-browser    | contains the browser extension classes, for browser integration    |
-| packages/francy-extension-jupyter    | contains the browser extension classes, for jupyter integration    |
 | packages/francy-extension-jupyterlab | contains the browser extension classes, for jupyterlab integration |
 | packages/francy-renderer-d3          | contains the classes to produce graphics with D3                   |
 | packages/francy-renderer-graphviz    | contains the classes to produce graphics with D3-Graphviz          |

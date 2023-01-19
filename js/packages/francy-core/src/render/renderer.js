@@ -1,7 +1,6 @@
 import BaseRenderer from './base';
 import {GlobalConfiguration} from '../util/configuration';
 import {Logger} from '../util/logger';
-import MathJaxWrapper from './mathjax-wrapper';
 
 /**
  * This class represents a rendable component.
@@ -41,6 +40,18 @@ export default class Renderer extends BaseRenderer {
      * @type {number}
      */
     this.transitionDuration = GlobalConfiguration.object.transitionDuration;
+    /**
+     * Stores the jupyterlab defined typesetter
+     * @type {object}
+     */
+    window.typesetter = this.typesetter = context.typesetter
+    if (!this.typesetter) {
+      this.typesetter = {
+        typeset: function typeset() {
+          Logger.info('Typesetter is not configured on this environment.')
+        }
+      }
+    }
   }
 
   /**
@@ -124,19 +135,18 @@ export default class Renderer extends BaseRenderer {
   }
 
   /**
-   * Returns the MathJax component
+   * Renders Math using the TypeSetter component configured
    *
-   * @returns {MathJaxWrapper} the MathJax component
    * @public
    */
-  get mathjax() {
-    return new MathJaxWrapper(this.options, this.context).load(this.data);
+  async mathTypesetting(node) {
+    this.typesetter.typeset(node)
   }
 
   /**
    * Sets an execution of 'unrender()' with the certain delay.
    *
-   * @param {integer} delay - the delay in ms to call 'unrender()' function, defaults to 10000 ms
+   * @param {number} delay - the delay in ms to call 'unrender()' function, defaults to 10000 ms
    * @public
    */
   autoUnrender(delay = 10000) {

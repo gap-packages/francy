@@ -47,18 +47,17 @@ export default class BaseComponent {
       .withLogRetries(true).withContext(this).withStackTrace(false)
       .onErrorThrow(mandatory).onErrorExec(this._onError);
     // run initialization
-    if (!this.delay) this._safeInitializeDecorator.handle();
-    //if (this.delay) {
-    //  setTimeout(() => {
-    //    this._safeInitializeDecorator.handle();
-    //    // give it another chance later...
-    //    if (!this.available) {
-    //      this.executed = false;
-    //    }
-    //  }, 0);
-    //} else { 
-    //  this._safeInitializeDecorator.handle(); 
-    //}
+    if (this.delay) {
+      setTimeout(() => {
+        this._safeInitializeDecorator.handle();
+        // give it another chance later...
+        if (!this.available) {
+          this.executed = false;
+        }
+      }, 0);
+    } else {
+      this._safeInitializeDecorator.handle();
+    }
   }
 
   /**

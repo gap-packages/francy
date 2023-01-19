@@ -25,7 +25,7 @@ export default class JupyterComponent extends BaseComponent {
    */
   initialize() {
     let global = (0, eval)('this');
-    if (!('_JUPYTERLAB' in global) && (!('Jupyter' in global))) {
+    if (!('_JUPYTERLAB' in global)) {
       throw new Error('We\'re not running on Jupyter...');
     }
     Logger.debug('Jupyter is available...');

@@ -131,7 +131,7 @@ export default class ConfigurationHandler extends Observable {
    * Adds a new configuration property
    *
    * @param {string} property - the configuration property name
-   * @param {Object} value - the configuration property value
+   * @param {object} value - the configuration property value
    * @returns {object} this instance
    * @public
    */

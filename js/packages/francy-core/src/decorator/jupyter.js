@@ -1,4 +1,4 @@
-import {Logger} from '../util/logger';
+//import {Logger} from '../util/logger';
 
 /* global Jupyter */
 
@@ -18,6 +18,7 @@ export default class JupyterDecorator {
   static registerKeyboardEvents(elements) {
     // TODO check if this still works on JupyterLab
     // disable keyboard shortcuts in Jupyter for specific css classed elements
+    /*
     if (!elements) return;
     try {
       elements.map(element => {
@@ -30,6 +31,7 @@ export default class JupyterDecorator {
         Logger.warn(`We can't do anything about this! An error occurred [${e}]`);
       }
     }
+    */
   }
 
 }

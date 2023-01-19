@@ -136,7 +136,7 @@ end);
 
 #############################################################################
 ##
-#O  GenerateID( ) . . . . . . . . . . . Generates sequential ids for objects
+#O  GenerateID( ) . . . . . . . . . . . Generates random ids for objects
 ##
 InstallMethod(GenerateID,
   "",
@@ -144,6 +144,5 @@ InstallMethod(GenerateID,
   [],
   0,
 function()
-  FrancyGeneratedID := FrancyGeneratedID + 1;
-  return Concatenation("F", String(FrancyGeneratedID));
+  return Concatenation("F", HexStringUUID(RandomUUID()));
 end);

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import './d3_wrapper';
+import * as d3 from 'd3';
 import { FrancyApp } from 'francy';
 import { Logger } from 'francy-core';
 import { D3Renderer } from '../../index';
@@ -10,10 +10,10 @@ import bar from '../../node_modules/francy-core/src/__test__/data/json4.json';
 import line from '../../node_modules/francy-core/src/__test__/data/json5.json';
 import scatter from '../../node_modules/francy-core/src/__test__/data/json6.json';
 
-/* global d3 */
-    
+
 describe('Francy Renderer Object', function() {
 
+  window.d3 = global.d3 = d3;
   var Francy = new FrancyApp({ appendTo: 'body', callbackHandler: Logger.info });
   Francy.RenderingManager.register(new D3Renderer());
   

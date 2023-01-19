@@ -76,7 +76,7 @@
 }
 
 .francy-main-menu li ul {
-  box-shadow: 5px 5px 5px grey!important;
+  box-shadow: 2px 2px 2px grey!important;
   min-width: 120px!important;
   z-index: 500!important;
 }
@@ -206,7 +206,7 @@
   right: inherit;
   z-index: 1000;
   background: #fff;
-  box-shadow: 5px 5px 5px #000;
+  box-shadow: 2px 2px 2px grey;
   margin-left: -182px;
   margin-top: -102px;
   padding: 10px;
@@ -299,7 +299,7 @@ div.output_subarea.jp-OutputWidget-Francy.output_result {
   min-width: 150px;
   border: 1px solid #cfcfcf;
   z-index: 500;
-  box-shadow: 5px 5px 5px grey
+  box-shadow: 2px 2px 2px grey
 }
 
 .francy-context-menu ul {
@@ -490,6 +490,10 @@ a[target='_blank']::after {
 
 .francy-output-value {
   padding: 5px
+}
+
+foreignObject {
+  overflow: visible;
 }
 
 /* Safari */

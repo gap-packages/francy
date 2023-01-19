@@ -16,8 +16,9 @@ const d3 = await Promise.all([
   import('d3-graphviz')
 ]).then(d3 => Object.assign({}, ...d3));
 
+import {Graphviz} from '@hpcc-js/wasm/graphviz'
+
 import * as vis from 'vis-network/standalone';
-import '@hpcc-js/wasm';
 
 import {FrancyApp} from 'francy';
 import {Logger, MIME} from 'francy-core';
@@ -25,10 +26,8 @@ import {D3Renderer} from 'francy-renderer-d3';
 import {GraphvizRenderer} from 'francy-renderer-graphviz';
 import {VisRenderer} from 'francy-renderer-vis';
 
-import {IRenderMimeRegistry, RenderedHTML} from '@jupyterlab/rendermime';
+import {ILatexTypesetter, IRenderMimeRegistry, RenderedHTML} from '@jupyterlab/rendermime';
 import {INotebookTracker} from '@jupyterlab/notebook';
-
-import Graphviz from '@hpcc-js/wasm/graphviz'
 
 window.d3 = d3
 window.vis = vis;
@@ -36,7 +35,6 @@ window.graphviz = Graphviz
 
 export const MIME_TYPE_TEXT = 'text/plain';
 export const CLASS_NAME = 'jp-OutputWidget-Francy';
-export const APPEND_ID = 'francy-drawing-div';
 
 /**
  * A widget for rendering 'application/vnd.francy+json'
@@ -45,7 +43,7 @@ export class FrancyWidget extends RenderedHTML {
   /**
    * Construct a new output widget.
    */
-  constructor(options, sessionContext) {
+  constructor(options, sessionContext, typesetter) {
     super(options);
     this._mimeType = MIME;
     this._sessionContext = sessionContext;
@@ -55,6 +53,7 @@ export class FrancyWidget extends RenderedHTML {
     let self = this;
     // update the callback handler with the session kernel
     this.Francy = new FrancyApp({
+      typesetter: typesetter,
       callbackHandler: function (cmd) {
         // NOTE it should be implemented like this:
         // at this point we know the element exists and the OutputArea is 2 levels up: this.parent.parent
@@ -81,8 +80,6 @@ export class FrancyWidget extends RenderedHTML {
     this.Francy.RenderingManager.register(new D3Renderer());
     this.Francy.RenderingManager.register(new GraphvizRenderer());
     this.Francy.RenderingManager.register(new VisRenderer());
-    // try to initialize MathJax just in case - hack
-    this.Francy.Components.MathJax.tryInitialize();
   }
 
   /**
@@ -92,7 +89,7 @@ export class FrancyWidget extends RenderedHTML {
     this.Francy.load(model.data[this._mimeType]).render()
       .catch(error => Logger.error(error))
       .then(element => this.node.appendChild(element));
-    return Promise.resolve(true);
+    return Promise.resolve();
   }
 
 }
@@ -106,11 +103,12 @@ const extension = {
   dataType: 'json',
   autoStart: true,
   requires: [IRenderMimeRegistry, INotebookTracker],
-  activate: (app, rendermime, notebook) => {
+  optional: [ILatexTypesetter],
+  activate: (app, rendermime, notebook, typesetter) => {
     rendermime.addFactory({
       safe: true,
       mimeTypes: [MIME],
-      createRenderer: options => new FrancyWidget(options, notebook.currentWidget.sessionContext)
+      createRenderer: options => new FrancyWidget(options, notebook.currentWidget.sessionContext, typesetter)
     }, 0);
   },
 };

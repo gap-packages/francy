@@ -18,11 +18,14 @@
     "test": "karma start karma.conf.js",
     "clean": "rm -rf ./dist/*",
     "build": "npm run clean && webpack --config webpack.config.js",
-    "build:prod": "npm run clean && webpack --env.production --config webpack.config.js",
+    "build:prod": "npm run clean && webpack --env production=true --config webpack.config.js",
     "build:jupyter": "npm run build"
   },
   "dependencies": {
     "francy-core": "^2.0.0"
+  },
+  "devDependencies": {
+    "d3": "^7.8.2"
   },
   "main": "./dist/index.js",
   "exports": {

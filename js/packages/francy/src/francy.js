@@ -29,12 +29,14 @@ export class FrancyApp extends Renderer {
    * @typedef {Object} options
    * @property {String} options.appendTo where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler this handler will be used to invoke actions from the menu, default console.log
+   * @property {Object} options.typesetter the global configured typesetter
    */
-  constructor({appendTo, callbackHandler}) {
+  constructor({appendTo, callbackHandler, typesetter}) {
     super({
       appendTo: appendTo,
       callbackHandler: callbackHandler
     }, {
+      typesetter: typesetter || undefined,
       renderingManager: new RenderingManagerHandler({
         configuration: new ConfigurationHandler({
           configuration: DefaultConfiguration

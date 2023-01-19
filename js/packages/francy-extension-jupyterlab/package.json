@@ -57,7 +57,7 @@
     "clean": "rm -rf ./lib ./dist ./build ./jupyter-francy/jupyter-francy ./jupyter-francy/__pycache__ ./jupyter-francy/labextension ./jupyter_francy.egg-info ./__pycache__",
     "build:lib": "",
     "build:labextension": "jupyter labextension build .",
-    "build:labextension:dev": "jupyter labextension build --development True .",
+    "build:labextension:dev": "jupyter labextension build --source-map True --development True .",
     "build": "npm run clean && npm run build:lib && npm run build:labextension:dev",
     "build:prod": "npm run clean && npm run build:lib && npm run build:labextension",
     "build:jupyter": "npm run build"

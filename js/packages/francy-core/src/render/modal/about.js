@@ -69,7 +69,7 @@ export default class AboutModal extends Modal {
       .attr('value', GlobalConfiguration.object.verbose)
       .attr('name', 'Verbose')
       .property('checked', GlobalConfiguration.object.verbose)
-      .on('change', function (e) {
+      .on('change', function () {
         GlobalConfiguration.object.verbose = this.value = this.checked = !GlobalConfiguration.object.verbose;
       })
       .on('input', this.onchange)

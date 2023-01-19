@@ -58,6 +58,9 @@ export default class Tooltip extends Renderer {
     // show tooltip
     this.element.style('display', 'block');
 
+    // render mathTypesetting
+    this.handlePromise(this.mathTypesetting(this.element.node()));
+
     // destroy me after default delay
     this.autoUnrender();
 

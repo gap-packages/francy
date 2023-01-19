@@ -36,24 +36,9 @@
     Please note, you need to run the installation commands from the same python version &Jupyter; is installed on. 
     In order to install/update &Francy;, please run the following command to download the latest version available from <URL>https://pypi.org/</URL>:
     <Log>
-      mcmartins@local:~$ pip install jupyter_francy -U
+      mcmartins@local:~$ cd francy/js
+      mcmartins@local:~$ pip install -U .
     </Log>
-
-    It is necessary to enable &Francy; on your &Jupyter; Notebook installation:
-    <Log>
-      mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy
-    </Log>
-    
-    For &Jupyter; Lab, please run:
-    <Log>
-      mcmartins@local:~$ jupyter labextension build
-    </Log>
-    
-    Alternatively, if you want to run &Francy; only on &Jupyter; Lab, simply execute:
-    <Log>
-      mcmartins@local:~$ jupyter labextension install jupyter-francy
-    </Log>
-    This will load the module from <URL>https://npmjs.org</URL>. This approach should be used if you want to run &Francy; only on &Jupyter; Lab.
 
   </Section>
 

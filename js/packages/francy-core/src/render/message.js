@@ -33,7 +33,7 @@ export default class Message extends Renderer {
 
     let message = this.element.selectAll('div.francy-alert').data(messages, d => d.id);
     let messageEnter = message.enter().append('div').attr('id', d => d.id)
-      .attr('class', d => `francy-alert alert-${d.type}`).on('click', function (e) {
+      .attr('class', d => `francy-alert alert-${d.type}`).on('click', function () {
         d3.select(this).style('display', 'none');
       });
     messageEnter.append('span').attr('class', 'strong').text(d => d.title);
@@ -46,8 +46,8 @@ export default class Message extends Renderer {
 
     this.element.style('display', 'block');
 
-    // render mathjax
-    this.handlePromise(this.mathjax.settings({appendTo: this, renderType: 'HTML-CSS'}).render());
+    // render mathTypesetting
+    this.handlePromise(this.mathTypesetting(this.element.node()));
 
     return this;
   }

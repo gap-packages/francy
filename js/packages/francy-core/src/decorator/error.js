@@ -112,7 +112,7 @@ export default class ErrorDecorator {
    * This method stores the number of retries to execute the function.
    *
    * @public
-   * @param {integer} n - the number of retries
+   * @param {number} n - the number of retries
    * @return {this} instance
    */
   withRetries(n) {

@@ -1,7 +1,10 @@
-import { expect } from 'chai';
-import { Components } from '../component/factory';
+import {expect} from 'chai';
+import {Components} from '../component/factory';
+import * as d3 from "d3";
 
 describe('Components', () => {
+
+  window.d3 = global.d3 = d3;
 
   it('should return an object', () => {
     expect(Components).to.be.an('object');

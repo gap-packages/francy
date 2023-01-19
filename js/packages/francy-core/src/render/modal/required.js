@@ -108,7 +108,7 @@ export default class RequiredArgsModal extends Modal {
           .attr('name', arg.id)
           .attr('type', arg.type)
           .attr('value', arg.value)
-          .on('change', function (e) {
+          .on('change', function () {
             self.data.callback.requiredArgs[this.id].value = this.value;
           })
           .on('input', this.onchange)
@@ -123,7 +123,7 @@ export default class RequiredArgsModal extends Modal {
           input.attr('type', 'checkbox')
             .attr('required', null)
             .attr('value', arg.value)
-            .on('change', function (e) {
+            .on('change', function () {
               self.data.callback.requiredArgs[this.id].value = this.value = this.checked;
             });
         }

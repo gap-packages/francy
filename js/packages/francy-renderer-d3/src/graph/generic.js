@@ -1,9 +1,9 @@
-import { Decorators, Graph } from 'francy-core';
+import {Decorators, Graph} from 'francy-core';
 
 export default class GenericGraph extends Graph {
 
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
   }
 
   @Decorators.Initializer.initialize()
@@ -76,16 +76,16 @@ export default class GenericGraph extends Graph {
         .classed('francy-edge-arrow', true)
         .style('stroke', 'none')
         .style('marker-start', d => `url(#arrow-${d.id})`)
-        .style('stroke-width', d => d.invisible ? 0 : 1.2);
+        .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.2));
     }
 
     linkEnter.filter(d => d.title).append('text')
       .classed('francy-label', true)
-      //.style('font - size', d => d.invisible ? 0 : 7 * Math.sqrt(d.weight || 1))
+      //.style('font-size', d => d.invisible ? 0 : 7 * Math.sqrt(d.weight || 1))
       .style('opacity', 0.1)
       .style('opacity', 0.1)
-      .text(d => d.title)
-      .attr('text-anchor', 'middle');
+      .attr('text-anchor', 'middle')
+      .text(d => d.title);
 
     link.exit().remove();
 
@@ -109,20 +109,10 @@ export default class GenericGraph extends Graph {
       .classed('francy-label', true)
       .text(d => d.title)
       .style('font-size', d => 5 * Math.sqrt(d.size))
-      .attr('x', function () {
-        // apply mathjax if this is the case
-        let text = d3.select(this);
-        if (text.text().startsWith('$') && text.text().endsWith('$')) {
-          // we need to set the position after re-render the latex
-          self.handlePromise(self.mathjax.settings({
-            appendTo: { element: text },
-            renderType: 'SVG',
-            postFunction: () => {
-              self.setLabelXPosition(this);
-              simulation.restart();
-            }
-          }).render());
-        }
+      .attr('text-align', 'middle')
+      .attr('x', function handleText() {
+        // apply mathTypesetting if this is the case
+        self.handleTypesetting(d3.select(this));
         return self._getXPosition(this);
       });
 
