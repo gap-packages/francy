@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Configure ZMQ repos
-        run: echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" >> /etc/apt/sources.list
+        run: sudo echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" >> /etc/apt/sources.list
       - name: Download ZMQ repo key
         run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
       - name: Install ZMQ
@@ -64,7 +64,10 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-          cache: 'pip'
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip
       - run: pip install jupyterlab
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -90,7 +93,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Configure ZMQ repos
-        run: echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" >> /etc/apt/sources.list
+        run: sudo echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" >> /etc/apt/sources.list
       - name: Download ZMQ repo key
         run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
       - name: Install ZMQ
