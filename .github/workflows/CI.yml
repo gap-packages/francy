@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: gap-actions/setup-gap@v2
         with:
-          GAP_PKGS_TO_BUILD: "datastructures digraphs json io profiling orb semigroups jupyterkernel"
+          GAP_PKGS_TO_BUILD: "datastructures digraphs json uuid io profiling orb semigroups zeromqinterface jupyterkernel"
           GAPBRANCH: ${{ matrix.gap-branch }}
       - uses: gap-actions/build-pkg@v1
       - uses: gap-actions/run-pkg-tests@v2
@@ -58,6 +58,8 @@ jobs:
         working-directory: js
       - run: npm run bootstrap
         working-directory: js
+      - run: npm run build
+        working-directory: js
       - run: npm run test
         working-directory: js
       - uses: codecov/codecov-action@v3
@@ -71,7 +73,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: gap-actions/setup-gap@v2
         with:
-          GAP_PKGS_TO_BUILD: "datastructures digraphs json io profiling orb semigroups"
+          GAP_PKGS_TO_BUILD: "datastructures digraphs uuid json io profiling orb semigroups zeromqinterface jupyterkernel"
       - uses: gap-actions/build-pkg-docs@v1
         with:
           use-latex: 'true'
