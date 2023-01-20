@@ -30,7 +30,9 @@ jobs:
 
     steps:
       - name: Configure ZMQ repos
-        run: sudo echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" >> /etc/apt/sources.list
+        run: |
+          sudo touch /etc/apt/sources.list.d/opensuse.list &&
+          echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
       - name: Download ZMQ repo key
         run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
       - name: Install ZMQ
@@ -93,7 +95,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Configure ZMQ repos
-        run: sudo echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" >> /etc/apt/sources.list
+        run: |
+          sudo touch /etc/apt/sources.list.d/opensuse.list &&
+          echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
       - name: Download ZMQ repo key
         run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
       - name: Install ZMQ
