@@ -1,7 +1,7 @@
 gap> canvas := Canvas("");
 <IsFrancyObject/IsCanvas>
 gap> FrancyId(canvas);
-"F16"
+"FB9434EB1D9C3443A9C319E151A4721EC"
 gap> SetTitle(canvas, "Quaternion Group Subgroup Lattice");
 gap> Title(canvas);
 "Quaternion Group Subgroup Lattice"
@@ -29,7 +29,7 @@ rec(
   graph := rec(
        ),
   height := 400,
-  id := "F16",
+  id := "FB9434EB1D9C3443A9C319E151A4721EC",
   menus := rec(
        ),
   messages := rec(

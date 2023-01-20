@@ -29,10 +29,18 @@ jobs:
           - stable-4.12
 
     steps:
+      - name: Configure ZMQ repos
+        run: echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" >> /etc/apt/sources.list
+      - name: Download ZMQ repo key
+        run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+      - name: Install ZMQ
+        run: |
+          sudo apt update && 
+          sudo apt install libzmq3-dev -y
       - uses: actions/checkout@v3
       - uses: gap-actions/setup-gap@v2
         with:
-          GAP_PKGS_TO_BUILD: "datastructures digraphs json uuid io profiling orb semigroups zeromqinterface jupyterkernel"
+          GAP_PKGS_TO_BUILD: "datastructures json uuid io profiling crypting zeromqinterface jupyterkernel"
           GAPBRANCH: ${{ matrix.gap-branch }}
       - uses: gap-actions/build-pkg@v1
       - uses: gap-actions/run-pkg-tests@v2
@@ -48,6 +56,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Set up chromedriver
+        run: |
+          sudo apt update &&
+          wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -P /tmp &&
+          sudo apt install -y "/tmp/google-chrome-stable_current_amd64.deb" -f
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+      - run: pip install jupyterlab
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -71,13 +89,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Configure ZMQ repos
+        run: echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" >> /etc/apt/sources.list
+      - name: Download ZMQ repo key
+        run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+      - name: Install ZMQ
+        run: |
+          sudo apt update && 
+          sudo apt install libzmq3-dev -y
       - uses: gap-actions/setup-gap@v2
         with:
-          GAP_PKGS_TO_BUILD: "datastructures digraphs uuid json io profiling orb semigroups zeromqinterface jupyterkernel"
+          GAP_PKGS_TO_BUILD: "datastructures uuid json io crypting zeromqinterface jupyterkernel"
       - uses: gap-actions/build-pkg-docs@v1
         with:
           use-latex: 'true'
-      - name: 'Upload documentation'
+      - name: Upload documentation
         uses: actions/upload-artifact@v2
         with:
           name: manual

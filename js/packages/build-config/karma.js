@@ -3,12 +3,13 @@ const puppeteer = require('puppeteer');
 process.env.CHROME_BIN = puppeteer.executablePath();
 
 module.exports = config => {
+  let test_files = 'src/__test__/*.js';
   config.set({
     frameworks: ['webpack', 'mocha', 'chai'],
     preprocessors: {
       'src/**/*.js': ['webpack', 'coverage']
     },
-    files: ['src/__test__/*.js'],
+    files: [test_files],
     plugins: ['karma-chrome-launcher', 'karma-mocha-reporter', 'karma-webpack', 'karma-mocha', 'karma-chai', 'karma-coverage'],
     webpack: {
       mode: 'development',
@@ -55,7 +56,13 @@ module.exports = config => {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromeHeadlessNoSandbox'],
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
     autoWatch: false,
     singleRun: true,
     concurrency: Infinity
