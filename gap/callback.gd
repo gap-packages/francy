@@ -22,7 +22,7 @@ DeclareCategory("IsCallback", IsFrancyObject);
 
 #! @Description
 #! Identifies <C>RequiredArg</C> objects.
-DeclareCategory( "IsRequiredArg", IsFrancyObject);
+DeclareCategory("IsRequiredArg", IsFrancyObject);
 
 #! @Description
 #! Identifies <C>ArgType</C> objects.

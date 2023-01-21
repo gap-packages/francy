@@ -57,7 +57,7 @@ BindGlobal("CanvasObjectType", NewType(CanvasFamily, IsCanvas and IsCanvasRep));
 #! @InsertChunk Example_Create_Canvas_1
 #! <P/>
 #! @Arguments IsString(title)[, IsCanvasDefaults]
-#! @Returns <C>Callback</C>
+#! @Returns <C>Canvas</C>
 DeclareOperation("Canvas", [IsString, IsCanvasDefaults]);
 
 #! @Description
