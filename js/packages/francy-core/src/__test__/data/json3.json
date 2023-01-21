@@ -4,7 +4,7 @@
   "canvas": {
     "width": 800,
     "id": "F291",
-    "height": 100,
+    "height": 400,
     "title": "Example Tree Graph",
     "zoomToFit": true,
     "texTypesetting": false,

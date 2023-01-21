@@ -4,7 +4,7 @@
   "canvas": {
     "width": 800,
     "id": "F146",
-    "height": 100,
+    "height": 400,
     "title": "Example undirected graph",
     "zoomToFit": true,
     "texTypesetting": false,

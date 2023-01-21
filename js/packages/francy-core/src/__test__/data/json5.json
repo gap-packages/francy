@@ -4,7 +4,7 @@
   "canvas": {
     "width": 800,
     "id": "F263",
-    "height": 200,
+    "height": 400,
     "title": "Example LINE Chart",
     "zoomToFit": true,
     "texTypesetting": false,

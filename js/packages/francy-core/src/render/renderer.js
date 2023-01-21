@@ -47,29 +47,10 @@ export default class Renderer extends BaseRenderer {
     window.typesetter = this.typesetter = context.typesetter
     if (!this.typesetter) {
       this.typesetter = {
-        typeset: function typeset() {
-          Logger.info('Typesetter is not configured on this environment.')
+        typeset: () => {
         }
       }
     }
-  }
-
-  /**
-   * This method is used by the decorator {Decorators.Initializer.initialize()}
-   * to initialize this renderer.
-   *
-   * @override
-   * @public
-   */
-  initialize() {
-  }
-
-  /**
-   * Handles component unrender
-   *
-   * @public
-   */
-  unrender() {
   }
 
   /**
@@ -132,6 +113,24 @@ export default class Renderer extends BaseRenderer {
   get height() {
     let height = +this.parent.attr('height') || d3.select('body').node().getBoundingClientRect().height;
     return height - this.margin.top - this.margin.bottom;
+  }
+
+  /**
+   * This method is used by the decorator {Decorators.Initializer.initialize()}
+   * to initialize this renderer.
+   *
+   * @override
+   * @public
+   */
+  initialize() {
+  }
+
+  /**
+   * Handles component unrender
+   *
+   * @public
+   */
+  unrender() {
   }
 
   /**

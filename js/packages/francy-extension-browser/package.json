@@ -22,9 +22,12 @@
     "francy-renderer-graphviz": "^2.0.0",
     "francy-renderer-vis": "^2.0.0"
   },
+  "devDependencies": {
+    "d3": "^7.8.2"
+  },
   "scripts": {
     "clean": "rm -rf ./dist/*",
-    "build": "echo",
+    "build": "npm run clean && webpack --config webpack.config.js",
     "build:production": "npm run clean && webpack --env.production --config webpack.config.js"
   },
   "files": [

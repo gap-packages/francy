@@ -4,7 +4,7 @@
   "canvas": {
     "width": 800,
     "id": "F267",
-    "height": 200,
+    "height": 400,
     "title": "Example SCATTER Chart",
     "zoomToFit": true,
     "texTypesetting": false,
