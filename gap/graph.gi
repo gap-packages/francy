@@ -301,6 +301,7 @@ InstallOtherMethod(Add,
    IsFrancyMessage],
   0,
 function(shape, message)
+  Add(message, Callback(Remove, [shape, message]));
   shape!.messages!.(message!.id) := message;
   return shape;
 end);

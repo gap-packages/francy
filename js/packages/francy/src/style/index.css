@@ -3,8 +3,8 @@
   position: relative;
   margin-top: 3px;
   border: solid 1px #cfcfcf;
-  /*font-size: 13px;*/
-  overflow: hidden
+  overflow: hidden;
+  order: -1;
 }
 
 .francy-menu-arrow-right {
@@ -264,6 +264,7 @@
 
 .jp-OutputWidget-Francy {
   padding-right: 0!important;
+  display: grid!important;
 }
 
 div.output_subarea.jp-OutputWidget-Francy.output_result {

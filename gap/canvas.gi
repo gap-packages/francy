@@ -84,6 +84,7 @@ InstallOtherMethod(Add,
    IsFrancyMessage],
   0,
 function(canvas, message)
+  Add(message, Callback(Remove, [canvas, message]));
   canvas!.messages!.(message!.id) := message;
   return canvas;
 end);

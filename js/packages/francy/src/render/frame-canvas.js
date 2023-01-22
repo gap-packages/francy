@@ -1,9 +1,4 @@
-import {
-  CompositeRenderer,
-  Decorators,
-  Logger,
-  Message
-} from 'francy-core';
+import {CompositeRenderer, Decorators, Logger, Message} from 'francy-core';
 import MainMenu from './menu-main';
 
 /**
@@ -22,6 +17,10 @@ export default class CanvasFrame extends CompositeRenderer {
     this.canvas = new Renderer(this.options, this.context);
   }
 
+  get MainMenu() {
+    return this.mainMenu;
+  }
+
   @Decorators.Data.requires('canvas')
   async render() {
     const frameId = `Frame-${this.data.canvas.id}`;
@@ -30,7 +29,7 @@ export default class CanvasFrame extends CompositeRenderer {
     if (!this.element.node()) {
       // create a svg element detached from the DOM!
       Logger.debug(`(${this.context.instanceId}) Creating Frame [${frameId}]...`);
-      this.element = this.parent.append('div').attr('class', 'francy').attr('id', frameId);
+      this.element = this.parent.append('div').classed('francy', true).attr('id', frameId);
     }
 
     // cannot continue if canvas is not present
@@ -47,10 +46,6 @@ export default class CanvasFrame extends CompositeRenderer {
     this.handlePromise(this.renderChildren());
 
     return this;
-  }
-
-  get MainMenu() {
-    return this.mainMenu;
   }
 
 }

@@ -122,8 +122,8 @@ function(list, result)
   for item in list do
     # well, everything that is important for the client is in records
     # everything inside arrays we just convert to string...
-    # ...if you wonder, these are most likely known arguments that are stored
-    # in order to execute callbacks, so the client does nothing with them
+    # ...if you wonder, these are most likely known arguments that are in memory
+    # and will be used to execute callbacks, so the client does nothing with them
     Add(result, String(item));
   od;
   return result;

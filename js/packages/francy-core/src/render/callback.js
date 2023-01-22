@@ -3,6 +3,7 @@ import ConfirmModal from './modal/confirm';
 import {Decorators} from '../decorator/factory';
 import RequiredArgsModal from './modal/required';
 import {Utilities} from '../util/utilities';
+import {Logger} from '../util/logger';
 
 /**
  * CallbackHandler is responsible for handling Callbacks and display Modal windows accordingly.
@@ -85,6 +86,8 @@ export default class CallbackHandler extends BaseRenderer {
     // FIXME
     // oh well, Trigger(<json>); is the entrypoint back to GAP 
     // while we don't support comms on the kernel:
-    return this.callback(`Trigger(${JSON.stringify(JSON.stringify(object))});`);
+    let message = `Trigger(${JSON.stringify(JSON.stringify(object))});`;
+    Logger.debug(message);
+    return this.callback(message);
   }
 }

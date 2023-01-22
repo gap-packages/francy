@@ -98,3 +98,15 @@ InstallMethod(Value, "message", [IsFrancyMessage], o -> o!.value);
 #! Sets the actual message of the <C>FrancyMessage</C>.
 #! @Arguments IsFrancyMessage, IsString
 InstallMethod(SetValue, "message, string", [IsFrancyMessage, IsString], function(o, s) o!.value := s; end);
+
+#! @Description
+#! Add a <C>Callback</C> to a specific <C>FrancyMessage</C>.
+#! @Arguments IsFrancyMessage, [IsCallback, List(IsCallback)]
+#! @Returns <C>FrancyMessage</C>
+#DeclareOperation("Add", [IsFrancyMessage, IsCallback]);
+
+#! @Description
+#! Remove a <C>Callback</C> from a specific <C>FrancyMessage</C>.
+#! @Arguments IsFrancyMessage, [IsCallback, List(IsCallback)]
+#! @Returns <C>FrancyMessage</C>
+#DeclareOperation("Remove", [IsFrancyMessage, IsCallback]);
