@@ -4,9 +4,10 @@
 
 #############################################################################
 ##
-#M  Callback( <callback type>, <trigger Type>,  <function>, <known args> ) . 
+#M  Callback( <callback type>, <trigger Type>,  <function>, <known args> )
 ##  
-## triggers a callback with a list of known args.
+## Triggers a callback with a list of known arguments.
+##
 ## Extra args, or required args, should be registered using:
 ##      Callback!.add(CallbackRequiredArg)
 ##
@@ -63,7 +64,7 @@ end);
 ##
 #M  NoopCallback( )
 ##
-## Creates an empty Callback object that does nothing
+## Creates an empty Callback object that does nothing.
 ##
 InstallMethod(NoopCallback,
   "",
@@ -85,7 +86,7 @@ InstallMethod(RequiredArg,
    IsString],
   0,
 function(argType, title)
-  # FIXME might have to add a new property with order of the arg!
+  # TODO might have to add a new property with the order of the argument for the function!
   return Objectify(RequiredArgObjectType, rec(
     id    := GenerateID(),
     type  := argType!.value,
@@ -96,7 +97,9 @@ end);
 
 #############################################################################
 ##
-#M  Add( <callback>, <required arg> ) . . . . . add objects to canvas
+#M  Add( <callback>, <required arg> )
+##
+## Add required args to a callback.
 ##
 InstallOtherMethod(Add,
   "a callback, a required arg",
@@ -125,7 +128,9 @@ end);
 
 #############################################################################
 ##
-#M  Remove( <callback>, <required arg> ) . . . . . add objects to canvas
+#M  Remove( <callback>, <required arg> )
+##
+## Remove required args from a callback.
 ##
 InstallOtherMethod(Remove,
   "a callback, a required arg",
@@ -154,7 +159,12 @@ end);
 
 #############################################################################
 ##
-#M  Trigger( <a json string> ) . triggers a callback
+#M  Trigger( <a json string> )
+##
+## Triggers a callback.
+##
+## This is the main entrypoint from the client implementation. When a user triggers a callback on the client, the client implementation
+## should handle the call to the server using this function.
 ##
 InstallMethod(Trigger,
   "a json string",
@@ -164,7 +174,7 @@ InstallMethod(Trigger,
 function(json)
   local callback, object, requiredArgs, arg;
   object := JsonStringToGap(json);
-  # FIXME need to validate the callback!
+  # TODO we need to validate the callback before we try to execute it!
   #if not IsCallbackRep(object) then
   #  Error("Not a valid Callback!");
   #fi;

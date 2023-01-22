@@ -4,7 +4,9 @@
 
 #############################################################################
 ##
-#M  Menu( <title> ) . . . . . . . . . . . . . . . a new menu entry
+#M  Menu( <title> )
+##
+## A menu entry.
 ##
 InstallMethod(Menu,
   "a title string",
@@ -32,7 +34,9 @@ end);
 
 #############################################################################
 ##
-#M  Add( <menu>, <menu> ) . . . . . add menu to canvas
+#M  Add( <menu>, <menu> )
+##
+## Add a menu to another menu creating a sub-menu.
 ##
 InstallOtherMethod(Add,
   "a menu, a menu",
@@ -61,7 +65,9 @@ end);
 
 #############################################################################
 ##
-#M  Remove( <menu>, <menu> ) . . . . . remove menu from menu
+#M  Remove( <menu>, <menu> )
+##
+## Remove a menu from another menu.
 ##
 InstallOtherMethod(Remove,
   "a menu, a menu",

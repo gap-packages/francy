@@ -4,7 +4,7 @@
 
 #############################################################################
 ##
-#M  Chart( <chart type> ) . 
+#M  Chart( <chart type> )
 ##
 InstallMethod(Chart,
   "a chart type, chart defaults",
@@ -32,7 +32,7 @@ end);
 
 #############################################################################
 ##
-#M  DefaultAxis( <chart type> ) . 
+#M  DefaultAxis( <chart type> )
 ##
 InstallMethod(DefaultAxis,
   "a chart type",
@@ -53,7 +53,9 @@ end);
 
 #############################################################################
 ##
-#M  Add( <chart>, <francy object> ) . . . . . add objects to canvas
+#M  Add( <chart>, <francy object> )
+##
+## Add a dataset to a chart.
 ##
 InstallOtherMethod(Add,
   "a Chart, a dataset",
@@ -82,7 +84,9 @@ end);
 
 #############################################################################
 ##
-#M  Remove( <chart>, <francy object> ) . . . . . remove object from canvas
+#M  Remove( <chart>, <francy object> )
+##
+## Remove a dataset from a chart.
 ##
 InstallOtherMethod(Remove,
   "a chart, a dataset",
@@ -111,7 +115,9 @@ end);
 
 #############################################################################
 ##
-#M  Dataset( <title>, <list of data> ) . . . . . create a dataset
+#M  Dataset( <title>, <list of data> )
+##
+## Create a dataset.
 ##
 InstallMethod(Dataset,
   "a title, a list of data",

@@ -5,6 +5,7 @@
 #! <C>FrancyMessage</C> is an object that holds a message.
 #! <P/>
 #! These messages can be used to provide information to users in the form of <C>SUCCESS</C>, <C>INFO</C>, <C>WARNING</C>, <C>ERROR</C>.
+#! It is up to the client implementation to handle these messages and their types in a fashionable manner.
 #! Please see Francy-JS for client implementation.
 
 
@@ -24,7 +25,7 @@ DeclareCategory("IsFrancyMessageType", IsFrancyObject);
 #! In this section we show all Francy FrancyMessage Families.
 
 #! @Description
-#! This Family identifies all <C>FrancyMessages</C> objects
+#! This Family identifies all <C>FrancyMessages</C> objects.
 #! @Returns <C>FrancyMessageFamily</C>
 BindGlobal("FrancyMessageFamily", NewFamily("FrancyMessageFamily", IsFrancyObject));
 
@@ -53,7 +54,7 @@ BindGlobal("FrancyMessageTypeObjectType", NewType(FrancyMessageFamily, IsFrancyM
 #! In this section we show all Francy FrancyMessage Operations.
 
 #! @Description
-#! Adds an info label with the format label: value
+#! Adds an info label with the format "label: value"
 #! <P/>
 #! @Arguments IsString, IsString
 #! @Returns <C>FrancyMessage</C>
@@ -64,7 +65,7 @@ DeclareOperation("FrancyMessage", [IsFrancyMessageType, IsString, IsString]);
 #! In this section we show all Global Callback Francy Records for multi purpose.
 
 #! @Description
-#! The various types of Graph supported.
+#! The various types of <C>FrancyMessage</C> supported.
 #! @Returns <C>rec</C> of <C>MessageType</C>
 BindGlobal("FrancyMessageType", rec(
   INFO    := Objectify(FrancyMessageTypeObjectType, rec(value := "info")),
@@ -76,7 +77,7 @@ BindGlobal("FrancyMessageType", rec(
 
 
 #! @Section Attributes
-#! In this section we show all Francy Core Attributes
+#! In this section we show all Francy Message Core Attributes
 
 #! @Description
 #! A title on a <C>FrancyMessage</C> is used to display the title information to the user.

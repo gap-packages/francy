@@ -4,7 +4,7 @@
 
 #############################################################################
 ##
-#M  Graph( <graph type> ) . 
+#M  Graph( <graph type> )
 ##
 InstallMethod(Graph,
   "a graph type",
@@ -32,7 +32,9 @@ end);
 
 #############################################################################
 ##
-#M  UnsetNodes( <graph> ) . . . . . removes all nodes from graph
+#M  UnsetNodes( <graph> )
+##
+## Removes all objects from a graph.
 ##
 InstallMethod(UnsetNodes,
   "a graph",
@@ -46,7 +48,9 @@ end);
 
 #############################################################################
 ##
-#M  UnsetNodes( <graph> ) . . . . . removes all nodes from graph
+#M  UnsetNodes( <graph> )
+##
+## Removes all links or edges from a graph.
 ##
 InstallMethod(UnsetLinks,
   "a graph",
@@ -60,7 +64,9 @@ end);
 
 #############################################################################
 ##
-#M  GetShape( <graph>, <string> ) . . . . . gets a node from graph
+#M  GetShape( <graph>, <string> )
+##
+## Gets a shape from a graph.
 ##
 InstallMethod(GetShape,
   "a graph, an id",
@@ -79,7 +85,9 @@ end);
 
 #############################################################################
 ##
-#M  GetShapes( <graph> ) . . . . . gets all nodes from graph
+#M  GetShapes( <graph> )
+##
+## Gets all shapes from a graph.
 ##
 InstallMethod(GetShapes,
   "a graph",
@@ -89,7 +97,9 @@ InstallMethod(GetShapes,
 
 #############################################################################
 ##
-#M  GetLink( <graph>, <string> ) . . . . . gets a link from graph
+#M  GetLink( <graph>, <string> )
+##
+## Gets a link or edge from a graph.
 ##
 InstallMethod(GetLink,
   "a graph, an id",
@@ -109,7 +119,9 @@ end);
 
 #############################################################################
 ##
-#M  GetLinks( <graph> ) . . . . . gets all links from graph
+#M  GetLinks( <graph> )
+##
+## Gets all links or edges from a graph.
 ##
 InstallMethod(GetLinks,
   "a graph",
@@ -119,7 +131,9 @@ InstallMethod(GetLinks,
 
 #############################################################################
 ##
-#M  Add( <graph>, <francy object> ) . . . . . add objects to graph
+#M  Add( <graph>, <francy object> )
+##
+## Add an object to a graph.
 ##
 InstallOtherMethod(Add,
   "a graph, a link",
@@ -143,7 +157,6 @@ function(graph, shape)
   return graph;
 end);
 
-
 InstallOtherMethod(Add,
   "a graph, a list of francy objects",
   true,
@@ -160,7 +173,9 @@ end);
 
 #############################################################################
 ##
-#M  Remove( <graph>, <francy object> ) . . . . . remove object from graph
+#M  Remove( <graph>, <francy object> )
+##
+## Remove an object from a graph.
 ##
 InstallOtherMethod(Remove,
   "a graph, a shape",
@@ -207,7 +222,9 @@ end);
 
 #############################################################################
 ##
-#M  Shape( <shapeType>, <title>, <options> )  . .  create a Shape for a type
+#M  Shape( <shapeType>, <title>, <options> )
+##
+## Create a shape.
 ##
 InstallMethod(Shape,
   "a shape type, a title string, a default configurations record",
@@ -251,7 +268,9 @@ end);
 
 #############################################################################
 ##
-#M  Add( <graph>, <francy object> ) . . . . . add objects to graph
+#M  Add( <graph>, <francy object> )
+##
+## Add a menu to a graph.
 ##
 InstallOtherMethod(Add,
   "a shape, a menu",
@@ -302,7 +321,9 @@ end);
 
 #############################################################################
 ##
-#M  Remove( <graph>, <francy object> ) . . . . . remove object from graph
+#M  Remove( <graph>, <francy object> )
+##
+## Remove a menu from a graph.
 ##
 InstallOtherMethod(Remove,
   "a shape, a menu",

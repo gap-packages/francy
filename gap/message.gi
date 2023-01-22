@@ -4,7 +4,9 @@
 
 #############################################################################
 ##
-#M  FrancyMessage( <messageType>, <string>, <string> )  . .  create a Label
+#M  FrancyMessage( <messageType>, <string>, <string> )
+##
+## Create a message object.
 ##
 InstallMethod(FrancyMessage,
   "message type, a title, a value",

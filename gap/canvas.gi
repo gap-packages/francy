@@ -4,7 +4,9 @@
 
 #############################################################################
 ##
-#M  Canvas( <title>, <options> ) . . . . . a new graphic canvas
+#M  Canvas( <title>, <options> )
+##
+## A new graphic canvas.
 ##
 InstallMethod(Canvas,
   "a title string, a default configurations record",
@@ -34,7 +36,9 @@ end);
 
 #############################################################################
 ##
-#M  Add( <canvas>, <francy object> ) . . . . . add objects to canvas
+#M  Add( <canvas>, <francy object> )
+##
+## Add objects to canvas.
 ##
 InstallOtherMethod(Add,
   "a canvas, a graph",
@@ -100,7 +104,9 @@ end);
 
 #############################################################################
 ##
-#M  Remove( <canvas>, <francy object> ) . . . . . remove object from canvas
+#M  Remove( <canvas>, <francy object> )
+##
+## Remove object from canvas.
 ##
 InstallOtherMethod(Remove,
   "a canvas, a graph",
@@ -166,7 +172,9 @@ end);
 
 #############################################################################
 ##
-#M  Draw( ) . . . . . 
+#M  Draw( )
+##
+## Prints to the output a JSON metadata model representation of the objects.
 ##
 InstallMethod(Draw,
   "a canvas",
@@ -190,7 +198,9 @@ end);
 
 #############################################################################
 ##
-#M  DrawSplash( ) . . . . . 
+#M  DrawSplash( )
+##
+## Creates an offline HTML page with the GUI representation of the objects.
 ##
 InstallMethod(DrawSplash,
   "a canvas",
