@@ -70,8 +70,8 @@
     "francy-renderer-vis": "^2.0.0"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^3.5.0",
-    "@jupyterlab/notebook": "^3.5.0",
-    "@jupyterlab/rendermime": "^3.5.0"
+    "@jupyterlab/builder": "^3.5.3",
+    "@jupyterlab/notebook": "^3.5.3",
+    "@jupyterlab/rendermime": "^3.5.3"
   }
 }

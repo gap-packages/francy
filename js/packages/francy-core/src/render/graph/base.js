@@ -25,6 +25,52 @@ export default class Graph extends Renderer {
     super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
   }
 
+  static get colors() {
+    return d3.scaleSequential().domain([0, 100]).interpolator(d3.interpolateRainbow);
+  }
+
+  static linkXPos(s, t) {
+    return Math.cos(Graph.angle(s, t)) + (s.x + t.x) / 2;
+  }
+
+  static linkYPos(s, t) {
+    return Math.sin(Graph.angle(s, t)) + (s.y + t.y) / 2;
+  }
+
+  static angle(s, t) {
+    return Math.atan2(t.y - s.y, t.x - s.x);
+  }
+
+  static getSymbol(type) {
+
+    let element;
+    switch (type) {
+      case 'cross':
+        element = d3.symbolCross;
+        break;
+      case 'diamond':
+        element = d3.symbolDiamond;
+        break;
+      case 'square':
+        element = d3.symbolSquare;
+        break;
+      case 'triangle':
+        element = d3.symbolTriangle;
+        break;
+      case 'star':
+        element = d3.symbolStar;
+        break;
+      case 'wye':
+        element = d3.symbolWye;
+        break;
+      case 'circle':
+      default:
+        element = d3.symbolCircle;
+    }
+
+    return element;
+  }
+
   initialize() {
     this.element = this.parent.select('g.francy-content');
     this.tooltip = new Tooltip(this.options, this.context);
@@ -39,8 +85,8 @@ export default class Graph extends Renderer {
           this.handlePromise(this.tooltip.load({messages: data.messages}).render());
           // ok, this is almost a hack, because this should be rendered on
           // the tooltip itself… but because a tooltip gets only the messages
-          // object to render and not the whole `this.data` object, 
-          // we can't check for the property canvas.texTypesetting, 
+          // object to render and not the whole `this.data` object,
+          // we can't check for the property canvas.texTypesetting,
           // hence this:
           this.handlePromise(this.mathTypesetting(this.tooltip.parent.node()));
         }
@@ -48,12 +94,26 @@ export default class Graph extends Renderer {
       doubleClick: (e, data) => this._executeCallback.call(this, this, data, 'dblclick'),
       click: (e, data) => this._executeCallback.call(this, this, data, 'click'),
       contextMenu: (e, data) => {
+        // do not show the jupyterlab context menu here
+        e.stopPropagation();
         // default, build context menu
         this.handlePromise(this.contextMenu.load(data).render());
         // any callbacks will be handled here
         this._executeCallback.call(this, this, data, 'contextmenu');
+        // do not show the browser context menu
+        return this._stopEvents(e);
       }
     };
+  }
+
+  _stopEvents(e) {
+    if (e.preventDefault !== undefined) {
+      e.preventDefault();
+    }
+    if (e.stopPropagation !== undefined) {
+      e.stopPropagation();
+    }
+    return false;
   }
 
   _applyEvents(element) {
@@ -99,52 +159,6 @@ export default class Graph extends Renderer {
         cb.trigger === event && self.handlePromise(self.callback.load({callback: cb}).execute());
       });
     }
-  }
-
-  static linkXPos(s, t) {
-    return Math.cos(Graph.angle(s, t)) + (s.x + t.x) / 2;
-  }
-
-  static linkYPos(s, t) {
-    return Math.sin(Graph.angle(s, t)) + (s.y + t.y) / 2;
-  }
-
-  static angle(s, t) {
-    return Math.atan2(t.y - s.y, t.x - s.x);
-  }
-
-  static get colors() {
-    return d3.scaleSequential().domain([0, 100]).interpolator(d3.interpolateRainbow);
-  }
-
-  static getSymbol(type) {
-
-    let element;
-    switch (type) {
-      case 'cross':
-        element = d3.symbolCross;
-        break;
-      case 'diamond':
-        element = d3.symbolDiamond;
-        break;
-      case 'square':
-        element = d3.symbolSquare;
-        break;
-      case 'triangle':
-        element = d3.symbolTriangle;
-        break;
-      case 'star':
-        element = d3.symbolStar;
-        break;
-      case 'wye':
-        element = d3.symbolWye;
-        break;
-      case 'circle':
-      default:
-        element = d3.symbolCircle;
-    }
-
-    return element;
   }
 
   _getXPosition(element) {
