@@ -1,0 +1,117 @@
+name: CI
+
+# Trigger the workflow on push or pull request
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+
+# the `concurrency` settings ensure that not too many CI jobs run in parallel
+concurrency:
+  # group by workflow and ref; the last slightly strange component ensures that for pull
+  # requests, we limit to 1 concurrent job, but for the master branch we don't
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.ref != 'refs/heads/master' || github.run_number }}
+  # Cancel intermediate builds, but only if it is a pull request build.
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+
+jobs:
+  # The CI test job
+  test_gap:
+    name: ${{ matrix.gap-branch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        gap-branch:
+          - master
+          - stable-4.12
+
+    steps:
+      - name: Configure ZMQ repos
+        run: |
+          sudo touch /etc/apt/sources.list.d/opensuse.list &&
+          echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
+      - name: Download ZMQ repo key
+        run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+      - name: Install ZMQ
+        run: |
+          sudo apt update && 
+          sudo apt install libzmq3-dev -y
+      - uses: actions/checkout@v3
+      - uses: gap-actions/setup-gap@v2
+        with:
+          GAP_PKGS_TO_BUILD: "datastructures json uuid io profiling crypting zeromqinterface jupyterkernel"
+          GAPBRANCH: ${{ matrix.gap-branch }}
+      - uses: gap-actions/build-pkg@v1
+      - uses: gap-actions/run-pkg-tests@v2
+      - uses: gap-actions/process-coverage@v2
+      - uses: codecov/codecov-action@v3
+
+  test_js:
+    name: ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up chromedriver
+        run: |
+          sudo apt update &&
+          wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -P /tmp &&
+          sudo apt install -y "/tmp/google-chrome-stable_current_amd64.deb" -f
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip
+      - run: pip install jupyterlab
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      #- run: npm ci
+      #  working-directory: js
+      - run: npm install
+        working-directory: js
+      - run: npm run bootstrap
+        working-directory: js
+      - run: npm run build
+        working-directory: js
+      - run: npm run test
+        working-directory: js
+      - uses: codecov/codecov-action@v3
+
+  # The documentation job
+  manual:
+    name: Build manuals
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure ZMQ repos
+        run: |
+          sudo touch /etc/apt/sources.list.d/opensuse.list &&
+          echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
+      - name: Download ZMQ repo key
+        run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+      - name: Install ZMQ
+        run: |
+          sudo apt update && 
+          sudo apt install libzmq3-dev -y
+      - uses: gap-actions/setup-gap@v2
+        with:
+          GAP_PKGS_TO_BUILD: "datastructures uuid json io crypting zeromqinterface jupyterkernel"
+      - uses: gap-actions/build-pkg-docs@v1
+        with:
+          use-latex: 'true'
+      - name: Upload documentation
+        uses: actions/upload-artifact@v2
+        with:
+          name: manual
+          path: ./doc/manual.pdf

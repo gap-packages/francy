@@ -1,4 +1,4 @@
-import { GlobalConfiguration } from './configuration';
+import {GlobalConfiguration} from './configuration';
 
 /**
  * This class provides a logger for the Francy application.
@@ -7,65 +7,61 @@ class Log {
 
   /**
    * Logger constructor
-   * @param verbose prints extra log information to console.log, defaults to false
    */
   constructor() {
-    /**
-     * Stores the browser console function
-     * @type {function}
-     */
-    this.console = console;
   }
 
   /**
    * Creates a [DEBUG] entry in the console log
    * @param message the message to print
+   * @param object and object to print along with the message
    */
   debug(message, object) {
     if (GlobalConfiguration.object.verbose) {
       if (object) {
-        this.console.debug(Log._format('D', message), object);
+        window.console.debug(Log._format('D', message), object);
       } else {
-        this.console.debug(Log._format('D', message));
+        window.console.debug(Log._format('D', message));
       }
     }
   }
-  
+
   /**
    * Creates an [INFO] entry in the console log
    * @param message the message to print
+   * @param object and object to print along with the message
    */
   info(message, object) {
     if (object) {
-      this.console.info(Log._format('I', message), object);
+      window.console.info(Log._format('I', message), object);
     } else {
-      this.console.info(Log._format('I', message));
+      window.console.info(Log._format('I', message));
     }
   }
 
   /**
    * Creates an [ERROR] entry in the console log
    * @param message the message to print
-   * @param error the error Object to attach to the message
+   * @param object and object to print along with the message
    */
   error(message, object) {
     if (object) {
-      this.console.error(Log._format('E', message), object);
+      window.console.error(Log._format('E', message), object);
     } else {
-      this.console.error(Log._format('E', message));
+      window.console.error(Log._format('E', message));
     }
   }
 
   /**
    * Creates a [WARN] entry in the console log
    * @param message the message to print
-   * @param error the error Object to attach to the message
+   * @param object and object to print along with the message
    */
   warn(message, object) {
     if (object) {
-      this.console.info(Log._format('W', message), object);
+      window.console.info(Log._format('W', message), object);
     } else {
-      this.console.info(Log._format('W', message));
+      window.console.info(Log._format('W', message));
     }
   }
 

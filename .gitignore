@@ -43,8 +43,6 @@
 coverage
 *.coverage
 
-**/labextension/
-**/nbextension/
 **/*.egg-info/
 **/build/
 gap/dist/
@@ -52,8 +50,7 @@ gap/dist/
 
 # Compiled javascript
 **/__pycache__/
-**/jupyter_francy/static/
-**/jupyter_francy/jupyter_francy.egg-info/
+**/jupyter-francy.egg-info/
 
 # OS X
 **/.DS_Store
@@ -68,3 +65,7 @@ build.sh
 gh-pages/
 
 **/dist/*
+
+**/build_log.json
+
+**/docs/*

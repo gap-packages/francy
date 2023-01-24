@@ -1,23 +1,23 @@
-import { Logger } from '../util/logger';
+import {Logger} from '../util/logger';
 import Observable from '../util/observable';
-import { RuntimeException } from '../util/exception';
-import { Utilities } from '../util/utilities';
+import {RuntimeException} from '../util/exception';
+import {Utilities} from '../util/utilities';
 
 /**
  * This class implements all the methods to handle multiple renderers on {Francy}.
- * 
+ *
  * {RenderingManager} is a singleton that can be accessed to register and unregister a {Renderer}.
- * Only onde renderer is active at a time.
- * 
+ * Only one renderer is active at a time.
+ *
  * {RenderingManager} will notify any subscribed methods when a supported events {RENDERING_EVENTS} occur.
- * 
- * @example RenderingManager.subscribe(RENDERING_EVENTS.REGISTER, objectChanged => {}); 
+ *
+ * @example RenderingManager.subscribe(RENDERING_EVENTS.REGISTER, objectChanged => {});
  * @example Francy.RenderingManager.register(new D3Renderer());
  * @example Francy.RenderingManager.unregister('D3Renderer');
  * @example Francy.RenderingManager.enable('D3Renderer');
  * @example Francy.RenderingManager.allRenderers();
  * @example Francy.RenderingManager.activeRenderer();
- * 
+ *
  * @extends {Observable}
  */
 export default class RenderingManagerHandler extends Observable {
@@ -28,13 +28,13 @@ export default class RenderingManagerHandler extends Observable {
   constructor(context) {
     super();
     this.context = context;
-    // this only adds if does not exist
+    // add only if it does not exist
     this.context.configuration.addProperty('renderers', {});
   }
 
   /**
    * This method is used to register a renderer within {Francy}.
-   * 
+   *
    * @returns {object} this instance
    * @public
    */
@@ -44,10 +44,10 @@ export default class RenderingManagerHandler extends Observable {
     } else if (clazz.configuration.name && !(clazz.configuration.name in this.context.configuration.object.renderers)) {
       clazz.configuration.enable = clazz.configuration.enable || false;
       Logger.debug(`(${this.context.instanceId}) Registering Renderer: ${clazz.configuration.name}`);
-      this.context.configuration.object.renderers[clazz.configuration.name] = { 
-        enable: false, 
-        renderer: clazz.configuration.renderer, 
-        name: clazz.configuration.name, 
+      this.context.configuration.object.renderers[clazz.configuration.name] = {
+        enable: false,
+        renderer: clazz.configuration.renderer,
+        name: clazz.configuration.name,
         id: Utilities.generateId()
       };
       this.notify(RENDERING_EVENTS.REGISTER, this.context.configuration.object.renderers[clazz.configuration.name]);
@@ -63,7 +63,7 @@ export default class RenderingManagerHandler extends Observable {
 
   /**
    * This method is used to unregister a renderer.
-   * 
+   *
    * @param {string} name - the name of the renderer
    * @returns {object} this instance
    * @public
@@ -78,9 +78,9 @@ export default class RenderingManagerHandler extends Observable {
   }
 
   /**
-   * This method is used to enable a renderer. Only one renderer is enabled 
-   * at a time, so the previous enabled renderer will be set to disabled.
-   * 
+   * This method is used to enable a renderer. Only one renderer is enabled
+   * at a time, so the previous enabled renderer will be set to `disabled`.
+   *
    * @param {string} name - the name of the renderer
    * @returns {object} this instance
    * @public
@@ -102,7 +102,7 @@ export default class RenderingManagerHandler extends Observable {
 
   /**
    * This method returns all the renderers registered
-   * 
+   *
    * @return {object} the renderers dictionary
    * @public
    */
@@ -112,7 +112,7 @@ export default class RenderingManagerHandler extends Observable {
 
   /**
    * This method returns the current active renderer.
-   * 
+   *
    * @return {string} the renderer name
    * @public
    */
@@ -135,9 +135,4 @@ export default class RenderingManagerHandler extends Observable {
  * The events supported by {RenderingManager}.
  * @public
  */
-export const RENDERING_EVENTS = { REGISTER: 'REGISTER', UNREGISTER: 'UNREGISTER', STATUS: 'STATUS' };
-/**
- * The {RenderingManager} singleton
- * @public
- */
-//export const RenderingManager = new RenderingManagerHandler();
+export const RENDERING_EVENTS = {REGISTER: 'REGISTER', UNREGISTER: 'UNREGISTER', STATUS: 'STATUS'};

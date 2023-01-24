@@ -23,7 +23,7 @@ export default class BarChart extends Chart {
       barsGroup = this.element.append('g').attr('class', 'francy-bars');
     }
 
-    var self = this;
+    let self = this;
 
     this.datasetNames.forEach(function (key, index) {
       let bar = barsGroup.selectAll(`.francy-bar-${index}`).data(self.datasets[key]);
@@ -47,12 +47,12 @@ export default class BarChart extends Chart {
         .attr('height', function (d) {
           return self.height - self.yScale(d);
         })
-        .on('mouseenter', function (d) {
+        .on('mouseenter', function (e, d) {
           d3.select(this).transition()
             .duration(250).style('fill-opacity', 0.5);
           self.handlePromise(self.tooltip.load(Chart.tooltip(key, d)).render());
         })
-        .on('mouseleave', function () {
+        .on('mouseleave', function (e) {
           d3.select(this).transition()
             .duration(250).style('fill-opacity', 1);
           self.tooltip.unrender();

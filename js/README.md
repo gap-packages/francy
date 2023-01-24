@@ -1,21 +1,13 @@
 # Francy - Javascript
 
-[![npm version](https://badge.fury.io/js/francy.svg)](https://badge.fury.io/js/francy)
-[![npm version](https://badge.fury.io/js/francy-core.svg)](https://badge.fury.io/js/francy-core)
-[![npm version](https://badge.fury.io/js/francy-extension-browser.svg)](https://badge.fury.io/js/francy-extension-browser)
-[![npm version](https://badge.fury.io/js/jupyter-francy.svg)](https://badge.fury.io/js/jupyter-francy)
-[![npm version](https://badge.fury.io/js/francy-renderer-d3.svg)](https://badge.fury.io/js/francy-renderer-d3)
-[![npm version](https://badge.fury.io/js/francy-renderer-graphviz.svg)](https://badge.fury.io/js/francy-renderer-graphviz)
-[![npm version](https://badge.fury.io/js/francy-renderer-vis.svg)](https://badge.fury.io/js/francy-renderer-vis)
-
 This Javascript module produces graphics based on the semantic model produced by Francy GAP.
 
-Francy depends on [d3.v5](https://d3js.org/).
+Francy depends on [d3.v7](https://d3js.org/).
 
 ## Renderers
 
 Francy supports renderers to be registered and thus producing different representations of graphs.
-The renderers can be swithed at any time using the user interface, by selecting `Settings > Renderers` in the main menu.
+The renderers can be switched at any time using the user interface, by selecting `Settings > Renderers` in the main menu.
 
 Francy implements 3 renderers at the moment:
 
@@ -29,20 +21,13 @@ Note:
 Make sure [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter - JupyterKernel is distributed with GAP by default, since v4.10 :)
 Make sure [Francy GAP](/) is installed on GAP - Francy is distributed with GAP by default, since v4.10 :)
 
-### Jupyter integration
+### Jupyterlab integration
 
-In order to use this module in Jupyter, it can be installed as a notebook extension and lab extension:
-
-```bash
-mcmartins@local:~$ pip install jupyter_francy
-mcmartins@local:~$ jupyter lab build # for JupyterLab
-mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Notebook
-```
-
-It's possible to install it on Jupyter lab by running:
+In order to use this module on JupyterLab:
 
 ```bash
-mcmartins@local:~$ jupyter labextension install jupyter-francy
+mcmartins@local:~$ cd pkgs/francy/js/packages/francy-extension-jupyterlab/
+mcmartins@local:~$ pip install -U .
 ```
 
 ### Browser integration
@@ -51,7 +36,7 @@ mcmartins@local:~$ jupyter labextension install jupyter-francy
 <html>
 <head>
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v5,graphviz,vis">
-  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://unpkg.com/viz.js@1.8.1/viz.js"></script>
   <script src="https://unpkg.com/d3-graphviz@2.6.1/build/d3-graphviz.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
@@ -90,7 +75,8 @@ mcmartins@local:~$ jupyter labextension install jupyter-francy
 
 # Contribute
 
-Bug fixing, new features or new Renderers, contributions are welcome! This section provides basic information in order to start contributing to the Javascript code base.
+Bug fixing, new features or new Renderers, are welcome! 
+This section provides basic information to start contributing to the Javascript code base.
 
 ## Development
 
@@ -99,6 +85,7 @@ The project is managed by npm and follows all the standard Lerna project format.
 To run Francy on your development environment follow the following recipe:
 
 ```bash
+mcmartins@local:~/francy/js $ sudo npm install -g n && sudo n stable
 mcmartins@local:~/francy/js $ # install dependencies
 mcmartins@local:~/francy/js $ npm install
 mcmartins@local:~/francy/js $ npm run bootstrap
@@ -112,9 +99,6 @@ mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ pip install -e .
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ # for JupyterLab
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ jupyter labextension link
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ jupyter lab --watch
-mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ # for Notebook
-mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ jupyter nbextension install --symlink --py --sys-prefix jupyter_francy
-mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ jupyter nbextension enable --py --sys-prefix jupyter_francy
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ # run jupyter locally
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ cd ~/francy/notebooks
 mcmartins@local:~/francy/notebooks $ jupyter notebook --ip=0.0.0.0 --port=8080 --no-browser
@@ -126,16 +110,16 @@ Please follow these [instructions](/RELEASE.md) for releasing.
 
 # Package Structure
 
-|Directory                          |Description                                                      |
-|:----------------------------------|:----------------------------------------------------------------|
-| packages                          | contains the packages that builds up francy-js                  |
-| packages/francy                   | contains the base components of Francy                          |
-| packages/francy-core              | contains the core components of Francy                          |
-| packages/francy-extension-browser | contains the browser extension classes, for browser integration |
-| packages/francy-extension-jupyter | contains the browser extension classes, for jupyter integration |
-| packages/francy-renderer-d3       | contains the classes to produce graphics with D3                |
-| packages/francy-renderer-graphviz | contains the classes to produce graphics with D3-Graphviz       |
-| packages/francy-renderer-vis      | contains the classes to produce graphics with Vis.js            |
+| Directory                            | Description                                                        |
+|:-------------------------------------|:-------------------------------------------------------------------|
+| packages                             | contains the packages that builds up francy-js                     |
+| packages/francy                      | contains the base components of Francy                             |
+| packages/francy-core                 | contains the core components of Francy                             |
+| packages/francy-extension-browser    | contains the browser extension classes, for browser integration    |
+| packages/francy-extension-jupyterlab | contains the browser extension classes, for jupyterlab integration |
+| packages/francy-renderer-d3          | contains the classes to produce graphics with D3                   |
+| packages/francy-renderer-graphviz    | contains the classes to produce graphics with D3-Graphviz          |
+| packages/francy-renderer-vis         | contains the classes to produce graphics with Vis.js               |
 
 # License
 

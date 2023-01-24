@@ -48,16 +48,15 @@ BindGlobal("CanvasObjectType", NewType(CanvasFamily, IsCanvas and IsCanvasRep));
 #! In this section we show all Francy Canvas Operations.
 
 #! @Description
-#! Canvas represents a base element to draw graphics on. Inspired by
-#! the HTML canvas tag element which is used to draw graphics, in runtime,
-#! via JavaScript.
+#! A <C>Canvas</C> represents the base element where rendering happens. This object is inspired by
+#! the HTML canvas tag element, which is used to draw graphics in runtime via JavaScript.
 #! Examples:
 #! <P/>
 #! Create a simple <C>Canvas</C>:
 #! @InsertChunk Example_Create_Canvas_1
 #! <P/>
 #! @Arguments IsString(title)[, IsCanvasDefaults]
-#! @Returns <C>Callback</C>
+#! @Returns <C>Canvas</C>
 DeclareOperation("Canvas", [IsString, IsCanvasDefaults]);
 
 #! @Description
@@ -115,15 +114,15 @@ DeclareOperation("Canvas", [IsString, IsCanvasDefaults]);
 #DeclareOperation("Remove", [IsCanvas, IsFrancyMessage]);
 
 #! @Description
-#! Generates the JSON representation of the canvas and children objects
+#! Generates the JSON metadata model representation of the <C>Canvas</C> object and all children objects.
 #! @Arguments IsCanvas
-#! @Returns <C>rec</C> with json representation of the canvas
+#! @Returns <C>rec</C> with the JSON metadata model representation of the <C>Canvas</C>
 DeclareOperation("Draw", [IsCanvas]);
 
 #! @Description
-#! Generates an HTML page and opens it within the default browser of the system
+#! Generates an HTML page with an offline version od Francy JS and opens it within the default browser of the system.
 #! @Arguments IsCanvas
-#! @Returns <C>rec</C> with html generated
+#! @Returns <C>IsString</C> with HTML generated
 DeclareOperation("DrawSplash", [IsCanvas]);
 
 
@@ -131,7 +130,7 @@ DeclareOperation("DrawSplash", [IsCanvas]);
 #! In this section we show all Global Francy Canvas Records for multi purpose.
 
 #! @Description
-#! This <C>rec</C> holds all the default setting for a canvas
+#! This <C>rec</C> holds all the default settings for a <C>Canvas</C>.
 BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults and IsCanvasDefaultsRep), rec(
   width          := 800,
   height         := 600,
@@ -141,54 +140,55 @@ BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults an
 
 
 #! @Section Attributes
-#! In this section we show the Francy Attributes
+#! In this section we show the Francy Attributes.
 
 #! @Description
-#! The Width of the canvas in pixels
+#! The Width of the <C>Canvas</C> in pixels <C>IsPosInt</C>.
 #! @Returns <C>IsPosInt</C>
 DeclareAttribute("Width", IsCanvas);
 InstallMethod(Width, "canvas", [IsCanvas], o -> o!.width);
 #! @Description
-#! Sets the Width of the canvas in pixels
+#! Sets the Width of the <C>Canvas</C> in pixels <C>IsPosInt</C>.
 #! @Arguments IsCanvas, IsPosInt
 InstallMethod(SetWidth, "canvas, positive int", [IsCanvas, IsPosInt], function(o, i) o!.width := i; end);
 
 #! @Description
-#! The Height of the canvas in pixels
+#! The Height of the <C>Canvas</C> in pixels <C>IsPosInt</C>.
 #! @Returns <C>IsPosInt</C>
 DeclareAttribute("Height", IsCanvas);
 InstallMethod(Height, "canvas", [IsCanvas], o -> o!.height);
 #! @Description
-#! Sets the Height of the canvas in pixels
+#! Sets the Height of the <C>Canvas</C> in pixels <C>IsPosInt</C>.
 #! @Arguments IsCanvas, IsPosInt
 InstallMethod(SetHeight, "canvas, positive int", [IsCanvas, IsPosInt], function(o, i) o!.height := i; end);
 
 #! @Description
-#! <C>ZoomToFit</C> is a property that sets the zoom to fit behavior on change in the client implementation.
+#! <C>ZoomToFit</C> is a property that sets the objects within the <C>Canvas</C> to fit within the GUI visible area,
+#! after rendering in the client implementation.
 #! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("ZoomToFit", IsCanvas);
 InstallMethod(ZoomToFit, "canvas", [IsCanvas], o -> o!.zoomToFit);
 #! @Description
-#! <C>ZoomToFit</C> is a property that sets the zoom to fit behavior on change in the client.
+#! <C>ZoomToFit</C> is a property that sets the objects within the <C>Canvas</C> to fit within the GUI visible area.
 #! @Arguments IsCanvas, IsBool
 InstallMethod(SetZoomToFit, "canvas, boolean", [IsCanvas, IsBool], function(o, b) o!.zoomToFit := b; end);
 
 #! @Description
-#! A title on a required arg is used to ask the user what is expected from his input.
+#! The <C>Canvas</C> title to show on the GUI.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Title", IsCanvas);
 InstallMethod(Title, "canvas", [IsCanvas], o -> o!.title);
 #! @Description
-#! Sets the title of the required arg.
+#! Sets the title of the <C>Canvas</C>.
 #! @Arguments IsCanvas, IsString
 InstallMethod(SetTitle, "canvas, string", [IsCanvas, IsString], function(o, s) o!.title := s; end);
 
 #! @Description
-#! Enables usage of Tex typestting on the client implementation, if supported.
+#! Enables usage of TeX Typesetting on the client implementation, if supported.
 #! @Returns <C>IsBool</C> with the title of the object
 DeclareAttribute("TexTypesetting", IsCanvas);
 InstallMethod(TexTypesetting, "canvas", [IsCanvas], o -> o!.texTypesetting);
 #! @Description
-#! Sets Tex typestting on the canvas objects
+#! Sets TeX Typesetting on the canvas objects.
 #! @Arguments IsCanvas, IsBool
 InstallMethod(SetTexTypesetting, "canvas, boolean", [IsCanvas, IsBool], function(o, b) o!.texTypesetting := b; end);

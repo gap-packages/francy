@@ -4,7 +4,7 @@
 #! @Chapter Francy Charts
 #! It is possible to build <C>Charts</C> with simple <C>Datasets</C>.
 #! <P/>
-#! Currently, Francy, supports Bar, Line and Scatter Charts.
+#! Currently, Francy, supports Bar, Line and Scatter charts.
 #! <P/>
 #! Please see Francy-JS for client implementation.
 
@@ -106,8 +106,7 @@ BindGlobal("AxisScaleTypeObjectType",  NewType(ChartFamily, IsAxisScaleType and 
 #! In this section we show all Francy Chart Operations.
 
 #! @Description
-#! Every object to draw will be a subclass of this object. This will allow
-#! all the objects to contain the same base information.
+#! Every object will be a subclass of <C>Chart</C> object. All objects contain the same base information.
 #! <P/>
 #! Examples:
 #! <P/>
@@ -151,14 +150,14 @@ DeclareOperation("Dataset", [IsString, IsList]);
 DeclareOperation("DefaultAxis", [IsChartType]);
 
 #! @Description
-#! Creates a XAxis
+#! Creates a <C>XAxis</C>
 #! <P/>
 #! @Arguments IsAxisScaleType, IsString(title), IsList(domain)
 #! @Returns <C>XAxis</C>
 DeclareOperation("XAxis", [IsAxisScaleType, IsString, IsList]);
 
 #! @Description
-#! Creates a YAxis
+#! Creates a <C>YAxis</C>
 #! <P/>
 #! @Arguments IsAxisScaleType, IsString(title), IsList(domain)
 #! @Returns <C>YAxis</C>
@@ -169,7 +168,7 @@ DeclareOperation("YAxis", [IsAxisScaleType, IsString, IsList]);
 #! In this section we show all Global Chart Francy Records for multi purpose.
 
 #! @Description
-#! The various types of Charts supported.
+#! The various types of <C>Chart</C> supported.
 #! @Returns <C>rec</C> of <C>GraphType</C>
 BindGlobal("ChartType", rec(
   LINE    := Objectify(ChartTypeObjectType, rec(value := "line")),
@@ -186,7 +185,7 @@ BindGlobal("AxisScaleType", rec(
 ));
 
 #! @Description
-#! The various types of Charts Defaults
+#! The various types of <C>Chart</C> Defaults
 #! @Returns <C>rec</C> of <C>ChartDefaults</C>
 BindGlobal("ChartDefaults", Objectify(NewType(ChartFamily, IsChartDefaults and IsChartDefaultsRep), rec(
   showLegend := true
@@ -197,32 +196,32 @@ BindGlobal("ChartDefaults", Objectify(NewType(ChartFamily, IsChartDefaults and I
 #! In this section we show all Francy Attributes
 
 #! @Description
-#! <C>ShowLegend</C> is a property that enables or disables the legend in the client implementation.
+#! <C>ShowLegend</C> is a property that enables or disables displaying the <C>Chart</C> legend in the client implementation.
 #! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("ShowLegend", IsChart);
 InstallMethod(ShowLegend, "chart", [IsChart], o -> o!.showLegend);
 #! @Description
-#! <C>ShowLegend</C> is a property that enables or disables the legend in the client implementation.
+#! <C>ShowLegend</C> is a property that enables or disables displaying the <C>Chart</C> legend in the client implementation.
 #! @Arguments IsChart, IsBool
 InstallMethod(SetShowLegend, "chart, boolean", [IsChart, IsBool], function(o, b) o!.showLegend := b; end);
 
 #! @Description
-#! This title is used to display the X Axis Title in the client implementation.
+#! This is used to display the X Axis Title in the client implementation.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("AxisXTitle", IsChart);
 InstallMethod(AxisXTitle, "chart", [IsChart], o -> o!.axis!.x!.title);
 #! @Description
-#! This title is used to display the X Axis Title in the client implementation.
+#! This is used to display the X Axis Title in the client implementation.
 #! @Arguments IsChart, IsString
 InstallMethod(SetAxisXTitle, "chart, string", [IsChart, IsString], function(o, s) o!.axis!.x!.title := s; end);
 
 #! @Description
-#! This title is used to display the Y Axis Title in the client implementation.
+#! This is used to display the Y Axis Title in the client implementation.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("AxisYTitle", IsChart);
 InstallMethod(AxisYTitle, "chart", [IsChart], o -> o!.axis!.y!.title);
 #! @Description
-#! This title is used to display the Y Axis Title in the client implementation.
+#! This is used to display the Y Axis Title in the client implementation.
 #! @Arguments IsChart, IsString
 InstallMethod(SetAxisYTitle, "chart, string", [IsChart, IsString], function(o, s) o!.axis!.y!.title := s; end);
 

@@ -11,7 +11,7 @@ SetPackageInfo(rec(
 
   PackageName := "Francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
-  Version     := "1.2.4",
+  Version     := "2.0.0",
   Date        := "17/05/2019", # dd/mm/yyyy format
   License     := "MIT",
 
@@ -66,7 +66,8 @@ SetPackageInfo(rec(
     GAP                    := ">=4.10",
     NeededOtherPackages    := [["GAPDoc", ">= 1.6.1"],
                               ["json", ">= 2.0.0"],
-                              ["JupyterKernel", ">= 1.0"]],
+                              ["uuid", ">= 0.7"],
+                              ["JupyterKernel", ">= 1.4.1"]],
     SuggestedOtherPackages := [],
     ExternalConditions     := []
   ),

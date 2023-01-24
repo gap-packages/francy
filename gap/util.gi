@@ -4,7 +4,9 @@
 
 #############################################################################
 ##
-#M  PrintObj( <obj> ) . . . . . . . . . . . . .  override for IsFrancyObjects
+#M  PrintObj( <obj> )
+##
+## Override of the PrintObj function for IsFrancyObjects
 ##
 InstallOtherMethod(PrintObj,
   "a francy object",
@@ -17,7 +19,9 @@ end);
 
 #############################################################################
 ##
-#M  ViewString( <obj> )  . . . . . . . . . . . . override for IsFrancyObjects
+#M  ViewString( <obj> )
+##
+## Override of the ViewString function for IsFrancyObjects
 ##
 InstallOtherMethod(ViewString,
   "a francy object",
@@ -32,7 +36,9 @@ end);
 
 #############################################################################
 ##
-#M  JUPYTER_ViewString( <obj> )  . . . . . . . . override for IsFrancyObjects
+#M  JUPYTER_ViewString( <obj> )
+##
+## Override of the JUPYTER_ViewString function for IsFrancyObjects
 ##
 InstallOtherMethod(JUPYTER_ViewString,
   "a francy object",
@@ -44,13 +50,15 @@ InstallOtherMethod(JUPYTER_ViewString,
 
 #############################################################################
 ##
-#M  Sanitize( <obj> )  . . . . . . . . simple properties clone for FrancyObjects
+#M  Sanitize( <obj> )
+##
+## Simple properties clone utility function for FrancyObjects.
 ##
 ## This method will clone a FrancyObject and return a record, traversing all the
-## components and converting when appropriate.
+## components and converting any types that are not JSON serializable, when appropriate.
 ##
-## This method removes components of type IsFunction, as they can't be
-## converted to JSON string, converts lists of objects into lists of strings
+## This method removes components of type IsFunction, as they aren't
+## serializable JSON compatible, it converts lists of objects into lists of strings
 ## and everything else that is not a FrancyObject and therefore unknown!
 ##
 InstallMethod(Sanitize,
@@ -64,7 +72,9 @@ end);
 
 #############################################################################
 ##
-#M  Sanitize( <obj> )  . . . . . . . . simple properties clone for Records
+#M  Sanitize( <obj> )
+##
+## Simple properties clone for Records
 ##
 ## This method will clone a FrancyObject into the given record
 ##
@@ -95,7 +105,9 @@ end);
 
 #############################################################################
 ##
-#M  Sanitize( <obj> )  . . . . . . . . simple properties clone for Records
+#M  Sanitize( <obj> )
+##
+## Simple properties clone for Records
 ##
 ## This method will return a sanitized list from another list
 ##
@@ -110,8 +122,8 @@ function(list, result)
   for item in list do
     # well, everything that is important for the client is in records
     # everything inside arrays we just convert to string...
-    # ...if you wonder, these are most likely known arguments that are stored
-    # in order to execute callbacks, so the client does nothing with them
+    # ...if you wonder, these are most likely known arguments that are in memory
+    # and will be used to execute callbacks, so the client does nothing with them
     Add(result, String(item));
   od;
   return result;
@@ -119,7 +131,9 @@ end);
 
 #############################################################################
 ##
-#O  MergeRecord( <obj>, <obj> )  . . . . . . . . simple properties merge
+#O  MergeRecord( <obj>, <obj> )
+##
+## Simple properties merge utility function.
 ##
 InstallMethod(MergeObjects,
   "an object, another object",
@@ -136,7 +150,9 @@ end);
 
 #############################################################################
 ##
-#O  GenerateID( ) . . . . . . . . . . . Generates sequential ids for objects
+#O  GenerateID( )
+##
+## Generates random IDs for objects identification and integrity between client and server implementations.
 ##
 InstallMethod(GenerateID,
   "",
@@ -144,6 +160,5 @@ InstallMethod(GenerateID,
   [],
   0,
 function()
-  FrancyGeneratedID := FrancyGeneratedID + 1;
-  return Concatenation("F", String(FrancyGeneratedID));
+  return Concatenation("F", HexStringUUID(RandomUUID()));
 end);

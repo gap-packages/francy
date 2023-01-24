@@ -4,7 +4,7 @@
   "canvas": {
     "width": 800,
     "id": "F265",
-    "height": 200,
+    "height": 400,
     "title": "Example BAR Chart",
     "zoomToFit": true,
     "texTypesetting": false,

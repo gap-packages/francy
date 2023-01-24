@@ -2,8 +2,8 @@
 # francy: Interactive Discrete Mathematics in GAP
 #
 #! @Chapter Francy Menus
-#! Menus are agregators of actions that are represented here by <C>Callbacks</C>.
-#! Menus can have SubMenus, and are constituted by a Title and a Callback.
+#! Menus are lists of actions that are rendered on the GUI. Menus can have SubMenus,
+#! and are constituted by a label Title and an action defined as a <C>Callback</C>.
 #! <P/>
 #! Please see Francy-JS for client implementation.
 
@@ -20,7 +20,7 @@ DeclareCategory("IsMenu", IsFrancyObject);
 #! In this section we show all Francy Menu Families.
 
 #! @Description
-#! This Family identifies all <C>Menu</C> objects
+#! This Family identifies all <C>Menu</C> objects.
 #! @Returns <C>MenuFamily</C>
 BindGlobal("MenuFamily", NewFamily("MenuFamily", IsMenu));
 
@@ -41,22 +41,22 @@ BindGlobal("MenuObjectType", NewType(MenuFamily, IsMenu and IsMenuRep));
 #! In this section we show all Francy Menu Operations.
 
 #! @Description
-#! Creates a Menu for a <C>Callback</C>
-#! Is up to the client implementation to sort out the Menu and invoke the <C>Callback</C>
+#! Creates a Menu with a label title and an action <C>Callback</C>.
+#! Is up to the client implementation to sort out the Menu and invoke the <C>Callback</C>.
 #! @Arguments IsString(title), [IsCallback]
 #! @Returns <C>Menu</C>
 DeclareOperation("Menu", [IsString, IsCallback]);
 
 #! @Description
-#! Add <C>Menu</C> to a specific <C>Menu</C> creating a Submenu.
+#! Add one <C>Menu</C> to a specific <C>Menu</C> creating a Submenu.
 #! Is up to the client implementation to handle this.
 #! @Arguments IsMenu, [IsMenu, List(IsMenu)]
 #! @Returns <C>Menu</C>
 #DeclareOperation("Add", [IsMenu, IsMenu]);
 
 #! @Description
-#! Remove <C>Menu</C> from a specific <C>Menu</C>.
-#! The client should be able to handle this.
+#! Remove a <C>Menu</C> from a specific <C>Menu</C>.
+#! Is up to the client implementation to handle this.
 #! @Arguments IsMenu, [IsMenu, List(IsMenu)]
 #! @Returns <C>Menu</C>
 #DeclareOperation("Remove", [IsMenu, IsMenu]);
@@ -66,7 +66,7 @@ DeclareOperation("Menu", [IsString, IsCallback]);
 #! In this section we show all Francy Core Attributes
 
 #! @Description
-#! A title on a <C>Menu</C> is used to identify the menu entry.
+#! A label title on a <C>Menu</C> is used to identify what action it is about on a menu entry.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Title", IsMenu);
 InstallMethod(Title, "menu", [IsMenu], o -> o!.title);

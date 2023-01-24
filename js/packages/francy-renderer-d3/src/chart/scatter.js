@@ -38,14 +38,14 @@ export default class ScatterChart extends Chart {
         .attr('cy', function (d) {
           return self.yScale(d);
         })
-        .on('mouseenter', function (d) {
+        .on('mouseenter', function (e, d) {
           d3.select(this).transition()
             .duration(250)
             .style('fill-opacity', 0.5)
             .attr('r', 10);
           self.handlePromise(self.tooltip.load(Chart.tooltip(key, d)).render());
         })
-        .on('mouseleave', function () {
+        .on('mouseleave', function (e) {
           d3.select(this).transition()
             .duration(250)
             .style('fill-opacity', 1)

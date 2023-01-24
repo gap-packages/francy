@@ -1,28 +1,28 @@
-import { Components } from '../../component/factory';
-import { Decorators } from '../../decorator/factory';
-import { GlobalConfiguration } from '../../util/configuration';
-import { Logger } from '../../util/logger';
+import {Components} from '../../component/factory';
+import {Decorators} from '../../decorator/factory';
+import {GlobalConfiguration} from '../../util/configuration';
+import {Logger} from '../../util/logger';
 import Modal from './base';
 
 /**
  * Implements The About Modal Window.
- * 
+ *
  * This component shows information about this app.
- * 
+ *
  * @extends {Modal}
  */
 export default class AboutModal extends Modal {
 
   /**
    * Base constructor
-   * 
+   *
    * @typedef {Object} options
-   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {String} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
-   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   * @property {Object} context - the context of the application, usually a configuration and a rendering manager instance
    */
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
   }
 
   @Decorators.Initializer.initialize()
@@ -51,13 +51,13 @@ export default class AboutModal extends Modal {
     content.append('span').append('a').attr('href', 'https://github.com/gap-packages/francy').attr('target', '_blank').text('Francy on Github');
     content.append('br');
     content.append('br');
-    
+
     if (this.data.version !== VERSION) {
       content.append('span').text(`Data was generated in Francy GAP v${this.data.version} and you're using Francy JS v${VERSION}... Rendering may fail, please update your system...`);
       content.append('br');
       content.append('br');
     }
-    
+
     if (GlobalConfiguration.object.verbose) {
       content.append('span').text('Loaded Data:');
       content.append('pre').attr('class', 'francy').style('text-align', 'left').html(Decorators.Highlight.syntax(JSON.stringify(this.data, null, 2)));
@@ -70,7 +70,7 @@ export default class AboutModal extends Modal {
       .attr('name', 'Verbose')
       .property('checked', GlobalConfiguration.object.verbose)
       .on('change', function () {
-        GlobalConfiguration.object.verbose = this.value = this.checked = !GlobalConfiguration.object.verbose; 
+        GlobalConfiguration.object.verbose = this.value = this.checked = !GlobalConfiguration.object.verbose;
       })
       .on('input', this.onchange)
       .on('keyup', this.onchange)
@@ -78,8 +78,8 @@ export default class AboutModal extends Modal {
 
     let footer = form.append('div').attr('class', 'francy-modal-footer');
 
-    footer.append('button').text('Ok').on('click', () => {
-      d3.event.preventDefault();
+    footer.append('button').text('Ok').on('click', (e) => {
+      e.preventDefault();
       this.unrender.call(this);
     });
 

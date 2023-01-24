@@ -1,6 +1,6 @@
 {
   "name": "francy-extension-browser",
-  "version": "1.2.4",
+  "version": "2.0.0",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Browser Extension",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
@@ -16,32 +16,14 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "francy": "^1.2.4",
-    "francy-renderer-d3": "^1.2.4",
-    "francy-renderer-graphviz": "^1.2.4",
-    "francy-renderer-vis": "^1.2.4"
+    "francy": "^2.0.0",
+    "francy-core": "^2.0.0",
+    "francy-renderer-d3": "^2.0.0",
+    "francy-renderer-graphviz": "^2.0.0",
+    "francy-renderer-vis": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.10.4",
-    "@babel/core": "7.10.4",
-    "@babel/plugin-proposal-decorators": "7.10.4",
-    "@babel/plugin-transform-classes": "7.10.4",
-    "@babel/plugin-transform-runtime": "7.10.4",
-    "@babel/polyfill": "7.10.4",
-    "@babel/preset-env": "7.10.4",
-    "babel-loader": "8.1.0",
-    "css-loader": "3.6.0",
-    "file-loader": "6.0.0",
-    "francy-core": "^1.2.4",
-    "json-loader": "0.5.7",
-    "lodash.isequal": "4.5.0",
-    "mkdirp": "1.0.4",
-    "npm-run-all": "4.1.5",
-    "rimraf": "3.0.2",
-    "style-loader": "1.2.1",
-    "url-loader": "4.1.0",
-    "webpack": "4.43.0",
-    "webpack-cli": "3.3.12"
+    "d3": "^7.8.2"
   },
   "scripts": {
     "clean": "rm -rf ./dist/*",

@@ -2,21 +2,21 @@ import Renderer from '../renderer';
 
 /**
  * Implements basic methods for handling Modal windows.
- * 
+ *
  * @extends {Renderer}
  */
 export default class Modal extends Renderer {
 
   /**
    * Base constructor
-   * 
+   *
    * @typedef {Object} options
-   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {String} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
-   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   * @property {Object} context - the context of the application, usually a configuration and a rendering manager instance
    */
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
     /**
      * Stores the element
      * @type {object}
@@ -42,10 +42,10 @@ export default class Modal extends Renderer {
     this.overlay = d3.select('body').append('div').attr('class', 'francy-overlay');
     this.holder = d3.select('body').append('div').attr('class', 'francy');
   }
-  
+
   /**
    * Handles component unrender
-   * 
+   *
    * @public
    */
   unrender() {
@@ -53,10 +53,10 @@ export default class Modal extends Renderer {
     this.element.remove();
     this.holder.remove();
   }
-  
+
   /**
-   * Utility method to create an header
-   * 
+   * Utility method to create a header
+   *
    * @private
    */
   _buildHeader(form, title) {
@@ -67,27 +67,27 @@ export default class Modal extends Renderer {
       headerTitle.append('span').text(`${this.data.title}`);
     }
   }
-  
+
   /**
-   * Utility method to create an header
-   * 
+   * Utility method to create a header
+   *
    * @private
    */
   _buildFooter(form) {
     let footer = form.append('div').attr('class', 'francy-modal-footer');
 
-    footer.append('button').text('Ok').on('click', () => {
+    footer.append('button').text('Ok').on('click', (e) => {
       if (form.node().checkValidity()) {
-        d3.event.preventDefault();
+        e.preventDefault();
         this.options.callbackHandler(this.data.callback);
         this.unrender.call(this);
       }
       return false;
     });
 
-    footer.append('button').text('Cancel').on('click', () => { 
-      d3.event.preventDefault(); 
-      this.unrender.call(this); 
+    footer.append('button').text('Cancel').on('click', (e) => {
+      e.preventDefault();
+      this.unrender.call(this);
     });
   }
 
