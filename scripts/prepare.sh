@@ -9,7 +9,10 @@ CURRENT=`pwd`
 #
 echo -e "\nInstalling latest master GAP into $GAPROOT..."
 
-git clone --depth=2 https://github.com/gap-system/gap.git $GAPROOT
+# git clone --depth=2 https://github.com/gap-system/gap.git $GAPROOT
+
+export GAPROOT=/mnt/c/Projects/gap/
+export CFLAGS="-O2"
 
 cd $GAPROOT
 
@@ -20,20 +23,20 @@ fi
 ./configure
 make -j4
 
-make bootstrap-pkg-full WGET="wget -N --no-check-certificate --tries=5 --waitretry=5 --retry-connrefused"
+#make bootstrap-pkg-full WGET="wget -N --no-check-certificate --tries=5 --waitretry=5 --retry-connrefused"
 
 cd pkg
 
-rm -rf uuid-* crypting-*
+#rm -rf uuid-* crypting-*
 
 # install latest version of uuid
-git clone https://github.com/gap-packages/uuid
+#git clone https://github.com/gap-packages/uuid
 
 # install latest version of crypting
-git clone https://github.com/gap-packages/crypting
+#git clone https://github.com/gap-packages/crypting
 
 # install latest version of JupyterKernel
-git clone https://github.com/gap-packages/JupyterKernel
+#git clone https://github.com/gap-packages/JupyterKernel
 
 # install latest version of francy-monoid
 git clone https://github.com/gap-packages/FrancyMonoids
@@ -57,15 +60,15 @@ cd $CURRENT
 #
 # Install francy on GAP
 #
-cp -r . $GAPROOT/pkg/francy
+#cp -r . $GAPROOT/pkg/francy
 
 ################################################################################
 #
 # Install francy-js and extensions build tools
 #
-cd js
-npm ci
-npm run bootstrap
-npm run build:production
+#cd js
+#npm ci
+#npm run bootstrap
+#npm run build:production
 
-cd $CURRENT
+#cd $CURRENT

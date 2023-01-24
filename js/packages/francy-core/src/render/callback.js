@@ -1,28 +1,29 @@
 import BaseRenderer from './base';
 import ConfirmModal from './modal/confirm';
-import { Decorators } from '../decorator/factory';
+import {Decorators} from '../decorator/factory';
 import RequiredArgsModal from './modal/required';
-import { Utilities } from '../util/utilities';
+import {Utilities} from '../util/utilities';
+import {Logger} from '../util/logger';
 
 /**
- * CallbackHandler is responsible for handling Callbacks and display Modal windows accodingly.
+ * CallbackHandler is responsible for handling Callbacks and display Modal windows accordingly.
  * Callbacks can have arguments, for which a Modal window will appear to request such input.
  * Callbacks can also show a confirmation message before arguments input / execution.
- * If a Callback does not require an argument and no confirmation message, 
+ * If a Callback does not require an argument and no confirmation message,
  * then the Callback is executed immediately.
  */
 export default class CallbackHandler extends BaseRenderer {
 
   /**
    * Base constructor
-   * 
+   *
    * @typedef {Object} options
-   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {String} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
-   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   * @property {Object} context - the context of the application, usually a configuration and a rendering manager instance
    */
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
     /**
      * Stores the callback to execute
      * @type {function}
@@ -33,9 +34,9 @@ export default class CallbackHandler extends BaseRenderer {
   /**
    * Runs callback function. If this callback is configured to get input from the user,
    * this will be prompt before execution.
-   * 
+   *
    * @returns {object} the output from the callback function
-   * @public 
+   * @public
    */
   @Decorators.Data.requires('callback')
   async execute() {
@@ -50,7 +51,7 @@ export default class CallbackHandler extends BaseRenderer {
 
   /**
    * Builds and shows a {ConfirmModal}
-   * 
+   *
    * @private
    */
   async _showConfirmModal() {
@@ -64,7 +65,7 @@ export default class CallbackHandler extends BaseRenderer {
 
   /**
    * Builds and shows a {RequiredArgsModal}
-   * 
+   *
    * @private
    */
   async _showRequiredModal() {
@@ -75,15 +76,18 @@ export default class CallbackHandler extends BaseRenderer {
   }
 
   /**
-   * This method executes the callback with the result from the {RequiredArgsModal} 
+   * This method executes the callback with the result from the {RequiredArgsModal}
    * modal windows if required
-   * 
+   *
    * @param {object} object - the object to stringify and pass to the callback
    * @private
    */
   _execute(object) {
+    // FIXME
     // oh well, Trigger(<json>); is the entrypoint back to GAP 
     // while we don't support comms on the kernel:
-    return this.callback(`Trigger(${JSON.stringify(JSON.stringify(object))});`);
+    let message = `Trigger(${JSON.stringify(JSON.stringify(object))});`;
+    Logger.debug(message);
+    return this.callback(message);
   }
 }

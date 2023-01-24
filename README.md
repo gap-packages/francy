@@ -1,8 +1,6 @@
 [![Build Status](https://travis-ci.org/gap-packages/francy.svg?branch=master)](https://travis-ci.org/gap-packages/francy)
 [![Test Coverage Status](https://codecov.io/gh/gap-packages/francy/branch/master/graph/badge.svg)](https://codecov.io/gh/gap-packages/francy)
 
-[![npm version](https://badge.fury.io/js/francy-extension-browser.svg)](https://badge.fury.io/js/francy-extension-browser)
-[![npm version](https://badge.fury.io/js/jupyter-francy.svg)](https://badge.fury.io/js/jupyter-francy)
 [![PyPI version](https://badge.fury.io/py/jupyter-francy.svg)](https://badge.fury.io/py/jupyter-francy)
 
 # Francy

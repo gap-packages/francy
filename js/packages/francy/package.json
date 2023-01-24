@@ -1,6 +1,6 @@
 {
   "name": "francy",
-  "version": "1.2.4",
+  "version": "2.0.0",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
@@ -15,10 +15,20 @@
   ],
   "license": "MIT",
   "scripts": {
-    "test": "karma start karma.conf.js"
+    "test": "karma start karma.conf.js",
+    "clean": "rm -rf ./dist/*",
+    "build": "npm run clean && webpack --config webpack.config.js",
+    "build:prod": "npm run clean && webpack --env production=true --config webpack.config.js",
+    "build:jupyter": "npm run build"
   },
   "dependencies": {
-    "francy-core": "^1.2.4"
+    "francy-core": "^2.0.0"
   },
-  "main": "index.js"
+  "devDependencies": {
+    "d3": "^7.8.2"
+  },
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  }
 }

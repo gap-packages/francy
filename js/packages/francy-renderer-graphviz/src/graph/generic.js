@@ -1,10 +1,10 @@
-import { Callback, ContextMenu, Decorators, Graph, Tooltip, Utilities } from 'francy-core';
+import {Callback, ContextMenu, Decorators, Graph, Tooltip, Utilities} from 'francy-core';
 import DOTLanguageConverterHelper from '../util/dot-converter';
 
 export default class GraphGeneric extends Graph {
 
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
     this.callback = new Callback(this.options, this.context);
     this.tooltip = new Tooltip(this.options, this.context);
     this.contextMenu = new ContextMenu(this.options, this.context);
@@ -13,7 +13,7 @@ export default class GraphGeneric extends Graph {
   @Decorators.Data.requires('canvas.graph')
   @Decorators.Initializer.initialize()
   async render() {
-    let self = this,
+    var self = this,
       loader = Decorators.Loader.withContext(this).show(),
       dot = new DOTLanguageConverterHelper(this.context).load(this.data).convert(),
       canvasNodes = this.data.canvas.graph.nodes ? JSON.parse(JSON.stringify(Object.values(this.data.canvas.graph.nodes))) : [],
@@ -39,71 +39,53 @@ export default class GraphGeneric extends Graph {
         self.element.classed('francy-content', true);
         self.element.selectAll('title').remove();
         self.element.selectWithoutDataPropagation('polygon').remove();
+        self.element.append('g').classed('francy-nodes', true);
+        self.element.append('g').classed('francy-links', true);
 
-        let nodesG = self.element.append('g').classed('francy-nodes', true);
-        let linksG = self.element.append('g').classed('francy-links', true);
-        let nodes = self.element.selectAll('.node');
-        let links = self.element.selectAll('.edge');
-
-        nodes.each(function (d) {
+        let nodesGroup = self.element.select('g.francy-nodes');
+        self.element.selectAll('.node').remove().each(function (d) {
           Object.assign(d, self.data.canvas.graph.nodes[d.key]);
-        })
-          .classed('francy-node', true)
-          .classed('francy-highlight', true)
-          .classed('francy-selected', d => d.selected);
+          nodesGroup.node().appendChild(d3.select(this)
+            .classed('node', false)
+            .classed('francy-node', true)
+            .classed('francy-highlight', true)
+            .classed('francy-selected', d => d.selected).node());
+        });
+
+        let linksGroup = self.element.select('g.francy-links');
+        self.element.selectAll('.edge').remove().each(function (d) {
+          Object.assign(d, self.data.canvas.graph.links[d.key]);
+          linksGroup.node().appendChild(d3.select(this)
+            .classed('edge', false)
+            .classed('francy-link', true)
+            .style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.2)).node());
+        });
+
+        let nodes = self.element.selectAll('.francy-node');
+        let links = self.element.selectAll('.francy-link');
 
         nodes.selectAll('text')
           .classed('francy-label', true)
-          .attr('x', function () {
-            // apply mathjax if this is the case
-            let text = d3.select(this);
-            if (text.text().startsWith('$') && text.text().endsWith('$')) {
-              // we need to set the position after re-render the latex
-              let x = text.datum().attributes.x;
-              let y = text.datum().attributes.y;
-              let parentG = d3.select(text.node().parentNode);
-              self.handlePromise(self.mathjax.settings({
-                appendTo: { element: text },
-                renderType: 'SVG',
-                postFunction: function () {
-                  let svg = parentG.select('svg');
-                  if (svg.node()) {
-                    self.setLabelXPosition(svg, x);
-                    self.setLabelYPosition(svg, y);
-                  }
-                }
-              }).render());
-            }
-            return text.datum().attributes.x;
+          .attr('text-align', 'middle')
+          .attr('x', function handleText() {
+            // apply mathTypesetting if this is the case
+            self.handleTypesetting(d3.select(this));
+            return d3.select(this).datum().attributes.x;
           });
-
-        links.classed('francy-link', true).each(function (d) {
-          Object.assign(d, self.data.canvas.graph.links[d.key]);
-          d3.select(this).style('stroke-width', d => d.invisible ? 0 : Math.sqrt(d.weight || 0.2));
-        });
-
-        let removedNodes = nodes.remove();
-        let removedLinks = links.remove();
-        removedNodes.each(function () {
-          nodesG.node().appendChild(d3.select(this).node());
-        });
-        removedLinks.each(function () {
-          linksG.node().appendChild(d3.select(this).node());
-        });
 
         self._applyEvents(nodes);
 
         let connectedNodes = self._connectedNodes(nodes, canvasNodes, links, canvasLinks);
         let nodeOnClick = nodes.on('click');
-        nodes.on('click', function (d) {
+        nodes.on('click', function (e, d) {
           // default, highlight connected nodes
-          connectedNodes.call(this);
+          connectedNodes.call(this, e);
           // any callbacks will be handled here
-          nodeOnClick && nodeOnClick.call(this, d);
+          nodeOnClick && nodeOnClick.call(this, e, d);
         });
-        links.on('click', function () {
+        links.on('click', function (e) {
           // default, highlight connected nodes
-          connectedNodes.call(this);
+          connectedNodes.call(this, e);
         });
 
         self.parentClass.zoomToFit(true);
@@ -116,22 +98,20 @@ export default class GraphGeneric extends Graph {
 
   setLabelXPosition(element, x) {
     try {
-      let width = element.node().width.baseVal.value;
-      element.attr('x', Math.ceil(Number(x) - (width / 2)));
+      element.attr('x', Math.ceil(x * 2));
     } catch (Error) {
-      // don't care, this might fail for multiple reasons
-      // the use rmight have switch renderer for instance
+      // don't care, this might fail for multiple reasons,
+      // the user might have switch renderer for instance,
       // no worries if something is not properly aligned :P
     }
   }
 
   setLabelYPosition(element, y) {
     try {
-      let height = element.node().height.baseVal.value;
-      element.attr('y', Math.ceil(Number(y) - (height / 2)));
+      element.attr('y', -Math.ceil(y * 2));
     } catch (Error) {
-      // don't care, this might fail for multiple reasons
-      // the use rmight have switch renderer for instance
+      // don't care, this might fail for multiple reasons,
+      // the user might have switch renderer for instance,
       // no worries if something is not properly aligned :P
     }
   }
@@ -146,13 +126,13 @@ export default class GraphGeneric extends Graph {
 
     canvasLinks.forEach(function (d) {
       let sourceId = Utilities.isObject(d.source) ? d.source.id : d.source;
-      let targetId = Utilities.isObject( d.target) ? d.target.id : d.target;
+      let targetId = Utilities.isObject(d.target) ? d.target.id : d.target;
       linkedByIndex[`${sourceId},${sourceId}`] = true;
       linkedByIndex[`${targetId},${sourceId}`] = true;
       linkedByIndex[`${sourceId},${targetId}`] = true;
     });
 
-    function connected() {
+    function connected(e) {
       if (!self.context.configuration.object.showNeighbours) return;
       let el = d3.select(this);
       if (!toggle) {
@@ -180,7 +160,7 @@ export default class GraphGeneric extends Graph {
           });
         }
         setTimeout(() => {
-          d3.select('body').on('click', () => toggle ? connected.call(this) : undefined);
+          d3.select('body').on('click', (e) => toggle ? connected.call(this, e) : undefined);
         }, 0);
         //Reduce the op
         toggle = true;
@@ -195,7 +175,9 @@ export default class GraphGeneric extends Graph {
         d3.select('body').on('click', undefined);
         toggle = false;
       }
-      d3.event.preventDefault();
+      if (e) {
+        e.preventDefault();
+      }
     }
 
     return connected;

@@ -2,7 +2,7 @@ import JsonUtils from './json';
 
 /**
  * This class provides utility methods to handle and store data.
- * 
+ *
  * @access private
  */
 export default class DataHandler {
@@ -22,8 +22,8 @@ export default class DataHandler {
    * Loads and stores data if valid. This will invoke `JsonUtils.parse` to transform
    * this {string} into a JSON object.
    *
-   * @param {string} json - a francy valid json string that will be parsed into an {object}
-   * @returns {object} this instance
+   * @param {Object} json - a francy valid json string that will be parsed into an {object}
+   * @returns {Object} this instance
    * @public
    */
   load(json) {

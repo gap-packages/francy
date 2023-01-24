@@ -40,14 +40,14 @@ export default class LineChart extends Chart {
         .style('stroke-width', '5px')
         .attr('class', `francy-line-${index}`)
         .attr('d', valueLine)
-        .on('mouseenter', function (d) {
+        .on('mouseenter', function (e, d) {
           d3.select(this).transition()
             .duration(250)
             .style('stroke-opacity', 0.5)
             .style('stroke-width', '10px');
           self.handlePromise(self.tooltip.load(Chart.tooltip(key, d)).render());
         })
-        .on('mouseleave', function () {
+        .on('mouseleave', function (e) {
           d3.select(this).transition()
             .duration(250)
             .style('stroke-opacity', 1)

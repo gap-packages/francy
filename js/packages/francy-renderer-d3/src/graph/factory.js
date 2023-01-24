@@ -11,7 +11,7 @@ export default class Graph extends Renderer {
   @Decorators.Data.requires('canvas.graph')
   async render() {
 
-    let graph = undefined;
+    let graph;
     switch (this.data.canvas.graph.type) {
     case 'tree':
       graph = new TreeGraph(this.options, this.context);

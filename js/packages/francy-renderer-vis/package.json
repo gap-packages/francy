@@ -1,6 +1,6 @@
 {
   "name": "francy-renderer-vis",
-  "version": "1.2.4",
+  "version": "2.0.0",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - A Vis.js Renderer",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
@@ -15,13 +15,20 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "francy-core": "^1.2.4"
+    "francy-core": "^2.0.0"
   },
   "devDependencies": {
-    "francy": "^1.2.4"
+    "francy": "^2.0.0"
   },
   "scripts": {
-    "test": "karma start karma.conf.js"
+    "test": "karma start karma.conf.js",
+    "clean": "rm -rf ./dist/*",
+    "build": "npm run clean && webpack --config webpack.config.js",
+    "build:prod": "npm run clean && webpack --env production=true --config webpack.config.js",
+    "build:jupyter": "npm run build"
   },
-  "main": "index.js"
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  }
 }

@@ -10,7 +10,7 @@ export default class Canvas extends CompositeRenderer {
     this.chartFactory = new ChartGeneric(this.options, this.context);
     this.visLayoutSortMethod = ['directed', 'hubsize'];
     this.visLayoutDirections = { 'UD': 'Top to Bottom', 'LR': 'Left to Right', 'DU': 'Bottom to Top', 'RL': 'Right to Left' };
-    // this only adds if does not exist
+    // add only if it does not exist
     this.context.configuration.addProperty('visLayoutSortMethod', 'directed');
     this.context.configuration.addProperty('visLayoutDirection', 'UD');
   }
@@ -50,7 +50,7 @@ export default class Canvas extends CompositeRenderer {
   }
 
   _buildMenu() {
-    var self = this;
+    let self = this;
     // here we have access to MainMenu
     this.visLayoutSortMethod.forEach((method) => {
       this.parentClass.MainMenu.addMultiMenuOnSettingsMenu({

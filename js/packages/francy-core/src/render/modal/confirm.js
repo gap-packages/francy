@@ -1,28 +1,28 @@
-import { Components } from '../../component/factory';
-import { Decorators } from '../../decorator/factory';
-import { Logger } from '../../util/logger';
+import {Components} from '../../component/factory';
+import {Decorators} from '../../decorator/factory';
+import {Logger} from '../../util/logger';
 import Modal from './base';
 
 /**
  * Implements a Confirmation Modal window.
- * 
+ *
  * The modal window takes a callback and based on the callback configuration will
  * display a message to the user prior to the execution of the callback.
- * 
+ *
  * @extends {Modal}
  */
 export default class ConfirmModal extends Modal {
 
   /**
    * Base constructor
-   * 
+   *
    * @typedef {Object} options
-   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {String} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
-   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   * @property {Object} context - the context of the application, usually a configuration and a rendering manager instance
    */
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
     /**
      * Stores the element
      * @type {object}
@@ -32,7 +32,7 @@ export default class ConfirmModal extends Modal {
 
   /**
    * This method is used to render this component
-   * 
+   *
    * @public
    */
   @Decorators.Initializer.initialize()

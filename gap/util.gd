@@ -2,6 +2,8 @@
 # francy: Interactive Discrete Mathematics in GAP
 #
 #! @Chapter Francy Util
+#!
+#! Utility functions used across the package.
 
 
 #! @Section Operations
@@ -14,10 +16,9 @@
 DeclareOperation("JUPYTER_ViewString", [IsObject]);
 
 #! @Description
-#! This method will clone a <C>Object</C> and return a sanitized record, traversing all the
-#! components and sanitizing when appropriate.
-#! Sanitizing in this context means, replace everything with it's string representation 
-#! that can't be converted into JSON!
+#! This method will clone an <C>Object</C> and return a sanitized record. It traverses all the
+#! components sanitizing when appropriate.
+#! Sanitizing in this context means: replace everything that can't be converted into JSON, with its string representation!
 #! @Arguments IsObject
 #! @Returns <C>rec</C>
 DeclareOperation("Sanitize", [IsObject]);
@@ -29,12 +30,7 @@ DeclareOperation("Sanitize", [IsObject]);
 DeclareOperation("MergeObjects", [IsFrancyObject, IsFrancyObject]);
 
 #! @Description
-#! This method will generate a sequential ID for use as object identifier.
+#! This method will generate a sequential ID to be used as object identifier.
+#! These IDs are used to identify the objects between the client and the server, and are crucial for the communication between both.
 #! @Returns <C>IsString</C>
 DeclareOperation("GenerateID", []);
-
-#! @Description
-#! Holds the latest generated ID.
-#! @Returns <C>IsString</C>
-BindGlobal("FrancyGeneratedID", 0);
-MakeReadWriteGlobal("FrancyGeneratedID");
