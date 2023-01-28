@@ -95,13 +95,10 @@ export default class BaseRenderer extends DataHandler {
   /**
    * Returns the current mouse position.
    *
-   * @private
+   * @protected
    */
-  _mousePosition() {
-    // FIXME
-    let x = ((event.screenX + event.clientX) / 2) - event.pageX + event.offsetX;
-    let y = ((event.screenY + event.clientY) / 2) - event.pageY + event.offsetY;
-    return [x, y];
+  getMousePosition(e) {
+    return [Number(e && e.layerX || 0), Number(e && e.layerY || 0)];
   }
 
   /**

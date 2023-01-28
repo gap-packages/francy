@@ -54,24 +54,15 @@ export class FrancyWidget extends RenderedHTML {
     // update the callback handler with the session kernel
     this.Francy = new FrancyApp({
       typesetter: typesetter,
-      callbackHandler: function (cmd) {
+      callbackHandler: function callbackHandler(cmd) {
         // NOTE it should be implemented like this:
         // at this point we know the element exists and the OutputArea is 2 levels up: this.parent.parent
         // OutputArea.execute(cmd, self.parent.parent, self._session);
-        // NOTE but francy holds state in the DOM (d3 behaviour), so we need to reuse it:
+        // NOTE but since francy holds state in the DOM (d3 behaviour), we need to reuse it:
         let future = self._sessionContext.session.kernel.requestExecute({code: cmd});
-        future.onIOPub = function (msg) {
+        future.onIOPub = function onIOPub(msg) {
           if (msg.content && msg.content.data) {
-            if (msg.content.data[MIME]) {
-              // This will update an existing canvas by its ID!
-              self.Francy.load(msg.content.data[MIME]);
-            } else if (msg.content.data[MIME_TYPE_TEXT]) {
-              // This will add an output div!
-              self.Francy.load(msg.content.data[MIME_TYPE_TEXT]);
-            }
-            self.Francy.render()
-              .then(element => self.node.appendChild(element))
-              .catch(error => Logger.error(error));
+            return self.render(msg.content)
           }
         };
       }
@@ -86,7 +77,7 @@ export class FrancyWidget extends RenderedHTML {
    * Render 'application/vnd.francy+json' into this widget's node.
    */
   render(model) {
-    this.Francy.load(model.data[this._mimeType]).render()
+    this.Francy.load(model.data[this._mimeType] || model.data[MIME_TYPE_TEXT]).render()
       .catch(error => Logger.error(error))
       .then(element => this.node.appendChild(element));
     return Promise.resolve();

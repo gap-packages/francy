@@ -17,7 +17,7 @@ import setuptools
 HERE = Path(__file__).parent.resolve()
 
 # The name of the project
-name = "jupyter-francy"
+name = "jupyterlab-francy"
 
 lab_path = (HERE / name / "labextension")
 
@@ -71,7 +71,7 @@ setup_args = dict(
     long_description_content_type="text/markdown",
     cmdclass=cmdclass,
     #packages=setuptools.find_packages(),
-    packages=['jupyter-francy', 'jupyter-francy.labextension', 'jupyter-francy.labextension.static'],
+    packages=['jupyterlab-francy', 'jupyterlab-francy.labextension', 'jupyterlab-francy.labextension.static'],
     install_requires=[],
     zip_safe=False,
     include_package_data=True,
@@ -82,8 +82,6 @@ setup_args = dict(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",

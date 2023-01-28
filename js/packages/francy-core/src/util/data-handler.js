@@ -1,4 +1,5 @@
 import JsonUtils from './json';
+import {Logger} from './logger';
 
 /**
  * This class provides utility methods to handle and store data.
@@ -31,6 +32,7 @@ export default class DataHandler {
     if (data) {
       this.data = data;
     }
+    Logger.debug(`${this.constructor.name} loaded data:`, data);
     return this;
   }
 

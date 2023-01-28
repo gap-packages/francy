@@ -1,7 +1,8 @@
-[![Build Status](https://travis-ci.org/gap-packages/francy.svg?branch=master)](https://travis-ci.org/gap-packages/francy)
+![Build Workflow](https://github.com/gap-packages/francy/actions/workflows/CI.yml/badge.svg)
 [![Test Coverage Status](https://codecov.io/gh/gap-packages/francy/branch/master/graph/badge.svg)](https://codecov.io/gh/gap-packages/francy)
 
 [![PyPI version](https://badge.fury.io/py/jupyter-francy.svg)](https://badge.fury.io/py/jupyter-francy)
+[![PyPI version](https://badge.fury.io/py/jupyterlab-francy.svg)](https://badge.fury.io/py/jupyterlab-francy)
 
 # Francy
 
@@ -16,17 +17,13 @@ There is javascript implementation of the graphical representation that works on
 
 See [Graphics Interface](/js)
 
-## Binder 
-
-Jupyter Notebook Binder
-
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master)
+## Binder
 
 Jupyter Lab Binder
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master?urlpath=lab)
 
-These binders include the following notebooks:
+The following notebooks are available:
 
 |Notebook                        |Description                                                     |
 |:-------------------------------|:---------------------------------------------------------------|
@@ -42,15 +39,13 @@ These binders include the following notebooks:
 
 # Jupyter Integration
 
-In order to use this module in Jupyter, install it as follows, both jupyter lab and notebook extension:
+In order to use this module in JupyterLab, install it as follows:
 
 ```bash
-mcmartins@local:~$ pip install jupyter_francy
-mcmartins@local:~$ jupyter lab build # for JupyterLab
-mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Jupyter Notebook
+mcmartins@local:~$ pip install jupyterlab-francy
 ```
 
-The jupyter extension requires the JupyterKernel GAP package installed. 
+The jupyterlab extension requires the JupyterKernel GAP package to be installed. 
 See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel) for more information.
 
 # Package Structure

@@ -78,11 +78,11 @@ export default class Graph extends Renderer {
     this.callback = new Callback(this.options, this.context);
     this.graphOperations = new GraphOperations(this.options, this.context);
     this.OnEvent = {
-      mouseOut: (e) => this.tooltip.unrender(),
+      mouseOut: () => this.tooltip.unrender(),
       mouseIn: (e, data) => {
         if (data && data.messages) {
           // default, show tooltip
-          this.handlePromise(this.tooltip.load({messages: data.messages}).render());
+          this.handlePromise(this.tooltip.load({messages: data.messages}).render(e));
           // ok, this is almost a hack, because this should be rendered on
           // the tooltip itself… but because a tooltip gets only the messages
           // object to render and not the whole `this.data` object,
@@ -97,7 +97,7 @@ export default class Graph extends Renderer {
         // do not show the jupyterlab context menu here
         e.stopPropagation();
         // default, build context menu
-        this.handlePromise(this.contextMenu.load(data).render());
+        this.handlePromise(this.contextMenu.load(data).render(e));
         // any callbacks will be handled here
         this._executeCallback.call(this, this, data, 'contextmenu');
         // do not show the browser context menu

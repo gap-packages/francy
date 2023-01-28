@@ -101,7 +101,7 @@ mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ jupyter labexten
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ jupyter lab --watch
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ # run jupyter locally
 mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ cd ~/francy/notebooks
-mcmartins@local:~/francy/notebooks $ jupyter notebook --ip=0.0.0.0 --port=8080 --no-browser
+mcmartins@local:~/francy/notebooks $ jupyter lab --ip=0.0.0.0 --port=8080 --no-browser
 ```
 
 ## Releasing

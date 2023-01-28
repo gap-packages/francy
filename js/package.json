@@ -7,19 +7,19 @@
     "url": "https://github.com/gap-packages/francy.git"
   },
   "scripts": {
-    "prepare": "lerna link --no-ci && lerna run prepare --no-ci",
-    "bootstrap": "lerna bootstrap --no-ci",
-    "test": "lerna run test --no-ci",
-    "build": "lerna run build --no-ci",
-    "build:jupyter": "lerna run build:jupyter --no-ci",
-    "build:prod": "lerna run build:prod --no-ci",
-    "clean": "lerna run clean --no-ci",
-    "version": "lerna version --no-git-tag-version --no-push --no-ci",
+    "prepare": "lerna link && lerna run prepare",
+    "bootstrap": "lerna bootstrap",
+    "test": "lerna run test",
+    "build": "lerna run build",
+    "build:jupyter": "lerna run build:jupyter",
+    "build:prod": "lerna run build:prod",
+    "clean": "lerna run clean",
+    "version": "lerna version --no-git-tag-version --no-push",
     "docs": "esdoc",
     "lint": "eslint --debug --config ./.eslintrc.json ./packages/**",
     "lint:fix": "eslint --debug --fix --config ./.eslintrc.json ./packages/**",
     "coverage": "npm run test",
-    "publish": "lerna publish --skip-git --force-publish --no-ci"
+    "publish": "lerna publish --skip-git --force-publish"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

@@ -29,8 +29,7 @@
     "**/node_modules/**",
     "**/dist/**", 
     "**/lib/**",
-    "**/jupyter_francy/**",
-    "**/jupyter-francy/**"
+    "**/jupyterlab-francy/**"
   ],
   "rules": {
     "indent": [
