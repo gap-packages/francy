@@ -28,7 +28,7 @@ export default class Tooltip extends Renderer {
    * @public
    */
   @Decorators.Data.requires('messages')
-  async render() {
+  async render(e) {
 
     this.element = this.HTMLParent.select('div.francy-tooltip-holder');
     // check if the window is already present
@@ -40,7 +40,7 @@ export default class Tooltip extends Renderer {
     // check if it exists already
     if (this.element.selectAll('*').node()) return;
 
-    let position = this._mousePosition();
+    let position = this.getMousePosition(e);
 
     // TODO this won't be visible all the times, fine until someone complains about :P
     this.element.style('left', (position[0] + 15) + 'px').style('top', (position[1] - 15) + 'px');

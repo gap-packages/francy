@@ -1,4 +1,3 @@
-import {Components} from '../../component/factory';
 import {Decorators} from '../../decorator/factory';
 import {GlobalConfiguration} from '../../util/configuration';
 import {Logger} from '../../util/logger';
@@ -82,11 +81,6 @@ export default class AboutModal extends Modal {
       e.preventDefault();
       this.unrender.call(this);
     });
-
-    // disable keyboard shortcuts when using this modal in Jupyter
-    if (Components.Jupyter.isAvailable) {
-      Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
-    }
 
     Logger.debug(`(${this.context.instanceId}) Modal About updated [${modalId}]...`);
 

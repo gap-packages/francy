@@ -1,4 +1,3 @@
-import {Components} from '../../component/factory';
 import {Decorators} from '../../decorator/factory';
 import GraphOperations from '../graph/operations';
 import {Logger} from '../../util/logger';
@@ -53,11 +52,6 @@ export default class RequiredArgsModal extends Modal {
     this._buildContent(form);
 
     this._buildFooter(form);
-
-    // disable keyboard shortcuts when using this modal in Jupyter
-    if (Components.Jupyter.isAvailable) {
-      Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
-    }
 
     let inputElement = form.selectAll('.francy-arg').node();
     if (inputElement) {

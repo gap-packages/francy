@@ -83,11 +83,9 @@ export default class CallbackHandler extends BaseRenderer {
    * @private
    */
   _execute(object) {
-    // FIXME
-    // oh well, Trigger(<json>); is the entrypoint back to GAP 
-    // while we don't support comms on the kernel:
-    let message = `Trigger(${JSON.stringify(JSON.stringify(object))});`;
-    Logger.debug(message);
-    return this.callback(message);
+    // FIXME Trigger(<json>); is the entrypoint back to GAP
+    //  while JupyterKernel doesn't support comms:
+    Logger.debug('Executing Trigger function:', object);
+    return this.callback(`Trigger(${JSON.stringify(JSON.stringify(object))});`);
   }
 }

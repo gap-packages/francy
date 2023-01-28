@@ -81,7 +81,7 @@ export default class GraphGeneric extends Graph {
     network.on('oncontext', function (params) {
       params.event.preventDefault();
       let data = resolveNode.call(this, params);
-      self.OnEvent.contextMenu(data);
+      self.OnEvent.contextMenu(params.event, data);
     });
 
     network.on('doubleClick', function (params) {

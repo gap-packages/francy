@@ -1,4 +1,3 @@
-import {Components} from '../../component/factory';
 import {Decorators} from '../../decorator/factory';
 import {Logger} from '../../util/logger';
 import Modal from './base';
@@ -58,11 +57,6 @@ export default class ConfirmModal extends Modal {
     row.append('div').attr('class', 'francy-table-cell').append('span').attr('id', `Confirm-${this.data.callback.id}`).text(this.data.callback.confirm);
 
     this._buildFooter(form);
-
-    // disable keyboard shortcuts when using this modal in Jupyter
-    if (Components.Jupyter.isAvailable) {
-      Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-overlay', '.francy-modal']);
-    }
 
     Logger.debug(`(${this.context.instanceId}) Confirm Modal updated [${modalId}]...`);
 

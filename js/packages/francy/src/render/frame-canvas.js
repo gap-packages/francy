@@ -25,6 +25,7 @@ export default class CanvasFrame extends CompositeRenderer {
   async render() {
     const frameId = `Frame-${this.data.canvas.id}`;
     this.element = d3.select(`div#${frameId}`);
+
     // check if the canvas is already present
     if (!this.element.node()) {
       // create a svg element detached from the DOM!

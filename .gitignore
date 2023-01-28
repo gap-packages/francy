@@ -50,7 +50,7 @@ gap/dist/
 
 # Compiled javascript
 **/__pycache__/
-**/jupyter-francy.egg-info/
+**/jupyterlab-francy.egg-info/
 
 # OS X
 **/.DS_Store

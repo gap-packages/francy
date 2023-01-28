@@ -36,7 +36,7 @@ export default class ContextMenu extends Menu {
         .attr('class', 'francy-context-menu-holder');
     }
 
-    let position = this._mousePosition();
+    let position = this.getMousePosition(e);
 
     this.element.style('left', position[0] + 5 + 'px').style('top', position[1] + 5 + 'px');
 

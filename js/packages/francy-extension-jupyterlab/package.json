@@ -35,7 +35,7 @@
   "jupyterlab": {
     "webpackConfig": "./webpack.config.js",
     "extension": true,
-    "outputDir": "jupyter-francy/labextension",
+    "outputDir": "jupyterlab-francy/labextension",
     "discovery": {
       "kernel": [
         {
@@ -43,7 +43,7 @@
             "language": "^gap"
           },
           "base": {
-            "name": "jupyter-francy"
+            "name": "jupyterlab-francy"
           },
           "managers": [
             "pip",
@@ -54,7 +54,7 @@
     }
   },
   "scripts": {
-    "clean": "rm -rf ./lib ./dist ./build ./jupyter-francy/jupyter-francy ./jupyter-francy/__pycache__ ./jupyter-francy/labextension ./jupyter_francy.egg-info ./__pycache__",
+    "clean": "rm -rf ./lib ./dist ./build jupyterlab-francy/jupyterlab-francy jupyterlab-francy/__pycache__ jupyterlab-francy/labextension ./jupyter_francy.egg-info ./__pycache__",
     "build:lib": "",
     "build:labextension": "jupyter labextension build .",
     "build:labextension:dev": "jupyter labextension build --source-map True --development True .",

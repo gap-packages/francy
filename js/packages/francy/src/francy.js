@@ -87,6 +87,6 @@ export class FrancyApp extends Renderer {
     }
     return await this.factory.load(this.data).render()
       .then(result => result.element.node())
-      .finally(() => this.load({}));
+      .finally(() => undefined);
   }
 }

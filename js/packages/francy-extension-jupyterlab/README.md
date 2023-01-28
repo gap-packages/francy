@@ -1,21 +1,21 @@
 # Francy Jupyter Extension - jupyter_francy
 
-[![PyPI version](https://badge.fury.io/py/jupyter-francy.svg)](https://badge.fury.io/py/jupyter-francy)
+[![PyPI version](https://badge.fury.io/py/jupyterlab-francy.svg)](https://badge.fury.io/py/jupyterlab-francy)
 
-A JupyterLab and Jupyter Notebook extension for rendering mime 'application/vnd.francy+json'
+A JupyterLab extension for rendering mime 'application/vnd.francy+json'
 
 <!--- ![output renderer](http://g.recordit.co/QAsC7YULcY.gif) --->
 
 ## Install
 
 ```bash
-pip install jupyter_francy
+pip install jupyterlab-francy
 ```
 
 ## Development
 
 ```bash
-pip install -e .
+cd packges/francy-extension-jupyterlab && pip install .
 ```
 
 Note: 
