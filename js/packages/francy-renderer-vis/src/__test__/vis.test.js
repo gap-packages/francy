@@ -3,7 +3,7 @@ import { FrancyApp } from 'francy';
 import { Logger } from 'francy-core';
 import { VisRenderer } from '../../index';
 
-import undirected from '../../node_modules/francy-core/src/__test__/data/json1.json';
+import undirected from '../../../francy-core/src/__test__/data/json1.json';
 import * as vis from 'vis-network/standalone';
 import * as d3 from "d3";
 

@@ -2,7 +2,7 @@ import chai, { expect } from 'chai';
 chai.use(require('chai-string'));
 
 import DOTLanguageHelper from '../util/dot-converter';
-import graph from '../../node_modules/francy-core/src/__test__/data/json1.json';
+import graph from '../../../francy-core/src/__test__/data/json1.json';
 import { ConfigurationHandler, DefaultConfiguration } from 'francy-core';
 import * as d3 from 'd3';
 

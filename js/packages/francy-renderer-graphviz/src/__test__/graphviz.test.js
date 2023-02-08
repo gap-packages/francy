@@ -4,7 +4,7 @@ import { Logger } from 'francy-core';
 import { GraphvizRenderer } from '../../index';
 import * as d3 from 'd3';
 
-import undirected from '../../node_modules/francy-core/src/__test__/data/json1.json';
+import undirected from '../../../francy-core/src/__test__/data/json1.json';
 import Graphviz from '@hpcc-js/wasm/graphviz'
 
 describe('Render Graph', () => {

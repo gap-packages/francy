@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
+const lerna = require('../../lerna.json')
 
 /**
  * This webpack.config.js is shared by all packages.
@@ -26,9 +27,9 @@ module.exports = options => env => {
 
   console.log('Creating output directory: ' + dist_dir)
 
-  const description = `'${options.currentPackageConfig.name}, v${options.currentPackageConfig.version}, ${options.currentPackageConfig.description} - by ${options.currentPackageConfig.author}.'`;
+  const description = `'${options.currentPackageConfig.name}, v${lerna.version}, ${options.currentPackageConfig.description} - by ${options.currentPackageConfig.author}.'`;
   const defaultPlugins = [
-    new webpack.DefinePlugin({VERSION: JSON.stringify(options.currentPackageConfig.version), FRANCY_DESC: description}),
+    new webpack.DefinePlugin({VERSION: JSON.stringify(lerna.version), FRANCY_DESC: description}),
     new webpack.BannerPlugin(description)
   ];
 

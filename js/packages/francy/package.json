@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "francy",
   "version": "2.0.0",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP",
@@ -17,15 +18,11 @@
   "scripts": {
     "test": "karma start karma.conf.js",
     "clean": "rm -rf ./dist/*",
-    "build": "npm run clean && webpack --config webpack.config.js",
-    "build:prod": "npm run clean && webpack --env production=true --config webpack.config.js",
-    "build:jupyter": "npm run build"
+    "build": "webpack --config webpack.config.js",
+    "build:prod": "webpack --env production=true --config webpack.config.js"
   },
   "dependencies": {
-    "francy-core": "^2.0.0"
-  },
-  "devDependencies": {
-    "d3": "^7.8.2"
+    "francy-core": "*"
   },
   "main": "./dist/index.js",
   "exports": {

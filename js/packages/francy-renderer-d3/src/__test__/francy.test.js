@@ -3,12 +3,12 @@ import * as d3 from 'd3';
 import { FrancyApp } from 'francy';
 import { Logger } from 'francy-core';
 import { D3Renderer } from '../../index';
-import undirected from '../../node_modules/francy-core/src/__test__/data/json1.json';
-import directed from '../../node_modules/francy-core/src/__test__/data/json2.json';
-import tree from '../../node_modules/francy-core/src/__test__/data/json3.json';
-import bar from '../../node_modules/francy-core/src/__test__/data/json4.json';
-import line from '../../node_modules/francy-core/src/__test__/data/json5.json';
-import scatter from '../../node_modules/francy-core/src/__test__/data/json6.json';
+import undirected from '../../../francy-core/src/__test__/data/json1.json';
+import directed from '../../../francy-core/src/__test__/data/json2.json';
+import tree from '../../../francy-core/src/__test__/data/json3.json';
+import bar from '../../../francy-core/src/__test__/data/json4.json';
+import line from '../../../francy-core/src/__test__/data/json5.json';
+import scatter from '../../../francy-core/src/__test__/data/json6.json';
 
 
 describe('Francy Renderer Object', function() {
