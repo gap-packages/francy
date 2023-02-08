@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [19.x]
 
     steps:
       - uses: actions/checkout@v3
@@ -78,8 +78,6 @@ jobs:
       #- run: npm ci
       #  working-directory: js
       - run: npm install
-        working-directory: js
-      - run: npm run bootstrap
         working-directory: js
       - run: npm run build
         working-directory: js

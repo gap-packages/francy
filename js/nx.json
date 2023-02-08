@@ -1,0 +1,50 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "useDaemonProcess": false,
+        "cacheableOperations": [
+          "build",
+          "build:prod",
+          "build:labextension",
+          "build:labextension:dev"
+        ]
+      }
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
+    },
+    "build:prod": {
+      "dependsOn": [
+        "^build:prod"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
+    },
+    "build:labextension": {
+      "dependsOn": [
+        "^build:labextension"
+      ],
+      "outputs": [
+        "{projectRoot}/jupyterlab-francy/labextension"
+      ]
+    },
+    "build:labextension:dev": {
+      "dependsOn": [
+        "^build:labextension:dev"
+      ],
+      "outputs": [
+        "{projectRoot}/jupyterlab-francy/labextension"
+      ]
+    }
+  }
+}

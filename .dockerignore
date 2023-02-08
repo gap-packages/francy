@@ -1,0 +1,23 @@
+# ignore .git and .cache folders
+.git
+.cache
+.github
+.idea
+
+*.tgz
+
+*.sh
+
+**/coverage/
+**/dist/
+**/node_modules/
+**/coverage/
+
+.idea
+.iml
+
+.c9
+.ipynb_*
+.nyc*
+
+*-lock.json
