@@ -79,6 +79,8 @@ jobs:
       #  working-directory: js
       - run: npm install
         working-directory: js
+      - run: npm run eslint
+        working-directory: js
       - run: npm run build
         working-directory: js
       - run: npm run test

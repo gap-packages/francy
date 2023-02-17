@@ -7,6 +7,7 @@
 ReadPackage("francy", "gap/francy.gd");
 ReadPackage("francy", "gap/util.gd");
 ReadPackage("francy", "gap/message.gd");
+ReadPackage("francy", "gap/renderer.gd");
 ReadPackage("francy", "gap/callback.gd");
 ReadPackage("francy", "gap/menu.gd");
 ReadPackage("francy", "gap/canvas.gd");

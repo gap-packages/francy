@@ -1,5 +1,5 @@
+import CallbackHandler from './callback';
 import Renderer from './renderer';
-import CallbackHandler from "./callback";
 
 /**
  * The {Message} holds the messages for the current Graphics.

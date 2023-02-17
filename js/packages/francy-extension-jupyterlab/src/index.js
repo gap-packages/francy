@@ -1,3 +1,13 @@
+import * as vis from 'vis-network/standalone';
+import {ILatexTypesetter, IRenderMimeRegistry, RenderedHTML} from '@jupyterlab/rendermime';
+import {Logger, MIME} from 'francy-core';
+import {D3Renderer} from 'francy-renderer-d3';
+import {FrancyApp} from 'francy';
+import {Graphviz} from '@hpcc-js/wasm/graphviz';
+import {GraphvizRenderer} from 'francy-renderer-graphviz';
+import {INotebookTracker} from '@jupyterlab/notebook';
+import {VisRenderer} from 'francy-renderer-vis';
+
 const d3 = await Promise.all([
   import('d3-selection'),
   import('d3-shape'),
@@ -16,22 +26,9 @@ const d3 = await Promise.all([
   import('d3-graphviz')
 ]).then(d3 => Object.assign({}, ...d3));
 
-import {Graphviz} from '@hpcc-js/wasm/graphviz'
-
-import * as vis from 'vis-network/standalone';
-
-import {FrancyApp} from 'francy';
-import {Logger, MIME} from 'francy-core';
-import {D3Renderer} from 'francy-renderer-d3';
-import {GraphvizRenderer} from 'francy-renderer-graphviz';
-import {VisRenderer} from 'francy-renderer-vis';
-
-import {ILatexTypesetter, IRenderMimeRegistry, RenderedHTML} from '@jupyterlab/rendermime';
-import {INotebookTracker} from '@jupyterlab/notebook';
-
-window.d3 = d3
+window.d3 = d3;
 window.vis = vis;
-window.graphviz = Graphviz
+window.graphviz = Graphviz;
 
 export const MIME_TYPE_TEXT = 'text/plain';
 export const CLASS_NAME = 'jp-OutputWidget-Francy';
@@ -62,7 +59,7 @@ export class FrancyWidget extends RenderedHTML {
         let future = self._sessionContext.session.kernel.requestExecute({code: cmd});
         future.onIOPub = function onIOPub(msg) {
           if (msg.content && msg.content.data) {
-            return self.render(msg.content)
+            return self.render(msg.content);
           }
         };
       }

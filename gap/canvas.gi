@@ -90,6 +90,17 @@ function(canvas, message)
 end);
 
 InstallOtherMethod(Add,
+  "a canvas, a renderer",
+  true,
+  [IsCanvas,
+   IsFrancyRenderer],
+  0,
+function(canvas, renderer)
+  canvas!.renderer := renderer!.value;
+  return canvas;
+end);
+
+InstallOtherMethod(Add,
   "a canvas, a list of francy objects",
   true,
   [IsCanvas,

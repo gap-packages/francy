@@ -2,7 +2,6 @@ import DataDecorator from './data';
 import ErrorDecorator from './error';
 import HighlightDecorator from './highlight';
 import InitializerDecorator from './initialize';
-import JupyterDecorator from './jupyter';
 import LoaderDecorator from './loader';
 
 /**
@@ -21,7 +20,6 @@ import LoaderDecorator from './loader';
  * @property {InitializerDecorator} Initializer {Decorator} instance
  * @property {ErrorDecorator} Error {Decorator} instance
  * @property {HighlightDecorator} Highlight {Decorator} instance
- * @property {JupyterDecorator} Jupyter {Decorator} instance
  * @public
  */
 export const Decorators = {
@@ -38,8 +36,6 @@ export const Decorators = {
 
   Initializer: InitializerDecorator,
 
-  Highlight: HighlightDecorator,
-
-  Jupyter: JupyterDecorator
+  Highlight: HighlightDecorator
 
 };

@@ -4,15 +4,26 @@
     "commonjs": true,
     "es2020": true,
     "es2021": true,
-    "es2022": true
+    "es2022": true,
+    "node": true
   },
   "extends": "eslint:recommended",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "requireConfigFile": false,
     "sourceType": "module",
-    "ecmaVersion": 13
+    "ecmaVersion": "latest",
+    "babelOptions": {
+      "babelrc": false,
+      "configFile": false,
+      "plugins": [
+        ["@babel/plugin-proposal-decorators", {"legacy": true}]
+      ]
+    }
   },
-  "parser": "@babel/eslint-parser",
+  "plugins": [
+    "@babel"
+  ],
   "globals": {
     "d3": true,
     "VERSION": true,
@@ -20,17 +31,6 @@
     "FRANCY_DESC": true,
     "MathJax": true
   },
-  "ignorePatterns": [
-    "**.json",
-    "**/*.test.js",
-    "**/__test__/*.js",
-    "**.html",
-    "karma*.js",
-    "**/node_modules/**",
-    "**/dist/**", 
-    "**/lib/**",
-    "**/jupyterlab-francy/**"
-  ],
   "rules": {
     "indent": [
       "error",
@@ -50,14 +50,39 @@
     ],
     "no-else-return": 1,
     "space-unary-ops": 2,
-    "brace-style": ["error", "1tbs"],
-    "no-unused-vars": [2, { "vars": "all", "varsIgnorePattern": ".*ignore" }],
-    "no-global-assign": ["error", { "exceptions": ["__webpack_public_path__"] }],
-    "sort-imports": ["error", {
+    "brace-style": [
+      "error",
+      "1tbs"
+    ],
+    "no-unused-vars": [
+      2,
+      {
+        "vars": "all",
+        "varsIgnorePattern": ".*ignore"
+      }
+    ],
+    "no-global-assign": [
+      "error",
+      {
+        "exceptions": [
+          "__webpack_public_path__",
+          "__dirname"
+        ]
+      }
+    ],
+    "sort-imports": [
+      "error",
+      {
         "ignoreCase": false,
         "ignoreDeclarationSort": false,
         "ignoreMemberSort": false,
-        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
-    }]
+        "memberSyntaxSortOrder": [
+          "none",
+          "all",
+          "multiple",
+          "single"
+        ]
+      }
+    ]
   }
 }

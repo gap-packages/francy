@@ -47,7 +47,7 @@ export default class ContextMenu extends Menu {
     if (this.element.selectAll('*').node()) return;
 
     // destroy menu
-    d3.select('body').on('click.francy-context-menu', (e) => this.unrender());
+    d3.select('body').on('click.francy-context-menu', () => this.unrender());
 
     // this gets executed when a contextmenu event occurs
     let menu = this.element.append('div').attr('class', 'francy-context-menu').append('ul');

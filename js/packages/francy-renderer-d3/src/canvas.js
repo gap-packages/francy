@@ -60,7 +60,7 @@ export default class Canvas extends CompositeRenderer {
 
         content.transition().duration(self.transitionDuration)
           .attr('transform', `translate(${translateX},${translateY})scale(${scale},${scale})`)
-          .on('end', (e) => updateZoom(translateX, translateY, scale));
+          .on('end', () => updateZoom(translateX, translateY, scale));
       }
     }
 

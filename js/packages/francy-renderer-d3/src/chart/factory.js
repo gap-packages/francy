@@ -13,17 +13,17 @@ export default class ChartFactory extends Renderer {
   async render() {
     let chart;
     switch (this.data.canvas.chart.type) {
-      case 'bar':
-        chart = new BarChart(this.options, this.context);
-        break;
-      case 'line':
-        chart = new LineChart(this.options, this.context);
-        break;
-      case 'scatter':
-        chart = new ScatterChart(this.options, this.context);
-        break;
-      default:
-        chart = new BarChart(this.options, this.context);
+    case 'bar':
+      chart = new BarChart(this.options, this.context);
+      break;
+    case 'line':
+      chart = new LineChart(this.options, this.context);
+      break;
+    case 'scatter':
+      chart = new ScatterChart(this.options, this.context);
+      break;
+    default:
+      chart = new BarChart(this.options, this.context);
     }
 
     let element = await this.handlePromise(chart.load(this.data).render());

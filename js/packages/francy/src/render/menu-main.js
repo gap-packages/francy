@@ -72,14 +72,14 @@ export default class MainMenu extends Menu {
     this._addEntryOnFrancyMenu({
       id: 'zoom-entry',
       title: 'Zoom to Fit',
-      onClickCallback: function (e) {
+      onClickCallback: function () {
         self.options.appendTo.canvas.zoomToFit(true);
       }
     });
     this._addEntryOnFrancyMenu({
       id: 'save-entry',
       title: 'Save to PNG',
-      onClickCallback: function (e) {
+      onClickCallback: function () {
         let name = self.data.canvas.title
           ? Utilities.sanitize(self.data.canvas.title, '_') + '.png'
           : 'diagram.png';
@@ -105,7 +105,7 @@ export default class MainMenu extends Menu {
     this._addEntryOnFrancyMenu({
       id: 'about-entry',
       title: 'About',
-      onClickCallback: function (e) {
+      onClickCallback: function () {
         self.handlePromise(self.aboutModal.load(self.data).render());
       }
     });
@@ -120,7 +120,7 @@ export default class MainMenu extends Menu {
         menuTitle: 'Renderers',
         entryId: o.id,
         entryTitle: `${o.enable ? '&#9745' : '&#9744'} ${o.name}`,
-        entryOnClickCallback: function (e) {
+        entryOnClickCallback: function () {
           self.context.renderingManager.enable(o.name);
         },
         entryOnEachCallback: function () {
@@ -168,7 +168,7 @@ export default class MainMenu extends Menu {
   addEntryOnSettingsMenu({id, title, onClickCallback, onEachCallback, withSeparator}) {
     let entry = this.element.select('.settings-entry>ul').data([{id: id, title: title}]);
     entry = entry.append('li').attr('class', d => d.id);
-    onClickCallback = onClickCallback || function (e) {
+    onClickCallback = onClickCallback || function () {
     };
     onEachCallback = onEachCallback || function () {
     };
@@ -194,7 +194,7 @@ export default class MainMenu extends Menu {
       content = entry.append('ul');
     }
 
-    entryOnClickCallback = entryOnClickCallback || function (e) {
+    entryOnClickCallback = entryOnClickCallback || function () {
     };
     entryOnEachCallback = entryOnEachCallback || function () {
     };
@@ -215,7 +215,7 @@ export default class MainMenu extends Menu {
   _addEntryOnFrancyMenu({id, title, onClickCallback, onEachCallback, withSeparator}) {
     let entry = this.element.select('.francy-entry>ul').data([{id: id, title: title}]);
     entry = entry.append('li').attr('class', d => d.id);
-    onClickCallback = onClickCallback || function (e) {
+    onClickCallback = onClickCallback || function () {
     };
     onEachCallback = onEachCallback || function () {
     };
@@ -232,7 +232,7 @@ export default class MainMenu extends Menu {
   addEntryOnMenu({id, title, onClickCallback, onEachCallback}) {
     let entry = this.element.data([{id: id, title: title}]);
     entry = entry.append('li').attr('class', d => d.id);
-    onClickCallback = onClickCallback || function (e) {
+    onClickCallback = onClickCallback || function () {
     };
     onEachCallback = onEachCallback || function () {
     };

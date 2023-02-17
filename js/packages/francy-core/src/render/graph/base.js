@@ -45,27 +45,27 @@ export default class Graph extends Renderer {
 
     let element;
     switch (type) {
-      case 'cross':
-        element = d3.symbolCross;
-        break;
-      case 'diamond':
-        element = d3.symbolDiamond;
-        break;
-      case 'square':
-        element = d3.symbolSquare;
-        break;
-      case 'triangle':
-        element = d3.symbolTriangle;
-        break;
-      case 'star':
-        element = d3.symbolStar;
-        break;
-      case 'wye':
-        element = d3.symbolWye;
-        break;
-      case 'circle':
-      default:
-        element = d3.symbolCircle;
+    case 'cross':
+      element = d3.symbolCross;
+      break;
+    case 'diamond':
+      element = d3.symbolDiamond;
+      break;
+    case 'square':
+      element = d3.symbolSquare;
+      break;
+    case 'triangle':
+      element = d3.symbolTriangle;
+      break;
+    case 'star':
+      element = d3.symbolStar;
+      break;
+    case 'wye':
+      element = d3.symbolWye;
+      break;
+    case 'circle':
+    default:
+      element = d3.symbolCircle;
     }
 
     return element;
@@ -197,7 +197,7 @@ export default class Graph extends Renderer {
       this.handlePromise(this.mathTypesetting(text.node()));
       let foreignObject = d3.select(text.node().parentElement).append('foreignObject');
       foreignObject.node().appendChild(text.select('mjx-container').node());
-      let mathExpr = foreignObject.select('mjx-math').node()
+      let mathExpr = foreignObject.select('mjx-math').node();
       this.setLabelXPosition(foreignObject, mathExpr.clientWidth);
       this.setLabelYPosition(foreignObject, mathExpr.clientHeight);
       text.remove();

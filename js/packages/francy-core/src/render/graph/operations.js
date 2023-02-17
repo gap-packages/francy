@@ -151,11 +151,11 @@ export default class GraphOperations extends BaseRenderer {
   }
 
   labelsOpacityBehavior(link) {
-    link.on('mouseover', function (e) {
+    link.on('mouseover', function () {
       d3.select(this).selectAll('text')
         .style('opacity', 1)
         .style('opacity', 1);
-    }).on('mouseleave', function (e) {
+    }).on('mouseleave', function () {
       d3.select(this).selectAll('text')
         .style('opacity', 0.1)
         .style('opacity', 0.1);

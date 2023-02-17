@@ -42,8 +42,23 @@ export default class CanvasFrame extends CompositeRenderer {
 
     Logger.debug(`(${this.context.instanceId}) Frame updated [${frameId}]...`);
 
-    this.removeChildren();
-    this.addChild(this.mainMenu).addChild(this.messages).addChild(this.canvas);
+    if (this.data.canvas.renderer) {
+      // if the user specifies the renderer on GAP,
+      //   then we do not allow the user to change it on the client by deleting all the other registered renderers
+      let renderer = this.data.canvas.renderer.split('.');
+      Logger.debug(`Switching to renderer configured on GAP: ${renderer[0]}`);
+      this.context.renderingManager.unregisterAllExcept(renderer[0]);
+      this.context.renderingManager.enable(renderer[0]);
+      // FIXME I don't like this, but didn't find a better way to set the engine - only graphviz has engines
+      if (renderer.length > 0 && renderer[0].toLowerCase().includes('Graphviz'.toLowerCase())) {
+        Logger.debug(`Renderer Graphviz with Engine: ${renderer[1]}`)
+        this.context.configuration.object.graphvizEngine = renderer[1];
+      }
+      let Renderer = this.context.renderingManager.activeRenderer();
+      this.canvas = new Renderer(this.options, this.context);
+    }
+
+    this.removeChildren().addChild(this.mainMenu).addChild(this.messages).addChild(this.canvas);
     this.handlePromise(this.renderChildren());
 
     return this;
