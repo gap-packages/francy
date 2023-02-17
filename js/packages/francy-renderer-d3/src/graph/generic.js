@@ -166,8 +166,8 @@ export default class GenericGraph extends Graph {
         //.force('link', ylayered ? linkForce.strength(d => d.weight ? Math.sqrt(d.weight) % 1 : 1 / (linksToAdd.length + 1)) : linkForce)
         .force('link', ylayered ? linkForce.strength(1 / (linksToAdd.length + 1)) : linkForce)
         .force('collide', d3.forceCollide().radius((radius > symbolRadius ? radius : symbolRadius * 1.5) / 2))
-        .on('tick', (e) => safeTicked.handle())
-        .on('end', (e) => safeEnd.handle());
+        .on('tick', () => safeTicked.handle())
+        .on('end', () => safeEnd.handle());
 
       if (nodesToAdd.length >= 1000 || linksToAdd.length >= 1000) {
         self.parent.attr('visibility', 'hidden');

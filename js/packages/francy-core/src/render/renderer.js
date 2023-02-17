@@ -44,12 +44,12 @@ export default class Renderer extends BaseRenderer {
      * Stores the jupyterlab defined typesetter
      * @type {object}
      */
-    window.typesetter = this.typesetter = context.typesetter
+    window.typesetter = this.typesetter = context.typesetter;
     if (!this.typesetter) {
       this.typesetter = {
         typeset: () => {
         }
-      }
+      };
     }
   }
 
@@ -139,7 +139,7 @@ export default class Renderer extends BaseRenderer {
    * @public
    */
   async mathTypesetting(node) {
-    this.typesetter.typeset(node)
+    this.typesetter.typeset(node);
   }
 
   /**

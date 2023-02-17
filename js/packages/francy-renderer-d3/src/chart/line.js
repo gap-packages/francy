@@ -47,7 +47,7 @@ export default class LineChart extends Chart {
             .style('stroke-width', '10px');
           self.handlePromise(self.tooltip.load(Chart.tooltip(key, d)).render());
         })
-        .on('mouseleave', function (e) {
+        .on('mouseleave', function () {
           d3.select(this).transition()
             .duration(250)
             .style('stroke-opacity', 1)

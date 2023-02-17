@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
-const lerna = require('../../lerna.json')
+const lerna = require('../../lerna.json');
 
 /**
  * This webpack.config.js is shared by all packages.
@@ -13,19 +13,19 @@ const lerna = require('../../lerna.json')
 module.exports = options => env => {
 
   if (!options.currentPackageConfig || !options.modulePath) {
-    throw new Error("Missing options object!")
+    throw new Error('Missing options object!');
   }
 
-  console.log(`---Running webpack---`)
+  console.log('---Running webpack---');
 
-  env.production = Boolean(env.production)
+  env.production = Boolean(env.production);
 
   console.log(`Production environment: ${env.production}`);
 
   let dist_dir = path.join(options.modulePath, '/dist');
   fs.mkdirSync(dist_dir, {recursive: true});
 
-  console.log('Creating output directory: ' + dist_dir)
+  console.log('Creating output directory: ' + dist_dir);
 
   const description = `'${options.currentPackageConfig.name}, v${lerna.version}, ${options.currentPackageConfig.description} - by ${options.currentPackageConfig.author}.'`;
   const defaultPlugins = [
@@ -33,7 +33,7 @@ module.exports = options => env => {
     new webpack.BannerPlugin(description)
   ];
 
-  console.log('Module description: ' + description)
+  console.log('Module description: ' + description);
 
   /**
    * Custom webpack loaders are generally the same for all webpack bundles, hence

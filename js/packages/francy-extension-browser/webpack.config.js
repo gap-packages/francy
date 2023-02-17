@@ -5,5 +5,5 @@ module.exports = env => {
     experiments: {
       topLevelAwait: true
     }
-  }
+  };
 };

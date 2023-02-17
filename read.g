@@ -6,6 +6,7 @@
 
 ReadPackage("francy", "gap/util.gi");
 ReadPackage("francy", "gap/message.gi");
+ReadPackage("francy", "gap/renderer.gi");
 ReadPackage("francy", "gap/callback.gi");
 ReadPackage("francy", "gap/menu.gi");
 ReadPackage("francy", "gap/canvas.gi");

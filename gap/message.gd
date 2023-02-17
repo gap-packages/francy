@@ -62,7 +62,7 @@ DeclareOperation("FrancyMessage", [IsFrancyMessageType, IsString, IsString]);
 
 
 #! @Section Global
-#! In this section we show all Global Callback Francy Records for multi purpose.
+#! In this section we show all Global FrancyMessage Records for multi purpose.
 
 #! @Description
 #! The various types of <C>FrancyMessage</C> supported.
@@ -77,7 +77,7 @@ BindGlobal("FrancyMessageType", rec(
 
 
 #! @Section Attributes
-#! In this section we show all Francy Message Core Attributes
+#! In this section we show all FrancyMessage Core Attributes
 
 #! @Description
 #! A title on a <C>FrancyMessage</C> is used to display the title information to the user.

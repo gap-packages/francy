@@ -77,6 +77,27 @@ export default class RenderingManagerHandler extends Observable {
     return this;
   }
 
+
+  /**
+   * This method is used to unregister all renderers except the specified one.
+   * Useful to unregister all renderers when the user specifies the renderer on GAP.
+   *
+   * @param {string} name - the name of the renderer
+   * @returns {object} this instance
+   * @public
+   */
+  unregisterAllExcept(name) {
+    for (let prop in this.context.configuration.object.renderers) {
+      if (name === prop) {
+        continue;
+      }
+      Logger.debug(`(${this.context.instanceId}) Unregistering Renderer: ${prop}`);
+      this.notify(RENDERING_EVENTS.UNREGISTER, this.context.configuration.object.renderers[prop]);
+      delete this.context.configuration.object.renderers[prop];
+    }
+    return this;
+  }
+
   /**
    * This method is used to enable a renderer. Only one renderer is enabled
    * at a time, so the previous enabled renderer will be set to `disabled`.

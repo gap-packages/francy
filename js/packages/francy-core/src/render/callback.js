@@ -1,9 +1,9 @@
 import BaseRenderer from './base';
 import ConfirmModal from './modal/confirm';
 import {Decorators} from '../decorator/factory';
+import {Logger} from '../util/logger';
 import RequiredArgsModal from './modal/required';
 import {Utilities} from '../util/utilities';
-import {Logger} from '../util/logger';
 
 /**
  * CallbackHandler is responsible for handling Callbacks and display Modal windows accordingly.

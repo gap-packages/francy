@@ -114,6 +114,18 @@ DeclareOperation("Canvas", [IsString, IsCanvasDefaults]);
 #DeclareOperation("Remove", [IsCanvas, IsFrancyMessage]);
 
 #! @Description
+#! Adds a <C>FrancyRenderer</C> to a specific <C>IsCanvas</C>.
+#! @Arguments IsCanvas, [IsFrancyRenderer, List(IsFrancyRenderer)]
+#! @Returns <C>IsCanvas</C>
+#DeclareOperation("Add", [IsCanvas, IsFrancyRenderer]);
+
+#! @Description
+#! Removes a <C>FrancyRenderer</C> from a specific <C>IsCanvas</C>.
+#! @Arguments IsCanvas, [IsFrancyRenderer, List(IsFrancyRenderer)]
+#! @Returns <C>IsCanvas</C>
+#DeclareOperation("Remove", [IsCanvas, IsFrancyRenderer]);
+
+#! @Description
 #! Generates the JSON metadata model representation of the <C>Canvas</C> object and all children objects.
 #! @Arguments IsCanvas
 #! @Returns <C>rec</C> with the JSON metadata model representation of the <C>Canvas</C>
@@ -135,7 +147,7 @@ BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults an
   width          := 800,
   height         := 600,
   zoomToFit      := true,
-  texTypesetting := false
+  texTypesetting := true
 )));
 
 
