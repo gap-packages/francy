@@ -78,33 +78,4 @@ export default class Tooltip extends Renderer {
       this.element.style('display', null);
     }
   }
-
-  UNSAFE_componentWillMount() {
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
-  }
-
-  UNSAFE_componentWillUpdate(nextProps, nextState, nextContext) {
-  }
-
-  componentDidCatch(error, errorInfo) {
-  }
-
-  componentDidMount() {
-  }
-
-  forceUpdate(callback) {
-  }
-
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    return undefined;
-  }
-
-  setState(state, callback) {
-  }
-
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return false;
-  }
 }

@@ -18,10 +18,10 @@ gap>
 gap> Draw(canvas);
 <jupyter renderable>
 gap> TexTypesetting(canvas);
-false
-gap> SetTexTypesetting(canvas, true);
-gap> TexTypesetting(canvas);
 true
+gap> SetTexTypesetting(canvas, false);
+gap> TexTypesetting(canvas);
+false
 gap> PrintObj(canvas);
 rec(
   chart := rec(
@@ -34,7 +34,7 @@ rec(
        ),
   messages := rec(
        ),
-  texTypesetting := true,
+  texTypesetting := false,
   title := "Quaternion Group Subgroup Lattice",
   width := 400,
   zoomToFit := false )
