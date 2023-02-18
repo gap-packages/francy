@@ -51,7 +51,7 @@ export default class CanvasFrame extends CompositeRenderer {
       this.context.renderingManager.enable(renderer[0]);
       // FIXME I don't like this, but didn't find a better way to set the engine - only graphviz has engines
       if (renderer.length > 0 && renderer[0].toLowerCase().includes('Graphviz'.toLowerCase())) {
-        Logger.debug(`Renderer Graphviz with Engine: ${renderer[1]}`)
+        Logger.debug(`Renderer Graphviz with Engine: ${renderer[1]}`);
         this.context.configuration.object.graphvizEngine = renderer[1];
       }
       let Renderer = this.context.renderingManager.activeRenderer();
