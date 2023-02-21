@@ -1,5 +1,5 @@
 ################################################
-#! @BeginChunk Example_Create_Graph_1
+#! @BeginChunk Example_Create_Message_1
 #! @BeginExample
 
 canvas := Canvas("Example Canvas / Shape with Messages");

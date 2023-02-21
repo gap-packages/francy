@@ -8,7 +8,8 @@ export default class ErrorDecorator {
 
   /**
    * Default constructor
-   * @example Decorators.Error.wrap(function(){}).withContext(this).onErrorThrow(false).onErrorExec(function(){}).handle()
+   * @example
+   * // Decorators.Error.wrap(function(){}).withContext(this).onErrorThrow(false).onErrorExec(function(){}).handle()
    */
   constructor() {
     /**

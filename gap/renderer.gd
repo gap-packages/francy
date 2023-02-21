@@ -2,9 +2,10 @@
 # francy: Interactive Discrete Mathematics in GAP
 #
 #! @Chapter Francy Renderers
-#! <C>FrancyRenderer</C> is an object that holds the renderer name that will be used to display the graphics.
+#! <C>FrancyRenderer</C> is an object that holds the renderer name to be used by the client to display the graphics.
 #! <P/>
-#! If the renderer is specified, the user won't be able to switch renderer on the client side.
+#! Francy JS allows users to switch between renderers in runtime, but if the renderer is specified in the GAP code,
+#! then the user won't be able to switch between renderers on the client side.
 #! <P/>
 #! This implementation knows only about the official supported renderers: <C>D3</C>, <C>Vis</C> and <C>Graphviz</C>.
 #! Please see Francy-JS for client implementation.
@@ -56,8 +57,13 @@ BindGlobal("FrancyRendererTypeObjectType", NewType(FrancyRendererFamily, IsFranc
 #! @Description
 #! Adds an info label with the format "label: value"
 #! <P/>
-#! @Arguments IsString, IsString
-#! @Returns <C>FrancyMessage</C>
+#! Examples:
+#! <P/>
+#! Configure <C>FrancyRendererType.VIS</C> as the renderer for a specific canvas:
+#! @InsertChunk Example_Create_Renderer_1
+#! <P/>
+#! @Arguments IsFrancyRendererType
+#! @Returns <C>FrancyRenderer</C>
 DeclareOperation("FrancyRenderer", [IsFrancyRendererType]);
 
 
@@ -65,8 +71,8 @@ DeclareOperation("FrancyRenderer", [IsFrancyRendererType]);
 #! In this section we show all Global FrancyRendererType records for multi purpose.
 
 #! @Description
-#! The various types of <C>FrancyMessage</C> supported.
-#! @Returns <C>rec</C> of <C>MessageType</C>
+#! The various types of <C>FrancyRendererType</C> supported.
+#! @Returns <C>rec</C> of <C>FrancyRendererType</C>
 BindGlobal("FrancyRendererType", rec(
   D3                 := Objectify(FrancyRendererTypeObjectType, rec(value := "D3-Renderer")),
   VIS                := Objectify(FrancyRendererTypeObjectType, rec(value := "Vis-Renderer")),

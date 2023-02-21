@@ -6,7 +6,8 @@ export default class InitializerDecorator {
   /**
    * This function can be used as a decorator to intercept a method and execute the initialize method before.
    *
-   * @example \@Decorators.Initializer.initialize()
+   * @example
+   * // @Decorators.Initializer.initialize()
    *
    * @public
    */

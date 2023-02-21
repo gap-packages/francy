@@ -1,5 +1,5 @@
 ################################################
-#! @BeginChunk Example_Create_Graph_1
+#! @BeginChunk Example_Create_Menu_1
 #! @BeginExample
 
 canvas := Canvas("Callbacks in action");

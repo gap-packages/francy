@@ -10,7 +10,8 @@ export default class DataDecorator {
    * This function can be used as a decorator to intercept a method and, based on {this.data},
    * whether to execute it or not.
    *
-   * @example @Decorators.Data.notEmpty()
+   * @example
+   * // @Decorators.Data.notEmpty()
    * @public
    */
   static notEmpty() {
@@ -32,7 +33,8 @@ export default class DataDecorator {
    * This function can be used as a decorator to intercept a method and, based on {this.data},
    * whether to execute it or not.
    *
-   * @example @Decorators.Data.requires('canvas.graph')
+   * @example
+   * // @Decorators.Data.requires('canvas.graph')
    * @param {string} properties - the properties separated by a dot, e.g. 'data.property'
    * @public
    */
@@ -55,7 +57,8 @@ export default class DataDecorator {
    * This function can be used as a decorator to intercept a method and, based on {this.data},
    * execute it if the property is set to true otherwise rejects the promise.
    *
-   * @example @Decorators.Data.enabled('canvas.texTypesetting')
+   * @example
+   * // @Decorators.Data.enabled('canvas.texTypesetting')
    * @param {string} properties - the properties separated by a dot, e.g. 'data.property'
    * @public
    */
