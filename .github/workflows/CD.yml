@@ -1,4 +1,4 @@
-name: CI
+name: CD
 
 # Trigger the workflow on push or pull request
 on:
@@ -15,6 +15,8 @@ jobs:
         node-version: [ 19.x ]
 
     steps:
+      - env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
@@ -92,7 +94,8 @@ jobs:
           cp -f ../PackageInfo.g ../README* .
           cp -f ../doc/*.{css,html,js,txt} doc/
           cp -rf ../doc/js doc/
-          ls -larth doc/
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
           git add PackageInfo.g README* doc/ _data/package.yml
           git commit -m "Setup gh-pages based on GitHubPagesForGAP"
           git push -f --set-upstream origin gh-pages
