@@ -32,13 +32,15 @@ jobs:
         working-directory: js
       - run: npm run build:prod
         working-directory: js
-      - run: python -m build --wheel --sdist
-        working-directory: js/packages/francy-extension-jupyterlab
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish Browser extension
         run: npm publish
         working-directory: js/packages/francy-extension-browser
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: python -m build --wheel --sdist
+        working-directory: js/packages/francy-extension-jupyterlab
       - name: Publish Jupyterlab extension PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
