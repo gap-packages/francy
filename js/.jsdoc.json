@@ -1,0 +1,27 @@
+{
+  "plugins": [
+    "plugins/summarize"
+  ],
+  "recurseDepth": 10,
+  "opts": {
+    "destination": "../doc/js"
+  },
+  "source": {
+    "include": [
+      "packages"
+    ],
+    "includePattern": ".*\\.js$",
+    "excludePattern": ".*(\\.conf\\.js|\\.config\\.js|\\.test.js|\\.json|karma\\.js|webpack\\.js|__test__|dist|lib|node_modules|static)"
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": [
+      "jsdoc"
+    ]
+  },
+  "templates": {
+    "cleverLinks": true,
+    "monospaceLinks": true
+  }
+}

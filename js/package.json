@@ -10,12 +10,12 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "lerna run test",
-    "build": "lerna run build",
-    "build:prod": "lerna run build:prod",
-    "clean": "lerna run clean",
+    "test": "lerna run test --stream",
+    "build": "lerna run build --stream",
+    "build:prod": "lerna run build:prod --stream",
+    "clean": "lerna run clean --stream",
     "version": "lerna version --no-git-tag-version --no-push",
-    "docs": "esdoc",
+    "docs": "jsdoc --verbose --recurse --configure .jsdoc.json",
     "lint": "eslint --config .eslintrc.json packages/francy*",
     "lint:fix": "eslint --fix --config .eslintrc.json packages/francy*",
     "coverage": "npm run test"
@@ -55,9 +55,7 @@
     "d3-shape": "^3.2.0",
     "d3-transition": "^3.0.1",
     "d3-zoom": "^3.0.0",
-    "esdoc": "^0.0.2",
-    "esdoc-ecmascript-proposal-plugin": "^1.0.0",
-    "esdoc-standard-plugin": "^1.0.0",
+    "jsdoc": "^4.0.2",
     "eslint": "^8.34.0",
     "file-loader": "^6.2.0",
     "json-loader": "^0.5.7",

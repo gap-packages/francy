@@ -56,6 +56,11 @@ BindGlobal("FrancyMessageTypeObjectType", NewType(FrancyMessageFamily, IsFrancyM
 #! @Description
 #! Adds an info label with the format "label: value"
 #! <P/>
+#! Examples:
+#! <P/>
+#! Create <C>FrancyMessage</C> of all types within a canvas:
+#! @InsertChunk Example_Create_Message_1
+#! <P/>
 #! @Arguments IsString, IsString
 #! @Returns <C>FrancyMessage</C>
 DeclareOperation("FrancyMessage", [IsFrancyMessageType, IsString, IsString]);

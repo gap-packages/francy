@@ -65,7 +65,7 @@ jobs:
           sudo apt install -y "/tmp/google-chrome-stable_current_amd64.deb" -f
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.10'
       - uses: actions/cache@v3
         with:
           path: ~/.cache/pip
@@ -75,8 +75,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      #- run: npm ci
-      #  working-directory: js
       - run: npm install
         working-directory: js
       - run: npm run lint

@@ -43,6 +43,11 @@ BindGlobal("MenuObjectType", NewType(MenuFamily, IsMenu and IsMenuRep));
 #! @Description
 #! Creates a Menu with a label title and an action <C>Callback</C>.
 #! Is up to the client implementation to sort out the Menu and invoke the <C>Callback</C>.
+#! Examples:
+#! <P/>
+#! Create a <C>FrancyMenu</C>:
+#! @InsertChunk Example_Create_Menu_1
+#! <P/>
 #! @Arguments IsString(title), [IsCallback]
 #! @Returns <C>Menu</C>
 DeclareOperation("Menu", [IsString, IsCallback]);

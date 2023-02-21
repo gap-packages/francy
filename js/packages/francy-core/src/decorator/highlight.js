@@ -8,7 +8,8 @@ export default class HighlightDecorator {
    *
    * credits here: https://stackoverflow.com/questions/4810841/how-can-i-pretty-print-json-using-javascript#answer-7220510
    *
-   * @example Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2))
+   * @example
+   * // Decorators.Highlight.syntax(JSON.stringify(this.data.canvas, null, 2))
    *
    * @param {string} json - the json string
    * @public

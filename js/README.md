@@ -17,7 +17,6 @@ Francy implements 3 renderers at the moment:
 
 ## Usage
 
-Note: 
 Make sure [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter - JupyterKernel is distributed with GAP by default, since v4.10 :)
 Make sure [Francy GAP](/) is installed on GAP - Francy is distributed with GAP by default, since v4.10 :)
 
@@ -26,8 +25,7 @@ Make sure [Francy GAP](/) is installed on GAP - Francy is distributed with GAP b
 In order to use this module on JupyterLab:
 
 ```bash
-mcmartins@local:~$ cd pkgs/francy/js/packages/francy-extension-jupyterlab/
-mcmartins@local:~$ pip install -U .
+mcmartins@local:~$ pip install -U jupyterlab-francy
 ```
 
 ### Browser integration
@@ -36,15 +34,7 @@ mcmartins@local:~$ pip install -U .
 <html>
 <head>
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v5,graphviz,vis">
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://unpkg.com/viz.js@1.8.1/viz.js"></script>
-  <script src="https://unpkg.com/d3-graphviz@2.6.1/build/d3-graphviz.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" />
-  <script src="https://unpkg.com/francy-extension-browser@1.2.4/dist/FrancyJS.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.2.4/dist/D3Renderer.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.2.4/dist/GraphvizRenderer.bundle.js"></script>
-  <script src="https://unpkg.com/francy-extension-browser@1.2.4/dist/VisRenderer.bundle.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@2.0.0/dist/main.js"></script>
   <title>Francy</title>
 </head>
 <body>
@@ -52,7 +42,7 @@ mcmartins@local:~$ pip install -U .
   <script>
 
     // configure francy
-    var Francy = new FrancyApp({ 
+    let Francy = new FrancyApp({ 
       appendTo: '#francy-drawing-div', 
       callbackHandler: (json) => {
         Logger.info(`Input from callback: ${json}`);

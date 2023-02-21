@@ -1,10 +1,16 @@
-# Francy Jupyter Extension - jupyter_francy
+# Francy Jupyter Extension - jupyterlab-francy
 
-[![PyPI version](https://badge.fury.io/py/jupyterlab-francy.svg)](https://badge.fury.io/py/jupyterlab-francy)
+![Build Workflow](https://github.com/gap-packages/francy/actions/workflows/CI.yml/badge.svg)
+[![Test Coverage Status](https://codecov.io/gh/gap-packages/francy/branch/master/graph/badge.svg)](https://codecov.io/gh/gap-packages/francy)
+[![Jupyter Lab version](https://badge.fury.io/py/jupyterlab-francy.svg)](https://badge.fury.io/py/jupyterlab-francy)
 
-A JupyterLab extension for rendering mime 'application/vnd.francy+json'
+Francy - An Interactive Discrete Mathematics Framework for GAP - Jupyter Lab Extension
 
-<!--- ![output renderer](http://g.recordit.co/QAsC7YULcY.gif) --->
+## Requirements
+
+* JupyterLab >= 3.1
+* GAP [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter
+* Package [Francy GAP](https://github.com/gap-packages/francy) is installed on GAP
 
 ## Install
 
@@ -12,15 +18,11 @@ A JupyterLab extension for rendering mime 'application/vnd.francy+json'
 pip install jupyterlab-francy
 ```
 
-## Development
+## Uninstall
 
 ```bash
-cd packges/francy-extension-jupyterlab && pip install .
+pip uninstall jupyterlab-francy
 ```
-
-Note: 
-Make sure [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter.
-Make sure [Francy GAP](/) is installed on GAP.
 
 # License
 

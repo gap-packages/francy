@@ -1,0 +1,105 @@
+name: CI
+
+# Trigger the workflow on push or pull request
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  publish_packages:
+    name: Build and Publish plugins
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 19.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip
+      - run: pip install jupyterlab build
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+        working-directory: js
+      - run: npm run build:prod
+        working-directory: js
+      - run: python -m build --wheel --sdist
+        working-directory: js/packages/francy-extension-jupyterlab
+      - name: Publish Browser extension
+        run: |
+          npm config set '//registry.npmjs.org/:_authToken' ${NPM_API_TOKEN}
+          npm publish
+        working-directory: js/packages/francy-extension-browser
+      - name: Publish Jupyterlab extension PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          packages_dir: js/packages/francy-extension-jupyterlab/dist
+      - name: Github Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: release.txt
+
+  publish_documentation:
+    name: Build and Publish manuals
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure ZMQ repos
+        run: |
+          sudo touch /etc/apt/sources.list.d/opensuse.list &&
+          echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
+      - name: Download ZMQ repo key
+        run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+      - name: Install ZMQ
+        run: |
+          sudo apt update && 
+          sudo apt install libzmq3-dev -y
+      - uses: gap-actions/setup-gap@v2
+        with:
+          GAP_PKGS_TO_BUILD: "datastructures uuid json io crypting zeromqinterface jupyterkernel"
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+        working-directory: js
+      - run: npm run docs
+        working-directory: js
+      - uses: gap-actions/build-pkg-docs@v1
+        with:
+          use-latex: 'false'
+      - name: Release documentation
+        run: |
+          # Add a new remote pointing to the GitHubPagesForGAP repository
+          git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
+          git fetch gh-gap
+          # Create a fresh gh-pages branch from the new remote
+          git branch gh-pages gh-gap/gh-pages --no-track
+          # Create a new worktree and change into it
+          git worktree add gh-pages gh-pages
+          cd gh-pages
+          cp -f ../PackageInfo.g ../README* .
+          cp -f ../doc/*.{css,html,js,txt} doc/
+          cp -rf ../doc/js doc/
+          ls -larth doc/
+          git add PackageInfo.g README* doc/ _data/package.yml
+          git commit -m "Setup gh-pages based on GitHubPagesForGAP"
+          git push -f --set-upstream origin gh-pages
+      - name: Upload documentation
+        uses: actions/upload-artifact@v2
+        with:
+          name: manual
+          path: ./doc/manual.pdf
+
+

@@ -2,7 +2,8 @@
 
 Francy's releases are done automatically using GitHub Actions.
 
-Update the project version number using `scripts/prepare.js`.
+Update the project version number using `npm run version`.
+Update the release notes files `release.txt`.
 
 Commit and follow Git Flow instructions.
 

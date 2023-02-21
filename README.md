@@ -1,8 +1,8 @@
 ![Build Workflow](https://github.com/gap-packages/francy/actions/workflows/CI.yml/badge.svg)
 [![Test Coverage Status](https://codecov.io/gh/gap-packages/francy/branch/master/graph/badge.svg)](https://codecov.io/gh/gap-packages/francy)
 
-[![PyPI version](https://badge.fury.io/py/jupyter-francy.svg)](https://badge.fury.io/py/jupyter-francy)
-[![PyPI version](https://badge.fury.io/py/jupyterlab-francy.svg)](https://badge.fury.io/py/jupyterlab-francy)
+[![Jupyter Notebook extension](https://badge.fury.io/py/jupyter-francy.svg)](https://badge.fury.io/py/jupyter-francy)
+[![Jupyter Lab version](https://badge.fury.io/py/jupyterlab-francy.svg)](https://badge.fury.io/py/jupyterlab-francy)
 
 # Francy
 
@@ -13,7 +13,8 @@ this package is responsible for the generation of a semantic model that can be u
 
 See [Official Documentation](https://gap-packages.github.io/francy/doc/chap1.html)
 
-There is javascript implementation of the graphical representation that works on Jupyter, embeded in a Web page or as a Desktop Application (e.g. using electron).
+There is javascript module responsible for generating a graphical representation of the semantic model,
+that works on Jupyter, embedded in a Web page or as a Desktop Application (e.g. using electron).
 
 See [Graphics Interface](/js)
 
@@ -42,10 +43,16 @@ The following notebooks are available:
 In order to use this module in JupyterLab, install it as follows:
 
 ```bash
-mcmartins@local:~$ pip install jupyterlab-francy
+mcmartins@local:~$ pip install -U jupyterlab-francy
 ```
 
-The jupyterlab extension requires the JupyterKernel GAP package to be installed. 
+If you still use the old JupyterNotebooks, you should use the latest version supported, v1.2.4:
+
+```bash
+mcmartins@local:~$ pip install -U jupyter-francy
+```
+
+This extension requires the JupyterKernel GAP package to be installed. 
 See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel) for more information.
 
 # Package Structure

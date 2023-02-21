@@ -11,12 +11,18 @@ import {Utilities} from '../util/utilities';
  *
  * {RenderingManager} will notify any subscribed methods when a supported events {RENDERING_EVENTS} occur.
  *
- * @example RenderingManager.subscribe(RENDERING_EVENTS.REGISTER, objectChanged => {});
- * @example Francy.RenderingManager.register(new D3Renderer());
- * @example Francy.RenderingManager.unregister('D3Renderer');
- * @example Francy.RenderingManager.enable('D3Renderer');
- * @example Francy.RenderingManager.allRenderers();
- * @example Francy.RenderingManager.activeRenderer();
+ * @example
+ * RenderingManager.subscribe(RENDERING_EVENTS.REGISTER, objectChanged => {});
+ * @example
+ * Francy.RenderingManager.register(new D3Renderer());
+ * @example
+ * Francy.RenderingManager.unregister('D3Renderer');
+ * @example
+ * Francy.RenderingManager.enable('D3Renderer');
+ * @example
+ * Francy.RenderingManager.allRenderers();
+ * @example
+ * Francy.RenderingManager.activeRenderer();
  *
  * @extends {Observable}
  */
