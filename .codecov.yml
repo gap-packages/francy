@@ -14,9 +14,11 @@ comment:
 
 ignore:
   - "PackageInfo.g"
+  - "makedoc.g"
   - "init.g"
   - "read.g"
   - "tst/**/*"  # ignore test harness code
+  - "tst/*.g"  # ignore test harness code
   - "test/**/*" # ignore test harness code
   - "__test__/**/*" # ignore test harness code
   - "node_modules/**/*"

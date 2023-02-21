@@ -2,8 +2,6 @@ import { CompositeRenderer, Decorators, GlobalConfiguration, Logger, RENDERING_E
 import ChartFactory from './chart/factory';
 import GraphFactory from './graph/factory';
 
-/* global d3 */
-
 export default class Canvas extends CompositeRenderer {
 
   constructor({ appendTo, callbackHandler }, context) {
@@ -29,18 +27,18 @@ export default class Canvas extends CompositeRenderer {
       self.element.call(zoom.transform, d3.zoomIdentity.translate(translateX, translateY).scale(scale, scale));
     }
 
-    function zoomed() {
-      content.attr('transform', d3.event.transform);
+    function zoomed(e) {
+      content.attr('transform', e.transform);
     }
 
-    function stopped() {
-      if (d3.event.defaultPrevented) {
-        d3.event.stopPropagation();
+    function stopped(e) {
+      if (e.defaultPrevented) {
+        e.stopPropagation();
       }
     }
 
     function zoomToFit(force) {
-      // only execute if enable, of course
+      // only execute if enabled, of course
       if (self.data.canvas.zoomToFit || force) {
         let bounds = content.node().getBBox();
 

@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "build-config",
+  "description": "Webpack build configuration files shared across the project",
+  "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gap-packages/francy.git"
+  },
+  "keywords": [
+    "gap",
+    "francy",
+    "graphics",
+    "interactivity"
+  ],
+  "license": "MIT"
+}

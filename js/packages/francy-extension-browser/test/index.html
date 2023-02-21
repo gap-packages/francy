@@ -1,90 +1,66 @@
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v5">
-  <script src="https://unpkg.com/viz.js@1.8.1/viz.js"></script>
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <script src="https://unpkg.com/d3-graphviz@2.6.1/build/d3-graphviz.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full,Safe"></script>
-  <script src="../dist/FrancyJS.bundle.js"></script>
-  <script src="../dist/D3Renderer.bundle.js"></script>
-  <script src="../dist/GraphvizRenderer.bundle.js"></script>
-  <script src="../dist/VisRenderer.bundle.js"></script>
-  <title>Francy Test</title>
+    <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v7,graphviz,vis,vis">
+    <script src="../dist/main.js"></script>
+    <title>Francy Test</title>
 </head>
 
 <body>
-  <div id="francy-drawing-div" style="visibility:hidden;"></div>
+<div id="francy-drawing-div" style="visibility:hidden;"></div>
 </body>
 
 <script>
-  
-  var Francy = new FrancyApp({ 
-    appendTo: '#francy-drawing-div', 
-    callbackHandler: (json) => {
-      Logger.info(`Input from callback: ${json}`);
-    }
-  });
 
-  // register available renderers
-  Francy.RenderingManager.register(new D3Renderer());
-  Francy.RenderingManager.register(new GraphvizRenderer());
-  Francy.RenderingManager.register(new VisRenderer());
+  function resolvePromise(data) {
+    let Francy = new FrancyApp({
+      appendTo: '#francy-drawing-div',
+      callbackHandler: (json) => {
+        console.log(`Input from callback: ${json}`);
+      }
+    });
 
-  function resolvePromise(francy) {
-    francy.render().catch(error => Logger.error(error)).then(element => {
+    // register available renderers
+    Francy.RenderingManager.register(new D3Renderer());
+    Francy.RenderingManager.register(new GraphvizRenderer());
+    Francy.RenderingManager.register(new VisRenderer());
+    Francy.load(data).render().catch(error => Logger.error(error)).then(element => {
       // NOTE: we're using a visible div to append the object so no need to do anything here
       // document.getElementsByTagName('body')[0].appendChild(element);
       if (element) {
         document.body.appendChild(element);
-        Logger.info('Object rendered...', element);
+        console.log('Object rendered...', element);
       }
     });
   }
 
-  fetch('../node_modules/francy/src/__test__/data/json1.json')
+  fetch('../../francy-core/src/__test__/data/json1.json')
     .then(response => response.json())
-    .then(json => {
-      resolvePromise(Francy.load(json));
-    });
+    .then(resolvePromise);
 
-  fetch('../node_modules/francy/src/__test__/data/json2.json')
+  fetch('../../francy-core/src/__test__/data/json2.json')
     .then(response => response.json())
-    .then(json => {
-      resolvePromise(Francy.load(json));
-    });
+    .then(resolvePromise);
 
-  fetch('../node_modules/francy/src/__test__/data/json3.json')
+  fetch('../../francy-core/src/__test__/data/json3.json')
     .then(response => response.json())
-    .then(json => {
-      resolvePromise(Francy.load(json));
-    });
+    .then(resolvePromise);
 
-  fetch('../node_modules/francy/src/__test__/data/json4.json')
+  fetch('../../francy-core/src/__test__/data/json4.json')
     .then(response => response.json())
-    .then(json => {
-      resolvePromise(Francy.load(json));
-    });
+    .then(resolvePromise);
 
-  fetch('../node_modules/francy/src/__test__/data/json5.json')
+  fetch('../../francy-core/src/__test__/data/json5.json')
     .then(response => response.json())
-    .then(json => {
-      resolvePromise(Francy.load(json));
-    });
+    .then(resolvePromise);
 
-  fetch('../node_modules/francy/src/__test__/data/json6.json')
+  fetch('../../francy-core/src/__test__/data/json6.json')
     .then(response => response.json())
-    .then(json => {
-      resolvePromise(Francy.load(json));
-    });
+    .then(resolvePromise);
 
-  fetch('../node_modules/francy/src/__test__/data/json7.json')
+  fetch('../../francy-core/src/__test__/data/json7.json')
     .then(response => response.json())
-    .then(json => {
-      resolvePromise(Francy.load(json));
-    });
+    .then(resolvePromise);
 </script>
 
 </html>

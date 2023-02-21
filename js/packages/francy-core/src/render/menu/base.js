@@ -8,18 +8,18 @@ export default class Menu extends Renderer {
 
   /**
    * Base constructor
-   * 
+   *
    * @typedef {Object} options
    * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
    */
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
   }
 
   /**
    * This method traverses an iterator and creates the menu entries.
-   * 
+   *
    * @param {object} appendTo - the object to append the menu to
    * @param {object} menusIterator - the iterator from {Menu#iterator}
    * @public
@@ -30,7 +30,7 @@ export default class Menu extends Renderer {
       let entry = appendTo.append('li');
       let action = entry.selectAll('a').data([menuItem]).enter().append('a').attr('title', menuItem.title).html(menuItem.title);
       if (menuItem.callback && Object.values(menuItem.callback).length) {
-        action.on('click', d => new CallbackHandler(this.options, this.context).load(d, true).execute());
+        action.on('click', (e, d) => new CallbackHandler(this.options, this.context).load(d).execute());
       }
       if (menuItem.menus && Object.values(menuItem.menus).length > 0) {
         action.append('div').classed('francy-menu-arrow-down', true).style('float', 'right');
@@ -43,7 +43,7 @@ export default class Menu extends Renderer {
 
   /**
    * Creates an iterator from an array
-   * 
+   *
    * @returns {object} the iterator
    * @public
    */

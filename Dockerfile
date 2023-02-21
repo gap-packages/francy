@@ -1,30 +1,31 @@
-FROM gapsystem/gap-docker-master:latest
+FROM ubuntu:22.10
 
 MAINTAINER Manuel Martins <manuelmachadomartins@gmail.com>
 
-COPY --chown=1000:1000 . $HOME/francy
+ARG DEBIAN_FRONTEND="noninteractive"
+ARG WGET="wget -N --no-check-certificate --tries=5 --waitretry=5 --retry-connrefused"
 
-USER root
-
-RUN apt-get update && apt-get install python3-pip -y
-
-RUN rm -rf $HOME/inst/gap-master/pkg/francy && mv $HOME/francy $HOME/inst/gap-master/pkg/francy \
-  && cd $HOME/inst/gap-master/pkg \
-  && rm -rf JupyterKernel && git clone https://github.com/gap-packages/JupyterKernel \
-  && git clone https://github.com/gap-packages/FrancyMonoids \
-  && git clone https://github.com/mcmartins/subgroup-lattice
-
-RUN apt-get -qq install -y curl \
-    && curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - \
-    && apt-get install -yq nodejs && npm install npm@latest -g
-
-# notebook and lab extension installation
-RUN cd $HOME/inst/gap-master/pkg/francy/js && npm install --unsafe-perm && npm run bootstrap && npm run build:jupyter \
-  && cd $HOME/inst/gap-master/pkg/francy/js/packages/francy-extension-jupyter && pip3 install -e . \
-  && jupyter nbextension install --symlink --py --sys-prefix jupyter_francy \
-  && jupyter nbextension enable --py --sys-prefix jupyter_francy \
-  && cd $HOME/inst/gap-master/pkg/francy/js/packages/francy-extension-jupyter/jupyter_francy/labextension && jupyter labextension install
+RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc texlive-xetex libgmp-dev libreadline-dev graphviz \
+    zlib1g-dev libzmq3-dev gcc g++ make autoconf && useradd -s /bin/bash -d /home/gap/ -m -G sudo gap && \
+    git clone --depth=2 -b master https://github.com/gap-system/gap.git /home/gap/master && cd /home/gap/master && \
+    ./autogen.sh && ./configure && make -j4 V=1 && ln -s /home/gap/master/bin/gap.sh /usr/local/sbin/gap && \
+    make bootstrap-pkg-minimal DOWNLOAD="$WGET" WGET="$WGET" &&  \
+    cd /home/gap/master/pkg && rm -rf /home/gap/master/pkg/francy && \
+    git clone https://github.com/gap-packages/JupyterKernel &&  \
+    git clone https://github.com/gap-packages/FrancyMonoids && \
+    git clone https://github.com/gap-packages/francy && \
+    git clone https://github.com/mcmartins/subgroup-lattice && \
+    for pkg in 'io profilling json uuid crypting zeromqinterface jupyterkernel'; do ../bin/BuildPackages.sh --strict $pkg*; done &&  \
+    rm -rf /home/gap/master/packages-required.tar.gz && chown -R gap:gap /home/gap/master/ && \
+    apt purge git gcc g++ make autoconf curl wget -y
 
 USER gap
 
-WORKDIR $HOME/inst/gap-master/pkg/francy/notebooks
+ENV PATH="${PATH}:/home/gap/.local/bin"
+
+# jupyter lab extension installation
+RUN pip install jupyterlab jupyterlab-francy
+
+WORKDIR /home/gap/master/pkg/francy/notebooks
+
+CMD jupyter lab --port=8080

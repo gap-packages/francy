@@ -35,12 +35,12 @@ export default class GraphGeneric extends Graph {
       node['chosen'] = node.selected;
       node['shape'] = node.type;
       if (self.data.canvas.graph.type === 'tree') {
-        // safe as there are no links on trees - yeah, it's an hack
+        // safe as there are no links on trees - yeah, it's a hack
         canvasLinks.push({id: Utilities.generateId(), from: node.parent, to: node.id});
       }
     });
 
-    var network = new vis.Network(this.parent.node(), {
+    let network = new vis.Network(this.parent.node(), {
       nodes: new vis.DataSet(canvasNodes),
       edges: new vis.DataSet(canvasLinks)
     }, {
@@ -81,7 +81,7 @@ export default class GraphGeneric extends Graph {
     network.on('oncontext', function (params) {
       params.event.preventDefault();
       let data = resolveNode.call(this, params);
-      self.OnEvent.contextMenu(data);
+      self.OnEvent.contextMenu(params.event, data);
     });
 
     network.on('doubleClick', function (params) {
@@ -107,6 +107,10 @@ export default class GraphGeneric extends Graph {
         return node.options;
       }
     }
+    
+    this.graphOperations.nodeOperations.getAll = function () {
+      return network.getSelectedNodes();
+    };
   }
 
 }

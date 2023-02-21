@@ -1,21 +1,21 @@
 import Observable from './observable';
-import { Utilities } from './utilities';
+import {Utilities} from './utilities';
 
 /**
  * This class provides the application configuration.
  * It extends the {Observable} class providing methods to subscribe on changes.
- * 
+ *
  * @extends {Observable}
  */
 export default class ConfigurationHandler extends Observable {
   /**
-   * Creates a instance of ModelTracker.
-   * 
-   * @param {object} object - the object object to keep track of changes.
+   * Creates an instance of ModelTracker.
+   *
+   * @param {object} object - the object to keep track of changes.
    * @param {object} config
    * @param {number} config.throttle - the interval for storing dirty data
    */
-  constructor(object, { throttle = 5000, backend = BACKEND.NONE } = {}) {
+  constructor(object, {throttle = 5000, backend = BACKEND.NONE} = {}) {
     super();
     /**
      * This is property is used to flag when the object changes.
@@ -42,7 +42,7 @@ export default class ConfigurationHandler extends Observable {
     // load configuration object
     this._load(object);
   }
-  
+
   /**
    * This loads the configuration object
    * @type function
@@ -64,7 +64,6 @@ export default class ConfigurationHandler extends Observable {
       setInterval(() => {
         this._syncPull();
         this._syncPush();
-        return;
       }, this._throttle);
     }
     /**
@@ -78,7 +77,7 @@ export default class ConfigurationHandler extends Observable {
   /**
    * This method is used by the proxy to set a property when a change occurs, plus it sets the current object to dirty.
    * @param {object} object - the object being tracked
-   * @param {object} property - the property changed
+   * @param {string} property - the property changed
    * @param {object} value - the new value
    * @public
    */
@@ -104,9 +103,9 @@ export default class ConfigurationHandler extends Observable {
     }
     return property in target ? target[property] : target;
   }
-  
+
   /**
-   * This method is used by the proxy to checkif the object has a property
+   * This method is used by the proxy to check if the object has a property
    * @param {object} target - the object being tracked
    * @param {object} key - the object property
    * @returns {boolean} returns true if the property exists, otherwise false
@@ -129,13 +128,13 @@ export default class ConfigurationHandler extends Observable {
   }
 
   /**
-  * Adds a new configuration property
-  * 
-  * @param {string} property - the configuration property name
-  * @param {Object} value - the configuration property value
-  * @returns {object} this instance
-  * @public 
-  */
+   * Adds a new configuration property
+   *
+   * @param {string} property - the configuration property name
+   * @param {object} value - the configuration property value
+   * @returns {object} this instance
+   * @public
+   */
   addProperty(property, value) {
     if (!this.hasProperty(property)) {
       Object.defineProperty(this.object, property, {
@@ -148,13 +147,13 @@ export default class ConfigurationHandler extends Observable {
     }
     return this;
   }
-  
+
   /**
-  * Checks if a configuration property exists. Returns true if it exists, otherwise false.
-  * 
-  * @param {string} name - the configuration property name
-  * @returns {boolean} returns true if the property exists, otherwise false
-  * @public 
+   * Checks if a configuration property exists. Returns true if it exists, otherwise false.
+   *
+   * @param {string} name - the configuration property name
+   * @returns {boolean} returns true if the property exists, otherwise false
+   * @public
    */
   hasProperty(name) {
     return name in this.object;
@@ -169,14 +168,14 @@ export default class ConfigurationHandler extends Observable {
       this._backend.setItem(SETTINGS_KEY, JSON.stringify(this.object));
     }
   }
-  
+
   /**
    * This method is used to explicitly sync the current object from the storage
    * @private
    */
   _syncPull() {
     if (!this._localDirty) {
-    // check for changes and load them
+      // check for changes and load them
       let item = this._backend.getItem(SETTINGS_KEY);
       if (item) {
         let obj = Object.assign({}, JSON.parse(item));

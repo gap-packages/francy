@@ -1,18 +1,17 @@
-import { Decorators, Renderer } from 'francy-core';
+import {Decorators, Renderer} from 'francy-core';
 import GenericGraph from './generic';
 import TreeGraph from './tree';
 
 export default class Graph extends Renderer {
 
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
   }
 
   @Decorators.Data.requires('canvas.graph')
   async render() {
 
-    let element = undefined;
-    let graph = element;
+    let graph;
     switch (this.data.canvas.graph.type) {
     case 'tree':
       graph = new TreeGraph(this.options, this.context);
@@ -21,7 +20,7 @@ export default class Graph extends Renderer {
       graph = new GenericGraph(this.options, this.context);
     }
 
-    element = await this.handlePromise(graph.load(this.data).render());
+    let element = await this.handlePromise(graph.load(this.data).render());
 
     if (element) {
       setTimeout(element.parent.zoomToFit, this.transitionDuration);

@@ -1,7 +1,7 @@
 gap> canvas := Canvas("");
 <IsFrancyObject/IsCanvas>
 gap> FrancyId(canvas);
-"F16"
+"FB9434EB1D9C3443A9C319E151A4721EC"
 gap> SetTitle(canvas, "Quaternion Group Subgroup Lattice");
 gap> Title(canvas);
 "Quaternion Group Subgroup Lattice"
@@ -18,15 +18,10 @@ gap>
 gap> Draw(canvas);
 <jupyter renderable>
 gap> TexTypesetting(canvas);
-false
-gap> SetTexTypesetting(canvas, true);
+true
+gap> SetTexTypesetting(canvas, false);
 gap> TexTypesetting(canvas);
-true
-gap> splash:=DrawSplash(canvas);;
-gap> IsString(splash);
-true
-gap> StartsWith(splash, "<!DOCTYPE html>\n");
-true
+false
 gap> PrintObj(canvas);
 rec(
   chart := rec(
@@ -34,12 +29,12 @@ rec(
   graph := rec(
        ),
   height := 400,
-  id := "F16",
+  id := "FB9434EB1D9C3443A9C319E151A4721EC",
   menus := rec(
        ),
   messages := rec(
        ),
-  texTypesetting := true,
+  texTypesetting := false,
   title := "Quaternion Group Subgroup Lattice",
   width := 400,
   zoomToFit := false )

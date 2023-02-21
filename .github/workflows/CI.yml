@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   # The CI test job
-  test:
+  test_gap:
     name: ${{ matrix.gap-branch }}
     runs-on: ubuntu-latest
     strategy:
@@ -27,21 +27,62 @@ jobs:
         gap-branch:
           - master
           - stable-4.12
-          - stable-4.11
-          - stable-4.10
 
     steps:
-      - uses: actions/checkout@v3
-      - name: 'Install initial dependencies'
+      - name: Configure ZMQ repos
         run: |
-          sudo apt-get install libzmq3-dev nodejs npm
+          sudo touch /etc/apt/sources.list.d/opensuse.list &&
+          echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
+      - name: Download ZMQ repo key
+        run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+      - name: Install ZMQ
+        run: |
+          sudo apt update && 
+          sudo apt install libzmq3-dev -y
+      - uses: actions/checkout@v3
       - uses: gap-actions/setup-gap@v2
         with:
-          GAP_PKGS_TO_BUILD: "io profiling crypting json ZeroMQInterface"
+          GAP_PKGS_TO_BUILD: "datastructures json uuid io profiling crypting zeromqinterface jupyterkernel"
           GAPBRANCH: ${{ matrix.gap-branch }}
       - uses: gap-actions/build-pkg@v1
       - uses: gap-actions/run-pkg-tests@v2
       - uses: gap-actions/process-coverage@v2
+      - uses: codecov/codecov-action@v3
+
+  test_js:
+    name: ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [19.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up chromedriver
+        run: |
+          sudo apt update &&
+          wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -P /tmp &&
+          sudo apt install -y "/tmp/google-chrome-stable_current_amd64.deb" -f
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip
+      - run: pip install jupyterlab
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+        working-directory: js
+      - run: npm run lint
+        working-directory: js
+      - run: npm run build
+        working-directory: js
+      - run: npm run test
+        working-directory: js
       - uses: codecov/codecov-action@v3
 
   # The documentation job
@@ -50,14 +91,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
+      - name: Configure ZMQ repos
+        run: |
+          sudo touch /etc/apt/sources.list.d/opensuse.list &&
+          echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
+      - name: Download ZMQ repo key
+        run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+      - name: Install ZMQ
+        run: |
+          sudo apt update && 
+          sudo apt install libzmq3-dev -y
       - uses: gap-actions/setup-gap@v2
+        with:
+          GAP_PKGS_TO_BUILD: "datastructures uuid json io crypting zeromqinterface jupyterkernel"
       - uses: gap-actions/build-pkg-docs@v1
         with:
           use-latex: 'true'
-      - name: 'Upload documentation'
-        uses: actions/upload-artifact@v3
+      - name: Upload documentation
+        uses: actions/upload-artifact@v2
         with:
           name: manual
           path: ./doc/manual.pdf
-          if-no-files-found: error

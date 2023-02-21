@@ -1,7 +1,5 @@
 import { DataHandler, Decorators, Graph, Utilities } from 'francy-core';
 
-/* global d3 */
-
 /**
  * This class converts Francy Json into DOT Language required by Graphviz.
  * 
@@ -60,7 +58,8 @@ export default class DOTLanguageConverterHelper extends DataHandler {
   _createLeaf(node) {
     let dotLink = `\n\t"${node.id}"`;
     dotLink += this.directed ? ' -> ' : ' -- ';
-    return dotLink += `{ ${this.treeLinks[node.id].join('" "')} }`;
+    dotLink += `{ ${this.treeLinks[node.id].join('" "')} }`;
+    return dotLink;
   }
 
   _createNode(node) {
@@ -71,7 +70,8 @@ export default class DOTLanguageConverterHelper extends DataHandler {
     dotNode += ` label="${node.title.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')}"`;
     dotNode += ` shape="${node.type}"`;
     dotNode += ` fillcolor="${node.conjugate ? d3.color(Graph.colors(node.conjugate * 5)).hex() : node.color ? node.color : d3.color(Graph.colors(node.layer * 5)).hex()}"`;
-    return dotNode += ' ];';
+    dotNode += ' ];';
+    return dotNode;
   }
 
   _iterateLinks() {
@@ -91,7 +91,8 @@ export default class DOTLanguageConverterHelper extends DataHandler {
       dotLink += link.type ? ` shape="${link.type}"` : '';
       dotLink += link.color ? ` fillcolor="${d3.color(link.color).hex()}" color="${d3.color(link.color).hex()}"` : '';
     }
-    return dotLink += ' ];';
+    dotLink += ' ];';
+    return dotLink;
   }
 
 }

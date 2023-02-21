@@ -1,19 +1,16 @@
-// import css inline - couldn't make this work on the webpack conf :/
-import '!style-loader!css-loader!./style/index.css';
-import { 
-  Components, 
-  ConfigurationHandler, 
-  Decorators, 
-  DefaultConfiguration, 
-  Logger, 
-  Renderer, 
-  RenderingManagerHandler, 
-  Utilities } from 'francy-core';
-import Frame from './render/frame';
+import './style/index.css';
+import {
+  Components,
+  ConfigurationHandler,
+  DefaultConfiguration,
+  Logger,
+  Renderer,
+  RenderingManagerHandler,
+  Utilities
+} from 'francy-core';
+import Factory from './render/factory';
 
-/* global VERSION */
-
-(() => Logger.info(`Francy JS v${VERSION}! Enjoy...`))();
+(() => Logger.info(`Francy JS v${VERSION}!`))();
 
 /**
  * Francy is the main entry point for the whole framework. By passing an input string/object to the {Francy.load} function,
@@ -29,29 +26,31 @@ export class FrancyApp extends Renderer {
 
   /**
    * Creates an instance of Francy with the following options:
-   * @typedef {Object} Options
-   * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
-   * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
+   * @typedef {Object} options
+   * @property {String} options.appendTo where the generated html/svg components will be attached to, default body
+   * @property {Function} options.callbackHandler this handler will be used to invoke actions from the menu, default console.log
+   * @property {Object} options.typesetter the global configured typesetter
    */
-  constructor({ appendTo, callbackHandler }) {
-    super({ 
-      appendTo: appendTo, 
-      callbackHandler: callbackHandler 
+  constructor({appendTo, callbackHandler, typesetter}) {
+    super({
+      appendTo: appendTo,
+      callbackHandler: callbackHandler
     }, {
-      renderingManager: new RenderingManagerHandler({ 
-        configuration: new ConfigurationHandler({ 
-          configuration: DefaultConfiguration 
-        }), 
-        instanceId: Utilities.generateId() 
+      typesetter: typesetter || undefined,
+      renderingManager: new RenderingManagerHandler({
+        configuration: new ConfigurationHandler({
+          configuration: DefaultConfiguration
+        }),
+        instanceId: Utilities.generateId()
       }),
       get configuration() {
-        return this.renderingManager.context.configuration; 
-      }, 
+        return this.renderingManager.context.configuration;
+      },
       get instanceId() {
-        return this.renderingManager.context.instanceId; 
+        return this.renderingManager.context.instanceId;
       },
     });
-    this.frame = undefined;
+    this.factory = undefined;
     // all good!
   }
 
@@ -64,11 +63,10 @@ export class FrancyApp extends Renderer {
   get RenderingManager() {
     return this.context.renderingManager;
   }
-  
 
   /**
-   * Returns the {Components] instance to to get external components
-   * 
+   * Returns the {Components} instance to get external components
+   *
    * @returns {Components} instance
    * @public
    */
@@ -82,15 +80,13 @@ export class FrancyApp extends Renderer {
    * @returns {object} the html element created
    * @public
    */
-  @Decorators.Data.requires('canvas')
   async render() {
-    if (!this.frame) {
-      this.frame = new Frame(this.options, this.context);
+    // lazy load initialization
+    if (!this.factory) {
+      this.factory = new Factory(this.options, this.context);
     }
-    let graph = await this.frame
-      .load(this.data).render()
-      .then(element => element)
-      .finally(() => this.load({}, true));
-    return graph.element.node();
+    return await this.factory.load(this.data).render()
+      .then(result => result.element.node())
+      .finally(() => undefined);
   }
 }

@@ -11,8 +11,8 @@ SetPackageInfo(rec(
 
   PackageName := "Francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
-  Version     := "1.2.5",
-  Date        := "05/09/2022", # dd/mm/yyyy format
+  Version     := "2.0.0",
+  Date        := "25/01/2023", # dd/mm/yyyy format
   License     := "MIT",
 
   Persons := [
@@ -24,14 +24,10 @@ SetPackageInfo(rec(
       Email         := "manuelmachadomartins@gmail.com",
       WWWHome       := "http://github.com/mcmartins",
       PostalAddress := Concatenation("Departamento de Ciências e Tecnologia da Universidade Aberta", "\n", 
-                                    "Lisboa, Portugal", "\n", 
-                                    "Faculdade de Ciências e Tecnologia da Universidade de Coimbra", "\n", 
-                                    "Coimbra, Portugal"),
+                                    "Lisboa, Portugal"),
       Institution   := Concatenation("Departamento de Ciências e Tecnologia da Universidade Aberta", "\n", 
-                                    "Lisboa, Portugal", "\n", 
-                                    "Faculdade de Ciências e Tecnologia da Universidade de Coimbra", "\n", 
-                                    "Coimbra, Portugal"),
-      Place         := "Lisbon, Coimbra - PT"
+                                    "Lisboa, Portugal"),
+      Place         := "Lisbon - PT"
     )
   ],
 
@@ -66,7 +62,8 @@ SetPackageInfo(rec(
     GAP                    := ">=4.10",
     NeededOtherPackages    := [["GAPDoc", ">= 1.6.1"],
                               ["json", ">= 2.0.0"],
-                              ["JupyterKernel", ">= 1.0"]],
+                              ["uuid", ">= 0.7"],
+                              ["JupyterKernel", ">= 1.4.1"]],
     SuggestedOtherPackages := [],
     ExternalConditions     := []
   ),

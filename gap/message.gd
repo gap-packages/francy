@@ -5,6 +5,7 @@
 #! <C>FrancyMessage</C> is an object that holds a message.
 #! <P/>
 #! These messages can be used to provide information to users in the form of <C>SUCCESS</C>, <C>INFO</C>, <C>WARNING</C>, <C>ERROR</C>.
+#! It is up to the client implementation to handle these messages and their types in a fashionable manner.
 #! Please see Francy-JS for client implementation.
 
 
@@ -24,7 +25,7 @@ DeclareCategory("IsFrancyMessageType", IsFrancyObject);
 #! In this section we show all Francy FrancyMessage Families.
 
 #! @Description
-#! This Family identifies all <C>FrancyMessages</C> objects
+#! This Family identifies all <C>FrancyMessages</C> objects.
 #! @Returns <C>FrancyMessageFamily</C>
 BindGlobal("FrancyMessageFamily", NewFamily("FrancyMessageFamily", IsFrancyObject));
 
@@ -53,7 +54,12 @@ BindGlobal("FrancyMessageTypeObjectType", NewType(FrancyMessageFamily, IsFrancyM
 #! In this section we show all Francy FrancyMessage Operations.
 
 #! @Description
-#! Adds an info label with the format label: value
+#! Adds an info label with the format "label: value"
+#! <P/>
+#! Examples:
+#! <P/>
+#! Create <C>FrancyMessage</C> of all types within a canvas:
+#! @InsertChunk Example_Create_Message_1
 #! <P/>
 #! @Arguments IsString, IsString
 #! @Returns <C>FrancyMessage</C>
@@ -61,10 +67,10 @@ DeclareOperation("FrancyMessage", [IsFrancyMessageType, IsString, IsString]);
 
 
 #! @Section Global
-#! In this section we show all Global Callback Francy Records for multi purpose.
+#! In this section we show all Global FrancyMessage Records for multi purpose.
 
 #! @Description
-#! The various types of Graph supported.
+#! The various types of <C>FrancyMessage</C> supported.
 #! @Returns <C>rec</C> of <C>MessageType</C>
 BindGlobal("FrancyMessageType", rec(
   INFO    := Objectify(FrancyMessageTypeObjectType, rec(value := "info")),
@@ -76,7 +82,7 @@ BindGlobal("FrancyMessageType", rec(
 
 
 #! @Section Attributes
-#! In this section we show all Francy Core Attributes
+#! In this section we show all FrancyMessage Core Attributes
 
 #! @Description
 #! A title on a <C>FrancyMessage</C> is used to display the title information to the user.
@@ -97,3 +103,15 @@ InstallMethod(Value, "message", [IsFrancyMessage], o -> o!.value);
 #! Sets the actual message of the <C>FrancyMessage</C>.
 #! @Arguments IsFrancyMessage, IsString
 InstallMethod(SetValue, "message, string", [IsFrancyMessage, IsString], function(o, s) o!.value := s; end);
+
+#! @Description
+#! Add a <C>Callback</C> to a specific <C>FrancyMessage</C>.
+#! @Arguments IsFrancyMessage, [IsCallback, List(IsCallback)]
+#! @Returns <C>FrancyMessage</C>
+#DeclareOperation("Add", [IsFrancyMessage, IsCallback]);
+
+#! @Description
+#! Remove a <C>Callback</C> from a specific <C>FrancyMessage</C>.
+#! @Arguments IsFrancyMessage, [IsCallback, List(IsCallback)]
+#! @Returns <C>FrancyMessage</C>
+#DeclareOperation("Remove", [IsFrancyMessage, IsCallback]);

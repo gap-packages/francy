@@ -1,11 +1,9 @@
-import { Decorators, Graph } from 'francy-core';
-
-/* global d3 */
+import {Decorators, Graph} from 'francy-core';
 
 export default class GenericGraph extends Graph {
 
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
   }
 
   @Decorators.Initializer.initialize()
@@ -83,11 +81,11 @@ export default class GenericGraph extends Graph {
 
     linkEnter.filter(d => d.title).append('text')
       .classed('francy-label', true)
-      //.style('font - size', d => d.invisible ? 0 : 7 * Math.sqrt(d.weight || 1))
+      //.style('font-size', d => d.invisible ? 0 : 7 * Math.sqrt(d.weight || 1))
       .style('opacity', 0.1)
       .style('opacity', 0.1)
-      .text(d => d.title)
-      .attr('text-anchor', 'middle');
+      .attr('text-anchor', 'middle')
+      .text(d => d.title);
 
     link.exit().remove();
 
@@ -111,20 +109,10 @@ export default class GenericGraph extends Graph {
       .classed('francy-label', true)
       .text(d => d.title)
       .style('font-size', d => 5 * Math.sqrt(d.size))
-      .attr('x', function () {
-        // apply mathjax if this is the case
-        let text = d3.select(this);
-        if (text.text().startsWith('$') && text.text().endsWith('$')) {
-          // we need to set the position after re-render the latex
-          self.handlePromise(self.mathjax.settings({
-            appendTo: { element: text },
-            renderType: 'SVG',
-            postFunction: () => {
-              self.setLabelXPosition(this);
-              simulation.restart();
-            }
-          }).render());
-        }
+      .attr('text-align', 'middle')
+      .attr('x', function handleText() {
+        // apply mathTypesetting if this is the case
+        self.handleTypesetting(d3.select(this));
         return self._getXPosition(this);
       });
 
@@ -140,7 +128,7 @@ export default class GenericGraph extends Graph {
 
       node.each(function () {
         let bound = this.getBBox();
-        // calculate default radius for colisions
+        // calculate default radius for collisions
         // check the widest group Bounding Box
         if (radius < bound.width) {
           radius = bound.width;
@@ -152,11 +140,11 @@ export default class GenericGraph extends Graph {
           symbolRadius = symbolBound.width;
         }
         // check whether the graph will be layered on y - hasse
-        if (node.data()[0].layer != 0) {
+        if (node.data()[0].layer !== 0) {
           ylayered = true;
         }
         // check whether the graph will be layered on x
-        if (node.data()[0].conjugate != 0) {
+        if (node.data()[0].conjugate !== 0) {
           xlayered = true;
         }
       });
@@ -253,15 +241,15 @@ export default class GenericGraph extends Graph {
 
       let connectedNodes = self.graphOperations.connectedNodes(node, canvasNodes, link, canvasLinks);
       let nodeOnClick = node.on('click');
-      node.on('click', function (d) {
+      node.on('click', function (e, d) {
         // default, highlight connected nodes
-        connectedNodes.call(this);
+        connectedNodes.call(this, e);
         // any callbacks will be handled here
-        nodeOnClick && nodeOnClick.call(this, d);
+        nodeOnClick && nodeOnClick.call(this, e, d);
       });
-      link.on('click', function () {
+      link.on('click', function (e) {
         // default, highlight connected nodes
-        connectedNodes.call(this);
+        connectedNodes.call(this, e);
       });
     }
 

@@ -1,18 +1,19 @@
 import { expect } from 'chai';
-import './d3_wrapper';
-import { FrancyApp, Logger } from 'francy';
+import * as d3 from 'd3';
+import { FrancyApp } from 'francy';
+import { Logger } from 'francy-core';
 import { D3Renderer } from '../../index';
-import undirected from '../../node_modules/francy-core/src/__test__/data/json1.json';
-import directed from '../../node_modules/francy-core/src/__test__/data/json2.json';
-import tree from '../../node_modules/francy-core/src/__test__/data/json3.json';
-import bar from '../../node_modules/francy-core/src/__test__/data/json4.json';
-import line from '../../node_modules/francy-core/src/__test__/data/json5.json';
-import scatter from '../../node_modules/francy-core/src/__test__/data/json6.json';
+import undirected from '../../../francy-core/src/__test__/data/json1.json';
+import directed from '../../../francy-core/src/__test__/data/json2.json';
+import tree from '../../../francy-core/src/__test__/data/json3.json';
+import bar from '../../../francy-core/src/__test__/data/json4.json';
+import line from '../../../francy-core/src/__test__/data/json5.json';
+import scatter from '../../../francy-core/src/__test__/data/json6.json';
 
-/* global d3 */
-    
+
 describe('Francy Renderer Object', function() {
 
+  window.d3 = global.d3 = d3;
   var Francy = new FrancyApp({ appendTo: 'body', callbackHandler: Logger.info });
   Francy.RenderingManager.register(new D3Renderer());
   
@@ -24,14 +25,14 @@ describe('Francy Renderer Object', function() {
      Francy.load(undirected).render()
      .catch(error => done(error))
      .then(object => {
-      expect(object).to.be.a('htmldivelement');
-      
-      setTimeout(function() {
-        expect(d3.select(object).selectAll('svg').size()).to.be.equals(1);
-        expect(d3.select(object).selectAll('.francy-node').size()).to.be.equals(2);
-        expect(d3.select(object).selectAll('.francy-link').size()).to.be.equals(1);
-        done();
-      }, 0);
+        expect(object).to.be.a('htmldivelement');
+        
+        setTimeout(function() {
+          expect(d3.select(object).selectAll('svg').size()).to.be.equals(1);
+          expect(d3.select(object).selectAll('.francy-node').size()).to.be.equals(2);
+          expect(d3.select(object).selectAll('.francy-link').size()).to.be.equals(1);
+          done();
+        }, 0);
       
     });
   });
@@ -40,14 +41,14 @@ describe('Francy Renderer Object', function() {
      Francy.load(directed).render()
      .catch(error => done(error))
      .then(object => {
-      expect(object).to.be.a('htmldivelement');
-      
-      setTimeout(function() {
-        expect(d3.select(object).selectAll('svg').size()).to.be.equals(1);
-        expect(d3.select(object).selectAll('.francy-node').size()).to.be.equals(2);
-        expect(d3.select(object).selectAll('.francy-link').size()).to.be.equals(1);
-        done();
-      }, 0);
+        expect(object).to.be.a('htmldivelement');
+        
+        setTimeout(function() {
+          expect(d3.select(object).selectAll('svg').size()).to.be.equals(1);
+          expect(d3.select(object).selectAll('.francy-node').size()).to.be.equals(2);
+          expect(d3.select(object).selectAll('.francy-link').size()).to.be.equals(1);
+          done();
+        }, 0);
       
     });
   });

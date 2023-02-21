@@ -1,9 +1,8 @@
-[![Build Status](https://github.com/gap-packages/francy/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/gap-packages/francy/actions?query=workflow%3ACI+branch%3Amaster)
+![Build Workflow](https://github.com/gap-packages/francy/actions/workflows/CI.yml/badge.svg)
 [![Test Coverage Status](https://codecov.io/gh/gap-packages/francy/branch/master/graph/badge.svg)](https://codecov.io/gh/gap-packages/francy)
 
-[![npm version](https://badge.fury.io/js/francy-extension-browser.svg)](https://badge.fury.io/js/francy-extension-browser)
-[![npm version](https://badge.fury.io/js/jupyter-francy.svg)](https://badge.fury.io/js/jupyter-francy)
-[![PyPI version](https://badge.fury.io/py/jupyter-francy.svg)](https://badge.fury.io/py/jupyter-francy)
+[![Jupyter Notebook extension](https://badge.fury.io/py/jupyter-francy.svg)](https://badge.fury.io/py/jupyter-francy)
+[![Jupyter Lab version](https://badge.fury.io/py/jupyterlab-francy.svg)](https://badge.fury.io/py/jupyterlab-francy)
 
 # Francy
 
@@ -14,21 +13,18 @@ this package is responsible for the generation of a semantic model that can be u
 
 See [Official Documentation](https://gap-packages.github.io/francy/doc/chap1.html)
 
-There is javascript implementation of the graphical representation that works on Jupyter, embeded in a Web page or as a Desktop Application (e.g. using electron).
+There is javascript module responsible for generating a graphical representation of the semantic model,
+that works on Jupyter, embedded in a Web page or as a Desktop Application (e.g. using electron).
 
 See [Graphics Interface](/js)
 
-## Binder 
-
-Jupyter Notebook Binder
-
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master)
+## Binder
 
 Jupyter Lab Binder
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gap-packages/francy/master?urlpath=lab)
 
-These binders include the following notebooks:
+The following notebooks are available:
 
 |Notebook                        |Description                                                     |
 |:-------------------------------|:---------------------------------------------------------------|
@@ -39,19 +35,24 @@ These binders include the following notebooks:
 |francy.ipynb                    | First notebook ever created with Francy                        |
 |ICMS_2018.ipynb                 | Presentation notebook for the ICMS 2018 in USA                 |
 |orbital-graphs.ipynb            | Contains some reseach algorithms for orbital graphs            |
+|output-widget.ipynb             | Contains an example of the output of 'plain/text' elements     |
 |subgroup-lattice.ipynb          | Contains Subgroup-Lattice package examples                     |
 
 # Jupyter Integration
 
-In order to use this module in Jupyter, install it as follows, both jupyter lab and notebook extension:
+In order to use this module in JupyterLab, install it as follows:
 
 ```bash
-mcmartins@local:~$ pip install jupyter_francy
-mcmartins@local:~$ jupyter lab build # for JupyterLab
-mcmartins@local:~$ jupyter nbextension enable --py --sys-prefix jupyter_francy # for Jupyter Notebook
+mcmartins@local:~$ pip install -U jupyterlab-francy
 ```
 
-The jupyter extension requires the JupyterKernel GAP package installed. 
+If you still use the old JupyterNotebooks, you should use the latest version supported, v1.2.4:
+
+```bash
+mcmartins@local:~$ pip install -U jupyter-francy
+```
+
+This extension requires the JupyterKernel GAP package to be installed. 
 See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel) for more information.
 
 # Package Structure

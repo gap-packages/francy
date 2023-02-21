@@ -1,7 +1,0 @@
-default_context:
-    author_name: "Manuel Martins"
-    author_email: "manuelmachadomartins@gmail.com"
-    mime_type: "application/vnd.francy+json"
-    file_type: "json"
-    mime_short_name: "francy"
-    extension_name: "jupyter_francy"

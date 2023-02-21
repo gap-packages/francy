@@ -1,8 +1,6 @@
 import Chart from './chart';
 import { Decorators } from 'francy-core';
 
-/* global d3 */
-
 export default class ScatterChart extends Chart {
 
   constructor({ appendTo, callbackHandler }, context) {
@@ -40,12 +38,12 @@ export default class ScatterChart extends Chart {
         .attr('cy', function (d) {
           return self.yScale(d);
         })
-        .on('mouseenter', function (d) {
+        .on('mouseenter', function (e, d) {
           d3.select(this).transition()
             .duration(250)
             .style('fill-opacity', 0.5)
             .attr('r', 10);
-          self.handlePromise(self.tooltip.load(Chart.tooltip(key, d), true).render());
+          self.handlePromise(self.tooltip.load(Chart.tooltip(key, d)).render());
         })
         .on('mouseleave', function () {
           d3.select(this).transition()

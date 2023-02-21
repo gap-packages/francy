@@ -1,29 +1,28 @@
-import { Components } from '../../component/factory';
-import { Decorators } from '../../decorator/factory';
+import {Decorators} from '../../decorator/factory';
 import GraphOperations from '../graph/operations';
-import { Logger } from '../../util/logger';
+import {Logger} from '../../util/logger';
 import Modal from './base';
 
 /**
  * Implements a Required Arguments Modal window.
- * 
+ *
  * The modal window takes a callback and based on the callback configuration will
  * create the input fields required and display them to the user.
- * 
+ *
  * @extends {Modal}
  */
 export default class RequiredArgsModal extends Modal {
 
   /**
    * Base constructor
-   * 
+   *
    * @typedef {Object} options
-   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {String} options.appendTo - where the generated html/svg components will be attached to, default body
    * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
-   * @param {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   * @property {Object} context - the context of the application, usually a configuration and a rendering manager instance
    */
-  constructor({ appendTo, callbackHandler }, context) {
-    super({ appendTo: appendTo, callbackHandler: callbackHandler }, context);
+  constructor({appendTo, callbackHandler}, context) {
+    super({appendTo: appendTo, callbackHandler: callbackHandler}, context);
     /**
      * Stores the element
      * @type {object}
@@ -33,7 +32,7 @@ export default class RequiredArgsModal extends Modal {
 
   /**
    * This method is used to render this component
-   * 
+   *
    * @public
    */
   @Decorators.Initializer.initialize()
@@ -54,11 +53,6 @@ export default class RequiredArgsModal extends Modal {
 
     this._buildFooter(form);
 
-    // disable keyboard shortcuts when using this modal in Jupyter
-    if (Components.Jupyter.isAvailable) {
-      Decorators.Jupyter.registerKeyboardEvents(['.francy', '.francy-arg', '.francy-overlay', '.francy-modal']);
-    }
-
     let inputElement = form.selectAll('.francy-arg').node();
     if (inputElement) {
       inputElement.focus();
@@ -71,7 +65,7 @@ export default class RequiredArgsModal extends Modal {
 
   /**
    * Utility method to handle content build
-   * 
+   *
    * @private
    */
   _buildContent(form) {
@@ -86,7 +80,8 @@ export default class RequiredArgsModal extends Modal {
       row.append('div').attr('class', 'francy-table-cell').append('label')
         .attr('for', arg.id).text(arg.title);
       if (arg.type === 'select') {
-        let operations = new GraphOperations(this.options);
+        let operations = self.parentClass.graphFactory && self.parentClass.graphFactory.graphOperations
+          ? self.parentClass.graphFactory.graphOperations : new GraphOperations(self.options, self.context);
         let selectedNodes = Object.values(operations.nodeSelection.getAll());
         row.append('div').attr('class', 'francy-table-cell').append('select')
           .attr('class', 'francy-arg')
@@ -115,7 +110,7 @@ export default class RequiredArgsModal extends Modal {
           .on('paste', this.onchange);
         // wait, if it is boolean we create a checkbox
         if (arg.type === 'boolean') {
-          // well, a checkbox works this way so we need to initialize 
+          // well, a checkbox works this way, so we need to initialize
           // the value to false and update the value based on the checked 
           // property that triggers the onchange event
           arg.value = arg.value || false;

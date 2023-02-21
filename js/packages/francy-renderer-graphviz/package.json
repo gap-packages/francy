@@ -1,6 +1,7 @@
 {
+  "private": true,
   "name": "francy-renderer-graphviz",
-  "version": "1.2.4",
+  "version": "2.0.0",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - A Graphviz Renderer",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
@@ -15,13 +16,19 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "francy-core": "^1.2.4"
+    "francy-core": "*"
   },
   "devDependencies": {
-    "francy": "^1.2.4"
+    "francy": "*"
   },
   "scripts": {
-    "test": "karma start karma.conf.js"
+    "test": "karma start karma.conf.js",
+    "clean": "rm -rf ./dist/*",
+    "build": "webpack --config webpack.config.js",
+    "build:prod": "webpack --env production=true --config webpack.config.js"
   },
-  "main": "index.js"
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  }
 }

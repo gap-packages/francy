@@ -1,0 +1,71 @@
+{
+  "private": true,
+  "name": "francy-extension-jupyterlab",
+  "version": "2.0.0",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Jupyter Lab Extension",
+  "keywords": [
+    "gap",
+    "francy",
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension"
+  ],
+  "homepage": "https://github.com/gap-packages/francy",
+  "bugs": {
+    "url": "https://github.com/gap-packages/francy/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Manuel Martins",
+    "email": "manuelmachadomartins@gmail.com"
+  },
+  "files": [
+    "src/index.js"
+  ],
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gap-packages/francy.git"
+  },
+  "scripts": {
+    "build": "npm run build:labextension:dev",
+    "build:prod": "npm run build:labextension",
+    "build:labextension": "jupyter labextension build .",
+    "build:labextension:dev": "jupyter labextension build --development True .",
+    "clean:labextension": "npm run clean",
+    "clean:all": "npm run clean:labextension",
+    "clean": "rimraf ./dist ./build jupyterlab-francy/__pycache__ jupyterlab-francy/labextension jupyter_francy.egg-info __pycache__"
+  },
+  "dependencies": {
+    "francy": "*",
+    "francy-core": "*",
+    "francy-renderer-d3": "*",
+    "francy-renderer-graphviz": "*",
+    "francy-renderer-vis": "*"
+  },
+  "devDependencies": {
+    "@jupyterlab/builder": "^3.6.1",
+    "rimraf": "^4.1.2"
+  },
+  "jupyterlab": {
+    "webpackConfig": "./webpack.config.js",
+    "extension": true,
+    "outputDir": "jupyterlab-francy/labextension",
+    "discovery": {
+      "kernel": [
+        {
+          "kernel_spec": {
+            "language": "^gap"
+          },
+          "base": {
+            "name": "jupyterlab-francy"
+          },
+          "managers": [
+            "pip",
+            "conda"
+          ]
+        }
+      ]
+    }
+  }
+}

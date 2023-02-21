@@ -4,7 +4,9 @@
 
 #############################################################################
 ##
-#M  Canvas( <title>, <options> ) . . . . . a new graphic canvas
+#M  Canvas( <title>, <options> )
+##
+## A new graphic canvas.
 ##
 InstallMethod(Canvas,
   "a title string, a default configurations record",
@@ -34,7 +36,9 @@ end);
 
 #############################################################################
 ##
-#M  Add( <canvas>, <francy object> ) . . . . . add objects to canvas
+#M  Add( <canvas>, <francy object> )
+##
+## Add objects to canvas.
 ##
 InstallOtherMethod(Add,
   "a canvas, a graph",
@@ -80,7 +84,19 @@ InstallOtherMethod(Add,
    IsFrancyMessage],
   0,
 function(canvas, message)
+  Add(message, Callback(Remove, [canvas, message]));
   canvas!.messages!.(message!.id) := message;
+  return canvas;
+end);
+
+InstallOtherMethod(Add,
+  "a canvas, a renderer",
+  true,
+  [IsCanvas,
+   IsFrancyRenderer],
+  0,
+function(canvas, renderer)
+  canvas!.renderer := renderer!.value;
   return canvas;
 end);
 
@@ -100,7 +116,9 @@ end);
 
 #############################################################################
 ##
-#M  Remove( <canvas>, <francy object> ) . . . . . remove object from canvas
+#M  Remove( <canvas>, <francy object> )
+##
+## Remove object from canvas.
 ##
 InstallOtherMethod(Remove,
   "a canvas, a graph",
@@ -166,7 +184,9 @@ end);
 
 #############################################################################
 ##
-#M  Draw( ) . . . . . 
+#M  Draw( )
+##
+## Prints to the output a JSON metadata model representation of the objects.
 ##
 InstallMethod(Draw,
   "a canvas",
@@ -193,7 +213,9 @@ end);
 
 #############################################################################
 ##
-#M  DrawSplash( ) . . . . . 
+#M  DrawSplash( )
+##
+## Creates an offline HTML page with the GUI representation of the objects.
 ##
 InstallMethod(DrawSplash,
   "a canvas",
@@ -211,16 +233,17 @@ function(canvas)
     "<!DOCTYPE html>\n\
     <html>\n\
       <head>\n\
-        <meta charset=\"utf-8\" content=\"text/html\" property=\"GAP,francy,d3.v5\"></meta>\n\
-        <link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.rawgit.com/mcmartins/francy/develop/js/extensions/browser/index.css\"></link>\n\
-        <script src=\"https://d3js.org/d3.v5.js\"></script>\n\
-        <script src=\"https://cdn.rawgit.com/mcmartins/francy/master/js/extensions/browser/francy.bundle.js\"></script>\n\
+        <meta charset=\"utf-8\" content=\"text/html\" property=\"GAP,francy,d3.v7,vis,graphviz\"></meta>\n\
+        <script src=\"https://cdn.statically.io/gh/gap-packages/francy/latest/js/packages/francy-extension-browser/dist/main.js\"></script>\n\
         <title>Francy</title>\n\
       </head>\n\
       <body>\n\
         <div id=\"francy\"></div>\n\
         <script>\n\
-          var francy = new Francy({verbose: true, appendTo: 'body', callbackHandler: console.log});\n\
+          var francy = new Francy({verbose: true, appendTo: '#francy', callbackHandler: console.log});\n\
+          francy.RenderingManager.register(new D3Renderer());\n\
+          francy.RenderingManager.register(new GraphvizRenderer());\n\
+          francy.RenderingManager.register(new VisRenderer());\n\
           francy.load(", result!.data!.(FrancyMIMEType), ").render();\n\
         </script>\n\
       </body>\n\
@@ -228,10 +251,12 @@ function(canvas)
     
     PrintTo(name, page);
 
-    if ARCH_IS_MAC_OS_X() or ARCH_IS_UNIX() then
-        Exec("open ",name);
+    if ARCH_IS_UNIX() then
+        Exec("xdg-open ", name);
+    elif ARCH_IS_MAC_OS_X() then
+        Exec("open ", name);
     elif ARCH_IS_WINDOWS() then
-        Exec("start ",name);
+        Exec("start ", name);
     fi;
 
     return page;
