@@ -1,0 +1,267 @@
+  
+  [1X3 [33X[0;0YFrancy Canvas[133X[101X
+  
+  [33X[0;0YA [10XCanvas[110X is an area where the graphics representation of Francy live.[133X
+  
+  [33X[0;0YPlease see Francy-JS for client implementation.[133X
+  
+  
+  [1X3.1 [33X[0;0YCategories[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Canvas Categories.[133X
+  
+  [1X3.1-1 IsCanvas[101X
+  
+  [33X[1;0Y[29X[2XIsCanvas[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XCanvas[110X objects.[133X
+  
+  [1X3.1-2 IsCanvasDefaults[101X
+  
+  [33X[1;0Y[29X[2XIsCanvasDefaults[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XCanvasDefaults[110X objects.[133X
+  
+  
+  [1X3.2 [33X[0;0YFamilies[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Canvas Families.[133X
+  
+  
+  [1X3.3 [33X[0;0YRepresentations[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Canvas Representations.[133X
+  
+  [1X3.3-1 IsCanvasRep[101X
+  
+  [33X[1;0Y[29X[2XIsCanvasRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XCanvas[110X internal representation.[133X
+  
+  [1X3.3-2 IsCanvasDefaultsRep[101X
+  
+  [33X[1;0Y[29X[2XIsCanvasDefaultsRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XCanvasDefaults[110X internal representation.[133X
+  
+  
+  [1X3.4 [33X[0;0YOperations[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Canvas Operations.[133X
+  
+  [1X3.4-1 Canvas[101X
+  
+  [33X[1;0Y[29X[2XCanvas[102X( [3XIsString(title)[103X[, [3XIsCanvasDefaults[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XCanvas[110X[133X
+  
+  [33X[0;0YA [10XCanvas[110X represents the base element where rendering happens. This object is
+  inspired  by  the HTML canvas tag element, which is used to draw graphics in
+  runtime via JavaScript. Examples:[133X
+  
+  [33X[0;0YCreate a simple [10XCanvas[110X:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xcanvas := Canvas("");[127X[104X
+    [4X[25Xgap>[125X [27XId(canvas);[127X[104X
+    [4X[25Xgap>[125X [27XSetTitle(canvas, "Quaternion Group Subgroup Lattice");[127X[104X
+    [4X[25Xgap>[125X [27XTitle(canvas);[127X[104X
+    [4X[25Xgap>[125X [27XSetHeight(canvas, 400); # default 600[127X[104X
+    [4X[25Xgap>[125X [27XHeight(canvas);[127X[104X
+    [4X[25Xgap>[125X [27XSetWidth(canvas, 400); # default 800[127X[104X
+    [4X[25Xgap>[125X [27XWidth(canvas);[127X[104X
+    [4X[25Xgap>[125X [27XSetZoomToFit(canvas, false); # default true[127X[104X
+    [4X[25Xgap>[125X [27XZoomToFit(canvas);[127X[104X
+    [4X[25Xgap>[125X [27XDraw(canvas);[127X[104X
+  [4X[32X[104X
+  
+  [1X3.4-2 Add[101X
+  
+  [33X[1;0Y[29X[2XAdd[102X( [3XIsCanvas[103X[, [3XIsFrancyGraph[103X, [3XList(IsFrancyGraph)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XCanvas[110X[133X
+  
+  [33X[0;0YAdds a [10XFrancyGraph[110X to a specific [10XCanvas[110X. Well, the api is abstract enough to
+  allow  Adding  a  list  of  [10XIsFrancyGraph[110X  to  a canvas, but this results in
+  setting the graph property only to the last [10XIsFrancyGraph[110X in the list.[133X
+  
+  [1X3.4-3 Remove[101X
+  
+  [33X[1;0Y[29X[2XRemove[102X( [3XIsCanvas[103X[, [3XIsFrancyGraph[103X, [3XList(IsFrancyGraph)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XCanvas[110X[133X
+  
+  [33X[0;0YRemoves a [10XFrancyGraph[110X from a [10XCanvas[110X.[133X
+  
+  [1X3.4-4 Add[101X
+  
+  [33X[1;0Y[29X[2XAdd[102X( [3XIsCanvas[103X[, [3XIsChart[103X, [3XList(IsChart)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XCanvas[110X[133X
+  
+  [33X[0;0YAdds a [10XChart[110X to a specific [10XCanvas[110X. Well, the api is abstract enough to allow
+  Adding  a list of [10XIsChart[110X to a canvas, but this results in setting the graph
+  property only to the last [10XIsChart[110X in the list.[133X
+  
+  [1X3.4-5 Remove[101X
+  
+  [33X[1;0Y[29X[2XRemove[102X( [3XIsCanvas[103X[, [3XIsChart[103X, [3XList(IsChart)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XCanvas[110X[133X
+  
+  [33X[0;0YRemoves a [10XChart[110X from a [10XCanvas[110X.[133X
+  
+  [1X3.4-6 Add[101X
+  
+  [33X[1;0Y[29X[2XAdd[102X( [3XIsCanvas[103X[, [3XIsMenu[103X, [3XList(IsMenu)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XCanvas[110X[133X
+  
+  [33X[0;0YAdds a [10XMenu[110X to a specific [10XCanvas[110X.[133X
+  
+  [1X3.4-7 Remove[101X
+  
+  [33X[1;0Y[29X[2XRemove[102X( [3XIsCanvas[103X[, [3XIsMenu[103X, [3XList(IsMenu)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XCanvas[110X[133X
+  
+  [33X[0;0YRemoves a [10XMenu[110X from a [10XCanvas[110X.[133X
+  
+  [1X3.4-8 Add[101X
+  
+  [33X[1;0Y[29X[2XAdd[102X( [3XIsCanvas[103X[, [3XIsFrancyMessage[103X, [3XList(IsFrancyMessage)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsCanvas[110X[133X
+  
+  [33X[0;0YAdds a [10XFrancyMessage[110X to a specific [10XIsCanvas[110X.[133X
+  
+  [1X3.4-9 Remove[101X
+  
+  [33X[1;0Y[29X[2XRemove[102X( [3XIsCanvas[103X[, [3XIsFrancyMessage[103X, [3XList(IsFrancyMessage)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsCanvas[110X[133X
+  
+  [33X[0;0YRemoves a [10XFrancyMessage[110X from a specific [10XIsCanvas[110X.[133X
+  
+  [1X3.4-10 Add[101X
+  
+  [33X[1;0Y[29X[2XAdd[102X( [3XIsCanvas[103X[, [3XIsFrancyRenderer[103X, [3XList(IsFrancyRenderer)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsCanvas[110X[133X
+  
+  [33X[0;0YAdds a [10XFrancyRenderer[110X to a specific [10XIsCanvas[110X.[133X
+  
+  [1X3.4-11 Remove[101X
+  
+  [33X[1;0Y[29X[2XRemove[102X( [3XIsCanvas[103X[, [3XIsFrancyRenderer[103X, [3XList(IsFrancyRenderer)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsCanvas[110X[133X
+  
+  [33X[0;0YRemoves a [10XFrancyRenderer[110X from a specific [10XIsCanvas[110X.[133X
+  
+  [1X3.4-12 Draw[101X
+  
+  [33X[1;0Y[29X[2XDraw[102X( [3XIsCanvas[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xrec[110X with the JSON metadata model representation of the [10XCanvas[110X[133X
+  
+  [33X[0;0YGenerates  the  JSON  metadata model representation of the [10XCanvas[110X object and
+  all children objects.[133X
+  
+  [1X3.4-13 DrawSplash[101X
+  
+  [33X[1;0Y[29X[2XDrawSplash[102X( [3XIsCanvas[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsString[110X with HTML generated[133X
+  
+  [33X[0;0YGenerates  an  HTML  page  with an offline version od Francy JS and opens it
+  within the default browser of the system.[133X
+  
+  
+  [1X3.5 [33X[0;0YGlobal[133X[101X
+  
+  [33X[0;0YIn this section we show all Global Francy Canvas Records for multi purpose.[133X
+  
+  
+  [1X3.6 [33X[0;0YAttributes[133X[101X
+  
+  [33X[0;0YIn this section we show the Francy Attributes.[133X
+  
+  [1X3.6-1 Width[101X
+  
+  [33X[1;0Y[29X[2XWidth[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsPosInt[110X[133X
+  
+  [33X[0;0YThe Width of the [10XCanvas[110X in pixels [10XIsPosInt[110X.[133X
+  
+  [1X3.6-2 Width[101X
+  
+  [33X[1;0Y[29X[2XWidth[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X3.6-3 SetWidth[101X
+  
+  [33X[1;0Y[29X[2XSetWidth[102X( [3XIsCanvas[103X, [3XIsPosInt[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the Width of the [10XCanvas[110X in pixels [10XIsPosInt[110X.[133X
+  
+  [1X3.6-4 Height[101X
+  
+  [33X[1;0Y[29X[2XHeight[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsPosInt[110X[133X
+  
+  [33X[0;0YThe Height of the [10XCanvas[110X in pixels [10XIsPosInt[110X.[133X
+  
+  [1X3.6-5 Height[101X
+  
+  [33X[1;0Y[29X[2XHeight[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X3.6-6 SetHeight[101X
+  
+  [33X[1;0Y[29X[2XSetHeight[102X( [3XIsCanvas[103X, [3XIsPosInt[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the Height of the [10XCanvas[110X in pixels [10XIsPosInt[110X.[133X
+  
+  [1X3.6-7 ZoomToFit[101X
+  
+  [33X[1;0Y[29X[2XZoomToFit[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsBool[110X True if enabled otherwise False[133X
+  
+  [33X[0;0Y[10XZoomToFit[110X  is  a  property  that  sets  the objects within the [10XCanvas[110X to fit
+  within the GUI visible area, after rendering in the client implementation.[133X
+  
+  [1X3.6-8 ZoomToFit[101X
+  
+  [33X[1;0Y[29X[2XZoomToFit[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X3.6-9 SetZoomToFit[101X
+  
+  [33X[1;0Y[29X[2XSetZoomToFit[102X( [3XIsCanvas[103X, [3XIsBool[103X ) [32X operation[133X
+  
+  [33X[0;0Y[10XZoomToFit[110X  is  a  property  that  sets  the objects within the [10XCanvas[110X to fit
+  within the GUI visible area.[133X
+  
+  [1X3.6-10 Title[101X
+  
+  [33X[1;0Y[29X[2XTitle[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsString[110X with the title of the object[133X
+  
+  [33X[0;0YThe [10XCanvas[110X title to show on the GUI.[133X
+  
+  [1X3.6-11 Title[101X
+  
+  [33X[1;0Y[29X[2XTitle[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X3.6-12 SetTitle[101X
+  
+  [33X[1;0Y[29X[2XSetTitle[102X( [3XIsCanvas[103X, [3XIsString[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the title of the [10XCanvas[110X.[133X
+  
+  [1X3.6-13 TexTypesetting[101X
+  
+  [33X[1;0Y[29X[2XTexTypesetting[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsBool[110X with the title of the object[133X
+  
+  [33X[0;0YEnables usage of TeX Typesetting on the client implementation, if supported.[133X
+  
+  [1X3.6-14 TexTypesetting[101X
+  
+  [33X[1;0Y[29X[2XTexTypesetting[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X3.6-15 SetTexTypesetting[101X
+  
+  [33X[1;0Y[29X[2XSetTexTypesetting[102X( [3XIsCanvas[103X, [3XIsBool[103X ) [32X operation[133X
+  
+  [33X[0;0YSets TeX Typesetting on the canvas objects.[133X
+  

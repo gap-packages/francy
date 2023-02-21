@@ -1,1 +1,306 @@
-Placeholder
+  
+  
+                                    [1X Francy [101X
+  
+  
+                [1X Framework for Interactive Discrete Mathematics [101X
+  
+  
+                                     2.0.0
+  
+  
+                                25 January 2023
+  
+  
+                                 Manuel Martins
+  
+  
+  
+  Manuel Martins
+      Email:    [7Xmailto:manuelmachadomartins@gmail.com[107X
+      Homepage: [7Xhttp://github.com/mcmartins[107X
+      Address:  [33X[0;14YDepartamento de Ciências e Tecnologia da Universidade Aberta[133X
+                [33X[0;14YLisboa, Portugal[133X
+  
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (Francy)[101X
+  
+  1 [33X[0;0YIntroduction[133X
+    1.1 [33X[0;0YFrancy[133X
+    1.2 [33X[0;0YApplications[133X
+    1.3 [33X[0;0YFunctionality[133X
+    1.4 [33X[0;0YInstallation[133X
+    1.5 [33X[0;0YHow it works[133X
+    1.6 [33X[0;0YPublications[133X
+  2 [33X[0;0YFrancy Callbacks[133X
+    2.1 [33X[0;0YCategories[133X
+      2.1-1 IsCallback
+      2.1-2 IsRequiredArg
+      2.1-3 IsArgType
+      2.1-4 IsTriggerType
+    2.2 [33X[0;0YFamilies[133X
+    2.3 [33X[0;0YRepresentations[133X
+      2.3-1 IsCallbackRep
+      2.3-2 IsRequiredArgRep
+      2.3-3 IsArgTypeRep
+      2.3-4 IsTriggerTypeRep
+    2.4 [33X[0;0YOperations[133X
+      2.4-1 Callback
+      2.4-2 NoopCallback
+      2.4-3 RequiredArg
+      2.4-4 Trigger
+      2.4-5 Add
+      2.4-6 Remove
+    2.5 [33X[0;0YGlobals[133X
+    2.6 [33X[0;0YAttributes[133X
+      2.6-1 Title
+      2.6-2 Title
+      2.6-3 SetTitle
+      2.6-4 Value
+      2.6-5 Value
+      2.6-6 SetValue
+      2.6-7 ConfirmMessage
+      2.6-8 ConfirmMessage
+      2.6-9 SetConfirmMessage
+  3 [33X[0;0YFrancy Canvas[133X
+    3.1 [33X[0;0YCategories[133X
+      3.1-1 IsCanvas
+      3.1-2 IsCanvasDefaults
+    3.2 [33X[0;0YFamilies[133X
+    3.3 [33X[0;0YRepresentations[133X
+      3.3-1 IsCanvasRep
+      3.3-2 IsCanvasDefaultsRep
+    3.4 [33X[0;0YOperations[133X
+      3.4-1 Canvas
+      3.4-2 Add
+      3.4-3 Remove
+      3.4-4 Add
+      3.4-5 Remove
+      3.4-6 Add
+      3.4-7 Remove
+      3.4-8 Add
+      3.4-9 Remove
+      3.4-10 Add
+      3.4-11 Remove
+      3.4-12 Draw
+      3.4-13 DrawSplash
+    3.5 [33X[0;0YGlobal[133X
+    3.6 [33X[0;0YAttributes[133X
+      3.6-1 Width
+      3.6-2 Width
+      3.6-3 SetWidth
+      3.6-4 Height
+      3.6-5 Height
+      3.6-6 SetHeight
+      3.6-7 ZoomToFit
+      3.6-8 ZoomToFit
+      3.6-9 SetZoomToFit
+      3.6-10 Title
+      3.6-11 Title
+      3.6-12 SetTitle
+      3.6-13 TexTypesetting
+      3.6-14 TexTypesetting
+      3.6-15 SetTexTypesetting
+  4 [33X[0;0YFrancy Charts[133X
+    4.1 [33X[0;0YCategories[133X
+      4.1-1 IsChart
+      4.1-2 IsChartType
+      4.1-3 IsChartDefaults
+      4.1-4 IsAxisScaleType
+      4.1-5 IsXAxis
+      4.1-6 IsYAxis
+      4.1-7 IsDataset
+    4.2 [33X[0;0YFamilies[133X
+    4.3 [33X[0;0YRepresentations[133X
+      4.3-1 IsChartRep
+      4.3-2 IsChartDefaultsRep
+      4.3-3 IsChartTypeRep
+      4.3-4 IsAxisScaleTypeRep
+      4.3-5 IsAxisRep
+      4.3-6 IsDatasetRep
+    4.4 [33X[0;0YOperations[133X
+      4.4-1 Chart
+      4.4-2 Add
+      4.4-3 Remove
+      4.4-4 Dataset
+      4.4-5 DefaultAxis
+      4.4-6 XAxis
+      4.4-7 YAxis
+    4.5 [33X[0;0YGlobal[133X
+    4.6 [33X[0;0YAttributes[133X
+      4.6-1 ShowLegend
+      4.6-2 ShowLegend
+      4.6-3 SetShowLegend
+      4.6-4 AxisXTitle
+      4.6-5 AxisXTitle
+      4.6-6 SetAxisXTitle
+      4.6-7 AxisYTitle
+      4.6-8 AxisYTitle
+      4.6-9 SetAxisYTitle
+      4.6-10 AxisXDomain
+      4.6-11 AxisXDomain
+      4.6-12 SetAxisXDomain
+  5 [33X[0;0YFrancy Core[133X
+    5.1 [33X[0;0YCategories[133X
+      5.1-1 IsFrancyObject
+      5.1-2 IsFrancyDefaultObject
+      5.1-3 IsFrancyTypeObject
+    5.2 [33X[0;0YFamilies[133X
+    5.3 [33X[0;0YGlobal[133X
+    5.4 [33X[0;0YAttributes[133X
+      5.4-1 FrancyId
+      5.4-2 FrancyId
+      5.4-3 SetFrancyId
+  6 [33X[0;0YFrancy Graphs[133X
+    6.1 [33X[0;0YCategories[133X
+      6.1-1 IsFrancyGraph
+      6.1-2 IsFrancyGraphType
+      6.1-3 IsFrancyGraphDefaults
+      6.1-4 IsShape
+      6.1-5 IsShapeType
+      6.1-6 IsShapeDefaults
+      6.1-7 IsLink
+      6.1-8 IsLinkDefaults
+    6.2 [33X[0;0YFamilies[133X
+    6.3 [33X[0;0YRepresentations[133X
+      6.3-1 IsFrancyGraphRep
+      6.3-2 IsFrancyGraphDefaultsRep
+      6.3-3 IsFrancyGraphTypeRep
+      6.3-4 IsShapeRep
+      6.3-5 IsShapeDefaultsRep
+      6.3-6 IsShapeTypeRep
+      6.3-7 IsLinkRep
+      6.3-8 IsLinkDefaultsRep
+    6.4 [33X[0;0YOperations[133X
+      6.4-1 Graph
+      6.4-2 UnsetNodes
+      6.4-3 UnsetLinks
+      6.4-4 Add
+      6.4-5 Remove
+      6.4-6 Add
+      6.4-7 Remove
+      6.4-8 Shape
+      6.4-9 GetShape
+      6.4-10 GetShapes
+      6.4-11 Add
+      6.4-12 Remove
+      6.4-13 Add
+      6.4-14 Remove
+      6.4-15 Add
+      6.4-16 Remove
+      6.4-17 Link
+      6.4-18 Links
+      6.4-19 GetLink
+      6.4-20 GetLinks
+    6.5 [33X[0;0YGlobal[133X
+    6.6 [33X[0;0YAttributes[133X
+      6.6-1 Title
+      6.6-2 Title
+      6.6-3 SetTitle
+      6.6-4 Color
+      6.6-5 Color
+      6.6-6 SetColor
+      6.6-7 PosX
+      6.6-8 PosX
+      6.6-9 SetPosX
+      6.6-10 PosY
+      6.6-11 PosY
+      6.6-12 SetPosY
+      6.6-13 Size
+      6.6-14 Size
+      6.6-15 SetSize
+      6.6-16 Layer
+      6.6-17 Layer
+      6.6-18 SetLayer
+      6.6-19 ParentShape
+      6.6-20 ParentShape
+      6.6-21 SetParentShape
+      6.6-22 Simulation
+      6.6-23 Simulation
+      6.6-24 SetSimulation
+      6.6-25 Collapsed
+      6.6-26 Collapsed
+      6.6-27 SetCollapsed
+      6.6-28 Selected
+      6.6-29 Selected
+      6.6-30 SetSelected
+      6.6-31 ConjugateId
+      6.6-32 ConjugateId
+      6.6-33 SetConjugateId
+      6.6-34 Weight
+      6.6-35 Weight
+      6.6-36 SetWeight
+      6.6-37 Length
+      6.6-38 Length
+      6.6-39 SetLength
+      6.6-40 Invisible
+      6.6-41 Invisible
+      6.6-42 SetInvisible
+      6.6-43 Color
+      6.6-44 Color
+      6.6-45 SetColor
+      6.6-46 Title
+      6.6-47 Title
+      6.6-48 SetTitle
+  7 [33X[0;0YFrancy Menus[133X
+    7.1 [33X[0;0YCategories[133X
+      7.1-1 IsMenu
+    7.2 [33X[0;0YFamilies[133X
+    7.3 [33X[0;0YRepresentations[133X
+      7.3-1 IsMenuRep
+    7.4 [33X[0;0YOperations[133X
+      7.4-1 Menu
+      7.4-2 Add
+      7.4-3 Remove
+    7.5 [33X[0;0YAttributes[133X
+      7.5-1 Title
+      7.5-2 Title
+      7.5-3 SetTitle
+  8 [33X[0;0YFrancy Messages[133X
+    8.1 [33X[0;0YCategories[133X
+      8.1-1 IsFrancyMessage
+      8.1-2 IsFrancyMessageType
+    8.2 [33X[0;0YFamilies[133X
+    8.3 [33X[0;0YRepresentations[133X
+      8.3-1 IsFrancyMessageRep
+      8.3-2 IsFrancyMessageTypeRep
+    8.4 [33X[0;0YOperations[133X
+      8.4-1 FrancyMessage
+    8.5 [33X[0;0YGlobal[133X
+    8.6 [33X[0;0YAttributes[133X
+      8.6-1 Title
+      8.6-2 Title
+      8.6-3 SetTitle
+      8.6-4 Value
+      8.6-5 Value
+      8.6-6 SetValue
+      8.6-7 Add
+      8.6-8 Remove
+  9 [33X[0;0YFrancy Renderers[133X
+    9.1 [33X[0;0YCategories[133X
+      9.1-1 IsFrancyRenderer
+      9.1-2 IsFrancyRendererType
+    9.2 [33X[0;0YFamilies[133X
+    9.3 [33X[0;0YRepresentations[133X
+      9.3-1 IsFrancyRendererRep
+      9.3-2 IsFrancyRendererTypeRep
+    9.4 [33X[0;0YOperations[133X
+      9.4-1 FrancyRenderer
+    9.5 [33X[0;0YGlobal[133X
+    9.6 [33X[0;0YAttributes[133X
+      9.6-1 Value
+      9.6-2 Value
+      9.6-3 SetValue
+  10 [33X[0;0YFrancy Util[133X
+    10.1 [33X[0;0YOperations[133X
+      10.1-1 JUPYTER_ViewString
+      10.1-2 Sanitize
+      10.1-3 MergeObjects
+      10.1-4 GenerateID
+  
+  
+  [32X

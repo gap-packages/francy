@@ -1,0 +1,608 @@
+  
+  [1X6 [33X[0;0YFrancy Graphs[133X[101X
+  
+  [33X[0;0YA graph is visual representation or a diagram that represents data or values
+  in  an  organized  mode.  With  Francy,  it  is possible to build direct and
+  indirect [10XGraphs[110X.[133X
+  
+  [33X[0;0YPlease see examples section.[133X
+  
+  [33X[0;0YPlease see Francy-JS for client implementation.[133X
+  
+  
+  [1X6.1 [33X[0;0YCategories[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Graph Categories.[133X
+  
+  [1X6.1-1 IsFrancyGraph[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyGraph[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XGraph[110X objects.[133X
+  
+  [1X6.1-2 IsFrancyGraphType[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyGraphType[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XGraphType[110X objects.[133X
+  
+  [1X6.1-3 IsFrancyGraphDefaults[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyGraphDefaults[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XGraphDefaults[110X objects.[133X
+  
+  [1X6.1-4 IsShape[101X
+  
+  [33X[1;0Y[29X[2XIsShape[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XShape[110X objects.[133X
+  
+  [1X6.1-5 IsShapeType[101X
+  
+  [33X[1;0Y[29X[2XIsShapeType[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XShapeType[110X objects.[133X
+  
+  [1X6.1-6 IsShapeDefaults[101X
+  
+  [33X[1;0Y[29X[2XIsShapeDefaults[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XShapeDefaults[110X objects.[133X
+  
+  [1X6.1-7 IsLink[101X
+  
+  [33X[1;0Y[29X[2XIsLink[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XLink[110X objects.[133X
+  
+  [1X6.1-8 IsLinkDefaults[101X
+  
+  [33X[1;0Y[29X[2XIsLinkDefaults[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XLinkDefaults[110X objects.[133X
+  
+  
+  [1X6.2 [33X[0;0YFamilies[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Graph Families.[133X
+  
+  
+  [1X6.3 [33X[0;0YRepresentations[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Graph Representations.[133X
+  
+  [1X6.3-1 IsFrancyGraphRep[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyGraphRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XGraph[110X internal representation.[133X
+  
+  [1X6.3-2 IsFrancyGraphDefaultsRep[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyGraphDefaultsRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XGraphDefaults[110X internal representation.[133X
+  
+  [1X6.3-3 IsFrancyGraphTypeRep[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyGraphTypeRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XGraphType[110X internal representation.[133X
+  
+  [1X6.3-4 IsShapeRep[101X
+  
+  [33X[1;0Y[29X[2XIsShapeRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XShape[110X internal representation.[133X
+  
+  [1X6.3-5 IsShapeDefaultsRep[101X
+  
+  [33X[1;0Y[29X[2XIsShapeDefaultsRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XShapeDefaults[110X internal representation.[133X
+  
+  [1X6.3-6 IsShapeTypeRep[101X
+  
+  [33X[1;0Y[29X[2XIsShapeTypeRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XShapeType[110X internal representation.[133X
+  
+  [1X6.3-7 IsLinkRep[101X
+  
+  [33X[1;0Y[29X[2XIsLinkRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XLink[110X internal representation.[133X
+  
+  [1X6.3-8 IsLinkDefaultsRep[101X
+  
+  [33X[1;0Y[29X[2XIsLinkDefaultsRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XLinkDefaults[110X internal representation.[133X
+  
+  
+  [1X6.4 [33X[0;0YOperations[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Graph Operations.[133X
+  
+  [1X6.4-1 Graph[101X
+  
+  [33X[1;0Y[29X[2XGraph[102X( [3XIsFrancyGraphType[103X[, [3XIsFrancyGraphDefaults[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XGraph[110X[133X
+  
+  [33X[0;0YEvery  object  will be a subclass of this [10XGraph[110X. All the objects contain the
+  same base information.[133X
+  
+  [33X[0;0YExamples:[133X
+  
+  [33X[0;0YCreate  a  simple  [10XGraph[110X  of  type  [10XGraphType.DIRECTED[110X with simple [10XShape[110X and
+  connected with [10XLinks[110X:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgraph := Graph(GraphType.DIRECTED);[127X[104X
+    [4X[25Xgap>[125X [27XSetSimulation(graph, false);[127X[104X
+    [4X[25Xgap>[125X [27Xshape1 := Shape(ShapeType.SQUARE);[127X[104X
+    [4X[25Xgap>[125X [27Xshape1!.layer := 1;[127X[104X
+    [4X[25Xgap>[125X [27Xshape2 := Shape(ShapeType.TRIANGLE);[127X[104X
+    [4X[25Xgap>[125X [27Xshape2!.layer := 3;[127X[104X
+    [4X[25Xgap>[125X [27Xlink := Link(shape1, shape2);[127X[104X
+    [4X[25Xgap>[125X [27XAdd(graph, link);[127X[104X
+    [4X[25Xgap>[125X [27XAdd(graph, [shape1, shape2]);[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YCreate  a  simple  [10XGraph[110X  of type [10XGraphType.UNDIRECTED[110X with simple [10XShape[110X and
+  with a [10XTriggerEvent.RIGHT_CLICK[110X [10XCallback[110X:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgraph := Graph(GraphType.UNDIRECTED);[127X[104X
+    [4X[25Xgap>[125X [27Xshape := Shape(ShapeType.SQUARE);[127X[104X
+    [4X[25Xgap>[125X [27XMyFunction := function() Add(graph, Shape(ShapeType.Circle)); return graph; end;[127X[104X
+    [4X[25Xgap>[125X [27Xcallback := Callback(TriggerType.RIGHT_CLICK, MyFunction);[127X[104X
+    [4X[25Xgap>[125X [27XAdd(shape, callback);[127X[104X
+    [4X[25Xgap>[125X [27XAdd(graph, shape);[127X[104X
+  [4X[32X[104X
+  
+  [1X6.4-2 UnsetNodes[101X
+  
+  [33X[1;0Y[29X[2XUnsetNodes[102X( [3Xarg[103X ) [32X operation[133X
+  
+  [33X[0;0YRemoves all nodes from a graph.[133X
+  
+  [1X6.4-3 UnsetLinks[101X
+  
+  [33X[1;0Y[29X[2XUnsetLinks[102X( [3Xarg[103X ) [32X operation[133X
+  
+  [33X[0;0YRemoves all nodes from a graph.[133X
+  
+  [1X6.4-4 Add[101X
+  
+  [33X[1;0Y[29X[2XAdd[102X( [3XIsFrancyGraph[103X[, [3XIsLink[103X, [3XList(IsLink)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XGraph[110X[133X
+  
+  [33X[0;0YAdd [10XIsLink[110X to a specific [10XGraph[110X.[133X
+  
+  [1X6.4-5 Remove[101X
+  
+  [33X[1;0Y[29X[2XRemove[102X( [3XIsFrancyGraph[103X[, [3XIsLink[103X, [3XList(IsLink)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XGraph[110X[133X
+  
+  [33X[0;0YRemove [10XIsLink[110X from a specific [10XGraph[110X.[133X
+  
+  [1X6.4-6 Add[101X
+  
+  [33X[1;0Y[29X[2XAdd[102X( [3XIsFrancyGraph[103X[, [3XIsShape[103X, [3XList(IsShape)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XGraph[110X[133X
+  
+  [33X[0;0YAdd [10XIsShape[110X to a specific [10XGraph[110X.[133X
+  
+  [1X6.4-7 Remove[101X
+  
+  [33X[1;0Y[29X[2XRemove[102X( [3XIsFrancyGraph[103X[, [3XIsShape[103X, [3XList(IsShape)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XGraph[110X[133X
+  
+  [33X[0;0YRemove [10XIsShape[110X from a specific [10XGraph[110X.[133X
+  
+  [1X6.4-8 Shape[101X
+  
+  [33X[1;0Y[29X[2XShape[102X( [3XIsShapeType[103X[, [3XIsString(title)[103X, [3XIsShapeDefaults[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XShape[110X[133X
+  
+  [33X[0;0YEvery object will be a subclass of [10XShape[110X object. All the objects contain the
+  same base information.[133X
+  
+  [1X6.4-9 GetShape[101X
+  
+  [33X[1;0Y[29X[2XGetShape[102X( [3XIsFrancyGraph[103X, [3XIsString[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XShape[110X[133X
+  
+  [33X[0;0YGets a [10XShape[110X node from a [10XGraph[110X by ID.[133X
+  
+  [1X6.4-10 GetShapes[101X
+  
+  [33X[1;0Y[29X[2XGetShapes[102X( [3XIsFrancyGraph[103X, [3XIsString[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XList(Shape)[110X[133X
+  
+  [33X[0;0YGets a [10XShape[110X node from a [10XGraph[110X by ID.[133X
+  
+  [1X6.4-11 Add[101X
+  
+  [33X[1;0Y[29X[2XAdd[102X( [3XIsShape[103X[, [3XIsMenu[103X, [3XList(IsMenu)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XShape[110X[133X
+  
+  [33X[0;0YAdd a [10XMenu[110X to a specific [10XShape[110X.[133X
+  
+  [1X6.4-12 Remove[101X
+  
+  [33X[1;0Y[29X[2XRemove[102X( [3XIsShape[103X[, [3XIsMenu[103X, [3XList(IsMenu)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XShape[110X[133X
+  
+  [33X[0;0YRemove a [10XMenu[110X from a specific [10XShape[110X.[133X
+  
+  [1X6.4-13 Add[101X
+  
+  [33X[1;0Y[29X[2XAdd[102X( [3XIsShape[103X[, [3XIsCallback[103X, [3XList(IsCallback)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XShape[110X[133X
+  
+  [33X[0;0YAdd a [10XCallback[110X to a specific [10XShape[110X.[133X
+  
+  [1X6.4-14 Remove[101X
+  
+  [33X[1;0Y[29X[2XRemove[102X( [3XIsShape[103X[, [3XIsCallback[103X, [3XList(IsCallback)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XShape[110X[133X
+  
+  [33X[0;0YRemove a [10XCallback[110X from a specific [10XShape[110X.[133X
+  
+  [1X6.4-15 Add[101X
+  
+  [33X[1;0Y[29X[2XAdd[102X( [3XIsShape[103X[, [3XIsFrancyMessage[103X, [3XList(IsFrancyMessage)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XShape[110X[133X
+  
+  [33X[0;0YAdd a [10XCallback[110X to a specific [10XShape[110X.[133X
+  
+  [1X6.4-16 Remove[101X
+  
+  [33X[1;0Y[29X[2XRemove[102X( [3XIsShape[103X[, [3XIsFrancyMessage[103X, [3XList(IsFrancyMessage)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XShape[110X[133X
+  
+  [33X[0;0YRemove a [10XCallback[110X from a specific [10XShape[110X.[133X
+  
+  [1X6.4-17 Link[101X
+  
+  [33X[1;0Y[29X[2XLink[102X( [3XIsShape[103X, [3XIsShape[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XLink[110X[133X
+  
+  [33X[0;0YCreates a [10XLink[110X or edge between the two [10XShape[110X.[133X
+  
+  [1X6.4-18 Links[101X
+  
+  [33X[1;0Y[29X[2XLinks[102X( [3XList(IsShape)[103X, [3XList(IsShape)[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XList(Link)[110X[133X
+  
+  [33X[0;0YCreates  a [10XLink[110X or edge between the [10XShape[110X of the first list and the [10XShape[110X of
+  the second list.[133X
+  
+  [1X6.4-19 GetLink[101X
+  
+  [33X[1;0Y[29X[2XGetLink[102X( [3XIsFrancyGraph[103X, [3XIsString[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XLink[110X[133X
+  
+  [33X[0;0YGets a [10XLink[110X or edge from a graph by ID.[133X
+  
+  [1X6.4-20 GetLinks[101X
+  
+  [33X[1;0Y[29X[2XGetLinks[102X( [3XIsFrancyGraph[103X, [3XIsString[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XList(Link)[110X[133X
+  
+  [33X[0;0YGets a [10XLink[110X or edge from a graph.[133X
+  
+  
+  [1X6.5 [33X[0;0YGlobal[133X[101X
+  
+  [33X[0;0YIn  this  section  we  show  all  Global  Callback  Francy Records for multi
+  purpose.[133X
+  
+  
+  [1X6.6 [33X[0;0YAttributes[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Core Attributes[133X
+  
+  [1X6.6-1 Title[101X
+  
+  [33X[1;0Y[29X[2XTitle[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsString[110X with the title of the object[133X
+  
+  [33X[0;0YSets  the  [10XShape[110X  label  title.  Supports TeX syntax and will be Typeset, if
+  supported by the client implementation.[133X
+  
+  [1X6.6-2 Title[101X
+  
+  [33X[1;0Y[29X[2XTitle[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-3 SetTitle[101X
+  
+  [33X[1;0Y[29X[2XSetTitle[102X( [3XIsRequiredArg[103X, [3XIsString[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XShape[110X label title.[133X
+  
+  [1X6.6-4 Color[101X
+  
+  [33X[1;0Y[29X[2XColor[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsInt[110X[133X
+  
+  [33X[0;0YThe  [10XColor[110X of the current [10XShape[110X. This should be an hexadecimal colour value,
+  e.g.: #ff0000[133X
+  
+  [1X6.6-5 Color[101X
+  
+  [33X[1;0Y[29X[2XColor[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-6 SetColor[101X
+  
+  [33X[1;0Y[29X[2XSetColor[102X( [3XIsShape[103X, [3XIsString[103X ) [32X operation[133X
+  
+  [33X[0;0YSets  the  [10XColor[110X  value.  This  should be an hexadecimal colour value, e.g.:
+  #ff0000[133X
+  
+  [1X6.6-7 PosX[101X
+  
+  [33X[1;0Y[29X[2XPosX[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsInt[110X[133X
+  
+  [33X[0;0YThe Position in the X Axis of the [10XShape[110X in the [10XCanvas[110X in pixels.[133X
+  
+  [1X6.6-8 PosX[101X
+  
+  [33X[1;0Y[29X[2XPosX[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-9 SetPosX[101X
+  
+  [33X[1;0Y[29X[2XSetPosX[102X( [3XIsShape[103X, [3XIsInt[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the Position in the X Axis of the [10XShape[110X in the [10XCanvas[110X in pixels.[133X
+  
+  [1X6.6-10 PosY[101X
+  
+  [33X[1;0Y[29X[2XPosY[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsInt[110X[133X
+  
+  [33X[0;0YThe Position in the Y Axis of the [10XShape[110X in the [10XCanvas[110X in pixels.[133X
+  
+  [1X6.6-11 PosY[101X
+  
+  [33X[1;0Y[29X[2XPosY[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-12 SetPosY[101X
+  
+  [33X[1;0Y[29X[2XSetPosY[102X( [3XIsShape[103X, [3XIsInt[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the Position in the Y Axis of the [10XShape[110X in the [10XCanvas[110X in pixels.[133X
+  
+  [1X6.6-13 Size[101X
+  
+  [33X[1;0Y[29X[2XSize[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsPosInt[110X[133X
+  
+  [33X[0;0YThe [10XSize[110X of the [10XShape[110X in pixels.[133X
+  
+  [1X6.6-14 Size[101X
+  
+  [33X[1;0Y[29X[2XSize[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-15 SetSize[101X
+  
+  [33X[1;0Y[29X[2XSetSize[102X( [3XIsShape[103X, [3XIsPosInt[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XSize[110X of the [10XShape[110X in pixels.[133X
+  
+  [1X6.6-16 Layer[101X
+  
+  [33X[1;0Y[29X[2XLayer[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsInt[110X[133X
+  
+  [33X[0;0YThe  [10XLayer[110X  level in which the node will be placed. This property might also
+  be  used to apply a different color depending on the layer level. Depends on
+  the client implementation.[133X
+  
+  [1X6.6-17 Layer[101X
+  
+  [33X[1;0Y[29X[2XLayer[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-18 SetLayer[101X
+  
+  [33X[1;0Y[29X[2XSetLayer[102X( [3XIsShape[103X, [3XIsInt[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XLayer[110X number on a [10XShape[110X.[133X
+  
+  [1X6.6-19 ParentShape[101X
+  
+  [33X[1;0Y[29X[2XParentShape[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsShape[110X[133X
+  
+  [33X[0;0YThe  [10XParentShape[110X  in which the node will be placed. This property might also
+  be used to apply a different color depending on the parent level. Depends on
+  the client implementation.[133X
+  
+  [1X6.6-20 ParentShape[101X
+  
+  [33X[1;0Y[29X[2XParentShape[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-21 SetParentShape[101X
+  
+  [33X[1;0Y[29X[2XSetParentShape[102X( [3XIsShape[103X, [3XIsShape[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XParentShape[110X on a [10XShape[110X.[133X
+  
+  [1X6.6-22 Simulation[101X
+  
+  [33X[1;0Y[29X[2XSimulation[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsBool[110X True if enabled otherwise False[133X
+  
+  [33X[0;0Y[10XSimulation[110X  is  a  property  that  sets  the simulation behavior by applying
+  forces  to  organize  the  graphics,  without  the  need  to  provide custom
+  positions on the rendered GUI. Depends on the client implementation.[133X
+  
+  [1X6.6-23 Simulation[101X
+  
+  [33X[1;0Y[29X[2XSimulation[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-24 SetSimulation[101X
+  
+  [33X[1;0Y[29X[2XSetSimulation[102X( [3XIsCanvas[103X, [3XIsBool[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XSimulation[110X behavior, as per de description above.[133X
+  
+  [1X6.6-25 Collapsed[101X
+  
+  [33X[1;0Y[29X[2XCollapsed[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsBool[110X True if enabled otherwise False[133X
+  
+  [33X[0;0Y[10XCollapsed[110X  is  a property that sets [10XGraph[110X Tree structures to fold by default
+  on the rendered GUI.[133X
+  
+  [1X6.6-26 Collapsed[101X
+  
+  [33X[1;0Y[29X[2XCollapsed[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-27 SetCollapsed[101X
+  
+  [33X[1;0Y[29X[2XSetCollapsed[102X( [3XIsCanvas[103X, [3XIsBool[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XCollapsed[110X behavior, as per the description above.[133X
+  
+  [1X6.6-28 Selected[101X
+  
+  [33X[1;0Y[29X[2XSelected[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsBool[110X True if enabled otherwise False[133X
+  
+  [33X[0;0Y[10XSelected[110X is a property that sets [10XShape[110X objects as selected by default on the
+  rendered GUI.[133X
+  
+  [1X6.6-29 Selected[101X
+  
+  [33X[1;0Y[29X[2XSelected[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-30 SetSelected[101X
+  
+  [33X[1;0Y[29X[2XSetSelected[102X( [3XIsCanvas[103X, [3XIsBool[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XSelected[110X behavior, as per the description above.[133X
+  
+  [1X6.6-31 ConjugateId[101X
+  
+  [33X[1;0Y[29X[2XConjugateId[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsBool[110X True if enabled otherwise False[133X
+  
+  [33X[0;0Y[10XConjugateId[110X  is a property that is used to group [10XShape[110X objects by default on
+  the rendered GUI.[133X
+  
+  [1X6.6-32 ConjugateId[101X
+  
+  [33X[1;0Y[29X[2XConjugateId[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-33 SetConjugateId[101X
+  
+  [33X[1;0Y[29X[2XSetConjugateId[102X( [3XIsCanvas[103X, [3XIsBool[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XConjugate[110X behavior, as per the description above.[133X
+  
+  [1X6.6-34 Weight[101X
+  
+  [33X[1;0Y[29X[2XWeight[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsInt[110X[133X
+  
+  [33X[0;0YThe [10XWeight[110X of the current [10XLink[110X or edge.[133X
+  
+  [1X6.6-35 Weight[101X
+  
+  [33X[1;0Y[29X[2XWeight[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-36 SetWeight[101X
+  
+  [33X[1;0Y[29X[2XSetWeight[102X( [3XIsLink[103X, [3XIsInt[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XWeight[110X value on a [10XLink[110X or edge.[133X
+  
+  [1X6.6-37 Length[101X
+  
+  [33X[1;0Y[29X[2XLength[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsInt[110X[133X
+  
+  [33X[0;0YThe [10XLength[110X of the current [10XLink[110X or edge.[133X
+  
+  [1X6.6-38 Length[101X
+  
+  [33X[1;0Y[29X[2XLength[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-39 SetLength[101X
+  
+  [33X[1;0Y[29X[2XSetLength[102X( [3XIsLink[103X, [3XIsInt[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XLength[110X value on a [10XLink[110X or edge.[133X
+  
+  [1X6.6-40 Invisible[101X
+  
+  [33X[1;0Y[29X[2XInvisible[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsBoolean[110X[133X
+  
+  [33X[0;0YThe [10XInvisible[110X property of the current [10XLink[110X or edge.[133X
+  
+  [1X6.6-41 Invisible[101X
+  
+  [33X[1;0Y[29X[2XInvisible[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-42 SetInvisible[101X
+  
+  [33X[1;0Y[29X[2XSetInvisible[102X( [3XIsLink[103X, [3XIsBool[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XInvisible[110X property value on a [10XLink[110X or edge.[133X
+  
+  [1X6.6-43 Color[101X
+  
+  [33X[1;0Y[29X[2XColor[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsInt[110X[133X
+  
+  [33X[0;0YThe [10XColor[110X of the current [10XLink[110X or edge.[133X
+  
+  [1X6.6-44 Color[101X
+  
+  [33X[1;0Y[29X[2XColor[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-45 SetColor[101X
+  
+  [33X[1;0Y[29X[2XSetColor[102X( [3XIsShape[103X, [3XIsString[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XColor[110X value on a [10XLink[110X or edge.[133X
+  
+  [1X6.6-46 Title[101X
+  
+  [33X[1;0Y[29X[2XTitle[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsInt[110X[133X
+  
+  [33X[0;0YThe [10XTitle[110X of the current [10XLink[110X or edge.[133X
+  
+  [1X6.6-47 Title[101X
+  
+  [33X[1;0Y[29X[2XTitle[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X6.6-48 SetTitle[101X
+  
+  [33X[1;0Y[29X[2XSetTitle[102X( [3XIsShape[103X, [3XIsString[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the [10XTitle[110X value on a [10XLink[110X or edge.[133X
+  

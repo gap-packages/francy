@@ -1,0 +1,184 @@
+  
+  
+  [1XIndex[101X
+  
+  [2XAdd[102X, for IsCallback, IsRequiredArg 2.4-5 
+      for IsCanvas, IsChart 3.4-4 
+      for IsCanvas, IsFrancyGraph 3.4-2 
+      for IsCanvas, IsFrancyMessage 3.4-8 
+      for IsCanvas, IsFrancyRenderer 3.4-10 
+      for IsCanvas, IsMenu 3.4-6 
+      for IsChart, IsDataset 4.4-2 
+      for IsFrancyGraph, IsLink 6.4-4 
+      for IsFrancyGraph, IsShape 6.4-6 
+      for IsFrancyMessage, IsCallback 8.6-7 
+      for IsMenu, IsMenu 7.4-2 
+      for IsShape, IsCallback 6.4-13 
+      for IsShape, IsFrancyMessage 6.4-15 
+      for IsShape, IsMenu 6.4-11 
+  [2XAxisXDomain[102X, for IsChart 4.6-10  4.6-11 
+  [2XAxisXTitle[102X, for IsChart 4.6-4  4.6-5 
+  [2XAxisYTitle[102X, for IsChart 4.6-7  4.6-8 
+  [2XCallback[102X, for IsTriggerType, IsFunction, IsList 2.4-1 
+  [2XCanvas[102X, for IsString, IsCanvasDefaults 3.4-1 
+  [2XChart[102X, for IsChartType, IsChartDefaults 4.4-1 
+  [2XCollapsed[102X, for IsFrancyGraph 6.6-25  6.6-26 
+  [2XColor[102X, for IsLink 6.6-43  6.6-44 
+      for IsShape 6.6-4  6.6-5 
+  [2XConfirmMessage[102X, for IsCallback 2.6-7  2.6-8 
+  [2XConjugateId[102X, for IsShape 6.6-31  6.6-32 
+  [2XDataset[102X, for IsString, IsList 4.4-4 
+  [2XDefaultAxis[102X, for IsChartType 4.4-5 
+  [2XDraw[102X, for IsCanvas 3.4-12 
+  [2XDrawSplash[102X, for IsCanvas 3.4-13 
+  [2XFrancyId[102X, for IsFrancyObject 5.4-1  5.4-2 
+  [2XFrancyMessage[102X, for IsFrancyMessageType, IsString, IsString 8.4-1 
+  [2XFrancyRenderer[102X, for IsFrancyRendererType 9.4-1 
+  [2XGenerateID[102X 10.1-4 
+  [2XGetLink[102X, for IsFrancyGraph, IsString 6.4-19 
+  [2XGetLinks[102X, for IsFrancyGraph 6.4-20 
+  [2XGetShape[102X, for IsFrancyGraph, IsString 6.4-9 
+  [2XGetShapes[102X, for IsFrancyGraph 6.4-10 
+  [2XGraph[102X, for IsFrancyGraphType, IsFrancyGraphDefaults 6.4-1 
+  [2XHeight[102X, for IsCanvas 3.6-4  3.6-5 
+  [2XInvisible[102X, for IsLink 6.6-40  6.6-41 
+  [2XIsArgType[102X, for IsFrancyTypeObject 2.1-3 
+  [2XIsArgTypeRep[102X, for IsComponentObjectRep 2.3-3 
+  [2XIsAxisRep[102X, for IsComponentObjectRep 4.3-5 
+  [2XIsAxisScaleType[102X, for IsFrancyTypeObject 4.1-4 
+  [2XIsAxisScaleTypeRep[102X, for IsComponentObjectRep 4.3-4 
+  [2XIsCallback[102X, for IsFrancyObject 2.1-1 
+  [2XIsCallbackRep[102X, for IsComponentObjectRep 2.3-1 
+  [2XIsCanvas[102X, for IsFrancyObject 3.1-1 
+  [2XIsCanvasDefaults[102X, for IsFrancyDefaultObject 3.1-2 
+  [2XIsCanvasDefaultsRep[102X, for IsComponentObjectRep 3.3-2 
+  [2XIsCanvasRep[102X, for IsComponentObjectRep 3.3-1 
+  [2XIsChart[102X, for IsFrancyObject 4.1-1 
+  [2XIsChartDefaults[102X, for IsFrancyDefaultObject 4.1-3 
+  [2XIsChartDefaultsRep[102X, for IsComponentObjectRep 4.3-2 
+  [2XIsChartRep[102X, for IsComponentObjectRep 4.3-1 
+  [2XIsChartType[102X, for IsFrancyTypeObject 4.1-2 
+  [2XIsChartTypeRep[102X, for IsComponentObjectRep 4.3-3 
+  [2XIsDataset[102X, for IsFrancyObject 4.1-7 
+  [2XIsDatasetRep[102X, for IsComponentObjectRep 4.3-6 
+  [2XIsFrancyDefaultObject[102X, for IsObject 5.1-2 
+  [2XIsFrancyGraph[102X, for IsFrancyObject 6.1-1 
+  [2XIsFrancyGraphDefaults[102X, for IsFrancyDefaultObject 6.1-3 
+  [2XIsFrancyGraphDefaultsRep[102X, for IsComponentObjectRep 6.3-2 
+  [2XIsFrancyGraphRep[102X, for IsComponentObjectRep 6.3-1 
+  [2XIsFrancyGraphType[102X, for IsFrancyObject 6.1-2 
+  [2XIsFrancyGraphTypeRep[102X, for IsComponentObjectRep 6.3-3 
+  [2XIsFrancyMessage[102X, for IsFrancyObject 8.1-1 
+  [2XIsFrancyMessageRep[102X, for IsComponentObjectRep 8.3-1 
+  [2XIsFrancyMessageType[102X, for IsFrancyObject 8.1-2 
+  [2XIsFrancyMessageTypeRep[102X, for IsComponentObjectRep 8.3-2 
+  [2XIsFrancyObject[102X, for IsObject 5.1-1 
+  [2XIsFrancyRenderer[102X, for IsFrancyObject 9.1-1 
+  [2XIsFrancyRendererRep[102X, for IsComponentObjectRep 9.3-1 
+  [2XIsFrancyRendererType[102X, for IsFrancyObject 9.1-2 
+  [2XIsFrancyRendererTypeRep[102X, for IsComponentObjectRep 9.3-2 
+  [2XIsFrancyTypeObject[102X, for IsObject 5.1-3 
+  [2XIsLink[102X, for IsFrancyObject 6.1-7 
+  [2XIsLinkDefaults[102X, for IsFrancyDefaultObject 6.1-8 
+  [2XIsLinkDefaultsRep[102X, for IsComponentObjectRep 6.3-8 
+  [2XIsLinkRep[102X, for IsComponentObjectRep 6.3-7 
+  [2XIsMenu[102X, for IsFrancyObject 7.1-1 
+  [2XIsMenuRep[102X, for IsComponentObjectRep 7.3-1 
+  [2XIsRequiredArg[102X, for IsFrancyObject 2.1-2 
+  [2XIsRequiredArgRep[102X, for IsComponentObjectRep 2.3-2 
+  [2XIsShape[102X, for IsFrancyObject 6.1-4 
+  [2XIsShapeDefaults[102X, for IsFrancyDefaultObject 6.1-6 
+  [2XIsShapeDefaultsRep[102X, for IsComponentObjectRep 6.3-5 
+  [2XIsShapeRep[102X, for IsComponentObjectRep 6.3-4 
+  [2XIsShapeType[102X, for IsFrancyObject 6.1-5 
+  [2XIsShapeTypeRep[102X, for IsComponentObjectRep 6.3-6 
+  [2XIsTriggerType[102X, for IsFrancyTypeObject 2.1-4 
+  [2XIsTriggerTypeRep[102X, for IsComponentObjectRep 2.3-4 
+  [2XIsXAxis[102X, for IsFrancyObject 4.1-5 
+  [2XIsYAxis[102X, for IsFrancyObject 4.1-6 
+  [2XJUPYTER_ViewString[102X, for IsObject 10.1-1 
+  [2XLayer[102X, for IsShape 6.6-16  6.6-17 
+  [2XLength[102X, for IsLink 6.6-37  6.6-38 
+  [2XLink[102X, for IsShape, IsShape, IsLinkDefaults 6.4-17 
+  [2XLinks[102X, for IsList, IsList, IsLinkDefaults 6.4-18 
+  [2XMenu[102X, for IsString, IsCallback 7.4-1 
+  [2XMergeObjects[102X, for IsFrancyObject, IsFrancyObject 10.1-3 
+  [2XNoopCallback[102X 2.4-2 
+  [2XParentShape[102X, for IsShape 6.6-19  6.6-20 
+  [2XPosX[102X, for IsShape 6.6-7  6.6-8 
+  [2XPosY[102X, for IsShape 6.6-10  6.6-11 
+  [2XRemove[102X, for IsCallback, IsRequiredArg 2.4-6 
+      for IsCanvas, IsChart 3.4-5 
+      for IsCanvas, IsFrancyGraph 3.4-3 
+      for IsCanvas, IsFrancyMessage 3.4-9 
+      for IsCanvas, IsFrancyRenderer 3.4-11 
+      for IsCanvas, IsMenu 3.4-7 
+      for IsChart, IsDataset 4.4-3 
+      for IsFrancyGraph, IsLink 6.4-5 
+      for IsFrancyGraph, IsShape 6.4-7 
+      for IsFrancyMessage, IsCallback 8.6-8 
+      for IsMenu, IsMenu 7.4-3 
+      for IsShape, IsCallback 6.4-14 
+      for IsShape, IsFrancyMessage 6.4-16 
+      for IsShape, IsMenu 6.4-12 
+  [2XRequiredArg[102X, for IsArgType, IsString 2.4-3 
+  [2XSanitize[102X, for IsObject 10.1-2 
+  [2XSelected[102X, for IsShape 6.6-28  6.6-29 
+  [2XSetAxisXDomain[102X, for IsChart, IsList 4.6-12 
+  [2XSetAxisXTitle[102X, for IsChart, IsString 4.6-6 
+  [2XSetAxisYTitle[102X, for IsChart, IsString 4.6-9 
+  [2XSetCollapsed[102X, for IsFrancyGraph, IsBool 6.6-27 
+  [2XSetColor[102X, for IsLink, IsString 6.6-45 
+      for IsShape, IsString 6.6-6 
+  [2XSetConfirmMessage[102X, for IsCallback, IsString 2.6-9 
+  [2XSetConjugateId[102X, for IsShape, IsInt 6.6-33 
+  [2XSetFrancyId[102X, for IsFrancyObject, IsString 5.4-3 
+  [2XSetHeight[102X, for IsCanvas, IsPosInt 3.6-6 
+  [2XSetInvisible[102X, for IsLink, IsBool 6.6-42 
+  [2XSetLayer[102X, for IsShape, IsInt 6.6-18 
+  [2XSetLength[102X, for IsLink, IsInt 6.6-39 
+  [2XSetParentShape[102X, for IsShape, IsShape 6.6-21 
+  [2XSetPosX[102X, for IsShape, IsInt 6.6-9 
+  [2XSetPosY[102X, for IsShape, IsInt 6.6-12 
+  [2XSetSelected[102X, for IsShape, IsBool 6.6-30 
+  [2XSetShowLegend[102X, for IsChart, IsBool 4.6-3 
+  [2XSetSimulation[102X, for IsFrancyGraph, IsBool 6.6-24 
+  [2XSetSize[102X, for IsShape, IsPosInt 6.6-15 
+  [2XSetTexTypesetting[102X, for IsCanvas, IsBool 3.6-15 
+  [2XSetTitle[102X, for IsCanvas, IsString 3.6-12 
+      for IsFrancyMessage, IsString 8.6-3 
+      for IsLink, IsString 6.6-48 
+      for IsMenu, IsString 7.5-3 
+      for IsRequiredArg, IsString 2.6-3 
+      for IsShape, IsString 6.6-3 
+  [2XSetValue[102X, for IsFrancyMessage, IsString 8.6-6 
+      for IsFrancyRenderer, IsFrancyRendererType 9.6-3 
+      for IsRequiredArg, IsString 2.6-6 
+  [2XSetWeight[102X, for IsLink, IsInt 6.6-36 
+  [2XSetWidth[102X, for IsCanvas, IsPosInt 3.6-3 
+  [2XSetZoomToFit[102X, for IsCanvas, IsBool 3.6-9 
+  [2XShape[102X, for IsShapeType, IsString, IsShapeDefaults 6.4-8 
+  [2XShowLegend[102X, for IsChart 4.6-1  4.6-2 
+  [2XSimulation[102X, for IsFrancyGraph 6.6-22  6.6-23 
+  [2XSize[102X, for IsShape 6.6-13  6.6-14 
+  [2XTexTypesetting[102X, for IsCanvas 3.6-13  3.6-14 
+  [2XTitle[102X, for IsCanvas 3.6-10  3.6-11 
+      for IsFrancyMessage 8.6-1  8.6-2 
+      for IsLink 6.6-46  6.6-47 
+      for IsMenu 7.5-1  7.5-2 
+      for IsRequiredArg 2.6-1  2.6-2 
+      for IsShape 6.6-1  6.6-2 
+  [2XTrigger[102X, for IsString 2.4-4 
+  [2XUnsetLinks[102X, for IsFrancyGraph 6.4-3 
+  [2XUnsetNodes[102X, for IsFrancyGraph 6.4-2 
+  [2XValue[102X, for IsFrancyMessage 8.6-4  8.6-5 
+      for IsFrancyRenderer 9.6-1  9.6-2 
+      for IsRequiredArg 2.6-4  2.6-5 
+  [2XWeight[102X, for IsLink 6.6-34  6.6-35 
+  [2XWidth[102X, for IsCanvas 3.6-1  3.6-2 
+  [2XXAxis[102X, for IsAxisScaleType, IsString, IsList 4.4-6 
+  [2XYAxis[102X, for IsAxisScaleType, IsString, IsList 4.4-7 
+  [2XZoomToFit[102X, for IsCanvas 3.6-7  3.6-8 
+  
+  
+  -------------------------------------------------------

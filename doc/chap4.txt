@@ -1,0 +1,292 @@
+  
+  [1X4 [33X[0;0YFrancy Charts[133X[101X
+  
+  [33X[0;0YIt is possible to build [10XCharts[110X with simple [10XDatasets[110X.[133X
+  
+  [33X[0;0YCurrently, Francy, supports Bar, Line and Scatter charts.[133X
+  
+  [33X[0;0YPlease see Francy-JS for client implementation.[133X
+  
+  
+  [1X4.1 [33X[0;0YCategories[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Chart Categories.[133X
+  
+  [1X4.1-1 IsChart[101X
+  
+  [33X[1;0Y[29X[2XIsChart[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XChart[110X objects.[133X
+  
+  [1X4.1-2 IsChartType[101X
+  
+  [33X[1;0Y[29X[2XIsChartType[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XChartType[110X objects.[133X
+  
+  [1X4.1-3 IsChartDefaults[101X
+  
+  [33X[1;0Y[29X[2XIsChartDefaults[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XChartDefaults[110X objects.[133X
+  
+  [1X4.1-4 IsAxisScaleType[101X
+  
+  [33X[1;0Y[29X[2XIsAxisScaleType[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XAxisScaleType[110X objects.[133X
+  
+  [1X4.1-5 IsXAxis[101X
+  
+  [33X[1;0Y[29X[2XIsXAxis[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XXAxis[110X objects.[133X
+  
+  [1X4.1-6 IsYAxis[101X
+  
+  [33X[1;0Y[29X[2XIsYAxis[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XYAxis[110X objects.[133X
+  
+  [1X4.1-7 IsDataset[101X
+  
+  [33X[1;0Y[29X[2XIsDataset[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XDataset[110X objects.[133X
+  
+  
+  [1X4.2 [33X[0;0YFamilies[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Chart Families.[133X
+  
+  
+  [1X4.3 [33X[0;0YRepresentations[133X[101X
+  
+  [33X[0;0YIn this section we show the Francy Chart Representations.[133X
+  
+  [1X4.3-1 IsChartRep[101X
+  
+  [33X[1;0Y[29X[2XIsChartRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XChart[110X internal representation.[133X
+  
+  [1X4.3-2 IsChartDefaultsRep[101X
+  
+  [33X[1;0Y[29X[2XIsChartDefaultsRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XChartDefaults[110X internal representation.[133X
+  
+  [1X4.3-3 IsChartTypeRep[101X
+  
+  [33X[1;0Y[29X[2XIsChartTypeRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XChartType[110X internal representation.[133X
+  
+  [1X4.3-4 IsAxisScaleTypeRep[101X
+  
+  [33X[1;0Y[29X[2XIsAxisScaleTypeRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XAxisScaleType[110X internal representation.[133X
+  
+  [1X4.3-5 IsAxisRep[101X
+  
+  [33X[1;0Y[29X[2XIsAxisRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XAxisRep[110X internal representation.[133X
+  
+  [1X4.3-6 IsDatasetRep[101X
+  
+  [33X[1;0Y[29X[2XIsDatasetRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XDatasetRep[110X internal representation.[133X
+  
+  
+  [1X4.4 [33X[0;0YOperations[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Chart Operations.[133X
+  
+  [1X4.4-1 Chart[101X
+  
+  [33X[1;0Y[29X[2XChart[102X( [3XIsChartType[103X[, [3XIsChartDefaults[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XChart[110X[133X
+  
+  [33X[0;0YEvery  object  will  be  a subclass of [10XChart[110X object. All objects contain the
+  same base information.[133X
+  
+  [33X[0;0YExamples:[133X
+  
+  [33X[0;0YCreate a simple [10XChart[110X of type [10XChartType.BAR[110X:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xchart:=Chart(ChartType.BAR);[127X[104X
+    [4X[25Xgap>[125X [27XSetAxisXTitle(chart, "X Axis");[127X[104X
+    [4X[25Xgap>[125X [27XAxisXTitle(chart);[127X[104X
+    [4X[25Xgap>[125X [27XSetAxisXDomain(chart, ["domain1", "domain2", "domain3", "domain4", "domain5"]); # default [][127X[104X
+    [4X[25Xgap>[125X [27XAxisXDomain(chart);[127X[104X
+    [4X[25Xgap>[125X [27XSetAxisYTitle(chart, "Y Axis");[127X[104X
+    [4X[25Xgap>[125X [27XAxisYTitle(chart);[127X[104X
+    [4X[25Xgap>[125X [27Xdata1 := Dataset("data1", [100,20,30,47,90]);[127X[104X
+    [4X[25Xgap>[125X [27Xdata2 := Dataset("data2", [51,60,72,38,97]);[127X[104X
+    [4X[25Xgap>[125X [27Xdata3 := Dataset("data3", [50,60,70,80,90]);[127X[104X
+    [4X[25Xgap>[125X [27XAdd(chart, [data1, data2, data3]);[127X[104X
+    [4X[25Xgap>[125X [27XRemove(chart, data1);[127X[104X
+    [4X[25Xgap>[125X [27XAdd(chart, data1);[127X[104X
+    [4X[25Xgap>[125X [27XRemove(chart, [data2, data3]);[127X[104X
+    [4X[25Xgap>[125X [27XLength(RecNames(chart!.data)) = 1;[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YCreate a simple [10XChart[110X of type [10XChartType.LINE[110X:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xchart:=Chart(ChartType.LINE);[127X[104X
+    [4X[25Xgap>[125X [27XSetAxisXTitle(chart, "X Axis");[127X[104X
+    [4X[25Xgap>[125X [27XSetAxisYTitle(chart, "Y Axis");[127X[104X
+    [4X[25Xgap>[125X [27Xdata1 := Dataset("data1", [100,20,30,47,90]);[127X[104X
+    [4X[25Xgap>[125X [27XAdd(chart, data1);[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YCreate a simple [10XChart[110X of type [10XChartType.SCATTER[110X:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xchart:=Chart(ChartType.SCATTER);[127X[104X
+    [4X[25Xgap>[125X [27XSetAxisXTitle(chart, "X Axis");[127X[104X
+    [4X[25Xgap>[125X [27XSetAxisYTitle(chart, "Y Axis");[127X[104X
+    [4X[25Xgap>[125X [27Xdata1 := Dataset("data1", [100,20,30,47,90]);[127X[104X
+    [4X[25Xgap>[125X [27XAdd(chart, data1);[127X[104X
+  [4X[32X[104X
+  
+  [1X4.4-2 Add[101X
+  
+  [33X[1;0Y[29X[2XAdd[102X( [3XIsChart[103X[, [3XIsDataset[103X, [3XList(IsDataset)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XChart[110X[133X
+  
+  [33X[0;0YAdds a [10XDataset[110X to a specific [10XChart[110X.[133X
+  
+  [1X4.4-3 Remove[101X
+  
+  [33X[1;0Y[29X[2XRemove[102X( [3XIsChart[103X[, [3XIsDataset[103X, [3XList(IsDataset)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XChart[110X[133X
+  
+  [33X[0;0YRemoves a [10XDataset[110X from a specific [10XChart[110X.[133X
+  
+  [1X4.4-4 Dataset[101X
+  
+  [33X[1;0Y[29X[2XDataset[102X( [3XIsString(title)[103X, [3XIsList(data)[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XDataset[110X[133X
+  
+  [33X[0;0YCreates a dataset.[133X
+  
+  [1X4.4-5 DefaultAxis[101X
+  
+  [33X[1;0Y[29X[2XDefaultAxis[102X( [3XIsChartType[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xrec[110X[133X
+  
+  [33X[0;0YReturns the default settings for a [10XChartType[110X[133X
+  
+  [1X4.4-6 XAxis[101X
+  
+  [33X[1;0Y[29X[2XXAxis[102X( [3XIsAxisScaleType[103X, [3XIsString(title)[103X, [3XIsList(domain)[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XXAxis[110X[133X
+  
+  [33X[0;0YCreates a [10XXAxis[110X[133X
+  
+  [1X4.4-7 YAxis[101X
+  
+  [33X[1;0Y[29X[2XYAxis[102X( [3XIsAxisScaleType[103X, [3XIsString(title)[103X, [3XIsList(domain)[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XYAxis[110X[133X
+  
+  [33X[0;0YCreates a [10XYAxis[110X[133X
+  
+  
+  [1X4.5 [33X[0;0YGlobal[133X[101X
+  
+  [33X[0;0YIn this section we show all Global Chart Francy Records for multi purpose.[133X
+  
+  
+  [1X4.6 [33X[0;0YAttributes[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Attributes[133X
+  
+  [1X4.6-1 ShowLegend[101X
+  
+  [33X[1;0Y[29X[2XShowLegend[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsBool[110X True if enabled otherwise False[133X
+  
+  [33X[0;0Y[10XShowLegend[110X  is  a  property  that  enables  or disables displaying the [10XChart[110X
+  legend in the client implementation.[133X
+  
+  [1X4.6-2 ShowLegend[101X
+  
+  [33X[1;0Y[29X[2XShowLegend[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X4.6-3 SetShowLegend[101X
+  
+  [33X[1;0Y[29X[2XSetShowLegend[102X( [3XIsChart[103X, [3XIsBool[103X ) [32X operation[133X
+  
+  [33X[0;0Y[10XShowLegend[110X  is  a  property  that  enables  or disables displaying the [10XChart[110X
+  legend in the client implementation.[133X
+  
+  [1X4.6-4 AxisXTitle[101X
+  
+  [33X[1;0Y[29X[2XAxisXTitle[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsString[110X with the title of the object[133X
+  
+  [33X[0;0YThis is used to display the X Axis Title in the client implementation.[133X
+  
+  [1X4.6-5 AxisXTitle[101X
+  
+  [33X[1;0Y[29X[2XAxisXTitle[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X4.6-6 SetAxisXTitle[101X
+  
+  [33X[1;0Y[29X[2XSetAxisXTitle[102X( [3XIsChart[103X, [3XIsString[103X ) [32X operation[133X
+  
+  [33X[0;0YThis is used to display the X Axis Title in the client implementation.[133X
+  
+  [1X4.6-7 AxisYTitle[101X
+  
+  [33X[1;0Y[29X[2XAxisYTitle[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsString[110X with the title of the object[133X
+  
+  [33X[0;0YThis is used to display the Y Axis Title in the client implementation.[133X
+  
+  [1X4.6-8 AxisYTitle[101X
+  
+  [33X[1;0Y[29X[2XAxisYTitle[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X4.6-9 SetAxisYTitle[101X
+  
+  [33X[1;0Y[29X[2XSetAxisYTitle[102X( [3XIsChart[103X, [3XIsString[103X ) [32X operation[133X
+  
+  [33X[0;0YThis is used to display the Y Axis Title in the client implementation.[133X
+  
+  [1X4.6-10 AxisXDomain[101X
+  
+  [33X[1;0Y[29X[2XAxisXDomain[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsList[110X[133X
+  
+  [33X[0;0YThis is the domain of the X Axis values in the client implementation.[133X
+  
+  [1X4.6-11 AxisXDomain[101X
+  
+  [33X[1;0Y[29X[2XAxisXDomain[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X4.6-12 SetAxisXDomain[101X
+  
+  [33X[1;0Y[29X[2XSetAxisXDomain[102X( [3XIsList[103X, [3XIsList[103X ) [32X operation[133X
+  
+  [33X[0;0YThis is the domain of the X Axis values in the client implementation.[133X
+  

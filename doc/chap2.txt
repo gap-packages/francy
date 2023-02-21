@@ -1,0 +1,270 @@
+  
+  [1X2 [33X[0;0YFrancy Callbacks[133X[101X
+  
+  [33X[0;0Y[10XCallbacks[110X  are objects holding a [10XFunction[110X, a list of arguments and a trigger
+  event. [10XCallbacks[110X are used to execute GAP code from a remote client using the
+  [10XTrigger[110X Operation.[133X
+  
+  [33X[0;0Y[10XCallbacks[110X can be added directly to [10XMenus[110X and [10XShapes[110X.[133X
+  
+  [33X[0;0YPlease see Francy-JS for client implementation.[133X
+  
+  
+  [1X2.1 [33X[0;0YCategories[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Callback Categories.[133X
+  
+  [1X2.1-1 IsCallback[101X
+  
+  [33X[1;0Y[29X[2XIsCallback[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XCallback[110X objects.[133X
+  
+  [1X2.1-2 IsRequiredArg[101X
+  
+  [33X[1;0Y[29X[2XIsRequiredArg[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XRequiredArg[110X objects.[133X
+  
+  [1X2.1-3 IsArgType[101X
+  
+  [33X[1;0Y[29X[2XIsArgType[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XArgType[110X objects.[133X
+  
+  [1X2.1-4 IsTriggerType[101X
+  
+  [33X[1;0Y[29X[2XIsTriggerType[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XTriggerType[110X objects.[133X
+  
+  
+  [1X2.2 [33X[0;0YFamilies[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Callback Families.[133X
+  
+  
+  [1X2.3 [33X[0;0YRepresentations[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Callback Representations.[133X
+  
+  [1X2.3-1 IsCallbackRep[101X
+  
+  [33X[1;0Y[29X[2XIsCallbackRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XCallback[110X internal representation.[133X
+  
+  [1X2.3-2 IsRequiredArgRep[101X
+  
+  [33X[1;0Y[29X[2XIsRequiredArgRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XRequiredArg[110X internal representation.[133X
+  
+  [1X2.3-3 IsArgTypeRep[101X
+  
+  [33X[1;0Y[29X[2XIsArgTypeRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XArgType[110X internal representation.[133X
+  
+  [1X2.3-4 IsTriggerTypeRep[101X
+  
+  [33X[1;0Y[29X[2XIsTriggerTypeRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XTriggerType[110X internal representation.[133X
+  
+  
+  [1X2.4 [33X[0;0YOperations[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Callback Operations.[133X
+  
+  [1X2.4-1 Callback[101X
+  
+  [33X[1;0Y[29X[2XCallback[102X( [3XIsTriggerType[103X, [3XIsFunction[103X, [3XIsList(object)[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XCallback[110X[133X
+  
+  [33X[0;0YCreates  a  [10XCallback[110X object that holds a [10XFunction[110X and the [10XRequiredArgs[110X to be
+  executed by a [10XTriggerType[110X.[133X
+  
+  [33X[0;0Y[13XPlease note, the Function must always [10XReturn[110X[113X[133X
+  
+  [33X[0;0YExamples:[133X
+  
+  [33X[0;0YCreate a simple [10XCallback[110X with no arguments:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMyFunction := function() return "Hello World!"; end;[127X[104X
+    [4X[25Xgap>[125X [27Xcallback := Callback(MyFunction);[127X[104X
+    [4X[25Xgap>[125X [27XId(callback);[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YCreate a [10XCallback[110X with one required argument of type string:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMyFunction := function(str) return Concatenation("Hello", " ", str); end;[127X[104X
+    [4X[25Xgap>[125X [27Xcallback := Callback(MyFunction);[127X[104X
+    [4X[25Xgap>[125X [27Xarg := RequiredArg(ArgType.STRING, "Your Name");[127X[104X
+    [4X[25Xgap>[125X [27XAdd(callback, arg);[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YCreate a [10XCallback[110X with one known argument of type string:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMyFunction := function(args) return args; end;[127X[104X
+    [4X[25Xgap>[125X [27Xcallback := Callback(MyFunction, ["Hello World"]);[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YCreate  a [10XCallback[110X with one known argument and one required argument of type
+  string:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMyFunction := function(a,b) return Concatenation(a, b); end;[127X[104X
+    [4X[25Xgap>[125X [27Xcallback := Callback(MyFunction, ["Hello "]);[127X[104X
+    [4X[25Xgap>[125X [27Xarg := RequiredArg(ArgType.STRING, "Your Name");[127X[104X
+    [4X[25Xgap>[125X [27XAdd(callback, arg);[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YCreate  a [10XCallback[110X with one known argument and one required argument of type
+  string and double click trigger Type:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMyFunction := function(a,b) return Concatenation(a, b); end;[127X[104X
+    [4X[25Xgap>[125X [27Xcallback := Callback(TriggerType.DOUBLE_CLICK, MyFunction, ["Hello "]);[127X[104X
+    [4X[25Xgap>[125X [27Xarg := RequiredArg(ArgType.STRING, "Your Name");[127X[104X
+    [4X[25Xgap>[125X [27XAdd(callback, arg);[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn order to see the output of the previous examples, we have to simulate the
+  external call to [10XTrigger[110X operation:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMyFunction := function(a,b) return Concatenation(a, b); end;[127X[104X
+    [4X[25Xgap>[125X [27Xcallback := Callback(TriggerType.DOUBLE_CLICK, MyFunction, ["Hello "]);[127X[104X
+    [4X[25Xgap>[125X [27Xarg := RequiredArg(ArgType.STRING, "Your Name");[127X[104X
+    [4X[25Xgap>[125X [27XSetTitle(arg, "Enter your name");[127X[104X
+    [4X[25Xgap>[125X [27XTitle(arg);[127X[104X
+    [4X[25Xgap>[125X [27XAdd(callback, arg);[127X[104X
+    [4X[25Xgap>[125X [27XSetValue(arg, "Manuel"); # simulate the user input[127X[104X
+    [4X[25Xgap>[125X [27XValue(arg);[127X[104X
+    [4X[25Xgap>[125X [27XTrigger(GapToJsonString(Sanitize(callback))); # simulate the external trigger[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YCreate  a  Noop  Callback,  useful  for  Menu  holders, where no [10XFunction[110X is
+  required:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xcallback := NoopCallback();[127X[104X
+  [4X[32X[104X
+  
+  [1X2.4-2 NoopCallback[101X
+  
+  [33X[1;0Y[29X[2XNoopCallback[102X(  ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XCallback[110X[133X
+  
+  [33X[0;0YCreates  an  empty  [10XCallback[110X object that does nothing. Useful to create menu
+  holders.[133X
+  
+  [1X2.4-3 RequiredArg[101X
+  
+  [33X[1;0Y[29X[2XRequiredArg[102X( [3XIsArgType[103X, [3XIsString(title)[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XRequiredArg[110X[133X
+  
+  [33X[0;0YCreates  a [10XCallback[110X with a [10XRequiredArg[110X. [10XRequiredArg[110X is user input driven and
+  required  for  the  execution  of  a  [10XCallback[110X  [10XFunction[110X. The value for this
+  argument will be provided by the user.[133X
+  
+  [1X2.4-4 Trigger[101X
+  
+  [33X[1;0Y[29X[2XTrigger[102X( [3XIsString(JSON)[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe result of the execution of the [10XCallback[110X defined [10XFunction[110X[133X
+  
+  [33X[0;0YTriggers   a   [10XCallback[110X   [10XFunction[110X   in  GAP.  Gets  a  JSON  String  object
+  representation of the callback to execute.[133X
+  
+  [1X2.4-5 Add[101X
+  
+  [33X[1;0Y[29X[2XAdd[102X( [3XIsCallback[103X[, [3XIsRequiredArg[103X, [3XList(IsRequiredArg)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XCallback[110X[133X
+  
+  [33X[0;0YAdds a [10XRequiredArg[110X to a specific [10XCallback[110X.[133X
+  
+  [1X2.4-6 Remove[101X
+  
+  [33X[1;0Y[29X[2XRemove[102X( [3XIsCallback[103X[, [3XIsRequiredArg[103X, [3XList(IsRequiredArg)[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XCallback[110X[133X
+  
+  [33X[0;0YRemoves a [10XRequiredArg[110X from a specific [10XCallback[110X.[133X
+  
+  
+  [1X2.5 [33X[0;0YGlobals[133X[101X
+  
+  [33X[0;0YIn  this  section  we  show  the  Global  Callback  Francy Records for multi
+  purpose.[133X
+  
+  
+  [1X2.6 [33X[0;0YAttributes[133X[101X
+  
+  [33X[0;0YIn this section we show the Francy Callback Attributes[133X
+  
+  [1X2.6-1 Title[101X
+  
+  [33X[1;0Y[29X[2XTitle[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsString[110X with the title of the object[133X
+  
+  [33X[0;0YA title on a [10XRequiredArg[110X is used to retrieve input from a user.[133X
+  
+  [1X2.6-2 Title[101X
+  
+  [33X[1;0Y[29X[2XTitle[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X2.6-3 SetTitle[101X
+  
+  [33X[1;0Y[29X[2XSetTitle[102X( [3XIsRequiredArg[103X, [3XIsString[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the title of the [10XRequiredArg[110X.[133X
+  
+  [1X2.6-4 Value[101X
+  
+  [33X[1;0Y[29X[2XValue[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsString[110X with the value of the object[133X
+  
+  [33X[0;0YA  value on a [10XRequiredArg[110X is the actual input value to be passed to back gap
+  from the client GUI. These values are stored as [10XString[110X for convenience, even
+  if  the  [10XArgType[110X  specified  for  the [10XRequiredArg[110X is of another type. Hence,
+  explicit conversion is required within the [10XCallback[110X [10XFunction[110X.[133X
+  
+  [1X2.6-5 Value[101X
+  
+  [33X[1;0Y[29X[2XValue[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X2.6-6 SetValue[101X
+  
+  [33X[1;0Y[29X[2XSetValue[102X( [3XIsRequiredArg[103X, [3XIsString[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the value of the [10XRequiredArg[110X.[133X
+  
+  [1X2.6-7 ConfirmMessage[101X
+  
+  [33X[1;0Y[29X[2XConfirmMessage[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya  [10XIsString[110X  with  the  message to be shown to the user before the
+            [10XCallback[110X execution.[133X
+  
+  [33X[0;0YThis will display a confirmation message before any [10XCallback[110X is executed.[133X
+  
+  [1X2.6-8 ConfirmMessage[101X
+  
+  [33X[1;0Y[29X[2XConfirmMessage[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X2.6-9 SetConfirmMessage[101X
+  
+  [33X[1;0Y[29X[2XSetConfirmMessage[102X( [3XIsRequiredArg[103X, [3XIsString[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the value of the confirmation message to display to the user.[133X
+  

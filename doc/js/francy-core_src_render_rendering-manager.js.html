@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: francy-core/src/render/rendering-manager.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: francy-core/src/render/rendering-manager.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {Logger} from '../util/logger';
+import Observable from '../util/observable';
+import {RuntimeException} from '../util/exception';
+import {Utilities} from '../util/utilities';
+
+/**
+ * This class implements all the methods to handle multiple renderers on {Francy}.
+ *
+ * {RenderingManager} is a singleton that can be accessed to register and unregister a {Renderer}.
+ * Only one renderer is active at a time.
+ *
+ * {RenderingManager} will notify any subscribed methods when a supported events {RENDERING_EVENTS} occur.
+ *
+ * @example
+ * RenderingManager.subscribe(RENDERING_EVENTS.REGISTER, objectChanged => {});
+ * @example
+ * Francy.RenderingManager.register(new D3Renderer());
+ * @example
+ * Francy.RenderingManager.unregister('D3Renderer');
+ * @example
+ * Francy.RenderingManager.enable('D3Renderer');
+ * @example
+ * Francy.RenderingManager.allRenderers();
+ * @example
+ * Francy.RenderingManager.activeRenderer();
+ *
+ * @extends {Observable}
+ */
+export default class RenderingManagerHandler extends Observable {
+
+  /**
+   * Default Constructor
+   */
+  constructor(context) {
+    super();
+    this.context = context;
+    // add only if it does not exist
+    this.context.configuration.addProperty('renderers', {});
+  }
+
+  /**
+   * This method is used to register a renderer within {Francy}.
+   *
+   * @returns {object} this instance
+   * @public
+   */
+  register(clazz) {
+    if (!clazz || !clazz.configuration || !clazz.configuration.name || !clazz.configuration.renderer) {
+      throw new RuntimeException('Not a valid renderer!');
+    } else if (clazz.configuration.name &amp;&amp; !(clazz.configuration.name in this.context.configuration.object.renderers)) {
+      clazz.configuration.enable = clazz.configuration.enable || false;
+      Logger.debug(`(${this.context.instanceId}) Registering Renderer: ${clazz.configuration.name}`);
+      this.context.configuration.object.renderers[clazz.configuration.name] = {
+        enable: false,
+        renderer: clazz.configuration.renderer,
+        name: clazz.configuration.name,
+        id: Utilities.generateId()
+      };
+      this.notify(RENDERING_EVENTS.REGISTER, this.context.configuration.object.renderers[clazz.configuration.name]);
+      if (clazz.configuration.enable) {
+        this.enable(clazz.configuration.name);
+      }
+    } else {
+      // update the renderer has this does not get serialized
+      this.context.configuration.object.renderers[clazz.configuration.name].renderer = clazz.configuration.renderer;
+    }
+    return this;
+  }
+
+  /**
+   * This method is used to unregister a renderer.
+   *
+   * @param {string} name - the name of the renderer
+   * @returns {object} this instance
+   * @public
+   */
+  unregister(name) {
+    if (name) {
+      Logger.debug(`(${this.context.instanceId}) Unregistering Renderer: ${name}`);
+      this.notify(RENDERING_EVENTS.UNREGISTER, this.context.configuration.object.renderers[name]);
+      delete this.context.configuration.object.renderers[name];
+    }
+    return this;
+  }
+
+
+  /**
+   * This method is used to unregister all renderers except the specified one.
+   * Useful to unregister all renderers when the user specifies the renderer on GAP.
+   *
+   * @param {string} name - the name of the renderer
+   * @returns {object} this instance
+   * @public
+   */
+  unregisterAllExcept(name) {
+    for (let prop in this.context.configuration.object.renderers) {
+      if (name === prop) {
+        continue;
+      }
+      Logger.debug(`(${this.context.instanceId}) Unregistering Renderer: ${prop}`);
+      this.notify(RENDERING_EVENTS.UNREGISTER, this.context.configuration.object.renderers[prop]);
+      delete this.context.configuration.object.renderers[prop];
+    }
+    return this;
+  }
+
+  /**
+   * This method is used to enable a renderer. Only one renderer is enabled
+   * at a time, so the previous enabled renderer will be set to `disabled`.
+   *
+   * @param {string} name - the name of the renderer
+   * @returns {object} this instance
+   * @public
+   */
+  enable(name) {
+    if (name) {
+      Logger.info(`(${this.context.instanceId}) Enabling Renderer: ${name}`);
+      for (let prop in this.context.configuration.object.renderers) {
+        let previous = this.context.configuration.object.renderers[prop].enable;
+        let current = name === prop;
+        if (previous !== current) {
+          this.context.configuration.object.renderers[prop].enable = current;
+          this.notify(RENDERING_EVENTS.STATUS, this.context.configuration.object.renderers[prop]);
+        }
+      }
+    }
+    return this;
+  }
+
+  /**
+   * This method returns all the renderers registered
+   *
+   * @return {object} the renderers dictionary
+   * @public
+   */
+  allRenderers() {
+    return this.context.configuration.object.renderers;
+  }
+
+  /**
+   * This method returns the current active renderer.
+   *
+   * @return {string} the renderer name
+   * @public
+   */
+  activeRenderer() {
+    let r = this.context.configuration.object.renderers[Object.keys(this.context.configuration.object.renderers[0])];
+    for (let prop in this.context.configuration.object.renderers) {
+      if (this.context.configuration.object.renderers[prop].enable) {
+        r = this.context.configuration.object.renderers[prop];
+        break;
+      }
+    }
+    if (!r.renderer) {
+      throw new RuntimeException('No renderers registered!');
+    }
+    Logger.debug(`(${this.context.instanceId}) Active Renderer: ${r.name}`);
+    return r.renderer;
+  }
+}
+/**
+ * The events supported by {RenderingManager}.
+ * @public
+ */
+export const RENDERING_EVENTS = {REGISTER: 'REGISTER', UNREGISTER: 'UNREGISTER', STATUS: 'STATUS'};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Exception.html">Exception</a></li><li><a href="FrancyApp.html">FrancyApp</a></li><li><a href="FrancyWidget.html">FrancyWidget</a></li><li><a href="Log.html">Log</a></li><li><a href="RuntimeException.html">RuntimeException</a></li><li><a href="module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#BACKEND">BACKEND</a></li><li><a href="global.html#DefaultConfiguration">DefaultConfiguration</a></li><li><a href="global.html#GlobalConfiguration">GlobalConfiguration</a></li><li><a href="global.html#HTMLCanvasParent">HTMLCanvasParent</a></li><li><a href="global.html#HTMLParent">HTMLParent</a></li><li><a href="global.html#Logger">Logger</a></li><li><a href="global.html#MIME">MIME</a></li><li><a href="global.html#RENDERING_EVENTS">RENDERING_EVENTS</a></li><li><a href="global.html#SVGParent">SVGParent</a></li><li><a href="global.html#activeRenderer">activeRenderer</a></li><li><a href="global.html#addChild">addChild</a></li><li><a href="global.html#addProperty">addProperty</a></li><li><a href="global.html#allRenderers">allRenderers</a></li><li><a href="global.html#autoUnrender">autoUnrender</a></li><li><a href="global.html#enable">enable</a></li><li><a href="global.html#enabled">enabled</a></li><li><a href="global.html#execute">execute</a></li><li><a href="global.html#extension">extension</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMousePosition">getMousePosition</a></li><li><a href="global.html#handle">handle</a></li><li><a href="global.html#handleErrors">handleErrors</a></li><li><a href="global.html#handlePromise">handlePromise</a></li><li><a href="global.html#has">has</a></li><li><a href="global.html#hasProperty">hasProperty</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#hide">hide</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#isAvailable">isAvailable</a></li><li><a href="global.html#iterator">iterator</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#margin">margin</a></li><li><a href="global.html#mathTypesetting">mathTypesetting</a></li><li><a href="global.html#notEmpty">notEmpty</a></li><li><a href="global.html#notify">notify</a></li><li><a href="global.html#object">object</a></li><li><a href="global.html#onErrorExec">onErrorExec</a></li><li><a href="global.html#onErrorThrow">onErrorThrow</a></li><li><a href="global.html#parent">parent</a></li><li><a href="global.html#parentClass">parentClass</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#removeChildren">removeChildren</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderChildren">renderChildren</a></li><li><a href="global.html#requires">requires</a></li><li><a href="global.html#set">set</a></li><li><a href="global.html#settings">settings</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#subscribe">subscribe</a></li><li><a href="global.html#syntax">syntax</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#unregister">unregister</a></li><li><a href="global.html#unregisterAllExcept">unregisterAllExcept</a></li><li><a href="global.html#unrender">unrender</a></li><li><a href="global.html#unsubscribe">unsubscribe</a></li><li><a href="global.html#unsubscribeAll">unsubscribeAll</a></li><li><a href="global.html#width">width</a></li><li><a href="global.html#withContext">withContext</a></li><li><a href="global.html#withLogRetries">withLogRetries</a></li><li><a href="global.html#withRetries">withRetries</a></li><li><a href="global.html#withStackTrace">withStackTrace</a></li><li><a href="global.html#wrap">wrap</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Feb 21 2023 22:00:55 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

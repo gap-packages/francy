@@ -1,0 +1,100 @@
+  
+  [1X5 [33X[0;0YFrancy Core[133X[101X
+  
+  [33X[0;0YFrancy  is responsible for generating JSON metadata models allowing external
+  tools  /  libraries  /  frameworks  to  add  visual  representations to math
+  structures. This JSON model representation defines the contract between this
+  package  (server)  and  a  GUI  framework  (client),  enabling  complete SoC
+  (Separation   of   Concerns).  Francy  can  be  used  to  provide  graphical
+  interactive environments on existing GAP packages.[133X
+  
+  [33X[0;0YA  JSON schema is available and can be used to produce compliant clients for
+  this package. [13XSee schema/francy.json[113X[133X
+  
+  [33X[0;0YTo  map  required and optional attributes from the schema into GAP code, the
+  implementation follows the following criteria:[133X
+  
+  [30X    [33X[0;6YObject  creation  requests mandatory attributes, i.e. required with no
+        default value, e.g. canvas:=Canvas("Title")[133X
+  
+  [30X    [33X[0;6YObject creation accepts an object of defaults, i.e. default values for
+        mandatory  fields  but  that  might  repeat throughout the creation of
+        multiple     similar     objects,     e.g.    defaults:=DefaultCanvas;
+        defaults!.zoomToFit:=false;   canvas:=Canvas("Title",defaults);  Where
+        DefaultCanvas contains defaults for width (800) and height (600)[133X
+  
+  [30X    [33X[0;6YAttributes  associated with the object that can be set, .i.e. optional
+        with       no       defaults,       e.g.      canvas:=Canvas("Title");
+        SetTexTypesetting(canvas,true);[133X
+  
+  [33X[0;0YThe  API  follows  common  GAP naming conventions and adding objects is done
+  using   Add(objectHolder,object)   and   removing   object   is  done  using
+  Remove(objectHolder,object).[133X
+  
+  [33X[0;0YAlthough  Francy  has  the  concept  of  a  [10XGraph[110X, it does not implement any
+  Mathematics Graphs Theory.[133X
+  
+  [33X[0;0YPlease see Francy-JS for client implementation.[133X
+  
+  
+  [1X5.1 [33X[0;0YCategories[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Core Categories.[133X
+  
+  [1X5.1-1 IsFrancyObject[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyObject[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies all [10XObjects[110X in Francy.[133X
+  
+  [1X5.1-2 IsFrancyDefaultObject[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyDefaultObject[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies all Default record objects in Francy.[133X
+  
+  [1X5.1-3 IsFrancyTypeObject[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyTypeObject[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies all Type record objects in Francy.[133X
+  
+  
+  [1X5.2 [33X[0;0YFamilies[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Core Families.[133X
+  
+  
+  [1X5.3 [33X[0;0YGlobal[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Core Types[133X
+  
+  
+  [1X5.4 [33X[0;0YAttributes[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy Core Attributes[133X
+  
+  [1X5.4-1 FrancyId[101X
+  
+  [33X[1;0Y[29X[2XFrancyId[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsString[110X with the unique identifier of the object[133X
+  
+  [33X[0;0YAll Objects created in Francy have a generated unique identifier.[133X
+  
+  [1X5.4-2 FrancyId[101X
+  
+  [33X[1;0Y[29X[2XFrancyId[102X( [3Xarg1[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya [10XIsString[110X with the unique id of the object[133X
+  
+  [33X[0;0YPrints the object unique identifier.[133X
+  
+  [1X5.4-3 SetFrancyId[101X
+  
+  [33X[1;0Y[29X[2XSetFrancyId[102X( [3Xo[103X, [3Xs[103X ) [32X operation[133X
+  
+  [33X[0;0YUse  with care! Changing the unique ID might be useful in certain cases, but
+  bear in mind it might cause unexpected behavior. Use at your own risk.[133X
+  

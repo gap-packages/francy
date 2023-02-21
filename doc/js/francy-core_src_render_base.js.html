@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: francy-core/src/render/base.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: francy-core/src/render/base.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import DataHandler from '../util/data-handler';
+import {Decorators} from '../decorator/factory';
+import {Exception} from '../util/exception';
+import {Logger} from '../util/logger';
+
+/**
+ * Base is the base of renderers and contains multiple utility methods.
+ *
+ * @extends {DataHandler}
+ */
+export default class BaseRenderer extends DataHandler {
+
+  /**
+   * Base constructor
+   *
+   * @typedef {Object} options
+   * @property {String} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
+   * @property {Object} context - the context of the application, usually a configuration and a rendering manager instance
+   */
+  constructor({appendTo = 'body', callbackHandler}, context = {}) {
+    super();
+    /**
+     * @typedef {Object} Options
+     * @property {Boolean} appendTo where the generated html/svg components will be attached to, default body
+     * @property {Function} callbackHandler this handler will be used to invoke actions from the menu, default console.log
+     */
+    this.options = undefined;
+    this.settings({appendTo: appendTo, callbackHandler: callbackHandler});
+    this.context = context;
+  }
+
+  /**
+   * Returns the parent element of this class
+   *
+   * @return {object} a d3 object
+   * @public
+   */
+  get parent() {
+    return this.options.appendTo.element;
+  }
+
+  /**
+   * Returns the parent class of this class
+   *
+   * @return {Renderer} the {Renderer} or {Composite} parent of this class
+   * @public
+   */
+  get parentClass() {
+    return this.options.appendTo;
+  }
+
+  /**
+   * Generic error handler.
+   * Will log the error and rethrow if error is unknown.
+   *
+   * @param {Error} error - an error instance
+   * @public
+   */
+  static handleErrors(error) {
+    if (error instanceof Exception) {
+      // well, most of these are just informative
+      Logger.debug(error.message);
+      return;
+    }
+    Logger.error(error.message);
+    throw error;
+  }
+
+  /**
+   * Saves the settings in an internal options object.
+   *
+   * @typedef {Object} options
+   * @property {Boolean} options.appendTo - where the generated html/svg components will be attached to, default body
+   * @property {Function} options.callbackHandler - this handler will be used to invoke actions from the menu, default console.log
+   * @returns {object} this instance
+   * @public
+   */
+  settings({appendTo, callbackHandler}) {
+    this.options = this.options || {};
+    if (!this.options.callbackHandler &amp;&amp; !callbackHandler) {
+      throw new Error('A Callback Handler must be provided! This will be used to trigger events from the graphics produced...');
+    }
+    if (!this.options.appendTo &amp;&amp; !appendTo) {
+      throw new Error('Missing an element or id to append the graphics to!');
+    }
+    if (appendTo &amp;&amp; !appendTo.element) {
+      appendTo = {element: d3.select(appendTo)};
+    }
+    this.options.appendTo = appendTo || this.options.appendTo;
+    this.options.callbackHandler = callbackHandler || this.options.callbackHandler;
+    return this;
+  }
+
+  /**
+   * Returns the current mouse position.
+   *
+   * @protected
+   */
+  getMousePosition(e) {
+    return [Number(e &amp;&amp; e.layerX || 0), Number(e &amp;&amp; e.layerY || 0)];
+  }
+
+  /**
+   * Generic Promise handler.
+   * This will show the Loader/Spinner on the application while processing.
+   *
+   * @param {Promise} promise - a promise to execute
+   * @return {Object} the result of the promise
+   * @public
+   */
+  handlePromise(promise) {
+    let loader = Decorators.Loader.withContext(this).show();
+    return promise
+      .then(data => data)
+      .catch(error => BaseRenderer.handleErrors(error))
+      .finally(() => loader.hide());
+  }
+
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Exception.html">Exception</a></li><li><a href="FrancyApp.html">FrancyApp</a></li><li><a href="FrancyWidget.html">FrancyWidget</a></li><li><a href="Log.html">Log</a></li><li><a href="RuntimeException.html">RuntimeException</a></li><li><a href="module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#BACKEND">BACKEND</a></li><li><a href="global.html#DefaultConfiguration">DefaultConfiguration</a></li><li><a href="global.html#GlobalConfiguration">GlobalConfiguration</a></li><li><a href="global.html#HTMLCanvasParent">HTMLCanvasParent</a></li><li><a href="global.html#HTMLParent">HTMLParent</a></li><li><a href="global.html#Logger">Logger</a></li><li><a href="global.html#MIME">MIME</a></li><li><a href="global.html#RENDERING_EVENTS">RENDERING_EVENTS</a></li><li><a href="global.html#SVGParent">SVGParent</a></li><li><a href="global.html#activeRenderer">activeRenderer</a></li><li><a href="global.html#addChild">addChild</a></li><li><a href="global.html#addProperty">addProperty</a></li><li><a href="global.html#allRenderers">allRenderers</a></li><li><a href="global.html#autoUnrender">autoUnrender</a></li><li><a href="global.html#enable">enable</a></li><li><a href="global.html#enabled">enabled</a></li><li><a href="global.html#execute">execute</a></li><li><a href="global.html#extension">extension</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getMousePosition">getMousePosition</a></li><li><a href="global.html#handle">handle</a></li><li><a href="global.html#handleErrors">handleErrors</a></li><li><a href="global.html#handlePromise">handlePromise</a></li><li><a href="global.html#has">has</a></li><li><a href="global.html#hasProperty">hasProperty</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#hide">hide</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#isAvailable">isAvailable</a></li><li><a href="global.html#iterator">iterator</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#margin">margin</a></li><li><a href="global.html#mathTypesetting">mathTypesetting</a></li><li><a href="global.html#notEmpty">notEmpty</a></li><li><a href="global.html#notify">notify</a></li><li><a href="global.html#object">object</a></li><li><a href="global.html#onErrorExec">onErrorExec</a></li><li><a href="global.html#onErrorThrow">onErrorThrow</a></li><li><a href="global.html#parent">parent</a></li><li><a href="global.html#parentClass">parentClass</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#removeChildren">removeChildren</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderChildren">renderChildren</a></li><li><a href="global.html#requires">requires</a></li><li><a href="global.html#set">set</a></li><li><a href="global.html#settings">settings</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#subscribe">subscribe</a></li><li><a href="global.html#syntax">syntax</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#unregister">unregister</a></li><li><a href="global.html#unregisterAllExcept">unregisterAllExcept</a></li><li><a href="global.html#unrender">unrender</a></li><li><a href="global.html#unsubscribe">unsubscribe</a></li><li><a href="global.html#unsubscribeAll">unsubscribeAll</a></li><li><a href="global.html#width">width</a></li><li><a href="global.html#withContext">withContext</a></li><li><a href="global.html#withLogRetries">withLogRetries</a></li><li><a href="global.html#withRetries">withRetries</a></li><li><a href="global.html#withStackTrace">withStackTrace</a></li><li><a href="global.html#wrap">wrap</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Feb 21 2023 22:00:55 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

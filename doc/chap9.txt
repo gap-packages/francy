@@ -1,0 +1,109 @@
+  
+  [1X9 [33X[0;0YFrancy Renderers[133X[101X
+  
+  [33X[0;0Y[10XFrancyRenderer[110X  is  an object that holds the renderer name to be used by the
+  client to display the graphics.[133X
+  
+  [33X[0;0YFrancy  JS  allows  users to switch between renderers in runtime, but if the
+  renderer is specified in the GAP code, then the user won't be able to switch
+  between renderers on the client side.[133X
+  
+  [33X[0;0YThis  implementation  knows only about the official supported renderers: [10XD3[110X,
+  [10XVis[110X and [10XGraphviz[110X. Please see Francy-JS for client implementation.[133X
+  
+  
+  [1X9.1 [33X[0;0YCategories[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy FrancyRenderer Categories.[133X
+  
+  [1X9.1-1 IsFrancyRenderer[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyRenderer[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XFrancyRenderer[110X objects.[133X
+  
+  [1X9.1-2 IsFrancyRendererType[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyRendererType[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIdentifies [10XFrancyRendererType[110X objects.[133X
+  
+  
+  [1X9.2 [33X[0;0YFamilies[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy FrancyRenderer Families.[133X
+  
+  
+  [1X9.3 [33X[0;0YRepresentations[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy FrancyRenderer Representations.[133X
+  
+  [1X9.3-1 IsFrancyRendererRep[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyRendererRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XFrancyRenderer[110X internal representation.[133X
+  
+  [1X9.3-2 IsFrancyRendererTypeRep[101X
+  
+  [33X[1;0Y[29X[2XIsFrancyRendererTypeRep[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YChecks whether an [10XObject[110X has a [10XFrancyRendererType[110X internal representation.[133X
+  
+  
+  [1X9.4 [33X[0;0YOperations[133X[101X
+  
+  [33X[0;0YIn this section we show all Francy FrancyRenderer Operations.[133X
+  
+  [1X9.4-1 FrancyRenderer[101X
+  
+  [33X[1;0Y[29X[2XFrancyRenderer[102X( [3XIsFrancyRendererType[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10XFrancyRenderer[110X[133X
+  
+  [33X[0;0YAdds an info label with the format "label: value"[133X
+  
+  [33X[0;0YExamples:[133X
+  
+  [33X[0;0YConfigure [10XFrancyRendererType.VIS[110X as the renderer for a specific canvas:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xcanvas := Canvas("Example Canvas / Shape with Messages");[127X[104X
+    [4X[25Xgap>[125X [27Xgraph := Graph(GraphType.UNDIRECTED);[127X[104X
+    [4X[25Xgap>[125X [27XAdd(canvas, graph);[127X[104X
+    [4X[25Xgap>[125X [27Xvis := FrancyRenderer(FrancyRendererType.VIS);[127X[104X
+    [4X[25Xgap>[125X [27XAdd(canvas, vis);[127X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.5 [33X[0;0YGlobal[133X[101X
+  
+  [33X[0;0YIn  this  section  we  show  all Global FrancyRendererType records for multi
+  purpose.[133X
+  
+  
+  [1X9.6 [33X[0;0YAttributes[133X[101X
+  
+  [33X[0;0YIn this section we show all FrancyRenderer Core Attributes[133X
+  
+  [1X9.6-1 Value[101X
+  
+  [33X[1;0Y[29X[2XValue[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIsString[110X with the renderer of the object[133X
+  
+  [33X[0;0YA  value  on a [10XFrancyRenderer[110X is used to specify which renderer will be used
+  to draw the graphics on the client.[133X
+  
+  [1X9.6-2 Value[101X
+  
+  [33X[1;0Y[29X[2XValue[102X( [3Xarg1[103X ) [32X operation[133X
+  
+  [1X9.6-3 SetValue[101X
+  
+  [33X[1;0Y[29X[2XSetValue[102X( [3XIsFrancyRenderer[103X, [3XIsString[103X ) [32X operation[133X
+  
+  [33X[0;0YSets the actual renderer [10XFrancyRenderer[110X.[133X
+  
