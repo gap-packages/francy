@@ -71,26 +71,22 @@ This section provides basic information to start contributing to the Javascript 
 ## Development
 
 The project is managed by npm and follows all the standard Lerna project format.
-
 To run Francy on your development environment follow the following recipe:
 
 ```bash
 mcmartins@local:~/francy/js $ sudo npm install -g n && sudo n stable
 mcmartins@local:~/francy/js $ # install dependencies
 mcmartins@local:~/francy/js $ npm install
-mcmartins@local:~/francy/js $ npm run bootstrap
-mcmartins@local:~/francy/js $ # run tests
-mcmartins@local:~/francy/js $ npm run test
 mcmartins@local:~/francy/js $ # build project
 mcmartins@local:~/francy/js $ npm run build
+mcmartins@local:~/francy/js $ # run tests
+mcmartins@local:~/francy/js $ npm run test
 mcmartins@local:~/francy/js $ # development installation for jupyter
 mcmartins@local:~/francy/js $ cd packages/francy-extension-jupyter
-mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ pip install -e .
-mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ # for JupyterLab
-mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ jupyter labextension link
-mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ jupyter lab --watch
-mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ # run jupyter locally
-mcmartins@local:~/francy/js/packages/francy-extension-jupyter $ cd ~/francy/notebooks
+mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ # for JupyterLab
+mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ pip install .
+mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ # run jupyter locally
+mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ cd ~/francy/notebooks
 mcmartins@local:~/francy/notebooks $ jupyter lab --ip=0.0.0.0 --port=8080 --no-browser
 ```
 

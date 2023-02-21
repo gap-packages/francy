@@ -18,6 +18,6 @@ mcmartins@local:~$ git flow release start 2.0.0
 mcmartins@local:~$ git checkout master
 mcmartins@local:~$ git merge release/2.0.0
 mcmartins@local:~$ git flow release finish '2.0.0'
-mcmartins@local:~$ git push
 mcmartins@local:~$ git push --tags
+mcmartins@local:~$ git push
 ```

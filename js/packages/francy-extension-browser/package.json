@@ -1,6 +1,6 @@
 {
   "name": "francy-extension-browser",
-  "version": "0.0.0b",
+  "version": "2.0.0",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Browser Extension",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {

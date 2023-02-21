@@ -1,6 +1,6 @@
 # Francy Graphviz Renderer
 
-This package contains the implementation of graphs and charts using viz.js (Gaphviz).
+This package contains the implementation of graphs and charts using Graphviz.
 
 # Usage
 

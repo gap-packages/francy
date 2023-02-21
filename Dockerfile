@@ -28,4 +28,4 @@ RUN pip install jupyterlab jupyterlab-francy
 
 WORKDIR /home/gap/master/pkg/francy/notebooks
 
-CMD jupyter lab --port=9090
+CMD jupyter lab --port=8080
