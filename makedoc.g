@@ -14,6 +14,7 @@ AutoDoc(rec(autodoc := true,
                                             SubgroupLattice := "<URL Text=\"SubgroupLattice\">https://github.com/mcmartins/subgroup-lattice</URL>",
                                             FrancyMonoids := "<URL Text=\"FrancyMonoids\">https://github.com/gap-packages/FrancyMonoids</URL>",
                                             JupyterKernel := "<Package>JupyterKernel</Package>",
-                                            json := "<Package>json</Package>"))));
+                                            json := "<Package>json</Package>",
+                                            uuid := "<Package>uuid</Package>"))));
 
 QUIT;
