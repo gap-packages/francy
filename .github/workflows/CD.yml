@@ -64,8 +64,7 @@ jobs:
         run: |
           sudo touch /etc/apt/sources.list.d/opensuse.list &&
           echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
-      - name: Download ZMQ repo key
-        run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+          wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
       - name: Install ZMQ
         run: |
           sudo apt update && 
