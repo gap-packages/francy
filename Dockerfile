@@ -24,5 +24,7 @@ RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc t
 
 USER jovyan
 
+ENV PATH="/opt/conda/bin:/opt/conda/condabin:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 # jupyter lab extension installation
 RUN pip install jupyterlab-francy
