@@ -25,4 +25,4 @@ RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc t
 USER jovyan
 
 # jupyter lab extension installation
-RUN pip install jupyterlab jupyterlab-francy
+RUN pip install --no-cache-dir jupyterlab jupyterlab-francy && rm -rf /home/jovyan/.jupyter/*
