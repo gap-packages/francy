@@ -1,3 +1,4 @@
+gap> RANDOM_SEED(1);
 gap> graph := Graph(GraphType.DIRECTED);
 <IsFrancyObject/IsFrancyGraph>
 gap> SetSimulation(graph, false);

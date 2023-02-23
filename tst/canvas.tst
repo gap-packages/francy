@@ -1,3 +1,4 @@
+gap> RANDOM_SEED(1);
 gap> canvas := Canvas("");
 <IsFrancyObject/IsCanvas>
 gap> FrancyId(canvas);

@@ -75,14 +75,23 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
       - run: npm install
         working-directory: js
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm run lint
         working-directory: js
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm run build
         working-directory: js
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm run test
         working-directory: js
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - uses: codecov/codecov-action@v3
 
   # The documentation job
@@ -108,8 +117,3 @@ jobs:
       - uses: gap-actions/build-pkg-docs@v1
         with:
           use-latex: 'true'
-      - name: Upload documentation
-        uses: actions/upload-artifact@v2
-        with:
-          name: manual
-          path: ./doc/manual.pdf

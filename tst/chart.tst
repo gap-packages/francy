@@ -1,3 +1,4 @@
+gap> RANDOM_SEED(1);
 gap> chart:=Chart(ChartType.BAR);
 <IsFrancyObject/IsChart>
 gap> SetAxisXTitle(chart, "X Axis");

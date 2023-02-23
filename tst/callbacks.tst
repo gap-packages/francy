@@ -1,3 +1,4 @@
+gap> RANDOM_SEED(1);
 gap> MyFunction := function() return "Hello World!"; end;
 function(  ) ... end
 gap> callback := Callback(MyFunction);
