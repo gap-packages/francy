@@ -1,20 +1,16 @@
 {
   "private": true,
-  "name": "jupyterlab-francy",
-  "version": "2.0.1",
-  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Jupyter Lab Extension",
-  "keywords": [
-    "gap",
-    "francy",
-    "jupyter",
-    "jupyterlab",
-    "jupyterlab-extension"
-  ],
+  "name": "francy-extension-jupyterlab",
+  "version": "2.0.0",
+  "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Jupyter Notebook/Lab Extension",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gap-packages/francy.git"
+  },
   "homepage": "https://github.com/gap-packages/francy",
   "bugs": {
     "url": "https://github.com/gap-packages/francy/issues"
   },
-  "license": "MIT",
   "author": {
     "name": "Manuel Martins",
     "email": "manuelmachadomartins@gmail.com"
@@ -26,30 +22,17 @@
   "directories": {
     "lib": "src/"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gap-packages/francy.git"
-  },
-  "scripts": {
-    "build": "npm run build:labextension:dev",
-    "build:prod": "npm run build:labextension",
-    "build:labextension": "jupyter labextension build .",
-    "build:labextension:dev": "jupyter labextension build --development True .",
-    "clean:labextension": "npm run clean",
-    "clean:all": "npm run clean:labextension",
-    "clean": "rimraf ./dist ./build jupyterlab-francy/__pycache__ jupyterlab-francy/labextension jupyter_francy.egg-info __pycache__"
-  },
-  "dependencies": {
-    "francy": "*",
-    "francy-core": "*",
-    "francy-renderer-d3": "*",
-    "francy-renderer-graphviz": "*",
-    "francy-renderer-vis": "*"
-  },
-  "devDependencies": {
-    "@jupyterlab/builder": "^3.6.1",
-    "rimraf": "^4.1.2"
-  },
+  "license": "MIT",
+  "keywords": [
+    "gap",
+    "francy",
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension",
+    "jupyter notebook",
+    "jupyter notebook extension",
+    "extension"
+  ],
   "jupyterlab": {
     "webpackConfig": "./webpack.config.js",
     "extension": true,
@@ -70,5 +53,24 @@
         }
       ]
     }
+  },
+  "scripts": {
+    "clean": "rm -rf ./lib ./dist ./build jupyterlab-francy/jupyterlab-francy jupyterlab-francy/__pycache__ jupyterlab-francy/labextension ./jupyter_francy.egg-info ./__pycache__",
+    "build:labextension": "jupyter labextension build .",
+    "build:labextension:dev": "jupyter labextension build --source-map True --development True .",
+    "build": "npm run build:labextension:dev",
+    "build:prod": "npm run build:labextension"
+  },
+  "dependencies": {
+    "francy": "*",
+    "francy-core": "*",
+    "francy-renderer-d3": "*",
+    "francy-renderer-graphviz": "*",
+    "francy-renderer-vis": "*"
+  },
+  "devDependencies": {
+    "@jupyterlab/builder": "^3.6.1",
+    "@jupyterlab/notebook": "^3.6.1",
+    "@jupyterlab/rendermime": "^3.6.1"
   }
 }
