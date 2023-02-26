@@ -1,0 +1,51 @@
+name: NPM_PYPI
+
+# Trigger the workflow on push or pull request
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  publish_js_python_packages:
+    name: Build and Publish plugins
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 19.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip
+      - run: pip install jupyterlab build
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install
+        working-directory: js
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm run build:prod
+        working-directory: js
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Browser extension
+        run: npm publish --no-workspaces
+        working-directory: js/packages/francy-extension-browser
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: python -m build --wheel --sdist
+        working-directory: js/packages/francy-extension-jupyterlab
+      - name: Publish Jupyterlab extension PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          packages_dir: js/packages/francy-extension-jupyterlab/dist

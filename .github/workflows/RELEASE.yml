@@ -1,0 +1,64 @@
+name: RELEASE
+
+# Trigger the workflow on push or pull request
+on:
+  push:
+    branches:
+      - master
+
+# the `concurrency` settings ensure that not too many CI jobs run in parallel
+concurrency:
+  # group by workflow and ref; the last slightly strange component ensures that for pull
+  # requests, we limit to 1 concurrent job, but for the master branch we don't
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.ref != 'refs/heads/master' || github.run_number }}
+  # Cancel intermediate builds, but only if it is a pull request build.
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+
+jobs:
+  gap_release_tools:
+    name: Build and Publish manuals
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure ZMQ repos
+        run: |
+          sudo touch /etc/apt/sources.list.d/opensuse.list &&
+          echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
+          wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+      - name: Install ZMQ
+        run: |
+          sudo apt update && 
+          sudo apt install libzmq3-dev -y
+      - uses: gap-actions/setup-gap@v2
+        with:
+          GAP_PKGS_TO_BUILD: "datastructures uuid json io crypting zeromqinterface jupyterkernel"
+          GAPBRANCH: master
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+        working-directory: js
+      - run: npm run docs
+        working-directory: js
+      - name: GAPTools Release
+        run: |
+          # Clone Release tools
+          git clone --depth=2 -b master https://github.com/gap-system/ReleaseTools $HOME/ReleaseTools
+          # Add a new remote pointing to the GitHubPagesForGAP repository
+          git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
+          git fetch gh-gap
+          # Create a fresh gh-pages branch from the new remote
+          git branch gh-pages gh-gap/gh-pages --no-track
+          # Create a new worktree and change into it
+          git worktree add gh-pages gh-pages
+          # Copy JavaScript documentation
+          cp -rf doc/js gh-pages/doc/
+          # Configure git
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git config github.user "GitHub Actions Bot"
+          git config github.token "${{ secrets.GITHUB_TOKEN }}"
+          # Run Release Script
+          GAP="$HOME/gap/bin/gap.sh" $HOME/ReleaseTools/release-gap-package --push

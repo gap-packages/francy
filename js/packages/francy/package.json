@@ -1,7 +1,6 @@
 {
   "private": true,
   "name": "francy",
-  "version": "2.0.0",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {

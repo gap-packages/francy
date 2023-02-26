@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "francy-extension-jupyterlab",
-  "version": "2.0.0",
+  "name": "jupyterlab-francy",
+  "version": "2.0.1",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Jupyter Lab Extension",
   "keywords": [
     "gap",
@@ -19,10 +19,13 @@
     "name": "Manuel Martins",
     "email": "manuelmachadomartins@gmail.com"
   },
-  "files": [
-    "src/index.js"
-  ],
   "main": "src/index.js",
+  "files": [
+    "src/**/*.js"
+  ],
+  "directories": {
+    "lib": "src/"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gap-packages/francy.git"
