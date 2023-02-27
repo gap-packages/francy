@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version": "2.0.1",
   "name": "francy-js",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Renders [application/vnd.francy+json] MIME Type on Jupyter Environments.",
   "repository": {
@@ -18,7 +19,7 @@
     "docs": "jsdoc --verbose --recurse --configure .jsdoc.json",
     "lint": "eslint --config .eslintrc.json packages/francy*",
     "lint:fix": "eslint --fix --config .eslintrc.json packages/francy*",
-    "coverage": "npm run test"
+    "coverage": "yarn run test"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
@@ -55,9 +56,9 @@
     "d3-shape": "^3.2.0",
     "d3-transition": "^3.0.1",
     "d3-zoom": "^3.0.0",
-    "jsdoc": "^4.0.2",
     "eslint": "^8.34.0",
     "file-loader": "^6.2.0",
+    "jsdoc": "^4.0.2",
     "json-loader": "^0.5.7",
     "karma": "^6.4.1",
     "karma-chai": "^0.1.0",
@@ -82,6 +83,7 @@
     "terser-webpack-plugin": "^5.3.6",
     "vis-network": "^9.1.2",
     "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "webpack-cli": "^5.0.1",
+    "yarn": "^1.22.19"
   }
 }

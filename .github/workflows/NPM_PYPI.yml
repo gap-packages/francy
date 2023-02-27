@@ -29,16 +29,15 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
-      - run: npm install
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
         working-directory: js
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: npm run build:prod
+      - run: yarn run build:prod
         working-directory: js
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish Browser extension
-        run: npm publish --no-workspaces
+        run: |
+          npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+          npm publish --no-workspaces
         working-directory: js/packages/francy-extension-browser
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

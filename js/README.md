@@ -70,17 +70,17 @@ This section provides basic information to start contributing to the Javascript 
 
 ## Development
 
-The project is managed by npm and follows all the standard Lerna project format.
+The project is managed by yarn and follows all the standard Lerna project format.
 To run Francy on your development environment follow the following recipe:
 
 ```bash
 mcmartins@local:~/francy/js $ sudo npm install -g n && sudo n stable
 mcmartins@local:~/francy/js $ # install dependencies
-mcmartins@local:~/francy/js $ npm install
+mcmartins@local:~/francy/js $ yarn install
 mcmartins@local:~/francy/js $ # build project
-mcmartins@local:~/francy/js $ npm run build
+mcmartins@local:~/francy/js $ yarn run build
 mcmartins@local:~/francy/js $ # run tests
-mcmartins@local:~/francy/js $ npm run test
+mcmartins@local:~/francy/js $ yarn run test
 mcmartins@local:~/francy/js $ # development installation for jupyter
 mcmartins@local:~/francy/js $ cd packages/francy-extension-jupyter
 mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ # for JupyterLab
@@ -98,7 +98,7 @@ There are 3 workflows defined for this project:
 * RELEASE - This workflow runs the [ReleaseTools](https://github.com/gap-system/ReleaseTools) scripts for commits on `master`. This will TAG the code, generate the documentation and create a release on GitHub. 
 * NPM_PYPI - This workflow publishes the Python Jupyter extensions and the JavaScript NPM modules when a TAG is created.
 
-
+All developments should happen on the branch `develop` and to release just create a pull request to `master`.
 
 # Package Structure
 

@@ -24,7 +24,7 @@
   },
   "scripts": {
     "clean": "rm -rf ./dist/*",
-    "build": "npm run build:prod",
+    "build": "yarn run build:prod",
     "build:prod": "webpack --env production=true --config webpack.config.js"
   },
   "files": [

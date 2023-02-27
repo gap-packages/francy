@@ -38,9 +38,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
         working-directory: js
-      - run: npm run docs
+      - run: yarn run docs
         working-directory: js
       - name: GAPTools Release
         run: |
