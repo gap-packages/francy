@@ -1,3 +1,4 @@
+gap> RANDOM_SEED(1);
 gap> canvas := Canvas("Callbacks in action");
 <IsFrancyObject/IsCanvas>
 gap> SetHeight(canvas, 100);

@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "francy-extension-jupyterlab",
-  "version": "2.0.0",
+  "name": "jupyterlab-francy",
+  "version": "2.0.1",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Jupyter Lab Extension",
   "keywords": [
     "gap",
@@ -19,21 +19,24 @@
     "name": "Manuel Martins",
     "email": "manuelmachadomartins@gmail.com"
   },
-  "files": [
-    "src/index.js"
-  ],
   "main": "src/index.js",
+  "files": [
+    "src/**/*.js"
+  ],
+  "directories": {
+    "lib": "src/"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gap-packages/francy.git"
   },
   "scripts": {
-    "build": "npm run build:labextension:dev",
-    "build:prod": "npm run build:labextension",
+    "build": "yarn run build:labextension:dev",
+    "build:prod": "yarn run build:labextension",
     "build:labextension": "jupyter labextension build .",
     "build:labextension:dev": "jupyter labextension build --development True .",
-    "clean:labextension": "npm run clean",
-    "clean:all": "npm run clean:labextension",
+    "clean:labextension": "yarn run clean",
+    "clean:all": "yarn run clean:labextension",
     "clean": "rimraf ./dist ./build jupyterlab-francy/__pycache__ jupyterlab-francy/labextension jupyter_francy.egg-info __pycache__"
   },
   "dependencies": {

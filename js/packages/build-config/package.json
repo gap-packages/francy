@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version": "2.0.1",
   "name": "build-config",
   "description": "Webpack build configuration files shared across the project",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",

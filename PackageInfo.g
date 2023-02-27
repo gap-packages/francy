@@ -9,9 +9,9 @@
 
 SetPackageInfo(rec(
 
-  PackageName := "Francy",
+  PackageName := "francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
-  Version     := "2.0.0",
+  Version     := "2.0.1",
   Date        := "25/01/2023", # dd/mm/yyyy format
   License     := "MIT",
 
@@ -37,13 +37,13 @@ SetPackageInfo(rec(
     Type := "git",
     URL  := Concatenation( "https://github.com/gap-packages/", ~.PackageName ),
   ),
-  IssueTrackerURL := Concatenation(~.SourceRepository.URL, "/issues"),
-  PackageWWWHome  := "https://gap-packages.github.io/francy",
-  PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
-  README_URL      := Concatenation(~.PackageWWWHome, "/README.md"),
-  ArchiveURL      := Concatenation("https://github.com/gap-packages/francy/",
-                                "releases/download/v", ~.Version,
-                                "/francy-", ~.Version),
+  IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+  PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", ~.PackageName ),
+  README_URL      := Concatenation( ~.PackageWWWHome, "/README.md" ),
+  PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
+  ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", ~.PackageName, "-", ~.Version ),
   ArchiveFormats  := ".tar.gz",
 
   AbstractHTML :=

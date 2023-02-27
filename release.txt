@@ -1,3 +1,0 @@
-This major release includes multiple bug fixes and performance improvements.
-
-We dropped support to jupyter notebooks extension.

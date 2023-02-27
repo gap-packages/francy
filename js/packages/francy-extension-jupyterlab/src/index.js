@@ -86,7 +86,7 @@ export class FrancyWidget extends RenderedHTML {
  * This extension will configure a mime renderer factory for 'application/vnd.francy+json' data.
  */
 const extension = {
-  id: 'francy-extension-jupyterlab:factory',
+  id: 'jupyterlab-francy:factory',
   name: 'francy',
   dataType: 'json',
   autoStart: true,

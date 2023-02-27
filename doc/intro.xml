@@ -33,7 +33,7 @@
 
     This package requires the &GAP; packages &JupyterKernel;, &json; and &uuid;, all of which are distributed with &GAP; by default.
     &Francy; requires &Jupyter; to be installed on your system. Please note that you need to run the installation commands from the same python version &Jupyter; is installed on.
-    Currently, &Francy; is supported only on &Juyter; Lab, if you want to use it on the old &Jupyter; Notebooks, please install the latest supported version: v1.2.4.
+    Currently, &Francy; is supported only on &Jupyter; Lab, if you want to use it on the old &Jupyter; Notebooks, please install the latest supported version: v1.2.4.
     In order to install or update &Francy;, please run the following command to download the latest version available from <URL>https://pypi.org/</URL>:
     <Log>
       mcmartins@local:~$ pip install -U jupyterlab-francy

@@ -33,8 +33,7 @@ jobs:
         run: |
           sudo touch /etc/apt/sources.list.d/opensuse.list &&
           echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
-      - name: Download ZMQ repo key
-        run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+          wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
       - name: Install ZMQ
         run: |
           sudo apt update && 
@@ -54,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [19.x]
+        node-version: [ 19.x ]
 
     steps:
       - uses: actions/checkout@v3
@@ -75,13 +74,26 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install
+          registry-url: 'https://registry.npmjs.org'
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: js
-      - run: npm run lint
+      - name: Restore yarn cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
+          restore-keys: |
+            yarn-cache-folder-
+      - run: yarn install --frozen-lockfile
         working-directory: js
-      - run: npm run build
+      - run: yarn run lint
         working-directory: js
-      - run: npm run test
+      - run: yarn run build:prod
+        working-directory: js
+      - run: yarn run test
         working-directory: js
       - uses: codecov/codecov-action@v3
 
@@ -96,8 +108,7 @@ jobs:
         run: |
           sudo touch /etc/apt/sources.list.d/opensuse.list &&
           echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
-      - name: Download ZMQ repo key
-        run: wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+          wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
       - name: Install ZMQ
         run: |
           sudo apt update && 
@@ -108,8 +119,3 @@ jobs:
       - uses: gap-actions/build-pkg-docs@v1
         with:
           use-latex: 'true'
-      - name: Upload documentation
-        uses: actions/upload-artifact@v2
-        with:
-          name: manual
-          path: ./doc/manual.pdf

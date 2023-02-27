@@ -90,3 +90,5 @@ gh-pages/
 **/build_log.json
 
 **/docs/*
+
+**/labextension/

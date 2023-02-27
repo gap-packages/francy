@@ -1,6 +1,6 @@
 {
   "name": "francy-extension-browser",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Browser Extension",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
   "repository": {
@@ -23,7 +23,8 @@
     "francy-renderer-vis": "*"
   },
   "scripts": {
-    "build": "npm run build:prod",
+    "clean": "rm -rf ./dist/*",
+    "build": "yarn run build:prod",
     "build:prod": "webpack --env production=true --config webpack.config.js"
   },
   "files": [
