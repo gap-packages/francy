@@ -34,7 +34,7 @@ mcmartins@local:~$ pip install -U jupyterlab-francy
 <html>
 <head>
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v7,graphviz,vis">
-  <script src="https://unpkg.com/francy-extension-browser@2.0.1/dist/main.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser@2.0.2/dist/main.js"></script>
   <title>Francy</title>
 </head>
 <body>

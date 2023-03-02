@@ -45,13 +45,15 @@ jobs:
         working-directory: js
       - run: yarn run build:prod
         working-directory: js
-      - name: Publish Browser extension
+      - name: Configure npm
         run: |
           npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-          npm publish --no-workspaces
-        working-directory: js/packages/francy-extension-browser
+        working-directory: js
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Browser extension
+        run: npm publish --no-workspaces
+        working-directory: js/packages/francy-extension-browser
       - run: python -m build --wheel --sdist
         working-directory: js/packages/francy-extension-jupyterlab
       - name: Publish Jupyterlab extension PyPI

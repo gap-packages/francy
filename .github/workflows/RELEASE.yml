@@ -56,6 +56,8 @@ jobs:
       - run: yarn run docs
         working-directory: js
       - name: GAPTools Release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           # Clone Release tools
           git clone --depth=2 -b master https://github.com/gap-system/ReleaseTools $HOME/ReleaseTools
@@ -68,10 +70,5 @@ jobs:
           git worktree add gh-pages gh-pages
           # Copy JavaScript documentation
           cp -rf doc/js gh-pages/doc/
-          # Configure git
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
-          git config github.user "GitHub Actions Bot"
-          git config github.token "${{ secrets.GITHUB_TOKEN }}"
           # Run Release Script
-          GAP="$HOME/gap/bin/gap.sh" $HOME/ReleaseTools/release-gap-package --push
+          GAP="$HOME/gap/bin/gap.sh" bash -x $HOME/ReleaseTools/release-gap-package --force --push --token ${GH_TOKEN}
