@@ -30,6 +30,9 @@ jobs:
         run: |
           sudo apt update && 
           sudo apt install libzmq3-dev -y
+      - name: Install TeXLive
+        run: |
+          sudo apt-get install --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended
       - uses: gap-actions/setup-gap@v2
         with:
           GAP_PKGS_TO_BUILD: "datastructures uuid json io crypting zeromqinterface jupyterkernel"
