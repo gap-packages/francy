@@ -62,10 +62,10 @@ jobs:
           # Clone Release tools
           git clone --depth=2 -b master https://github.com/gap-system/ReleaseTools $HOME/ReleaseTools
           # Add a new remote pointing to the GitHubPagesForGAP repository
-          git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
-          git fetch gh-gap
+          # git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
+          # git fetch gh-gap
           # Create a fresh gh-pages branch from the new remote
-          git branch gh-pages gh-gap/gh-pages --no-track
+          # git branch gh-pages gh-gap/gh-pages --no-track
           # Create a new worktree and change into it
           git worktree add gh-pages gh-pages
           # Copy JavaScript documentation
