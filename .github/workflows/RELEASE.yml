@@ -67,9 +67,10 @@ jobs:
           # Clone Release tools
           git clone --depth=2 -b master https://github.com/gap-system/ReleaseTools $HOME/ReleaseTools
           # Add a new remote pointing to the GitHubPagesForGAP repository
-          git remote -v
           git worktree add gh-pages origin/gh-pages
+          cd gh-pages && git checkout gh-pages && git pull && cd ..
           # Copy JavaScript documentation
           cp -rf doc/js gh-pages/doc/
           # Run Release Script
           GAP="$HOME/gap/bin/gap.sh" bash -x $HOME/ReleaseTools/release-gap-package --force --push --token ${GH_TOKEN}
+
