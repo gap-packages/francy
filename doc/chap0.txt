@@ -1,12 +1,12 @@
   
   
-                                    [1X Francy [101X
+                                    [1X francy [101X
   
   
                 [1X Framework for Interactive Discrete Mathematics [101X
   
   
-                                     2.0.0
+                                     2.0.2
   
   
                                 25 January 2023

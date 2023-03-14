@@ -40,16 +40,16 @@
   
   [1X1.4 [33X[0;0YInstallation[133X[101X
   
-  [33X[0;0YThis   package   requires   the   [5XGAP[105X   packages   [5XJupyterKernel[105X,  [5Xjson[105X  and
-  UNKNOWNEntity(uuid),  all  of  which  are  distributed  with [5XGAP[105X by default.
-  [5XFrancy[105X  requires  Jupyter  ([7Xhttps://jupyter.org[107X)  to  be  installed  on your
-  system.  Please note that you need to run the installation commands from the
-  same   python   version   Jupyter  ([7Xhttps://jupyter.org[107X)  is  installed  on.
-  Currently,  [5XFrancy[105X  is  supported  only on UNKNOWNEntity(Juyter) Lab, if you
-  want  to  use  it on the old Jupyter ([7Xhttps://jupyter.org[107X) Notebooks, please
-  install  the latest supported version: v1.2.4. In order to install or update
-  [5XFrancy[105X,  please  run  the  following  command to download the latest version
-  available from [7Xhttps://pypi.org/[107X:[133X
+  [33X[0;0YThis  package requires the [5XGAP[105X packages [5XJupyterKernel[105X, [5Xjson[105X and [5Xuuid[105X, all of
+  which   are  distributed  with  [5XGAP[105X  by  default.  [5XFrancy[105X  requires  Jupyter
+  ([7Xhttps://jupyter.org[107X)  to  be installed on your system. Please note that you
+  need  to  run the installation commands from the same python version Jupyter
+  ([7Xhttps://jupyter.org[107X)  is  installed on. Currently, [5XFrancy[105X is supported only
+  on  Jupyter  ([7Xhttps://jupyter.org[107X)  Lab,  if  you  want to use it on the old
+  Jupyter ([7Xhttps://jupyter.org[107X) Notebooks, please install the latest supported
+  version:  v1.2.4.  In  order  to  install  or  update [5XFrancy[105X, please run the
+  following   command   to   download   the   latest  version  available  from
+  [7Xhttps://pypi.org/[107X:[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X      mcmartins@local:~$ pip install -U jupyterlab-francy[128X[104X
