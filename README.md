@@ -79,4 +79,3 @@ See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel) for more
 # License
 
 [MIT](LICENSE) License
-
