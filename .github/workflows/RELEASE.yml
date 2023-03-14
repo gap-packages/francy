@@ -72,5 +72,7 @@ jobs:
           # Copy JavaScript documentation
           cp -rf doc/js gh-pages/doc/
           # Run Release Script
+          git config --global user.email "noreply@none.no"
+          git config --global user.name "GitHubActionRELEASE"
           GAP="$HOME/gap/bin/gap.sh" bash -x $HOME/ReleaseTools/release-gap-package --force --push --token ${GH_TOKEN}
 
