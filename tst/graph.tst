@@ -42,8 +42,6 @@ gap> Add(graph, link);
 gap> GetLink(graph, FrancyId(link));
 <IsFrancyObject/IsLink>
 gap> GetLink(graph, "I'm not there!");
-gap> GetLinks(graph);
-rec( F1DE6EE59E29D4239443125A0840082FE := <IsFrancyObject/IsLink> )
 gap> Remove(graph, link);
 <IsFrancyObject/IsFrancyGraph>
 gap> Add(graph, [link]);

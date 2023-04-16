@@ -34,7 +34,7 @@ mcmartins@local:~$ pip install -U jupyterlab-francy
 <html>
 <head>
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v7,graphviz,vis">
-  <script src="https://unpkg.com/francy-extension-browser@2.0.2/dist/main.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser/dist/main.js"></script>
   <title>Francy</title>
 </head>
 <body>
@@ -92,13 +92,12 @@ mcmartins@local:~/francy/notebooks $ jupyter lab --ip=0.0.0.0 --port=8080 --no-b
 
 ## Releasing
 
-There are 3 workflows defined for this project:
+There are 2 workflows defined for this project:
 
 * CI - This workflow runs all tests (JS and GAP) for every commit/pull request on branches `develop` and `master`
-* RELEASE - This workflow runs the [ReleaseTools](https://github.com/gap-system/ReleaseTools) scripts for commits on `master`. This will TAG the code, generate the documentation and create a release on GitHub. 
-* NPM_PYPI - This workflow publishes the Python Jupyter extensions and the JavaScript NPM modules when a TAG is created.
+* RELEASE - This workflow runs the [ReleaseTools](https://github.com/gap-system/ReleaseTools) scripts on new `tag`.
 
-All developments should happen on the branch `develop` and to release just create a pull request to `master`.
+All developments should happen on the branch `develop` and to release just follow the release flow using `git flow`.
 
 # Package Structure
 
