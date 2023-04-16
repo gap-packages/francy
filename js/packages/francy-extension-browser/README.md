@@ -8,7 +8,7 @@ This extension can be used in `offline` mode in a web page as follows:
 <html>
 <head>
   <meta charset="utf-8" content="text/html" property="GAP,francy,d3.v7,graphviz,vis,vis">
-  <script src="https://unpkg.com/francy-extension-browser@2.0.2/dist/main.js"></script>
+  <script src="https://unpkg.com/francy-extension-browser/dist/main.js"></script>
   <title>Francy</title>
 </head>
 <body>

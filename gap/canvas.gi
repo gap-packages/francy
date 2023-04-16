@@ -197,10 +197,7 @@ function(canvas)
   local object;
   object := rec();
   object!.mime    := FrancyMIMEType;
-  #object!.version := InstalledPackageVersion("francy");
-  # FIXME/HACK/TODO: hardcode version 1.2.4, for the sake of the 1.2.5
-  # interim release. To be reverted for future releases.
-  object!.version := "1.2.4";
+  object!.version := InstalledPackageVersion("francy");
   object!.canvas  := Sanitize(canvas);
   return Objectify(
     JupyterRenderableType, 
@@ -234,7 +231,7 @@ function(canvas)
     <html>\n\
       <head>\n\
         <meta charset=\"utf-8\" content=\"text/html\" property=\"GAP,francy,d3.v7,vis,graphviz\"></meta>\n\
-        <script src=\"https://cdn.statically.io/gh/gap-packages/francy/latest/js/packages/francy-extension-browser/dist/main.js\"></script>\n\
+        <script src=\"https://unpkg.com/francy-extension-browser/dist/main.js\"></script>\n\
         <title>Francy</title>\n\
       </head>\n\
       <body>\n\
