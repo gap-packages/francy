@@ -1,10 +1,9 @@
 name: RELEASE
 
-# Trigger the workflow on push or pull request
+# Trigger the workflow on release, which is created by the release tools locally
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [published]
 
 # the `concurrency` settings ensure that not too many CI jobs run in parallel
 concurrency:
@@ -79,7 +78,7 @@ jobs:
 #          GAP="$HOME/gap/bin/gap.sh" bash -x $HOME/ReleaseTools/release-gap-package --force --push --token ${GH_TOKEN}
 
   publish_js_python_packages:
-    needs: gap_release_tools
+    #needs: gap_release_tools
     name: Build and Publish plugins
     runs-on: ubuntu-latest
     strategy:
