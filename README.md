@@ -76,6 +76,27 @@ See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel) for more
 | [Francy Julia](https://github.com/fieker/Francy)           | [Claus Fieker](https://github.com/fieker)        | Francy ported to Julia language                          |
 | [Francy Widgets](https://github.com/zerline/francy-widget) | [Odile Bénassy](https://github.com/zerline)      | Francy Python adapter for representing graphs in Jupyter |
 
+## Releasing
+
+All developments should happen on the branch `develop` and this should be merged into `master` when one is happy to release.
+
+To update the JS packages version, run the following command and pick the new version:
+
+```bash
+user@local js/ $ yarn run version
+```
+
+To update the Python PyPi.org package version please update the version on:
+
+* `js/packages/francy-extension-jupyterlab/pypproject.toml`
+
+To release, the official [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure should be followed.
+
+There are 2 workflows defined for this project:
+
+* CI - This workflow runs all tests (JS and GAP) for every commit/pull request on branches `develop` and `master`
+* RELEASE - This workflow runs the Python PyPi.org and NPM releases on new `tag`s created, normally after running the [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure.
+
 # License
 
 [MIT](LICENSE) License

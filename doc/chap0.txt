@@ -6,10 +6,10 @@
                 [1X Framework for Interactive Discrete Mathematics [101X
   
   
-                                     2.0.2
+                                     2.0.3
   
   
-                                25 January 2023
+                                 16 April 2023
   
   
                                  Manuel Martins

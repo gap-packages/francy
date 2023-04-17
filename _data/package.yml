@@ -1,7 +1,7 @@
 name: francy
-version: "2.0.2"
+version: "2.0.3"
 license: "MIT"
-date: 2023-01-25
+date: 2023-04-16
 description: |
     Framework for Interactive Discrete Mathematics
 
@@ -35,7 +35,7 @@ packageinfo: https://gap-packages.github.io/francy/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/francy/releases/download/v2.0.2/francy-2.0.2.tar.gz
+      url: https://github.com/gap-packages/francy/releases/download/v2.0.3/francy-2.0.3.tar.gz
 
 abstract: |
     The <span class="pkgname">Francy</span> package allows to use graphics in GAP.
@@ -49,7 +49,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Mar23</span>]   <b class='BibAuthor'>Martins, M.</b>,
      <i class='BibTitle'>francy, Framework for Interactive Discrete Mathematics,
-             Version 2.0.2</i>
+             Version 2.0.3</i>
      (<span class='BibYear'>2023</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/francy">https://gap-packages.github.io/francy</a></span>.
@@ -57,11 +57,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ francy2.0.2,
+    @misc{ francy2.0.3,
       author =           {Martins, M.},
       title =            {{francy},    Framework    for   Interactive   Discrete
-                          Mathematics, {V}ersion 2.0.2},
-      month =            {Jan},
+                          Mathematics, {V}ersion 2.0.3},
+      month =            {Apr},
       year =             {2023},
       note =             {GAP package},
       howpublished =     {\href          {https://gap-packages.github.io/francy}
