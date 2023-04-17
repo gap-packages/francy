@@ -92,12 +92,15 @@ mcmartins@local:~/francy/notebooks $ jupyter lab --ip=0.0.0.0 --port=8080 --no-b
 
 ## Releasing
 
-There are 2 workflows defined for this project:
+To update the JS packages version, run the following command and pick the new version:
 
-* CI - This workflow runs all tests (JS and GAP) for every commit/pull request on branches `develop` and `master`
-* RELEASE - This workflow runs the [ReleaseTools](https://github.com/gap-system/ReleaseTools) scripts on new `tag`.
+```bash
+user@local js/ $ yarn run version
+```
 
-All developments should happen on the branch `develop` and to release just follow the release flow using `git flow`.
+To update the Python PyPi.org package version please update the version on:
+
+* `js/packages/francy-extension-jupyterlab/pypproject.toml`
 
 # Package Structure
 

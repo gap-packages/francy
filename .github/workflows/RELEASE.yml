@@ -15,66 +15,68 @@ concurrency:
   cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 
 jobs:
-  gap_release_tools:
-    name: Build and Publish manuals
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Configure ZMQ repos
-        run: |
-          sudo touch /etc/apt/sources.list.d/opensuse.list &&
-          echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
-          wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
-      - name: Install ZMQ
-        run: |
-          sudo apt update && 
-          sudo apt install libzmq3-dev -y
-      - name: Install TeXLive
-        run: |
-          sudo apt-get install --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended
-      - uses: gap-actions/setup-gap@v2
-        with:
-          GAP_PKGS_TO_BUILD: "datastructures uuid json io crypting zeromqinterface jupyterkernel"
-          GAPBRANCH: master
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          registry-url: 'https://registry.npmjs.org'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-        shell: bash
-        working-directory: js
-      - name: Restore yarn cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
-          restore-keys: |
-            yarn-cache-folder-
-      - run: yarn install --frozen-lockfile
-        working-directory: js
-      - run: yarn run docs
-        working-directory: js
-      - name: GAPTools Release
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          # Clone Release tools
-          git clone --depth=2 -b master https://github.com/gap-system/ReleaseTools $HOME/ReleaseTools
-          # Add a new remote pointing to the GitHubPagesForGAP repository
-          git worktree add gh-pages origin/gh-pages
-          cd gh-pages && git checkout gh-pages && git pull && cd ..
-          # Copy JavaScript documentation
-          cp -rf doc/js gh-pages/doc/
-          # Run Release Script
-          git config --global user.email "noreply@none.no"
-          git config --global user.name "GitHubActionRELEASE"
-          GAP="$HOME/gap/bin/gap.sh" bash -x $HOME/ReleaseTools/release-gap-package --force --push --token ${GH_TOKEN}
+# FIXME well, on tag we do not have the refs necessary for the `git symbolic-ref -q --short HEAD` hence it fails
+# GAP related release will be done manually as all other gap packages, using the Release-Tools package, locally
+#  gap_release_tools:
+#    name: Build and Publish manuals
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          fetch-depth: 0
+#      - name: Configure ZMQ repos
+#        run: |
+#          sudo touch /etc/apt/sources.list.d/opensuse.list &&
+#          echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
+#          wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+#      - name: Install ZMQ
+#        run: |
+#          sudo apt update &&
+#          sudo apt install libzmq3-dev -y
+#      - name: Install TeXLive
+#        run: |
+#          sudo apt-get install --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended
+#      - uses: gap-actions/setup-gap@v2
+#        with:
+#          GAP_PKGS_TO_BUILD: "datastructures uuid json io crypting zeromqinterface jupyterkernel"
+#          GAPBRANCH: master
+#      - name: Use Node.js ${{ matrix.node-version }}
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: ${{ matrix.node-version }}
+#          registry-url: 'https://registry.npmjs.org'
+#      - name: Get yarn cache directory path
+#        id: yarn-cache-dir-path
+#        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+#        shell: bash
+#        working-directory: js
+#      - name: Restore yarn cache
+#        uses: actions/cache@v3
+#        with:
+#          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+#          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
+#          restore-keys: |
+#            yarn-cache-folder-
+#      - run: yarn install --frozen-lockfile
+#        working-directory: js
+#      - run: yarn run docs
+#        working-directory: js
+#      - name: GAPTools Release
+#        env:
+#          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+#        run: |
+#          # Clone Release tools
+#          git clone --depth=2 -b master https://github.com/gap-system/ReleaseTools $HOME/ReleaseTools
+#          # Add a new remote pointing to the GitHubPagesForGAP repository
+#          git worktree add gh-pages origin/gh-pages
+#          cd gh-pages && git checkout gh-pages && git pull && cd ..
+#          # Copy JavaScript documentation
+#          cp -rf doc/js gh-pages/doc/
+#          # Run Release Script
+#          git config --global user.email "noreply@none.no"
+#          git config --global user.name "GitHubActionRELEASE"
+#          GAP="$HOME/gap/bin/gap.sh" bash -x $HOME/ReleaseTools/release-gap-package --force --push --token ${GH_TOKEN}
 
   publish_js_python_packages:
     needs: gap_release_tools
