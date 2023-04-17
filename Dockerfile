@@ -17,7 +17,7 @@ RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc t
     git clone https://github.com/gap-packages/francy && \
     git clone https://github.com/mcmartins/subgroup-lattice && \
     git clone https://github.com/gap-packages/OrbitalGraphs && \
-    for pkg in 'io profilling json uuid crypting zeromqinterface jupyterkernel digraphs'; do ../bin/BuildPackages.sh --strict $pkg*; done &&  \
+    for pkg in `ls`; do ../bin/BuildPackages.sh --strict $pkg*; done &&  \
     rm -rf /opt/master/packages.tar.gz && chown -R jovyan: /opt/master/ && \
     cd /opt/master/pkg/jupyterkernel && pip install . && \
     ln -s /opt/master/pkg/francy/notebooks /home/jovyan/notebooks && \
