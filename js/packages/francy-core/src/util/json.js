@@ -12,7 +12,7 @@ export default class JsonUtils {
   static parse(input) {
     if (!input) return;
     if (typeof input === 'string') {
-      let jsonRegex = /{(?:[^])*}/g;
+      let jsonRegex = /{[^]*}/g;
       let match = jsonRegex.exec(input);
       if (match) {
         input = JSON.parse(match[0]);

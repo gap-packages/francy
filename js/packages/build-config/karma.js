@@ -53,7 +53,9 @@ module.exports = config => {
     coverageReporter: {
       reporters: [{type: 'lcovonly', subdir: '.'}]
     },
-    port: 9876,
+    server: {
+      port: 9876,
+    },
     colors: true,
     logLevel: config.LOG_INFO,
     browsers: ['ChromeHeadlessNoSandbox'],
