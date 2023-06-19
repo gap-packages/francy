@@ -60,7 +60,6 @@ See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel) for more
 |Directory   |Description                                                     |
 |:-----------|:---------------------------------------------------------------|
 | tst        | contains gap code tests                                        |
-| scripts    | contains scripts used by travis                                |
 | schema     | contains the francy JSON Schema                                |
 | notebooks  | contains some notebooks with francy examples                   |
 | js         | contains the source code of francy-js                          |
