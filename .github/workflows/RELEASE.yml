@@ -75,7 +75,7 @@ jobs:
 #          # Run Release Script
 #          git config --global user.email "noreply@none.no"
 #          git config --global user.name "GitHubActionRELEASE"
-#          GAP="$HOME/gap/bin/gap.sh" bash -x $HOME/ReleaseTools/release-gap-package --force --push --token ${GH_TOKEN}
+#          GAP="$HOME/gap/gap" bash -x $HOME/ReleaseTools/release-gap-package --force --push --token ${GH_TOKEN}
 
   publish_js_python_packages:
     #needs: gap_release_tools

@@ -21,7 +21,7 @@ RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc t
     rm -rf /opt/master/packages.tar.gz && chown -R jovyan: /opt/master/ && \
     cd /opt/master/pkg/jupyterkernel && pip install . && \
     ln -s /opt/master/pkg/francy/notebooks /home/jovyan/notebooks && \
-    ln -s /opt/master/bin/gap.sh /usr/local/sbin/gap && \
+    ln -s /opt/master/gap /usr/local/sbin/gap && \
     apt purge git gcc g++ make autoconf curl wget -y
 
 USER jovyan
