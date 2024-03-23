@@ -30,11 +30,6 @@ jobs:
           - stable-4.12
 
     steps:
-      - name: Configure ZMQ repos
-        run: |
-          sudo touch /etc/apt/sources.list.d/opensuse.list &&
-          echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
-          wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
       - name: Install ZMQ
         run: |
           sudo apt update && 
@@ -108,11 +103,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Configure ZMQ repos
-        run: |
-          sudo touch /etc/apt/sources.list.d/opensuse.list &&
-          echo "deb https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" | sudo tee -a /etc/apt/sources.list.d/opensuse.list
-          wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
       - name: Install ZMQ
         run: |
           sudo apt update && 
