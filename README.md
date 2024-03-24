@@ -9,7 +9,8 @@
 Francy is a package for GAP that provides a framework for Interactive Discrete Mathematics.
 
 Unlike [XGAP](https://github.com/gap-packages/xgap), Francy is not linked with any GUI framework and instead, 
-this package is responsible for the generation of a semantic model that can be used to produce a graphical representation using any other framework / language.
+this package is responsible for the generation of a semantic model that can be used to produce a graphical representation 
+using any other framework / language.
 
 See [Official Documentation](https://gap-packages.github.io/francy/doc/chap1.html)
 
@@ -26,33 +27,35 @@ Jupyter Lab Binder
 
 The following notebooks are available:
 
-|Notebook                        |Description                                                     |
-|:-------------------------------|:---------------------------------------------------------------|
-|francy-features.ipynb           | Contains examples of all features present in Francy            |
-|francy-monoids-mult-three.ipynb | Contains an example of proofs used in a paper                  |
-|francy-monoids.ipynb            | Contains FrancyMonoids package examples                        |
-|francy-numericalsgps.ipynb      | Same as above, but the algorithms are visible in the notebook  |
-|francy.ipynb                    | First notebook ever created with Francy                        |
-|ICMS_2018.ipynb                 | Presentation notebook for the ICMS 2018 in USA                 |
-|orbital-graphs.ipynb            | Contains some reseach algorithms for orbital graphs            |
-|output-widget.ipynb             | Contains an example of the output of 'plain/text' elements     |
-|subgroup-lattice.ipynb          | Contains Subgroup-Lattice package examples                     |
+| Notebook                        | Description                                                   |
+|:--------------------------------|:--------------------------------------------------------------|
+| demo.ipynb                      | Contains examples of all features present in Francy           |
+| francy.ipynb                    | First notebook ever created with Francy                       |
+| francy-features.ipynb           | Contains examples of all features present in Francy           |
+| francy-monoids.ipynb            | Contains FrancyMonoids package examples                       |
+| francy-monoids-mult-three.ipynb | Contains an example of proofs used in a paper                 |
+| francy-numericalsgps.ipynb      | Same as above, but the algorithms are visible in the notebook |
+| ICMS_2018.ipynb                 | Presentation notebook for the ICMS 2018 in USA                |
+| messages.ipynb                  | Contains examples of how to use messages                      |
+| orbital-graphs.ipynb            | Contains some research algorithms for orbital graphs          |
+| output-widget.ipynb             | Contains an example of the output of 'plain/text' elements    |
+| subgroup-lattice.ipynb          | Contains Subgroup-Lattice package examples                    |
 
 # Jupyter Integration
 
-In order to use this module in JupyterLab, install it as follows:
+In order to use this module in JupyterLab and Notebook 7.0.0+, install it as follows:
 
 ```bash
 mcmartins@local:~$ pip install -U jupyterlab-francy
 ```
 
-If you still use the old JupyterNotebooks, you should use the latest version supported, v1.2.4:
+If you still use the old Jupyter Notebook (<7.0.0), you should use the old extension v1.2.4:
 
 ```bash
 mcmartins@local:~$ pip install -U jupyter-francy
 ```
 
-This extension requires the JupyterKernel GAP package to be installed. 
+Please note that in order to use Francy, it is required the JupyterKernel GAP package to be installed. 
 See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel) for more information.
 
 # Package Structure
@@ -95,7 +98,8 @@ To release, the official [ReleaseTools](https://github.com/gap-system/ReleaseToo
 There are 2 workflows defined for this project:
 
 * CI - This workflow runs all tests (JS and GAP) for every commit/pull request on branches `develop` and `master`
-* RELEASE - This workflow runs the Python PyPi.org and NPM releases on new `tag`s created, normally after running the [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure.
+* RELEASE - This workflow runs the Python PyPi.org and NPM releases on new `tag`s created, normally after running the 
+* [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure.
 
 # License
 

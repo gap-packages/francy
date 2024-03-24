@@ -1,1 +1,1 @@
-export { FrancyApp } from './src/francy';
+export {FrancyApp} from './src/francy';
