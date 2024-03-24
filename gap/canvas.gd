@@ -132,7 +132,7 @@ DeclareOperation("Canvas", [IsString, IsCanvasDefaults]);
 DeclareOperation("Draw", [IsCanvas]);
 
 #! @Description
-#! Generates an HTML page with an offline version od Francy JS and opens it within the default browser of the system.
+#! Generates an HTML page with an offline version of Francy JS and opens it within the default browser of the system.
 #! @Arguments IsCanvas
 #! @Returns <C>IsString</C> with HTML generated
 DeclareOperation("DrawSplash", [IsCanvas]);

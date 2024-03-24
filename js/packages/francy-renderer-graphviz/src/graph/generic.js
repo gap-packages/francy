@@ -22,7 +22,7 @@ export default class GraphGeneric extends Graph {
     self.parent
       .graphviz()
       .logEvents(false)
-      .fade(false)
+      .fade(true)
       .engine(self.context.configuration.object.graphvizEngine)
       .keyMode('id')
       .dot(dot)
