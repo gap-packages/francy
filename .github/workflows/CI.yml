@@ -68,7 +68,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip
-      - run: pip install jupyterlab
+      - run: pip install jupyterlab==4.0.1
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
