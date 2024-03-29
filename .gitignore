@@ -92,3 +92,5 @@ gh-pages/
 **/docs/*
 
 **/labextension/
+
+**/.nx/*
