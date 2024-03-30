@@ -90,6 +90,16 @@ mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ cd ~/francy/n
 mcmartins@local:~/francy/notebooks $ jupyter lab --ip=0.0.0.0 --port=8080 --no-browser
 ```
 
+In alternative, if you do not want to install all the dependencies on your own laptop, the `dev-Dockerfile` can be used to build an image of the whole environment:
+
+```bash
+mcmartins@local:~/francy $ docker build -t francy:develop -f dev-Dockerfile .
+...
+mcmartins@local:~/francy $ docker run --rm --name francy -p 8888:8888 francy:develop
+```
+
+NOTE: Depending on the system, one might need to use `--net host` on the docker run command.
+
 ## Releasing
 
 To update the JS packages version, run the following command and pick the new version:

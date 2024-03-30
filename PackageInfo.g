@@ -47,7 +47,7 @@ SetPackageInfo(rec(
   ArchiveFormats  := ".tar.gz",
 
   AbstractHTML :=
-  "The <span class=\"pkgname\">Francy</span> package allows to use graphics in GAP.",
+  "<span class=\"pkgname\">Francy</span> offers a framework for generating graphic representations of data structures in GAP.",
 
   PackageDoc := rec(
     BookName         := "Francy",

@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 19.x ]
+        node-version: [ 21.x ]
 
     steps:
       - uses: actions/checkout@v4
@@ -68,7 +68,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip
-      - run: pip install jupyterlab==4.0.1
+      - run: pip install jupyterlab==4.1.5
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
