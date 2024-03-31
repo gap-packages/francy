@@ -2,11 +2,12 @@ FROM jupyter/minimal-notebook:latest
 
 LABEL Author="Manuel Martins <manuelmachadomartins@gmail.com>"
 
-USER root
-
 ARG DEBIAN_FRONTEND="noninteractive"
 ARG WGET="wget -N --no-check-certificate --tries=5 --waitretry=5 --retry-connrefused"
 
+USER root
+
+# setup GAP environment
 RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc texlive-xetex libgmp-dev libreadline-dev graphviz \
     zlib1g-dev libzmq3-dev gcc g++ make autoconf && \
     git clone --depth=2 -b master https://github.com/gap-system/gap.git /opt/master && cd /opt/master && \
@@ -17,17 +18,20 @@ RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc t
     git clone https://github.com/gap-packages/francy && \
     git clone https://github.com/mcmartins/subgroup-lattice && \
     git clone https://github.com/gap-packages/OrbitalGraphs && \
-    for pkg in `ls`; do ../bin/BuildPackages.sh --strict $pkg*; done &&  \
+    for pkg in `ls`; do ../bin/BuildPackages.sh --strict $pkg*; done && \
     rm -rf /opt/master/packages.tar.gz && chown -R jovyan: /opt/master/ && \
     cd /opt/master/pkg/jupyterkernel && pip install . && \
-    ln -s /opt/master/pkg/francy/notebooks /home/jovyan/notebooks && \
-    ln -s /opt/master/gap /usr/local/sbin/gap
+    ln -s /opt/master/gap /usr/local/sbin/gap && \
+    rm -rf /home/jovyan/.jupyter/*
 
+# setup JS / Python environment
+RUN apt install nodejs -y && pip install --no-cache-dir jupyterlab
+
+# setup local source code
 USER jovyan
 
-# jupyter lab extension installation
-COPY . /home/jovyan/francy/
+COPY --chown=jovyan:wheel . /opt/francy/
 
-RUN pip install --no-cache-dir jupyterlab && \
-    cd /home/jovyan/francy/js/packages/francy-extension-jupyterlab/ && \
-    pip install . && cd - && rm -rf /home/jovyan/.jupyter/*
+RUN cd /opt/francy/js/ && npm install && \
+    cd packages/francy-extension-jupyterlab/ && \
+    pip install . && cd ~

@@ -10,12 +10,12 @@ Francy is a framework for Interactive Discrete Mathematics built for [GAP](https
 Groups, Algorithms, Programming - a System for Computational Discrete Algebra.
 
 Unlike [XGAP](https://github.com/gap-packages/xgap), Francy is not linked with any GUI framework and instead, 
-this package is responsible for the generation of a semantic model that can be used to produce a graphical representation 
-using any other framework / language.
+this package generates a semantic model of data structures that can be used to produce a graphical representation
+of these, using any other framework / language.
 
 See [Official Documentation](https://gap-packages.github.io/francy/doc/chap1.html)
 
-We provide a Javascript implementation able to produce a graphical representation of the semantic model,
+We provide a Javascript module able to produce graphical representations of the semantic model,
 that works on Jupyter environments, embedded in a Web page or as a Desktop Application (e.g. using electron).
 
 See [Graphics Interface](/js)
@@ -83,6 +83,8 @@ See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel) for more
 
 All developments should happen on the branch `develop` and this should be merged into `master` when one is happy to release.
 
+To release, the official [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure should be followed.
+
 ### Versioning
 
 To update the JS packages version, run the following command and pick the new version:
@@ -94,8 +96,6 @@ user@local js/ $ yarn run version
 To update the Python3 package version, please change it on the `pyproject.toml`:
 
 * `js/packages/francy-extension-jupyterlab/pypproject.toml`
-
-To release, the official [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure should be followed.
 
 ### CI / CD Pipelines
 

@@ -2,10 +2,10 @@ FROM jupyter/minimal-notebook:latest
 
 LABEL Author="Manuel Martins <manuelmachadomartins@gmail.com>"
 
-USER root
-
 ARG DEBIAN_FRONTEND="noninteractive"
 ARG WGET="wget -N --no-check-certificate --tries=5 --waitretry=5 --retry-connrefused"
+
+USER root
 
 RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc texlive-xetex libgmp-dev libreadline-dev graphviz \
     zlib1g-dev libzmq3-dev gcc g++ make autoconf && \

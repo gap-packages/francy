@@ -20,7 +20,7 @@ Francy implements 3 renderers at the moment:
 Make sure [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter - JupyterKernel is distributed with GAP by default, since v4.10 :)
 Make sure [Francy GAP](/) is installed on GAP - Francy is distributed with GAP by default, since v4.10 :)
 
-### Jupyterlab integration
+### Jupyter integration
 
 In order to use this module on JupyterLab:
 
@@ -95,12 +95,19 @@ In alternative, if you do not want to install all the dependencies on your own l
 ```bash
 mcmartins@local:~/francy $ docker build -t francy:develop -f dev-Dockerfile .
 ...
-mcmartins@local:~/francy $ docker run --rm --name francy -p 8888:8888 francy:develop
+mcmartins@local:~/francy $ docker run --rm --name francy -p 8888:8888 -v ./notebooks:/home/jovyan/notebooks francy:develop
 ```
 
 NOTE: Depending on the system, one might need to use `--net host` on the docker run command.
 
 ## Releasing
+
+All developments should happen on the branch `develop` and this should be merged into `master` when one is happy to release.
+
+To release, the official [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure should be followed. These packages
+will be released to `npmjs.com` and `pypi.org` as part of the github action `RELEASE.yml` when a new tag is created.
+
+### Versioning
 
 To update the JS packages version, run the following command and pick the new version:
 

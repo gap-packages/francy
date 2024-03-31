@@ -7,7 +7,7 @@
         <Heading>Francy</Heading>
 
         &Francy; emerged from the need for a lightweight framework to construct interactive graphics in GAP, 
-        primarily for web usage, particularly within &Jupyter; environments.
+        primarily for the web, particularly within &Jupyter; environments.
         Although there was an initial attempt to repurpose the XGAP package, the absence of a standardized 
         data exchange format between GAP and the graphics renderer, coupled with the project's straightforward 
         requirements, led to the development of a new GAP package. Explore &Francy;'s functionality on these
@@ -42,7 +42,7 @@
         with &GAP; by default.
         &Francy; requires &Jupyter; to be installed on your system. Please note that you need to run the installation
         commands from the same python version &Jupyter; is installed on.
-        Currently, &Francy; is supported on &Jupyter; Lab and the new Notebooks (&gt;7.0.0).
+        Currently, &Francy; is supported on &Jupyter; Lab and the new Notebooks (&gt;=7.0.0).
         In order to install or update &Francy;, please run the following command to download the latest version
         available from <URL>https://pypi.org/</URL>:
         <Log>
@@ -60,7 +60,7 @@
 
         &Francy; requires a rendering package to display graphics. &Francy; provides by default 3 renderers based on
         D3.js, Vis.js and Graphviz, for rendering the semantic model representations produced by the GAP package.
-        The renderers can be switched at any time using the user interface, by selecting 'Settings > Renderers' in the
+        The renderers can be switched at any time using the user interface, by selecting 'Settings, Renderers' in the
         main menu.
         This library is distributed both as a browser module and as a &Jupyter; Lab extension.
         This library can be used in &Jupyter; Lab, using the &JupyterKernel; and the MIME type 'application/vnd.francy+json'

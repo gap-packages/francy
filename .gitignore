@@ -41,6 +41,8 @@
 /doc/chooser.html
 /doc/_*.xml
 
+**/doc/js
+
 *.la
 *src/*.lo
 
@@ -93,4 +95,5 @@ gh-pages/
 
 **/labextension/
 
-**/.nx/*
+**/.nx
+**/.yarn
