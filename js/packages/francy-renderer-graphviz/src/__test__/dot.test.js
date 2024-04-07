@@ -1,4 +1,4 @@
-import chai, {expect, assert} from 'chai';
+import {expect} from 'chai';
 
 import DOTLanguageHelper from '../util/dot-converter';
 import graph from '../../../francy-core/src/__test__/data/json1.json';
@@ -15,7 +15,7 @@ describe('DOT Language utils', () => {
   });
 
   it('should convert json to dot', () => {
-    //expect(DOTLanguageHelper).to.be.an('function');
+    expect(DOTLanguageHelper).to.be.an('function');
 
     let dotLanguageHelper = new DOTLanguageHelper({configuration: configuration});
     let dot = dotLanguageHelper.load(graph).convert();
