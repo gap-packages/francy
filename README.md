@@ -44,7 +44,7 @@ The following notebooks are available:
 
 # Jupyter Integration
 
-In order to use this module in JupyterLab and Notebook 7.0.0+, install it as follows:
+In order to use this module in JupyterLab and Notebook >=7.0.0, install it as follows:
 
 ```bash
 mcmartins@local:~$ pip install -U jupyterlab-francy

@@ -82,7 +82,7 @@ mcmartins@local:~/francy/js $ yarn run build
 mcmartins@local:~/francy/js $ # run tests
 mcmartins@local:~/francy/js $ yarn run test
 mcmartins@local:~/francy/js $ # development installation for jupyter
-mcmartins@local:~/francy/js $ cd packages/francy-extension-jupyter
+mcmartins@local:~/francy/js $ cd packages/francy-extension-jupyterlab/
 mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ # for JupyterLab
 mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ pip install .
 mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ # run jupyter locally
