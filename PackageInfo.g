@@ -11,7 +11,7 @@ SetPackageInfo(rec(
 
   PackageName := "francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
-  Version     := "2.0.3",
+  Version     := "2.0.4",
   Date        := "16/04/2023", # dd/mm/yyyy format
   License     := "MIT",
 

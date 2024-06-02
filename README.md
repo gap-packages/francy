@@ -97,6 +97,10 @@ To update the Python3 package version, please change it on the `pyproject.toml`:
 
 * `js/packages/francy-extension-jupyterlab/pypproject.toml`
 
+To update the GAP package version, please change it on the `PackageInfo.g` file:
+
+* `PackageInfo.g`
+
 ### CI / CD Pipelines
 
 There are 2 workflows defined for this project:
