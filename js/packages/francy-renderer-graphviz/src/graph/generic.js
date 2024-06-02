@@ -97,6 +97,7 @@ export default class GraphGeneric extends Graph {
   }
 
   setLabelXPosition(element, x) {
+    /* eslint-disable no-unused-vars */
     try {
       element.attr('x', Math.ceil(x * 2));
     } catch (Error) {
@@ -104,9 +105,11 @@ export default class GraphGeneric extends Graph {
       // the user might have switch renderer for instance,
       // no worries if something is not properly aligned :P
     }
+    /* eslint-enable no-unused-vars */
   }
 
   setLabelYPosition(element, y) {
+    /* eslint-disable no-unused-vars */
     try {
       element.attr('y', -Math.ceil(y * 2));
     } catch (Error) {
@@ -114,6 +117,7 @@ export default class GraphGeneric extends Graph {
       // the user might have switch renderer for instance,
       // no worries if something is not properly aligned :P
     }
+    /* eslint-enable no-unused-vars */
   }
 
   _connectedNodes(node, canvasNodes, link, canvasLinks) {

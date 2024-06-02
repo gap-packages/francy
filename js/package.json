@@ -16,11 +16,12 @@
     "clean": "lerna run clean --stream",
     "version": "lerna version --no-git-tag-version --no-push --no-private",
     "docs": "jsdoc --verbose --recurse --configure .jsdoc.json",
-    "lint": "eslint --config .eslintrc.json packages/francy*",
-    "lint:fix": "eslint --fix --config .eslintrc.json packages/francy*",
+    "lint": "eslint --config eslint.config.mjs packages/francy*",
+    "lint:fix": "eslint --fix --config eslint.config.mjs packages/francy*",
     "coverage": "yarn run test"
   },
   "devDependencies": {
+    "globals": "^15.3.0",
     "@babel/cli": "^7.24.6",
     "@babel/core": "^7.24.6",
     "@babel/eslint-parser": "^7.24.6",
@@ -55,6 +56,8 @@
     "d3-transition": "^3.0.1",
     "d3-zoom": "^3.0.0",
     "eslint": "^9.4.0",
+    "@eslint/js": "^9.4.0",
+    "@eslint/eslintrc": "^3.1.0",
     "file-loader": "^6.2.0",
     "jsdoc": "^4.0.3",
     "json-loader": "^0.5.7",

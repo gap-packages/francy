@@ -172,23 +172,28 @@ export default class Graph extends Renderer {
   }
 
   setLabelXPosition(element, width) {
+    /* eslint-disable no-unused-vars */
     try {
       element.attr('x', -Math.ceil(width / 2));
-    } catch (Error) {
+    } catch (err) {
+      
       // don't care, this might fail for multiple reasons,
       // the user might have switch renderer for instance,
       // no worries if something is not properly aligned :P
     }
+    /* eslint-enable no-unused-vars */
   }
 
   setLabelYPosition(element, height) {
+    /* eslint-disable no-unused-vars */
     try {
       element.attr('y', -Math.ceil(height / 2));
-    } catch (Error) {
+    } catch (err) {
       // don't care, this might fail for multiple reasons,
       // the user might have switch renderer for instance,
       // no worries if something is not properly aligned :P
     }
+    /* eslint-enable no-unused-vars */
   }
 
   handleTypesetting(text) {
