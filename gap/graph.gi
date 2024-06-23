@@ -6,6 +6,8 @@
 ##
 #M  Graph( <graph type> )
 ##
+## A graph representation.
+##
 InstallMethod(Graph,
   "a graph type",
   true,

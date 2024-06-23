@@ -6,16 +6,17 @@
 
 # Francy
 
-Francy is a package for GAP that provides a framework for Interactive Discrete Mathematics.
+Francy is a framework for Interactive Discrete Mathematics built for [GAP](https://www.gap-system.org/) - 
+Groups, Algorithms, Programming - a System for Computational Discrete Algebra.
 
 Unlike [XGAP](https://github.com/gap-packages/xgap), Francy is not linked with any GUI framework and instead, 
-this package is responsible for the generation of a semantic model that can be used to produce a graphical representation 
-using any other framework / language.
+this package generates a semantic model of data structures that can be used to produce a graphical representation
+of these, using any other framework / language.
 
 See [Official Documentation](https://gap-packages.github.io/francy/doc/chap1.html)
 
-There is javascript module responsible for generating a graphical representation of the semantic model,
-that works on Jupyter, embedded in a Web page or as a Desktop Application (e.g. using electron).
+We provide a Javascript module able to produce graphical representations of the semantic model,
+that works on Jupyter environments, embedded in a Web page or as a Desktop Application (e.g. using electron).
 
 See [Graphics Interface](/js)
 
@@ -43,7 +44,7 @@ The following notebooks are available:
 
 # Jupyter Integration
 
-In order to use this module in JupyterLab and Notebook 7.0.0+, install it as follows:
+In order to use this module in JupyterLab and Notebook >=7.0.0, install it as follows:
 
 ```bash
 mcmartins@local:~$ pip install -U jupyterlab-francy
@@ -55,7 +56,7 @@ If you still use the old Jupyter Notebook (<7.0.0), you should use the old exten
 mcmartins@local:~$ pip install -U jupyter-francy
 ```
 
-Please note that in order to use Francy, it is required the JupyterKernel GAP package to be installed. 
+Please note that in order to use `Francy`, it is required that the `JupyterKernel` GAP package is installed. 
 See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel) for more information.
 
 # Package Structure
@@ -82,23 +83,30 @@ See [Jupyter GAP Kernel](https://github.com/gap-packages/JupyterKernel) for more
 
 All developments should happen on the branch `develop` and this should be merged into `master` when one is happy to release.
 
+To release, the official [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure should be followed.
+
+### Versioning
+
 To update the JS packages version, run the following command and pick the new version:
 
 ```bash
 user@local js/ $ yarn run version
 ```
 
-To update the Python PyPi.org package version please update the version on:
+To update the Python3 package version, please change it on the `pyproject.toml`:
 
 * `js/packages/francy-extension-jupyterlab/pypproject.toml`
 
-To release, the official [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure should be followed.
+To update the GAP package version, please change it on the `PackageInfo.g` file:
+
+* `PackageInfo.g`
+
+### CI / CD Pipelines
 
 There are 2 workflows defined for this project:
 
 * CI - This workflow runs all tests (JS and GAP) for every commit/pull request on branches `develop` and `master`
-* RELEASE - This workflow runs the Python PyPi.org and NPM releases on new `tag`s created, normally after running the 
-* [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure.
+* RELEASE - This workflow runs the Python PyPi.org and NPM releases on new `tag`s created, normally after running the [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure.
 
 # License
 
