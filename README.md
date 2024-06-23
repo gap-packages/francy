@@ -106,8 +106,7 @@ To update the GAP package version, please change it on the `PackageInfo.g` file:
 There are 2 workflows defined for this project:
 
 * CI - This workflow runs all tests (JS and GAP) for every commit/pull request on branches `develop` and `master`
-* RELEASE - This workflow runs the Python PyPi.org and NPM releases on new `tag`s created, normally after running the 
-* [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure.
+* RELEASE - This workflow runs the Python PyPi.org and NPM releases on new `tag`s created, normally after running the [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure.
 
 # License
 

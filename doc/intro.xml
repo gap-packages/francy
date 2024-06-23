@@ -59,12 +59,13 @@
         <Heading>How it works</Heading>
 
         &Francy; requires a rendering package to display graphics. &Francy; provides by default 3 renderers based on
-        D3.js, Vis.js and Graphviz, for rendering the semantic model representations produced by the GAP package.
-        The renderers can be switched at any time using the user interface, by selecting 'Settings, Renderers' in the
-        main menu.
-        This library is distributed both as a browser module and as a &Jupyter; Lab extension.
-        This library can be used in &Jupyter; Lab, using the &JupyterKernel; and the MIME type 'application/vnd.francy+json'
-        to render the document.
+        D3.js, Vis.js and Graphviz, for rendering the semantic model representations, identified by the MIME type 
+        'application/vnd.francy+json', produced by the GAP package. 
+        Renderers can be switched at any time using the user interface, by selecting 'Settings' and then 'Renderers' 
+        in the main menu.
+        This library is distributed both as a browser module and as a &Jupyter; extension. It can be used in the browser 
+        in non interactive mode (meaning no communication with GAP, the semantic model is loaded, e.g., as a json file),
+        or within &Jupyter; environments, in interactive mode, using the &JupyterKernel;.
         For more information, please check the 
         <URL Text="JavaScript Documentation">https://gap-packages.github.io/francy/doc/js/doc/index.html</URL>.
     </Section>
