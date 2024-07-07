@@ -36,7 +36,7 @@ end);
 ##
 #M  Add( <menu>, <menu> )
 ##
-## Add a menu to another menu creating a sub-menu.
+## Add a menu to another menu, creating a sub-menu.
 ##
 InstallOtherMethod(Add,
   "a menu, a menu",
