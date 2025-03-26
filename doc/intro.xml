@@ -6,75 +6,68 @@
     <Section>
         <Heading>Francy</Heading>
 
-        &Francy; arose from the necessity of having a lightweight framework for building interactive graphics, generated
-        from GAP, running primarily on the web, specially in &Jupyter; environments.
-        An initial attempt to re-use XGAP and port it was made, but the lack of a standardized data exchange format
-        between
-        GAP and the graphics renderer, and the simplistic initial requirements
-        of the project were the basis for the creation of a new GAP package.
-        Take a look at &Francy; functionality on these
+        &Francy; emerged from the need for a lightweight framework to construct interactive graphics in GAP, 
+        primarily for the web, particularly within &Jupyter; environments.
+        Although there was an initial attempt to repurpose the XGAP package, the absence of a standardized 
+        data exchange format between GAP and the graphics renderer, coupled with the project's straightforward 
+        requirements, led to the development of a new GAP package. Explore &Francy;'s functionality on these
         <URL Text="Jupyter Notebooks">https://mybinder.org/v2/gh/gap-packages/francy/master</URL>.
     </Section>
 
     <Section>
         <Heading>Applications</Heading>
 
-        &Francy; has potentially many applications and can be used to provide a graphical representation of data
-        structures,
-        allowing one to navigate through and explore properties or relations of these structures.
-        In this way, &Francy; can be used to enrich a learning environment where GAP provides a library of thousands of
-        functions implementing algebraic algorithms as well as large data libraries of algebraic objects.
+        &Francy; has numerous applications and can be used to create graphical representations of data structures. 
+        It facilitates navigation and exploration of properties or relationships within these structures.
+        Consequently, &Francy; enriches learning environments where GAP offers a vast library of functions 
+        implementing algebraic algorithms alongside extensive data libraries of algebraic objects.
         &FrancyMonoids; and &SubgroupLattice; are some example packages using &Francy;.
     </Section>
 
     <Section>
         <Heading>Functionality</Heading>
 
-        &Francy; provides an interface to draw graphics using objects. This interface is based on simple concepts of
-        drawing
-        and graph theory, allowing the creation of directed and undirected graphs, trees, line charts, bar charts and
-        scatter charts.
-        These graphical objects are drawn inside a canvas that includes a space for menus and to display informative
+        &Francy; offers an interface for drawing graphics using objects. This interface relies on basic principles of
+        drawing and graph theory, enabling the creation of directed and undirected graphs, trees, line charts, 
+        bar charts and scatter charts.
+        These graphical objects are depicted within a canvas, which includes a space for menus and to display informative
         messages.
-        Within the canvas it is possible to interact with the graphical objects by clicking, selecting, dragging and
-        zooming.
+        Users can interact with the graphical objects within the canvas by clicking, selecting, dragging, and zooming.
     </Section>
 
     <Section>
         <Heading>Installation</Heading>
 
         This package requires the &GAP; packages &JupyterKernel;, &json; and &uuid;, all of which are distributed
-        with &GAP;
-        by default.
+        with &GAP; by default.
         &Francy; requires &Jupyter; to be installed on your system. Please note that you need to run the installation
-        commands
-        from the same python version &Jupyter; is installed on.
-        Currently, &Francy; is supported only on &Jupyter; Lab, if you want to use it on the old &Jupyter; Notebooks,
-        please
-        install the latest supported version: v1.2.4.
+        commands from the same python version &Jupyter; is installed on.
+        Currently, &Francy; is supported on &Jupyter; Lab and the new Notebooks (&gt;=7.0.0).
         In order to install or update &Francy;, please run the following command to download the latest version
-        available
-        from <URL>https://pypi.org/</URL>:
+        available from <URL>https://pypi.org/</URL>:
         <Log>
             mcmartins@local:~$ pip install -U jupyterlab-francy
+        </Log>
+        If you want to use it on the old &Jupyter; Notebooks (&lt;7.0.0), please install the latest supported version 
+        available from <URL>https://pypi.org/</URL>:
+        <Log>
+            mcmartins@local:~$ pip install -U jupyter-francy
         </Log>
     </Section>
 
     <Section>
         <Heading>How it works</Heading>
 
-        &Francy; requires a rendering package to display graphics. &Francy; provides by default 3 Renderers based on
-        D3.js,
-        Vis.js and Graphviz, for rendering the semantic model representations produced by the GAP package.
-        The renderers can be switched at any time using the user interface, by selecting 'Settings > Renderers' in the
-        main menu.
-        This library is distributed both as a browser module and as a &Jupyter; Lab extension.
-        This library can be used in &Jupyter; Lab, using the &JupyterKernel; and the MIME type
-        'application/vnd.francy+json'
-        to render the document.
-        Please check the
-        <URL Text="JavaScript Documentation">https://gap-packages.github.io/francy/doc/js/doc/index.html</URL>
-        for more information.
+        &Francy; requires a rendering package to display graphics. &Francy; provides by default 3 renderers based on
+        D3.js, Vis.js and Graphviz, for rendering the semantic model representations, identified by the MIME type 
+        'application/vnd.francy+json', produced by the GAP package. 
+        Renderers can be switched at any time using the user interface, by selecting 'Settings' and then 'Renderers' 
+        in the main menu.
+        This library is distributed both as a browser module and as a &Jupyter; extension. It can be used in the browser 
+        in non interactive mode (meaning no communication with GAP, the semantic model is loaded, e.g., as a json file),
+        or within &Jupyter; environments, in interactive mode, using the &JupyterKernel;.
+        For more information, please check the 
+        <URL Text="JavaScript Documentation">https://gap-packages.github.io/francy/doc/js/doc/index.html</URL>.
     </Section>
 
     <Section>

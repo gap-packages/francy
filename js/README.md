@@ -20,7 +20,7 @@ Francy implements 3 renderers at the moment:
 Make sure [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter - JupyterKernel is distributed with GAP by default, since v4.10 :)
 Make sure [Francy GAP](/) is installed on GAP - Francy is distributed with GAP by default, since v4.10 :)
 
-### Jupyterlab integration
+### Jupyter integration
 
 In order to use this module on JupyterLab:
 
@@ -82,7 +82,7 @@ mcmartins@local:~/francy/js $ yarn run build
 mcmartins@local:~/francy/js $ # run tests
 mcmartins@local:~/francy/js $ yarn run test
 mcmartins@local:~/francy/js $ # development installation for jupyter
-mcmartins@local:~/francy/js $ cd packages/francy-extension-jupyter
+mcmartins@local:~/francy/js $ cd packages/francy-extension-jupyterlab/
 mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ # for JupyterLab
 mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ pip install .
 mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ # run jupyter locally
@@ -90,7 +90,24 @@ mcmartins@local:~/francy/js/packages/francy-extension-jupyterlab $ cd ~/francy/n
 mcmartins@local:~/francy/notebooks $ jupyter lab --ip=0.0.0.0 --port=8080 --no-browser
 ```
 
+In alternative, if you do not want to install all the dependencies on your own laptop, the `dev-Dockerfile` can be used to build an image of the whole environment:
+
+```bash
+mcmartins@local:~/francy $ docker build -t francy:develop -f dev-Dockerfile .
+...
+mcmartins@local:~/francy $ docker run --rm --name francy -p 8888:8888 -v ./notebooks:/home/jovyan/notebooks francy:develop
+```
+
+NOTE: Depending on the system, one might need to use `--net host` on the docker run command.
+
 ## Releasing
+
+All developments should happen on the branch `develop` and this should be merged into `master` when one is happy to release.
+
+To release, the official [ReleaseTools](https://github.com/gap-system/ReleaseTools) procedure should be followed. These packages
+will be released to `npmjs.com` and `pypi.org` as part of the github action `RELEASE.yml` when a new tag is created.
+
+### Versioning
 
 To update the JS packages version, run the following command and pick the new version:
 

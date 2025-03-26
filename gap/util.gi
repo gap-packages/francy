@@ -6,7 +6,7 @@
 ##
 #M  PrintObj( <obj> )
 ##
-## Override of the PrintObj function for IsFrancyObjects
+## Override of the PrintObj function for IsFrancyObjects.
 ##
 InstallOtherMethod(PrintObj,
   "a francy object",
@@ -21,7 +21,7 @@ end);
 ##
 #M  ViewString( <obj> )
 ##
-## Override of the ViewString function for IsFrancyObjects
+## Override of the ViewString function for IsFrancyObjects.
 ##
 InstallOtherMethod(ViewString,
   "a francy object",
@@ -38,7 +38,7 @@ end);
 ##
 #M  JUPYTER_ViewString( <obj> )
 ##
-## Override of the JUPYTER_ViewString function for IsFrancyObjects
+## Override of the JUPYTER_ViewString function for IsFrancyObjects.
 ##
 InstallOtherMethod(JUPYTER_ViewString,
   "a francy object",
@@ -54,12 +54,12 @@ InstallOtherMethod(JUPYTER_ViewString,
 ##
 ## Simple properties clone utility function for FrancyObjects.
 ##
-## This method will clone a FrancyObject and return a record, traversing all the
-## components and converting any types that are not JSON serializable, when appropriate.
+## This method will clone a FrancyObject and return a new record, traversing all the
+## components and converting, when appropriate, any types that are not JSON serializable.
 ##
 ## This method removes components of type IsFunction, as they aren't
 ## serializable JSON compatible, it converts lists of objects into lists of strings
-## and everything else that is not a FrancyObject and therefore unknown!
+## and everything else that is not a FrancyObject and therefore unknown.
 ##
 InstallMethod(Sanitize,
   "an object",
@@ -74,9 +74,9 @@ end);
 ##
 #M  Sanitize( <obj> )
 ##
-## Simple properties clone for Records
+## Simple properties clone for Records.
 ##
-## This method will clone a FrancyObject into the given record
+## This method will clone a FrancyObject into the given record.
 ##
 InstallOtherMethod(Sanitize,
   "an object, a record",
@@ -107,9 +107,9 @@ end);
 ##
 #M  Sanitize( <obj> )
 ##
-## Simple properties clone for Records
+## Simple properties clone for Records.
 ##
-## This method will return a sanitized list from another list
+## This method will return a sanitized list from another list.
 ##
 InstallOtherMethod(Sanitize,
   "a list, another list",
