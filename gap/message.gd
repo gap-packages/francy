@@ -88,6 +88,7 @@ BindGlobal("FrancyMessageType", rec(
 #! A title on a <C>FrancyMessage</C> is used to display the title information to the user.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Title", IsFrancyMessage);
+#
 InstallMethod(Title, "message", [IsFrancyMessage], o -> o!.title);
 #! @Description
 #! Sets the title of the <C>FrancyMessage</C>.
@@ -98,6 +99,7 @@ InstallMethod(SetTitle, "message, string", [IsFrancyMessage, IsString], function
 #! A value on a <C>FrancyMessage</C> is used to display the information to the user.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Value", IsFrancyMessage);
+#
 InstallMethod(Value, "message", [IsFrancyMessage], o -> o!.value);
 #! @Description
 #! Sets the actual message of the <C>FrancyMessage</C>.
