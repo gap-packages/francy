@@ -74,6 +74,7 @@ DeclareOperation("Menu", [IsString, IsCallback]);
 #! A label title on a <C>Menu</C> is used to identify what action it is about on a menu entry.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Title", IsMenu);
+#
 InstallMethod(Title, "menu", [IsMenu], o -> o!.title);
 #! @Description
 #! Sets the title of the <C>Menu</C>.

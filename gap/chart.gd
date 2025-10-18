@@ -199,6 +199,7 @@ BindGlobal("ChartDefaults", Objectify(NewType(ChartFamily, IsChartDefaults and I
 #! <C>ShowLegend</C> is a property that enables or disables displaying the <C>Chart</C> legend in the client implementation.
 #! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("ShowLegend", IsChart);
+#
 InstallMethod(ShowLegend, "chart", [IsChart], o -> o!.showLegend);
 #! @Description
 #! <C>ShowLegend</C> is a property that enables or disables displaying the <C>Chart</C> legend in the client implementation.
@@ -209,6 +210,7 @@ InstallMethod(SetShowLegend, "chart, boolean", [IsChart, IsBool], function(o, b)
 #! This is used to display the X Axis Title in the client implementation.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("AxisXTitle", IsChart);
+#
 InstallMethod(AxisXTitle, "chart", [IsChart], o -> o!.axis!.x!.title);
 #! @Description
 #! This is used to display the X Axis Title in the client implementation.
@@ -219,6 +221,7 @@ InstallMethod(SetAxisXTitle, "chart, string", [IsChart, IsString], function(o, s
 #! This is used to display the Y Axis Title in the client implementation.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("AxisYTitle", IsChart);
+#
 InstallMethod(AxisYTitle, "chart", [IsChart], o -> o!.axis!.y!.title);
 #! @Description
 #! This is used to display the Y Axis Title in the client implementation.
@@ -229,6 +232,7 @@ InstallMethod(SetAxisYTitle, "chart, string", [IsChart, IsString], function(o, s
 #! This is the domain of the X Axis values in the client implementation.
 #! @Returns <C>IsList</C>
 DeclareAttribute("AxisXDomain", IsChart);
+#
 InstallMethod(AxisXDomain, "chart", [IsChart], o -> o!.axis!.x!.domain);
 #! @Description
 #! This is the domain of the X Axis values in the client implementation.

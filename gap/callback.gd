@@ -186,6 +186,7 @@ BindGlobal("TriggerType", rec(
 #! A title on a <C>RequiredArg</C> is used to retrieve input from a user.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Title", IsRequiredArg);
+#
 InstallMethod(Title, "requiredArg", [IsRequiredArg], o -> o!.title);
 #! @Description
 #! Sets the title of the <C>RequiredArg</C>.
@@ -198,6 +199,7 @@ InstallMethod(SetTitle, "requiredArg, string", [IsRequiredArg, IsString], functi
 #! Hence, explicit conversion is required within the <C>Callback</C> <C>Function</C>.
 #! @Returns <C>IsString</C> with the value of the object
 DeclareAttribute("Value", IsRequiredArg);
+#
 InstallMethod(Value, "requiredArg", [IsRequiredArg], o -> o!.value);
 #! @Description
 #! Sets the value of the <C>RequiredArg</C>.
@@ -208,6 +210,7 @@ InstallMethod(SetValue, "requiredArg, string", [IsRequiredArg, IsString], functi
 #! This will display a confirmation message before any <C>Callback</C> is executed.
 #! @Returns a <C>IsString</C> with the message to be shown to the user before the <C>Callback</C> execution.
 DeclareAttribute("ConfirmMessage", IsCallback);
+#
 InstallMethod(ConfirmMessage, "callback", [IsCallback], o -> o!.confirm);
 #! @Description
 #! Sets the value of the confirmation message to display to the user.
