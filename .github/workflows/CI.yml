@@ -89,7 +89,7 @@ jobs:
           key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
           restore-keys: |
             yarn-cache-folder-
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable
         working-directory: js
       - run: yarn run lint
         working-directory: js
