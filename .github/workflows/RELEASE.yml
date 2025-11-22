@@ -20,10 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 21.x ]
+        node-version: [ 24.x ]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
@@ -31,7 +31,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip
-      - run: pip install jupyterlab==4.1.5 build
+      - run: pip install jupyterlab build
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -39,7 +39,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+        run: echo "dir=$(pwd)/.yarn/cache" >> "$GITHUB_OUTPUT"
         shell: bash
         working-directory: js
       - name: Restore yarn cache
@@ -49,7 +49,7 @@ jobs:
           key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
           restore-keys: |
             yarn-cache-folder-
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable
         working-directory: js
       - run: yarn run build:prod
         working-directory: js
