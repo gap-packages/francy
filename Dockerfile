@@ -1,4 +1,4 @@
-FROM jupyter/minimal-notebook:latest
+FROM quay.io/jupyter/minimal-notebook:latest
 
 LABEL Author="Manuel Martins <manuelmachadomartins@gmail.com>"
 
@@ -8,7 +8,7 @@ ARG WGET="wget -N --no-check-certificate --tries=5 --waitretry=5 --retry-connref
 USER root
 
 RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc texlive-xetex libgmp-dev libreadline-dev graphviz \
-    zlib1g-dev libzmq3-dev gcc g++ make autoconf && \
+    zlib1g-dev libzmq3-dev m4 gcc g++ make autoconf && \
     git clone --depth=2 -b master https://github.com/gap-system/gap.git /opt/master && cd /opt/master && \
     ./autogen.sh && ./configure && make -j4 V=1 && \
     make bootstrap-pkg-full DOWNLOAD="$WGET" WGET="$WGET" &&  \

@@ -26,14 +26,14 @@ jobs:
       matrix:
         gap-branch:
           - master
-          - stable-4.13
-          - stable-4.12
+          - stable-4.15
+          - stable-4.14
 
     steps:
       - name: Install ZMQ
         run: |
           sudo apt update && 
-          sudo apt install libzmq3-dev -y
+          sudo apt install libzmq3-dev m4 -y
       - uses: actions/checkout@v4
       - uses: gap-actions/setup-gap@v2
         with:
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 21.x ]
+        node-version: [ 24.x ]
 
     steps:
       - uses: actions/checkout@v4
@@ -63,7 +63,7 @@ jobs:
           sudo apt install -y "/tmp/google-chrome-stable_current_amd64.deb" -f
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.12'
       - uses: actions/cache@v3
         with:
           path: ~/.cache/pip

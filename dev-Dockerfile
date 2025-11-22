@@ -1,4 +1,4 @@
-FROM jupyter/minimal-notebook:latest
+FROM quay.io/jupyter/minimal-notebook:latest
 
 LABEL Author="Manuel Martins <manuelmachadomartins@gmail.com>"
 
@@ -8,9 +8,12 @@ ARG WGET="wget -N --no-check-certificate --tries=5 --waitretry=5 --retry-connref
 USER root
 
 # setup GAP environment
-RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc texlive-xetex libgmp-dev libreadline-dev graphviz \
-    zlib1g-dev libzmq3-dev gcc g++ make autoconf && \
-    git clone --depth=2 -b master https://github.com/gap-system/gap.git /opt/master && cd /opt/master && \
+RUN apt update && apt -qq install -y \
+      git curl wget python3-pip inkscape pandoc texlive-xetex \
+      libgmp-dev libreadline-dev graphviz zlib1g-dev \
+      libzmq3-dev m4 gcc g++ make autoconf && \
+    git clone --depth=2 -b master https://github.com/gap-system/gap.git /opt/master && \
+    cd /opt/master && \
     ./autogen.sh && ./configure && make -j4 V=1 && \
     make bootstrap-pkg-full DOWNLOAD="$WGET" WGET="$WGET" &&  \
     cd /opt/master/pkg && rm -rf /opt/master/pkg/francy && \
@@ -21,17 +24,27 @@ RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc t
     for pkg in `ls`; do ../bin/BuildPackages.sh --strict $pkg*; done && \
     rm -rf /opt/master/packages.tar.gz && chown -R jovyan: /opt/master/ && \
     cd /opt/master/pkg/jupyterkernel && pip install . && \
-    ln -s /opt/master/gap /usr/local/sbin/gap && \
+    cd /usr/local/sbin/ && \
+    ln -s /opt/master/gap && \
+    ln -s /opt/master/pkg/jupyterkernel/bin/jupyter-kernel-gap && \
     rm -rf /home/jovyan/.jupyter/*
 
+ENV JUPYTER_GAP_EXECUTABLE=gap
+
 # setup JS / Python environment
-RUN apt install nodejs -y && pip install --no-cache-dir jupyterlab
+RUN apt install -y nodejs npm && \
+    pip install --no-cache-dir jupyterlab && \
+    npm install --global yarn
+
+# switch to jovyan *before* running yarn, so it can write to /home/jovyan
+USER jovyan
+WORKDIR /home/jovyan
 
 # setup local source code
-USER jovyan
+COPY --chown=jovyan:users . /opt/francy/
 
-COPY --chown=jovyan:wheel . /opt/francy/
-
-RUN cd /opt/francy/js/ && npm install && \
+RUN cd /opt/francy/js/ && yarn set version berry && \
+    yarn install && yarn run build && \
     cd packages/francy-extension-jupyterlab/ && \
-    pip install . && cd ~
+    pip install . && \
+    cd ~

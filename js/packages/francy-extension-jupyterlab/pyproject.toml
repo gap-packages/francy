@@ -9,7 +9,7 @@ build-backend = "hatchling.build"
 name = "jupyterlab-francy"
 description = "Francy - An Interactive Discrete Mathematics Framework for GAP - Jupyter Lab Extension"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.12"
 authors = [
     { name = "Manuel Martins", email = "manuelmachadomartins@gmail.com" },
 ]
