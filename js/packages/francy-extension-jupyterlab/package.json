@@ -46,8 +46,8 @@
     "francy-renderer-vis": "*"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^4.2.2",
-    "rimraf": "^5.0.7"
+    "@jupyterlab/builder": "^4.5.0",
+    "rimraf": "^6.1.2"
   },
   "jupyterlab": {
     "webpackConfig": "./webpack.config.js",
