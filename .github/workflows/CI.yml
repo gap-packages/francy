@@ -86,6 +86,11 @@ jobs:
           key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
           restore-keys: |
             yarn-cache-folder-
+      - name: Setup Yarn (project-local)
+        run: |
+          corepack enable
+          cd js
+          yarn set version 4.11.0
       - run: yarn install --frozen-lockfile
         working-directory: js
       - run: yarn run lint
