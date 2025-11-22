@@ -74,6 +74,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
+      - name: Enable Corepack (Yarn)
+        run: corepack enable
+        working-directory: js
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
@@ -86,11 +89,6 @@ jobs:
           key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
           restore-keys: |
             yarn-cache-folder-
-      - name: Setup Yarn (project-local)
-        run: |
-          corepack enable
-          cd js
-          yarn set version 4.11.0
       - run: yarn install --frozen-lockfile
         working-directory: js
       - run: yarn run lint
