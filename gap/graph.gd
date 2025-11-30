@@ -314,6 +314,7 @@ BindGlobal("LinkDefaults", Objectify(NewType(LinkFamily, IsLinkDefaults and IsLi
 #! Supports TeX syntax and will be Typeset, if supported by the client implementation.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Title", IsShape);
+#
 InstallMethod(Title, "shape", [IsShape], o -> o!.title);
 #! @Description
 #! Sets the <C>Shape</C> label title.
@@ -324,6 +325,7 @@ InstallMethod(SetTitle, "shape, string", [IsShape, IsString], function(o, s) o!.
 #! The <C>Color</C> of the current <C>Shape</C>. This should be an hexadecimal colour value, e.g.: #ff0000
 #! @Returns <C>IsInt</C>
 DeclareAttribute("Color", IsShape);
+#
 InstallMethod(Color, "shape", [IsShape], o -> o!.color);
 #! @Description
 #! Sets the <C>Color</C> value. This should be an hexadecimal colour value, e.g.: #ff0000
@@ -334,6 +336,7 @@ InstallMethod(SetColor, "shape, string", [IsShape, IsString], function(o, s) o!.
 #! The Position in the X Axis of the <C>Shape</C> in the <C>Canvas</C> in pixels.
 #! @Returns <C>IsInt</C>
 DeclareAttribute("PosX", IsShape);
+#
 InstallMethod(PosX, "shape", [IsShape], o -> o!.x);
 #! @Description
 #! Sets the Position in the X Axis of the <C>Shape</C> in the <C>Canvas</C> in pixels.
@@ -344,6 +347,7 @@ InstallMethod(SetPosX, "shape, int", [IsShape, IsInt], function(o, i) o!.x := i;
 #! The Position in the Y Axis of the <C>Shape</C> in the <C>Canvas</C> in pixels.
 #! @Returns <C>IsInt</C>
 DeclareAttribute("PosY", IsShape);
+#
 InstallMethod(PosY, "shape", [IsShape], o -> o!.y);
 #! @Description
 #! Sets the Position in the Y Axis of the <C>Shape</C> in the <C>Canvas</C> in pixels.
@@ -354,6 +358,7 @@ InstallMethod(SetPosY, "shape, int", [IsShape, IsInt], function(o, i) o!.y := i;
 #! The <C>Size</C> of the <C>Shape</C> in pixels.
 #! @Returns <C>IsPosInt</C>
 DeclareAttribute("Size", IsShape);
+#
 InstallMethod(Size, "shape", [IsShape], o -> o!.size);
 #! @Description
 #! Sets the <C>Size</C> of the <C>Shape</C> in pixels.
@@ -366,6 +371,7 @@ InstallMethod(SetSize, "shape, int", [IsShape, IsPosInt], function(o, i) o!.size
 #! Depends on the client implementation.
 #! @Returns <C>IsInt</C>
 DeclareAttribute("Layer", IsShape);
+#
 InstallMethod(Layer, "shape", [IsShape], o -> o!.layer);
 #! @Description
 #! Sets the <C>Layer</C> number on a <C>Shape</C>.
@@ -378,6 +384,7 @@ InstallMethod(SetLayer, "shape, int", [IsShape, IsInt], function(o, i) o!.layer 
 #! Depends on the client implementation.
 #! @Returns <C>IsShape</C>
 DeclareAttribute("ParentShape", IsShape);
+#
 InstallMethod(ParentShape, "shape", [IsShape], o -> o!.parent);
 #! @Description
 #! Sets the <C>ParentShape</C> on a <C>Shape</C>.
@@ -389,6 +396,7 @@ InstallMethod(SetParentShape, "shape, shape", [IsShape, IsShape], function(o, p)
 #! without the need to provide custom positions on the rendered GUI. Depends on the client implementation.
 #! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("Simulation", IsFrancyGraph);
+#
 InstallMethod(Simulation, "graph", [IsFrancyGraph], o -> o!.simulation);
 #! @Description
 #! Sets the <C>Simulation</C> behavior, as per de description above.
@@ -399,6 +407,7 @@ InstallMethod(SetSimulation, "graph, boolean", [IsFrancyGraph, IsBool], function
 #! <C>Collapsed</C> is a property that sets <C>Graph</C> Tree structures to fold by default on the rendered GUI.
 #! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("Collapsed", IsFrancyGraph);
+#
 InstallMethod(Collapsed, "graph", [IsFrancyGraph], o -> o!.collapsed);
 #! @Description
 #! Sets the <C>Collapsed</C> behavior, as per the description above.
@@ -409,6 +418,7 @@ InstallMethod(SetCollapsed, "graph, boolean", [IsFrancyGraph, IsBool], function(
 #! <C>Selected</C> is a property that sets <C>Shape</C> objects as selected by default on the rendered GUI.
 #! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("Selected", IsShape);
+#
 InstallMethod(Selected, "shape", [IsShape], o -> o!.selected);
 #! @Description
 #! Sets the <C>Selected</C> behavior, as per the description above.
@@ -419,6 +429,7 @@ InstallMethod(SetSelected, "shape, boolean", [IsShape, IsBool], function(o, b) o
 #! <C>ConjugateId</C> is a property that is used to group <C>Shape</C> objects by default on the rendered GUI.
 #! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("ConjugateId", IsShape);
+#
 InstallMethod(ConjugateId, "shape", [IsShape], o -> o!.conjugate);
 #! @Description
 #! Sets the <C>Conjugate</C> behavior, as per the description above.
@@ -429,6 +440,7 @@ InstallMethod(SetConjugateId, "shape, int", [IsShape, IsInt], function(o, i) o!.
 #! The <C>Weight</C> of the current <C>Link</C> or edge.
 #! @Returns <C>IsInt</C>
 DeclareAttribute("Weight", IsLink);
+#
 InstallMethod(Weight, "link", [IsLink], o -> o!.weight);
 #! @Description
 #! Sets the <C>Weight</C> value on a <C>Link</C> or edge.
@@ -439,6 +451,7 @@ InstallMethod(SetWeight, "link, int", [IsLink, IsInt], function(o, i) o!.weight 
 #! The <C>Length</C> of the current <C>Link</C> or edge.
 #! @Returns <C>IsInt</C>
 DeclareAttribute("Length", IsLink);
+#
 InstallMethod(Length, "link", [IsLink], o -> o!.length);
 #! @Description
 #! Sets the <C>Length</C> value on a <C>Link</C> or edge.
@@ -449,6 +462,7 @@ InstallMethod(SetLength, "link, int", [IsLink, IsInt], function(o, i) o!.length 
 #! The <C>Invisible</C> property of the current <C>Link</C> or edge.
 #! @Returns <C>IsBoolean</C>
 DeclareAttribute("Invisible", IsLink);
+#
 InstallMethod(Invisible, "link", [IsLink], o -> o!.invisible);
 #! @Description
 #! Sets the <C>Invisible</C> property value on a <C>Link</C> or edge.
@@ -459,6 +473,7 @@ InstallMethod(SetInvisible, "link, int", [IsLink, IsBool], function(o, b) o!.inv
 #! The <C>Color</C> of the current <C>Link</C> or edge.
 #! @Returns <C>IsInt</C>
 DeclareAttribute("Color", IsLink);
+#
 InstallMethod(Color, "link", [IsLink], o -> o!.color);
 #! @Description
 #! Sets the <C>Color</C> value on a <C>Link</C> or edge.
@@ -469,6 +484,7 @@ InstallMethod(SetColor, "link, string", [IsLink, IsString], function(o, s) o!.co
 #! The <C>Title</C> of the current <C>Link</C> or edge.
 #! @Returns <C>IsInt</C>
 DeclareAttribute("Title", IsLink);
+#
 InstallMethod(Title, "link", [IsLink], o -> o!.title);
 #! @Description
 #! Sets the <C>Title</C> value  on a <C>Link</C> or edge.

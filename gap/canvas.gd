@@ -158,6 +158,7 @@ BindGlobal("CanvasDefaults", Objectify(NewType(CanvasFamily, IsCanvasDefaults an
 #! The Width of the <C>Canvas</C> in pixels <C>IsPosInt</C>.
 #! @Returns <C>IsPosInt</C>
 DeclareAttribute("Width", IsCanvas);
+#
 InstallMethod(Width, "canvas", [IsCanvas], o -> o!.width);
 #! @Description
 #! Sets the Width of the <C>Canvas</C> in pixels <C>IsPosInt</C>.
@@ -168,6 +169,7 @@ InstallMethod(SetWidth, "canvas, positive int", [IsCanvas, IsPosInt], function(o
 #! The Height of the <C>Canvas</C> in pixels <C>IsPosInt</C>.
 #! @Returns <C>IsPosInt</C>
 DeclareAttribute("Height", IsCanvas);
+#
 InstallMethod(Height, "canvas", [IsCanvas], o -> o!.height);
 #! @Description
 #! Sets the Height of the <C>Canvas</C> in pixels <C>IsPosInt</C>.
@@ -179,6 +181,7 @@ InstallMethod(SetHeight, "canvas, positive int", [IsCanvas, IsPosInt], function(
 #! after rendering in the client implementation.
 #! @Returns <C>IsBool</C> True if enabled otherwise False
 DeclareAttribute("ZoomToFit", IsCanvas);
+#
 InstallMethod(ZoomToFit, "canvas", [IsCanvas], o -> o!.zoomToFit);
 #! @Description
 #! <C>ZoomToFit</C> is a property that sets the objects within the <C>Canvas</C> to fit within the GUI visible area.
@@ -189,6 +192,7 @@ InstallMethod(SetZoomToFit, "canvas, boolean", [IsCanvas, IsBool], function(o, b
 #! The <C>Canvas</C> title to show on the GUI.
 #! @Returns <C>IsString</C> with the title of the object
 DeclareAttribute("Title", IsCanvas);
+#
 InstallMethod(Title, "canvas", [IsCanvas], o -> o!.title);
 #! @Description
 #! Sets the title of the <C>Canvas</C>.
@@ -199,6 +203,7 @@ InstallMethod(SetTitle, "canvas, string", [IsCanvas, IsString], function(o, s) o
 #! Enables usage of TeX Typesetting on the client implementation, if supported.
 #! @Returns <C>IsBool</C> with the title of the object
 DeclareAttribute("TexTypesetting", IsCanvas);
+#
 InstallMethod(TexTypesetting, "canvas", [IsCanvas], o -> o!.texTypesetting);
 #! @Description
 #! Sets TeX Typesetting on the canvas objects.
