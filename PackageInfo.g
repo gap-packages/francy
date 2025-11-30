@@ -11,7 +11,7 @@ SetPackageInfo(rec(
 
   PackageName := "francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
-  Version     := "2.0.3",
+  Version     := "2.0.4",
   Date        := "16/04/2023", # dd/mm/yyyy format
   License     := "MIT",
 
@@ -47,7 +47,7 @@ SetPackageInfo(rec(
   ArchiveFormats  := ".tar.gz",
 
   AbstractHTML :=
-  "The <span class=\"pkgname\">Francy</span> package allows to use graphics in GAP.",
+  "<span class=\"pkgname\">Francy</span> offers a framework for generating graphic representations of data structures in GAP.",
 
   PackageDoc := rec(
     BookName         := "Francy",

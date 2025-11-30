@@ -8,7 +8,7 @@ Francy - An Interactive Discrete Mathematics Framework for GAP - Jupyter Lab Ext
 
 ## Requirements
 
-* JupyterLab >= 3.1
+* JupyterLab >= 4.0
 * GAP [JupyterKenel](https://github.com/gap-packages/JupyterKernel) is installed on Jupyter
 * Package [Francy GAP](https://github.com/gap-packages/francy) is installed on GAP
 

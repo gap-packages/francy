@@ -7,25 +7,44 @@ ARG WGET="wget -N --no-check-certificate --tries=5 --waitretry=5 --retry-connref
 
 USER root
 
+# setup GAP environment
 RUN apt update && apt -qq install -y \
       git curl wget python3-pip inkscape pandoc texlive-xetex \
       build-essential autoconf libgmp-dev libreadline-dev zlib1g-dev graphviz libzmq3-dev && \
     git clone --depth=2 -b master https://github.com/gap-system/gap.git /opt/master && \
-    cd /opt/master && ./autogen.sh && ./configure && make -j4 V=1 && \
+    cd /opt/master && \
+    ./autogen.sh && ./configure && make -j4 V=1 && \
     make bootstrap-pkg-full DOWNLOAD="$WGET" WGET="$WGET" &&  \
     cd /opt/master/pkg && rm -rf /opt/master/pkg/francy && \
     git clone https://github.com/gap-packages/FrancyMonoids && \
     git clone https://github.com/gap-packages/francy && \
     git clone https://github.com/mcmartins/subgroup-lattice && \
     git clone https://github.com/gap-packages/OrbitalGraphs && \
-    for pkg in `ls`; do ../bin/BuildPackages.sh --strict $pkg*; done &&  \
+    for pkg in `ls`; do ../bin/BuildPackages.sh --strict $pkg*; done && \
     rm -rf /opt/master/packages.tar.gz && chown -R jovyan: /opt/master/ && \
     cd /opt/master/pkg/jupyterkernel && pip install . && \
-    ln -s /opt/master/pkg/francy/notebooks /home/jovyan/notebooks && \
-    ln -s /opt/master/gap /usr/local/sbin/gap && \
-    apt purge git gcc g++ make autoconf curl wget -y
+    cd /usr/local/sbin/ && \
+    ln -s /opt/master/gap && \
+    ln -s /opt/master/pkg/jupyterkernel/bin/jupyter-kernel-gap && \
+    rm -rf /home/jovyan/.jupyter/*
 
-USER jovyan
+ENV JUPYTER_GAP_EXECUTABLE=gap
 
+# setup JS / Python environment
 # jupyter lab extension installation hardcoded to 4.4.10 as this is the last version where jupyterkernel works
-RUN pip install --no-cache-dir jupyterlab==4.4.10 jupyterlab-francy && rm -rf /home/jovyan/.jupyter/*
+RUN apt install -y nodejs npm && \
+    pip install --no-cache-dir jupyterlab==4.4.10 && \
+    npm install --global yarn corepack
+
+# switch to jovyan *before* running yarn, so it can write to /home/jovyan
+USER jovyan
+WORKDIR /home/jovyan
+
+# setup local source code
+COPY --chown=jovyan:users . /opt/francy/
+
+RUN cd /opt/francy/js/ && corepack enable && \
+    yarn set version berry && yarn install && yarn run build && \
+    cd packages/francy-extension-jupyterlab/ && \
+    pip install . && \
+    cd ~

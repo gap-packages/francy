@@ -1,6 +1,6 @@
 {
   "name": "jupyterlab-francy",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Jupyter Lab Extension",
   "keywords": [
     "gap",
@@ -46,8 +46,8 @@
     "francy-renderer-vis": "*"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^4.0.1",
-    "rimraf": "^5.0.1"
+    "@jupyterlab/builder": "^4.5.0",
+    "rimraf": "^6.1.2"
   },
   "jupyterlab": {
     "webpackConfig": "./webpack.config.js",

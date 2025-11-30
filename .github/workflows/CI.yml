@@ -4,6 +4,7 @@ name: CI
 on:
   push:
     branches:
+      - main
       - master
       - develop
   pull_request:
@@ -19,31 +20,32 @@ concurrency:
 jobs:
   # The CI test job
   test_gap:
-    name: ${{ matrix.gap-branch }}
+    name: ${{ matrix.gap-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        gap-branch:
+        gap-version:
           - master
           - stable-4.15
           - stable-4.14
-          - stable-4.13
-          - stable-4.12
+          - stable-4.15
+          - stable-4.14
 
     steps:
       - name: Install ZMQ
         run: |
           sudo apt update && 
-          sudo apt install libzmq3-dev -y
+          sudo apt install libzmq3-dev m4 -y
       - uses: actions/checkout@v6
-      - uses: gap-actions/setup-gap@v2
+      - uses: gap-actions/setup-gap@v3
         with:
-          GAP_PKGS_TO_BUILD: "datastructures json uuid io profiling crypting zeromqinterface jupyterkernel"
-          GAPBRANCH: ${{ matrix.gap-branch }}
-      - uses: gap-actions/build-pkg@v1
-      - uses: gap-actions/run-pkg-tests@v3
-      - uses: gap-actions/run-pkg-tests@v3
+          gap-version: ${{ matrix.gap-version }}
+      - run: |
+          cd $GAPROOT/pkg
+          ../bin/BuildPackages.sh --strict datastructures json uuid io profiling crypting zeromqinterface jupyterkernel
+      - uses: gap-actions/build-pkg@v2
+      - uses: gap-actions/run-pkg-tests@v4
         with:
           only-needed: true
       - uses: gap-actions/process-coverage@v2
@@ -56,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 19.x ]
+        node-version: [ 24.x ]
 
     steps:
       - uses: actions/checkout@v6
@@ -67,20 +69,23 @@ jobs:
           sudo apt install -y "/tmp/google-chrome-stable_current_amd64.deb" -f
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.12'
       - uses: actions/cache@v3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip
-      - run: pip install jupyterlab==4.0.1
+      - run: pip install jupyterlab
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
+      - name: Enable Corepack (Yarn)
+        run: corepack enable
+        working-directory: js
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+        run: echo "dir=$(pwd)/.yarn/cache" >> "$GITHUB_OUTPUT"
         shell: bash
         working-directory: js
       - name: Restore yarn cache
@@ -90,11 +95,19 @@ jobs:
           key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
           restore-keys: |
             yarn-cache-folder-
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable
         working-directory: js
       - run: yarn run lint
         working-directory: js
       - run: yarn run build:prod
+        env:
+          # workaround as jupyterlab build uses yarn 1 which change the lock file
+          YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+          CI: ""
+        working-directory: js
+      - name: Restore lockfile to committed state (workaround)
+        run: |
+          git restore yarn.lock
         working-directory: js
       - run: yarn run test
         working-directory: js
@@ -113,9 +126,10 @@ jobs:
         run: |
           sudo apt update && 
           sudo apt install libzmq3-dev -y
-      - uses: gap-actions/setup-gap@v2
-        with:
-          GAP_PKGS_TO_BUILD: "datastructures uuid json io crypting zeromqinterface jupyterkernel"
-      - uses: gap-actions/build-pkg-docs@v1
+      - uses: gap-actions/setup-gap@v3
+      - run: |
+          cd $GAPROOT/pkg
+          ../bin/BuildPackages.sh --strict datastructures json uuid io profiling crypting zeromqinterface jupyterkernel
+      - uses: gap-actions/build-pkg-docs@v2
         with:
           use-latex: 'true'

@@ -41,6 +41,8 @@
 /doc/chooser.html
 /doc/_*.xml
 
+**/doc/js
+
 *.la
 *src/*.lo
 
@@ -49,12 +51,7 @@
 
 **/node_modules/
 
-.idea
-.iml
-
-.c9
-.ipynb_*
-.nyc*
+.*
 
 # istanbul
 **/.nyc_output/
@@ -92,3 +89,6 @@ gh-pages/
 **/docs/*
 
 **/labextension/
+
+**/.nx
+**/.yarn
