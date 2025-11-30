@@ -7,10 +7,11 @@ ARG WGET="wget -N --no-check-certificate --tries=5 --waitretry=5 --retry-connref
 
 USER root
 
-RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc texlive-xetex libgmp-dev libreadline-dev graphviz \
-    zlib1g-dev libzmq3-dev m4 gcc g++ make autoconf && \
-    git clone --depth=2 -b master https://github.com/gap-system/gap.git /opt/master && cd /opt/master && \
-    ./autogen.sh && ./configure && make -j4 V=1 && \
+RUN apt update && apt -qq install -y \
+      git curl wget python3-pip inkscape pandoc texlive-xetex \
+      build-essential autoconf libgmp-dev libreadline-dev zlib1g-dev graphviz libzmq3-dev && \
+    git clone --depth=2 -b master https://github.com/gap-system/gap.git /opt/master && \
+    cd /opt/master && ./autogen.sh && ./configure && make -j4 V=1 && \
     make bootstrap-pkg-full DOWNLOAD="$WGET" WGET="$WGET" &&  \
     cd /opt/master/pkg && rm -rf /opt/master/pkg/francy && \
     git clone https://github.com/gap-packages/FrancyMonoids && \
@@ -27,4 +28,4 @@ RUN apt update && apt -qq install -y git curl wget python3-pip inkscape pandoc t
 USER jovyan
 
 # jupyter lab extension installation
-RUN pip install --no-cache-dir jupyterlab jupyterlab-francy && rm -rf /home/jovyan/.jupyter/*
+RUN pip install --no-cache-dir jupyterlab==4.4.10 jupyterlab-francy && rm -rf /home/jovyan/.jupyter/*

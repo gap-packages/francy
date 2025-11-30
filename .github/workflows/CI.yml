@@ -4,6 +4,7 @@ name: CI
 on:
   push:
     branches:
+      - main
       - master
       - develop
   pull_request:
@@ -19,12 +20,12 @@ concurrency:
 jobs:
   # The CI test job
   test_gap:
-    name: ${{ matrix.gap-branch }}
+    name: ${{ matrix.gap-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        gap-branch:
+        gap-version:
           - master
           - stable-4.15
           - stable-4.14
@@ -36,13 +37,15 @@ jobs:
         run: |
           sudo apt update && 
           sudo apt install libzmq3-dev m4 -y
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: gap-actions/setup-gap@v3
         with:
-          GAP_PKGS_TO_BUILD: "datastructures json uuid io profiling crypting zeromqinterface jupyterkernel"
-          GAPBRANCH: ${{ matrix.gap-branch }}
-      - uses: gap-actions/build-pkg@v1
-      - uses: gap-actions/run-pkg-tests@v3
+          gap-version: ${{ matrix.gap-version }}
+      - run: |
+          cd $GAPROOT/pkg
+          ../bin/BuildPackages.sh --strict datastructures json uuid io profiling crypting zeromqinterface jupyterkernel
+      - uses: gap-actions/build-pkg@v2
+      - uses: gap-actions/run-pkg-tests@v4
         with:
           only-needed: true
       - uses: gap-actions/process-coverage@v2
@@ -58,7 +61,7 @@ jobs:
         node-version: [ 24.x ]
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up chromedriver
         run: |
           sudo apt update &&
@@ -110,7 +113,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Install ZMQ
         run: |
           sudo apt update && 

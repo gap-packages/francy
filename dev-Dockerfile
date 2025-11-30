@@ -10,8 +10,7 @@ USER root
 # setup GAP environment
 RUN apt update && apt -qq install -y \
       git curl wget python3-pip inkscape pandoc texlive-xetex \
-      libgmp-dev libreadline-dev graphviz zlib1g-dev \
-      libzmq3-dev m4 gcc g++ make autoconf && \
+      build-essential autoconf libgmp-dev libreadline-dev zlib1g-dev graphviz libzmq3-dev && \
     git clone --depth=2 -b master https://github.com/gap-system/gap.git /opt/master && \
     cd /opt/master && \
     ./autogen.sh && ./configure && make -j4 V=1 && \
@@ -33,8 +32,8 @@ ENV JUPYTER_GAP_EXECUTABLE=gap
 
 # setup JS / Python environment
 RUN apt install -y nodejs npm && \
-    pip install --no-cache-dir jupyterlab && \
-    npm install --global yarn
+    pip install --no-cache-dir jupyterlab==4.4.10 && \
+    npm install --global yarn corepack
 
 # switch to jovyan *before* running yarn, so it can write to /home/jovyan
 USER jovyan
@@ -43,8 +42,8 @@ WORKDIR /home/jovyan
 # setup local source code
 COPY --chown=jovyan:users . /opt/francy/
 
-RUN cd /opt/francy/js/ && yarn set version berry && \
-    yarn install && yarn run build && \
+RUN cd /opt/francy/js/ && corepack enable && \
+    yarn set version berry && yarn install && yarn run build && \
     cd packages/francy-extension-jupyterlab/ && \
     pip install . && \
     cd ~

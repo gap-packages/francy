@@ -51,12 +51,7 @@
 
 **/node_modules/
 
-.idea
-.iml
-
-.c9
-.ipynb_*
-.nyc*
+.*
 
 # istanbul
 **/.nyc_output/
