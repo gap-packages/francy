@@ -119,8 +119,9 @@ jobs:
           sudo apt update && 
           sudo apt install libzmq3-dev -y
       - uses: gap-actions/setup-gap@v3
-        with:
-          GAP_PKGS_TO_BUILD: "datastructures uuid json io crypting zeromqinterface jupyterkernel"
+      - run: |
+          cd $GAPROOT/pkg
+          ../bin/BuildPackages.sh --strict datastructures json uuid io profiling crypting zeromqinterface jupyterkernel
       - uses: gap-actions/build-pkg-docs@v2
         with:
           use-latex: 'true'

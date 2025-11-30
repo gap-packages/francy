@@ -31,6 +31,7 @@ RUN apt update && apt -qq install -y \
 ENV JUPYTER_GAP_EXECUTABLE=gap
 
 # setup JS / Python environment
+# jupyter lab extension installation hardcoded to 4.4.10 as this is the last version where jupyterkernel works
 RUN apt install -y nodejs npm && \
     pip install --no-cache-dir jupyterlab==4.4.10 && \
     npm install --global yarn corepack

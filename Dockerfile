@@ -27,5 +27,5 @@ RUN apt update && apt -qq install -y \
 
 USER jovyan
 
-# jupyter lab extension installation
+# jupyter lab extension installation hardcoded to 4.4.10 as this is the last version where jupyterkernel works
 RUN pip install --no-cache-dir jupyterlab==4.4.10 jupyterlab-francy && rm -rf /home/jovyan/.jupyter/*
