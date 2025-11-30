@@ -101,8 +101,13 @@ jobs:
         working-directory: js
       - run: yarn run build:prod
         env:
+          # workaround as jupyterlab build uses yarn 1 which change the lock file
           YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
           CI: ""
+        working-directory: js
+      - name: Restore lockfile to committed state (workaround)
+        run: |
+          git restore yarn.lock
         working-directory: js
       - run: yarn run test
         working-directory: js
