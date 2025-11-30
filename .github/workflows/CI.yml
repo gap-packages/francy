@@ -100,6 +100,9 @@ jobs:
       - run: yarn run lint
         working-directory: js
       - run: yarn run build:prod
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+          CI: ""
         working-directory: js
       - run: yarn run test
         working-directory: js

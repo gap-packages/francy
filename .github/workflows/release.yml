@@ -55,6 +55,9 @@ jobs:
       - run: yarn install --immutable
         working-directory: js
       - run: yarn run build:prod
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+          CI: ""
         working-directory: js
       - name: Configure npm
         run: |
