@@ -94,6 +94,7 @@ BindGlobal("FrancyRendererType", rec(
 #! A value on a <C>FrancyRenderer</C> is used to specify which renderer will be used to draw the graphics on the client.
 #! @Returns <C>IsString</C> with the renderer of the object
 DeclareAttribute("Value", IsFrancyRenderer);
+#
 InstallMethod(Value, "renderer", [IsFrancyRenderer], o -> o!.value);
 #! @Description
 #! Sets the actual renderer <C>FrancyRenderer</C>.
