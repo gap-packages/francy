@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "2.0.3",
+  "version": "2.0.4",
   "name": "francy-core",
   "description": "Francy - An Interactive Discrete Mathematics Framework for GAP - Core library",
   "author": "Manuel Martins <manuelmachadomartins@gmail.com>",
