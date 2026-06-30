@@ -45,7 +45,7 @@ jobs:
       - run: |
           cd $GAPROOT/pkg
           ../bin/BuildPackages.sh --strict datastructures json uuid io profiling crypting zeromqinterface jupyterkernel
-      - uses: gap-actions/build-pkg@v2
+      - uses: gap-actions/build-pkg@v3
       - uses: gap-actions/run-pkg-tests@v4
         with:
           only-needed: true
