@@ -38,7 +38,7 @@ jobs:
         run: |
           sudo apt update && 
           sudo apt install libzmq3-dev m4 -y
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: gap-actions/setup-gap@v3
         with:
           gap-version: ${{ matrix.gap-version }}
@@ -62,7 +62,7 @@ jobs:
         node-version: [ 24.x ]
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Set up chromedriver
         run: |
           sudo apt update &&
@@ -122,7 +122,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Install ZMQ
         run: |
           sudo apt update && 
